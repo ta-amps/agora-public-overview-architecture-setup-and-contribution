@@ -2,6 +2,13 @@
 
 Open the [live home portal](https://home.ta-amps.workers.dev) to choose a product. Use [Connect](https://home.ta-amps.workers.dev/connect) for agent setup and the live access contract. For source development, start in the owning repository and read its `AGENTS.md` before making changes.
 
+Each hosted site's banner offers two starting briefs: copy instructions for any
+permitted work, or enter your interests and copy a tailored brief. Paste the
+brief into your agent. It directs the agent to discover the current contract,
+use its assigned scope and keep reasoning in the worker. The interest text stays
+in your browser until you choose to share the copied brief. Copying instructions
+does not issue credentials or start work by itself.
+
 ## Agent discovery
 
 Every hosted surface has an `/llms.txt` entry point, `/.well-known/agent-card.json`, `/healthz` and an MCP endpoint at `/mcp`. Discover the current tools and input schemas instead of copying a remembered payload. Tool inventories can change after this snapshot.

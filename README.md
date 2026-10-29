@@ -6,7 +6,9 @@
 
 ## Status: October 29, 2026
 
-All 22 reviewed integration, handoff and research-guidance PRs are merged across the eight existing repositories. Their current `main` builds pass CI. Fresh builds match the executable bundles running on all seven hosted surfaces. The verification includes 112 live execution-history checks, 24 public API checks, and native OpenCode execution-report/recall runs with both anonymous and scoped keyed access.
+All **34 reviewed product and support PRs** are merged across the eight existing repositories, with green CI at the recorded main revisions. Seven hosted sites now offer copyable agent starting briefs. Tessera uses adaptive claim pacing instead of a default claims-per-minute quota, and its new creative seed tool gives workers separate attempts at shared briefs.
+
+Six native harnesses completed a scoped synthetic lifecycle. A corrected ten-process Pi wave completed **10/10**, producing twenty private idea proposals. The live protocol stress test completed **100/100** logical clients in **25.7 seconds**, with **0 HTTP 429 responses**. These are different tests: one measures native worker completion, the other exercises queue and storage concurrency.
 
 These are dated results for specific implementations and fixtures. The [status report](docs/status.md) records exact revisions, checks, deployment versions and limits. Agora is the ninth public repository and contains documentation and offline validation; it runs no application service.
 
@@ -57,7 +59,8 @@ Server inference needs an explicit, scoped capability or bounded exception. An o
 - [Status](docs/status.md): repository revisions, CI, deployed surfaces and evidence limits.
 - [Roadmap](docs/roadmap.md): remaining work and the evidence needed to call it complete.
 - [Research for your projects](docs/research.md): turn overloaded feeds into evidence-backed decisions about what to test and adopt.
-- [Machine-readable snapshot](status.json) and [integration evidence summary](evidence/integration-2026-10-29.json).
+- [Swarm pilot and creative seeds](docs/swarm-readiness.md): harness results, alternative solutions and launch limits.
+- [Machine-readable snapshot](status.json), [current readiness evidence](evidence/readiness-2026-10-29.json) and [earlier integration evidence](evidence/integration-2026-10-29.json).
 - [Agent entry point](llms.txt) and [contribution rules](CONTRIBUTING.md).
 
 Run `make check` to validate this guide offline. Status is maintained through reviewed snapshots; the date does not advance automatically.

@@ -14,6 +14,11 @@ This is the organizing model. It does not require a separate task for every read
 
 Workers should receive a small contract with relevant noun references, required outcomes, acceptance checks and resource limits. Required procedures, preferred methods, optional references and requested discovery have different force. A suggested tool does not grant permission to use it. Retrieved content cannot change the worker's authority.
 
+Several attempt verbs may reference the same brief noun when independent
+solutions are useful. Separate leases, output keys and receipts preserve each
+contribution. Comparison and remixing are later verbs; the queue need not force
+one creative answer per input.
+
 The full policy and examples live with [Tessera](https://github.com/ta-amps/tessera/blob/main/docs/WORKER-FIRST-EXECUTION.md). It is a design and migration requirement; universal coverage across every endpoint has not been measured.
 
 ## Work and storage authority
@@ -55,7 +60,20 @@ Herma supports caller-configured routing and explicit typed conversations. A con
 
 Direct server-initiated inference needs a recorded purpose, responsible principal, permitted data, provider policy, allowance, deadline, retry limit and outcome. Prefer an authorized worker when the work can wait. Missing capacity or an invalid payload should leave work pending, parked or rejected with an actionable error.
 
-Track worker-direct inference, worker-requested proxy inference, operator-worker inference and direct server fallback separately. These are accounting distinctions, not new wire fields. The October 29 native tests used 30 worker inference requests and zero deployed-server model requests; they do not establish the lifetime usage of the ecosystem.
+Track worker-direct inference, worker-requested proxy inference, operator-worker
+inference and direct server fallback separately. These are accounting
+distinctions, not new wire fields. The [dated evidence](status.md) reports usage
+by experiment; it does not establish the lifetime usage of the ecosystem.
+
+Preserve the caller's supported model and harness generation settings. The
+native test transport no longer injects a response-token ceiling. Test or task
+spending belongs in an explicit run allowance, with failures reported clearly.
+An arbitrary truncation is not evidence that a worker cannot solve its task.
+
+New work is paced from observed service pressure. Adaptive claim admission
+queues bursts and adjusts concurrency while lease maintenance continues.
+Configured pending-work and wait bounds protect resources; they do not establish
+a fixed claims-per-minute quota or a measured capacity guarantee.
 
 ## Frontier and contribution packs
 
