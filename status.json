@@ -1,0 +1,318 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-10-29T13:05:06.584713+00:00",
+  "guide": {
+    "name": "agora",
+    "url": "https://github.com/ta-amps/agora",
+    "kind": "documentation",
+    "ci_workflow": "https://github.com/ta-amps/agora/actions/workflows/check.yml"
+  },
+  "summary": {
+    "ecosystem_repositories": 8,
+    "guide_repositories": 1,
+    "merged_pull_requests": 22,
+    "open_pull_requests": 0,
+    "all_main_checks_passed": true,
+    "hosted_surfaces": 7,
+    "all_bundles_match_tested_builds": true
+  },
+  "repositories": [
+    {
+      "name": "tessera",
+      "url": "https://github.com/ta-amps/tessera",
+      "role": "Shared noun/verb fabric, scope, storage and execution evidence",
+      "main_revision": "775f7647c0b6f858bc95bf08f52c7fa27ebd5d93",
+      "open_pull_requests": 0,
+      "checks": [
+        {
+          "id": 40875723274,
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/ta-amps/tessera/actions/runs/40875723274"
+        }
+      ]
+    },
+    {
+      "name": "shamash",
+      "url": "https://github.com/ta-amps/shamash",
+      "role": "Synthetic harm/scam evidence workflows and human review boundaries",
+      "main_revision": "a6026225b74449539855fae3c0cbbe9c2decdbab",
+      "open_pull_requests": 0,
+      "checks": [
+        {
+          "id": 40875709744,
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/ta-amps/shamash/actions/runs/40875709744"
+        }
+      ]
+    },
+    {
+      "name": "eranos",
+      "url": "https://github.com/ta-amps/eranos",
+      "role": "Donated-worker NGO kit workflows and independent review",
+      "main_revision": "8a6cabf83aa26df347201f943adf551ae4907394",
+      "open_pull_requests": 0,
+      "checks": [
+        {
+          "id": 40875641519,
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/ta-amps/eranos/actions/runs/40875641519"
+        }
+      ]
+    },
+    {
+      "name": "herma",
+      "url": "https://github.com/ta-amps/herma",
+      "role": "Optional scoped context shim and explicit bounded model interfaces",
+      "main_revision": "492ced92dcab2dd73a719b874ce85d0572975bd4",
+      "open_pull_requests": 0,
+      "checks": [
+        {
+          "id": 40875666486,
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/ta-amps/herma/actions/runs/40875666486"
+        }
+      ]
+    },
+    {
+      "name": "kothar",
+      "url": "https://github.com/ta-amps/kothar",
+      "role": "Deterministic verified-node recipe compiler and runtime",
+      "main_revision": "1f30c30357c62ebf56d0bb3d5d462332e84b2562",
+      "open_pull_requests": 0,
+      "checks": [
+        {
+          "id": 40875693603,
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/ta-amps/kothar/actions/runs/40875693603"
+        }
+      ]
+    },
+    {
+      "name": "kinema",
+      "url": "https://github.com/ta-amps/kinema",
+      "role": "Deterministic motion, frame recipes, captions and layout QA",
+      "main_revision": "93abaae9b235258a8c9937fdbe8dc85451c46305",
+      "open_pull_requests": 0,
+      "checks": [
+        {
+          "id": 40875681634,
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/ta-amps/kinema/actions/runs/40875681634"
+        }
+      ]
+    },
+    {
+      "name": "hackathon-context",
+      "url": "https://github.com/ta-amps/hackathon-context",
+      "role": "Project-neutral participant instructions and tools",
+      "main_revision": "5ccebd6f5c06fc581a06f48721fd1029b63a3bb2",
+      "open_pull_requests": 0,
+      "checks": [
+        {
+          "id": 40872745512,
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/ta-amps/hackathon-context/actions/runs/40872745512"
+        }
+      ]
+    },
+    {
+      "name": "pack-contributions",
+      "url": "https://github.com/ta-amps/pack-contributions",
+      "role": "Pack authoring guidance and synthetic proposals",
+      "main_revision": "c0e3e27fd3472b88be1acee6db8c6911d7aaf1a8",
+      "open_pull_requests": 0,
+      "checks": [
+        {
+          "id": 40878259551,
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/ta-amps/pack-contributions/actions/runs/40878259551"
+        }
+      ]
+    }
+  ],
+  "surfaces": [
+    {
+      "name": "tessera",
+      "url": "https://tessera.ta-amps.workers.dev",
+      "source_repository": "tessera",
+      "build_source_revision": "b1b470475c3ff03db0963bbcf6b271911d79f73e",
+      "observed_at": "2026-10-29T12:26:04.565475+00:00",
+      "deployed_version": "42d8bf93-0d37-47e6-8937-1070df117c27",
+      "matches_tested_build": true,
+      "discovered_tool_count": 37,
+      "modules": [
+        {
+          "file": "worker.js",
+          "sha256": "ad21d6b1b7fe600aadfcbbbacb96ce3861158754fa5581ef9bfeca9337972f76",
+          "bytes": 695867
+        }
+      ]
+    },
+    {
+      "name": "shamash",
+      "url": "https://shamash.ta-amps.workers.dev",
+      "source_repository": "shamash",
+      "build_source_revision": "562fda6cdc68c0f2e41d9f2746a5df5a2feea48f",
+      "observed_at": "2026-10-29T12:26:06.065243+00:00",
+      "deployed_version": "b0228f52-6280-4cb7-9512-40f3ed6d9469",
+      "matches_tested_build": true,
+      "discovered_tool_count": 6,
+      "modules": [
+        {
+          "file": "worker.js",
+          "sha256": "2b1c0ba7c44cf18dadb52e6a474420ff7e6478cc91ac80186aebd0db79b34c26",
+          "bytes": 71070
+        }
+      ]
+    },
+    {
+      "name": "eranos",
+      "url": "https://eranos.ta-amps.workers.dev",
+      "source_repository": "eranos",
+      "build_source_revision": "2625d8812debe0109a89c83d251297b8638c8b1c",
+      "observed_at": "2026-10-29T12:26:04.747488+00:00",
+      "deployed_version": "349325ae-b8f7-41e8-912e-eb6b71f7aad1",
+      "matches_tested_build": true,
+      "discovered_tool_count": 4,
+      "modules": [
+        {
+          "file": "worker.js",
+          "sha256": "f0bdc247dc36244daf6ea84aecf5231e8c8ce34c576f557e1b13789cf7cb40b9",
+          "bytes": 65488
+        }
+      ]
+    },
+    {
+      "name": "herma",
+      "url": "https://herma.ta-amps.workers.dev",
+      "source_repository": "herma",
+      "build_source_revision": "9aa85638d62d8ee479f4d1d609221a519224c4a4",
+      "observed_at": "2026-10-29T12:26:09.349597+00:00",
+      "deployed_version": "e7cf3607-d626-40e7-ae46-187e4fe536a8",
+      "matches_tested_build": true,
+      "discovered_tool_count": 3,
+      "modules": [
+        {
+          "file": "entry.js",
+          "sha256": "30b9a37f7d1cff2f17ec670350f37de043a9b544288644245f93a9960239e306",
+          "bytes": 280147
+        }
+      ]
+    },
+    {
+      "name": "kothar",
+      "url": "https://kothar.ta-amps.workers.dev",
+      "source_repository": "kothar",
+      "build_source_revision": "2455afd99254b335a1bfb60e0779c7332698d306",
+      "observed_at": "2026-10-29T12:26:10.556393+00:00",
+      "deployed_version": "a23638b2-8f1e-462b-bc5e-07240decda28",
+      "matches_tested_build": true,
+      "discovered_tool_count": 4,
+      "modules": [
+        {
+          "file": "worker.js",
+          "sha256": "49c9bccef22d16b826400804df4e658eb396c6427cd42ce1ebc268a27c371929",
+          "bytes": 238356
+        }
+      ]
+    },
+    {
+      "name": "kinema",
+      "url": "https://kinema.ta-amps.workers.dev",
+      "source_repository": "kinema",
+      "build_source_revision": "dcb0a0acf12064ed433c092d6022a33e9587e209",
+      "observed_at": "2026-10-29T12:26:09.756036+00:00",
+      "deployed_version": "4237faa4-6bd8-414e-be5d-548e13db9f60",
+      "matches_tested_build": true,
+      "discovered_tool_count": 4,
+      "modules": [
+        {
+          "file": "worker.js",
+          "sha256": "f83906effa1ee588b7b7cf1eb1fb833c1af1c7756803edea1cb8b5f0090fd5cc",
+          "bytes": 145155
+        }
+      ]
+    },
+    {
+      "name": "home",
+      "url": "https://home.ta-amps.workers.dev",
+      "source_repository": null,
+      "build_source_revision": null,
+      "observed_at": "2026-10-29T12:26:12.960450+00:00",
+      "deployed_version": "cddb9894-f4cf-4253-8d3e-c9de31d4d367",
+      "matches_tested_build": true,
+      "discovered_tool_count": 5,
+      "modules": [
+        {
+          "file": "worker.js",
+          "sha256": "11a0e21148f7d73e24b53c98afccb951b5ddaed098843ed5396bd03722b25b2c",
+          "bytes": 157811
+        }
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "name": "Scoped noun/verb work and execution history",
+      "state": "implemented",
+      "owner": "tessera"
+    },
+    {
+      "name": "Optional context and explicit typed conversations",
+      "state": "implemented_with_limits",
+      "owner": "herma"
+    },
+    {
+      "name": "Synthetic domain workflows and deterministic tools",
+      "state": "implemented_with_limits",
+      "owner": "product_repositories"
+    },
+    {
+      "name": "General category/profile resolver",
+      "state": "proposed",
+      "owner": "tessera"
+    },
+    {
+      "name": "General shim admission, activation and rollback",
+      "state": "incomplete",
+      "owner": "herma"
+    },
+    {
+      "name": "Frontier public candidate admission",
+      "state": "incomplete",
+      "owner": "frontier"
+    },
+    {
+      "name": "Capability research from feeds to project decisions",
+      "state": "proposed",
+      "owner": "pack-contributions"
+    }
+  ],
+  "frontier": {
+    "enabled": true,
+    "server_repair_mode": "off",
+    "server_repair_enabled": false,
+    "execution_policy": "external_workers_first",
+    "cadence_minutes": 15,
+    "stop_at": "2026-11-04T17:00:00.000Z"
+  },
+  "limitations": [
+    "Dated maintainer observations for the listed implementations and fixtures, not continuous monitoring or third-party certification.",
+    "Native execution-history evidence covers one OpenCode/Ollama run per principal; broader clients and repeated reliability remain unverified.",
+    "No fresh rendered-browser verification was available in this cycle; HTTP checks do not prove rendered UI behavior.",
+    "Executable bundle parity is byte identity, not a full configuration, asset, load or long-running operational certification.",
+    "The general category/profile resolver and general shim admission/activation/rollback are incomplete.",
+    "Frontier public candidate admission is pending and its catalog is empty; contribution blueprints and capability research remain proposals.",
+    "Parametric motion and metadata checks do not certify all rendered media or license ownership.",
+    "No complete reconstruction of inaccessible or opaque session histories is claimed."
+  ],
+  "evidence_path": "evidence/integration-2026-10-29.json"
+}

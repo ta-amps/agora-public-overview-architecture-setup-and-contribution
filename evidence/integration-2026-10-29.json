@@ -1,0 +1,463 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-10-29T13:05:06.584713+00:00",
+  "provenance": "Maintainer-recorded integration checks; public CI and canonical native observation are linked. Private raw histories, credentials and account metadata are excluded.",
+  "merged_pull_requests": [
+    "https://github.com/ta-amps/eranos/pull/1",
+    "https://github.com/ta-amps/eranos/pull/2",
+    "https://github.com/ta-amps/eranos/pull/3",
+    "https://github.com/ta-amps/hackathon-context/pull/1",
+    "https://github.com/ta-amps/herma/pull/1",
+    "https://github.com/ta-amps/herma/pull/2",
+    "https://github.com/ta-amps/herma/pull/3",
+    "https://github.com/ta-amps/herma/pull/4",
+    "https://github.com/ta-amps/herma/pull/5",
+    "https://github.com/ta-amps/kinema/pull/1",
+    "https://github.com/ta-amps/kinema/pull/2",
+    "https://github.com/ta-amps/kothar/pull/1",
+    "https://github.com/ta-amps/kothar/pull/2",
+    "https://github.com/ta-amps/pack-contributions/pull/1",
+    "https://github.com/ta-amps/pack-contributions/pull/2",
+    "https://github.com/ta-amps/shamash/pull/1",
+    "https://github.com/ta-amps/shamash/pull/2",
+    "https://github.com/ta-amps/shamash/pull/3",
+    "https://github.com/ta-amps/tessera/pull/1",
+    "https://github.com/ta-amps/tessera/pull/2",
+    "https://github.com/ta-amps/tessera/pull/3",
+    "https://github.com/ta-amps/tessera/pull/4"
+  ],
+  "repository_checks": [
+    {
+      "repository": "tessera",
+      "summary": "262 Python tests passed, 6 skipped; 5 actual workerd cases; local HTTP conformance 32 passed, 4 skipped; empty-backend negative control passed.",
+      "commands": [
+        {
+          "argv": [
+            "uv",
+            "sync",
+            "--all-groups",
+            "--all-extras",
+            "--locked"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "npm",
+            "ci",
+            "--ignore-scripts"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "check"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "test-worker"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "suite-http-local"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "suite-stub"
+          ],
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "repository": "shamash",
+      "summary": "259 tests passed; synthetic development cases, adapter conformance (30 passed, 6 skipped), TypeScript and frontend build passed.",
+      "commands": [
+        {
+          "argv": [
+            "uv",
+            "lock"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "uv",
+            "sync",
+            "--all-groups",
+            "--locked"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "check"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "dev-cases"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "suite",
+            "BACKEND=local"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "pnpm",
+            "--dir",
+            "web",
+            "install",
+            "--frozen-lockfile"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "web-check"
+          ],
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "repository": "eranos",
+      "summary": "56 tests passed; example verification, adapter conformance (30 passed, 6 skipped), TypeScript and frontend build passed.",
+      "commands": [
+        {
+          "argv": [
+            "uv",
+            "lock"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "uv",
+            "sync",
+            "--all-groups",
+            "--locked"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "check"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "verify-examples"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "suite",
+            "BACKEND=local"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "pnpm",
+            "--dir",
+            "web",
+            "install",
+            "--frozen-lockfile"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "web-check"
+          ],
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "repository": "herma",
+      "summary": "85 Python tests and 49 actual Worker checks passed, including strict decisions and offline no-egress controls.",
+      "commands": [
+        {
+          "argv": [
+            "uv",
+            "lock"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "uv",
+            "sync",
+            "--all-groups",
+            "--locked"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "npm",
+            "ci",
+            "--ignore-scripts"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "check"
+          ],
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "repository": "kothar",
+      "summary": "39 tests and the deterministic demo passed; demo uses 18 verified nodes.",
+      "commands": [
+        {
+          "argv": [
+            "uv",
+            "sync",
+            "--all-groups",
+            "--locked"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "check"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "demo"
+          ],
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "repository": "kinema",
+      "summary": "38 tests and the deterministic demo passed.",
+      "commands": [
+        {
+          "argv": [
+            "uv",
+            "sync",
+            "--all-groups",
+            "--locked"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "check"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "demo"
+          ],
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "repository": "hackathon-context",
+      "summary": "Two unittest groups passed: 12 and 13 tests; offline document and example checks passed.",
+      "commands": [
+        {
+          "argv": [
+            "make",
+            "check"
+          ],
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "repository": "pack-contributions",
+      "summary": "10 tests, 12 JSON examples, local documentation links and public hygiene passed.",
+      "commands": [
+        {
+          "argv": [
+            "make",
+            "check"
+          ],
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "portal_checks": {
+    "node_checks_passed": 33,
+    "actual_worker_sqlite_checks_passed": 20
+  },
+  "live_execution_history": {
+    "passed": true,
+    "check_count": 112,
+    "passed_check_count": 112,
+    "failed_check_count": 0,
+    "http_requests": 65,
+    "cleanup_requests": 2,
+    "provider_calls": 0,
+    "fingerprint": "aee353a4cccc32baa8a03f62fc6efbcca425c9edee1f613b36ab92ddedd7e09a"
+  },
+  "public_checks": {
+    "passed": 24,
+    "total": 24,
+    "scope": "deployed HTTP discovery, public projection and synthetic invalid payloads; no browser or paid-model certification",
+    "fingerprint": "deee74d7c383c6a66ceb29154766aa5f5124961f7f5cc357bbba9ba87396137a"
+  },
+  "native_execution_history": {
+    "public_evidence": "https://github.com/ta-amps/tessera/blob/775f7647c0b6f858bc95bf08f52c7fa27ebd5d93/docs/evidence/native-history-observation.json",
+    "observed_date": "2026-10-29",
+    "harness": "OpenCode 2.1.2",
+    "provider": "Ollama Cloud",
+    "model": "kimi-k2.7-code",
+    "interface": "Direct deployed Tessera MCP; no context shim or Frontier connector",
+    "scope": "One synthetic execution-report and recall loop per principal. Worker observations do not qualify public artifact admission or universal client compatibility.",
+    "worker_inference_requests": 30,
+    "server_model_requests": 0,
+    "runs": [
+      {
+        "mode": "anonymous",
+        "passed": true,
+        "native_event_counts": {
+          "step_start": 14,
+          "tool_use": 13,
+          "step_finish": 13,
+          "text": 1
+        },
+        "native_calls": [
+          "tessera_whoami",
+          "tessera_claim",
+          "tessera_heartbeat",
+          "tessera_put_record",
+          "tessera_get_record",
+          "tessera_submit",
+          "tessera_list_executions",
+          "tessera_get_execution",
+          "tessera_enqueue",
+          "tessera_claim",
+          "tessera_recall_execution",
+          "tessera_cancel",
+          "tessera_my_audit"
+        ],
+        "provider_requests": 15,
+        "provider_usage_records": 15,
+        "provider_reported_prompt_tokens_sum": 68975,
+        "provider_reported_completion_tokens_sum": 3180,
+        "exact_input_recall": true,
+        "independent_http_readback": true,
+        "fresh_key_revoked": null,
+        "run_fingerprint": "db1d178ad17a37cfd2c661e4398f733e10beed19edff767a73e9e9243806dc74",
+        "cost_usd": null,
+        "cost_reason": "Subscription use is not a per-run invoice."
+      },
+      {
+        "mode": "keyed",
+        "passed": true,
+        "native_event_counts": {
+          "step_start": 14,
+          "text": 2,
+          "tool_use": 13,
+          "step_finish": 13
+        },
+        "native_calls": [
+          "tessera_whoami",
+          "tessera_claim",
+          "tessera_heartbeat",
+          "tessera_put_record",
+          "tessera_get_record",
+          "tessera_submit",
+          "tessera_list_executions",
+          "tessera_get_execution",
+          "tessera_enqueue",
+          "tessera_claim",
+          "tessera_recall_execution",
+          "tessera_cancel",
+          "tessera_my_audit"
+        ],
+        "provider_requests": 15,
+        "provider_usage_records": 15,
+        "provider_reported_prompt_tokens_sum": 62803,
+        "provider_reported_completion_tokens_sum": 3437,
+        "exact_input_recall": true,
+        "independent_http_readback": true,
+        "fresh_key_revoked": true,
+        "run_fingerprint": "46b9f15a1bd21503f4115657086e8fe744483570a7a83e0e5b811e446cdef2f7",
+        "cost_usd": null,
+        "cost_reason": "Subscription use is not a per-run invoice."
+      }
+    ],
+    "retained_setup_failures": [
+      {
+        "mode": "anonymous",
+        "provider_requests": 0,
+        "reason": "Test driver module-name collision before any network request; corrected."
+      },
+      {
+        "mode": "keyed",
+        "provider_requests": 0,
+        "reason": "Test driver used an unsupported enqueue HTTP path before inference; corrected to the documented route; fresh key revoked."
+      }
+    ],
+    "limits": [
+      "One run per principal, not a reliability estimate.",
+      "Native Muse, Grokbot, Muse.ai and other model/version combinations are not established by this evidence.",
+      "No automatic output replay, generated-code admission, general category resolver or new shim activation was enabled."
+    ]
+  },
+  "provider_calls_this_integration_cycle": {
+    "ollama_worker": 30,
+    "meta": 0
+  },
+  "new_runtime_deployments_in_this_cycle": 0,
+  "deployment_reason": "Fresh executable builds already match existing live versions. Integration changes after the comparison are documentation and source-history merges.",
+  "existing_local_work_preserved": true,
+  "limits": [
+    "Dated maintainer observations for the listed implementations and fixtures, not continuous monitoring or third-party certification.",
+    "Native execution-history evidence covers one OpenCode/Ollama run per principal; broader clients and repeated reliability remain unverified.",
+    "No fresh rendered-browser verification was available in this cycle; HTTP checks do not prove rendered UI behavior.",
+    "Executable bundle parity is byte identity, not a full configuration, asset, load or long-running operational certification.",
+    "The general category/profile resolver and general shim admission/activation/rollback are incomplete.",
+    "Frontier public candidate admission is pending and its catalog is empty; contribution blueprints and capability research remain proposals.",
+    "Parametric motion and metadata checks do not certify all rendered media or license ownership.",
+    "No complete reconstruction of inaccessible or opaque session histories is claimed."
+  ]
+}

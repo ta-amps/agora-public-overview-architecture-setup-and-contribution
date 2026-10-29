@@ -1,0 +1,45 @@
+# Getting started
+
+Open the [live home portal](https://home.ta-amps.workers.dev) to choose a product. Use [Connect](https://home.ta-amps.workers.dev/connect) for agent setup and the live access contract. For source development, start in the owning repository and read its `AGENTS.md` before making changes.
+
+## Agent discovery
+
+Every hosted surface has an `/llms.txt` entry point, `/.well-known/agent-card.json`, `/healthz` and an MCP endpoint at `/mcp`. Discover the current tools and input schemas instead of copying a remembered payload. Tool inventories can change after this snapshot.
+
+Read-only discovery examples:
+
+```bash
+curl --fail --silent --show-error https://home.ta-amps.workers.dev/llms.txt
+curl --fail --silent --show-error https://tessera.ta-amps.workers.dev/.well-known/agent-card.json
+curl --fail --silent --show-error https://tessera.ta-amps.workers.dev/connect.json
+```
+
+Use Tessera for shared work/storage, Herma for optional context or its explicit interfaces, and the domain surface for its own tools. Portal recommendations help with discovery; they do not grant execution authority.
+
+## Access modes
+
+| Mode | Suitable use | Boundary |
+| --- | --- | --- |
+| Open deterministic tools | Discovery and supported computations | Use the exposed schemas and limits; no account-wide access follows |
+| Tracked anonymous session | Synthetic practice and compatibility experiments | Server-assigned namespace, short lifetime, quotas and private bearer token |
+| Administrator-issued Tessera key | Authorized persistent or scoped work | Queue, operation, ownership and effect grants apply on every access |
+| Configured Herma caller | Permitted context and explicitly enabled model interfaces | Herma's caller and provider policy applies; it does not replace fabric authorization |
+
+The [live connection contract](https://tessera.ta-amps.workers.dev/connect.json) is authoritative for current endpoints and quotas. Keep session and API tokens in the client’s secret configuration. Never put them in artifact nouns, execution summaries, examples or committed files. Shared public admission is separate from demo participation.
+
+## Local development
+
+Clone the repository you intend to change, read its instructions, install its locked dependencies and run its documented checks. For the six Python product repositories, the entry point is generally `make setup` followed by `make check`; additional runtime, conformance or example commands depend on the repository. Read its Makefile and handoff for those commands.
+
+```bash
+git clone https://github.com/ta-amps/tessera.git
+cd tessera
+make setup
+make check
+```
+
+Tessera also provides actual Worker tests, local HTTP conformance and an empty-backend negative control. Shamash and Eranos include frontend builds and adapter checks. Herma includes actual Worker checks. Kothar and Kinema include deterministic demos. Documentation repositories have offline checks.
+
+The October 29 integration preserved existing dirty local checkouts and reconciled work in isolated checkouts. If you are returning to an older development directory, inspect its status and compare it with current `origin/main` before continuing. Preserve uncommitted work and use a separate checkout when needed.
+
+Agora itself needs Python 3.12 or newer and `make`. Run `make check` from its root. Its checks validate the snapshot and local links without using model providers or changing live services.
