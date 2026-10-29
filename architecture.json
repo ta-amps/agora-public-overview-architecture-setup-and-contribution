@@ -1,0 +1,206 @@
+{
+  "schema_version": 1,
+  "kind": "documentation_inventory",
+  "authority": "tessera",
+  "policy": "docs/architecture-checkpoint.md",
+  "ordinary_reasoning": "authorized_workers",
+  "implicit_server_fallback": false,
+  "repositories": [
+    {
+      "name": "tessera",
+      "role": "fabric",
+      "nouns": [
+        "record",
+        "blob",
+        "receipt"
+      ],
+      "verbs": [
+        "claimable task"
+      ],
+      "checks": [
+        "tests",
+        "conformance-draft"
+      ]
+    },
+    {
+      "name": "herma",
+      "role": "adapter",
+      "nouns": [
+        "context",
+        "provider configuration",
+        "conversation evidence"
+      ],
+      "verbs": [
+        "interpret an explicit work request"
+      ],
+      "checks": [
+        "tests",
+        "deploy/cloudflare"
+      ]
+    },
+    {
+      "name": "shamash",
+      "role": "workflow_pack",
+      "nouns": [
+        "synthetic evidence",
+        "analysis",
+        "review evidence"
+      ],
+      "verbs": [
+        "analyze",
+        "review"
+      ],
+      "checks": [
+        "tests"
+      ]
+    },
+    {
+      "name": "eranos",
+      "role": "workflow_pack",
+      "nouns": [
+        "kit",
+        "artifact",
+        "review evidence"
+      ],
+      "verbs": [
+        "draft",
+        "test",
+        "review",
+        "release"
+      ],
+      "checks": [
+        "tests"
+      ]
+    },
+    {
+      "name": "kothar",
+      "role": "seed_pack",
+      "nouns": [
+        "code node",
+        "recipe",
+        "compiler",
+        "runtime",
+        "result"
+      ],
+      "verbs": [
+        "compose",
+        "compile",
+        "execute",
+        "verify"
+      ],
+      "checks": [
+        "tests"
+      ]
+    },
+    {
+      "name": "kinema",
+      "role": "seed_pack",
+      "nouns": [
+        "scene",
+        "motion formula",
+        "asset",
+        "captions",
+        "evaluator",
+        "result"
+      ],
+      "verbs": [
+        "generate",
+        "retarget",
+        "evaluate",
+        "review"
+      ],
+      "checks": [
+        "tests"
+      ]
+    },
+    {
+      "name": "hackathon-context",
+      "role": "authoring_kit",
+      "nouns": [
+        "guidance",
+        "template",
+        "source reference"
+      ],
+      "verbs": [
+        "author",
+        "verify"
+      ],
+      "checks": [
+        "scripts"
+      ]
+    },
+    {
+      "name": "pack-contributions",
+      "role": "authoring_kit",
+      "nouns": [
+        "pack proposal",
+        "contract example"
+      ],
+      "verbs": [
+        "propose",
+        "review"
+      ],
+      "checks": [
+        "tests"
+      ]
+    }
+  ],
+  "server_exceptions": [
+    {
+      "id": "infrastructure",
+      "reasoning": false,
+      "owner": "tessera",
+      "boundary": "Scoped deterministic identity, leases, storage, validation and receipts",
+      "evidence": "docs/status.md"
+    },
+    {
+      "id": "management",
+      "reasoning": false,
+      "owner": "operator",
+      "boundary": "Explicit effect authority for credentials, accounting, provisioning, schedules and recovery",
+      "evidence": "docs/architecture-checkpoint.md"
+    },
+    {
+      "id": "model_transport",
+      "reasoning": false,
+      "owner": "herma",
+      "boundary": "Explicit caller-requested provider, destination, data scope and payer",
+      "evidence": "docs/architecture.md"
+    },
+    {
+      "id": "explicit_inference",
+      "reasoning": true,
+      "owner": "herma",
+      "boundary": "Opt-in capability with scoped purpose and reserved allowance; no automatic worker fallback",
+      "evidence": "docs/architecture.md",
+      "required_record": [
+        "purpose",
+        "principal",
+        "data_scope",
+        "provider",
+        "model",
+        "destination",
+        "payer",
+        "allowance",
+        "deadline",
+        "retry_policy",
+        "outcome"
+      ]
+    }
+  ],
+  "enforcement_scope": "Inventory validation plus owning-repository behavioral checks; not universal runtime certification",
+  "core_entities": [
+    "noun",
+    "verb"
+  ],
+  "supporting_boundaries": [
+    "surface",
+    "infrastructure"
+  ],
+  "seed_pack_contents": [
+    "noun",
+    "verb"
+  ],
+  "project_is_primitive": false,
+  "project_semantics": "Convenient surface/grouping name represented with existing nouns; no separate core lifecycle"
+}

@@ -1,108 +1,267 @@
 # Current status
 
-Snapshot observed **2026-10-29T15:36:07.524802+00:00**. This is a dated record of implemented behavior, deployments and measured tests. Later changes require a new observation.
+Snapshot reconciled **2026-10-29T19:59:57.770230+00:00**. Exact main and CI were read at
+**2026-10-29T19:43:24.521020+00:00**. Other evidence retains its own date and scope.
 
-## Integration
+**Fresh public Tessera reads passed at 19:54 UTC:** health and instructions
+returned HTTP 200, with health `ok:true` and `db_ok:true`. These checks are
+separate from the latest recorded concurrent release receipts for Tessera PR13
+and home. They do not independently identify the executable version or qualify
+native artifact/report readback, new learning paths or a completed Frontier cycle.
+The earlier quota incident remains historical; Herma's new source is undeployed.
 
-All **34 reviewed PRs** are merged across the eight product/support repositories. There are no open product/support PRs in this snapshot, and each exact main revision below has green CI. Original dirty development checkouts were preserved while integration work used isolated checkouts. Agora is the ninth public repository and contains documentation and offline validation.
+## Integrated source
 
-The [current evidence](../evidence/readiness-2026-10-29.json) lists merged PRs and test observations. The [earlier integration evidence](../evidence/integration-2026-10-29.json) remains unchanged; its results are historical baseline coverage rather than fresh tests of every later change.
+At the dated GitHub observation above, **50 product/support PRs were merged**
+across eight repositories, with **zero open PRs** and successful CI at every
+exact main revision below. Concurrent work may change this after the observation.
+This adds sixteen PRs to the earlier 34: Tessera 9–13, Herma 8–11, Eranos 5,
+Kothar 4–5, Kinema 4 and hackathon-context 2–4. Agora is the ninth repository and provides documentation
+and offline validation, with no application runtime.
+
+The [current evidence](../evidence/training-and-community-2026-10-29.json) lists all 50 PR URLs and the new merge
+receipts. [Earlier readiness](../evidence/readiness-2026-10-29.json) and
+[integration evidence](../evidence/integration-2026-10-29.json) remain unchanged.
+Original dirty development checkouts were preserved. The latest concurrent
+Tessera 12–13, Eranos 5 and hackathon-context 4 merges were observed through
+GitHub metadata and CI. Separate concurrent Tessera 12/13 release packets are
+now inspected; their local execution remains attributed reported evidence. Herma 11 has the owning and independent source checks
+described below. This is a dated cutoff, not continuous monitoring.
 
 | Repository | Main revision | CI at that revision |
 | --- | --- | --- |
-| [tessera](https://github.com/ta-amps/tessera) | [`89803665`](https://github.com/ta-amps/tessera/commit/89803665d61d5156f85d8adbc4679d25ad6b91a1) | [pass 40902277938](https://github.com/ta-amps/tessera/actions/runs/40902277938) |
+| [tessera](https://github.com/ta-amps/tessera) | [`182bcaee`](https://github.com/ta-amps/tessera/commit/182bcaeec9b0112739360f8778fe855401a16390) | [pass 40940844592](https://github.com/ta-amps/tessera/actions/runs/40940844592) |
 | [shamash](https://github.com/ta-amps/shamash) | [`b9f3b409`](https://github.com/ta-amps/shamash/commit/b9f3b409b0b9345ca0f3de3923296f11b65ebc7c) | [pass 40890070406](https://github.com/ta-amps/shamash/actions/runs/40890070406) |
-| [eranos](https://github.com/ta-amps/eranos) | [`40c5517a`](https://github.com/ta-amps/eranos/commit/40c5517a3dc634ce1e6c4713e1f252d3dd7bafee) | [pass 40890017028](https://github.com/ta-amps/eranos/actions/runs/40890017028) |
-| [herma](https://github.com/ta-amps/herma) | [`f13baef1`](https://github.com/ta-amps/herma/commit/f13baef1864b9ede7fdd62d4a65ab9039bd09cd7) | [pass 40890050576](https://github.com/ta-amps/herma/actions/runs/40890050576) |
-| [kothar](https://github.com/ta-amps/kothar) | [`73e5ebbe`](https://github.com/ta-amps/kothar/commit/73e5ebbed38a58bd9231fd2c92de542389fe7c1b) | [pass 40890106818](https://github.com/ta-amps/kothar/actions/runs/40890106818) |
-| [kinema](https://github.com/ta-amps/kinema) | [`6f0594cf`](https://github.com/ta-amps/kinema/commit/6f0594cfd04bfcde715c50b95a3609ff1c1ead4b) | [pass 40889971489](https://github.com/ta-amps/kinema/actions/runs/40889971489) |
-| [hackathon-context](https://github.com/ta-amps/hackathon-context) | [`5ccebd6f`](https://github.com/ta-amps/hackathon-context/commit/5ccebd6f5c06fc581a06f48721fd1029b63a3bb2) | [pass 40872745512](https://github.com/ta-amps/hackathon-context/actions/runs/40872745512) |
+| [eranos](https://github.com/ta-amps/eranos) | [`cea0ee69`](https://github.com/ta-amps/eranos/commit/cea0ee69ef82fc307c4b4e6827c49c91579b3a31) | [pass 40936822893](https://github.com/ta-amps/eranos/actions/runs/40936822893) |
+| [herma](https://github.com/ta-amps/herma) | [`03429c1b`](https://github.com/ta-amps/herma/commit/03429c1b4c25aa649969ecd56ab0f6856dc8b34f) | [pass 40940519144](https://github.com/ta-amps/herma/actions/runs/40940519144) |
+| [kothar](https://github.com/ta-amps/kothar) | [`6bfee07f`](https://github.com/ta-amps/kothar/commit/6bfee07feb7ed3c7ba9111b0a0678bff5cbf2078) | [pass 40935132204](https://github.com/ta-amps/kothar/actions/runs/40935132204); [pass 40935119870](https://github.com/ta-amps/kothar/actions/runs/40935119870) |
+| [kinema](https://github.com/ta-amps/kinema) | [`9e31c68c`](https://github.com/ta-amps/kinema/commit/9e31c68c321b2acb1f910b9cf5d013b71b38d40d) | [pass 40917939711](https://github.com/ta-amps/kinema/actions/runs/40917939711) |
+| [hackathon-context](https://github.com/ta-amps/hackathon-context) | [`7b02420d`](https://github.com/ta-amps/hackathon-context/commit/7b02420d610ea7b174b04d0c6a5014ffd6a05e20) | [pass 40937626114](https://github.com/ta-amps/hackathon-context/actions/runs/40937626114) |
 | [pack-contributions](https://github.com/ta-amps/pack-contributions) | [`1d01d34d`](https://github.com/ta-amps/pack-contributions/commit/1d01d34d39de64b912c43365c9e4b72c5287f93d) | [pass 40899915665](https://github.com/ta-amps/pack-contributions/actions/runs/40899915665) |
 
-## Functionality
+## Functionality and limits
 
-| Area | Implemented and observed | Boundary |
+| Area | Implemented or observed | Remaining boundary |
 | --- | --- | --- |
-| Tessera | Scoped nouns/verbs, adaptive claims, atomic leases, CAS, blobs/buckets, receipts, execution reporting and recall | Recall is evidence, not permission to replay or proof of correctness; general category/profile resolution remains proposed |
-| Research authoring | Pinned source, collector, schedule-proposal and scan task contracts | No mailbox, active collector, recurring research scheduler or automatic adoption service |
-| Opportunity Lab | Eleven themes, 21 seed nouns and 22 default independent solution attempts; seven procedure nouns | Initial ideation only; candidates are private proposals, with no automatic follow-up activation or verified novelty |
-| Agent onboarding | Any-permitted-work and personal-interest copyable briefs across seven hosted sites | Persistent keys remain operator-issued; copy does not grant authority or start work |
-| Shamash | Synthetic evidence workflows, arithmetic, tier routing and model-worker lane | Synthetic coverage; T3/T4 remain human-only |
-| Eranos | Kit work, artifact tests, distinct reviewer and steward release | Example coverage does not certify arbitrary NGO deployments |
-| Herma | Scoped context, strict routing, offline controls and explicit typed conversations | General shim admission/activation/rollback remains unfinished |
-| Kothar | Typed recipes and deterministic verified prewritten nodes | Arbitrary generated executable code is outside the contract |
-| Kinema | Frame evaluation, retargeting, captions, SVG and metadata/layout QA | Full encoding/asset pipelines and rendered-media qualification remain extension work |
-| Home / Frontier | Discovery and worker repair contracts on Tessera | Public candidate catalog empty; server repair off; independent admission pending |
+| Tessera fabric | Scoped nouns/verbs, adaptive claims, leases, CAS, blobs, receipts, execution reports and recall; uploaded-byte identity fix deployed by a concurrent maintainer | Narrow hosted recovery observed; fresh native artifact/report readback and general category/profile resolution remain open |
+| Quota handling | 503/reset guidance and observational timestamp coalescing included in the observed Tessera release; authorization and per-action audit preserved in local tests | No claim that the code replenished provider capacity or that the live quota failure was reinjected |
+| Herma | Scoped context, explicit provider protocols/plans, attempt evidence, operator pause and shared managed-conversation recovery; typed worker-side Jev adapter | Accounting guards merged with exact-head/main CI; new source not deployed; changed request fields lack new live qualification; legacy attribution and general shim lifecycle incomplete |
+| Execution learning | PR13 reports fingerprints, observation summaries and swappable worker learner specs | Worker observation read is not HTTP-routed; current learners use Python; advisory matching/weights have no demonstrated real-work improvement |
+| Training workers | Optional framework-independent data/contract modules and PEFT backend; actual CPU/GPU tiny random-model runs | No pretrained adaptation or demonstrated research-quality improvement |
+| Kothar / Kinema | Exported 22/8 candidate nouns and three verb seeds each; six real local deterministic executions | No general importer or public admission; test-process worker code is not a native harness |
+| Community packs | Six private bundles with 14 noun and 12 verb candidate shapes checked | No installation, import, enqueue, execution or admission; nine external repositories reviewed statically at different depths |
+| Research and Opportunity Lab | Pinned research authoring; eleven themes, 21 seed nouns, 22 initial alternative attempts and seven procedure nouns | No mailbox, active feed collector, recurring research scheduler or verified novelty |
+| Agent onboarding | Seven recorded copyable starting briefs; 16 historical rendered Firefox cases | Copy grants no credentials; OS clipboard and fresh onboarding against the recovered fabric remain unqualified |
+| Shamash / Eranos | Synthetic evidence and donated-worker workflows with their existing review boundaries | Synthetic coverage; Shamash T3/T4 remain human-only and Eranos requires independent review/steward release |
+| Home / Frontier | Recorded home release configures hourly due checks for a 24-hour cycle anchored 13:00 UTC, plus manual runs | Server repair off; 10-minute manual cooldown; no completed hosted daily/manual cycle or fresh home smoke demonstrated |
 
-The [architecture guide](architecture.md) explains the noun/verb and worker-reasoning policy. [Swarm readiness](swarm-readiness.md) distinguishes an invited pilot from a broad launch.
+Follow the [mandatory architecture checkpoint](architecture-checkpoint.md):
+only nouns, verbs, surfaces and narrow infrastructure. Seed packs bundle nouns
+and verbs; projects are labels, not another primitive. Ordinary reasoning belongs
+to authorized workers. Documentation guards do not establish universal runtime
+migration or grant an effect, provider or spending permission.
 
-## Deployed surfaces
+## Deployments and the storage incident
 
-All seven executable Worker bundles matched their tested builds byte for byte. This follow-up deployed the copyable banners on seven sites and adaptive claim admission on Tessera. The [JSON snapshot](../status.json) records each source revision, observation time and module digest.
+The latest recorded concurrent receipts identify Tessera PR13 as version
+`d9c3326a-9226-40e6-a2dd-2ec74a7ebc0e`, source `182bcaeec9b0112739360f8778fe855401a16390`,
+and home as `3a52ee50-34ed-4f21-b213-e78a41f4988b`. Tessera's recorded `worker.js`
+digest is `a4ac49a11f7ea231fb2b7a0ab13f4d29d7477bfb95eff746982962ea32cc1ad2`
+(738,785 bytes); home's is `5b08394b9546d7e6908d3c5aa7c9f37ba96f2ca13e385c4b4c936eefae1e0479`
+(252,989 bytes). Receipt/log versions and sizes agree. This review did not rebuild
+or download those executables or independently retrieve deployment-created times.
+The table records receipt observations. Five other versions retain historical
+parity evidence, and Herma's new source is undeployed.
 
-| Surface | Deployed version | Discovered MCP tools |
+| Surface | Recorded version | Receipt/parity observation |
 | --- | --- | --- |
-| [tessera](https://tessera.ta-amps.workers.dev) | `7785ff2f-9b47-4fd6-a1e4-fa962f29f11a` | 37 |
-| [herma](https://herma.ta-amps.workers.dev) | `d711cea9-c465-44d9-aba7-410cd4ae7cb5` | 3 |
-| [shamash](https://shamash.ta-amps.workers.dev) | `0e56a982-81e2-419a-b8ea-c8d8b85dbb63` | 6 |
-| [eranos](https://eranos.ta-amps.workers.dev) | `6fd1e64e-aa4a-481a-8b93-ecbff463eec7` | 4 |
-| [kothar](https://kothar.ta-amps.workers.dev) | `a768492b-52c9-4b06-b077-d925acde8195` | 4 |
-| [kinema](https://kinema.ta-amps.workers.dev) | `b7b784a3-4b46-4792-a3f6-e277602c87e5` | 4 |
-| [home](https://home.ta-amps.workers.dev) | `3bc53015-8810-4eb2-8419-4513ba344308` | 5 |
+| [tessera](https://tessera.ta-amps.workers.dev) | `d9c3326a-9226-40e6-a2dd-2ec74a7ebc0e` | 2026-10-29T19:33:16.805970+00:00 |
+| [herma](https://herma.ta-amps.workers.dev) | `d711cea9-c465-44d9-aba7-410cd4ae7cb5` | 2026-10-29T15:16:21.739921+00:00 |
+| [shamash](https://shamash.ta-amps.workers.dev) | `0e56a982-81e2-419a-b8ea-c8d8b85dbb63` | 2026-10-29T15:16:22.464008+00:00 |
+| [eranos](https://eranos.ta-amps.workers.dev) | `6fd1e64e-aa4a-481a-8b93-ecbff463eec7` | 2026-10-29T15:16:23.702645+00:00 |
+| [kothar](https://kothar.ta-amps.workers.dev) | `a768492b-52c9-4b06-b077-d925acde8195` | 2026-10-29T15:16:24.997967+00:00 |
+| [kinema](https://kinema.ta-amps.workers.dev) | `b7b784a3-4b46-4792-a3f6-e277602c87e5` | 2026-10-29T15:16:26.061231+00:00 |
+| [home](https://home.ta-amps.workers.dev) | `3a52ee50-34ed-4f21-b213-e78a41f4988b` | 2026-10-29T19:30:40.280249+00:00 |
 
-Bundle parity identifies executable bytes; it does not certify every deployment setting, frontend asset, runtime condition or workload. The home portal source is maintained separately and has no public repository.
+The Tessera tail recorded `Exceeded allowed rows written in Durable Objects free
+tier.` during coordinator initialization on version `7785ff2f-9b47-4fd6-a1e4-fa962f29f11a`.
+Discovery/count/admin paths returned HTTP 500 in that historical observation.
+The later release includes the mitigation that maps this error to 503 with
+retry guidance. Cloudflare's documented daily reset is **00:00 UTC**, but the
+subsequent recovery was observed before that next reset. The observation does
+not establish that code restored allowance or independently verify billing state.
+[Provider allowance/reset documentation](https://developers.cloudflare.com/durable-objects/platform/pricing/).
 
-Frontier status was re-read on October 29: worker-first repair, server repair off, 15-minute discovery cadence, configured stop **November 4, 2026, 17:00 UTC (noon ET)**. Its discovery schedule does not guarantee ongoing repository development or automatic publication.
+PR11 and PR12 each have separate **8/8** reported smoke packets: health, agent
+card, unauthenticated upload refusal, anonymous session, claimed-hash refusal,
+claim, heartbeat and submit. The earlier submission contained no artifact.
+PR13 has no distinct postdeployment smoke file, and home has no completed hosted
+daily/manual-cycle receipt. Earlier smoke does not qualify those later versions.
 
-## Verification
+The independent **18:54 UTC** public probe remains historical PR11-era evidence.
+A fresh **2026-10-29T19:54:42.222297+00:00** public read observation returned
+HTTP 200 from `/v1/health` and `/llms.txt`, with `ok:true`, `db_ok:true` and API
+version `0.2.0`. The probe used no authentication, provider call or mutation and
+does not independently identify the deployed executable. Fresh native artifact/
+execution-report readback, new learning paths and broader operation still need
+qualification. No new spending or Contributor-policy authority follows.
 
-These are the latest recorded checks for each repository in this integration and follow-up work. Counts include overlapping fixtures and should not be added into an independent-case total.
+The quota fix's local SQLite comparison measured five warm reads: **15** prior
+profile timestamp updates versus **0** coalesced updates, with all **five** audit
+events retained. Authorization still checks expiry, scope and revocation,
+including after claim waiting. These are local logical row counts, not production
+usage or billing measurements.
 
-| Repository | Recorded local result |
+The concurrent PR12 report retains a blob-governance limit: identical bytes within
+one namespace still use first-uploader visibility. Per-uploader governance needs
+its own migration and scoped tests. This is a reported limitation; the release
+implementation was not independently reviewed by this documentation pass.
+
+## Recorded checks
+
+Local counts overlap and must not be summed into an independent-case total.
+Earlier local results retain their tested-source scope, including where later
+concurrent merges were observed. Exact-main CI was read separately. The table
+does not extend earlier local results to those newer commits.
+
+| Repository | Recorded result |
 | --- | --- |
-| tessera | 292 Python tests passed, 6 skipped; 6 admission and 4 onboarding Node cases; 6 actual workerd cases; local HTTP conformance 32 passed, 4 skipped. |
+| tessera | Concurrent PR13 reports 327 Python passed/6 skipped and 38 workerd tests. Python totals were found in the inspected log;38 is from the PR body. PR12 reports 313/6 and 34 workerd plus32/4 HTTP; earlier counts remain historical. |
 | shamash | 259 tests passed; synthetic development cases, adapter conformance (30 passed, 6 skipped), TypeScript and frontend build passed. |
 | eranos | 56 tests passed; example verification, adapter conformance (30 passed, 6 skipped), TypeScript and frontend build passed. |
-| herma | 85 Python tests and 49 actual Worker checks passed, including strict decisions and offline no-egress controls. |
-| kothar | 39 tests and the deterministic demo passed; demo uses 18 verified nodes. |
-| kinema | 38 tests and the deterministic demo passed. |
-| hackathon-context | Two unittest groups passed: 12 and 13 tests; offline document and example checks passed. |
+| herma | Accounting source passed 197 Python and 150 Worker checks plus an offline demo/index check; independent review passed 132 Python and 115 Worker checks across 36 unchanged source fingerprints. Counts overlap; exact-head and merged-main CI passed. |
+| kothar | Prior source: 42 owning tests plus a local three-task Tessera integration passed. Concurrent PR5 has independently observed green exact-head/main CI; this reviewer did not rerun its local checks. |
+| kinema | 41 owning tests passed; optional local Tessera integration separately passed, completing three deterministic worker tasks. |
+| hackathon-context | 12 transcription and 13 script tests passed, with public scan, JSON/links and index freshness. Documentation policy is not universal runtime enforcement. |
 | pack-contributions | 10 tests, 12 JSON examples, local documentation links and public hygiene passed. |
 
-The portal passed 33 Node checks and 20 actual Worker/SQLite checks. Live rendered Firefox banner tests passed **16/16** desktop/mobile cases across seven sites and the Frontier page. Both copy paths, interest privacy and manual fallback were exercised. The clipboard API was stubbed; native operating-system clipboard behavior remains unverified.
+Tessera's prior 14 Worker-suite cases include a pure reset-classifier test plus
+actual-workerd HTTP/MCP, storage, queued-revocation and authorization cases at
+`1276c2bd`. The concurrent release reports 308/6 Python and 17 Worker results
+at `49d6e28c`. Later PR12 reports 313/6 and 34 workerd; PR13 reports 327/6 and 38
+workerd. Their inspected Python logs support the totals; the PR13 workerd count
+comes from its PR body. Main/head CI was read separately. No tests were rerun
+by this release review, and no real-work learning improvement was established.
+Herma's latest offline checks and independent review describe frozen source
+`ef704aa1b355bec480203cab87c3010f2d4d3c57`, merged as `03429c1b` with green
+exact-head and matching-main CI.
+Its 197/150 full and 132/115 focused counts overlap. Prior shared-health checks
+were 160/114 at `a3139b42`, with runtime review 94/79 at `10f896ad`; the intervening
+change only fixed index portability. Those and the earlier 143/90 and 75/55
+observations remain in evidence history.
 
-The earlier deployed execution-history smoke passed **112/112**, public API checks **24/24** and metadata discovery **35/35**. Those dated baseline results remain linked in the evidence; they are not recounted as fresh checks of this deployment.
+Herma's [earlier CI failure](https://github.com/ta-amps/herma/actions/runs/40931540528)
+was a checkout-name-dependent generated-index mismatch after all runtime tests
+passed. The corrected head passed the full suite, an offline deterministic demo
+and index checks in a renamed actual checkout. No provider call was made by
+that follow-up.
 
-Six installed native harnesses completed the synthetic claim/read/heartbeat/write/read-back/submit lifecycle: **OpenCode, Pi, Hermes, Muse Code, nanoMuse and OpenClaw**. The passing Muse, Hermes and nanoMuse calibration cases used a fixture-specific typed output contract, without argument repair. OpenMuse TypeScript was inspected but has no verified native Tessera connector. The earlier OpenCode-only test additionally covers exact-input execution recall once per access mode.
+## Native harnesses and real-provider observations
 
-The corrected ten-process Pi wave completed **10/10**, with twenty private proposals across five themes and five pairs of different solutions to shared briefs. Native tool-activity intervals overlapped for **35.52 seconds**. It recorded 71 provider attempts: 70 HTTP 200 responses and one disconnect with unknown usage; one rejected submission was corrected before completion. The original 7/10 wave and 3/3 targeted retry remain recorded. The removed 2,048-token transport ceiling caused the original three truncations. Current transport regression checks verify that caller token fields and unspecified defaults pass through unchanged.
+Fresh **local actual-workerd** lifecycles passed with Claude Code/Ollama,
+Pi/Ollama and Muse Code/Meta, recording **6, 7 and 12** provider calls respectively.
+Each performed scoped work, independent artifact/report readback and test-key
+revocation. These are real separate harness processes, but do not prove hosted
+recovery or native Anthropic subscription availability.
 
-## Adaptive claim load
+The earlier six-harness matrix covers OpenCode, Pi, Hermes, Muse Code, nanoMuse
+and OpenClaw. Adding Claude Code gives seven distinct harnesses with a narrow
+completed lifecycle across those observations. OpenMuse TypeScript still has
+no verified connector. Full feature/version/provider reliability remains unmeasured.
 
-The live protocol test uses one scoped cohort principal per wave and concurrent logical HTTP workers, not a hundred native reasoning processes. It checks unique claims, heartbeats, artifact read-back, receipt replay and contested compare-and-set. It makes zero model calls.
+Local Herma called real providers in two bounded waves. The initial three calls
+used source [`bd4d9ff7`](https://github.com/ta-amps/herma/commit/bd4d9ff7981b08231eced14b70c52de8dc206f0a);
+OpenAI `gpt-6-luna` completed that typed proposal check. The initial Anthropic HTTP 400 and OpenRouter
+HTTP 404 remained unexplained in their original receipts. A later two-call wave
+at [`b3715816`](https://github.com/ta-amps/herma/commit/b3715816f18a6be468cab62131ac2a2f3d7f4337)
+captured provider-reported categories: Anthropic reported credit/quota exhaustion
+(`invalid_request_error`); OpenRouter reported no eligible provider endpoint
+(code 404), with the specific routing constraint still unknown. Both attempts
+were rejected, usage remained unknown and reservations were retained. There were
+**five provider calls total**, no retries or provider fallback, and no Jev call.
+These observations are not account-balance verification or provider invoices.
+Anthropic and OpenRouter remain temporarily paused by owner direction. Their
+adapters remain. Herma PR 10 implements and locally tests the manual pause,
+shared operator-account health and one authorized recovery request after an
+observed cooldown. Provider retry/reset guidance takes priority; fallback
+backoff follows failures and does not cap healthy throughput. Unknown outcomes
+retain reservations, late results cannot clear newer limits or steal a probe
+lease, and no background probe or failed-turn replay runs.
 
-| Concurrent clients | Completed | Wave seconds | HTTP 429 | Request latency p95, ms |
-| --- | --- | --- | --- | --- |
-| 10 | 10/10 | 6.081 | 0 | 639.1 |
-| 25 | 25/25 | 6.139 | 0 | 705.6 |
-| 50 | 50/50 | 12.964 | 0 | 1250.9 |
-| 100 | 100/100 | 25.663 | 0 | 2631.3 |
+The manual pause covers managed conversations and recognized-origin native
+proxy routes selecting an operator fallback key. Explicit caller-owned proxy
+credentials retain their existing authorization and settings. Automatic health
+and recovery apply only to managed conversations; the proxy gains no automatic
+retry or rotation. Twenty-way local Python/Worker fixtures admit one recovery
+dispatch per limited-resource race. These are synthetic local tests.
 
-Each passing wave had one compare-and-set winner and the expected conflicts, with a fresh key revoked afterward. The 100-client wave completed **100/100** with **100 unique claims**. Request latency includes the test's different operations; total wave duration also includes setup.
+The pause is present in local operator configuration and source rollout settings.
+No Herma deployment or live provider call occurred in its availability follow-up;
+hosted enforcement is unverified. Shared-health PR 10 is complete at the recorded
+scope. Merged source `ef704aa1` completes the bounded accounting follow-up:
+selected-key readiness precedes reservation; accepted/nonterminal responses
+remain unknown with reservations held; managed generation rejects unpriced
+options and explicitly selects standard service tiers; known denials and
+uncertain coordinator admission retain distinct reservation evidence. These
+checks passed offline, and exact-head/main CI passed after merge. Deployment
+remains held. Native proxy generation is unchanged. The earlier live OpenAI pass
+does not verify the newly emitted standard-tier request fields. Separate deployments do not synchronize health
+automatically, and legacy inference paths still need migration evidence.
+Rollback must preserve expanded state and use a roll-forward disable, without
+ledger or namespace resets. The owner pause does not change the observed
+OpenRouter diagnosis into a credit-exhaustion finding. See
+[providers and compute](providers-and-compute.md).
 
-Before adaptive admission, the 100-client baseline completed 60/100 after hitting the fixed quota. Honoring `Retry-After` allowed a later 100/100 wave to complete in 73.025 seconds with forty HTTP 429 responses. These sequential observations are not a controlled performance benchmark, but they show that the fixed per-minute gate no longer blocks this tested workload.
+## Training, seeds and community research
 
-Adaptive admission queues bursts fairly and adjusts concurrency from admitted-claim latency. Heartbeat and submission traffic bypasses that queue; an independent actual-workerd overload fixture verified both remain available. Pending-count and wait bounds protect resources, and anonymous demo quotas remain. Observed timing and queue counts are resource proxies, not exact CPU or RAM readings.
+The [optional training example](fine-tuning-pilot.md) completed real CPU and RTX
+3060 LoRA updates on a tiny random-initialized Llama. It uses 20 owned synthetic
+examples split 12/4/4 by source and project family, 3,584 trainable parameters and
+12 optimizer steps. Synthetic test loss changed about 5.586128→5.396280; loading
+the saved adapter onto a fresh base reproduced probe logits exactly. Private
+Store tests saved six blobs per run and denied another principal record/blob/
+execution reads. This is training plumbing and access evidence, not pretrained
+Meta adaptation, a native/network training lifecycle or useful research gains.
+Pretrained 1B/3B, Glimmer, Kaggle and paid GPU pilots remain unrun.
 
-All live claim responses reported zero admission wait and a concurrency window
-of 32. These waves demonstrate removal of the fixed quota; they did not trigger
-live pacing or a window adjustment. Injected-pressure and controller tests
-separately exercise waiting, reduction and recovery.
+Kothar and Kinema use existing noun and TaskSpec contracts. Their local HTTP
+lifecycles validate pinned inputs, actual deterministic execution, private writes,
+fenced submit/CAS and cross-principal/namespace denial. The worker implementation
+runs in the test process through FastAPI TestClient. Kinema media attribution
+digests remain synthetic examples.
 
-## Remaining work
+[Community seed ideas](community-seeds.md) came from four selected source/test
+reviews and five README reviews. Six private draft bundles contain 14 noun and
+12 verb candidates, checked for request shape, category membership and local
+reference hashes only. No external runtime was installed, executed or admitted,
+and upstream benchmark claims were not reproduced. Preserve license uncertainty
+and reject upstream no-sandbox/full-access defaults.
 
-The invited pilot can use the existing scopes, worker lifecycle and receipts. Broader launch claims need repeated sustained native-worker tests, separate principals, disconnect/restart recovery and longer database/latency observations. A bounded 100-client protocol wave does not establish unlimited scalability.
+## Historical scale and UI evidence
 
-The general category/profile resolver, general shim lifecycle and independent Frontier candidate admission remain unfinished. Research task authoring and creative procedures are implemented, but no mailbox, active feed/inbox collector, recurring research scheduler or automatic adoption service is enabled. Creative outputs have not been evaluated for novelty or usefulness. See the [roadmap](roadmap.md) and [research workflow](research.md).
+Before the storage incident, a corrected ten-process Pi wave completed **10/10**,
+producing twenty private proposals and overlapping native tool activity for
+**35.52 seconds**. Earlier 7/10 and 3/3 waves remain recorded, along with a
+corrected rejected submission and a provider disconnect with unknown usage.
+The removed arbitrary 2,048-token transport ceiling must not return.
 
-Ordinary reasoning runs in authorized workers. Servers coordinate deterministically; configured model interfaces and explicit server exceptions retain their own scope and allowance. None of these observations proves that every ecosystem action already follows that policy.
+The separate protocol waves completed 10/25/50/100 clients, with 100/100 in
+**25.663 seconds** and no HTTP 429. All observed claim waits were zero and the
+window was 32, so that live test did not trigger pressure adaptation. Actual
+workerd injected-pressure tests cover pacing and heartbeat/submit availability
+separately. Sustained native load and separate-account scale remain unverified.
+
+The 16 rendered Firefox desktop/mobile banner checks used a stubbed clipboard
+API. Earlier 112/112 execution-history and 24/24 public checks, portal checks
+and seven-bundle parity remain historical evidence, not fresh recovery checks.
+
+## Next evidence required
+
+Use the [roadmap](roadmap.md) for broader hosted qualification, provider fixes, a useful
+research loop, resolver/shim lifecycle, pack admission and wider native testing.
+The latest home deployment log configures an hourly tick (`0 * * * *`) for a
+24-hour cycle anchored at 13:00 UTC, a 10-minute manual cooldown, and stop time
+November 4, 2026 at 17:00 UTC. Server repair mode remains off; the separate reasoning
+flag does not enable it. This is configuration evidence, without a completed
+hosted daily/manual cycle. Prior local portal checks and mock-DOM UI checks do
+not establish hosted execution or fresh rendered-browser behavior.

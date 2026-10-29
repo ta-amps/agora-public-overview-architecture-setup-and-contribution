@@ -1,0 +1,2592 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-10-29T19:59:57.770230+00:00",
+  "provenance": "Maintainer-recorded tests, exact public revisions and freshly read matching-main CI. Explicit allowlists exclude raw histories, account metadata, private identities and credentials.",
+  "historical_baselines": [
+    {
+      "path": "evidence/integration-2026-10-29.json",
+      "sha256": "ff5ec8fec13b75e486a44a8bb4b611c14504cae55004fe7ced6c57fa94ed216f"
+    },
+    {
+      "path": "evidence/readiness-2026-10-29.json",
+      "observed_at": "2026-10-29T15:36:07.524802+00:00",
+      "sha256": "73be27e8619d5d1660eea389c664a09b38583e494854a05fe7e175209bcae9b4"
+    }
+  ],
+  "merged_pull_requests": [
+    "https://github.com/ta-amps/eranos/pull/1",
+    "https://github.com/ta-amps/eranos/pull/2",
+    "https://github.com/ta-amps/eranos/pull/3",
+    "https://github.com/ta-amps/eranos/pull/4",
+    "https://github.com/ta-amps/hackathon-context/pull/1",
+    "https://github.com/ta-amps/herma/pull/1",
+    "https://github.com/ta-amps/herma/pull/2",
+    "https://github.com/ta-amps/herma/pull/3",
+    "https://github.com/ta-amps/herma/pull/4",
+    "https://github.com/ta-amps/herma/pull/5",
+    "https://github.com/ta-amps/herma/pull/6",
+    "https://github.com/ta-amps/herma/pull/7",
+    "https://github.com/ta-amps/kinema/pull/1",
+    "https://github.com/ta-amps/kinema/pull/2",
+    "https://github.com/ta-amps/kinema/pull/3",
+    "https://github.com/ta-amps/kothar/pull/1",
+    "https://github.com/ta-amps/kothar/pull/2",
+    "https://github.com/ta-amps/kothar/pull/3",
+    "https://github.com/ta-amps/pack-contributions/pull/1",
+    "https://github.com/ta-amps/pack-contributions/pull/2",
+    "https://github.com/ta-amps/pack-contributions/pull/3",
+    "https://github.com/ta-amps/pack-contributions/pull/4",
+    "https://github.com/ta-amps/shamash/pull/1",
+    "https://github.com/ta-amps/shamash/pull/2",
+    "https://github.com/ta-amps/shamash/pull/3",
+    "https://github.com/ta-amps/shamash/pull/4",
+    "https://github.com/ta-amps/tessera/pull/1",
+    "https://github.com/ta-amps/tessera/pull/2",
+    "https://github.com/ta-amps/tessera/pull/3",
+    "https://github.com/ta-amps/tessera/pull/4",
+    "https://github.com/ta-amps/tessera/pull/5",
+    "https://github.com/ta-amps/tessera/pull/6",
+    "https://github.com/ta-amps/tessera/pull/7",
+    "https://github.com/ta-amps/tessera/pull/8",
+    "https://github.com/ta-amps/tessera/pull/9",
+    "https://github.com/ta-amps/tessera/pull/10",
+    "https://github.com/ta-amps/herma/pull/8",
+    "https://github.com/ta-amps/herma/pull/9",
+    "https://github.com/ta-amps/kothar/pull/4",
+    "https://github.com/ta-amps/kinema/pull/4",
+    "https://github.com/ta-amps/hackathon-context/pull/2",
+    "https://github.com/ta-amps/hackathon-context/pull/3",
+    "https://github.com/ta-amps/herma/pull/10",
+    "https://github.com/ta-amps/tessera/pull/11",
+    "https://github.com/ta-amps/kothar/pull/5",
+    "https://github.com/ta-amps/tessera/pull/13",
+    "https://github.com/ta-amps/tessera/pull/12",
+    "https://github.com/ta-amps/eranos/pull/5",
+    "https://github.com/ta-amps/herma/pull/11",
+    "https://github.com/ta-amps/hackathon-context/pull/4"
+  ],
+  "new_merges": [
+    {
+      "repository": "tessera",
+      "pr": 9,
+      "url": "https://github.com/ta-amps/tessera/pull/9",
+      "head": "2e826203d42de8bb4d2e51d142ee67c6b9b7930b",
+      "merge_sha": "36526860b0048df2dec675051ec6681023bda3d9",
+      "observed_at": "2026-10-29T16:51:43.432652+00:00",
+      "head_checks": [
+        {
+          "id": 40915200916,
+          "name": "ci",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "repository": "tessera",
+      "pr": 10,
+      "url": "https://github.com/ta-amps/tessera/pull/10",
+      "head": "1276c2bddf68fc417431eac71fac0b774183d964",
+      "merge_sha": "55458514e84eaf1e524637c3bd04916ebb4b3c35",
+      "observed_at": "2026-10-29T17:24:14.853465+00:00",
+      "head_checks": [
+        {
+          "id": 40919654069,
+          "name": "ci",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "repository": "herma",
+      "pr": 8,
+      "url": "https://github.com/ta-amps/herma/pull/8",
+      "head": "97eefe0ab67f91b39bce76b836c5f644ce45557e",
+      "merge_sha": "dbbfbc0044051029927e563fef83959c75d9ce16",
+      "observed_at": "2026-10-29T16:51:50.000327+00:00",
+      "head_checks": [
+        {
+          "id": 40915225048,
+          "name": "ci",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "repository": "herma",
+      "pr": 9,
+      "url": "https://github.com/ta-amps/herma/pull/9",
+      "head": "b3715816f18a6be468cab62131ac2a2f3d7f4337",
+      "merge_sha": "5e98c8a05eb1939b6d7d3a56b0dc8d5c34823343",
+      "observed_at": "2026-10-29T17:40:25.807127+00:00",
+      "head_checks": [
+        {
+          "id": 40923240761,
+          "name": "ci",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "repository": "kothar",
+      "pr": 4,
+      "url": "https://github.com/ta-amps/kothar/pull/4",
+      "head": "e65e0b1c38385524223fd2ce02ad980623da8be2",
+      "merge_sha": "bb4910f9051b90581e6e87a509385244e9bd30aa",
+      "observed_at": "2026-10-29T17:05:11.221654+00:00",
+      "head_checks": [
+        {
+          "id": 40915672330,
+          "name": "ci",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "repository": "kinema",
+      "pr": 4,
+      "url": "https://github.com/ta-amps/kinema/pull/4",
+      "head": "4ad28476a0f8c6e77b628d6e699d5605f0b35a79",
+      "merge_sha": "9e31c68c321b2acb1f910b9cf5d013b71b38d40d",
+      "observed_at": "2026-10-29T17:05:23.423389+00:00",
+      "head_checks": [
+        {
+          "id": 40915682536,
+          "name": "ci",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "repository": "hackathon-context",
+      "pr": 2,
+      "url": "https://github.com/ta-amps/hackathon-context/pull/2",
+      "head": "b881ce182a78807ae06d0fffe791bdf7797951e0",
+      "merge_sha": "d8408f70ecea5ba5e274e2f4791736e75bdb58d7",
+      "observed_at": "2026-10-29T16:51:56.157309+00:00",
+      "head_checks": [
+        {
+          "id": 40915241226,
+          "name": "check",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "repository": "hackathon-context",
+      "pr": 3,
+      "url": "https://github.com/ta-amps/hackathon-context/pull/3",
+      "head": "7f01b5c98211afb1ce0fbd8295aedb60fd901fdb",
+      "merge_sha": "43a4e8630366e2982b4ae421a97faca3f63c4b33",
+      "observed_at": "2026-10-29T17:40:32.694735+00:00",
+      "head_checks": [
+        {
+          "id": 40923365037,
+          "name": "check",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "repository": "herma",
+      "pr": 10,
+      "url": "https://github.com/ta-amps/herma/pull/10",
+      "head": "a3139b42c57cdde619c751190cd0660174f8d66e",
+      "merge_sha": "800276376959a65d92e48c028d912380e836275f",
+      "observed_at": "2026-10-29T18:45:47.482717+00:00",
+      "head_checks": [
+        {
+          "id": 40933710201,
+          "name": "ci",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "repository": "tessera",
+      "pr": 11,
+      "url": "https://github.com/ta-amps/tessera/pull/11",
+      "head": "49d6e28cfd90796d99f42759153cc3985c5ce729",
+      "merge_sha": "39413a86525494030b326dbdaee627bb6bd02272",
+      "merged_at": "2026-10-29T18:34:09Z",
+      "base": "main",
+      "head_checks": [
+        {
+          "id": 40931342034,
+          "name": "ci",
+          "event": "pull_request",
+          "head_sha": "49d6e28cfd90796d99f42759153cc3985c5ce729",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/ta-amps/tessera/actions/runs/40931342034"
+        }
+      ],
+      "verification_scope": "Read-only GitHub merge metadata and exact-head CI; concurrent-session local checks are separate reported evidence.",
+      "observed_at": "2026-10-29T19:00:20.058070+00:00"
+    },
+    {
+      "repository": "kothar",
+      "pr": 5,
+      "url": "https://github.com/ta-amps/kothar/pull/5",
+      "head": "4906bd71c305bd00e1ba3ca3490726ec5209e917",
+      "merge_sha": "6bfee07feb7ed3c7ba9111b0a0678bff5cbf2078",
+      "merged_at": "2026-10-29T18:54:01Z",
+      "base": "main",
+      "head_checks": [
+        {
+          "id": 40934945964,
+          "name": "ci",
+          "event": "pull_request",
+          "head_sha": "4906bd71c305bd00e1ba3ca3490726ec5209e917",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/ta-amps/kothar/actions/runs/40934945964"
+        }
+      ],
+      "verification_scope": "Read-only GitHub merge metadata and exact-head CI; concurrent-session local checks are separate reported evidence.",
+      "observed_at": "2026-10-29T19:00:20.058070+00:00"
+    },
+    {
+      "repository": "tessera",
+      "pr": 13,
+      "url": "https://github.com/ta-amps/tessera/pull/13",
+      "head": "8b9ccead783d6df3fe9584fed377e82c57dd4dfe",
+      "merge_sha": "182bcaeec9b0112739360f8778fe855401a16390",
+      "merged_at": "2026-10-29T19:31:21Z",
+      "base": "main",
+      "head_checks": [
+        {
+          "id": 40940388121,
+          "name": "ci",
+          "event": "pull_request",
+          "head_sha": "8b9ccead783d6df3fe9584fed377e82c57dd4dfe",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/ta-amps/tessera/actions/runs/40940388121"
+        }
+      ],
+      "verification_scope": "Read-only GitHub merge metadata and exact-head CI; concurrent-session local checks are separate reported evidence.",
+      "observed_at": "2026-10-29T19:43:24.521020+00:00"
+    },
+    {
+      "repository": "tessera",
+      "pr": 12,
+      "url": "https://github.com/ta-amps/tessera/pull/12",
+      "head": "f7d6c2cbf9e023983a737396e49e06116a30963c",
+      "merge_sha": "1de68c1675234855de929ecd29ba972283908aca",
+      "merged_at": "2026-10-29T19:25:29Z",
+      "base": "main",
+      "head_checks": [
+        {
+          "id": 40939552172,
+          "name": "ci",
+          "event": "pull_request",
+          "head_sha": "f7d6c2cbf9e023983a737396e49e06116a30963c",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/ta-amps/tessera/actions/runs/40939552172"
+        }
+      ],
+      "verification_scope": "Read-only GitHub merge metadata and exact-head CI; concurrent-session local checks are separate reported evidence.",
+      "observed_at": "2026-10-29T19:43:24.521020+00:00"
+    },
+    {
+      "repository": "eranos",
+      "pr": 5,
+      "url": "https://github.com/ta-amps/eranos/pull/5",
+      "head": "eacc0da9dd853f5d017372c38f96e28faec753f2",
+      "merge_sha": "cea0ee69ef82fc307c4b4e6827c49c91579b3a31",
+      "merged_at": "2026-10-29T19:05:02Z",
+      "base": "main",
+      "head_checks": [
+        {
+          "id": 40936353098,
+          "name": "ci",
+          "event": "pull_request",
+          "head_sha": "eacc0da9dd853f5d017372c38f96e28faec753f2",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/ta-amps/eranos/actions/runs/40936353098"
+        }
+      ],
+      "verification_scope": "Read-only GitHub merge metadata and exact-head CI; concurrent-session local checks are separate reported evidence.",
+      "observed_at": "2026-10-29T19:43:24.521020+00:00"
+    },
+    {
+      "repository": "herma",
+      "pr": 11,
+      "url": "https://github.com/ta-amps/herma/pull/11",
+      "head": "ef704aa1b355bec480203cab87c3010f2d4d3c57",
+      "merge_sha": "03429c1b4c25aa649969ecd56ab0f6856dc8b34f",
+      "merged_at": "2026-10-29T19:29:16Z",
+      "base": "main",
+      "head_checks": [
+        {
+          "id": 40939907438,
+          "name": "ci",
+          "event": "pull_request",
+          "head_sha": "ef704aa1b355bec480203cab87c3010f2d4d3c57",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/ta-amps/herma/actions/runs/40939907438"
+        }
+      ],
+      "verification_scope": "Owning and independent source checks, exact-head CI and maintainer merge receipt; matching-main CI freshly observed. No deployment or live inference.",
+      "observed_at": "2026-10-29T19:43:24.521020+00:00",
+      "maintainer_merge_receipt_observed_at": "2026-10-29T19:29:17.225277+00:00",
+      "maintainer_merge_receipt_sha256": "d9fa9576d2927c92b5817767c2264651ee4e82391bda5ef9355f13037b022fbb"
+    },
+    {
+      "repository": "hackathon-context",
+      "pr": 4,
+      "url": "https://github.com/ta-amps/hackathon-context/pull/4",
+      "head": "e99ecb9d99a618c24df9349778d73ae1c88c242a",
+      "merge_sha": "7b02420d610ea7b174b04d0c6a5014ffd6a05e20",
+      "merged_at": "2026-10-29T19:10:14Z",
+      "base": "main",
+      "head_checks": [
+        {
+          "id": 40937482610,
+          "name": "check",
+          "event": "pull_request",
+          "head_sha": "e99ecb9d99a618c24df9349778d73ae1c88c242a",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/ta-amps/hackathon-context/actions/runs/40937482610"
+        }
+      ],
+      "verification_scope": "Read-only GitHub merge metadata and exact-head CI; concurrent-session local checks are separate reported evidence.",
+      "observed_at": "2026-10-29T19:43:24.521020+00:00"
+    }
+  ],
+  "remote_main_observation": {
+    "started_at": "2026-10-29T19:42:38.787070+00:00",
+    "observed_at": "2026-10-29T19:43:24.521020+00:00",
+    "scope": "Read-only repository main, matching-head CI and complete PR metadata observed over the stated interval; no deployment or provider probes.",
+    "repositories": [
+      {
+        "name": "tessera",
+        "main_revision": "182bcaeec9b0112739360f8778fe855401a16390",
+        "open_pull_requests": 0,
+        "checks": [
+          {
+            "id": 40940844592,
+            "name": "ci",
+            "event": "push",
+            "head_sha": "182bcaeec9b0112739360f8778fe855401a16390",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/ta-amps/tessera/actions/runs/40940844592"
+          }
+        ]
+      },
+      {
+        "name": "shamash",
+        "main_revision": "b9f3b409b0b9345ca0f3de3923296f11b65ebc7c",
+        "open_pull_requests": 0,
+        "checks": [
+          {
+            "id": 40890070406,
+            "name": "ci",
+            "event": "push",
+            "head_sha": "b9f3b409b0b9345ca0f3de3923296f11b65ebc7c",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/ta-amps/shamash/actions/runs/40890070406"
+          }
+        ]
+      },
+      {
+        "name": "eranos",
+        "main_revision": "cea0ee69ef82fc307c4b4e6827c49c91579b3a31",
+        "open_pull_requests": 0,
+        "checks": [
+          {
+            "id": 40936822893,
+            "name": "ci",
+            "event": "push",
+            "head_sha": "cea0ee69ef82fc307c4b4e6827c49c91579b3a31",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/ta-amps/eranos/actions/runs/40936822893"
+          }
+        ]
+      },
+      {
+        "name": "herma",
+        "main_revision": "03429c1b4c25aa649969ecd56ab0f6856dc8b34f",
+        "open_pull_requests": 0,
+        "checks": [
+          {
+            "id": 40940519144,
+            "name": "ci",
+            "event": "push",
+            "head_sha": "03429c1b4c25aa649969ecd56ab0f6856dc8b34f",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/ta-amps/herma/actions/runs/40940519144"
+          }
+        ]
+      },
+      {
+        "name": "kothar",
+        "main_revision": "6bfee07feb7ed3c7ba9111b0a0678bff5cbf2078",
+        "open_pull_requests": 0,
+        "checks": [
+          {
+            "id": 40935132204,
+            "name": "Graph Update: uv in /. #1663812063",
+            "event": "dynamic",
+            "head_sha": "6bfee07feb7ed3c7ba9111b0a0678bff5cbf2078",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/ta-amps/kothar/actions/runs/40935132204"
+          },
+          {
+            "id": 40935119870,
+            "name": "ci",
+            "event": "push",
+            "head_sha": "6bfee07feb7ed3c7ba9111b0a0678bff5cbf2078",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/ta-amps/kothar/actions/runs/40935119870"
+          }
+        ]
+      },
+      {
+        "name": "kinema",
+        "main_revision": "9e31c68c321b2acb1f910b9cf5d013b71b38d40d",
+        "open_pull_requests": 0,
+        "checks": [
+          {
+            "id": 40917939711,
+            "name": "ci",
+            "event": "push",
+            "head_sha": "9e31c68c321b2acb1f910b9cf5d013b71b38d40d",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/ta-amps/kinema/actions/runs/40917939711"
+          }
+        ]
+      },
+      {
+        "name": "hackathon-context",
+        "main_revision": "7b02420d610ea7b174b04d0c6a5014ffd6a05e20",
+        "open_pull_requests": 0,
+        "checks": [
+          {
+            "id": 40937626114,
+            "name": "check",
+            "event": "push",
+            "head_sha": "7b02420d610ea7b174b04d0c6a5014ffd6a05e20",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/ta-amps/hackathon-context/actions/runs/40937626114"
+          }
+        ]
+      },
+      {
+        "name": "pack-contributions",
+        "main_revision": "1d01d34d39de64b912c43365c9e4b72c5287f93d",
+        "open_pull_requests": 0,
+        "checks": [
+          {
+            "id": 40899915665,
+            "name": "check",
+            "event": "push",
+            "head_sha": "1d01d34d39de64b912c43365c9e4b72c5287f93d",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/ta-amps/pack-contributions/actions/runs/40899915665"
+          }
+        ]
+      }
+    ]
+  },
+  "repository_checks": [
+    {
+      "repository": "tessera",
+      "tested_revision": "8b9ccead783d6df3fe9584fed377e82c57dd4dfe",
+      "summary": "Concurrent PR13 reports 327 Python passed/6 skipped and 38 workerd tests. Python totals were found in the inspected log;38 is from the PR body. PR12 reports 313/6 and 34 workerd plus32/4 HTTP; earlier counts remain historical.",
+      "scope": "Reported concurrent checks and inspected logs/PR body, not independently rerun. Main/head CI are separately observed; no new postdeployment learning E2E or useful-work improvement demonstrated."
+    },
+    {
+      "repository": "shamash",
+      "summary": "259 tests passed; synthetic development cases, adapter conformance (30 passed, 6 skipped), TypeScript and frontend build passed.",
+      "commands": [
+        {
+          "argv": [
+            "uv",
+            "lock"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "uv",
+            "sync",
+            "--all-groups",
+            "--locked"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "check"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "dev-cases"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "suite",
+            "BACKEND=local"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "pnpm",
+            "--dir",
+            "web",
+            "install",
+            "--frozen-lockfile"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "web-check"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "scope": "Historical local checks retained for unchanged source; exact-main CI was freshly re-read."
+    },
+    {
+      "repository": "eranos",
+      "summary": "56 tests passed; example verification, adapter conformance (30 passed, 6 skipped), TypeScript and frontend build passed.",
+      "commands": [
+        {
+          "argv": [
+            "uv",
+            "lock"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "uv",
+            "sync",
+            "--all-groups",
+            "--locked"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "check"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "verify-examples"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "suite",
+            "BACKEND=local"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "pnpm",
+            "--dir",
+            "web",
+            "install",
+            "--frozen-lockfile"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "web-check"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "scope": "Historical local checks retained at their earlier tested source. The later concurrent merge has metadata and exact-head/main CI evidence only; no new local execution by this reviewer."
+    },
+    {
+      "repository": "herma",
+      "tested_revision": "ef704aa1b355bec480203cab87c3010f2d4d3c57",
+      "summary": "Accounting source passed 197 Python and 150 Worker checks plus an offline demo/index check; independent review passed 132 Python and 115 Worker checks across 36 unchanged source fingerprints. Counts overlap; exact-head and merged-main CI passed.",
+      "scope": "Owning and independent offline source checks, followed by exact-head and matching-main CI verification. No new live provider call or deployment.",
+      "independent_runtime_revision": "ef704aa1b355bec480203cab87c3010f2d4d3c57",
+      "independent_python_passed": 132,
+      "independent_worker_passed": 115
+    },
+    {
+      "repository": "kothar",
+      "tested_revision": "e65e0b1c38385524223fd2ce02ad980623da8be2",
+      "summary": "42 owning tests passed; optional local Tessera integration separately passed, completing three deterministic worker tasks.",
+      "scope": "Historical local checks at the recorded prior source; PR5 and its exact-head/main CI were independently read after the concurrent merge. No new local execution by this reviewer."
+    },
+    {
+      "repository": "kinema",
+      "tested_revision": "4ad28476a0f8c6e77b628d6e699d5605f0b35a79",
+      "summary": "41 owning tests passed; optional local Tessera integration separately passed, completing three deterministic worker tasks.",
+      "scope": "Local checks on the reviewed source before merge; fresh exact-main CI is recorded separately."
+    },
+    {
+      "repository": "hackathon-context",
+      "tested_revision": "7f01b5c98211afb1ce0fbd8295aedb60fd901fdb",
+      "summary": "12 transcription and 13 script tests passed, with public scan, JSON/links and index freshness. Documentation policy is not universal runtime enforcement.",
+      "scope": "Historical local checks retained at their earlier tested source. The later concurrent merge has metadata and exact-head/main CI evidence only; no new local execution by this reviewer."
+    },
+    {
+      "repository": "pack-contributions",
+      "summary": "10 tests, 12 JSON examples, local documentation links and public hygiene passed.",
+      "commands": [
+        {
+          "argv": [
+            "make",
+            "check"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "scope": "Historical local checks retained for unchanged source; exact-main CI was freshly re-read."
+    }
+  ],
+  "deployment_observation": {
+    "new_deployment_performed": true,
+    "deployment_actor": "Concurrent maintainer session",
+    "new_surfaces": [
+      "tessera",
+      "home"
+    ],
+    "herma_new_source_deployed": false,
+    "versions_and_module_hashes": "Latest Tessera PR13 and home recorded releases; PR12 and PR11 remain historical. Five other surfaces retain historical versions/modules.",
+    "parity_scope": "Latest Tessera and home receipts report executable matches; logs/metadata were inspected but artifacts were not independently rebuilt/downloaded. Five other surfaces retain historical parity evidence.",
+    "health_scope": "Fresh public health/instructions GETs passed with ok/db_ok, separately from release receipts. They do not independently identify the executable version or qualify native artifact/report and learning paths."
+  },
+  "hosted_incident": {
+    "service": "tessera",
+    "observed_at": "2026-10-29T16:39:42.231000+00:00",
+    "http_status": 500,
+    "provider_message": "Exceeded allowed rows written in Durable Objects free tier.",
+    "deployed_version": "7785ff2f-9b47-4fd6-a1e4-fa962f29f11a",
+    "deployed_source": "89803665d61d5156f85d8adbc4679d25ad6b91a1",
+    "recovery_verified": true,
+    "next_reset_after_incident": "2026-10-30T00:00:00+00:00",
+    "reset_source": "https://developers.cloudflare.com/durable-objects/platform/pricing/",
+    "quota_mitigation_deployed": true,
+    "initial_operating_decision": "continue locally on existing free plan until reset",
+    "status": "historical quota incident; subsequent narrow recovery observed",
+    "recovery_observed_at": "2026-10-29T19:54:42.222297+00:00",
+    "recovery_scope": "Fresh public health/instructions GETs passed with ok/db_ok, separately from release receipts. They do not independently identify the executable version or qualify native artifact/report and learning paths.",
+    "billing_state_independently_verified": false,
+    "capacity_restored_by_code_claimed": false
+  },
+  "quota_mitigation": {
+    "source": "https://github.com/ta-amps/tessera/pull/10",
+    "http_status_on_recognized_error": 503,
+    "retry_guidance": "next 00:00 UTC reset",
+    "last_used_observation_interval_seconds": 60,
+    "authorization_cached": false,
+    "post_wait_authorization_recheck_retained": true,
+    "per_action_audit_retained": true,
+    "local_comparison": {
+      "warm_requests": 5,
+      "legacy_profile_updates": 15,
+      "coalesced_profile_updates": 0,
+      "audit_events_each": 5,
+      "scope": "Local SQLite logical-row measurement, not production usage/billing."
+    },
+    "test_suite_cases": 14,
+    "helper_only_case_included": true,
+    "provider_capacity_restored_by_code": false,
+    "deployed_source_revision": "182bcaeec9b0112739360f8778fe855401a16390",
+    "deployed_version": "d9c3326a-9226-40e6-a2dd-2ec74a7ebc0e"
+  },
+  "native_execution_history": {
+    "public_evidence": "https://github.com/ta-amps/tessera/blob/775f7647c0b6f858bc95bf08f52c7fa27ebd5d93/docs/evidence/native-history-observation.json",
+    "observed_date": "2026-10-29",
+    "harness": "OpenCode 2.1.2",
+    "provider": "Ollama Cloud",
+    "model": "kimi-k2.7-code",
+    "interface": "Direct deployed Tessera MCP; no context shim or Frontier connector",
+    "scope": "One synthetic execution-report and recall loop per principal. Worker observations do not qualify public artifact admission or universal client compatibility.",
+    "worker_inference_requests": 30,
+    "server_model_requests": 0,
+    "runs": [
+      {
+        "mode": "anonymous",
+        "passed": true,
+        "native_event_counts": {
+          "step_start": 14,
+          "tool_use": 13,
+          "step_finish": 13,
+          "text": 1
+        },
+        "native_calls": [
+          "tessera_whoami",
+          "tessera_claim",
+          "tessera_heartbeat",
+          "tessera_put_record",
+          "tessera_get_record",
+          "tessera_submit",
+          "tessera_list_executions",
+          "tessera_get_execution",
+          "tessera_enqueue",
+          "tessera_claim",
+          "tessera_recall_execution",
+          "tessera_cancel",
+          "tessera_my_audit"
+        ],
+        "provider_requests": 15,
+        "provider_usage_records": 15,
+        "provider_reported_prompt_tokens_sum": 68975,
+        "provider_reported_completion_tokens_sum": 3180,
+        "exact_input_recall": true,
+        "independent_http_readback": true,
+        "fresh_key_revoked": null,
+        "run_fingerprint": "db1d178ad17a37cfd2c661e4398f733e10beed19edff767a73e9e9243806dc74",
+        "cost_usd": null,
+        "cost_reason": "Subscription use is not a per-run invoice."
+      },
+      {
+        "mode": "keyed",
+        "passed": true,
+        "native_event_counts": {
+          "step_start": 14,
+          "text": 2,
+          "tool_use": 13,
+          "step_finish": 13
+        },
+        "native_calls": [
+          "tessera_whoami",
+          "tessera_claim",
+          "tessera_heartbeat",
+          "tessera_put_record",
+          "tessera_get_record",
+          "tessera_submit",
+          "tessera_list_executions",
+          "tessera_get_execution",
+          "tessera_enqueue",
+          "tessera_claim",
+          "tessera_recall_execution",
+          "tessera_cancel",
+          "tessera_my_audit"
+        ],
+        "provider_requests": 15,
+        "provider_usage_records": 15,
+        "provider_reported_prompt_tokens_sum": 62803,
+        "provider_reported_completion_tokens_sum": 3437,
+        "exact_input_recall": true,
+        "independent_http_readback": true,
+        "fresh_key_revoked": true,
+        "run_fingerprint": "46b9f15a1bd21503f4115657086e8fe744483570a7a83e0e5b811e446cdef2f7",
+        "cost_usd": null,
+        "cost_reason": "Subscription use is not a per-run invoice."
+      }
+    ],
+    "retained_setup_failures": [
+      {
+        "mode": "anonymous",
+        "provider_requests": 0,
+        "reason": "Test driver module-name collision before any network request; corrected."
+      },
+      {
+        "mode": "keyed",
+        "provider_requests": 0,
+        "reason": "Test driver used an unsupported enqueue HTTP path before inference; corrected to the documented route; fresh key revoked."
+      }
+    ],
+    "limits": [
+      "One run per principal, not a reliability estimate.",
+      "Native Muse, Grokbot, Muse.ai and other model/version combinations are not established by this evidence.",
+      "No automatic output replay, generated-code admission, general category resolver or new shim activation was enabled."
+    ]
+  },
+  "native_execution_history_scope": "Historical retained evidence from readiness-2026-10-29.json, not fresh hosted recovery.",
+  "fresh_local_native_lifecycles": {
+    "runs": [
+      {
+        "harness": "claude",
+        "harness_version": "2.1.311",
+        "passed": true,
+        "provider_calls": 6,
+        "server_inference_requests": 0,
+        "fabric_environment": "isolated local actual workerd and SQLite Durable Objects",
+        "fabric_source_revision": "2e826203d42de8bb4d2e51d142ee67c6b9b7930b",
+        "hosted_test": false,
+        "artifact_readback": true,
+        "execution_report_observed": true,
+        "independent_report_readback": true,
+        "fresh_key_revoked": true,
+        "started_at": 1793292591.6703038,
+        "finished_at": 1793292616.3589005,
+        "result_sha256": "5dfb29241432626642c84e433f5d43dd09882ee5d6c2741c09485d0d23ad4123",
+        "task_readback_succeeded": true,
+        "task_state_readback": "done"
+      },
+      {
+        "harness": "pi",
+        "passed": true,
+        "provider_calls": 7,
+        "server_inference_requests": 0,
+        "fabric_environment": "isolated local actual workerd and SQLite Durable Objects",
+        "fabric_source_revision": "2e826203d42de8bb4d2e51d142ee67c6b9b7930b",
+        "hosted_test": false,
+        "artifact_readback": true,
+        "execution_report_observed": true,
+        "independent_report_readback": true,
+        "fresh_key_revoked": true,
+        "started_at": 1793292682.2796066,
+        "finished_at": 1793292703.8480365,
+        "result_sha256": "1a4dec2715883cd15c27be3eebd1ca38182ab58e8b221833cdd06f2f332387c3",
+        "task_readback_succeeded": true,
+        "task_state_readback": "done"
+      },
+      {
+        "harness": "muse",
+        "passed": true,
+        "provider_calls": 12,
+        "server_inference_requests": 0,
+        "fabric_environment": "isolated local actual workerd and SQLite Durable Objects",
+        "fabric_source_revision": "2e826203d42de8bb4d2e51d142ee67c6b9b7930b",
+        "hosted_test": false,
+        "artifact_readback": true,
+        "execution_report_observed": true,
+        "independent_report_readback": true,
+        "fresh_key_revoked": true,
+        "started_at": 1793292704.91744,
+        "finished_at": 1793292736.5613966,
+        "result_sha256": "ea1027d1cf66913604d4d6ee6e9774670783f960ddcac4e2b82243d8395a80a7",
+        "task_readback_succeeded": true,
+        "task_state_readback": "done"
+      }
+    ],
+    "scope": "Actual local Miniflare/workerd with real separate harness processes; no hosted recovery or provider-universal qualification."
+  },
+  "historical_scale_and_ui": {
+    "source": "evidence/readiness-2026-10-29.json",
+    "native_creative_completed": 10,
+    "private_idea_proposals": 20,
+    "native_tool_interval_overlap_seconds": 35.52,
+    "protocol_waves": [
+      10,
+      25,
+      50,
+      100
+    ],
+    "largest_protocol_completed": 100,
+    "largest_protocol_seconds": 25.663,
+    "http_429_count": 0,
+    "live_wait_ms": 0,
+    "live_window": 32,
+    "live_pressure_adaptation_triggered": false,
+    "rendered_banner_cases_passed": 16,
+    "clipboard_api_stubbed": true,
+    "retained_failed_waves": [
+      "7/10 original",
+      "3/3 targeted retry"
+    ],
+    "scope": "Historical, before the later storage incident; native process count differs from logical protocol clients."
+  },
+  "optional_training": {
+    "source": "https://github.com/ta-amps/tessera/blob/36526860b0048df2dec675051ec6681023bda3d9/examples/finetuning/evidence/smoke-2026-10-29.json",
+    "source_sha256": "e7b358cab591d1949673d8d5a15afa65bda0f425c53ce0c34fa31ef7e360a2be",
+    "scope": "One CPU and one local GPU run of a randomly initialized tiny Llama architecture, not pretrained Meta Llama or Muse Glimmer fine-tuning. Synthetic held-out loss is only a plumbing diagnostic.",
+    "runs": [
+      {
+        "name": "cpu",
+        "report": {
+          "base_model": {
+            "id": "random-initialized-tiny-Llama",
+            "random_initialization": true,
+            "revision": "local-seed-17"
+          },
+          "pretrained_weights_used": false,
+          "total_parameters": 110784,
+          "trainable_parameters": 3584,
+          "adapter_sha256": "605bbd52021c5ff201788271b42d2c2de52ce3301f568cdf1ffc3f3b44c6e759",
+          "dataset_sha256": "77a5a644377a26a5af5256e5a722e0e0c74e2ef8b96ec7f679939da6a5ef3d30",
+          "versions": {
+            "accelerate": "1.14.0",
+            "peft": "0.21.2",
+            "torch": "2.12.0+cpu",
+            "transformers": "5.12.0"
+          },
+          "hardware": {
+            "compute_dtype": "torch.float32",
+            "device": "cpu",
+            "gpu": null,
+            "peak_allocated_bytes": null,
+            "peak_reserved_bytes": null,
+            "total_vram_bytes": null
+          },
+          "loss": {
+            "adapter": {
+              "dev": 5.396824947637112,
+              "test": 5.396279554461959
+            },
+            "baseline": {
+              "dev": 5.584631365330065,
+              "test": 5.586127687449479
+            },
+            "interpretation": "Teacher-forced held-out loss is a plumbing diagnostic, not factual grounding or useful task quality.",
+            "reloaded_adapter": {
+              "dev": 5.396824947637112,
+              "test": 5.396279554461959
+            },
+            "training_steps": [
+              5.583507061004639,
+              5.570034027099609,
+              5.548404693603516,
+              5.527797698974609,
+              5.496273517608643,
+              5.472424507141113,
+              5.447061061859131,
+              5.432394981384277,
+              5.419084072113037,
+              5.411790370941162,
+              5.405214309692383,
+              5.4008965492248535
+            ]
+          },
+          "reload": {
+            "equivalent": true,
+            "fresh_base": true,
+            "maximum_probe_logit_difference": 0.0,
+            "probe": "last-token logits of first held-out example plus all held-out losses",
+            "tolerance": 1e-05
+          },
+          "frozen_parameters_unchanged": true,
+          "adapter_parameters_changed": true,
+          "truncated_examples": 0,
+          "padding": "none; one sequence per microbatch; prompt labels masked with -100",
+          "quality_evaluation": {
+            "factual_grounding": null,
+            "reason": "Not measured by this synthetic plumbing example; a reviewed held-out generation benchmark is required.",
+            "useful_task_decomposition": null
+          },
+          "promotion": "none; retain unchanged baseline until separate review and authorized admission"
+        },
+        "fabric": {
+          "adapter_sha256": "605bbd52021c5ff201788271b42d2c2de52ce3301f568cdf1ffc3f3b44c6e759",
+          "curation_receipt": "7d98c5fdaf645206df9e6dfdf0486175f36a9ea8daf9f3e47a1efac6bb9d5d85",
+          "dataset_sha256": "77a5a644377a26a5af5256e5a722e0e0c74e2ef8b96ec7f679939da6a5ef3d30",
+          "device": "cpu",
+          "limitations": "Local owned store, one tiny random-model worker; not a GPU fleet, hosted API test, pretrained model result or quality benchmark.",
+          "pretrained_weights_used": false,
+          "private_reads_denied": [
+            "record",
+            "blob",
+            "execution"
+          ],
+          "promotion": "none",
+          "saved_blob_count": 6,
+          "status": "private_local_training_verb_pass",
+          "store_backend": "in_process_sqlite",
+          "training_receipt": "5bc83ee8a8ce45c6d3ecc81f14a1b314249a02a38d13b185ebf59c810d7ed589"
+        },
+        "source_report_sha256": "d130f2587ccffaaf587f19ff6e9009289a23874e031d5e59ed4515c9bddae650",
+        "source_fabric_report_sha256": "ee7b89ba6cd1e7a6fcc5b0bcf700ec628889bb43026531b0d1c126bc6a04b7bd"
+      },
+      {
+        "name": "cuda",
+        "report": {
+          "base_model": {
+            "id": "random-initialized-tiny-Llama",
+            "random_initialization": true,
+            "revision": "local-seed-17"
+          },
+          "pretrained_weights_used": false,
+          "total_parameters": 110784,
+          "trainable_parameters": 3584,
+          "adapter_sha256": "a1efadff3fc21348282758da7140affbd651e1664457239f3c4e5685435e297c",
+          "dataset_sha256": "77a5a644377a26a5af5256e5a722e0e0c74e2ef8b96ec7f679939da6a5ef3d30",
+          "versions": {
+            "accelerate": "1.15.0",
+            "peft": "0.21.2",
+            "torch": "2.15.0",
+            "transformers": "5.22.0"
+          },
+          "hardware": {
+            "compute_dtype": "torch.float32",
+            "device": "cuda",
+            "gpu": "NVIDIA GeForce RTX 3060",
+            "peak_allocated_bytes": 41225728,
+            "peak_reserved_bytes": 46137344,
+            "total_vram_bytes": 12481003520
+          },
+          "loss": {
+            "adapter": {
+              "dev": 5.39682506566024,
+              "test": 5.396279554461959
+            },
+            "baseline": {
+              "dev": 5.584631124539162,
+              "test": 5.586128051008158
+            },
+            "interpretation": "Teacher-forced held-out loss is a plumbing diagnostic, not factual grounding or useful task quality.",
+            "reloaded_adapter": {
+              "dev": 5.39682506566024,
+              "test": 5.396279554461959
+            },
+            "training_steps": [
+              5.583507061004639,
+              5.570034027099609,
+              5.548404693603516,
+              5.527798175811768,
+              5.496273517608643,
+              5.472424507141113,
+              5.447061061859131,
+              5.432395935058594,
+              5.4190850257873535,
+              5.411790370941162,
+              5.405214309692383,
+              5.4008965492248535
+            ]
+          },
+          "reload": {
+            "equivalent": true,
+            "fresh_base": true,
+            "maximum_probe_logit_difference": 0.0,
+            "probe": "last-token logits of first held-out example plus all held-out losses",
+            "tolerance": 1e-05
+          },
+          "frozen_parameters_unchanged": true,
+          "adapter_parameters_changed": true,
+          "truncated_examples": 0,
+          "padding": "none; one sequence per microbatch; prompt labels masked with -100",
+          "quality_evaluation": {
+            "factual_grounding": null,
+            "reason": "Not measured by this synthetic plumbing example; a reviewed held-out generation benchmark is required.",
+            "useful_task_decomposition": null
+          },
+          "promotion": "none; retain unchanged baseline until separate review and authorized admission"
+        },
+        "fabric": {
+          "adapter_sha256": "a1efadff3fc21348282758da7140affbd651e1664457239f3c4e5685435e297c",
+          "curation_receipt": "d6d36f8089b61866ca0abee9e2e668f4614aadd7075bd171a807277e48a36fc6",
+          "dataset_sha256": "77a5a644377a26a5af5256e5a722e0e0c74e2ef8b96ec7f679939da6a5ef3d30",
+          "device": "cuda",
+          "limitations": "Local owned store, one tiny random-model worker; not a GPU fleet, hosted API test, pretrained model result or quality benchmark.",
+          "pretrained_weights_used": false,
+          "private_reads_denied": [
+            "record",
+            "blob",
+            "execution"
+          ],
+          "promotion": "none",
+          "saved_blob_count": 6,
+          "status": "private_local_training_verb_pass",
+          "store_backend": "in_process_sqlite",
+          "training_receipt": "fb3b175feea73d377348cfdae08b3c951d1e4a148c4912bf35c916177c3f53b7"
+        },
+        "source_report_sha256": "07e288047b742f6fb9a94035d01d70886c79feca802f2d398982328f8c3d2718",
+        "source_fabric_report_sha256": "b84e13a9ec4119dd114e29204100c1203c06dc1c7c4e09d1f9eb7a825026050b"
+      }
+    ],
+    "not_run": [
+      "Pretrained Llama 1B/3B training",
+      "Muse Glimmer H100 training",
+      "Kaggle notebook",
+      "Held-out factual grounding or useful-task quality evaluation",
+      "Automatic model admission or promotion"
+    ],
+    "data": "20 owned synthetic examples; 12 train/4 development/4 test; disjoint source and project families",
+    "execution": "Optional worker backend; in-process private Store claims/heartbeats/blobs/execution/denial tests; no server torch or second scheduler."
+  },
+  "seed_pack_execution": {
+    "repositories": {
+      "kinema": {
+        "tested_revision": "4ad28476a0f8c6e77b628d6e699d5605f0b35a79",
+        "candidate_nouns": 8,
+        "seed_verbs": 3,
+        "owning_tests_passed": 41,
+        "optional_integration_passed": 1,
+        "tasks_completed": 3
+      },
+      "kothar": {
+        "tested_revision": "e65e0b1c38385524223fd2ce02ad980623da8be2",
+        "candidate_nouns": 22,
+        "seed_verbs": 3,
+        "owning_tests_passed": 42,
+        "optional_integration_passed": 1,
+        "tasks_completed": 3
+      }
+    },
+    "lifecycle": {
+      "completed_tasks": 6,
+      "create_only_conflict_denial": true,
+      "cross_namespace_denial": true,
+      "enqueue_and_submit_idempotency": true,
+      "execution_environment": "Actual local Tessera service via FastAPI TestClient; deterministic worker implementation in the test process",
+      "fenced_submit_and_receipt": true,
+      "input_versions_and_tessera_canonical_sha256_verified": true,
+      "private_artifact_write": true,
+      "real_recipe_execution": true,
+      "record_write_model_validation": true,
+      "same_namespace_other_key_private_claim_denial": true,
+      "same_namespace_other_key_private_record_denial": true,
+      "task_spec_model_validation": true,
+      "wrong_fencing_token_denial": true
+    },
+    "provider_calls": 0,
+    "limits": [
+      "No production queue, pack admission, deployment or native harness installation is claimed.",
+      "This is local service and worker-code execution, not a separate-process native harness test.",
+      "The JSON envelope is an offline preview using existing request models; no generic importer is added.",
+      "Version-1 references require successful create-only writes and exact readback; conflicts require inspection.",
+      "Kinema bundled attributions and media digests are synthetic examples; no external media rights or blobs are verified.",
+      "Existing explicit web/API compatibility routes are retained.",
+      "Task guidance does not create additional server-side enforcement or grant permissions."
+    ]
+  },
+  "provider_qualification": {
+    "execution_environment": "Local Python HTTP Herma with real native provider transport, not deployed Workers runtime or autonomous native-worker qualification.",
+    "initial_three_call_wave": [
+      {
+        "provider": "openai",
+        "requested_model": "gpt-6-luna",
+        "reported_model": "gpt-6-luna",
+        "upstream_status": 200,
+        "outcome": "completed",
+        "source_revision": "bd4d9ff7981b08231eced14b70c52de8dc206f0a"
+      },
+      {
+        "provider": "anthropic",
+        "requested_model": "claude-haiku-4-5-20251001",
+        "reported_model": null,
+        "upstream_status": 400,
+        "outcome": "rejected",
+        "cause": "unknown in original captured evidence",
+        "source_revision": "bd4d9ff7981b08231eced14b70c52de8dc206f0a"
+      },
+      {
+        "provider": "openrouter",
+        "requested_model": "openai/gpt-4.1-nano",
+        "reported_model": null,
+        "upstream_status": 404,
+        "outcome": "rejected",
+        "cause": "unknown in original captured evidence",
+        "source_revision": "bd4d9ff7981b08231eced14b70c52de8dc206f0a"
+      }
+    ],
+    "diagnosed_two_call_wave": [
+      {
+        "provider": "anthropic",
+        "requested_model": "claude-haiku-4-5-20251001",
+        "upstream_status": 400,
+        "outcome": "rejected",
+        "provider_reported_category": "credit_or_quota_exhausted",
+        "provider_error_type": "invalid_request_error",
+        "usage": null,
+        "source_revision": "b3715816f18a6be468cab62131ac2a2f3d7f4337"
+      },
+      {
+        "provider": "openrouter",
+        "requested_model": "openai/gpt-4.1-nano",
+        "upstream_status": 404,
+        "outcome": "rejected",
+        "provider_reported_category": "no_eligible_provider_endpoint",
+        "provider_error_code": 404,
+        "specific_constraint": "unknown",
+        "usage": null,
+        "source_revision": "b3715816f18a6be468cab62131ac2a2f3d7f4337"
+      }
+    ],
+    "total_provider_requests": 5,
+    "invoice_cost_verified": false,
+    "unknown_usage_reservations_retained": true,
+    "fixture_keys_revoked": true,
+    "authorization_scope_replay_checks_passed": true,
+    "jev_live_calls": 0,
+    "retries_or_provider_fallback": false,
+    "initial_summary_sha256": "a7f53b02bc4e98432eb5fa469163815962fb91dfbd8fa9bb3b9841cc96a436b4",
+    "diagnosed_summary_sha256": "19b66568ca941fdaed34ac4af099aac2b94e591bbd53a4aaa8c48fd24e018f75",
+    "limits": [
+      "An explicit provider-reported error category is not a verified account balance or exact invoice.",
+      "OpenRouter specific unavailable constraint remains unknown.",
+      "The older 400/404 observations retain their original unknown causes.",
+      "Historical OpenAI success predates the new standard-tier accounting profile; no new live compatibility proof is inferred."
+    ],
+    "current_operator_direction": {
+      "anthropic": "temporarily_disabled_by_owner_direction",
+      "openrouter": "temporarily_disabled_by_owner_direction",
+      "enforcement_status": "merged and locally tested; local operator pause configured; hosted deployment held",
+      "source_revision": "a3139b42c57cdde619c751190cd0660174f8d66e",
+      "merge_revision": "800276376959a65d92e48c028d912380e836275f",
+      "adapters_retained": true,
+      "manual_pause_scope": "Managed typed conversations and recognized-provider native proxy routes that select an operator fallback key.",
+      "caller_owned_proxy_credentials": "Existing explicit caller credentials, authorization and native generation settings remain supported.",
+      "automatic_health_scope": "Managed typed conversations only, shared across callers in the existing local database or Worker allowance coordinator.",
+      "proxy_automatic_retry_or_rotation": false,
+      "diagnosis_limit": "OpenRouter no-eligible-endpoint is not evidence of exhausted credit; the owner pause is a separate operating decision.",
+      "further_anthropic_or_openrouter_calls_in_snapshot": 0,
+      "hosted_enforcement_verified": false,
+      "accounting_guards": {
+        "source_revision": "ef704aa1b355bec480203cab87c3010f2d4d3c57",
+        "implementation_status": "complete within the bounded patch; owning and independent offline checks passed",
+        "merge_status": "merged; exact-head and exact-main CI passed at the dated observation",
+        "deployed": false,
+        "new_live_provider_calls": 0,
+        "new_standard_tier_fields_live_qualified": false,
+        "merge_revision": "03429c1b4c25aa649969ecd56ab0f6856dc8b34f",
+        "pull_request": "https://github.com/ta-amps/herma/pull/11",
+        "head_ci": "https://github.com/ta-amps/herma/actions/runs/40939907438",
+        "main_ci": "https://github.com/ta-amps/herma/actions/runs/40940519144"
+      }
+    },
+    "operator_direction_history": [
+      {
+        "observed_at": "2026-10-29T17:49:13.414976+00:00",
+        "state": {
+          "anthropic": "temporarily_disabled_by_owner_direction",
+          "openrouter": "temporarily_disabled_by_owner_direction",
+          "enforcement_status": "explicit configuration-disable and shared cooldown follow-up in progress; not yet checked/merged/deployed",
+          "adapters_retained": true,
+          "diagnosis_limit": "OpenRouter no-eligible-endpoint is not evidence of exhausted credit.",
+          "further_anthropic_or_openrouter_calls_in_snapshot": 0
+        }
+      }
+    ],
+    "implementation_revisions": {
+      "initial_three_call_wave": "bd4d9ff7981b08231eced14b70c52de8dc206f0a",
+      "diagnosed_two_call_wave": "b3715816f18a6be468cab62131ac2a2f3d7f4337"
+    }
+  },
+  "community_seed_candidates": {
+    "bundle_count": 6,
+    "bundles": [
+      "Community Scout",
+      "Working Practices",
+      "Cost Trials",
+      "Verified Outcomes",
+      "Commit Tutor",
+      "Demo Workshop"
+    ],
+    "noun_candidates": 14,
+    "verb_candidates": 12,
+    "validation": {
+      "observed_at": "2026-10-29T17:50:19.546199+00:00",
+      "source_sha256": "9c7a1ca4be99863aa486fcd0e0bfdc9d6206bbe78a7c2bd937f1386c4a120441",
+      "record_shapes_passed": 14,
+      "task_shapes_passed": 12,
+      "registered_categories": true,
+      "local_reference_hashes": true,
+      "pinned_repository_snapshots": 9,
+      "scope": "shape/category membership/local-reference validation only; no admission, import, claims, execution or live storage",
+      "model": null
+    },
+    "source_repositories": [
+      {
+        "repository": "athos-agent/athos",
+        "revision": "f4a4bd5bcedc6173a4b69ec80ef59dc7829b301b",
+        "license": "Apache-2.0",
+        "license_url": "https://github.com/athos-agent/athos/blob/f4a4bd5bcedc6173a4b69ec80ef59dc7829b301b/LICENSE",
+        "readme_url": "https://github.com/athos-agent/athos/blob/f4a4bd5bcedc6173a4b69ec80ef59dc7829b301b/README.md",
+        "source_file_count": 11,
+        "review_depth": "selected source and test-source inspection; no execution"
+      },
+      {
+        "repository": "ConWan30/qortime-ai",
+        "revision": "95b39609d1e282f1a10aee8b813308dc28bfed50",
+        "license": "PolyForm-Noncommercial-1.0.0",
+        "license_url": "https://github.com/ConWan30/qortime-ai/blob/95b39609d1e282f1a10aee8b813308dc28bfed50/LICENSE",
+        "readme_url": "https://github.com/ConWan30/qortime-ai/blob/95b39609d1e282f1a10aee8b813308dc28bfed50/README.md",
+        "source_file_count": 9,
+        "review_depth": "selected source and test-source inspection; no execution"
+      },
+      {
+        "repository": "IrwinJam/agent-cost-harness",
+        "revision": "576fe5e5dae738b53e84e37fea7532fda544501c",
+        "license": "MIT",
+        "license_url": "https://github.com/IrwinJam/agent-cost-harness/blob/576fe5e5dae738b53e84e37fea7532fda544501c/LICENSE",
+        "readme_url": "https://github.com/IrwinJam/agent-cost-harness/blob/576fe5e5dae738b53e84e37fea7532fda544501c/README.md",
+        "source_file_count": 11,
+        "review_depth": "selected source and test-source inspection; no execution"
+      },
+      {
+        "repository": "shittuquoyum-ui/LUCID",
+        "revision": "aafd43f69aba03b81a08bebf27b10428e757b9b0",
+        "license": "MIT",
+        "license_url": "https://github.com/shittuquoyum-ui/LUCID/blob/aafd43f69aba03b81a08bebf27b10428e757b9b0/LICENSE",
+        "readme_url": "https://github.com/shittuquoyum-ui/LUCID/blob/aafd43f69aba03b81a08bebf27b10428e757b9b0/README.md",
+        "source_file_count": 12,
+        "review_depth": "selected source and test-source inspection; no execution"
+      },
+      {
+        "repository": "M4SPIDER/spider-game-engine-open-source-",
+        "revision": "f33930ed00f08200f59df83aabe2b4fc91c95c59",
+        "readme_url": "https://github.com/M4SPIDER/spider-game-engine-open-source-/blob/f33930ed00f08200f59df83aabe2b4fc91c95c59/README.md",
+        "github_license_spdx": "NOASSERTION",
+        "review_depth": "pinned README only; no execution",
+        "runtime_tested": false
+      },
+      {
+        "repository": "akyourowngames/A.N.K.I.T.A",
+        "revision": "812b1b6889d308edc5ca39a8d0cde4b735fd3d05",
+        "readme_url": "https://github.com/akyourowngames/A.N.K.I.T.A/blob/812b1b6889d308edc5ca39a8d0cde4b735fd3d05/README.md",
+        "github_license_spdx": "MIT",
+        "review_depth": "pinned README with earlier source-review comparison",
+        "runtime_tested": false
+      },
+      {
+        "repository": "qubitpage/carpathron-muse",
+        "revision": "21129697fd85f72aa1efc70a80b5ef4693eb2004",
+        "readme_url": "https://github.com/qubitpage/carpathron-muse/blob/21129697fd85f72aa1efc70a80b5ef4693eb2004/README.md",
+        "github_license_spdx": "MIT",
+        "review_depth": "pinned README only; no execution",
+        "runtime_tested": false
+      },
+      {
+        "repository": "tamzid2001/frontiersight-ai",
+        "revision": "5dd8378f754be9d7acf5ce07895e24f9b0376309",
+        "readme_url": "https://github.com/tamzid2001/frontiersight-ai/blob/5dd8378f754be9d7acf5ce07895e24f9b0376309/README.md",
+        "github_license_spdx": "MIT",
+        "review_depth": "pinned README only; no execution",
+        "runtime_tested": false
+      },
+      {
+        "repository": "wayneherrington/veevee",
+        "revision": "e01b40f68cec07d1c670069878da5a5ef3ac40dd",
+        "readme_url": "https://github.com/wayneherrington/veevee/blob/e01b40f68cec07d1c670069878da5a5ef3ac40dd/README.md",
+        "github_license_spdx": null,
+        "review_depth": "pinned README only; no execution",
+        "runtime_tested": false
+      }
+    ],
+    "installed": false,
+    "imported": false,
+    "enqueued": false,
+    "executed": false,
+    "admitted": false,
+    "external_code_copied": false,
+    "limits": [
+      "Nine repositories were reviewed at different static depths; no runtime/benchmark replication.",
+      "SPIDER README MIT claim conflicts with GitHub NOASSERTION; VeeVee license unknown; no reuse permission asserted.",
+      "QorTime Noncommercial license requires compatible permission for code reuse.",
+      "Raw discussion is not published, and no full channel archive was reconstructed."
+    ]
+  },
+  "architecture": {
+    "core_entities": [
+      "noun",
+      "verb"
+    ],
+    "supporting_boundaries": [
+      "surface",
+      "infrastructure"
+    ],
+    "seed_pack_contents": [
+      "noun",
+      "verb"
+    ],
+    "project_is_primitive": false,
+    "ordinary_reasoning": "authorized_workers",
+    "documentation_is_runtime_enforcement": false
+  },
+  "existing_local_work_preserved": true,
+  "limits": [
+    "Dated maintainer observations, not continuous monitoring or third-party certification. Implemented capability states describe source, not hosted availability.",
+    "The historical Tessera storage-quota incident is preserved. A concurrent maintainer release passed a narrow 8/8 hosted smoke; independent public health/instructions probes later passed. Fresh native artifact/report readback and sustained operation remain unverified. Account billing state and any new spending authority were not independently inferred from this recovery.",
+    "Latest recorded Tessera PR13 and home releases come from inspected concurrent receipts/logs; their executable hashes were not independently rebuilt/downloaded. Five other versions remain historical. Fresh public Tessera reads do not identify its executable version or qualify new learning paths; Herma remains undeployed.",
+    "Seven distinct native harnesses have completed a narrow lifecycle across historical hosted and fresh local fixtures. OpenMuse TypeScript has no verified connector; no universal feature/version/provider qualification is claimed.",
+    "Ten native Pi processes and 100 logical HTTP clients are historical different tests, with shared scoped cohort principals. Sustained separate-account scale and live adaptive-window pressure remain unverified.",
+    "Earlier 7/10 and 3/3 native waves, a corrected submission and a provider disconnect with unknown usage remain preserved. Native OS clipboard behavior was not tested; the 16 rendered Firefox cases used clipboard API stubs.",
+    "Tiny CPU/GPU LoRA training used random-initialized weights and synthetic data. Pretrained Meta training, useful-task improvement, Kaggle jobs and Glimmer training remain unrun.",
+    "Local seed-pack tests use the actual service and deterministic worker code through FastAPI TestClient; they are not separate-process native harness, hosted import or public admission proof. Kinema example media digests are synthetic.",
+    "Provider authentication, successful inference, native execution and deployment are distinct. Anthropic and OpenRouter calls were rejected; provider-reported diagnosis is not a measured account balance or invoice. Unknown usage remains reserved.",
+    "Community sources were reviewed at different static depths, without installing or executing them or reproducing benchmarks. Fourteen noun and twelve verb candidate shapes across six bundles are not imported, enqueued, executed or admitted packs.",
+    "General category/profile resolution, general shim admission/activation/rollback and independent Frontier candidate admission remain incomplete. Legacy inference-path attribution is not universally migrated.",
+    "No newsletter mailbox, active feed/inbox collector or general recurring research scheduler is enabled. Creative outputs and community mappings remain proposals.",
+    "No complete reconstruction of inaccessible session histories is claimed. Raw conversations, credentials, private identities and account details are excluded.",
+    "Anthropic and OpenRouter remain paused by owner direction. Explicit disable and managed-conversation shared recovery are merged and locally tested, including recognized-origin operator-key proxy pause with explicit caller credentials preserved. Hosted deployment is held; automatic health does not extend to the ordinary proxy or all legacy inference paths.",
+    "Herma shared-health PR10 and accounting PR11 are merged with matching-head/main CI and offline source checks. Deployment remains held; changed standard-tier request fields have no new live qualification.",
+    "Additional concurrent Tessera 12/13, Eranos5 and hackathon-context4 merges have read-only metadata/CI evidence in this snapshot; they do not inherit earlier local execution or deployment observations.",
+    "PR13 Worker observation read is not HTTP-routed; current learner use is Python-side, fuzzy matching is word overlap and weights are advisory. No demonstrated real-work improvement.",
+    "The home daily schedule is recorded configuration with no completed hosted daily/manual-cycle evidence. Prior rendered banner checks do not qualify its new UI.",
+    "Concurrent PR12 reports first-uploader visibility for identical-byte blobs within one namespace; per-uploader governance migration remains open. This reconciliation did not independently review that implementation."
+  ],
+  "remote_main_observation_history": [
+    {
+      "observed_at": "2026-10-29T17:42:22.666197+00:00",
+      "repositories": [
+        {
+          "name": "tessera",
+          "main_revision": "55458514e84eaf1e524637c3bd04916ebb4b3c35",
+          "open_pull_requests": 0,
+          "checks": [
+            {
+              "id": 40920993418,
+              "name": "ci",
+              "event": "push",
+              "head_sha": "55458514e84eaf1e524637c3bd04916ebb4b3c35",
+              "status": "completed",
+              "conclusion": "success",
+              "url": "https://github.com/ta-amps/tessera/actions/runs/40920993418"
+            }
+          ]
+        },
+        {
+          "name": "shamash",
+          "main_revision": "b9f3b409b0b9345ca0f3de3923296f11b65ebc7c",
+          "open_pull_requests": 0,
+          "checks": [
+            {
+              "id": 40890070406,
+              "name": "ci",
+              "event": "push",
+              "head_sha": "b9f3b409b0b9345ca0f3de3923296f11b65ebc7c",
+              "status": "completed",
+              "conclusion": "success",
+              "url": "https://github.com/ta-amps/shamash/actions/runs/40890070406"
+            }
+          ]
+        },
+        {
+          "name": "eranos",
+          "main_revision": "40c5517a3dc634ce1e6c4713e1f252d3dd7bafee",
+          "open_pull_requests": 0,
+          "checks": [
+            {
+              "id": 40890017028,
+              "name": "ci",
+              "event": "push",
+              "head_sha": "40c5517a3dc634ce1e6c4713e1f252d3dd7bafee",
+              "status": "completed",
+              "conclusion": "success",
+              "url": "https://github.com/ta-amps/eranos/actions/runs/40890017028"
+            }
+          ]
+        },
+        {
+          "name": "herma",
+          "main_revision": "5e98c8a05eb1939b6d7d3a56b0dc8d5c34823343",
+          "open_pull_requests": 0,
+          "checks": [
+            {
+              "id": 40923569978,
+              "name": "ci",
+              "event": "push",
+              "head_sha": "5e98c8a05eb1939b6d7d3a56b0dc8d5c34823343",
+              "status": "completed",
+              "conclusion": "success",
+              "url": "https://github.com/ta-amps/herma/actions/runs/40923569978"
+            }
+          ]
+        },
+        {
+          "name": "kothar",
+          "main_revision": "bb4910f9051b90581e6e87a509385244e9bd30aa",
+          "open_pull_requests": 0,
+          "checks": [
+            {
+              "id": 40917906902,
+              "name": "ci",
+              "event": "push",
+              "head_sha": "bb4910f9051b90581e6e87a509385244e9bd30aa",
+              "status": "completed",
+              "conclusion": "success",
+              "url": "https://github.com/ta-amps/kothar/actions/runs/40917906902"
+            }
+          ]
+        },
+        {
+          "name": "kinema",
+          "main_revision": "9e31c68c321b2acb1f910b9cf5d013b71b38d40d",
+          "open_pull_requests": 0,
+          "checks": [
+            {
+              "id": 40917939711,
+              "name": "ci",
+              "event": "push",
+              "head_sha": "9e31c68c321b2acb1f910b9cf5d013b71b38d40d",
+              "status": "completed",
+              "conclusion": "success",
+              "url": "https://github.com/ta-amps/kinema/actions/runs/40917939711"
+            }
+          ]
+        },
+        {
+          "name": "hackathon-context",
+          "main_revision": "43a4e8630366e2982b4ae421a97faca3f63c4b33",
+          "open_pull_requests": 0,
+          "checks": [
+            {
+              "id": 40923585130,
+              "name": "check",
+              "event": "push",
+              "head_sha": "43a4e8630366e2982b4ae421a97faca3f63c4b33",
+              "status": "completed",
+              "conclusion": "success",
+              "url": "https://github.com/ta-amps/hackathon-context/actions/runs/40923585130"
+            }
+          ]
+        },
+        {
+          "name": "pack-contributions",
+          "main_revision": "1d01d34d39de64b912c43365c9e4b72c5287f93d",
+          "open_pull_requests": 0,
+          "checks": [
+            {
+              "id": 40899915665,
+              "name": "check",
+              "event": "push",
+              "head_sha": "1d01d34d39de64b912c43365c9e4b72c5287f93d",
+              "status": "completed",
+              "conclusion": "success",
+              "url": "https://github.com/ta-amps/pack-contributions/actions/runs/40899915665"
+            }
+          ]
+        }
+      ],
+      "scope": "read-only exact main and matching-head CI; no deployment probe"
+    },
+    {
+      "observed_at": "2026-10-29T18:47:10.900081+00:00",
+      "repositories": [
+        {
+          "name": "tessera",
+          "main_revision": "39413a86525494030b326dbdaee627bb6bd02272",
+          "open_pull_requests": 0,
+          "checks": [
+            {
+              "id": 40932046859,
+              "name": "ci",
+              "event": "push",
+              "head_sha": "39413a86525494030b326dbdaee627bb6bd02272",
+              "status": "completed",
+              "conclusion": "success",
+              "url": "https://github.com/ta-amps/tessera/actions/runs/40932046859"
+            }
+          ]
+        },
+        {
+          "name": "shamash",
+          "main_revision": "b9f3b409b0b9345ca0f3de3923296f11b65ebc7c",
+          "open_pull_requests": 0,
+          "checks": [
+            {
+              "id": 40890070406,
+              "name": "ci",
+              "event": "push",
+              "head_sha": "b9f3b409b0b9345ca0f3de3923296f11b65ebc7c",
+              "status": "completed",
+              "conclusion": "success",
+              "url": "https://github.com/ta-amps/shamash/actions/runs/40890070406"
+            }
+          ]
+        },
+        {
+          "name": "eranos",
+          "main_revision": "40c5517a3dc634ce1e6c4713e1f252d3dd7bafee",
+          "open_pull_requests": 0,
+          "checks": [
+            {
+              "id": 40890017028,
+              "name": "ci",
+              "event": "push",
+              "head_sha": "40c5517a3dc634ce1e6c4713e1f252d3dd7bafee",
+              "status": "completed",
+              "conclusion": "success",
+              "url": "https://github.com/ta-amps/eranos/actions/runs/40890017028"
+            }
+          ]
+        },
+        {
+          "name": "herma",
+          "main_revision": "800276376959a65d92e48c028d912380e836275f",
+          "open_pull_requests": 0,
+          "checks": [
+            {
+              "id": 40933854982,
+              "name": "ci",
+              "event": "push",
+              "head_sha": "800276376959a65d92e48c028d912380e836275f",
+              "status": "completed",
+              "conclusion": "success",
+              "url": "https://github.com/ta-amps/herma/actions/runs/40933854982"
+            }
+          ]
+        },
+        {
+          "name": "kothar",
+          "main_revision": "bb4910f9051b90581e6e87a509385244e9bd30aa",
+          "open_pull_requests": 0,
+          "checks": [
+            {
+              "id": 40917906902,
+              "name": "ci",
+              "event": "push",
+              "head_sha": "bb4910f9051b90581e6e87a509385244e9bd30aa",
+              "status": "completed",
+              "conclusion": "success",
+              "url": "https://github.com/ta-amps/kothar/actions/runs/40917906902"
+            }
+          ]
+        },
+        {
+          "name": "kinema",
+          "main_revision": "9e31c68c321b2acb1f910b9cf5d013b71b38d40d",
+          "open_pull_requests": 0,
+          "checks": [
+            {
+              "id": 40917939711,
+              "name": "ci",
+              "event": "push",
+              "head_sha": "9e31c68c321b2acb1f910b9cf5d013b71b38d40d",
+              "status": "completed",
+              "conclusion": "success",
+              "url": "https://github.com/ta-amps/kinema/actions/runs/40917939711"
+            }
+          ]
+        },
+        {
+          "name": "hackathon-context",
+          "main_revision": "43a4e8630366e2982b4ae421a97faca3f63c4b33",
+          "open_pull_requests": 0,
+          "checks": [
+            {
+              "id": 40923585130,
+              "name": "check",
+              "event": "push",
+              "head_sha": "43a4e8630366e2982b4ae421a97faca3f63c4b33",
+              "status": "completed",
+              "conclusion": "success",
+              "url": "https://github.com/ta-amps/hackathon-context/actions/runs/40923585130"
+            }
+          ]
+        },
+        {
+          "name": "pack-contributions",
+          "main_revision": "1d01d34d39de64b912c43365c9e4b72c5287f93d",
+          "open_pull_requests": 0,
+          "checks": [
+            {
+              "id": 40899915665,
+              "name": "check",
+              "event": "push",
+              "head_sha": "1d01d34d39de64b912c43365c9e4b72c5287f93d",
+              "status": "completed",
+              "conclusion": "success",
+              "url": "https://github.com/ta-amps/pack-contributions/actions/runs/40899915665"
+            }
+          ]
+        }
+      ],
+      "scope": "read-only exact main and matching-head CI; no deployment probe"
+    },
+    {
+      "started_at": "2026-10-29T18:59:52.213599+00:00",
+      "observed_at": "2026-10-29T19:00:20.058070+00:00",
+      "repositories": [
+        {
+          "name": "tessera",
+          "main_revision": "39413a86525494030b326dbdaee627bb6bd02272",
+          "open_pull_requests": 0,
+          "checks": [
+            {
+              "id": 40932046859,
+              "name": "ci",
+              "event": "push",
+              "head_sha": "39413a86525494030b326dbdaee627bb6bd02272",
+              "status": "completed",
+              "conclusion": "success",
+              "url": "https://github.com/ta-amps/tessera/actions/runs/40932046859"
+            }
+          ]
+        },
+        {
+          "name": "shamash",
+          "main_revision": "b9f3b409b0b9345ca0f3de3923296f11b65ebc7c",
+          "open_pull_requests": 0,
+          "checks": [
+            {
+              "id": 40890070406,
+              "name": "ci",
+              "event": "push",
+              "head_sha": "b9f3b409b0b9345ca0f3de3923296f11b65ebc7c",
+              "status": "completed",
+              "conclusion": "success",
+              "url": "https://github.com/ta-amps/shamash/actions/runs/40890070406"
+            }
+          ]
+        },
+        {
+          "name": "eranos",
+          "main_revision": "40c5517a3dc634ce1e6c4713e1f252d3dd7bafee",
+          "open_pull_requests": 0,
+          "checks": [
+            {
+              "id": 40890017028,
+              "name": "ci",
+              "event": "push",
+              "head_sha": "40c5517a3dc634ce1e6c4713e1f252d3dd7bafee",
+              "status": "completed",
+              "conclusion": "success",
+              "url": "https://github.com/ta-amps/eranos/actions/runs/40890017028"
+            }
+          ]
+        },
+        {
+          "name": "herma",
+          "main_revision": "800276376959a65d92e48c028d912380e836275f",
+          "open_pull_requests": 0,
+          "checks": [
+            {
+              "id": 40933854982,
+              "name": "ci",
+              "event": "push",
+              "head_sha": "800276376959a65d92e48c028d912380e836275f",
+              "status": "completed",
+              "conclusion": "success",
+              "url": "https://github.com/ta-amps/herma/actions/runs/40933854982"
+            }
+          ]
+        },
+        {
+          "name": "kothar",
+          "main_revision": "6bfee07feb7ed3c7ba9111b0a0678bff5cbf2078",
+          "open_pull_requests": 0,
+          "checks": [
+            {
+              "id": 40935132204,
+              "name": "Graph Update: uv in /. #1663812063",
+              "event": "dynamic",
+              "head_sha": "6bfee07feb7ed3c7ba9111b0a0678bff5cbf2078",
+              "status": "completed",
+              "conclusion": "success",
+              "url": "https://github.com/ta-amps/kothar/actions/runs/40935132204"
+            },
+            {
+              "id": 40935119870,
+              "name": "ci",
+              "event": "push",
+              "head_sha": "6bfee07feb7ed3c7ba9111b0a0678bff5cbf2078",
+              "status": "completed",
+              "conclusion": "success",
+              "url": "https://github.com/ta-amps/kothar/actions/runs/40935119870"
+            }
+          ]
+        },
+        {
+          "name": "kinema",
+          "main_revision": "9e31c68c321b2acb1f910b9cf5d013b71b38d40d",
+          "open_pull_requests": 0,
+          "checks": [
+            {
+              "id": 40917939711,
+              "name": "ci",
+              "event": "push",
+              "head_sha": "9e31c68c321b2acb1f910b9cf5d013b71b38d40d",
+              "status": "completed",
+              "conclusion": "success",
+              "url": "https://github.com/ta-amps/kinema/actions/runs/40917939711"
+            }
+          ]
+        },
+        {
+          "name": "hackathon-context",
+          "main_revision": "43a4e8630366e2982b4ae421a97faca3f63c4b33",
+          "open_pull_requests": 0,
+          "checks": [
+            {
+              "id": 40923585130,
+              "name": "check",
+              "event": "push",
+              "head_sha": "43a4e8630366e2982b4ae421a97faca3f63c4b33",
+              "status": "completed",
+              "conclusion": "success",
+              "url": "https://github.com/ta-amps/hackathon-context/actions/runs/40923585130"
+            }
+          ]
+        },
+        {
+          "name": "pack-contributions",
+          "main_revision": "1d01d34d39de64b912c43365c9e4b72c5287f93d",
+          "open_pull_requests": 0,
+          "checks": [
+            {
+              "id": 40899915665,
+              "name": "check",
+              "event": "push",
+              "head_sha": "1d01d34d39de64b912c43365c9e4b72c5287f93d",
+              "status": "completed",
+              "conclusion": "success",
+              "url": "https://github.com/ta-amps/pack-contributions/actions/runs/40899915665"
+            }
+          ]
+        }
+      ],
+      "scope": "Read-only repository main, matching-head CI and complete PR metadata observed over the stated interval; no deployment or provider probes."
+    }
+  ],
+  "repository_check_history": [
+    {
+      "repository": "herma",
+      "tested_revision": "b3715816f18a6be468cab62131ac2a2f3d7f4337",
+      "summary": "143 Python and 90 Worker checks passed; independent focused review reran 75 Python and 55 Worker checks. Counts overlap and must not be summed.",
+      "scope": "Local checks on the reviewed source before merge; fresh exact-main CI is recorded separately."
+    },
+    {
+      "repository": "tessera",
+      "tested_revision": "1276c2bddf68fc417431eac71fac0b774183d964",
+      "summary": "307 Python passed, 6 skipped; 6 admission and 4 onboarding Node cases; 14 Worker-suite cases; local HTTP conformance 32 passed, 4 skipped; empty-backend negative control passed.",
+      "scope": "Local checks on the reviewed source before merge; fresh exact-main CI is recorded separately."
+    },
+    {
+      "repository": "herma",
+      "tested_revision": "a3139b42c57cdde619c751190cd0660174f8d66e",
+      "summary": "160 Python and 114 Worker checks passed, plus an offline deterministic demo and index parity in a renamed actual checkout. Independent runtime review passed 94 Python and 79 Worker checks at the unchanged runtime parent; counts overlap and must not be summed.",
+      "scope": "Final source checks before merge; independent runtime review is tied to its immutable parent. Exact-main CI is separate. No deployment or live provider calls in this follow-up.",
+      "independent_runtime_revision": "10f896ada4c87e718bd9d02e995ba05143b6be54",
+      "independent_python_passed": 94,
+      "independent_worker_passed": 79
+    },
+    {
+      "repository": "tessera",
+      "tested_revision": "49d6e28cfd90796d99f42759153cc3985c5ce729",
+      "summary": "Concurrent maintainer reports 308 Python passed, 6 skipped and 17 Worker tests. Prior quota-fix local HTTP 32 passed/4 skipped and 307 Python/14 Worker-suite observations remain historical.",
+      "scope": "Concurrent local execution is reported evidence, not rerun by this reviewer. Python total was inspected in the release log; exact-head and exact-main CI were independently read. Earlier local quota evidence remains separately preserved."
+    }
+  ],
+  "provider_availability": {
+    "source_revision": "a3139b42c57cdde619c751190cd0660174f8d66e",
+    "runtime_review_revision": "10f896ada4c87e718bd9d02e995ba05143b6be54",
+    "merge_revision": "800276376959a65d92e48c028d912380e836275f",
+    "pull_request": "https://github.com/ta-amps/herma/pull/10",
+    "head_ci": "https://github.com/ta-amps/herma/actions/runs/40933710201",
+    "main_ci": "https://github.com/ta-amps/herma/actions/runs/40933854982",
+    "operation": {
+      "anthropic": "temporarily_disabled_by_owner_direction",
+      "openrouter": "temporarily_disabled_by_owner_direction",
+      "enforcement_status": "merged and locally tested; local operator pause configured; hosted deployment held",
+      "source_revision": "a3139b42c57cdde619c751190cd0660174f8d66e",
+      "merge_revision": "800276376959a65d92e48c028d912380e836275f",
+      "adapters_retained": true,
+      "manual_pause_scope": "Managed typed conversations and recognized-provider native proxy routes that select an operator fallback key.",
+      "caller_owned_proxy_credentials": "Existing explicit caller credentials, authorization and native generation settings remain supported.",
+      "automatic_health_scope": "Managed typed conversations only, shared across callers in the existing local database or Worker allowance coordinator.",
+      "proxy_automatic_retry_or_rotation": false,
+      "diagnosis_limit": "OpenRouter no-eligible-endpoint is not evidence of exhausted credit; the owner pause is a separate operating decision.",
+      "further_anthropic_or_openrouter_calls_in_snapshot": 0,
+      "hosted_enforcement_verified": false
+    },
+    "behaviors": [
+      "Stable operator account aliases preserve shared limits across caller identities and key changes; aliases do not authorize account-limit bypass.",
+      "Observed model/account limits pause new managed calls; diagnosed credit/payment conditions also block the account across models.",
+      "Provider Retry-After or recognized reset guidance takes priority; absent guidance uses increasing recovery backoff, not a healthy-provider throughput cap.",
+      "The next fresh, already-authorized request may reserve one recovery probe and its existing allowance atomically; no background probe or failed-turn replay.",
+      "Expired or uncertain probes retain reservations and require existing uncertainty grants for later recovery.",
+      "Generation fencing prevents late results from clearing newer limits or stealing another probe lease; settlement is idempotent.",
+      "Manual disable overrides recovery permission; clearing it does not erase automatic health or reservations.",
+      "Scope, storage, coordination and caller/global budget failures stop; per-provider budget denial can advance only within an existing permitted independently budgeted plan."
+    ],
+    "checks": {
+      "python_passed": 160,
+      "worker_passed": 114,
+      "independent_python_passed": 94,
+      "independent_worker_passed": 79,
+      "independent_counts_overlap_full_suite": true,
+      "offline_demo_passed": true,
+      "renamed_actual_checkout_index_check_passed": true,
+      "concurrent_python_managed_turns": 20,
+      "concurrent_worker_budget_admissions": 20,
+      "concurrent_worker_managed_turns": 20,
+      "recovery_dispatches_per_limited_resource_race": 1,
+      "scope": "Local synthetic HTTP/workerd fixtures and deterministic helpers; not hosted or paid-provider qualification."
+    },
+    "ci_portability_correction": {
+      "initial_revision": "10f896ada4c87e718bd9d02e995ba05143b6be54",
+      "failed_ci": "https://github.com/ta-amps/herma/actions/runs/40931540528",
+      "cause": "Generated index headings depended on the checkout directory name; failure occurred after 159 Python and 114 Worker tests passed.",
+      "corrected_revision": "a3139b42c57cdde619c751190cd0660174f8d66e",
+      "changed_scope": "Index generator, portability regression and generated indexes only; runtime unchanged."
+    },
+    "review_sha256": "77301c5118623ea5b3f3d2e588540c6c3461b13b5ab909b93800b1b4388d34fc",
+    "new_live_provider_calls": 0,
+    "deployed": false,
+    "limits": [
+      "Separate databases/deployments do not synchronize operator account health automatically.",
+      "Automatic health/recovery applies to managed conversations, not the ordinary proxy or every legacy inference path.",
+      "Legacy embedding/micro-routing and arbitrary custom gateways still require their own migration evidence.",
+      "Additive tables require roll-forward disable for rollback; older positional-insert writers must not use the expanded state. No ledger or namespace reset.",
+      "Provider-reported usage may be unknown; retained reservations are not invoices.",
+      "Local/source pause configuration and merged tests do not establish hosted enforcement or Tessera recovery."
+    ],
+    "accounting_followup": {
+      "source_revision": "ef704aa1b355bec480203cab87c3010f2d4d3c57",
+      "implementation_status": "complete within the bounded patch; owning and independent offline checks passed",
+      "merge_status": "merged; exact-head and exact-main CI passed at the dated observation",
+      "deployed": false,
+      "new_live_provider_calls": 0,
+      "new_standard_tier_fields_live_qualified": false,
+      "merge_revision": "03429c1b4c25aa649969ecd56ab0f6856dc8b34f",
+      "pull_request": "https://github.com/ta-amps/herma/pull/11",
+      "head_ci": "https://github.com/ta-amps/herma/actions/runs/40939907438",
+      "main_ci": "https://github.com/ta-amps/herma/actions/runs/40940519144"
+    }
+  },
+  "merged_pull_request_observation": {
+    "observed_at": "2026-10-29T19:43:24.521020+00:00",
+    "count": 50,
+    "open_count": 0,
+    "scope": "Dated cutoff across eight repositories; later concurrent work is not inferred or chased by this snapshot."
+  },
+  "deployment_observation_history": [
+    {
+      "observed_at": "2026-10-29T18:51:42.761111+00:00",
+      "observation": {
+        "new_deployment_performed": false,
+        "versions_and_module_hashes": "retained unchanged in status.json with original observation times",
+        "parity_scope": "Seven historical deployed executables matched their recorded tested builds; this does not imply latest-main deployment or healthy storage."
+      },
+      "tessera_surface": {
+        "name": "tessera",
+        "url": "https://tessera.ta-amps.workers.dev",
+        "source_repository": "tessera",
+        "build_source_revision": "89803665d61d5156f85d8adbc4679d25ad6b91a1",
+        "observed_at": "2026-10-29T15:32:29.953393+00:00",
+        "deployed_version": "7785ff2f-9b47-4fd6-a1e4-fa962f29f11a",
+        "matches_tested_build": true,
+        "discovered_tool_count": 37,
+        "modules": [
+          {
+            "file": "worker.js",
+            "sha256": "ed11dc5bd278377f69db5e2a0c2377178c388b23da637f243b7e99a10c9ebb42",
+            "bytes": 709771
+          }
+        ],
+        "tool_inventory_evidence": "evidence/integration-2026-10-29.json",
+        "evidence_scope": "Historical executable/version observation retained unchanged; no fresh deployment or health qualification.",
+        "current_health": "last_observed_unavailable_provider_storage_quota; recovery_unverified"
+      }
+    },
+    {
+      "observed_at": "2026-10-29T19:48:05.888590+00:00",
+      "observation": {
+        "new_deployment_performed": true,
+        "deployment_actor": "Concurrent maintainer session",
+        "new_surface": "tessera",
+        "versions_and_module_hashes": "Tessera updated from its checked concurrent release receipt; six other versions and modules retain their historical observations.",
+        "parity_scope": "Executable identity is separate from configuration, provider capacity, end-to-end workflow coverage and sustained operation.",
+        "herma_new_source_deployed": false
+      },
+      "superseded_surfaces": [
+        {
+          "name": "tessera",
+          "url": "https://tessera.ta-amps.workers.dev",
+          "source_repository": "tessera",
+          "build_source_revision": "39413a86525494030b326dbdaee627bb6bd02272",
+          "observed_at": "2026-10-29T18:36:10.687745+00:00",
+          "deployed_version": "e9fcc867-18ea-4ede-ac47-90b1cd3b7dde",
+          "matches_tested_build": true,
+          "discovered_tool_count": 37,
+          "modules": [
+            {
+              "file": "worker.js",
+              "sha256": "6157de9f12dd05ee24aa24d6bf2c67fefa2bcd1346486620be4da44481653b60",
+              "bytes": 713153
+            }
+          ],
+          "tool_inventory_evidence": "evidence/integration-2026-10-29.json",
+          "evidence_scope": "Concurrent maintainer release receipt and executable parity, inspected read-only; independent public health/instructions probes are separately dated.",
+          "current_health": "narrow_recovery_observed; public_read_probes_and_concurrent_demo_smoke_passed",
+          "health_observed_at": "2026-10-29T18:54:37.145030+00:00",
+          "tool_inventory_scope": "The recorded tool count comes from historical inventory evidence and was not recounted for this release."
+        },
+        {
+          "name": "home",
+          "url": "https://home.ta-amps.workers.dev",
+          "source_repository": null,
+          "build_source_revision": null,
+          "observed_at": "2026-10-29T15:16:26.838879+00:00",
+          "deployed_version": "3bc53015-8810-4eb2-8419-4513ba344308",
+          "matches_tested_build": true,
+          "discovered_tool_count": 5,
+          "modules": [
+            {
+              "file": "worker.js",
+              "sha256": "1d43fd0914dc3235f1aa05a15c275093ada40797f39542d0c0917e7ffaa7d6a3",
+              "bytes": 167651
+            }
+          ],
+          "tool_inventory_evidence": "evidence/integration-2026-10-29.json",
+          "evidence_scope": "Historical executable/version observation retained unchanged; no fresh deployment or health qualification.",
+          "current_health": "not_requalified_in_this_snapshot"
+        }
+      ]
+    }
+  ],
+  "hosted_incident_history": [
+    {
+      "service": "tessera",
+      "observed_at": "2026-10-29T16:39:42.231000+00:00",
+      "http_status": 500,
+      "provider_message": "Exceeded allowed rows written in Durable Objects free tier.",
+      "deployed_version": "7785ff2f-9b47-4fd6-a1e4-fa962f29f11a",
+      "deployed_source": "89803665d61d5156f85d8adbc4679d25ad6b91a1",
+      "recovery_verified": false,
+      "operating_decision": "continue locally on existing free plan until reset",
+      "next_reset_after_incident": "2026-10-30T00:00:00+00:00",
+      "reset_source": "https://developers.cloudflare.com/durable-objects/platform/pricing/",
+      "billing_changed": false,
+      "data_reset": false,
+      "quota_mitigation_deployed": false
+    }
+  ],
+  "concurrent_tessera_release": {
+    "origin": "Concurrent maintainer session; release artifacts inspected read-only by this reconciliation.",
+    "release": {
+      "surface": "tessera",
+      "observed_at": "2026-10-29T18:36:10.687745+00:00",
+      "source_revision": "39413a86525494030b326dbdaee627bb6bd02272",
+      "tested_pr_head": "49d6e28cfd90796d99f42759153cc3985c5ce729",
+      "version": "e9fcc867-18ea-4ede-ac47-90b1cd3b7dde",
+      "matches_tested_build": true,
+      "modules": [
+        {
+          "file": "worker.js",
+          "sha256": "6157de9f12dd05ee24aa24d6bf2c67fefa2bcd1346486620be4da44481653b60",
+          "bytes": 713153
+        }
+      ],
+      "prior_versions": [
+        {
+          "version_id": "7785ff2f-9b47-4fd6-a1e4-fa962f29f11a",
+          "percentage": 100
+        }
+      ]
+    },
+    "artifact_sha256": {
+      "release.json": "ba9f212e6045733b99d98ec7bc3a459cea6924a9dd4bf1aa4ea9467ca18af9ed",
+      "smoke-3.jsonl": "d752b27d9a4347c026d452fcac5fc7a8e69dc2117f56e112b4983e0952eedaf9",
+      "smoke_tessera.py": "32a6341c8a09f4a6ae38c48aa3c93d3fc0473a88f81c6222b961a128ebcfcc38",
+      "local-checks.log": "1e68a5aae030b61d7f8834d765b877654933bb883d6fa9e322747b6027d55ac5"
+    },
+    "live_smoke": {
+      "passed": 8,
+      "total": 8,
+      "checks": [
+        {
+          "check": "health",
+          "status": 200,
+          "pass": true,
+          "seconds": 0.68
+        },
+        {
+          "check": "agent card",
+          "status": 200,
+          "pass": true,
+          "seconds": 0.33
+        },
+        {
+          "check": "unauthenticated blob upload refused",
+          "status": 401,
+          "pass": true,
+          "seconds": 0.61
+        },
+        {
+          "check": "anonymous session",
+          "status": 201,
+          "pass": true,
+          "seconds": 1.33
+        },
+        {
+          "check": "claimed sha256 mismatch refused (or no store scope)",
+          "status": 400,
+          "pass": true,
+          "seconds": 0.61
+        },
+        {
+          "check": "anonymous claim",
+          "status": 200,
+          "pass": true,
+          "seconds": 0.47
+        },
+        {
+          "check": "heartbeat",
+          "status": 200,
+          "pass": true,
+          "seconds": 1.79
+        },
+        {
+          "check": "submit",
+          "status": 200,
+          "pass": true,
+          "seconds": 0.63
+        }
+      ],
+      "scope": "Concurrent session synthetic demo.ping claim/heartbeat/submit smoke; no artifact or execution-report readback, separate native harness run or sustained capacity qualification."
+    },
+    "reported_local_checks": {
+      "python_passed": 308,
+      "python_skipped": 6,
+      "worker_passed": 17,
+      "source": "Concurrent session handoff; Python total also present in release local-checks.log; no new local execution by this reviewer."
+    },
+    "independent_current_probe": {
+      "observed_at": "2026-10-29T18:54:37.145030+00:00",
+      "source": "root unauthenticated read-only HTTP probes",
+      "requests": [
+        {
+          "path": "/v1/health",
+          "status": 200,
+          "content_type": "application/json",
+          "body_sha256": "7f35da0e508322518bc39171e8905125b8c036b3ba775f4a633d5108bfe86be5",
+          "returned_health": {
+            "ok": true,
+            "version": "0.2.0"
+          }
+        },
+        {
+          "path": "/llms.txt",
+          "status": 200,
+          "content_type": "text/plain; charset=utf-8",
+          "body_sha256": "94e9460788a7c4c0a0ffb3179554e53f359dd3d40198f0fe4a2a560fbeaf17ba",
+          "returned_health": null
+        }
+      ],
+      "provider_calls": 0,
+      "mutations_requested": 0,
+      "scope": "public health and agent instructions only; concurrent-session lifecycle and release evidence are separate"
+    },
+    "probe_receipt_sha256": "4e653501a1c5ee8391181f86d9051f1ce745994049e819b40eb2c9389954dbc0",
+    "full_native_artifact_report_lifecycle_requalified": false,
+    "full_share_readiness_claimed": false,
+    "financial_or_contributor_policy_authorization_inferred": false,
+    "evidence_status": "Historical PR11 release and smoke/probe; superseded by PR12/PR13 receipts. Its18:54 probe is not carried forward."
+  },
+  "concurrent_kothar_merge": {
+    "merge": {
+      "repository": "kothar",
+      "pr": 5,
+      "url": "https://github.com/ta-amps/kothar/pull/5",
+      "head": "4906bd71c305bd00e1ba3ca3490726ec5209e917",
+      "merge_sha": "6bfee07feb7ed3c7ba9111b0a0678bff5cbf2078",
+      "merged_at": "2026-10-29T18:54:01Z",
+      "base": "main",
+      "head_checks": [
+        {
+          "id": 40934945964,
+          "name": "ci",
+          "event": "pull_request",
+          "head_sha": "4906bd71c305bd00e1ba3ca3490726ec5209e917",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/ta-amps/kothar/actions/runs/40934945964"
+        }
+      ],
+      "verification_scope": "Read-only GitHub merge metadata and exact-head CI; concurrent-session local checks are separate reported evidence.",
+      "observed_at": "2026-10-29T19:00:20.058070+00:00"
+    },
+    "main_checks": [
+      {
+        "id": 40935132204,
+        "name": "Graph Update: uv in /. #1663812063",
+        "event": "dynamic",
+        "head_sha": "6bfee07feb7ed3c7ba9111b0a0678bff5cbf2078",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/ta-amps/kothar/actions/runs/40935132204"
+      },
+      {
+        "id": 40935119870,
+        "name": "ci",
+        "event": "push",
+        "head_sha": "6bfee07feb7ed3c7ba9111b0a0678bff5cbf2078",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/ta-amps/kothar/actions/runs/40935119870"
+      }
+    ],
+    "local_checks_rerun_by_this_reviewer": false,
+    "deployment_requalified": false
+  },
+  "snapshot_limit_history": [
+    {
+      "observed_at": "2026-10-29T18:51:42.761111+00:00",
+      "limits": [
+        "Dated maintainer observations, not continuous monitoring or third-party certification. Implemented capability states describe source, not hosted availability.",
+        "Hosted Tessera failed with the provider daily Durable Objects write allowance exhausted. Recovery remains unverified; work continues locally on the existing free plan until reset. No billing upgrade, account workaround or data reset was performed.",
+        "All seven deployment versions and module digests are historical and unchanged. New quota/provider/seed-pack source is not asserted to be deployed; bundle parity does not certify configuration, capacity or uptime.",
+        "Seven distinct native harnesses have completed a narrow lifecycle across historical hosted and fresh local fixtures. OpenMuse TypeScript has no verified connector; no universal feature/version/provider qualification is claimed.",
+        "Ten native Pi processes and 100 logical HTTP clients are historical different tests, with shared scoped cohort principals. Sustained separate-account scale and live adaptive-window pressure remain unverified.",
+        "Earlier 7/10 and 3/3 native waves, a corrected submission and a provider disconnect with unknown usage remain preserved. Native OS clipboard behavior was not tested; the 16 rendered Firefox cases used clipboard API stubs.",
+        "Tiny CPU/GPU LoRA training used random-initialized weights and synthetic data. Pretrained Meta training, useful-task improvement, Kaggle jobs and Glimmer training remain unrun.",
+        "Local seed-pack tests use the actual service and deterministic worker code through FastAPI TestClient; they are not separate-process native harness, hosted import or public admission proof. Kinema example media digests are synthetic.",
+        "Provider authentication, successful inference, native execution and deployment are distinct. Anthropic and OpenRouter calls were rejected; provider-reported diagnosis is not a measured account balance or invoice. Unknown usage remains reserved.",
+        "Community sources were reviewed at different static depths, without installing or executing them or reproducing benchmarks. Fourteen noun and twelve verb candidate shapes across six bundles are not imported, enqueued, executed or admitted packs.",
+        "General category/profile resolution, general shim admission/activation/rollback and independent Frontier candidate admission remain incomplete. Legacy inference-path attribution is not universally migrated.",
+        "No newsletter mailbox, active feed/inbox collector or general recurring research scheduler is enabled. Creative outputs and community mappings remain proposals.",
+        "No complete reconstruction of inaccessible session histories is claimed. Raw conversations, credentials, private identities and account details are excluded.",
+        "Anthropic and OpenRouter remain paused by owner direction. Explicit disable and managed-conversation shared recovery are merged and locally tested, including recognized-origin operator-key proxy pause with explicit caller credentials preserved. Hosted deployment is held; automatic health does not extend to the ordinary proxy or all legacy inference paths."
+      ]
+    }
+  ],
+  "provider_accounting": {
+    "source_revision": "ef704aa1b355bec480203cab87c3010f2d4d3c57",
+    "implementation_status": "complete within the bounded patch; owning and independent offline checks passed",
+    "merge_status": "merged; exact-head and exact-main CI passed at the dated observation",
+    "deployed": false,
+    "new_live_provider_calls": 0,
+    "new_standard_tier_fields_live_qualified": false,
+    "base_revision": "800276376959a65d92e48c028d912380e836275f",
+    "checks": {
+      "python_passed": 197,
+      "worker_passed": 150,
+      "independent_python_passed": 132,
+      "independent_worker_passed": 115,
+      "independent_source_fingerprints": 36,
+      "independent_counts_overlap_full_suite": true,
+      "offline_demo_passed": true,
+      "post_commit_index_check_passed": true,
+      "review_sha256": "6bf6df859ef941c69b55b172549aa57295d008b0ae831f6fa3de7752eb5f42fa"
+    },
+    "behaviors": [
+      "Check the selected operator credential before allowance reservation and again at dispatch. A known missing key records not-sent/not-reserved with zero reserved tokens; unrelated credentials are not borrowed.",
+      "Unexpected non-200 success statuses, including HTTP202, and OpenAI queued/in-progress responses retain unknown outcomes and reservations without clearing health or silently polling/retrying.",
+      "Only the existing caller-plan and operator uncertainty grants can permit another attempt after an unknown outcome.",
+      "The managed one-proposal profile rejects unpriced or opaque generation options before reservation and explicitly selects OpenAI default and Anthropic standard_only service tiers.",
+      "Separate planned reservation ceilings from actual reservations; known caller-budget denial records zero reserved attempt tokens, while uncertain Worker coordinator admission remains pending and retains caller tokens.",
+      "Existing worker-owned/native proxy generation settings and explicit large output allowances remain supported; deterministic guards stay within the existing scoped conversation/receipt lifecycle."
+    ],
+    "resolved_prior_followups": [
+      "Missing-key, known-not-sent attempts still need the reservation handling follow-up under review.",
+      "HTTP202 accepted-but-uncertain responses still need the outcome classification follow-up under review."
+    ],
+    "limits": [
+      "New standard-tier request fields have offline verification only. The earlier live OpenAI success belongs to its archived source/request and does not qualify this changed request profile.",
+      "Tariff ceilings must cover the selected model, context range and permitted settings; this is not an audit of every future provider option or pricing condition.",
+      "The conservative one-microdollar conversion discrepancy and contributor-alias normalization parity remain separate low-priority follow-ups; known contributor IDs remain refused.",
+      "Anthropic/OpenRouter remain paused, Jev has no live qualification, and this patch grants no new provider calls, spending or Contributor-policy authorization.",
+      "No new database schema migration; prior additive-state rollback cautions remain, with no health/budget resets."
+    ],
+    "merge_revision": "03429c1b4c25aa649969ecd56ab0f6856dc8b34f",
+    "pull_request": "https://github.com/ta-amps/herma/pull/11",
+    "head_ci": "https://github.com/ta-amps/herma/actions/runs/40939907438",
+    "main_ci": "https://github.com/ta-amps/herma/actions/runs/40940519144"
+  },
+  "additional_concurrent_merges": {
+    "observed_at": "2026-10-29T19:43:24.521020+00:00",
+    "pull_requests": [
+      "https://github.com/ta-amps/tessera/pull/13",
+      "https://github.com/ta-amps/tessera/pull/12",
+      "https://github.com/ta-amps/eranos/pull/5",
+      "https://github.com/ta-amps/hackathon-context/pull/4"
+    ],
+    "verification_scope": "GitHub metadata/CI inspection only for source review; separately inspected concurrent Tessera 12/13 release packets provide attributed deployment/local-check reports. No new independent execution coverage is inferred."
+  },
+  "frontier_configuration_history": [
+    {
+      "observed_at": "2026-10-29T15:31:45.178689+00:00",
+      "enabled": true,
+      "server_repair_mode": "off",
+      "server_repair_enabled": false,
+      "execution_policy": "external_workers_first",
+      "cadence_minutes": 15,
+      "stop_at": "2026-11-04T17:00:00.000Z",
+      "evidence_scope": "Historical schedule configuration, not proof of current job success during the storage incident."
+    }
+  ],
+  "concurrent_later_releases": {
+    "reviewed_at": "2026-10-29T19:55:43.124406+00:00",
+    "review_sha256": "3281bd4e9a05fc1106c7e2c8c1dbf86d6447ad8cf714e8c8e1831ae2032821f5",
+    "review_scope": "Read-only local release metadata, sanitized log fields, retained smoke rows, prior merge/CI observation, and selected source hashes. No new network calls, provider calls, builds, tests or deployments.",
+    "releases": [
+      {
+        "surface": "tessera",
+        "receipt_observed_at": "2026-10-29T19:27:13.663036+00:00",
+        "recorded_deployment_version": "29f58a55-caac-4825-b695-a7a425452ecb",
+        "source_repository": "ta-amps/tessera",
+        "build_source_revision": "1de68c1675234855de929ecd29ba972283908aca",
+        "tested_pr_head": "f7d6c2cbf9e023983a737396e49e06116a30963c",
+        "matches_tested_build_reported": true,
+        "modules": [
+          {
+            "file": "worker.js",
+            "sha256": "0cb0eeef339d8fd36f48318079aadc8269e54127c3941be82bf699d981f0b0f1",
+            "bytes": 732981
+          }
+        ],
+        "prior_versions": [
+          {
+            "version_id": "e9fcc867-18ea-4ede-ac47-90b1cd3b7dde",
+            "percentage": 100
+          }
+        ],
+        "deploy_log_version_matches": true,
+        "artifact_digests_independently_rebuilt_or_downloaded": false,
+        "evidence_sha256": {
+          "deploy.log": "aa85f116aa898e9f1e5a3a2d80f01b6db95cfa431e5cff7f04d616286c763d63",
+          "hardening-checks.log": "6340736512b88bf6566737b71f20ed928eb5f3ca707e728aec39cd96829c9e46",
+          "release.json": "4e0b61736e16bdcf80896966086b19d2d6f2929f6e8324dc1760ab2536a8a866",
+          "rollback.json": "239c5b7c324802a82863de23aea1a8ef962a098de31f6cdfdd067b64ca42fcf8",
+          "smoke.jsonl": "7542257388ab4c1a647513d3c08efccfede15068c897e1e6eefa7322bc6ca1db",
+          "tessera-hardening-PR.md": "1261ccf675893aae46a5860409a600522e88d3fbb6ec75a26be8b4f6e9df92a1"
+        },
+        "pr": 12,
+        "pr_url": "https://github.com/ta-amps/tessera/pull/12",
+        "merged_at": "2026-10-29T19:25:29Z",
+        "source_matches_recorded_merge": true,
+        "tested_head_matches_recorded_pr": true,
+        "receipt_observed_after_merge": true,
+        "exact_head_ci_from_prior_observation": [
+          {
+            "id": 40939552172,
+            "name": "ci",
+            "event": "pull_request",
+            "head_sha": "f7d6c2cbf9e023983a737396e49e06116a30963c",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/ta-amps/tessera/actions/runs/40939552172"
+          }
+        ],
+        "source_equals_observed_current_main": false,
+        "deployment_created_at_independently_verified": false,
+        "reported_hosted_smoke": {
+          "packet_present": true,
+          "passed": 8,
+          "total": 8,
+          "rows_consistent_with_summary": true,
+          "checks": [
+            {
+              "check": "health",
+              "status": 200,
+              "pass": true,
+              "seconds": 1.45
+            },
+            {
+              "check": "agent card",
+              "status": 200,
+              "pass": true,
+              "seconds": 0.56
+            },
+            {
+              "check": "unauthenticated blob upload refused",
+              "status": 401,
+              "pass": true,
+              "seconds": 0.26
+            },
+            {
+              "check": "anonymous session",
+              "status": 201,
+              "pass": true,
+              "seconds": 0.44
+            },
+            {
+              "check": "claimed sha256 mismatch refused (or no store scope)",
+              "status": 400,
+              "pass": true,
+              "seconds": 0.65
+            },
+            {
+              "check": "anonymous claim",
+              "status": 200,
+              "pass": true,
+              "seconds": 1.0
+            },
+            {
+              "check": "heartbeat",
+              "status": 200,
+              "pass": true,
+              "seconds": 0.43
+            },
+            {
+              "check": "submit",
+              "status": 200,
+              "pass": true,
+              "seconds": 0.49
+            }
+          ],
+          "scope": "Concurrent-session reported narrow lifecycle and public/authentication checks; no independent rerun, load test or model reasoning test."
+        },
+        "reported_local_checks": {
+          "python_passed": 313,
+          "python_skipped": 6,
+          "workerd_passed": 34,
+          "workerd_failed": 0,
+          "log_count_summaries_verified": true,
+          "http_local_passed_from_pr_body": 32,
+          "http_local_skipped_from_pr_body": 4
+        },
+        "reported_feature_scope": "Write-free discovery, lower write cost for denied/idle work, fair waiting-claim admission, reaper and client quota handling.",
+        "reported_limits": [
+          "First-uploader visibility of identical bytes within one namespace still needs per-uploader governance migration.",
+          "These write-cost measurements are local workerd measurements, not billing or hosted capacity evidence."
+        ]
+      },
+      {
+        "surface": "tessera",
+        "receipt_observed_at": "2026-10-29T19:33:16.805970+00:00",
+        "recorded_deployment_version": "d9c3326a-9226-40e6-a2dd-2ec74a7ebc0e",
+        "source_repository": "ta-amps/tessera",
+        "build_source_revision": "182bcaeec9b0112739360f8778fe855401a16390",
+        "tested_pr_head": "8b9ccead783d6df3fe9584fed377e82c57dd4dfe",
+        "matches_tested_build_reported": true,
+        "modules": [
+          {
+            "file": "worker.js",
+            "sha256": "a4ac49a11f7ea231fb2b7a0ab13f4d29d7477bfb95eff746982962ea32cc1ad2",
+            "bytes": 738785
+          }
+        ],
+        "prior_versions": [
+          {
+            "version_id": "29f58a55-caac-4825-b695-a7a425452ecb",
+            "percentage": 100
+          }
+        ],
+        "deploy_log_version_matches": true,
+        "artifact_digests_independently_rebuilt_or_downloaded": false,
+        "evidence_sha256": {
+          "deploy.log": "f4b4952fee004cb0d2747153ec9e96aac3bdc19cb7c983ca167bdfca79c375b8",
+          "learning-checks-2.log": "778beaab44172a41086227a913b95f38a5ae9843ef8035b60519727aeec68da8",
+          "release.json": "9ed1deb94a2072232933f80418ca1f3205819ff50be4ca7b37581c04a51df529",
+          "rollback.json": "0ca379a9fa3b1c55f324a531a3730ea56d35f85dca76496fb834ab0f4f4c4db7",
+          "tessera-learning-PR.md": "1aa5867454354af65792f25e800b70c476c86b869833502b01027e9a7524f9b0"
+        },
+        "pr": 13,
+        "pr_url": "https://github.com/ta-amps/tessera/pull/13",
+        "merged_at": "2026-10-29T19:31:21Z",
+        "source_matches_recorded_merge": true,
+        "tested_head_matches_recorded_pr": true,
+        "receipt_observed_after_merge": true,
+        "exact_head_ci_from_prior_observation": [
+          {
+            "id": 40940388121,
+            "name": "ci",
+            "event": "pull_request",
+            "head_sha": "8b9ccead783d6df3fe9584fed377e82c57dd4dfe",
+            "status": "completed",
+            "conclusion": "success",
+            "url": "https://github.com/ta-amps/tessera/actions/runs/40940388121"
+          }
+        ],
+        "source_equals_observed_current_main": true,
+        "deployment_created_at_independently_verified": false,
+        "reported_hosted_smoke": {
+          "packet_present": false,
+          "scope": "No distinct postdeployment smoke file in inspected PR13 packet. Earlier PR12 smoke is not transferred to this version."
+        },
+        "reported_local_checks": {
+          "python_passed": 327,
+          "python_skipped": 6,
+          "python_log_count_summary_verified": true,
+          "workerd_passed_from_pr_body": 38,
+          "workerd_final_count_not_present_in_inspected_check_log": true
+        },
+        "reported_feature_scope": "Execution learning metadata, fingerprints, observation summaries and swappable worker learner specs.",
+        "reported_limits": [
+          "Worker observation read is tested in workerd but not HTTP-routed; current learner use is Python-side.",
+          "Fuzzy matching is word overlap and learned weights are advisory associations.",
+          "No demonstrated improvement in real work or new postdeployment learning E2E receipt in this packet."
+        ]
+      },
+      {
+        "surface": "home",
+        "receipt_observed_at": "2026-10-29T19:30:40.280249+00:00",
+        "recorded_deployment_version": "3a52ee50-34ed-4f21-b213-e78a41f4988b",
+        "source_repository": null,
+        "build_source_revision": null,
+        "tested_pr_head": null,
+        "matches_tested_build_reported": true,
+        "modules": [
+          {
+            "file": "worker.js",
+            "sha256": "5b08394b9546d7e6908d3c5aa7c9f37ba96f2ca13e385c4b4c936eefae1e0479",
+            "bytes": 252989
+          }
+        ],
+        "prior_versions": [
+          {
+            "version_id": "3bc53015-8810-4eb2-8419-4513ba344308",
+            "percentage": 100
+          }
+        ],
+        "deploy_log_version_matches": true,
+        "artifact_digests_independently_rebuilt_or_downloaded": false,
+        "evidence_sha256": {
+          "deploy.log": "9230d405f88fe22e651c63ffcbd16a3deadbdd823c130a8859345d41e18382e1",
+          "deploy_home.py": "fc4a99bafbdf8e394005c7d7dfed5c3fb48944a603407b62da4658f3b0c5160e",
+          "release.json": "a842e25b2ff5e862e98af87a166460e9b83815fdc1725d59b1e4a150f22015af",
+          "rollback.json": "d24764de58b759c6bf6b55a63aeb1742c15cc79c1068864cbbc78487d025d8ef"
+        },
+        "frontier_configuration_from_deploy_log": {
+          "automation_enabled": true,
+          "cron": "0 * * * *",
+          "cycle_interval_hours": 24,
+          "cycle_start_utc": "13:00",
+          "manual_cooldown_minutes": 10,
+          "stop_at": "2026-11-04T17:00:00Z",
+          "reasoning_enabled_flag": true,
+          "server_repair_mode": "off",
+          "server_repair_enabled_by_source_and_recorded_mode": false,
+          "scope": "Deployment-log configuration, not fresh hosted status or proof of a completed daily cycle."
+        },
+        "source_scope": "Private portal source snapshot, not a public repository release. No private path or account binding values retained.",
+        "reported_hosted_smoke": {
+          "packet_present": false,
+          "scope": "No postdeployment smoke or completed hosted daily-cycle receipt in inspected packet."
+        },
+        "reported_local_checks_from_earlier_handoff": {
+          "unit_passed": 74,
+          "runtime_passed": 25,
+          "daily_runtime_guards_passed": 6,
+          "rerun_by_this_review": false,
+          "limits": [
+            "Runtime tests used actual local portal/Tessera Workers and fixture neighboring surfaces.",
+            "UI checks used a mock DOM, not a rendered browser.",
+            "These checks precede latest PR13 deployment and are not new hosted evidence."
+          ]
+        }
+      }
+    ],
+    "limits": [
+      "No fresh distinct PR13 or home hosted smoke file; PR12's 8/8 smoke is not transferred to later releases.",
+      "Actual deployment creation timestamps and executable bytes were not independently retrieved.",
+      "Selected home source files agree with the private snapshot, but one operator deployment binding differs; no complete source/configuration parity claim."
+    ]
+  },
+  "final_public_read_probe": {
+    "observed_at": "2026-10-29T19:54:42.222297+00:00",
+    "health": {
+      "status": 200,
+      "observed_at": "2026-10-29T19:54:41.270736+00:00",
+      "body_sha256": "e532f726a8364a522ae5f9a2d506227cc64e47dfbc03ab568aa18b7f41fe6dfb",
+      "ok": true,
+      "db_ok": true,
+      "version": "0.2.0"
+    },
+    "instructions": {
+      "status": 200,
+      "observed_at": "2026-10-29T19:54:41.860950+00:00",
+      "body_sha256": "94e9460788a7c4c0a0ffb3179554e53f359dd3d40198f0fe4a2a560fbeaf17ba"
+    },
+    "scope": "Independent unauthenticated public GETs only. No authentication, model or mutation requests; no independent executable-version identification, native artifact/report readback or new-feature qualification."
+  },
+  "final_public_read_probe_receipt_sha256": "da2cf979c7bc3d2ad3bfbbb221dec073f2afc68b934c458edb009f49ac3be5bc"
+}

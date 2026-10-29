@@ -95,6 +95,53 @@ def snapshot(data: dict, evidence: dict) -> None:
                 "unknown capability state")
 
 
+def architecture(data: dict, repo_names: set[str], root: Path) -> None:
+    require(data.get("schema_version") == 1 and data.get("kind") == "documentation_inventory",
+            "architecture must remain a documentation inventory")
+    require(data.get("authority") == "tessera", "work authority must remain Tessera")
+    require(data.get("core_entities") == ["noun", "verb"] and
+            data.get("supporting_boundaries") == ["surface", "infrastructure"],
+            "only nouns and verbs with surfaces and supporting infrastructure")
+    require(data.get("seed_pack_contents") == ["noun", "verb"] and
+            data.get("project_is_primitive") is False,
+            "seed packs bundle nouns and verbs; projects are not primitives")
+    require(data.get("ordinary_reasoning") == "authorized_workers" and
+            data.get("implicit_server_fallback") is False, "ordinary reasoning belongs in workers")
+    require((root / data["policy"]).is_file(), "architecture needs its checkpoint")
+    repos = data["repositories"]
+    require({r["name"] for r in repos} == repo_names and len(repos) == len(repo_names),
+            "architecture must classify every product repository once")
+    roles = {"fabric", "adapter", "workflow_pack", "seed_pack", "authoring_kit"}
+    for repo in repos:
+        require(set(repo) == {"name", "role", "nouns", "verbs", "checks"},
+                "unexpected repository authority or architecture field")
+        require(repo["role"] in roles, "unknown architecture role")
+        require((repo["role"] == "fabric") == (repo["name"] == "tessera"),
+                "domain packs must not own the work lifecycle")
+        if repo["name"] in {"kothar", "kinema"}:
+            require(repo["role"] == "seed_pack", "Kothar and Kinema must be seed packs")
+        for field in ("nouns", "verbs", "checks"):
+            require(isinstance(repo[field], list) and bool(repo[field]) and
+                    all(isinstance(v, str) and bool(v.strip()) for v in repo[field]),
+                    "repository needs noun, verb and check references")
+    exceptions = data["server_exceptions"]
+    require(len(exceptions) == 4 and {e["id"] for e in exceptions} ==
+            {"infrastructure", "management", "model_transport", "explicit_inference"},
+            "server exception classes must be explicit")
+    fields = {"purpose", "principal", "data_scope", "provider", "model", "destination", "payer", "allowance",
+              "deadline", "retry_policy", "outcome"}
+    for exception in exceptions:
+        require(bool(exception["owner"]) and bool(exception["boundary"]),
+                "server exceptions need an owner and boundary")
+        require((root / exception["evidence"]).is_file(), "exception reference missing")
+        require(exception["reasoning"] is (exception["id"] == "explicit_inference"),
+                "infrastructure and management are not blanket inference exemptions")
+        if exception["reasoning"]:
+            require(set(exception["required_record"]) == fields,
+                    "server inference must record authority, scope, allowance and outcome")
+    require(bool(data.get("enforcement_scope")), "architecture needs its enforcement limits")
+
+
 def public_text(text: str) -> None:
     for name, pattern in SENSITIVE.items():
         require(pattern.search(text) is None, "possible private material: " + name)
@@ -115,6 +162,7 @@ def check(root: Path = ROOT) -> dict:
     data = load(root / "status.json")
     evidence = load(root / data["evidence_path"])
     snapshot(data, evidence)
+    architecture(load(root / "architecture.json"), {r["name"] for r in data["repositories"]}, root)
     files = [p for p in root.rglob("*") if p.is_file() and not SKIP.intersection(p.relative_to(root).parts)]
     for path in files:
         text = path.read_text()

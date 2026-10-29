@@ -1,14 +1,28 @@
 # Architecture
 
-Tessera owns the shared task and artifact lifecycle. Product repositories add domain behavior or tools around that fabric. The live home portal helps people and agents discover the right entry point. Agora documents those relationships.
+Only nouns, verbs, surfaces and narrow supporting infrastructure. Seed packs
+contain nouns and verbs. Nouns hold reusable knowledge,
+tools, models, recipes and artifacts. Verbs describe independently schedulable
+outcomes for authorized workers. Tessera owns the shared task and artifact
+lifecycle. The home portal helps people and agents find projects; Agora documents
+the relationships. Follow the [required checkpoint](architecture-checkpoint.md).
 
-## Nouns and verbs
+## Nouns, verbs and their surfaces
 
 | Concept | Meaning | Examples |
 | --- | --- | --- |
 | Noun | A scoped, versioned input, definition, artifact or observation | A synthetic evidence bundle, recipe, task contract, test result or execution report |
 | Verb | An independently schedulable outcome with a claimant, lease and acceptance contract | Analyze a bundle, draft a kit, verify a recipe or review a proposed artifact |
-| Deterministic operation | An operation performed within a verb or by the coordination service | Check a permission, heartbeat a lease, compare versions, calculate a fee or validate a schema |
+| Surface | An interface exposing permitted nouns and verbs | Website, dashboard, CLI or HTTP/MCP interface |
+| Infrastructure | Narrow supporting coordination and management | Identity, storage, leases, CAS, transport and backpressure |
+
+Seed packs bundle nouns and verb templates/seeds. They are not an additional
+primitive, autonomous runtime or activation authority. Deterministic operations
+can remain within a verb or infrastructure; they need not each become a task.
+
+Project names are labels, not primitives. Descriptions use existing noun records,
+namespace and permission mechanisms. The
+public grouping introduces no additional scheduler or storage authority.
 
 This is the organizing model. It does not require a separate task for every read or arithmetic operation. Split a verb when work has an independent result, different permissions, separate equipment or a useful recovery boundary.
 
@@ -25,7 +39,7 @@ The full policy and examples live with [Tessera](https://github.com/ta-amps/tess
 
 Tessera supplies authenticated scope, queue permissions, claims, fencing tokens, heartbeats, task dependencies, compare-and-set records, content-addressed blobs, named buckets and durable receipts. Its HTTP, MCP, CLI and web interfaces expose the owning contracts. A frontend or shim cannot grant broader authority.
 
-Shamash and Eranos use Tessera for staged work and artifacts. Herma can read permitted context and expose explicitly requested model interfaces. The Python dependencies of all three pin a tested, merged Tessera revision. Kothar and Kinema provide deterministic tools a worker can invoke while holding a verb. The worker stores outputs using its own authorized fabric interface; a tool result does not become a shared noun or published artifact by itself.
+Shamash and Eranos use Tessera for staged work and artifacts. Herma can read permitted context and expose explicitly requested model interfaces. The Python dependencies of all three pin a tested, merged Tessera revision. Kothar and Kinema distribute seed packs: versioned code, recipes and deterministic tools a worker can invoke while holding a verb. Their existing project interfaces remain compatibility and showcase surfaces. The worker stores outputs using its own authorized fabric interface; exporting a pack or producing a tool result does not install, activate or admit an artifact by itself.
 
 Execution observations are protected nouns associated with accepted completion. They retain server-observed task and lease facts separately from optional worker-reported telemetry. Bounded recall can return permitted prior evidence. Recall does not authorize automatic replay, establish correctness or grant a new effect. See [execution reports and recall](https://github.com/ta-amps/tessera/blob/main/docs/execution-memory.md).
 
@@ -55,6 +69,18 @@ Workers perform ordinary reasoning, repair and self-checks. Deterministic server
 A worker may run on a contributor's machine, in an approved cloud service or in an operator environment. Placement does not establish who pays, whether the work is private or which actions are allowed. Private work uses authenticated ownership, queue scope, storage restrictions and effect limits. A `private` tag grants nothing.
 
 ## Explicit model interfaces and exceptions
+
+Server configuration, provider plans, health observations and attempt evidence
+are nouns too. Independently schedulable server management is private verb work.
+Server-side placement does not exempt either from scoped access or attribution.
+Surfaces cannot expose management nouns, history, logs or claims merely because
+they share an infrastructure operator. Provider and model selection must remain
+within the caller's permitted data destinations and payer allowance.
+
+Deterministic infrastructure and essential management services stay server-side
+when they own identity, storage, leases, accounting, authorized provisioning,
+scheduling or recovery. They retain effect authority and audit requirements.
+Calling a domain agent “management” does not exempt it from the worker rule.
 
 Herma supports caller-configured routing and explicit typed conversations. A configured optional shim may routinely use a model for interpretation within its own scope and budget. This does not insert a paid reviewer into every task or turn.
 

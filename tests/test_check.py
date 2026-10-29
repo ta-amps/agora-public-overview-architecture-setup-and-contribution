@@ -59,6 +59,46 @@ class PublicationChecks(unittest.TestCase):
         with self.assertRaises(ValueError):
             check.public_text("https://" + "user:password@" + "example.invalid")
 
+    def test_architecture_rejects_competing_work_authority_and_hidden_fallback(self):
+        baseline = check.load(ROOT / "architecture.json")
+        names = {r["name"] for r in check.load(ROOT / "status.json")["repositories"]}
+        invalid = copy.deepcopy(baseline)
+        invalid["implicit_server_fallback"] = True
+        with self.assertRaisesRegex(ValueError, "reasoning belongs in workers"):
+            check.architecture(invalid, names, ROOT)
+        invalid = copy.deepcopy(baseline)
+        next(r for r in invalid["repositories"] if r["name"] == "kinema")["role"] = "fabric"
+        with self.assertRaisesRegex(ValueError, "must not own"):
+            check.architecture(invalid, names, ROOT)
+
+    def test_architecture_rejects_incomplete_inventory_and_management_inference(self):
+        baseline = check.load(ROOT / "architecture.json")
+        names = {r["name"] for r in check.load(ROOT / "status.json")["repositories"]}
+        invalid = copy.deepcopy(baseline)
+        invalid["repositories"].pop()
+        with self.assertRaisesRegex(ValueError, "classify every"):
+            check.architecture(invalid, names, ROOT)
+        invalid = copy.deepcopy(baseline)
+        next(e for e in invalid["server_exceptions"] if e["id"] == "management")["reasoning"] = True
+        with self.assertRaisesRegex(ValueError, "blanket inference"):
+            check.architecture(invalid, names, ROOT)
+        for field in ("payer", "model", "destination"):
+            invalid = copy.deepcopy(baseline)
+            next(e for e in invalid["server_exceptions"] if e["id"] == "explicit_inference")["required_record"].remove(field)
+            with self.assertRaisesRegex(ValueError, "record authority"):
+                check.architecture(invalid, names, ROOT)
+
+    def test_architecture_rejects_extra_primitives_and_pack_authority(self):
+        baseline = check.load(ROOT / "architecture.json")
+        names = {r["name"] for r in check.load(ROOT / "status.json")["repositories"]}
+        for field, value in (("core_entities", ["noun", "verb", "project"]),
+                             ("project_is_primitive", True),
+                             ("seed_pack_contents", ["noun", "verb", "autonomous_service"])):
+            invalid = copy.deepcopy(baseline)
+            invalid[field] = value
+            with self.assertRaises(ValueError):
+                check.architecture(invalid, names, ROOT)
+
 
 if __name__ == "__main__":
     unittest.main()
