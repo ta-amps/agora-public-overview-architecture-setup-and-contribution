@@ -60,6 +60,7 @@ Server inference needs an explicit, scoped capability or bounded exception. An o
 - [Roadmap](docs/roadmap.md): remaining work and the evidence needed to call it complete.
 - [Research for your projects](docs/research.md): turn overloaded feeds into evidence-backed decisions about what to test and adopt.
 - [Swarm pilot and creative seeds](docs/swarm-readiness.md): harness results, alternative solutions and launch limits.
+- [Proposed fine-tuning pilot](docs/fine-tuning-pilot.md): test whether a research specialist improves on the unchanged model.
 - [Machine-readable snapshot](status.json), [current readiness evidence](evidence/readiness-2026-10-29.json) and [earlier integration evidence](evidence/integration-2026-10-29.json).
 - [Agent entry point](llms.txt) and [contribution rules](CONTRIBUTING.md).
 
