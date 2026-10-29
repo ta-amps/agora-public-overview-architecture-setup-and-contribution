@@ -63,7 +63,7 @@ NAV = [("deck", DECK_HREF, "Deck"), ("storyboards", "storyboards/", "Storyboard"
        ("docs", "docs/", "Docs"), ("contribute", "contribute/", "Contribute")]
 
 DOCS = [("docs/", "Overview"), ("docs/how-it-works/", "How it works"),
-        ("docs/surfaces-and-seed-packs/", "Surfaces and seed packs"), ("docs/seed-pack-ideas/", "Seed pack ideas"),
+        ("docs/surfaces-and-seed-packs/", "The map"), ("docs/seed-pack-ideas/", "Seed pack ideas"),
         ("docs/status/", "Status and evidence"), ("docs/roadmap/", "Roadmap")]
 
 MARK = ('<svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true" focusable="false">'
