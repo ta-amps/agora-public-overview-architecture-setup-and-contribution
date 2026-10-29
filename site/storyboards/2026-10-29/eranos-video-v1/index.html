@@ -64,7 +64,7 @@ section { display: flex; flex-direction: column; gap: 18px }
 .cut .seg { opacity: 1 }
 
 /* Two-column info blocks */
-.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px }
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 20px }
 .panel { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 22px; display: flex; flex-direction: column; gap: 12px; min-width: 0 }
 .panel ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; color: var(--ink-2) }
 table { width: 100%; border-collapse: collapse; font-size: 15px }
@@ -77,7 +77,7 @@ td b { color: var(--ink) }
 .sw i { width: 26px; height: 26px; border-radius: 6px; border: 1px solid var(--line); display: inline-block }
 
 /* Shot cards */
-.shots { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px }
+.shots { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr)); gap: 20px }
 .shot { background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; min-width: 0 }
 .shot svg { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; max-width: 100%; background: var(--frame); border-bottom: 1px solid var(--line) }
 .shot .body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 10px }
@@ -109,7 +109,7 @@ td b { color: var(--ink) }
 .step-head { display: none }
 @media (min-width: 760px) { .step-head { display: grid; background: var(--tint) } .step-head::before { content: "" } }
 @media (max-width: 759px) { .step { grid-template-columns: 32px minmax(0, 1fr) } .step > div:nth-child(n+2) { grid-column: 2 } }
-.decide { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px }
+.decide { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 16px }
 .decide .panel p { color: var(--ink-2) }
 .rec { font: 600 12px/1 var(--mono); color: var(--good); letter-spacing: .04em }
 footer { color: var(--muted); font-size: 14px; border-top: 1px solid var(--line); padding-top: 18px }
@@ -127,7 +127,7 @@ a { color: var(--blue); text-underline-offset: 3px }
   </div>
   <p class="eyebrow">Storyboard · draft 1 · October 29, 2026</p>
   <h1>Spare tokens, real tools</h1>
-  <p class="lede">A three-minute film about Eranos. A legal-aid desk needs a way to check recruitment fees in a job offer. A volunteer's AI agent builds a kit with their spare tokens, a different agent reviews it, and the desk gets a free, reviewed tool. In the last fifteen seconds we reveal that the video itself was made the same way, from nouns and verbs.</p>
+  <p class="lede">A three-minute film about Eranos. A small nonprofit needs a tool it can't afford to build. A volunteer's AI agent builds a kit with their spare tokens, a different agent reviews it, and the nonprofit gets a free, reviewed tool. In the last fifteen seconds we reveal that the video itself was made the same way, from nouns and verbs. Which kit stars is still open: see the options at the end.</p>
   <div class="meta">
     <span class="chip"><b>3:00</b> main cut</span>
     <span class="chip"><b>0:60</b> short cut</span>
@@ -226,7 +226,9 @@ a { color: var(--blue); text-underline-offset: 3px }
     <div class="panel">
       <h3>Sound and pace</h3>
       <ul>
-        <li>Narration in Taylor's own voice, warm and plain, about 150 words a minute. If we use a synthetic voice instead, we label it.</li>
+        <li>First cut: a high-quality AI voice, labeled on screen as AI-generated. Taylor records the final voiceover later.</li>
+        <li>The narration is a swappable noun, so the captions and timing are redone by verbs when the voice changes, not by hand.</li>
+        <li>Warm and plain, about 150 words a minute.</li>
         <li>Light instrumental music with no lyrics, ducked under speech, from a source whose license we record as a noun.</li>
         <li>Captions burned in at the bottom, at least 16 px at 1080p, two lines at most.</li>
         <li>Cuts on the beat of each step. No transition lasts longer than half a second.</li>
@@ -280,19 +282,20 @@ a { color: var(--blue); text-underline-offset: 3px }
     </article>
 
     <article class="shot">
-      <svg viewBox="0 0 320 180" role="img" aria-label="Three synthetic documents with highlighted fee lines">
+      <svg viewBox="0 0 320 180" role="img" aria-label="A small nonprofit's to-do list with one need it cannot staff">
         <rect class="f-bg" width="320" height="180"/>
-        <g><rect x="22" y="30" width="84" height="112" rx="6" class="f-card"/><rect x="118" y="38" width="84" height="112" rx="6" class="f-card"/><rect x="214" y="30" width="84" height="112" rx="6" class="f-card"/></g>
-        <text x="30" y="48" class="t f-mut">OFFER</text><text x="126" y="56" class="t f-mut">INVOICE</text><text x="222" y="48" class="t f-mut">PAYSLIP</text>
-        <g class="f-tint"><rect x="30" y="60" width="64" height="6"/><rect x="30" y="74" width="52" height="6"/><rect x="126" y="70" width="64" height="6"/><rect x="222" y="60" width="64" height="6"/><rect x="222" y="88" width="48" height="6"/></g>
-        <g class="f-rust"><rect x="30" y="92" width="58" height="8" rx="2"/><rect x="126" y="96" width="62" height="8" rx="2"/><rect x="222" y="112" width="54" height="8" rx="2"/></g>
-        <text x="22" y="166" class="t f-rust">SYNTHETIC EXAMPLE</text>
+        <rect x="40" y="26" width="240" height="122" rx="10" class="f-card"/>
+        <text x="56" y="50" class="t f-mut">A SMALL NONPROFIT · THIS WEEK</text>
+        <g class="f-tint"><rect x="56" y="62" width="208" height="16" rx="4"/><rect x="56" y="84" width="208" height="16" rx="4"/></g>
+        <rect x="56" y="106" width="208" height="24" rx="5" class="f-tint"/><rect x="56" y="106" width="4" height="24" class="f-rust"/>
+        <text x="68" y="122" class="t f-rust">needed: [the chosen kit] · no staff time</text>
+        <text x="40" y="166" class="t f-rust">SYNTHETIC EXAMPLE</text>
       </svg>
       <div class="body">
         <div class="top"><h3>3 · The need</h3><span class="tc">0:20–0:40</span></div>
-        <p class="vo">“A legal-aid desk is asked to check a job offer like this one. The fees are spread across three documents, and checking them against the rules takes time the desk doesn't have.”</p>
-        <p class="ost">On screen: SYNTHETIC EXAMPLE · fee lines highlighted one by one</p>
-        <p class="how"><b>Made by:</b> synthetic documents generated by the job-recruitment track's case verbs, each stamped SYNTHETIC.</p>
+        <p class="vo">“A small nonprofit needs a tool it can't afford to build. [One line for the chosen kit, for example: a food bank needs Saturday volunteers briefed in three languages.]”</p>
+        <p class="ost">On screen: the need, shown with SYNTHETIC example material</p>
+        <p class="how"><b>Made by:</b> synthetic material from the chosen track's case verbs, each item stamped SYNTHETIC.</p>
         <span class="status st-run">Needs assets</span>
       </div>
     </article>
@@ -306,7 +309,7 @@ a { color: var(--blue); text-underline-offset: 3px }
         <text x="32" y="58" class="t-d f-ink" font-size="13">Open tasks</text>
         <rect x="32" y="68" width="256" height="24" rx="5" class="f-tint"/>
         <rect x="32" y="98" width="256" height="24" rx="5" class="f-card"/><rect x="32" y="98" width="4" height="24" class="f-blue"/>
-        <text x="44" y="114" class="t f-ink">Build: recruitment-fee check kit</text>
+        <text x="44" y="114" class="t f-ink">Build: [the chosen kit]</text>
         <rect x="32" y="128" width="256" height="24" rx="5" class="f-tint"/>
       </svg>
       <div class="body">
@@ -322,7 +325,7 @@ a { color: var(--blue); text-underline-offset: 3px }
       <svg viewBox="0 0 320 180" role="img" aria-label="Terminal showing claim, heartbeat and receipt">
         <rect class="f-bg" width="320" height="180"/>
         <rect x="20" y="18" width="280" height="144" rx="8" class="f-ink"/>
-        <text x="34" y="44" class="t f-blue">› claim  job-recruitment-triage</text>
+        <text x="34" y="44" class="t f-blue">› claim  [the chosen track]</text>
         <text x="34" y="64" class="t f-mut">  lease held · one agent at a time</text>
         <text x="34" y="84" class="t f-blue">› heartbeat ✓</text>
         <text x="34" y="104" class="t f-blue">› execute</text>
@@ -343,16 +346,16 @@ a { color: var(--blue); text-underline-offset: 3px }
         <rect x="170" y="30" width="128" height="120" rx="10" class="f-card"/>
         <text x="182" y="52" class="t f-mut">KIT</text>
         <g class="f-rust"><rect x="182" y="62" width="104" height="18" rx="4"/><rect x="182" y="86" width="104" height="18" rx="4"/></g>
-        <text x="188" y="75" class="t" fill="#FFFDF8">fee arithmetic</text>
-        <text x="188" y="99" class="t" fill="#FFFDF8">rules in force</text>
+        <text x="188" y="75" class="t" fill="#FFFDF8">reused tool</text>
+        <text x="188" y="99" class="t" fill="#FFFDF8">checked template</text>
         <rect x="182" y="110" width="104" height="18" rx="4" class="f-blue"/><text x="188" y="123" class="t" fill="#FFFDF8">step map</text>
-        <text x="24" y="70" class="t f-good">✓ 12 synthetic cases</text>
-        <text x="24" y="92" class="t f-good">✓ fee totals match</text>
+        <text x="24" y="70" class="t f-good">✓ synthetic cases pass</text>
+        <text x="24" y="92" class="t f-good">✓ results match</text>
         <text x="24" y="114" class="t f-good">✓ human-only steps kept</text>
       </svg>
       <div class="body">
         <div class="top"><h3>6 · Build and test</h3><span class="tc">1:10–1:32</span></div>
-        <p class="vo">“It doesn't start from scratch. It reuses checked pieces, like a fee calculator and the rules in force on that date, and tests the kit on made-up cases.”</p>
+        <p class="vo">“It doesn't start from scratch. It reuses checked pieces from seed packs, and tests the kit on made-up cases.”</p>
         <p class="ost">On screen: reused nouns snap in; test results appear</p>
         <p class="how"><b>Made by:</b> real capture of the build, with a motion overlay of the reused nouns. The case count comes from the run's receipt, not this sketch.</p>
         <span class="status st-run">Needs a real run</span>
@@ -400,23 +403,23 @@ a { color: var(--blue); text-underline-offset: 3px }
     </article>
 
     <article class="shot">
-      <svg viewBox="0 0 320 180" role="img" aria-label="The kit flags a fee against a rule; a person decides">
+      <svg viewBox="0 0 320 180" role="img" aria-label="The kit drafts the busywork; a person decides">
         <rect class="f-bg" width="320" height="180"/>
         <rect x="20" y="22" width="180" height="136" rx="8" class="f-card"/>
-        <text x="32" y="44" class="t f-mut">FEE CHECK · SYNTHETIC</text>
+        <text x="32" y="44" class="t f-mut">KIT IN USE · SYNTHETIC</text>
         <rect x="32" y="56" width="156" height="30" rx="5" class="f-tint"/>
-        <text x="40" y="75" class="t f-rust">fee conflicts with rule §</text>
-        <text x="32" y="106" class="t f-ink2">risk indicator</text>
-        <text x="32" y="124" class="t f-ink2">never an accusation</text>
+        <text x="40" y="75" class="t f-rust">draft ready for review</text>
+        <text x="32" y="106" class="t f-ink2">the agent drafts</text>
+        <text x="32" y="124" class="t f-ink2">staff check it</text>
         <rect x="212" y="54" width="90" height="72" rx="8" class="f-ink"/>
         <text x="222" y="86" class="t" fill="#FFFDF8">person</text>
         <text x="222" y="104" class="t" fill="#FFFDF8">decides</text>
       </svg>
       <div class="body">
         <div class="top"><h3>9 · The kit in use</h3><span class="tc">2:00–2:26</span></div>
-        <p class="vo">“Now the desk has a free, reviewed kit. It does the arithmetic and points to the rule. The person decides what happens next.”</p>
-        <p class="ost">On screen: Risk indicator · never an accusation · SYNTHETIC</p>
-        <p class="how"><b>Made by:</b> real capture of the published kit, used on the synthetic offer from shot 3.</p>
+        <p class="vo">“Now the nonprofit has a free, reviewed kit. It does the busywork, and a person makes every decision about a person.”</p>
+        <p class="ost">On screen: the agent drafts · the person decides · SYNTHETIC</p>
+        <p class="how"><b>Made by:</b> real capture of the published kit, used on the synthetic example from shot 3.</p>
         <span class="status st-run">Needs a real run</span>
       </div>
     </article>
@@ -489,11 +492,11 @@ a { color: var(--blue); text-underline-offset: 3px }
   <p class="sub">This is what makes the reveal true. Each verb runs as a task on Tessera, is claimed by a worker, and leaves a receipt. Each noun is stored and versioned. The end card's counts come from these receipts.</p>
   <div class="steps" role="list">
     <div class="step step-head" aria-hidden="true"><div><span class="k">Verb</span></div><div><span class="k">Makes these nouns</span></div><div><span class="k">Tool or model</span></div></div>
-    <div class="step" role="listitem"><div><b>Draft the script</b><span class="k">a person approves</span></div><div>Script, shot list</div><div>Muse Spark drafts; Taylor edits</div></div>
-    <div class="step" role="listitem"><div><b>Make the synthetic documents</b></div><div>Offer, invoice and payslip, each stamped SYNTHETIC</div><div>The track's case verbs</div></div>
+    <div class="step" role="listitem"><div><b>Draft the script</b><span class="k">a person approves</span></div><div>Script, shot list</div><div>Muse Spark (contributor tier) drafts; Taylor edits</div></div>
+    <div class="step" role="listitem"><div><b>Make the synthetic material</b></div><div>Example records for the chosen kit, each stamped SYNTHETIC</div><div>The chosen track's case verbs</div></div>
     <div class="step" role="listitem"><div><b>Run the real kit task</b></div><div>Task, lease, kit, test results, review record, receipts</div><div>Volunteer agents on Eranos</div></div>
     <div class="step" role="listitem"><div><b>Capture the screens</b></div><div>Screen recordings at 1920×1080</div><div>A browser-capture verb</div></div>
-    <div class="step" role="listitem"><div><b>Record the narration</b><span class="k">a person</span></div><div>Narration audio</div><div>Taylor's voice</div></div>
+    <div class="step" role="listitem"><div><b>Make the narration</b><span class="k">AI voice first, then Taylor</span></div><div>Narration audio, labeled AI-generated until Taylor's take replaces it</div><div>A high-quality open text-to-speech model run locally (choice pending), then Taylor's voiceover</div></div>
     <div class="step" role="listitem"><div><b>Write the captions</b></div><div>SRT and WebVTT captions</div><div>Muse Voice Transcribe</div></div>
     <div class="step" role="listitem"><div><b>Compose and render</b></div><div>Sequence, render manifest, MP4 in two cuts</div><div>The video pack's render verb</div></div>
     <div class="step" role="listitem"><div><b>Check the video</b></div><div>QA report: streams, black frames, freezes, loudness, captions, spot frames</div><div>The video pack's check verb</div></div>
@@ -504,10 +507,21 @@ a { color: var(--blue); text-underline-offset: 3px }
 <section aria-labelledby="dec">
   <h2 id="dec">Decisions for Taylor</h2>
   <div class="decide">
-    <div class="panel"><h3>Which kit stars?</h3><p>The recruitment-fee check has the strongest stakes, and it reuses checked pieces from the exploitation pack. The volunteer-shift kit is gentler, and so is the multilingual service finder.</p><p class="rec">Suggested: recruitment-fee check</p></div>
-    <div class="panel"><h3>Whose voice?</h3><p>The checklist recommends your own voice. A labeled synthetic voice would make “entire video” literally true, but it sounds less human.</p><p class="rec">Suggested: your voice, recorded as a noun</p></div>
-    <div class="panel"><h3>Model spend</h3><p>Captions, a script draft and the agents' reasoning use Meta's API. For a three-minute video, we expect this to cost under two dollars.</p><p class="rec">Needs your OK before the run</p></div>
+    <div class="panel"><h3>Which kit stars?</h3><p>Pinned for now. The options are below. We pick one before the real run, because shots 3 to 9 are filmed from it.</p><p class="rec">Open</p></div>
+    <div class="panel"><h3>Whose voice?</h3><p>A high-quality AI voice first, labeled on screen. Taylor records the final voiceover later, and the captions are redone from it.</p><p class="rec">Decided</p></div>
+    <div class="panel"><h3>Model spend</h3><p>Captions, a script draft and the agents' reasoning use Meta's API, on the contributor tier by default. We expect under two dollars.</p><p class="rec">Approved up to $5</p></div>
     <div class="panel"><h3>Music</h3><p>A royalty-free instrumental with its license stored as a noun, or no music at all.</p><p class="rec">Suggested: one licensed track</p></div>
+  </div>
+</section>
+
+<section aria-labelledby="opts">
+  <h2 id="opts">Options for the starring kit</h2>
+  <p class="sub">Everyday nonprofit work, so the story is about service rather than investigations. The first three use tracks Eranos already has. The fourth would add a new track, which is data only.</p>
+  <div class="decide">
+    <div class="panel"><h3>A community service finder</h3><p>A community center's front desk helps a family find food, housing help and a clinic nearby, in their own language, and sends a warm referral note.</p><p class="how"><b>Why:</b> broad, human and easy to picture. <b>Track:</b> intake and referral.</p></div>
+    <div class="panel"><h3>Volunteer shift kit</h3><p>A food bank's Saturday shift gets role cards in three languages, a check-in list and clear steps for when to call a person.</p><p class="how"><b>Why:</b> warm and visual, with an obvious before and after. <b>Track:</b> volunteer shifts and procedures.</p></div>
+    <div class="panel"><h3>Grant check</h3><p>A small nonprofit's volunteer treasurer matches restricted grant spending to the grant terms before an audit, and the kit catches a mismatch.</p><p class="how"><b>Why:</b> a pain every small nonprofit knows, but less visual. <b>Track:</b> grants and compliance.</p></div>
+    <div class="panel"><h3>A new track</h3><p>For example, matching tutors to an after-school program, coordinating disaster-relief volunteers, or following up on animal-shelter adoptions.</p><p class="how"><b>Why:</b> shows that adding a cause is data, not code. <b>Cost:</b> more work before filming.</p></div>
   </div>
 </section>
 

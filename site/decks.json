@@ -83,7 +83,7 @@
       "core_slides": 9,
       "appendix_slides": 10,
       "path": "decks/2026-10-29/v4/",
-      "html_sha256": "d98acb61a0aa9dcc2be3bf3c06118afc842aab109f5f995112d0ff384942c0c3",
+      "html_sha256": "1a68ed7af008f15368f37033142d05a69dab832f6f5f37e9530bff1d27a82bc9",
       "source": "decks/2026-10-29/v4/source/",
       "claim_review": "decks/2026-10-29/v4/source/claims.json",
       "unbranded": true,
@@ -91,9 +91,9 @@
         {
           "format": "pdf",
           "path": "decks/2026-10-29/v4/ta-amps-hackathon-v4.pdf",
-          "sha256": "4335329f85d6e009ef586a0441e703ae685fe3b642c16ced27fa85e00a3f8a2e",
+          "sha256": "702478781a6395177ff18e3e3e0235546d2901d540fd0b84d44301e77f0858e4",
           "bytes": 448608,
-          "printed_from_html_sha256": "d98acb61a0aa9dcc2be3bf3c06118afc842aab109f5f995112d0ff384942c0c3"
+          "printed_from_html_sha256": "1a68ed7af008f15368f37033142d05a69dab832f6f5f37e9530bff1d27a82bc9"
         }
       ]
     }
