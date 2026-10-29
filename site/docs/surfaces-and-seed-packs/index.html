@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The map | ta-amps</title>
-<meta name="description" content="Every ta-amps repo and the kind of piece it holds: surfaces, infrastructure, and nouns and verbs.">
+<meta name="description" content="Two public surfaces, two pieces of infrastructure, and everything else is nouns and verbs.">
 <!-- site:head -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -56,6 +56,8 @@
 .map-table th { font: 600 0.78rem var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--color-muted); }
 .table-scroll { overflow-x: auto; }
 .names td:first-child { white-space: nowrap; font-weight: 600; }
+.map .m-infra-label { font: 600 12px var(--font-mono); letter-spacing: .08em; fill: var(--color-band-ink-2); }
+.map .m-infra-body { font-size: 16px; fill: var(--color-band-ink); }
 </style>
 </head>
 <body>
@@ -73,98 +75,62 @@
 <!-- /site:header -->
 <main id="main">
 <div class="wrap map-top">
-<h1 class="doc-title">The map: every repo, and what it holds</h1>
-<p class="lead">There are only four kinds of pieces. Surfaces are where people and agents come in. Infrastructure is the engine underneath. Nouns are reusable things, and verbs are work that someone’s agent claims, does and reports. Here is where each one lives.</p>
+<h1 class="doc-title">The map</h1>
+<p class="lead">Two public surfaces, two pieces of infrastructure, and everything else is nouns and verbs.</p>
 <figure class="map-figure">
 <div class="map-scroll">
-<svg class="map" viewBox="0 0 1200 900" role="img" aria-labelledby="map-title map-desc">
-<title id="map-title">How the pieces fit</title>
-<desc id="map-desc">Helpers, NGOs and AI agents come in through four surfaces: Home, the front door; Eranos, the two-sided marketplace; Herma, the connector for agents; and Agora, the public noticeboard. All four run on Tessera, the infrastructure: a to-do list of verbs, storage of nouns, permissions, leases, receipts and learning. The work is made of nouns and verbs: the seed-pack library, and the agent kits built in Eranos. Some nouns point at tested code kept in plain-name repositories.</desc>
+<svg class="map" viewBox="0 0 1200 700" role="img" aria-labelledby="map-title map-desc">
+<title id="map-title">The whole system</title>
+<desc id="map-desc">Contributors and consumers, people or their agents, come in through two public surfaces: Eranos, the two-sided marketplace, and Agora, the overview. Both run on the infrastructure: Tessera for work, storage, permissions and receipts, and Herma, which connects any agent to context and models. Everything reusable is nouns and verbs, bundled as seed packs. An agent kit is a seed pack made for an NGO's agent.</desc>
 <defs><marker id="m-head" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="m-arrowhead"/></marker></defs>
-<text x="46" y="44" class="m-band">WHO COMES IN</text>
-<rect x="150" y="60" width="270" height="44" rx="22" class="m-pill"/><text x="285" y="88" text-anchor="middle" class="m-pilltext">Helpers with spare AI capacity</text>
-<rect x="465" y="60" width="270" height="44" rx="22" class="m-pill"/><text x="600" y="88" text-anchor="middle" class="m-pilltext">NGOs and public-good groups</text>
-<rect x="780" y="60" width="270" height="44" rx="22" class="m-pill"/><text x="915" y="88" text-anchor="middle" class="m-pilltext">Any AI agent</text>
-<text x="46" y="150" class="m-band">SURFACES</text>
-<rect x="46" y="166" width="262" height="212" rx="16" class="m-card"/>
-<text x="68" y="206" class="m-title">Home</text>
-<text x="68" y="258" class="m-role">The front door</text>
-<text x="68" y="286" class="m-body">Links every place, and helps</text>
-<text x="68" y="307" class="m-body">any agent connect</text>
-<text x="68" y="360" class="m-repo">home.ta-amps.workers.dev</text>
-<rect x="328" y="166" width="262" height="212" rx="16" class="m-card-hero"/>
-<text x="350" y="206" class="m-title">Eranos</text>
-<text x="350" y="229" class="m-myth">a fund friends pay into</text>
-<text x="350" y="258" class="m-role">The two-sided marketplace</text>
-<rect x="348" y="274" width="122" height="32" rx="16" class="m-btn"/><text x="409" y="295" text-anchor="middle" class="m-btntext">I want to help</text>
-<rect x="476" y="274" width="94" height="32" rx="16" class="m-btn2"/><text x="523" y="295" text-anchor="middle" class="m-btn2text">I’m an NGO</text>
-<text x="350" y="330" class="m-body">Helpers’ agents build kits;</text>
-<text x="350" y="350" class="m-body">NGOs get reviewed kits</text>
-<text x="568" y="206" text-anchor="end" class="m-repo">ta-amps/eranos</text>
-<rect x="610" y="166" width="262" height="212" rx="16" class="m-card"/>
-<text x="632" y="206" class="m-title">Herma</text>
-<text x="632" y="229" class="m-myth">a waymarker at the crossroads</text>
-<text x="632" y="258" class="m-role">The connector</text>
-<text x="632" y="286" class="m-body">Agents plug in for the right</text>
-<text x="632" y="307" class="m-body">context and models</text>
-<text x="632" y="360" class="m-repo">ta-amps/herma</text>
-<rect x="892" y="166" width="262" height="212" rx="16" class="m-card"/>
-<text x="914" y="206" class="m-title">Agora</text>
-<text x="914" y="229" class="m-myth">the city’s public square</text>
-<text x="914" y="258" class="m-role">The public noticeboard</text>
-<text x="914" y="286" class="m-body">Decks, docs and dated</text>
-<text x="914" y="307" class="m-body">evidence. This site.</text>
-<text x="914" y="360" class="m-repo">ta-amps/agora</text>
-<rect x="46" y="424" width="1108" height="122" rx="16" class="m-infra"/>
-<text x="76" y="450" class="m-infra-label">INFRASTRUCTURE</text>
-<text x="76" y="482" class="m-infra-title">Tessera</text>
-<text x="76" y="504" class="m-infra-myth">a mosaic tile, and a token of proof</text>
-<text x="76" y="532" class="m-infra-repo">ta-amps/tessera · tessera.ta-amps.workers.dev</text>
-<rect x="420" y="452" width="163" height="26" rx="13" class="m-infra-chip"/><text x="501.5" y="469.5" text-anchor="middle" class="m-chiptext m-on-dark">to-do list of verbs</text>
-<rect x="593" y="452" width="141" height="26" rx="13" class="m-infra-chip"/><text x="663.5" y="469.5" text-anchor="middle" class="m-chiptext m-on-dark">storage of nouns</text>
-<rect x="744" y="452" width="104" height="26" rx="13" class="m-infra-chip"/><text x="796.0" y="469.5" text-anchor="middle" class="m-chiptext m-on-dark">permissions</text>
-<rect x="858" y="452" width="68" height="26" rx="13" class="m-infra-chip"/><text x="892.0" y="469.5" text-anchor="middle" class="m-chiptext m-on-dark">leases</text>
-<rect x="936" y="452" width="82" height="26" rx="13" class="m-infra-chip"/><text x="977.0" y="469.5" text-anchor="middle" class="m-chiptext m-on-dark">receipts</text>
-<rect x="1028" y="452" width="82" height="26" rx="13" class="m-infra-chip"/><text x="1069.0" y="469.5" text-anchor="middle" class="m-chiptext m-on-dark">learning</text>
-<text x="400" y="584" class="m-note">workers claim verbs here, and results are stored as nouns</text>
-<text x="46" y="594" class="m-band">NOUNS AND VERBS</text>
-<rect x="46" y="604" width="654" height="172" rx="16" class="m-lib"/>
-<text x="76" y="644" class="m-title">Seed-pack library</text>
-<text x="76" y="670" class="m-body">Plain collections of nouns and verbs, never branded. ta-amps/pack-contributions</text>
-<rect x="76" y="688" width="250" height="26" rx="13" class="m-chip"/><text x="201.0" y="705.5" text-anchor="middle" class="m-chiptext">spotting exploitation and scams</text>
-<rect x="336" y="688" width="163" height="26" rx="13" class="m-chip"/><text x="417.5" y="705.5" text-anchor="middle" class="m-chiptext">making a demo video</text>
-<rect x="76" y="724" width="192" height="26" rx="13" class="m-chip"/><text x="172.0" y="741.5" text-anchor="middle" class="m-chiptext">composing verified code</text>
-<rect x="278" y="724" width="141" height="26" rx="13" class="m-chip"/><text x="348.5" y="741.5" text-anchor="middle" class="m-chiptext">reviewing a repo</text>
-<rect x="429" y="724" width="148" height="26" rx="13" class="m-chip"/><text x="503.0" y="741.5" text-anchor="middle" class="m-chiptext">finding new tools</text>
-<rect x="76" y="760" width="141" height="26" rx="13" class="m-chip"/><text x="146.5" y="777.5" text-anchor="middle" class="m-chiptext">public-good kits</text>
-<rect x="227" y="760" width="104" height="26" rx="13" class="m-chip"/><text x="279.0" y="777.5" text-anchor="middle" class="m-chiptext">and 11 more</text>
-<rect x="720" y="604" width="434" height="172" rx="16" class="m-lib"/>
-<text x="750" y="644" class="m-title">Agent kits</text>
-<text x="750" y="670" class="m-body">What an NGO gets from Eranos. Every part is a noun.</text>
-<rect x="750" y="688" width="112" height="26" rx="13" class="m-chip-noun"/><text x="806.0" y="705.5" text-anchor="middle" class="m-chiptext">instructions</text>
-<rect x="872" y="688" width="68" height="26" rx="13" class="m-chip-noun"/><text x="906.0" y="705.5" text-anchor="middle" class="m-chiptext">skills</text>
-<rect x="950" y="688" width="90" height="26" rx="13" class="m-chip-noun"/><text x="995.0" y="705.5" text-anchor="middle" class="m-chiptext">knowledge</text>
-<rect x="750" y="724" width="192" height="26" rx="13" class="m-chip-noun"/><text x="846.0" y="741.5" text-anchor="middle" class="m-chiptext">connections to services</text>
-<rect x="952" y="724" width="82" height="26" rx="13" class="m-chip-noun"/><text x="993.0" y="741.5" text-anchor="middle" class="m-chiptext">step map</text>
-<rect x="750" y="760" width="141" height="26" rx="13" class="m-chip-noun"/><text x="820.5" y="777.5" text-anchor="middle" class="m-chiptext">checks and tests</text>
-<text x="400" y="812" class="m-note">some nouns point at tested code</text>
-<rect x="46" y="826" width="270" height="56" rx="12" class="m-code"/><text x="64" y="850" class="m-codetitle">Video and motion tools</text><text x="64" y="870" class="m-codesub">plain-name repo, coming</text>
-<rect x="326" y="826" width="270" height="56" rx="12" class="m-code"/><text x="344" y="850" class="m-codetitle">Code-composition tools</text><text x="344" y="870" class="m-codesub">plain-name repo, coming</text>
-<rect x="606" y="826" width="270" height="56" rx="12" class="m-code"/><text x="624" y="850" class="m-codetitle">Exploitation-pack code</text><text x="624" y="870" class="m-codesub">archived, read-only</text>
-<rect x="886" y="826" width="270" height="56" rx="12" class="m-code"/><text x="904" y="850" class="m-codetitle">hackathon-context</text><text x="904" y="870" class="m-codesub">reference: an event guide</text>
-<path d="M300 104 L440 162" class="m-arrow"/>
-<path d="M600 104 L480 162" class="m-arrow"/>
-<path d="M915 104 L748 162" class="m-arrow"/>
-<path d="M177 378 L177 420" class="m-arrow"/>
-<path d="M459 378 L459 420" class="m-arrow"/>
-<path d="M741 378 L741 420" class="m-arrow"/>
-<path d="M1023 378 L1023 420" class="m-arrow"/>
-<path d="M380 546 L380 602" class="m-arrow"/>
-<path d="M940 546 L940 602" class="m-arrow"/>
-<path d="M380 776 L380 822" class="m-arrow"/>
+
+<rect x="300" y="24" width="600" height="48" rx="24" class="m-pill"/>
+<text x="600" y="54" text-anchor="middle" class="m-pilltext">Contributors and consumers: people, or their AI agents</text>
+<path d="M480 72 L330 128" class="m-arrow"/>
+<path d="M720 72 L870 128" class="m-arrow"/>
+
+<text x="46" y="122" class="m-band">TWO PUBLIC SURFACES</text>
+<rect x="46" y="134" width="540" height="196" rx="18" class="m-card-hero"/>
+<text x="76" y="178" class="m-title">Eranos</text>
+<text x="200" y="178" class="m-myth">a fund friends pay into</text>
+<text x="76" y="208" class="m-role">The two-sided marketplace</text>
+<rect x="76" y="226" width="150" height="36" rx="18" class="m-btn"/>
+<text x="151" y="249" text-anchor="middle" class="m-btntext">I want to help</text>
+<rect x="236" y="226" width="320" height="36" rx="18" class="m-btn2"/>
+<text x="396" y="249" text-anchor="middle" class="m-btn2text">I’m an NGO looking for agentic solutions</text>
+<text x="76" y="306" class="m-repo">ta-amps/eranos · eranos.ta-amps.workers.dev</text>
+
+<rect x="614" y="134" width="540" height="196" rx="18" class="m-card-hero"/>
+<text x="644" y="178" class="m-title">Agora</text>
+<text x="762" y="178" class="m-myth">the city’s public square</text>
+<text x="644" y="208" class="m-role">The overview</text>
+<text x="644" y="238" class="m-body">How it works and how to set it up, use cases,</text>
+<text x="644" y="260" class="m-body">and how anyone connects as a contributor or consumer</text>
+<text x="644" y="306" class="m-repo">ta-amps/agora · ta-amps.github.io/agora</text>
+
+<path d="M316 330 L316 386" class="m-arrow"/>
+<path d="M884 330 L884 386" class="m-arrow"/>
+
+<rect x="46" y="390" width="1108" height="128" rx="18" class="m-infra"/>
+<text x="76" y="420" class="m-infra-label">INFRASTRUCTURE · NOT A PLACE PEOPLE VISIT</text>
+<text x="76" y="458" class="m-infra-title">Tessera</text>
+<text x="210" y="458" class="m-infra-myth">a mosaic tile, and a token of proof</text>
+<text x="76" y="488" class="m-infra-body">Work, storage, permissions and receipts</text>
+<text x="644" y="458" class="m-infra-title">Herma</text>
+<text x="760" y="458" class="m-infra-myth">a waymarker at the crossroads</text>
+<text x="644" y="488" class="m-infra-body">Connects any agent to context and models</text>
+
+<path d="M600 518 L600 574" class="m-arrow"/>
+<text x="616" y="552" class="m-note">workers claim verbs; results are stored as nouns</text>
+
+<text x="46" y="570" class="m-band">NOUNS AND VERBS</text>
+<rect x="46" y="582" width="1108" height="96" rx="18" class="m-lib"/>
+<text x="76" y="620" class="m-title">Seed packs</text>
+<text x="76" y="650" class="m-body">Everything reusable. An agent kit is a seed pack made for an NGO’s agent: its harness, model, instructions, skills,</text>
+<text x="76" y="670" class="m-body">knowledge, connections and working files, plus the checks that prove it works.   ta-amps/pack-contributions</text>
 </svg>
 </div>
-<figcaption>Read it top to bottom. People and agents come in through a surface. Every surface runs on Tessera. The work itself is nouns and verbs.</figcaption>
+<figcaption>Two places to go, one engine underneath, and everything else is nouns and verbs.</figcaption>
 </figure>
 </div>
 <div class="wrap doc">
@@ -175,43 +141,36 @@
 </nav>
 <!-- /site:docnav -->
 <div class="prose">
+<h2 id="surfaces">The two public surfaces</h2>
+<ul>
+<li><strong>Eranos, the two-sided marketplace.</strong> “I want to help”: donate spare AI capacity, and your agent builds and reviews nouns and verbs for good causes. “I’m an NGO looking for agentic solutions”: describe what you need and get a reviewed agent kit. <a href="https://eranos.ta-amps.workers.dev">eranos.ta-amps.workers.dev</a></li>
+<li><strong>Agora, the overview.</strong> How it works, how to set it up, use cases, and how anyone connects, as a contributor or a consumer. This site.</li>
+</ul>
+
+<h2 id="infrastructure">The infrastructure</h2>
+<ul>
+<li><strong>Tessera</strong> keeps the work, storage, permissions and receipts. A verb is claimed by one worker at a time, and every finished verb leaves a receipt. <a href="https://github.com/ta-amps/tessera">Source</a></li>
+<li><strong>Herma</strong> connects any agent to the right context and to models. <a href="https://github.com/ta-amps/herma">Source</a></li>
+</ul>
+
+<h2 id="packs">Nouns, verbs and seed packs</h2>
+<p>Nouns are reusable things. Verbs are work that a worker claims, does and reports. A seed pack bundles nouns and verbs so anyone can reuse them; it carries a plain name that says what it does. <a href="https://github.com/ta-amps/pack-contributions">The seed-pack library</a> holds them.</p>
+<p>An <strong>agent kit</strong> is simply a seed pack made for an NGO’s agent. One noun can hold an agent’s whole setup: its harness, its model and the files in its working directory. The verbs build it, check it and review it, and the agent that builds a kit can never approve it.</p>
 
 <h2 id="repos">Each repo, in one line</h2>
 <div class="table-scroll">
 <table class="map-table">
-<thead><tr><th>Repo</th><th>Kind</th><th>What it holds</th><th>Where it runs</th></tr></thead>
 <tbody>
-<tr><td><a href="https://github.com/ta-amps/eranos">eranos</a></td><td>Surface</td><td>The two-sided marketplace. “I want to help”: people donate spare AI capacity and their agents build and review agent kits. “I’m an NGO looking for agentic solutions”: groups describe a need and get a reviewed kit. Its tracks, briefs and kits are nouns.</td><td><a href="https://eranos.ta-amps.workers.dev">eranos.ta-amps.workers.dev</a></td></tr>
-<tr><td>home (private source)</td><td>Surface</td><td>The front door: links every place and helps any agent connect. A daily check makes sure the other surfaces are healthy.</td><td><a href="https://home.ta-amps.workers.dev">home.ta-amps.workers.dev</a></td></tr>
-<tr><td><a href="https://github.com/ta-amps/herma">herma</a></td><td>Surface (a connector)</td><td>Agents plug into it to get the right nouns in front of them as they work, and recorded connections to models.</td><td><a href="https://herma.ta-amps.workers.dev">herma.ta-amps.workers.dev</a></td></tr>
-<tr><td><a href="https://github.com/ta-amps/agora">agora</a></td><td>Surface</td><td>This public noticeboard: the decks, the video storyboard, the docs and dated evidence. No work happens here.</td><td><a href="https://ta-amps.github.io/agora/">ta-amps.github.io/agora</a></td></tr>
-<tr><td><a href="https://github.com/ta-amps/tessera">tessera</a></td><td>Infrastructure</td><td>The engine under every surface: the to-do list of verbs, versioned storage of nouns, permissions, leases, receipts and the learners that improve what gets reused.</td><td><a href="https://tessera.ta-amps.workers.dev">tessera.ta-amps.workers.dev</a></td></tr>
-<tr><td><a href="https://github.com/ta-amps/pack-contributions">pack-contributions</a></td><td>Nouns and verbs</td><td>The seed-pack library. Every pack is a plain collection of nouns and verbs, named for what it does. It holds data only; importing a pack runs nothing.</td><td>GitHub</td></tr>
-<tr><td><a href="https://github.com/ta-amps/hackathon-context">hackathon-context</a></td><td>Reference</td><td>A general guide to the hackathon’s rules, dates and Meta’s platform. It names no project.</td><td>GitHub</td></tr>
-<tr><td>Three older repos</td><td>Being renamed or archived</td><td>Their nouns and verbs are in the library. Their tested code stays in repos with plain names, and their old websites now show a notice.</td><td>Notices only</td></tr>
+<tr><td><a href="https://github.com/ta-amps/eranos">eranos</a></td><td>Public surface: the two-sided marketplace</td></tr>
+<tr><td><a href="https://github.com/ta-amps/agora">agora</a></td><td>Public surface: the overview</td></tr>
+<tr><td><a href="https://github.com/ta-amps/tessera">tessera</a></td><td>Infrastructure: work, storage, permissions and receipts</td></tr>
+<tr><td><a href="https://github.com/ta-amps/herma">herma</a></td><td>Infrastructure: connects any agent to context and models</td></tr>
+<tr><td><a href="https://github.com/ta-amps/pack-contributions">pack-contributions</a></td><td>Nouns and verbs: every seed pack, including agent kits</td></tr>
+<tr><td><a href="https://github.com/ta-amps/hackathon-context">hackathon-context</a></td><td>Not part of the system: a general guide to the hackathon</td></tr>
 </tbody>
 </table>
 </div>
-
-<h2 id="names">Why these names</h2>
-<p>The surfaces and the engine are named for what their old meanings describe. Seed packs are never named; each says what it does.</p>
-<div class="table-scroll">
-<table class="map-table names">
-<tbody>
-<tr><td>Eranos</td><td>In ancient Greece, a fund that friends paid into so that anyone in need could draw on it. Givers on one side, people who need help on the other.</td></tr>
-<tr><td>Agora</td><td>The city’s public square, where notices and news were posted for everyone to read.</td></tr>
-<tr><td>Herma</td><td>A waymarker of Hermes, the guide and messenger, set at crossroads and boundaries.</td></tr>
-<tr><td>Tessera</td><td>A small tile in a mosaic, and a token people carried as proof. Every noun and verb is a tile, and every finished verb leaves a receipt.</td></tr>
-</tbody>
-</table>
-</div>
-
-<h2 id="kits">What an agent kit is</h2>
-<p>An NGO doesn’t get a single tool. It gets an agent kit: a customized, tested harness with everything an agent needs to do one job well. That means instructions, skills, knowledge, connections to services, a step map that keeps some steps for people only, and checks and tests. Every part is a noun. Building, checking and reviewing the kit are verbs, and the agent that builds a kit can never approve it.</p>
-
-<h2 id="packs">Seed packs today</h2>
-<p>The <a href="https://github.com/ta-amps/pack-contributions">library</a> holds sixteen packs, including the one for spotting exploitation and scams in synthetic cases. Packs for video and motion, composing verified code, and researching what already exists before building are moving in now. Every pack is a proposal and a validated example; none is installed or switched on anywhere.</p>
-<p class="item-meta">Updated October 29, 2026.</p>
+<p class="item-meta">Older repos for three earlier packs are being renamed or archived; their packs live in the library. The address home.ta-amps.workers.dev sends people here and keeps agents’ connection points. Updated October 29, 2026.</p>
 </div>
 </div>
 </main>
