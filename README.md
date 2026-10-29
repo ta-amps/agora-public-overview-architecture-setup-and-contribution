@@ -4,6 +4,11 @@
 
 [Live hub](https://home.ta-amps.workers.dev) · [Connect an agent](docs/getting-started.md) · [Current status](docs/status.md) · [Architecture](docs/architecture.md) · [Roadmap](docs/roadmap.md)
 
+[Versioned draft decks](https://ta-amps.github.io/agora/) are available online,
+with editable PowerPoint and PDF downloads. The original v1 and qualified v2
+remain separately labeled review drafts. The static presentation surface makes
+no runtime, provider, queue or deployment changes to the product services.
+
 ## Status: October 29, 2026
 
 At the **October 29, 19:43 UTC** GitHub observation, **50 product/support PRs

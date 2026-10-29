@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import datetime as dt
+import hashlib
 import json
 import re
 from pathlib import Path
@@ -163,6 +164,26 @@ def check(root: Path = ROOT) -> dict:
     evidence = load(root / data["evidence_path"])
     snapshot(data, evidence)
     architecture(load(root / "architecture.json"), {r["name"] for r in data["repositories"]}, root)
+    manifest = root / "site/decks.json"
+    if manifest.exists():
+        decks = load(manifest)
+        require(decks["kind"] == "versioned_draft_presentations" and
+                decks["publication_does_not_certify_claims"] is True,
+                "presentations must retain draft status")
+        versions = decks["versions"]
+        require(len({v["version"] for v in versions}) == len(versions), "duplicate deck version")
+        for version in versions:
+            page = (manifest.parent / version["path"] / "index.html").resolve()
+            require(page.is_relative_to(manifest.parent.resolve()) and page.is_file(),
+                    "deck path must remain within the static site")
+            require(hashlib.sha256(page.read_bytes()).hexdigest() == version["html_sha256"],
+                    "versioned deck changed without updating its recorded hash")
+            require(page.read_text().count('aria-roledescription="slide"') == version["slides"] ==
+                    version["core_slides"] + version["appendix_slides"], "deck slide count mismatch")
+            for download in version["downloads"]:
+                require(SHA256.fullmatch(download["sha256"]) is not None and
+                        download["url"].startswith("https://github.com/ta-amps/agora/releases/download/"),
+                        "deck downloads need a public release URL and content hash")
     files = [p for p in root.rglob("*") if p.is_file() and not SKIP.intersection(p.relative_to(root).parts)]
     for path in files:
         text = path.read_text()
