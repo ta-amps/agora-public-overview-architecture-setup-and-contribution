@@ -1,0 +1,76 @@
+name: Propose a seed pack
+description: Suggest a collection of nouns and verbs for an industry, niche, topic or pipeline.
+title: "Seed pack: "
+labels: ["seed-pack-proposal"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for proposing a seed pack. A seed pack is a collection of nouns (reusable things) and verbs (jobs a worker can claim, execute and report) for one kind of work.
+
+        Share only public facts and synthetic examples. Don't paste credentials, personal data or anything private. A proposal starts a review; it doesn't run, install, admit or publish anything.
+  - type: input
+    id: name
+    attributes:
+      label: Name in plain English
+      description: Say what it is for, with no brand name.
+      placeholder: A collection of nouns and verbs for ...
+    validations:
+      required: true
+  - type: input
+    id: area
+    attributes:
+      label: Industry, niche, topic or pipeline
+      description: Who it helps, and with what kind of work.
+      placeholder: For example, food safety rules for small kitchens
+    validations:
+      required: true
+  - type: textarea
+    id: nouns
+    attributes:
+      label: Nouns it would contain
+      description: Reusable things, such as sources, rules, tools, code, recipes, datasets, checklists and examples.
+    validations:
+      required: true
+  - type: textarea
+    id: verbs
+    attributes:
+      label: Verbs it would run
+      description: Jobs a worker can claim, execute and report, such as "check each source for changes" or "compare two tools on the same task".
+    validations:
+      required: true
+  - type: textarea
+    id: freshness
+    attributes:
+      label: How freshness is kept
+      description: Which verbs keep the nouns current, how often they run, and when something counts as stale.
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Sources and licenses
+      description: Where the knowledge comes from, and the license or terms for each source. "Unsure" is a fine answer.
+    validations:
+      required: true
+  - type: textarea
+    id: checks
+    attributes:
+      label: How to check results
+      description: How a worker or a person can tell a result is right, such as tests, reference answers, a measurement or a reviewer who knows the field.
+    validations:
+      required: true
+  - type: input
+    id: contact
+    attributes:
+      label: Contact (optional)
+      description: A public handle or link if you would like to help build it. Never a private email address or phone number.
+    validations:
+      required: false
+  - type: checkboxes
+    id: public
+    attributes:
+      label: Safe to share
+      options:
+        - label: This proposal contains only public facts or synthetic examples, and no credentials or personal data.
+          required: true

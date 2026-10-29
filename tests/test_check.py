@@ -1,5 +1,7 @@
 import copy
+import hashlib
 import importlib.util
+import shutil
 import tempfile
 import unittest
 from pathlib import Path
@@ -98,6 +100,85 @@ class PublicationChecks(unittest.TestCase):
             invalid[field] = value
             with self.assertRaises(ValueError):
                 check.architecture(invalid, names, ROOT)
+
+
+PUBLISHED = {"v1": "f82b276b2fde16f993c958845de56026a4a2ef50a655d616a93b7f8c377803e4",
+             "v2": "5ebb6fefbd04ed37907d27ab2b07974d1b0e785eadd1bf9550daf05231a5ac02"}
+
+
+def page(path: Path, body: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text("<!doctype html><html><body>" + body + "</body></html>")
+
+
+class SiteChecks(unittest.TestCase):
+    def test_published_deck_versions_never_change(self):
+        decks = check.load(ROOT / "site/decks.json")
+        for version in decks["versions"][:2]:
+            self.assertEqual(PUBLISHED[version["version"]], version["html_sha256"])
+            data = (ROOT / "site" / version["path"] / "index.html").read_bytes()
+            self.assertEqual(PUBLISHED[version["version"]], hashlib.sha256(data).hexdigest())
+
+    def test_site_links_must_resolve_inside_the_site(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            site = root / "site"
+            page(site / "index.html", '<a href="docs/">Docs</a><a href="/agora/docs/#top">Top</a><p id="here"></p>')
+            page(site / "docs/index.html", '<h1 id="top">Docs</h1><a href="../#here">Back</a>')
+            pages = check.site_pages(site)
+            for path in pages:
+                check.site_links(path, site, pages, root)
+            for body in ('<a href="missing/">x</a>', '<a href="../outside.html">x</a>', '<a href="#nowhere">x</a>',
+                         '<a href="docs/#nowhere">x</a>', '<a href="/elsewhere/">x</a>'):
+                page(site / "bad.html", body)
+                pages = check.site_pages(site)
+                with self.assertRaises(ValueError):
+                    check.site_links(site / "bad.html", site, pages, root)
+
+    def test_issue_form_links_need_their_form(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            site = root / "site"
+            link = '<a href="https://github.com/ta-amps/agora/issues/new?template=feedback.yml">Feedback</a>'
+            page(site / "index.html", link)
+            pages = check.site_pages(site)
+            with self.assertRaises(ValueError):
+                check.site_links(site / "index.html", site, pages, root)
+            (root / ".github/ISSUE_TEMPLATE").mkdir(parents=True)
+            (root / ".github/ISSUE_TEMPLATE/feedback.yml").write_text("name: Feedback\n")
+            check.site_links(site / "index.html", site, pages, root)
+
+    def test_site_downloads_are_hash_checked(self):
+        with tempfile.TemporaryDirectory() as directory:
+            site = Path(directory)
+            data = b"%PDF-1.7 synthetic"
+            (site / "deck.pdf").write_bytes(data)
+            entry = {"format": "pdf", "path": "deck.pdf", "sha256": hashlib.sha256(data).hexdigest(), "bytes": len(data)}
+            self.assertEqual("deck.pdf", check.deck_download(entry, site))
+            for field, value in (("sha256", "0" * 64), ("bytes", 1), ("path", "../deck.pdf"), ("path", "other.pdf")):
+                with self.assertRaises(ValueError):
+                    check.deck_download(dict(entry, **{field: value}), site)
+            with self.assertRaises(ValueError):
+                check.deck_download({"format": "pdf", "url": "https://example.invalid/deck.pdf", "sha256": "0" * 64}, site)
+
+    def test_undeclared_binary_files_are_rejected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / "repo"
+            shutil.copytree(ROOT, root, ignore=shutil.ignore_patterns(".git", "__pycache__", ".venv"))
+            self.assertTrue(check.check(root)["offline_only"])
+            (root / "site/extra.pdf").write_bytes(b"%PDF-1.7 not declared")
+            with self.assertRaisesRegex(ValueError, "undeclared binary"):
+                check.check(root)
+
+    def test_retired_pack_names_are_blocked_on_public_pages(self):
+        saved = check.RETIRED_NAME_HASHES
+        try:
+            check.RETIRED_NAME_HASHES = {hashlib.sha256(b"oldname").hexdigest()}
+            self.assertTrue(check.retired_names("<p>The Oldname pack</p>"))
+            self.assertFalse(check.retired_names('<li data-provenance="https://example.invalid/oldname">A pack</li>'))
+            self.assertFalse(check.retired_names("<p>A collection of nouns and verbs</p>"))
+        finally:
+            check.RETIRED_NAME_HASHES = saved
 
 
 if __name__ == "__main__":

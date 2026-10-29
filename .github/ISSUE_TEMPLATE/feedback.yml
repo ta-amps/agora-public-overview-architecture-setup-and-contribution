@@ -1,0 +1,43 @@
+name: Give feedback
+description: Tell us what you looked at, what worked, what didn't, and what you would change.
+title: "Feedback: "
+labels: ["feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking a look. Short notes are welcome. Please don't include credentials or personal data.
+  - type: input
+    id: looked-at
+    attributes:
+      label: What you looked at
+      description: A page, the draft deck, the storyboard, a live site or a repository. A link helps.
+      placeholder: For example, https://ta-amps.github.io/agora/decks/2026-10-29/v4/
+    validations:
+      required: true
+  - type: textarea
+    id: worked
+    attributes:
+      label: What worked
+    validations:
+      required: false
+  - type: textarea
+    id: did-not-work
+    attributes:
+      label: What didn't work
+      description: Anything confusing, wrong, out of date or broken.
+    validations:
+      required: false
+  - type: textarea
+    id: suggestions
+    attributes:
+      label: Suggestions
+    validations:
+      required: false
+  - type: checkboxes
+    id: public
+    attributes:
+      label: Safe to share
+      options:
+        - label: This feedback contains no credentials or personal data.
+          required: true

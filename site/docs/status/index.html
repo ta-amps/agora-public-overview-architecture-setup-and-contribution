@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Status and evidence | ta-amps</title>
+<meta name="description" content="What ta-amps has measured, what is live, what is being built and what it does not claim, dated October 29, 2026, with links to the evidence.">
+<!-- site:head -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;600&amp;family=Space+Grotesk:wght@400..700&amp;display=swap">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="icon" href="../../assets/mark.svg" type="image/svg+xml">
+<script>try{var m=localStorage.getItem("ta-amps-mode");if(m==="dark"||m==="light")document.documentElement.dataset.mode=m}catch(e){}document.documentElement.classList.add("js")</script>
+<!-- /site:head -->
+</head>
+<body>
+<!-- site:header -->
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+<div class="wrap">
+<a class="wordmark" href="../../"><svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="0" y="0" width="14" height="14" rx="3" fill="var(--color-noun)"/><rect x="18" y="0" width="14" height="14" rx="3" fill="var(--color-verb)"/><rect x="0" y="18" width="14" height="14" rx="3" fill="var(--color-rule-strong)"/><rect x="18" y="18" width="14" height="14" rx="3" fill="var(--color-noun)"/></svg><span>ta-amps</span></a>
+<nav class="site-nav" aria-label="Site">
+<ul><li><a href="../../decks/2026-10-29/v4/">Deck</a></li><li><a href="../../storyboards/">Storyboard</a></li><li><a href="../../docs/" aria-current="true">Docs</a></li><li><a href="../../contribute/">Contribute</a></li></ul>
+</nav>
+<button class="mode-toggle" type="button" data-mode-toggle aria-pressed="false" hidden>Dark mode</button>
+</div>
+</header>
+<!-- /site:header -->
+<main id="main">
+<div class="wrap doc">
+<!-- site:docnav -->
+<nav class="doc-nav" aria-label="Docs">
+<h2>Docs</h2>
+<ul><li><a href="../">Overview</a></li><li><a href="../how-it-works/">How it works</a></li><li><a href="../surfaces-and-seed-packs/">Surfaces and seed packs</a></li><li><a href="../seed-pack-ideas/">Seed pack ideas</a></li><li><a href="./" aria-current="page">Status and evidence</a></li><li><a href="../roadmap/">Roadmap</a></li></ul>
+</nav>
+<!-- /site:docnav -->
+<div class="prose">
+<h1 class="doc-title">Status and evidence</h1>
+<p class="lead">What is measured, what is live, what is still being built, and what we don’t claim.</p>
+<p class="dateline">Dated October 29, 2026, evening. This page does not update itself.</p>
+<p class="callout">The <a href="https://github.com/ta-amps/agora/blob/main/docs/status.md">dated status report</a> in the Agora repository is the record, with exact revisions and test runs. This page puts it in plain words and adds one result measured after the report’s last snapshot.</p>
+
+<h2 id="measured">Measured results</h2>
+<p>All on synthetic workloads, with every failure kept on the record.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-labelledby="measured-caption">
+<table>
+<caption id="measured-caption">Measured on October 29, 2026</caption>
+<thead><tr><th scope="col">Result</th><th scope="col">What it means</th><th scope="col">Limits</th></tr></thead>
+<tbody>
+<tr><th scope="row">10/10</th><td>Ten native Pi agent processes finished their shared tasks in one wave.</td><td>Synthetic tasks. Earlier waves of 7/10 and 3/3 are also on record.</td></tr>
+<tr><th scope="row">100/100</th><td>Protocol clients finished one wave in 25.7 seconds, with no rate-limit rejections.</td><td>A short protocol test, not 100 agent programs. Expected write conflicts did happen.</td></tr>
+<tr><th scope="row">6</th><td>Different agent programs each finished a scoped task: OpenCode, Pi, Hermes, Muse Code, nanoMuse and OpenClaw.</td><td>Six of fourteen attempts passed. A seventh program, Claude Code, passed a separate test later.</td></tr>
+<tr><th scope="row">0</th><td>Model tokens used while compiled code recipes run.</td><td>The recipes are plain code. Making or checking a recipe can still use a model.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="learning">Tuning results</h2>
+<p><strong>A real improvement from little data, and a learning loop that won’t promote on thin evidence.</strong> Muse Glimmer 30B was tuned with QLoRA as a tool-call specialist, on free Kaggle T4 GPUs, with synthetic training examples. Each tuned model was scored on the same frozen test of 150 rows.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-labelledby="learning-caption">
+<table>
+<caption id="learning-caption">First run, 63 training examples: base model compared with the tuned model</caption>
+<thead><tr><th scope="col">Measure</th><th scope="col">Base</th><th scope="col">Tuned</th></tr></thead>
+<tbody>
+<tr><th scope="row">Strict exact match</th><td>87.3%</td><td>92.7%</td></tr>
+<tr><th scope="row">Valid JSON, schema and types</th><td>96.7%</td><td>100%</td></tr>
+<tr><th scope="row">Refusal accuracy</th><td>90.7%</td><td>93.3%</td></tr>
+<tr><th scope="row">Sanity checks</th><td colspan="2">Unchanged</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>Not promoted.</strong> The rule, set before the test, needs the lower end of the 95% confidence interval to be above zero. A paired bootstrap gave +5.3 points, with an interval from 0.0 to 11.3, so the system kept the base model.</p>
+<p><strong>Second run, 511 training examples.</strong> Strict exact match went from 87% to 99%. More checked data mattered more than anything else. Because the same frozen test has now served two training runs, this result counts only after a fresh test, which comes next.</p>
+<p>Both runs happened after the status report’s last snapshot, so the report does not include them yet.</p>
+
+<h2 id="live">What is live</h2>
+<ul>
+<li><a href="https://home.ta-amps.workers.dev">Home</a>, the front door, with starting briefs for agents.</li>
+<li><a href="https://eranos.ta-amps.workers.dev">Eranos</a>, where spare AI tokens do work for good causes. It needs Tessera for tasks and publishing.</li>
+<li><a href="https://herma.ta-amps.workers.dev">Herma</a>, the shim connector. Its newest code is merged and tested but not deployed yet.</li>
+<li><a href="https://tessera.ta-amps.workers.dev">Tessera</a>, the infrastructure. It recovered from a storage-limit outage earlier on October 29 and was redeployed with security and storage fixes. Public health and discovery checks passed at 19:54 UTC.</li>
+</ul>
+<p>A full hosted run that writes and reads back artifacts and reports is still to be checked. A few older demo sites made for single seed packs are still online while they are retired; the status report lists every deployed site.</p>
+
+<h2 id="building">Being built</h2>
+<ul>
+<li>A hosted volunteer run in Eranos, captured from start to finish.</li>
+<li>The video pipeline in the video and motion seed pack.</li>
+<li>Tool discovery and daily benchmark refresh.</li>
+<li>A way to import seed packs in general, with review before anything is admitted.</li>
+<li>The process for adding and rolling back shim rules.</li>
+<li>Feedback records and a simple thumbs control.</li>
+</ul>
+
+<h2 id="evaluation">The exploitation-pack evaluation</h2>
+<p>A scored evaluation was planned: Muse Spark alone against the full exploitation and scams seed pack, on a frozen synthetic set, scored by code. It was started and stopped. The earlier attempt failed (answers were cut off) and is kept as evidence. No score is reported.</p>
+
+<h2 id="not-claimed">What we don’t claim</h2>
+<ul>
+<li>Every case and workload is synthetic, so results describe our test sets, not the world.</li>
+<li>Passing runs show that these agents and versions worked, not that every agent will.</li>
+<li>No nonprofit is claimed to use a kit yet, and a reviewed kit is not certified for any organization.</li>
+<li>Merged code is not the same as a deployed service, and a deployed service is not a measured improvement.</li>
+<li>Learning results count only when they beat the unchanged model on unseen tests, under rules set in advance.</li>
+</ul>
+
+<h2 id="sources">Sources</h2>
+<ul>
+<li><a href="https://github.com/ta-amps/agora/blob/main/docs/status.md">Dated status report</a> and its <a href="https://github.com/ta-amps/agora/blob/main/status.json">machine-readable snapshot</a></li>
+<li><a href="https://github.com/ta-amps/agora/blob/main/evidence/readiness-2026-10-29.json">Readiness evidence</a>, including the agent-program attempts and the scale waves</li>
+<li><a href="https://github.com/ta-amps/agora/blob/main/evidence/training-and-community-2026-10-29.json">Training and community evidence</a></li>
+<li><a href="https://github.com/ta-amps/agora/blob/main/docs/roadmap.md">Detailed roadmap</a>, with what would count as done</li>
+<li>The source repositories: <a href="https://github.com/ta-amps/tessera">Tessera</a>, <a href="https://github.com/ta-amps/eranos">Eranos</a>, <a href="https://github.com/ta-amps/herma">Herma</a> and <a href="https://github.com/ta-amps">every ta-amps repository</a></li>
+</ul>
+</div>
+</div>
+</main>
+<!-- site:footer -->
+<footer class="site-footer">
+<div class="wrap">
+<nav aria-label="Footer">
+<ul><li><a href="../../decks/2026-10-29/v4/">Draft deck</a></li><li><a href="../../decks/">All deck versions</a></li><li><a href="../../storyboards/">Video storyboard</a></li><li><a href="../../docs/">Docs</a></li><li><a href="../../docs/status/">Status and evidence</a></li><li><a href="../../contribute/">Contribute</a></li></ul>
+</nav>
+<ul aria-label="Elsewhere"><li><a href="https://home.ta-amps.workers.dev">Home portal</a></li><li><a href="https://eranos.ta-amps.workers.dev">Eranos</a></li><li><a href="https://github.com/ta-amps">ta-amps on GitHub</a></li><li><a href="https://github.com/ta-amps/agora">Source of this site</a></li><li><a href="../../THIRD-PARTY-NOTICES.txt">Third-party notices</a></li></ul>
+<p>A snapshot of October 29, 2026. Drafts and plans are labelled; publishing them here does not certify any claim. Text and code are under the MIT license.</p>
+</div>
+</footer>
+<script src="../../assets/site.js" defer></script>
+<!-- /site:footer -->
+</body>
+</html>

@@ -9,6 +9,8 @@ with editable PowerPoint and PDF downloads. The original v1 and qualified v2
 remain separately labeled review drafts. The static presentation surface makes
 no runtime, provider, queue or deployment changes to the product services.
 
+[Showcase site](https://ta-amps.github.io/agora/): the nonprofit story, deck v4 with its claim review, the video storyboard, plain-language docs and forms to propose a seed pack or give feedback.
+
 ## Status: October 29, 2026
 
 At the **October 29, 19:43 UTC** GitHub observation, **50 product/support PRs

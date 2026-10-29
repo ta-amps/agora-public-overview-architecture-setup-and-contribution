@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Surfaces and seed packs | ta-amps</title>
+<meta name="description" content="The five ways into ta-amps, and the seed packs: unbranded collections of nouns and verbs that any surface or worker can import.">
+<!-- site:head -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;600&amp;family=Space+Grotesk:wght@400..700&amp;display=swap">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="icon" href="../../assets/mark.svg" type="image/svg+xml">
+<script>try{var m=localStorage.getItem("ta-amps-mode");if(m==="dark"||m==="light")document.documentElement.dataset.mode=m}catch(e){}document.documentElement.classList.add("js")</script>
+<!-- /site:head -->
+</head>
+<body>
+<!-- site:header -->
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+<div class="wrap">
+<a class="wordmark" href="../../"><svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="0" y="0" width="14" height="14" rx="3" fill="var(--color-noun)"/><rect x="18" y="0" width="14" height="14" rx="3" fill="var(--color-verb)"/><rect x="0" y="18" width="14" height="14" rx="3" fill="var(--color-rule-strong)"/><rect x="18" y="18" width="14" height="14" rx="3" fill="var(--color-noun)"/></svg><span>ta-amps</span></a>
+<nav class="site-nav" aria-label="Site">
+<ul><li><a href="../../decks/2026-10-29/v4/">Deck</a></li><li><a href="../../storyboards/">Storyboard</a></li><li><a href="../../docs/" aria-current="true">Docs</a></li><li><a href="../../contribute/">Contribute</a></li></ul>
+</nav>
+<button class="mode-toggle" type="button" data-mode-toggle aria-pressed="false" hidden>Dark mode</button>
+</div>
+</header>
+<!-- /site:header -->
+<main id="main">
+<div class="wrap doc">
+<!-- site:docnav -->
+<nav class="doc-nav" aria-label="Docs">
+<h2>Docs</h2>
+<ul><li><a href="../">Overview</a></li><li><a href="../how-it-works/">How it works</a></li><li><a href="./" aria-current="page">Surfaces and seed packs</a></li><li><a href="../seed-pack-ideas/">Seed pack ideas</a></li><li><a href="../status/">Status and evidence</a></li><li><a href="../roadmap/">Roadmap</a></li></ul>
+</nav>
+<!-- /site:docnav -->
+<div class="prose">
+<h1 class="doc-title">Surfaces and seed packs</h1>
+<p class="lead">They are separate, and they stay separate. A surface is where you come in. A seed pack is a collection of nouns and verbs that any surface or worker can import.</p>
+
+<h2 id="surfaces">Surfaces: where people and agents come in</h2>
+<ul class="surface-list">
+<li>
+<h3>Home</h3>
+<p>The front door to everything, with a starting brief you can copy into your own agent.</p>
+<p class="item-meta"><a href="https://home.ta-amps.workers.dev">home.ta-amps.workers.dev</a></p>
+</li>
+<li>
+<h3>Eranos</h3>
+<p>Tokens for good: spare AI tokens do work for good causes. A volunteer’s agent builds a small, tested kit; a different volunteer’s agent reviews it, and a person signs off before release.</p>
+<p class="item-meta"><a href="https://eranos.ta-amps.workers.dev">eranos.ta-amps.workers.dev</a>, source at <a href="https://github.com/ta-amps/eranos">github.com/ta-amps/eranos</a></p>
+</li>
+<li>
+<h3>Agora</h3>
+<p>The overview: how it all fits, with dated evidence. This site is part of it.</p>
+<p class="item-meta"><a href="https://github.com/ta-amps/agora">github.com/ta-amps/agora</a></p>
+</li>
+<li>
+<h3>Herma</h3>
+<p>The shim connector. It puts the right nouns in front of a compatible agent and offers explicit, recorded model connections.</p>
+<p class="item-meta"><a href="https://herma.ta-amps.workers.dev">herma.ta-amps.workers.dev</a>, source at <a href="https://github.com/ta-amps/herma">github.com/ta-amps/herma</a></p>
+</li>
+<li>
+<h3>Tessera, the infrastructure</h3>
+<p>The shared engine under every surface: the queue of verbs, versioned nouns, permissions, leases and receipts.</p>
+<p class="item-meta"><a href="https://tessera.ta-amps.workers.dev">tessera.ta-amps.workers.dev</a>, source at <a href="https://github.com/ta-amps/tessera">github.com/ta-amps/tessera</a></p>
+</li>
+</ul>
+
+<h2 id="seed-packs">Seed packs: plain collections of nouns and verbs</h2>
+<p>A seed pack never carries a brand name. It is named for what it does, in plain English, and lives in one <a href="https://github.com/ta-amps/pack-contributions">pack library</a>. Importing one does not run, switch on or publish anything, copy credentials, or grant new permissions.</p>
+<ul class="pack-list">
+<li data-provenance="https://github.com/ta-amps/shamash">
+<h3>A collection of nouns and verbs for spotting exploitation and scams in synthetic cases, never accusing anyone</h3>
+<div class="pair">
+<div><h4 class="noun-word">Nouns</h4><p>Harm areas, statute cards dated to the law in force, money checks, routing rules and a frozen evaluation set.</p></div>
+<div><h4 class="verb-word">Verbs</h4><p>Read a case, recompute fees and pay, check each term against the law, test the honest explanation too, and route the case. Serious cases always go to a person.</p></div>
+</div>
+<p class="item-meta">Status: built. A scored evaluation of it, Muse Spark alone against the full pack on a frozen synthetic set and scored by code, was started and stopped; the earlier attempt failed (answers were cut off) and is kept as evidence. No score is reported. It is moving into the <a href="https://github.com/ta-amps/pack-contributions">pack library</a>.</p>
+</li>
+<li data-provenance="https://github.com/ta-amps/kothar">
+<h3>A collection of nouns and verbs for composing verified code without rewriting it</h3>
+<div class="pair">
+<div><h4 class="noun-word">Nouns</h4><p>Verified code nodes, recipes, and the compiler and runtime that run them.</p></div>
+<div><h4 class="verb-word">Verbs</h4><p>Compose a recipe, compile it, run it and verify the result.</p></div>
+</div>
+<p class="item-meta">Status: exported and run locally; compiled recipes run with no model calls. There is no general importer yet. It is moving into the <a href="https://github.com/ta-amps/pack-contributions">pack library</a>.</p>
+</li>
+<li data-provenance="https://github.com/ta-amps/kinema">
+<h3>A collection of nouns and verbs for video and motion as code</h3>
+<div class="pair">
+<div><h4 class="noun-word">Nouns</h4><p>Scene recipes, motion formulas, captions and tool cards.</p></div>
+<div><h4 class="verb-word">Verbs</h4><p>Render, check every frame, and review.</p></div>
+</div>
+<p class="item-meta">Status: exported and run locally; video encoding is being built. It is moving into the <a href="https://github.com/ta-amps/pack-contributions">pack library</a>.</p>
+</li>
+<li>
+<h3>A collection of nouns and verbs for reviewing a public repo</h3>
+<div class="pair">
+<div><h4 class="noun-word">Nouns</h4><p>A bank of review questions, each with the evidence it needs and what would prove it wrong.</p></div>
+<div><h4 class="verb-word">Verbs</h4><p>Profile the repo, pick questions, investigate, compare options, write the report, and have someone else review it.</p></div>
+</div>
+<p class="item-meta">Status: being written, not published yet.</p>
+</li>
+<li>
+<h3>A collection of nouns and verbs for finding and testing new tools</h3>
+<div class="pair">
+<div><h4 class="noun-word">Nouns</h4><p>Tool cards, sources and trial results.</p></div>
+<div><h4 class="verb-word">Verbs</h4><p>Scan sources, run a fair trial, and decide to adopt a tool or not.</p></div>
+</div>
+<p class="item-meta">Status: being built.</p>
+</li>
+<li>
+<h3>A collection of nouns and verbs for benchmark scores, refreshed daily</h3>
+<div class="pair">
+<div><h4 class="noun-word">Nouns</h4><p>Scores with their source, date, hardware and method.</p></div>
+<div><h4 class="verb-word">Verbs</h4><p>Refresh daily, compare on our own setup, and flag stale scores.</p></div>
+</div>
+<p class="item-meta">Status: planned.</p>
+</li>
+<li>
+<h3>A collection of nouns and verbs for visual and 3D rendering</h3>
+<p class="item-meta">Status: planned. See <a href="../seed-pack-ideas/#rendering">seed pack ideas</a>.</p>
+</li>
+</ul>
+
+<h2 id="apart">How to tell them apart</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-labelledby="apart-caption">
+<table>
+<caption id="apart-caption">Surfaces compared with seed packs</caption>
+<thead><tr><th scope="col">Question</th><th scope="col">Surface</th><th scope="col">Seed pack</th></tr></thead>
+<tbody>
+<tr><th scope="row">What is it?</th><td>A way in: a website, connector or tool list</td><td>A collection of nouns and verbs</td></tr>
+<tr><th scope="row">Who uses it?</th><td>People and agents</td><td>Any surface or worker that imports it</td></tr>
+<tr><th scope="row">Does it run work?</th><td>No. Workers run verbs.</td><td>No. Importing it runs nothing.</td></tr>
+<tr><th scope="row">Does it have a name?</th><td>Yes, such as Home or Eranos</td><td>No. It says what it is for.</td></tr>
+</tbody>
+</table>
+</div>
+<p>A few older demo sites made for single seed packs are still online while they are retired. They are not surfaces. The <a href="https://github.com/ta-amps/agora/blob/main/docs/status.md">dated status report</a> lists every deployed site.</p>
+<p>Have an idea for a pack? <a href="../../contribute/">Propose a seed pack</a>.</p>
+</div>
+</div>
+</main>
+<!-- site:footer -->
+<footer class="site-footer">
+<div class="wrap">
+<nav aria-label="Footer">
+<ul><li><a href="../../decks/2026-10-29/v4/">Draft deck</a></li><li><a href="../../decks/">All deck versions</a></li><li><a href="../../storyboards/">Video storyboard</a></li><li><a href="../../docs/">Docs</a></li><li><a href="../../docs/status/">Status and evidence</a></li><li><a href="../../contribute/">Contribute</a></li></ul>
+</nav>
+<ul aria-label="Elsewhere"><li><a href="https://home.ta-amps.workers.dev">Home portal</a></li><li><a href="https://eranos.ta-amps.workers.dev">Eranos</a></li><li><a href="https://github.com/ta-amps">ta-amps on GitHub</a></li><li><a href="https://github.com/ta-amps/agora">Source of this site</a></li><li><a href="../../THIRD-PARTY-NOTICES.txt">Third-party notices</a></li></ul>
+<p>A snapshot of October 29, 2026. Drafts and plans are labelled; publishing them here does not certify any claim. Text and code are under the MIT license.</p>
+</div>
+</footer>
+<script src="../../assets/site.js" defer></script>
+<!-- /site:footer -->
+</body>
+</html>

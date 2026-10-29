@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How feedback will work | ta-amps</title>
+<meta name="description" content="The first design for ratings and comments in ta-amps, as nouns and verbs: what a feedback record holds, the work that uses it, and the limits on what it can change.">
+<!-- site:head -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;600&amp;family=Space+Grotesk:wght@400..700&amp;display=swap">
+<link rel="stylesheet" href="../../assets/site.css">
+<link rel="icon" href="../../assets/mark.svg" type="image/svg+xml">
+<script>try{var m=localStorage.getItem("ta-amps-mode");if(m==="dark"||m==="light")document.documentElement.dataset.mode=m}catch(e){}document.documentElement.classList.add("js")</script>
+<!-- /site:head -->
+</head>
+<body>
+<!-- site:header -->
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+<div class="wrap">
+<a class="wordmark" href="../../"><svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="0" y="0" width="14" height="14" rx="3" fill="var(--color-noun)"/><rect x="18" y="0" width="14" height="14" rx="3" fill="var(--color-verb)"/><rect x="0" y="18" width="14" height="14" rx="3" fill="var(--color-rule-strong)"/><rect x="18" y="18" width="14" height="14" rx="3" fill="var(--color-noun)"/></svg><span>ta-amps</span></a>
+<nav class="site-nav" aria-label="Site">
+<ul><li><a href="../../decks/2026-10-29/v4/">Deck</a></li><li><a href="../../storyboards/" aria-current="true">Storyboard</a></li><li><a href="../../docs/">Docs</a></li><li><a href="../../contribute/">Contribute</a></li></ul>
+</nav>
+<button class="mode-toggle" type="button" data-mode-toggle aria-pressed="false" hidden>Dark mode</button>
+</div>
+</header>
+<!-- /site:header -->
+<main id="main">
+<div class="wrap page-head">
+<p class="crumbs"><a href="../">Video storyboard</a></p>
+<h1>How feedback will work</h1>
+<p class="lead">Feedback is a noun too. People rate what they see; learners use those ratings to guide future work, and never promote anything on ratings alone.</p>
+<p class="dateline">First design, October 29, 2026. Not built yet: today, feedback goes through the <a href="https://github.com/ta-amps/agora/issues/new?template=feedback.yml">feedback form</a>.</p>
+</div>
+
+<div class="wrap section">
+<div class="prose">
+<h2>The noun: one feedback record</h2>
+<p>Each record holds:</p>
+<ul>
+<li>the target: the exact noun or verb it is about, with its version;</li>
+<li>who gave it;</li>
+<li>a rating, from −1 to +1, or on a 1 to 5 scale;</li>
+<li>optional aspects, such as correct, useful, style or speed;</li>
+<li>a short comment, with a length limit;</li>
+<li>when it was given.</li>
+</ul>
+<p>Feedback is private by default. The target’s owner can read it, and so can a learner that holds a grant to.</p>
+
+<h2>The verbs: work that uses it</h2>
+<dl class="term-list">
+<div><dt><span class="verb-word">Request feedback</span> (<code>request_feedback</code>)</dt><dd>Attaches a request to anything delivered, such as a rendered scene or a finished kit.</dd></div>
+<div><dt><span class="verb-word">Triage feedback</span> (<code>triage_feedback</code>)</dt><dd>A worker groups the comments into themes.</dd></div>
+<div><dt><span class="verb-word">Apply feedback</span> (<code>apply_feedback</code>)</dt><dd>Creates follow-up verbs, for example “re-render scene 3 with slower captions”.</dd></div>
+</dl>
+
+<h2>The surface: where people give it</h2>
+<p>A thumbs control with a one-line comment on each progress or delivery page, on the home portal or on a progress link.</p>
+
+<h2>The learners: what may change</h2>
+<ul>
+<li>The preference learner uses ratings to steer future palettes and styles.</li>
+<li>The routing learner uses outcomes plus ratings to choose models and verbs.</li>
+<li>Neither one ever promotes anything on ratings alone.</li>
+</ul>
+
+<h2>The infrastructure it needs</h2>
+<ul>
+<li>One rating per person for each version of a target.</li>
+<li>The same permission checks as everything else.</li>
+<li>Limits on abuse that are fair to each network, rather than one global cap.</li>
+</ul>
+<p><a href="../">Back to the storyboard</a></p>
+</div>
+</div>
+</main>
+<!-- site:footer -->
+<footer class="site-footer">
+<div class="wrap">
+<nav aria-label="Footer">
+<ul><li><a href="../../decks/2026-10-29/v4/">Draft deck</a></li><li><a href="../../decks/">All deck versions</a></li><li><a href="../../storyboards/">Video storyboard</a></li><li><a href="../../docs/">Docs</a></li><li><a href="../../docs/status/">Status and evidence</a></li><li><a href="../../contribute/">Contribute</a></li></ul>
+</nav>
+<ul aria-label="Elsewhere"><li><a href="https://home.ta-amps.workers.dev">Home portal</a></li><li><a href="https://eranos.ta-amps.workers.dev">Eranos</a></li><li><a href="https://github.com/ta-amps">ta-amps on GitHub</a></li><li><a href="https://github.com/ta-amps/agora">Source of this site</a></li><li><a href="../../THIRD-PARTY-NOTICES.txt">Third-party notices</a></li></ul>
+<p>A snapshot of October 29, 2026. Drafts and plans are labelled; publishing them here does not certify any claim. Text and code are under the MIT license.</p>
+</div>
+</footer>
+<script src="../../assets/site.js" defer></script>
+<!-- /site:footer -->
+</body>
+</html>

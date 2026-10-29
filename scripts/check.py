@@ -3,8 +3,10 @@ from __future__ import annotations
 
 import datetime as dt
 import hashlib
+import html
 import json
 import re
+import zipfile
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
@@ -18,6 +20,19 @@ SENSITIVE = {
     "private key": re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"),
     "local home path": re.compile(r"/(?:home|Users)/[A-Za-z0-9_.-]+/"),
     "credential URL": re.compile(r"https?://[^/\s]+:[^/\s]+@"),
+}
+BINARY_SUFFIXES = {".pdf", ".pptx"}
+RELEASE_PREFIX = "https://github.com/ta-amps/agora/releases/download/"
+PAGES_PREFIX = "/agora/"
+HTML_REF = re.compile(r'\s(?:href|src)="([^"]*)"')
+HTML_ID = re.compile(r'\sid="([^"]+)"')
+PROVENANCE = re.compile(r'\sdata-provenance="[^"]*"')
+ISSUE_FORM = re.compile(r"https://github\.com/ta-amps/agora/issues/new\?template=([A-Za-z0-9._-]+)")
+# Retired pack names (owner rule: packs carry no names). Stored as hashes, so the names never appear here.
+RETIRED_NAME_HASHES = {
+    "9410a442dd664c9234966c5ecc0ff595431749474bc67b7e2ce5ccaaed7793ec",
+    "4322a6b237d4d0f47990bad6edf90913cd88d2a1a6a9698a756b73e4dfd69329",
+    "d488476689bd8ff0424956c989ae7508815f2821f9524dfd3ea5aea931911978",
 }
 
 
@@ -159,12 +174,77 @@ def local_links(path: Path, root: Path) -> None:
                 "broken or escaping local link in " + path.name + ": " + target)
 
 
+def retired_names(text: str) -> bool:
+    text = PROVENANCE.sub(" ", text.lower())
+    return any(hashlib.sha256(word.encode()).hexdigest() in RETIRED_NAME_HASHES
+               for word in set(re.findall(r"[a-z0-9]+", text)))
+
+
+def deck_download(download: dict, site: Path) -> str | None:
+    """Validate one deck download; return its site-relative path when it is a file in the site."""
+    require(SHA256.fullmatch(download["sha256"]) is not None, "deck downloads need a content hash")
+    if "path" not in download:
+        require(download["url"].startswith(RELEASE_PREFIX),
+                "deck downloads need a public release URL and content hash")
+        return None
+    file = (site / download["path"]).resolve()
+    require(file.is_relative_to(site.resolve()) and file.is_file(), "deck download missing from the static site")
+    data = file.read_bytes()
+    require(hashlib.sha256(data).hexdigest() == download["sha256"] and len(data) == download["bytes"],
+            "deck download changed without updating its recorded hash")
+    if file.suffix == ".pdf":
+        require(data.startswith(b"%PDF-"), "deck PDF is not a PDF")
+    if file.suffix == ".pptx":
+        require(zipfile.is_zipfile(file), "deck PowerPoint is not a valid package")
+        with zipfile.ZipFile(file) as package:
+            require("ppt/presentation.xml" in package.namelist(), "deck PowerPoint has no presentation part")
+    return file.relative_to(site.resolve()).as_posix()
+
+
+def site_pages(site: Path) -> dict[Path, set[str]]:
+    pages = {}
+    for page in sorted(site.rglob("*.html")):
+        pages[page.resolve()] = set(HTML_ID.findall(page.read_text()))
+    return pages
+
+
+def site_links(page: Path, site: Path, pages: dict[Path, set[str]], root: Path) -> None:
+    text = page.read_text()
+    where = page.relative_to(site).as_posix()
+    for raw in HTML_REF.findall(text):
+        target = html.unescape(raw)
+        for form in ISSUE_FORM.findall(target):
+            require((root / ".github/ISSUE_TEMPLATE" / form).is_file(), "missing issue form in " + where + ": " + form)
+        parsed = urlsplit(target)
+        if parsed.scheme or parsed.netloc:
+            continue
+        path = unquote(parsed.path)
+        if not path:
+            require(not parsed.fragment or parsed.fragment in pages[page.resolve()],
+                    "missing anchor in " + where + ": " + target)
+            continue
+        if path.startswith(PAGES_PREFIX):
+            local = site / path[len(PAGES_PREFIX):]
+        else:
+            require(not path.startswith("/"), "site link outside the Pages path in " + where + ": " + target)
+            local = page.parent / path
+        local = local.resolve()
+        if path.endswith("/") or local.is_dir():
+            local = local / "index.html"
+        require(local.is_relative_to(site.resolve()) and local.is_file(),
+                "broken or escaping site link in " + where + ": " + target)
+        if parsed.fragment and local in pages:
+            require(parsed.fragment in pages[local], "missing anchor in " + where + ": " + target)
+
+
 def check(root: Path = ROOT) -> dict:
     data = load(root / "status.json")
     evidence = load(root / data["evidence_path"])
     snapshot(data, evidence)
     architecture(load(root / "architecture.json"), {r["name"] for r in data["repositories"]}, root)
     manifest = root / "site/decks.json"
+    declared: set[str] = set()
+    historical: set[str] = set()
     if manifest.exists():
         decks = load(manifest)
         require(decks["kind"] == "versioned_draft_presentations" and
@@ -180,18 +260,32 @@ def check(root: Path = ROOT) -> dict:
                     "versioned deck changed without updating its recorded hash")
             require(page.read_text().count('aria-roledescription="slide"') == version["slides"] ==
                     version["core_slides"] + version["appendix_slides"], "deck slide count mismatch")
+            if version.get("unbranded") is not True:
+                historical.add(page.relative_to(manifest.parent.resolve()).as_posix())
             for download in version["downloads"]:
-                require(SHA256.fullmatch(download["sha256"]) is not None and
-                        download["url"].startswith("https://github.com/ta-amps/agora/releases/download/"),
-                        "deck downloads need a public release URL and content hash")
+                local = deck_download(download, manifest.parent)
+                if local:
+                    declared.add(local)
     files = [p for p in root.rglob("*") if p.is_file() and not SKIP.intersection(p.relative_to(root).parts)]
+    site = root / "site"
     for path in files:
+        if path.suffix.lower() in BINARY_SUFFIXES:
+            rel = path.relative_to(site).as_posix() if path.is_relative_to(site) else path.as_posix()
+            require(rel in declared, "undeclared binary file: " + path.relative_to(root).as_posix())
+            public_text(path.read_bytes().decode("latin-1"))
+            continue
         text = path.read_text()
         public_text(text)
+        if path.is_relative_to(site) and path.relative_to(site).as_posix() not in historical:
+            require(not retired_names(text), "retired pack name on the public site: " + path.relative_to(root).as_posix())
         if path.suffix == ".json":
             load(path)
         if path.suffix == ".md" or path.name == "llms.txt":
             local_links(path, root)
+    if site.is_dir():
+        pages = site_pages(site)
+        for page in pages:
+            site_links(page, site, pages, root)
     report = (root / "docs/status.md").read_text()
     for repo in data["repositories"]:
         require(repo["main_revision"] in report, "status page missing exact revision")

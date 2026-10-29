@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Read the showcase first
+    url: https://ta-amps.github.io/agora/
+    about: The nonprofit story, the draft deck, the video storyboard and plain-language docs.
+  - name: Connect your own agent
+    url: https://home.ta-amps.workers.dev
+    about: Copy a starting brief into your own AI agent.

@@ -1,0 +1,10 @@
+{
+  "about": "Facts that changed after this draft was written, shown under the matching slide and in the PDF. The slides keep their own wording.",
+  "as_of": "2026-10-29",
+  "slides": {
+    "example": "our demo video is not made yet. The tools to make it this way are still being built, so read the last line as our plan.",
+    "evidence": "the 100 clients were a short protocol test, not 100 separate agent programs. None was turned away by a rate limit, but some expected write conflicts did happen. A seventh agent program passed a separate test later that day.",
+    "fixes": "the learner code is merged, and a tuned Glimmer 30B now beats its base on a frozen test (slide 18). Nothing is promoted until a fresh test confirms it. Similar-work lookup is merged code whose quality is not shown yet.",
+    "learning": "the first tuning rounds are measured (slide 18). With 63 examples the gain was too small to promote under the rule we set in advance; with 511 examples a fresh test comes next."
+  }
+}
