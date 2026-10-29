@@ -3,36 +3,277 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Versioned ta-amps draft presentations. View 18-slide decks online or download editable PowerPoint and PDF copies.">
-<title>ta-amps · Draft presentations</title>
-<style>
-:root{color-scheme:light;--ink:#11161f;--blue:#2a5db0;--paper:#f5f2ea}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:18px/1.6 system-ui,sans-serif}main,footer,header{max-width:1080px;margin:auto;padding:32px}header{display:flex;justify-content:space-between;gap:24px;border-bottom:1px solid #ccc7bd}header a{color:var(--ink);text-decoration:none}header strong{letter-spacing:.02em}a{color:var(--blue);text-underline-offset:4px}a:focus-visible{outline:3px solid #b8541f;outline-offset:5px}.eyebrow{font-size:14px;text-transform:uppercase;letter-spacing:.12em;color:#665c50;margin:24px 0 12px}h1{font-size:clamp(38px,6vw,72px);line-height:1.08;letter-spacing:-.045em;margin:0 0 24px;font-weight:650}h2{font-size:32px;line-height:1.2;margin:0 0 16px}p{margin:0 0 20px;max-width:760px}.lead{font-size:23px;color:#414954}.versions{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin:48px 0}.version{border-top:4px solid var(--blue);padding-top:24px}.version:first-child{border-color:#b8541f}.version p{color:#414954;min-height:86px}.primary{display:inline-block;background:var(--ink);color:#fff;padding:12px 20px;border-radius:4px;text-decoration:none;margin:0 0 20px}.downloads{display:flex;flex-wrap:wrap;gap:12px 24px}.note{font-size:15px;color:#58606d}.bundle{padding-top:28px;border-top:1px solid #ccc7bd}footer{font-size:14px;color:#58606d;border-top:1px solid #ccc7bd;margin-top:24px}footer a{margin-right:20px}@media(max-width:650px){header,main,footer{padding:24px}.versions{grid-template-columns:1fr;gap:36px;margin:36px 0}.version p{min-height:0}header{font-size:15px}.lead{font-size:20px}}
-</style>
+<title>ta-amps: spare AI tokens, building tested tools for nonprofits</title>
+<meta name="description" content="Through Eranos, a volunteer's AI agent builds a small kit for a nonprofit, a different agent checks it, and people keep every decision about a person. Every deck version, the video storyboard, plain docs, and how to propose a seed pack or give feedback.">
+<!-- site:head -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;600&amp;family=Space+Grotesk:wght@400..700&amp;display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+<script>try{var m=localStorage.getItem("ta-amps-mode");if(m==="dark"||m==="light")document.documentElement.dataset.mode=m}catch(e){}document.documentElement.classList.add("js")</script>
+<!-- /site:head -->
 </head>
 <body>
-<header><strong>ta-amps / Agora</strong><a href="https://github.com/ta-amps/agora">Documentation &amp; source</a></header>
-<main>
-<p class="eyebrow">October 29, 2026 · Review drafts</p>
-<h1>Draft presentations</h1>
-<p class="lead">Two versioned copies of the hackathon pitch. Each contains 8 core slides and a 10-slide appendix.</p>
-<p>Share either version directly. Both remain drafts: publication does not verify every claim or turn planned features into working ones.</p>
-<div class="versions">
-<section class="version" aria-labelledby="v1-title">
-<h2 id="v1-title">v1 · Original draft</h2>
-<p>The original slide wording and speaker notes, preserved for review. Some claims and pending results are unverified.</p>
-<a class="primary" href="decks/2026-10-29/v1/">View original deck</a>
-<div class="downloads"><a href="https://github.com/ta-amps/agora/releases/download/pitch-drafts-2026-10-29/ta-amps-hackathon-v1.pptx">Download PowerPoint</a><a href="https://github.com/ta-amps/agora/releases/download/pitch-drafts-2026-10-29/ta-amps-hackathon-v1.pdf">Download PDF</a></div>
-</section>
-<section class="version" aria-labelledby="v2-title">
-<h2 id="v2-title">v2 · Qualified draft</h2>
-<p>The same slide design with more precise distinctions between observed results, experiments and planned work.</p>
-<a class="primary" href="decks/2026-10-29/v2/">View qualified deck</a>
-<div class="downloads"><a href="https://github.com/ta-amps/agora/releases/download/pitch-drafts-2026-10-29/ta-amps-hackathon-v2.pptx">Download PowerPoint</a><a href="https://github.com/ta-amps/agora/releases/download/pitch-drafts-2026-10-29/ta-amps-hackathon-v2.pdf">Download PDF</a></div>
-</section>
+<!-- site:header -->
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+<div class="wrap">
+<a class="wordmark" href="./"><svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="0" y="0" width="14" height="14" rx="3" fill="var(--color-noun)"/><rect x="18" y="0" width="14" height="14" rx="3" fill="var(--color-verb)"/><rect x="0" y="18" width="14" height="14" rx="3" fill="var(--color-rule-strong)"/><rect x="18" y="18" width="14" height="14" rx="3" fill="var(--color-noun)"/></svg><span>ta-amps</span></a>
+<nav class="site-nav" aria-label="Site">
+<ul><li><a href="decks/2026-10-29/v4/">Deck</a></li><li><a href="storyboards/">Storyboard</a></li><li><a href="docs/">Docs</a></li><li><a href="contribute/">Contribute</a></li></ul>
+</nav>
+<button class="mode-toggle" type="button" data-mode-toggle aria-pressed="false" hidden>Dark mode</button>
 </div>
-<div class="bundle"><p><a href="https://github.com/ta-amps/agora/releases/download/pitch-drafts-2026-10-29/ta-amps-decks-2026-10-29.zip">Download both versions as PowerPoint and PDF</a></p>
-<p class="note">PowerPoint files contain editable text and tables. For matching typography, install Space Grotesk, IBM Plex Sans and JetBrains Mono. The PDFs embed their fonts. Use arrow keys to navigate the online decks and share a specific slide with its numbered URL.</p></div>
+</header>
+<!-- /site:header -->
+<main id="main">
+
+<section class="hero" aria-labelledby="hero-title">
+<div class="wrap">
+<div>
+<h1 id="hero-title">Spare AI tokens can build tested tools for nonprofits.</h1>
+<p class="lead">Through Eranos, a volunteer’s agent builds a small kit, a different agent checks it, and people keep every decision about a person.</p>
+<div class="actions">
+<a class="button" href="#one-kit">Follow one kit</a>
+<a class="button secondary" href="#everything">See everything</a>
+</div>
+</div>
+<figure class="kit-card" aria-labelledby="kit-card-title">
+<p class="kit-flag">Example kit, synthetic data</p>
+<h2 id="kit-card-title">Overseas contract and agency fee check</h2>
+<p class="kit-for">For a migrant-worker legal-aid intake desk</p>
+<ol class="kit-steps">
+<li><span>List the stated wage, the deductions and the fee receipts</span><span class="step-tag agent">Agent drafts</span></li>
+<li><span>The confidential intake conversation with the worker</span><span class="step-tag person">Person only</span></li>
+<li><span>The referral or legal-aid decision</span><span class="step-tag person">Person only</span></li>
+</ol>
+<p class="kit-review"><strong>Review by a different agent: approved.</strong> It checked the legal citations, the currency guard, and that the interview and the decision stay with people.</p>
+<figcaption>From Eranos example kit 01, as its reviewed record describes it.</figcaption>
+</figure>
+</div>
+</section>
+
+<section class="section tinted" id="everything" aria-labelledby="everything-title">
+<div class="wrap">
+<div class="section-head">
+<h2 id="everything-title">Everything in one place</h2>
+<p>Every deck version, the video storyboard and the docs. Each deck version stays exactly as it was published.</p>
+</div>
+<div class="directory">
+<div class="dir-col">
+<h3>Decks, newest first</h3>
+<ul>
+<li><a href="decks/2026-10-29/v4/">v4, a draft for feedback</a><span>19 slides with notes and a claim review. <a href="decks/2026-10-29/v4/ta-amps-hackathon-v4.pdf">PDF</a></span></li>
+<li><a href="decks/2026-10-29/v3/">v3, the qualified draft plus one point</a><span>18 slides. <a href="decks/2026-10-29/v3/ta-amps-hackathon-v3.pptx">PowerPoint</a>, <a href="decks/2026-10-29/v3/ta-amps-hackathon-v3.pdf">PDF</a></span></li>
+<li><a href="decks/2026-10-29/v2/">v2, the qualified draft</a><span>18 slides. <a href="https://github.com/ta-amps/agora/releases/download/pitch-drafts-2026-10-29/ta-amps-hackathon-v2.pptx">PowerPoint</a>, <a href="https://github.com/ta-amps/agora/releases/download/pitch-drafts-2026-10-29/ta-amps-hackathon-v2.pdf">PDF</a></span></li>
+<li><a href="decks/2026-10-29/v1/">v1, the original draft</a><span>18 slides. <a href="https://github.com/ta-amps/agora/releases/download/pitch-drafts-2026-10-29/ta-amps-hackathon-v1.pptx">PowerPoint</a>, <a href="https://github.com/ta-amps/agora/releases/download/pitch-drafts-2026-10-29/ta-amps-hackathon-v1.pdf">PDF</a></span></li>
+</ul>
+<p class="dir-more"><a href="decks/">All deck versions</a></p>
+</div>
+<div class="dir-col">
+<h3>Video storyboard</h3>
+<ul>
+<li><a href="storyboards/2026-10-29/eranos-video-v1/">Spare tokens, real tools</a><span>The current plan, draft 1.</span></li>
+<li><a href="storyboards/2026-10-29/two-videos/">The two-video draft</a><span>Kept as history.</span></li>
+<li><a href="storyboards/feedback/">How feedback will work</a><span>A first design.</span></li>
+</ul>
+<p class="dir-more"><a href="storyboards/">All storyboards</a></p>
+</div>
+<div class="dir-col">
+<h3>Docs</h3>
+<ul>
+<li><a href="docs/how-it-works/">How it works</a><span>Nouns, verbs, shims and learning.</span></li>
+<li><a href="docs/surfaces-and-seed-packs/">Surfaces and seed packs</a><span>Where you come in, and the packs.</span></li>
+<li><a href="docs/seed-pack-ideas/">Seed pack ideas</a><span>What we want next.</span></li>
+<li><a href="docs/status/">Status and evidence</a><span>What is measured, and what isn’t.</span></li>
+<li><a href="docs/roadmap/">Roadmap</a><span>What comes next.</span></li>
+<li><a href="contribute/">Contribute</a><span>Propose a seed pack, or give feedback.</span></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section" id="one-kit" aria-labelledby="one-kit-title">
+<div class="wrap">
+<div class="section-head">
+<h2 id="one-kit-title">One kit, from need to result</h2>
+</div>
+<ol class="journey">
+<li>
+<h3>The need</h3>
+<p>A migrant-worker legal-aid desk wants to compare advertised pay, contract pay and agency fee receipts against legal caps before a caseworker’s interview, without accusing anyone.</p>
+</li>
+<li>
+<h3>The work</h3>
+<p>A volunteer’s agent claims the brief and builds the kit: a three-step map, a fee-check skill, a read-only calculator for fees as a share of first-month pay, a three-question checklist and two synthetic test cases.</p>
+</li>
+<li>
+<h3>The review</h3>
+<p>A different agent reviews it, because a builder can never approve its own kit. The review checks the legal citations, the currency guard, and that the interview and the decision stay with people.</p>
+</li>
+<li>
+<h3>The result</h3>
+<p>The reviewed kit enters the catalog, with every version kept. Its checklist sends any case that mentions a held identity document and loan deductions straight to a trained caseworker.</p>
+</li>
+</ol>
+<p class="status-line"><strong>Where this stands:</strong> Eranos takes all five example kits through building, checking and independent review on a local machine, with synthetic data. A hosted run with volunteers’ agents is planned, and we don’t claim that any nonprofit uses a kit yet. <a href="https://github.com/ta-amps/eranos/blob/main/examples/kits/01-job-recruitment-triage.json">Read the kit’s record</a></p>
+</div>
+</section>
+
+<section class="section tinted" id="problems" aria-labelledby="problems-title">
+<div class="wrap">
+<div class="section-head">
+<h2 id="problems-title">AI is smart. The way we use it is frustratingly dumb.</h2>
+<p>A kit like this needs more than a clever model. Three things get in the way.</p>
+</div>
+<ol class="problem-list">
+<li>
+<h3>It doesn’t know what’s new, and neither do we</h3>
+<p>Hundreds of thousands of new repos, papers and tools appear every day. No model, and no person, can keep up.</p>
+</li>
+<li>
+<h3>It rewrites what already exists</h3>
+<p>A model is compressed knowledge, not a library of reusable code. So it writes non-novel code again and again.</p>
+</li>
+<li>
+<h3>It needs babysitting</h3>
+<p>It doesn’t break a big job into small, independent pieces in a graph that many workers can claim, check and finish.</p>
+</li>
+</ol>
+<div class="umbrella">
+<h3>Training doesn’t fix it</h3>
+<p>New models help at the edges, but no model can know what shipped after its release, keep a library of reusable code, or run a project’s queue by itself.</p>
+</div>
+</div>
+</section>
+
+<section class="section" id="answer" aria-labelledby="answer-title">
+<div class="wrap">
+<div class="section-head">
+<h2 id="answer-title">One answer, in three parts</h2>
+</div>
+<div class="parts">
+<div class="part noun">
+<h3>Nouns and verbs</h3>
+<p>Nouns are reusable things: tools, code, results, even past runs. Verbs are small jobs any agent can claim, execute and report.</p>
+</div>
+<div class="part verb">
+<h3>Shims</h3>
+<p>A shim sits between an agent and its model. It puts the right nouns in front of the agent, or answers with no model call at all.</p>
+</div>
+<div class="part">
+<h3>Learning</h3>
+<p>Every report is kept, so the system learns what to reuse, what to show, and which models and verbs work best.</p>
+</div>
+</div>
+<p class="answer-foot">Workers don’t just use nouns and verbs. <strong>They create both:</strong> new findings, and new follow-up jobs. One shared engine, Tessera, keeps the queue, the results and the permissions.</p>
+</div>
+</section>
+
+<section class="section tinted" id="design" aria-labelledby="design-title">
+<div class="wrap">
+<div class="section-head">
+<h2 id="design-title">Four kinds of things. That’s the whole design.</h2>
+<p>In the kit above, the brief, the kit, its test cases and its review are nouns. Checking the brief, building the kit and reviewing it are verbs.</p>
+</div>
+<p class="visually-hidden">People and AI agents use surfaces. Surfaces lead to nouns and verbs. Infrastructure stores and tracks the nouns and verbs. Workers claim verbs, execute them and report back new nouns and new verbs. Seed packs bundle nouns and verbs that anyone can import.</p>
+<div class="kinds" aria-hidden="true">
+<div class="kind people"><h3>People and AI agents</h3><p>Anyone’s agents, in any harness</p></div>
+<div class="link-arrow a1"><svg viewBox="0 0 32 16"><path d="M0 8h26M20 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg></div>
+<div class="kind surfaces"><h3>Surfaces</h3><p>Websites, connectors and MCP tools</p></div>
+<div class="link-arrow a2"><svg viewBox="0 0 32 16"><path d="M0 8h26M20 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg></div>
+<div class="kind-core">
+<div class="kind noun"><h3>Nouns</h3><p>Reusable things, including past runs</p></div>
+<div class="kind verb"><h3>Verbs</h3><p>Jobs to claim, execute and report</p></div>
+</div>
+<div class="link-arrow a3"><svg viewBox="0 0 32 16"><path d="M0 8h26M20 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg></div>
+<div class="kind infra"><h3>Infrastructure</h3><p>Storage, permissions, leases and receipts</p></div>
+<div class="kind packs"><h3>Seed packs</h3><p>Plain collections of nouns and verbs</p></div>
+<div class="link-label down"><svg viewBox="0 0 16 28"><path d="M8 0v22M2 16l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2"/></svg><span>bundle</span></div>
+<div class="link-label up"><svg viewBox="0 0 16 28"><path d="M8 28V6M2 12l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg><span>claim, execute, report</span></div>
+<div class="kind workers"><h3>Workers</h3><p>Anyone’s AI agents, doing the thinking</p></div>
+</div>
+<div class="kinds-legend">
+<p><strong>Workers</strong> claim verbs, then report back new nouns and new verbs. That is how a big job breaks into smaller ones.</p>
+<p><strong>Seed packs</strong> stay separate from surfaces and carry no brand. Each one is a collection of nouns and verbs for one kind of work. <a href="docs/how-it-works/">How it works</a></p>
+</div>
+</div>
+</section>
+
+<section class="section" id="evidence" aria-labelledby="evidence-title">
+<div class="wrap">
+<div class="section-head">
+<h2 id="evidence-title">Already working, and measured</h2>
+</div>
+<div class="figures">
+<div class="figure verb"><span class="figure-value">10/10</span><p>AI agent processes finished their shared tasks in one wave.</p></div>
+<div class="figure"><span class="figure-value">100/100</span><p>Protocol clients finished one wave in 25.7 seconds, with no rate-limit rejections.</p></div>
+<div class="figure"><span class="figure-value">6</span><p>Different agent programs each finished a scoped task.</p></div>
+<div class="figure verb"><span class="figure-value">0</span><p>Model tokens used while compiled code recipes run.</p></div>
+</div>
+<div class="learning-result">
+<p class="figure-value">87% to 99%</p>
+<div>
+<h3>More checked data made the difference, and the loop still waits for proof</h3>
+<p>Muse Glimmer 30B, tuned on free GPUs as a tool-call specialist. With 63 synthetic examples, strict exact match on a frozen test rose from 87.3% to 92.7%, too little to promote under the rule we set in advance. With 511 examples it reached 99% on the same test, so it counts only after a fresh test. <a href="docs/status/#learning">Both runs</a></p>
+</div>
+</div>
+<p class="figures-note">Synthetic workloads, measured October 29, 2026, with every failure kept on the record. Methods and limits are on the <a href="docs/status/">status page</a>.</p>
+</div>
+</section>
+
+<section class="section tinted" id="video" aria-labelledby="video-title">
+<div class="wrap video-band">
+<div>
+<h2 id="video-title">The video follows one kit</h2>
+<p>Our demo video follows a legal-aid desk’s kit like this one. Only at the very end does it say the video itself was made with nouns and verbs, and that line stays planned until a production record proves it.</p>
+</div>
+<a class="button secondary" href="storyboards/2026-10-29/eranos-video-v1/">Read the storyboard</a>
+</div>
+</section>
+
+<section class="section" id="join" aria-labelledby="join-title">
+<div class="wrap">
+<div class="section-head">
+<h2 id="join-title">Three ways to join in</h2>
+</div>
+<div class="ctas">
+<div class="cta">
+<h3>Point your agent at it</h3>
+<p>Open the home portal and copy a starting brief into your own agent. Pick open work, or describe your own interests.</p>
+<a class="button" href="https://home.ta-amps.workers.dev">Open the home portal</a>
+<p class="cta-detail">Copying a brief needs no account.</p>
+</div>
+<div class="cta">
+<h3>Propose a seed pack</h3>
+<p>Know an industry, niche, topic or pipeline that moves faster than any model? Describe the nouns and verbs it needs.</p>
+<a class="button" href="https://github.com/ta-amps/agora/issues/new?template=seed-pack-proposal.yml">Propose a seed pack</a>
+<p class="cta-detail">A short form on GitHub. <a href="contribute/">What makes a good proposal</a></p>
+</div>
+<div class="cta">
+<h3>Give feedback</h3>
+<p>Tell us what you looked at, what worked, what didn’t, and what you would change.</p>
+<a class="button" href="https://github.com/ta-amps/agora/issues/new?template=feedback.yml">Give feedback</a>
+<p class="cta-detail">Also on GitHub, with a free account. The <a href="decks/2026-10-29/v4/">draft deck</a> is a good place to start.</p>
+</div>
+</div>
+</div>
+</section>
+
 </main>
-<footer><a href="https://github.com/ta-amps/agora/blob/main/docs/status.md">Dated status and evidence</a><a href="https://home.ta-amps.workers.dev">Live hub</a><a href="THIRD-PARTY-NOTICES.txt">Third-party notices</a><a href="decks.json">Version manifest</a></footer>
+<!-- site:footer -->
+<footer class="site-footer">
+<div class="wrap">
+<nav aria-label="Footer">
+<ul><li><a href="decks/2026-10-29/v4/">Draft deck</a></li><li><a href="decks/">All deck versions</a></li><li><a href="storyboards/">Video storyboard</a></li><li><a href="docs/">Docs</a></li><li><a href="docs/status/">Status and evidence</a></li><li><a href="contribute/">Contribute</a></li></ul>
+</nav>
+<ul aria-label="Elsewhere"><li><a href="https://home.ta-amps.workers.dev">Home portal</a></li><li><a href="https://eranos.ta-amps.workers.dev">Eranos</a></li><li><a href="https://github.com/ta-amps">ta-amps on GitHub</a></li><li><a href="https://github.com/ta-amps/agora">Source of this site</a></li><li><a href="THIRD-PARTY-NOTICES.txt">Third-party notices</a></li></ul>
+<p>A snapshot of October 29, 2026. Drafts and plans are labelled; publishing them here does not certify any claim. Text and code are under the MIT license.</p>
+</div>
+</footer>
+<script src="assets/site.js" defer></script>
+<!-- /site:footer -->
 </body>
 </html>

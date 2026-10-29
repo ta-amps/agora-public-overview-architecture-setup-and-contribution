@@ -1,0 +1,30 @@
+<section id="learning" data-transition="fade" style="background:#F5F2EA;color:#11161F;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<div style="position:absolute;left:0;top:0;width:1920px;height:10px;background:linear-gradient(90deg, #2A5DB0, #B8541F)"></div>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;color:#11161F">It keeps learning after launch</h2>
+<div style="display:flex;flex-direction:row;align-items:center;gap:16px">
+<div style="flex:1;background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:32px;display:flex;flex-direction:column;gap:12px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#2A5DB0">MEMORY</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:36px;font-weight:700;line-height:1.15;color:#11161F">Finds similar past work</h3>
+<p style="font-size:26px;line-height:1.4;color:#3B4252">Every report is fingerprinted, so an agent sees what worked before it starts.</p>
+</div>
+<x-shape kind="arrow-right" style="width:56px;height:28px;background:#8A8F99"></x-shape>
+<div style="flex:1;background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:32px;display:flex;flex-direction:column;gap:12px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#2A5DB0">ROUTING WEIGHTS</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:36px;font-weight:700;line-height:1.15;color:#11161F">Picks what works</h3>
+<p style="font-size:26px;line-height:1.4;color:#3B4252">It learns which wording, shim, model and agent succeed for each kind of job.</p>
+</div>
+<x-shape kind="arrow-right" style="width:56px;height:28px;background:#8A8F99"></x-shape>
+<div style="flex:1;background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:32px;display:flex;flex-direction:column;gap:12px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#B8541F">MODEL WEIGHTS</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:36px;font-weight:700;line-height:1.15;color:#11161F">Tunes Meta models</h3>
+<p style="font-size:26px;line-height:1.4;color:#3B4252">Small open Meta models retrain on verified results, and replace the base only when they beat it.</p>
+</div>
+</div>
+<div style="background:#EDE8DC;border-radius:20px;padding:28px 32px;display:flex;flex-direction:row;align-items:center;gap:24px">
+<x-icon name="ThumbsUp" style="color:#B8541F;width:48px;height:48px"></x-icon>
+<p style="font-size:28px;line-height:1.4;color:#3B4252"><b>Feedback is a noun too.</b> People rate results; learners use those ratings to guide future work, but never promote anything on ratings alone.</p>
+</div>
+<svg aria-label="ta-amps mark" width="32" height="32" viewBox="0 0 32 32" style="position:absolute;left:128px;bottom:64px;width:32px;height:32px"><rect x="0" y="0" width="14" height="14" rx="3" fill="#2A5DB0"/><rect x="18" y="0" width="14" height="14" rx="3" fill="#B8541F"/><rect x="0" y="18" width="14" height="14" rx="3" fill="#11161F"/><rect x="18" y="18" width="14" height="14" rx="3" fill="#2A5DB0"/></svg>
+<p style="position:absolute;left:176px;bottom:64px;width:1616px;font-size:24px;color:#5E6472">Appendix · learning</p>
+<aside>Learning is split into separate, swappable learners. Memory finds similar past work from fingerprints. Routing weights learn which approach succeeds. Small open Meta models retrain on verified results in a loop that starts with very little data, and replace the base only when they beat it on a test they never saw. People’s feedback is stored as nouns that learners can use, without ever auto-promoting anything.</aside>
+</section>

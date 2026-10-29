@@ -49,6 +49,53 @@
           "bytes": 158316
         }
       ]
+    },
+    {
+      "version": "v3",
+      "label": "Qualified draft plus the atomic-work point",
+      "slides": 18,
+      "core_slides": 8,
+      "appendix_slides": 10,
+      "path": "decks/2026-10-29/v3/",
+      "html_sha256": "a2985302395e965631c44c7a7a18b340f3a8c2cc25fd69bd66f156cbd3a18bea",
+      "derived_from": "v2",
+      "change": "Slide 2 adds one point beneath the training point: today's AI doesn't break work into small, atomic, decentralized pieces in a graph that many workers can claim, check and finish. Nothing else in the slides changes.",
+      "downloads": [
+        {
+          "format": "pptx",
+          "path": "decks/2026-10-29/v3/ta-amps-hackathon-v3.pptx",
+          "sha256": "dc878eba1dfbc8485c34177993885f971eab42816b8fa0c396bbbd6199a53422",
+          "bytes": 112936
+        },
+        {
+          "format": "pdf",
+          "path": "decks/2026-10-29/v3/ta-amps-hackathon-v3.pdf",
+          "sha256": "c4f1921e98a9d0f19ab2e6df7fbfc4ccb25cbfe75b96a44bfb9baa89efe4761c",
+          "bytes": 158924
+        }
+      ],
+      "download_note": "PowerPoint and PDF made with the same export and validation scripts as v1 and v2. The PowerPoint passed the same finalizer checks."
+    },
+    {
+      "version": "v4",
+      "label": "Draft for feedback",
+      "slides": 19,
+      "core_slides": 9,
+      "appendix_slides": 10,
+      "path": "decks/2026-10-29/v4/",
+      "html_sha256": "d98acb61a0aa9dcc2be3bf3c06118afc842aab109f5f995112d0ff384942c0c3",
+      "source": "decks/2026-10-29/v4/source/",
+      "claim_review": "decks/2026-10-29/v4/source/claims.json",
+      "unbranded": true,
+      "downloads": [
+        {
+          "format": "pdf",
+          "path": "decks/2026-10-29/v4/ta-amps-hackathon-v4.pdf",
+          "sha256": "4335329f85d6e009ef586a0441e703ae685fe3b642c16ced27fa85e00a3f8a2e",
+          "bytes": 448608,
+          "printed_from_html_sha256": "d98acb61a0aa9dcc2be3bf3c06118afc842aab109f5f995112d0ff384942c0c3"
+        }
+      ]
     }
   ],
   "source_repository": "https://github.com/ta-amps/agora"

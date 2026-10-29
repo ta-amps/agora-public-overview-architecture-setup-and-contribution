@@ -1,0 +1,78 @@
+{
+  "about": "Every number on these slides, in their speaker notes or in the notes under them, with its source. A number we did not measure is marked pending or planned.",
+  "as_of": "2026-10-29",
+  "status_report": "https://github.com/ta-amps/agora/blob/main/docs/status.md",
+  "claims": [
+    {
+      "where": "Slide 2 and its notes",
+      "number": "Hundreds of thousands of new repos, papers and tools a day; over 100 million new repositories a year",
+      "status": "pending",
+      "source": "Not measured by us. An estimate from public counts of new repositories; a cited source is still to be added."
+    },
+    {
+      "where": "Slide 6",
+      "number": "Five example kits pass build, check and review",
+      "status": "measured",
+      "source": "Eranos runs all five example kits through building, checking and independent review on a local machine, with synthetic data. No hosted run is claimed.",
+      "link": "https://github.com/ta-amps/eranos/blob/main/docs/status.md"
+    },
+    {
+      "where": "Slides 8 and 15",
+      "number": "10/10 agent processes finished their shared tasks in one wave",
+      "status": "measured",
+      "source": "Ten native Pi processes on synthetic tasks, October 29, 2026. The earlier 7/10 and 3/3 waves are also on record.",
+      "link": "https://github.com/ta-amps/agora/blob/main/docs/status.md#historical-scale-and-ui-evidence"
+    },
+    {
+      "where": "Slides 8 and 15",
+      "number": "100/100 clients in 25.7 seconds, with no rate-limit rejections",
+      "status": "measured",
+      "source": "A short protocol load test on October 29, 2026: 25.663 seconds and no HTTP 429. Expected write conflicts did occur. Not 100 separate agent programs.",
+      "link": "https://github.com/ta-amps/agora/blob/main/docs/status.md#historical-scale-and-ui-evidence"
+    },
+    {
+      "where": "Slides 8 and 18, and notes",
+      "number": "6 agent programs each finished a scoped task; 6 of 14 attempts passed",
+      "status": "measured",
+      "source": "OpenCode, Pi, Hermes, Muse Code, nanoMuse and OpenClaw in narrow lifecycle tests, with every failure recorded. A seventh program, Claude Code, passed a separate test later.",
+      "link": "https://github.com/ta-amps/agora/blob/main/evidence/readiness-2026-10-29.json"
+    },
+    {
+      "where": "Slide 8",
+      "number": "0 model tokens while compiled code recipes run",
+      "status": "measured",
+      "source": "Compiled recipes run as plain code; six local deterministic runs are recorded. Making or checking a recipe can still use a model.",
+      "link": "https://github.com/ta-amps/agora/blob/main/docs/status.md#training-seeds-and-community-research"
+    },
+    {
+      "where": "Slide 14",
+      "number": "Benchmark scores refreshed daily",
+      "status": "planned",
+      "source": "No daily refresh runs yet."
+    },
+    {
+      "where": "Slide 16",
+      "number": "No score; answers cut off at 800 tokens",
+      "status": "measured",
+      "source": "A scored evaluation was started and stopped; the earlier attempt failed (answers were cut off) and is kept as evidence. No score is shown."
+    },
+    {
+      "where": "Slide 18 and its notes",
+      "number": "Glimmer 30B: strict exact match 87% to 99% with 511 training examples",
+      "status": "measured",
+      "source": "Tuned on free GPUs as a tool-call specialist, on synthetic data. The same frozen test served two training runs, so the result counts only after a fresh test, which comes next."
+    },
+    {
+      "where": "Notes under slides 15 and 17",
+      "number": "Glimmer 30B with 63 examples: 87.3% to 92.7% on a frozen 150-row test",
+      "status": "measured",
+      "source": "QLoRA on free Kaggle T4 GPUs. Valid JSON, schema and types 96.7% to 100%; refusal accuracy 90.7% to 93.3%; sanity checks unchanged. Paired bootstrap: +5.3 points, 95% CI 0.0 to 11.3, so the base model was kept."
+    },
+    {
+      "where": "Slide 18",
+      "number": "Voice Transcribe captions for the demo video",
+      "status": "planned",
+      "source": "The video is not made yet."
+    }
+  ]
+}

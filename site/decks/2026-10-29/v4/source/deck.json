@@ -1,0 +1,20 @@
+{
+  "v": 4,
+  "createdOnFiles": {"v": 1, "at": "2026-10-29T19:45:00Z"},
+  "lists": "css",
+  "title": "ta-amps Hackathon Pitch",
+  "cover": "cover",
+  "order": ["cover", "problems", "training", "answer", "model", "eranos", "example", "evidence", "try", "appendix", "shimrag", "loop", "map", "packs", "fixes", "evidencepack", "learning", "meta", "limits"],
+  "sections": {
+    "s1": {"description": "Core: three ways AI work is wasted, and why it keeps happening.", "start": "cover"},
+    "s2": {"description": "Core: the answer, how it works, and a real example.", "start": "answer"},
+    "s3": {"description": "Core: what already works, and how to try it.", "start": "evidence"},
+    "s4": {"description": "Appendix: shims vs RAG, the work loop, surfaces vs seed packs, and the details behind each claim.", "start": "appendix"}
+  },
+  "faces": {
+    "space-grotesk": {"family": "Space Grotesk", "href": "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400..700&display=swap"},
+    "ibm-plex-sans": {"family": "IBM Plex Sans", "href": "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap"},
+    "jetbrains-mono": {"family": "JetBrains Mono", "href": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap"}
+  },
+  "designSystems": []
+}

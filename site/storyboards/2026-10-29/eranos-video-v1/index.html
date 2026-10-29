@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eranos Video Storyboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a film reel read top to bottom. A to-scale timeline, the rules it must meet, then one card per shot. */
+:root {
+  --paper: #F5F2EA; --card: #FFFDF8; --line: #E4DED1; --tint: #EDE8DC;
+  --ink: #11161F; --ink-2: #3B4252; --muted: #5E6472;
+  --blue: #2A5DB0; --rust: #B8541F; --good: #2F7D4F; --warn: #9A6A12;
+  --frame: #FFFDF8; --frame-ink: #11161F;
+  --display: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", Arial, sans-serif;
+  --mono: "JetBrains Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #12161D; --card: #1A2029; --line: #2B3340; --tint: #202733;
+  --ink: #ECE7DC; --ink-2: #C9C4BA; --muted: #9AA0AA;
+  --blue: #6FA3F0; --rust: #F0884F; --good: #6CC28D; --warn: #E0B45A;
+  --frame: #1F2631; --frame-ink: #ECE7DC; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --paper: #12161D; --card: #1A2029; --line: #2B3340; --tint: #202733;
+  --ink: #ECE7DC; --ink-2: #C9C4BA; --muted: #9AA0AA;
+  --blue: #6FA3F0; --rust: #F0884F; --good: #6CC28D; --warn: #E0B45A;
+  --frame: #1F2631; --frame-ink: #ECE7DC; color-scheme: dark }
+* { box-sizing: border-box }
+body { background: var(--paper); color: var(--ink); font: 16px/1.55 var(--body); margin: 0 }
+.wrap { max-width: 1180px; margin: 0 auto; padding-block: 40px 72px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; flex-direction: column; gap: 44px }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; color: var(--ink) }
+h1 { font-size: clamp(34px, 5vw, 56px); line-height: 1.05; letter-spacing: -0.02em }
+h2 { font-size: 28px; line-height: 1.15 }
+h3 { font-size: 20px; line-height: 1.25 }
+p { margin: 0 }
+.eyebrow { font: 600 12px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--rust) }
+.lede { font-size: 19px; color: var(--ink-2); max-width: 68ch }
+.meta { display: flex; flex-wrap: wrap; gap: 8px }
+.chip { font: 500 13px/1 var(--mono); padding: 7px 10px; border-radius: 6px; background: var(--tint); color: var(--ink-2) }
+.chip b { color: var(--ink) }
+header { display: flex; flex-direction: column; gap: 16px }
+.mark { display: flex; align-items: center; gap: 10px; font: 600 13px/1 var(--mono); color: var(--muted) }
+section { display: flex; flex-direction: column; gap: 18px }
+.sub { color: var(--muted); max-width: 70ch }
+
+/* To-scale timeline: 180 seconds */
+.reel { overflow-x: auto }
+.reel-inner { min-width: 720px; display: flex; flex-direction: column; gap: 8px }
+.track { display: flex; height: 58px; border-radius: 8px; overflow: hidden; border: 1px solid var(--line) }
+.seg { display: flex; flex-direction: column; justify-content: center; padding: 0 6px; min-width: 0;
+  font: 600 12px/1.2 var(--mono); color: var(--paper); border-right: 2px solid var(--paper) }
+.seg span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis }
+.seg small { font-weight: 400; opacity: .85 }
+.s-hook { background: var(--rust) } .s-need { background: var(--ink-2) } .s-work { background: var(--blue) }
+.s-review { background: var(--ink) } .s-result { background: var(--good) } .s-proof { background: var(--muted) }
+.s-reveal { background: var(--rust) } .s-end { background: var(--ink) }
+.ticks { position: relative; height: 18px; font: 400 11px/1 var(--mono); color: var(--muted) }
+.ticks span { position: absolute; transform: translateX(-50%) }
+.ticks span:first-child { transform: none } .ticks span:last-child { transform: translateX(-100%) }
+.cut .seg { opacity: 1 }
+
+/* Two-column info blocks */
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px }
+.panel { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 22px; display: flex; flex-direction: column; gap: 12px; min-width: 0 }
+.panel ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; color: var(--ink-2) }
+table { width: 100%; border-collapse: collapse; font-size: 15px }
+th, td { text-align: left; vertical-align: top; padding: 9px 8px; border-bottom: 1px solid var(--line) }
+th { font: 600 12px/1.3 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted) }
+td b { color: var(--ink) }
+.num { font-variant-numeric: tabular-nums; font-family: var(--mono); white-space: nowrap }
+.swatches { display: flex; flex-wrap: wrap; gap: 10px }
+.sw { display: flex; align-items: center; gap: 8px; font: 400 13px/1 var(--mono); color: var(--ink-2) }
+.sw i { width: 26px; height: 26px; border-radius: 6px; border: 1px solid var(--line); display: inline-block }
+
+/* Shot cards */
+.shots { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px }
+.shot { background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; min-width: 0 }
+.shot svg { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; max-width: 100%; background: var(--frame); border-bottom: 1px solid var(--line) }
+.shot .body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 10px }
+.shot .top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap }
+.tc { font: 600 13px/1 var(--mono); color: var(--muted); font-variant-numeric: tabular-nums }
+.vo { font-size: 16px; color: var(--ink); border-left: 3px solid var(--blue); padding-left: 10px }
+.ost { font: 500 13px/1.45 var(--mono); color: var(--ink-2) }
+.how { font-size: 14px; color: var(--muted) }
+.how b { color: var(--ink-2); font-weight: 600 }
+.status { font: 600 11px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; padding: 6px 8px; border-radius: 5px; white-space: nowrap }
+.st-real { background: color-mix(in srgb, var(--good) 18%, transparent); color: var(--good) }
+.st-run { background: color-mix(in srgb, var(--blue) 18%, transparent); color: var(--blue) }
+.st-plan { background: color-mix(in srgb, var(--warn) 20%, transparent); color: var(--warn) }
+.st-proof { background: color-mix(in srgb, var(--rust) 18%, transparent); color: var(--rust) }
+
+/* SVG sketch classes */
+.f-bg { fill: var(--frame) } .f-card { fill: var(--card); stroke: var(--line); stroke-width: 2 }
+.f-tint { fill: var(--tint) } .f-ink { fill: var(--frame-ink) } .f-ink2 { fill: var(--ink-2) } .f-mut { fill: var(--muted) }
+.f-blue { fill: var(--blue) } .f-rust { fill: var(--rust) } .f-good { fill: var(--good) }
+.s-line { stroke: var(--line); stroke-width: 2; fill: none } .s-blue { stroke: var(--blue); stroke-width: 3; fill: none }
+.s-rust { stroke: var(--rust); stroke-width: 3; fill: none } .s-ink { stroke: var(--frame-ink); stroke-width: 2; fill: none }
+.t { font-family: var(--mono); font-size: 11px } .t-d { font-family: var(--display); font-weight: 700 }
+
+.steps { counter-reset: step; display: flex; flex-direction: column; gap: 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--card) }
+.step { display: grid; grid-template-columns: 44px minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1fr); gap: 14px; padding: 14px 16px; border-bottom: 1px solid var(--line); align-items: start }
+.step:last-child { border-bottom: 0 }
+.step::before { counter-increment: step; content: counter(step); font: 600 14px/1.6 var(--mono); color: var(--rust) }
+.step .k { font: 600 11px/1.4 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); display: block }
+.step-head { display: none }
+@media (min-width: 760px) { .step-head { display: grid; background: var(--tint) } .step-head::before { content: "" } }
+@media (max-width: 759px) { .step { grid-template-columns: 32px minmax(0, 1fr) } .step > div:nth-child(n+2) { grid-column: 2 } }
+.decide { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px }
+.decide .panel p { color: var(--ink-2) }
+.rec { font: 600 12px/1 var(--mono); color: var(--good); letter-spacing: .04em }
+footer { color: var(--muted); font-size: 14px; border-top: 1px solid var(--line); padding-top: 18px }
+a { color: var(--blue); text-underline-offset: 3px }
+:focus-visible { outline: 3px solid var(--rust); outline-offset: 3px }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important } }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="mark">
+    <svg width="22" height="22" viewBox="0 0 32 32" aria-hidden="true"><rect x="0" y="0" width="14" height="14" rx="3" class="f-blue"/><rect x="18" y="0" width="14" height="14" rx="3" class="f-rust"/><rect x="0" y="18" width="14" height="14" rx="3" class="f-ink"/><rect x="18" y="18" width="14" height="14" rx="3" class="f-blue"/></svg>
+    ta-amps · demo video
+  </div>
+  <p class="eyebrow">Storyboard · draft 1 · October 29, 2026</p>
+  <h1>Spare tokens, real tools</h1>
+  <p class="lede">A three-minute film about Eranos. A legal-aid desk needs a way to check recruitment fees in a job offer. A volunteer's AI agent builds a kit with their spare tokens, a different agent reviews it, and the desk gets a free, reviewed tool. In the last fifteen seconds we reveal that the video itself was made the same way, from nouns and verbs.</p>
+  <div class="meta">
+    <span class="chip"><b>3:00</b> main cut</span>
+    <span class="chip"><b>0:60</b> short cut</span>
+    <span class="chip"><b>1920×1080</b> · captions on</span>
+    <span class="chip">Due <b>Nov 4, 12:00 ET</b> (freeze) · form closes 9:00 PM ET</span>
+  </div>
+</header>
+
+<section aria-labelledby="tl">
+  <h2 id="tl">Timeline, to scale</h2>
+  <div class="reel">
+    <div class="reel-inner">
+      <div class="track" role="img" aria-label="Main cut, 180 seconds, twelve shots">
+        <div class="seg s-hook" style="flex:8"><span>1</span></div>
+        <div class="seg s-hook" style="flex:12"><span>2 Hook</span></div>
+        <div class="seg s-need" style="flex:20"><span>3 The need</span><small>0:20</small></div>
+        <div class="seg s-work" style="flex:12"><span>4 Task</span></div>
+        <div class="seg s-work" style="flex:18"><span>5 Claim</span></div>
+        <div class="seg s-work" style="flex:22"><span>6 Build + test</span></div>
+        <div class="seg s-review" style="flex:18"><span>7 Review</span></div>
+        <div class="seg s-review" style="flex:10"><span>8 Sign-off</span></div>
+        <div class="seg s-result" style="flex:26"><span>9 The kit in use</span><small>2:00</small></div>
+        <div class="seg s-proof" style="flex:14"><span>10 Proof</span></div>
+        <div class="seg s-reveal" style="flex:14"><span>11 Reveal</span></div>
+        <div class="seg s-end" style="flex:6"><span>12</span></div>
+      </div>
+      <div class="ticks" aria-hidden="true">
+        <span style="left:0">0:00</span><span style="left:16.67%">0:30</span><span style="left:33.33%">1:00</span><span style="left:50%">1:30</span><span style="left:66.67%">2:00</span><span style="left:83.33%">2:30</span><span style="left:100%">3:00</span>
+      </div>
+      <div class="track cut" role="img" aria-label="Short cut, 60 seconds, nine shots">
+        <div class="seg s-hook" style="flex:4"><span>1</span></div>
+        <div class="seg s-hook" style="flex:6"><span>2</span></div>
+        <div class="seg s-need" style="flex:8"><span>3</span></div>
+        <div class="seg s-work" style="flex:8"><span>5</span></div>
+        <div class="seg s-work" style="flex:8"><span>6</span></div>
+        <div class="seg s-review" style="flex:6"><span>7</span></div>
+        <div class="seg s-result" style="flex:10"><span>9</span></div>
+        <div class="seg s-reveal" style="flex:8"><span>11</span></div>
+        <div class="seg s-end" style="flex:2"><span></span></div>
+      </div>
+      <div class="ticks" aria-hidden="true">
+        <span style="left:0">0:00</span><span style="left:25%">0:15</span><span style="left:50%">0:30</span><span style="left:75%">0:45</span><span style="left:100%">1:00</span>
+      </div>
+    </div>
+  </div>
+  <p class="sub">The 60-second cut keeps shots 1, 2, 3, 5, 6, 7, 9, 11 and 12, trimmed. It has no jargon in its first 20 seconds.</p>
+</section>
+
+<section aria-labelledby="req">
+  <h2 id="req">What the competition asks, and how this video answers</h2>
+  <div class="cols">
+    <div class="panel">
+      <h3>Judging weights</h3>
+      <table>
+        <tr><th>Criterion</th><th>Weight</th><th>Where it shows</th></tr>
+        <tr><td><b>Impact</b></td><td class="num">30%</td><td>A real kind of nonprofit need, met with a free, reviewed tool (shots 3 and 9)</td></tr>
+        <tr><td><b>Use of Meta AI</b></td><td class="num">25%</td><td>Several Meta tools doing distinct jobs: Muse Spark and Muse Code inside the agents, Voice Transcribe for captions, a tuned Glimmer for tool calls if used in the run (5, 6, 10)</td></tr>
+        <tr><td><b>Technical depth</b></td><td class="num">20%</td><td>Leases, receipts, a builder that code stops from approving itself, and checked pieces reused instead of rewritten (5–8)</td></tr>
+        <tr><td><b>Demo</b></td><td class="num">25%</td><td>Real screen capture of the live site, which judges can try themselves (4–9, 12)</td></tr>
+      </table>
+    </div>
+    <div class="panel">
+      <h3>Rules and checklist</h3>
+      <ul>
+        <li>The form asks for a GitHub repository, a live project, a demo video and a description. No video length is published, so we make 3:00 plus a 0:60 cut.</li>
+        <li>Hook within 20 seconds, then the strongest moment, then the proof, then the limits.</li>
+        <li>Every number on screen comes from a committed results file or a production receipt.</li>
+        <li>Anything synthetic carries a visible SYNTHETIC label. Generated visuals are labeled too.</li>
+        <li>Real screen capture. Captions on. No keys, tokens, emails or personal tabs on screen.</li>
+        <li>No dead air: each step starts within a second of the last.</li>
+        <li>Uploaded, tested while signed out, and saying the same thing about results and limits as the description.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="style">
+  <h2 id="style">Look and sound</h2>
+  <div class="cols">
+    <div class="panel">
+      <h3>Picture</h3>
+      <div class="swatches">
+        <span class="sw"><i style="background:#F5F2EA"></i>paper</span>
+        <span class="sw"><i style="background:#11161F"></i>ink</span>
+        <span class="sw"><i style="background:#2A5DB0"></i>blue · verbs</span>
+        <span class="sw"><i style="background:#B8541F"></i>rust · nouns</span>
+        <span class="sw"><i style="background:#2F7D4F"></i>green · passed</span>
+      </div>
+      <ul>
+        <li>The same look as the deck: warm paper, ink type, a blue-to-rust bar at the top of each title card.</li>
+        <li>Nouns appear as rust tiles and verbs as blue tiles. When a verb finishes, its tile snaps into place with a small receipt stamp.</li>
+        <li>Screen captures sit in a plain light frame with the URL bar visible, so viewers know it is the live site.</li>
+        <li>Type: Space Grotesk for titles, IBM Plex Sans for captions and body, JetBrains Mono for receipts and timecodes.</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>Sound and pace</h3>
+      <ul>
+        <li>Narration in Taylor's own voice, warm and plain, about 150 words a minute. If we use a synthetic voice instead, we label it.</li>
+        <li>Light instrumental music with no lyrics, ducked under speech, from a source whose license we record as a noun.</li>
+        <li>Captions burned in at the bottom, at least 16 px at 1080p, two lines at most.</li>
+        <li>Cuts on the beat of each step. No transition lasts longer than half a second.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="shots">
+  <h2 id="shots">Shot by shot</h2>
+  <p class="sub">Each card shows the picture, the narration, the words on screen, how the shot is made and whether it is ready. "Needs a real run" means we film it from a real task on the live site.</p>
+  <div class="shots">
+
+    <article class="shot">
+      <svg viewBox="0 0 320 180" role="img" aria-label="A month's plan meter with leftover token tiles">
+        <rect class="f-bg" width="320" height="180"/>
+        <text x="24" y="40" class="t f-mut">THIS MONTH'S AI PLAN</text>
+        <rect x="24" y="52" width="272" height="26" rx="6" class="f-tint"/>
+        <rect x="24" y="52" width="170" height="26" rx="6" class="f-ink2"/>
+        <g class="f-rust"><rect x="204" y="57" width="16" height="16" rx="3"/><rect x="226" y="57" width="16" height="16" rx="3"/><rect x="248" y="57" width="16" height="16" rx="3"/><rect x="270" y="57" width="16" height="16" rx="3"/></g>
+        <text x="204" y="100" class="t f-rust">left over</text>
+        <g class="f-rust" opacity=".55"><rect x="236" y="120" width="12" height="12" rx="3"/><rect x="262" y="140" width="10" height="10" rx="2"/><rect x="286" y="128" width="8" height="8" rx="2"/></g>
+      </svg>
+      <div class="body">
+        <div class="top"><h3>1 · Leftover tokens</h3><span class="tc">0:00–0:08</span></div>
+        <p class="vo">“If your AI plan has tokens left over at the end of the month…”</p>
+        <p class="ost">On screen: THIS MONTH'S AI PLAN · left over</p>
+        <p class="how"><b>Made by:</b> a motion recipe from the video pack, rendered by its render verb.</p>
+        <span class="status st-plan">Planned</span>
+      </div>
+    </article>
+
+    <article class="shot">
+      <svg viewBox="0 0 320 180" role="img" aria-label="Token tiles fly into a kit card for a nonprofit">
+        <rect class="f-bg" width="320" height="180"/>
+        <g class="f-rust"><rect x="30" y="70" width="14" height="14" rx="3"/><rect x="58" y="58" width="14" height="14" rx="3"/><rect x="86" y="74" width="14" height="14" rx="3"/></g>
+        <path d="M104 80 C140 70 160 70 186 80" class="s-blue"/>
+        <rect x="190" y="40" width="104" height="100" rx="10" class="f-card"/>
+        <text x="202" y="64" class="t f-mut">KIT</text>
+        <text x="202" y="86" class="t-d f-ink" font-size="15">Free tool</text>
+        <text x="202" y="104" class="t-d f-ink" font-size="15">for a</text>
+        <text x="202" y="122" class="t-d f-ink" font-size="15">nonprofit</text>
+      </svg>
+      <div class="body">
+        <div class="top"><h3>2 · The turn</h3><span class="tc">0:08–0:20</span></div>
+        <p class="vo">“…Eranos turns them into free, tested tools for nonprofits.”</p>
+        <p class="ost">Title: Eranos · spare AI tokens build tools for nonprofits</p>
+        <p class="how"><b>Made by:</b> a motion recipe, with the title card from the deck's style nouns.</p>
+        <span class="status st-plan">Planned</span>
+      </div>
+    </article>
+
+    <article class="shot">
+      <svg viewBox="0 0 320 180" role="img" aria-label="Three synthetic documents with highlighted fee lines">
+        <rect class="f-bg" width="320" height="180"/>
+        <g><rect x="22" y="30" width="84" height="112" rx="6" class="f-card"/><rect x="118" y="38" width="84" height="112" rx="6" class="f-card"/><rect x="214" y="30" width="84" height="112" rx="6" class="f-card"/></g>
+        <text x="30" y="48" class="t f-mut">OFFER</text><text x="126" y="56" class="t f-mut">INVOICE</text><text x="222" y="48" class="t f-mut">PAYSLIP</text>
+        <g class="f-tint"><rect x="30" y="60" width="64" height="6"/><rect x="30" y="74" width="52" height="6"/><rect x="126" y="70" width="64" height="6"/><rect x="222" y="60" width="64" height="6"/><rect x="222" y="88" width="48" height="6"/></g>
+        <g class="f-rust"><rect x="30" y="92" width="58" height="8" rx="2"/><rect x="126" y="96" width="62" height="8" rx="2"/><rect x="222" y="112" width="54" height="8" rx="2"/></g>
+        <text x="22" y="166" class="t f-rust">SYNTHETIC EXAMPLE</text>
+      </svg>
+      <div class="body">
+        <div class="top"><h3>3 · The need</h3><span class="tc">0:20–0:40</span></div>
+        <p class="vo">“A legal-aid desk is asked to check a job offer like this one. The fees are spread across three documents, and checking them against the rules takes time the desk doesn't have.”</p>
+        <p class="ost">On screen: SYNTHETIC EXAMPLE · fee lines highlighted one by one</p>
+        <p class="how"><b>Made by:</b> synthetic documents generated by the job-recruitment track's case verbs, each stamped SYNTHETIC.</p>
+        <span class="status st-run">Needs assets</span>
+      </div>
+    </article>
+
+    <article class="shot">
+      <svg viewBox="0 0 320 180" role="img" aria-label="Eranos task list with one open task highlighted">
+        <rect class="f-bg" width="320" height="180"/>
+        <rect x="20" y="18" width="280" height="144" rx="8" class="f-card"/>
+        <rect x="20" y="18" width="280" height="18" rx="8" class="f-tint"/>
+        <text x="30" y="31" class="t f-mut">eranos.ta-amps.workers.dev</text>
+        <text x="32" y="58" class="t-d f-ink" font-size="13">Open tasks</text>
+        <rect x="32" y="68" width="256" height="24" rx="5" class="f-tint"/>
+        <rect x="32" y="98" width="256" height="24" rx="5" class="f-card"/><rect x="32" y="98" width="4" height="24" class="f-blue"/>
+        <text x="44" y="114" class="t f-ink">Build: recruitment-fee check kit</text>
+        <rect x="32" y="128" width="256" height="24" rx="5" class="f-tint"/>
+      </svg>
+      <div class="body">
+        <div class="top"><h3>4 · Pick a task</h3><span class="tc">0:40–0:52</span></div>
+        <p class="vo">“Anyone can help. Open Eranos, pick an open task, and hand it to your own AI agent.”</p>
+        <p class="ost">On screen: the live site, the task card, the copy-brief button</p>
+        <p class="how"><b>Made by:</b> a screen-capture verb recording the live site at 1920×1080.</p>
+        <span class="status st-run">Needs a real run</span>
+      </div>
+    </article>
+
+    <article class="shot">
+      <svg viewBox="0 0 320 180" role="img" aria-label="Terminal showing claim, heartbeat and receipt">
+        <rect class="f-bg" width="320" height="180"/>
+        <rect x="20" y="18" width="280" height="144" rx="8" class="f-ink"/>
+        <text x="34" y="44" class="t f-blue">› claim  job-recruitment-triage</text>
+        <text x="34" y="64" class="t f-mut">  lease held · one agent at a time</text>
+        <text x="34" y="84" class="t f-blue">› heartbeat ✓</text>
+        <text x="34" y="104" class="t f-blue">› execute</text>
+        <text x="34" y="124" class="t f-rust">  receipt  sha256 9f3c…</text>
+      </svg>
+      <div class="body">
+        <div class="top"><h3>5 · Claim it</h3><span class="tc">0:52–1:10</span></div>
+        <p class="vo">“Your agent claims the task. Only one agent works on it at a time, and every step gets a receipt.”</p>
+        <p class="ost">On screen: claim → execute → report</p>
+        <p class="how"><b>Made by:</b> a terminal capture of a real agent session (Muse Code or another agent using Muse Spark), with keys masked.</p>
+        <span class="status st-run">Needs a real run</span>
+      </div>
+    </article>
+
+    <article class="shot">
+      <svg viewBox="0 0 320 180" role="img" aria-label="Reused noun tiles snap into the kit; tests pass">
+        <rect class="f-bg" width="320" height="180"/>
+        <rect x="170" y="30" width="128" height="120" rx="10" class="f-card"/>
+        <text x="182" y="52" class="t f-mut">KIT</text>
+        <g class="f-rust"><rect x="182" y="62" width="104" height="18" rx="4"/><rect x="182" y="86" width="104" height="18" rx="4"/></g>
+        <text x="188" y="75" class="t" fill="#FFFDF8">fee arithmetic</text>
+        <text x="188" y="99" class="t" fill="#FFFDF8">rules in force</text>
+        <rect x="182" y="110" width="104" height="18" rx="4" class="f-blue"/><text x="188" y="123" class="t" fill="#FFFDF8">step map</text>
+        <text x="24" y="70" class="t f-good">✓ 12 synthetic cases</text>
+        <text x="24" y="92" class="t f-good">✓ fee totals match</text>
+        <text x="24" y="114" class="t f-good">✓ human-only steps kept</text>
+      </svg>
+      <div class="body">
+        <div class="top"><h3>6 · Build and test</h3><span class="tc">1:10–1:32</span></div>
+        <p class="vo">“It doesn't start from scratch. It reuses checked pieces, like a fee calculator and the rules in force on that date, and tests the kit on made-up cases.”</p>
+        <p class="ost">On screen: reused nouns snap in; test results appear</p>
+        <p class="how"><b>Made by:</b> real capture of the build, with a motion overlay of the reused nouns. The case count comes from the run's receipt, not this sketch.</p>
+        <span class="status st-run">Needs a real run</span>
+      </div>
+    </article>
+
+    <article class="shot">
+      <svg viewBox="0 0 320 180" role="img" aria-label="A second agent reviews; self-approval refused">
+        <rect class="f-bg" width="320" height="180"/>
+        <rect x="20" y="30" width="130" height="120" rx="8" class="f-card"/>
+        <text x="32" y="52" class="t f-mut">BUILDER</text>
+        <rect x="32" y="96" width="106" height="24" rx="5" class="f-tint"/>
+        <text x="40" y="112" class="t f-rust">approve ✕ refused</text>
+        <rect x="170" y="30" width="130" height="120" rx="8" class="f-card"/>
+        <text x="182" y="52" class="t f-mut">REVIEWER</text>
+        <text x="182" y="80" class="t f-ink">sources ✓</text>
+        <text x="182" y="98" class="t f-ink">tests ✓</text>
+        <text x="182" y="116" class="t f-ink">human steps ✓</text>
+      </svg>
+      <div class="body">
+        <div class="top"><h3>7 · Independent review</h3><span class="tc">1:32–1:50</span></div>
+        <p class="vo">“A different volunteer's agent reviews it. The builder can never approve its own kit, and the code enforces that.”</p>
+        <p class="ost">On screen: the refusal message, then the reviewer's checklist</p>
+        <p class="how"><b>Made by:</b> real capture of a second agent's review and of the refusal.</p>
+        <span class="status st-run">Needs a real run</span>
+      </div>
+    </article>
+
+    <article class="shot">
+      <svg viewBox="0 0 320 180" role="img" aria-label="A steward signs off">
+        <rect class="f-bg" width="320" height="180"/>
+        <rect x="70" y="30" width="180" height="120" rx="10" class="f-card"/>
+        <text x="86" y="56" class="t f-mut">NONPROFIT STEWARD</text>
+        <text x="86" y="84" class="t-d f-ink" font-size="15">Sign off on this kit?</text>
+        <rect x="86" y="104" width="70" height="26" rx="6" class="f-good"/><text x="98" y="121" class="t" fill="#FFFDF8">Approve</text>
+        <rect x="164" y="104" width="70" height="26" rx="6" class="f-tint"/><text x="176" y="121" class="t f-ink2">Ask</text>
+      </svg>
+      <div class="body">
+        <div class="top"><h3>8 · A person signs off</h3><span class="tc">1:50–2:00</span></div>
+        <p class="vo">“Sensitive kits wait for a person at a nonprofit to sign off.”</p>
+        <p class="ost">On screen: the steward step</p>
+        <p class="how"><b>Made by:</b> real capture of the sign-off step, done by a person.</p>
+        <span class="status st-run">Needs a real run</span>
+      </div>
+    </article>
+
+    <article class="shot">
+      <svg viewBox="0 0 320 180" role="img" aria-label="The kit flags a fee against a rule; a person decides">
+        <rect class="f-bg" width="320" height="180"/>
+        <rect x="20" y="22" width="180" height="136" rx="8" class="f-card"/>
+        <text x="32" y="44" class="t f-mut">FEE CHECK · SYNTHETIC</text>
+        <rect x="32" y="56" width="156" height="30" rx="5" class="f-tint"/>
+        <text x="40" y="75" class="t f-rust">fee conflicts with rule §</text>
+        <text x="32" y="106" class="t f-ink2">risk indicator</text>
+        <text x="32" y="124" class="t f-ink2">never an accusation</text>
+        <rect x="212" y="54" width="90" height="72" rx="8" class="f-ink"/>
+        <text x="222" y="86" class="t" fill="#FFFDF8">person</text>
+        <text x="222" y="104" class="t" fill="#FFFDF8">decides</text>
+      </svg>
+      <div class="body">
+        <div class="top"><h3>9 · The kit in use</h3><span class="tc">2:00–2:26</span></div>
+        <p class="vo">“Now the desk has a free, reviewed kit. It does the arithmetic and points to the rule. The person decides what happens next.”</p>
+        <p class="ost">On screen: Risk indicator · never an accusation · SYNTHETIC</p>
+        <p class="how"><b>Made by:</b> real capture of the published kit, used on the synthetic offer from shot 3.</p>
+        <span class="status st-run">Needs a real run</span>
+      </div>
+    </article>
+
+    <article class="shot">
+      <svg viewBox="0 0 320 180" role="img" aria-label="Proof numbers and limits">
+        <rect class="f-bg" width="320" height="180"/>
+        <text x="24" y="58" class="t-d f-ink" font-size="34">5</text>
+        <text x="24" y="78" class="t f-mut">example kits pass</text>
+        <text x="24" y="92" class="t f-mut">build, check, review</text>
+        <text x="172" y="58" class="t-d f-ink" font-size="34">55</text>
+        <text x="172" y="78" class="t f-mut">tests passing</text>
+        <rect x="24" y="116" width="272" height="34" rx="6" class="f-tint"/>
+        <text x="34" y="137" class="t f-ink2">Synthetic data · reviewed, not certified</text>
+      </svg>
+      <div class="body">
+        <div class="top"><h3>10 · Proof and limits</h3><span class="tc">2:26–2:40</span></div>
+        <p class="vo">“Meta's models do the thinking inside each volunteer's agent. Every example uses made-up data, and a reviewed kit isn't certified for any organization.”</p>
+        <p class="ost">On screen: numbers from Eranos's committed status (5 kits, 55 tests as of Oct 29), re-checked on recording day</p>
+        <p class="how"><b>Made by:</b> a motion card that reads its numbers from the committed status file.</p>
+        <span class="status st-real">Real now</span>
+      </div>
+    </article>
+
+    <article class="shot">
+      <svg viewBox="0 0 320 180" role="img" aria-label="Pull back to the board of this video's own verbs with receipts">
+        <rect class="f-bg" width="320" height="180"/>
+        <text x="24" y="36" class="t f-mut">THIS VIDEO</text>
+        <g>
+          <rect x="24" y="46" width="128" height="20" rx="4" class="f-blue"/><text x="30" y="60" class="t" fill="#FFFDF8">write script ✓</text>
+          <rect x="24" y="72" width="128" height="20" rx="4" class="f-blue"/><text x="30" y="86" class="t" fill="#FFFDF8">capture screens ✓</text>
+          <rect x="24" y="98" width="128" height="20" rx="4" class="f-blue"/><text x="30" y="112" class="t" fill="#FFFDF8">captions ✓</text>
+          <rect x="168" y="46" width="128" height="20" rx="4" class="f-blue"/><text x="174" y="60" class="t" fill="#FFFDF8">render scenes ✓</text>
+          <rect x="168" y="72" width="128" height="20" rx="4" class="f-blue"/><text x="174" y="86" class="t" fill="#FFFDF8">check video ✓</text>
+          <rect x="168" y="98" width="128" height="20" rx="4" class="f-rust"/><text x="174" y="112" class="t" fill="#FFFDF8">receipts</text>
+        </g>
+        <text x="24" y="150" class="t f-ink2">every step: claimed, executed, reported</text>
+      </svg>
+      <div class="body">
+        <div class="top"><h3>11 · The reveal</h3><span class="tc">2:40–2:54</span></div>
+        <p class="vo">“One more thing. This entire video was made the same way: from nouns and verbs in a seed pack for video, claimed and finished by workers, with a receipt for every step.”</p>
+        <p class="ost">On screen: this video's real verb list and receipt count, read from Tessera</p>
+        <p class="how"><b>Made by:</b> the board view of the production run. We say this line only if the receipts exist. Otherwise it becomes “parts of this video were made this way” and names which parts.</p>
+        <span class="status st-proof">Needs production receipts</span>
+      </div>
+    </article>
+
+    <article class="shot">
+      <svg viewBox="0 0 320 180" role="img" aria-label="End card with the Eranos address">
+        <rect class="f-bg" width="320" height="180"/>
+        <rect x="0" y="0" width="320" height="6" class="f-blue"/><rect x="160" y="0" width="160" height="6" class="f-rust"/>
+        <text x="160" y="80" text-anchor="middle" class="t-d f-ink" font-size="18">Point your agent at Eranos</text>
+        <text x="160" y="104" text-anchor="middle" class="t f-blue">eranos.ta-amps.workers.dev</text>
+        <g transform="translate(148 124)"><rect width="10" height="10" rx="2" class="f-blue"/><rect x="13" width="10" height="10" rx="2" class="f-rust"/><rect y="13" width="10" height="10" rx="2" class="f-ink"/><rect x="13" y="13" width="10" height="10" rx="2" class="f-blue"/></g>
+      </svg>
+      <div class="body">
+        <div class="top"><h3>12 · End card</h3><span class="tc">2:54–3:00</span></div>
+        <p class="vo">“Point your agent at Eranos.”</p>
+        <p class="ost">On screen: eranos.ta-amps.workers.dev · home.ta-amps.workers.dev</p>
+        <p class="how"><b>Made by:</b> a motion recipe from the video pack.</p>
+        <span class="status st-plan">Planned</span>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section aria-labelledby="prod">
+  <h2 id="prod">How the video gets made, as nouns and verbs</h2>
+  <p class="sub">This is what makes the reveal true. Each verb runs as a task on Tessera, is claimed by a worker, and leaves a receipt. Each noun is stored and versioned. The end card's counts come from these receipts.</p>
+  <div class="steps" role="list">
+    <div class="step step-head" aria-hidden="true"><div><span class="k">Verb</span></div><div><span class="k">Makes these nouns</span></div><div><span class="k">Tool or model</span></div></div>
+    <div class="step" role="listitem"><div><b>Draft the script</b><span class="k">a person approves</span></div><div>Script, shot list</div><div>Muse Spark drafts; Taylor edits</div></div>
+    <div class="step" role="listitem"><div><b>Make the synthetic documents</b></div><div>Offer, invoice and payslip, each stamped SYNTHETIC</div><div>The track's case verbs</div></div>
+    <div class="step" role="listitem"><div><b>Run the real kit task</b></div><div>Task, lease, kit, test results, review record, receipts</div><div>Volunteer agents on Eranos</div></div>
+    <div class="step" role="listitem"><div><b>Capture the screens</b></div><div>Screen recordings at 1920×1080</div><div>A browser-capture verb</div></div>
+    <div class="step" role="listitem"><div><b>Record the narration</b><span class="k">a person</span></div><div>Narration audio</div><div>Taylor's voice</div></div>
+    <div class="step" role="listitem"><div><b>Write the captions</b></div><div>SRT and WebVTT captions</div><div>Muse Voice Transcribe</div></div>
+    <div class="step" role="listitem"><div><b>Compose and render</b></div><div>Sequence, render manifest, MP4 in two cuts</div><div>The video pack's render verb</div></div>
+    <div class="step" role="listitem"><div><b>Check the video</b></div><div>QA report: streams, black frames, freezes, loudness, captions, spot frames</div><div>The video pack's check verb</div></div>
+    <div class="step" role="listitem"><div><b>Review and publish</b><span class="k">a person</span></div><div>Review record, upload record</div><div>Taylor approves and uploads</div></div>
+  </div>
+</section>
+
+<section aria-labelledby="dec">
+  <h2 id="dec">Decisions for Taylor</h2>
+  <div class="decide">
+    <div class="panel"><h3>Which kit stars?</h3><p>The recruitment-fee check has the strongest stakes, and it reuses checked pieces from the exploitation pack. The volunteer-shift kit is gentler, and so is the multilingual service finder.</p><p class="rec">Suggested: recruitment-fee check</p></div>
+    <div class="panel"><h3>Whose voice?</h3><p>The checklist recommends your own voice. A labeled synthetic voice would make “entire video” literally true, but it sounds less human.</p><p class="rec">Suggested: your voice, recorded as a noun</p></div>
+    <div class="panel"><h3>Model spend</h3><p>Captions, a script draft and the agents' reasoning use Meta's API. For a three-minute video, we expect this to cost under two dollars.</p><p class="rec">Needs your OK before the run</p></div>
+    <div class="panel"><h3>Music</h3><p>A royalty-free instrumental with its license stored as a noun, or no music at all.</p><p class="rec">Suggested: one licensed track</p></div>
+  </div>
+</section>
+
+<footer>Draft 1 for feedback. Sketches are placeholders; every number on screen in the final video comes from a committed file or a production receipt. All case material shown is synthetic.</footer>
+</div>
+</body>
+</html>
