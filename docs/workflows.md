@@ -13,7 +13,24 @@ These flows describe supported interfaces and product boundaries. Use the owning
 
 If an outcome is uncertain, reconcile it before retrying an effect. Lease loss stops further lease-bound effects. A missing input, invalid type or unavailable reviewer does not authorize fallback inference.
 
-The October 29 native observation covers this loop through deployed Tessera MCP with OpenCode/Ollama, including execution readback and exact-input recall under a second lease. There was one run per access mode. [Recorded evidence](https://github.com/ta-amps/tessera/blob/main/docs/evidence/native-history-observation.json).
+The October 29 matrix covers a scoped synthetic lifecycle in six native harnesses.
+The earlier OpenCode/Ollama observation additionally covers exact-input recall
+under a second lease, once per access mode. See the [native matrix and creative
+pilot](swarm-readiness.md) and the [earlier recall evidence](https://github.com/ta-amps/tessera/blob/main/docs/evidence/native-history-observation.json).
+
+## Several workers explore one brief
+
+A versioned brief noun can be the input to several attempt verbs. Each worker
+holds its own lease and writes its own artifact; differing solutions are useful
+outputs rather than conflicting writes. A comparison verb can rate the
+alternatives against explicit dimensions and evidence, and a remix verb can
+produce another candidate with parent references. Reusing input nouns preserves
+common context while separate receipts preserve who produced each result.
+
+The [Opportunity Lab](https://github.com/ta-amps/tessera/blob/main/docs/opportunity-lab.md)
+authors this pattern for eleven startup themes. Its procedure nouns also cover
+source discovery, benchmark design and proposals for new nouns and verbs.
+Only initial ideation tasks are activated by its authoring command.
 
 ## Shamash: synthetic evidence to reviewable findings
 

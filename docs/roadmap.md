@@ -4,13 +4,14 @@ The current release passes the checks recorded in [status](status.md). The items
 
 | Work | Current state | Completion evidence |
 | --- | --- | --- |
-| Capability research seeds | Source-to-decision workflow is documented; collection and trials are not active | Deduplicated provenance, a pinned real project profile, honest comparability checks and a bounded paired trial producing a useful decision |
+| Capability research seeds | Pinned seed/task authoring is implemented; collectors, mailbox and recurring schedules are not active | Deduplicated provenance, a pinned real project profile, honest comparability checks and a paired trial producing a useful decision |
+| [Research specialist fine-tuning](fine-tuning-pilot.md) | Proposed Muse Glimmer adapter experiment; no training data admission, GPU or adapter provisioned | Reviewed examples, held-out source/project families, a matched unchanged-model baseline and a measured improvement before admission |
 | Pinned category/profile work packets | Category query repairs exist; a general resolver and QueryPlan contract are proposed | Deterministic version resolution, source scope, conflict handling, required constraints, bounded completeness and direct-client parity |
 | Governed shim rules | Scoped existing rules and conversations work; general admission, activation and rollback remain incomplete | Invalid or revoked rules cannot activate; version changes invalidate affected evidence; rollback preserves authority and budgets |
-| Native-client coverage | October 29 OpenCode/Ollama report-and-recall loops passed under both principals | Repeated trials and the same operations in other intended native clients, with actual tool events and independent readback |
+| Native-client coverage | Six harnesses completed a scoped synthetic lifecycle; corrected ten-process creative wave passed 10/10 after removing a harness response cap; earlier 7/10 and 3/3 results remain recorded | Repeated native-process waves with unmodified native response settings; OpenMuse TypeScript connector; sustained separate-principal trials |
 | Frontier repair and admission pilot | Discovery and enforcement exist; server repair is off and the public catalog is empty | One bounded synthetic candidate tested against fixed baseline, development, holdout and adversarial fixtures, followed by independent verification and review |
 | Combined-artifact and delivery contracts | Proposed in pack-contributions | Checks for changed versions, broken joins, uncertain effects, duplicate delivery and revoked source access |
-| UI and operational qualification | HTTP discovery, runtime fixtures and bundle parity pass | Fresh rendered-browser checks, longer runtime/load observations and explicit deployment-specific limits |
+| UI and operational qualification | Sixteen desktop/mobile rendered banner cases pass; protocol load reaches 100 clients | Longer runtime/load observations, recovery and separate-principal coverage; native OS clipboard behavior |
 | Kinema media extensions | Frame recipes, SVG rendering and metadata QA work | An actual encoding/asset pipeline with rendered-media checks and documented license provenance |
 
 Keep these increments bounded. A no-change result is valid when a candidate fails to improve the measured outcome. Retain failed and aborted attempts. Preserve synthetic evaluation fixtures, independent checks and current authorization.

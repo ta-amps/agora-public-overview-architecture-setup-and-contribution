@@ -1,0 +1,1723 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-10-29T15:36:07.524802+00:00",
+  "provenance": "Maintainer-recorded checks with exact public revisions and CI. Raw histories, credentials, account metadata and private candidate content are excluded.",
+  "historical_baseline": {
+    "path": "evidence/integration-2026-10-29.json",
+    "observed_at": "2026-10-29T13:05:06.584713+00:00"
+  },
+  "merged_pull_requests": [
+    "https://github.com/ta-amps/eranos/pull/1",
+    "https://github.com/ta-amps/eranos/pull/2",
+    "https://github.com/ta-amps/eranos/pull/3",
+    "https://github.com/ta-amps/eranos/pull/4",
+    "https://github.com/ta-amps/hackathon-context/pull/1",
+    "https://github.com/ta-amps/herma/pull/1",
+    "https://github.com/ta-amps/herma/pull/2",
+    "https://github.com/ta-amps/herma/pull/3",
+    "https://github.com/ta-amps/herma/pull/4",
+    "https://github.com/ta-amps/herma/pull/5",
+    "https://github.com/ta-amps/herma/pull/6",
+    "https://github.com/ta-amps/herma/pull/7",
+    "https://github.com/ta-amps/kinema/pull/1",
+    "https://github.com/ta-amps/kinema/pull/2",
+    "https://github.com/ta-amps/kinema/pull/3",
+    "https://github.com/ta-amps/kothar/pull/1",
+    "https://github.com/ta-amps/kothar/pull/2",
+    "https://github.com/ta-amps/kothar/pull/3",
+    "https://github.com/ta-amps/pack-contributions/pull/1",
+    "https://github.com/ta-amps/pack-contributions/pull/2",
+    "https://github.com/ta-amps/pack-contributions/pull/3",
+    "https://github.com/ta-amps/pack-contributions/pull/4",
+    "https://github.com/ta-amps/shamash/pull/1",
+    "https://github.com/ta-amps/shamash/pull/2",
+    "https://github.com/ta-amps/shamash/pull/3",
+    "https://github.com/ta-amps/shamash/pull/4",
+    "https://github.com/ta-amps/tessera/pull/1",
+    "https://github.com/ta-amps/tessera/pull/2",
+    "https://github.com/ta-amps/tessera/pull/3",
+    "https://github.com/ta-amps/tessera/pull/4",
+    "https://github.com/ta-amps/tessera/pull/5",
+    "https://github.com/ta-amps/tessera/pull/6",
+    "https://github.com/ta-amps/tessera/pull/7",
+    "https://github.com/ta-amps/tessera/pull/8"
+  ],
+  "repository_checks": [
+    {
+      "repository": "tessera",
+      "summary": "292 Python tests passed, 6 skipped; 6 admission and 4 onboarding Node cases; 6 actual workerd cases; local HTTP conformance 32 passed, 4 skipped.",
+      "commands": [
+        {
+          "argv": [
+            "make",
+            "check"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "npm",
+            "run",
+            "test:worker"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "suite-http-local"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "scope": "Latest recorded repository checks during the October 29 integration and follow-up work."
+    },
+    {
+      "repository": "shamash",
+      "summary": "259 tests passed; synthetic development cases, adapter conformance (30 passed, 6 skipped), TypeScript and frontend build passed.",
+      "commands": [
+        {
+          "argv": [
+            "uv",
+            "lock"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "uv",
+            "sync",
+            "--all-groups",
+            "--locked"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "check"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "dev-cases"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "suite",
+            "BACKEND=local"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "pnpm",
+            "--dir",
+            "web",
+            "install",
+            "--frozen-lockfile"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "web-check"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "scope": "Latest recorded repository checks during the October 29 integration and follow-up work."
+    },
+    {
+      "repository": "eranos",
+      "summary": "56 tests passed; example verification, adapter conformance (30 passed, 6 skipped), TypeScript and frontend build passed.",
+      "commands": [
+        {
+          "argv": [
+            "uv",
+            "lock"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "uv",
+            "sync",
+            "--all-groups",
+            "--locked"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "check"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "verify-examples"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "suite",
+            "BACKEND=local"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "pnpm",
+            "--dir",
+            "web",
+            "install",
+            "--frozen-lockfile"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "web-check"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "scope": "Latest recorded repository checks during the October 29 integration and follow-up work."
+    },
+    {
+      "repository": "herma",
+      "summary": "85 Python tests and 49 actual Worker checks passed, including strict decisions and offline no-egress controls.",
+      "commands": [
+        {
+          "argv": [
+            "uv",
+            "lock"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "uv",
+            "sync",
+            "--all-groups",
+            "--locked"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "npm",
+            "ci",
+            "--ignore-scripts"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "check"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "scope": "Latest recorded repository checks during the October 29 integration and follow-up work."
+    },
+    {
+      "repository": "kothar",
+      "summary": "39 tests and the deterministic demo passed; demo uses 18 verified nodes.",
+      "commands": [
+        {
+          "argv": [
+            "uv",
+            "sync",
+            "--all-groups",
+            "--locked"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "check"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "demo"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "scope": "Latest recorded repository checks during the October 29 integration and follow-up work."
+    },
+    {
+      "repository": "kinema",
+      "summary": "38 tests and the deterministic demo passed.",
+      "commands": [
+        {
+          "argv": [
+            "uv",
+            "sync",
+            "--all-groups",
+            "--locked"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "check"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "make",
+            "demo"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "scope": "Latest recorded repository checks during the October 29 integration and follow-up work."
+    },
+    {
+      "repository": "hackathon-context",
+      "summary": "Two unittest groups passed: 12 and 13 tests; offline document and example checks passed.",
+      "commands": [
+        {
+          "argv": [
+            "make",
+            "check"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "scope": "Latest recorded repository checks during the October 29 integration and follow-up work."
+    },
+    {
+      "repository": "pack-contributions",
+      "summary": "10 tests, 12 JSON examples, local documentation links and public hygiene passed.",
+      "commands": [
+        {
+          "argv": [
+            "make",
+            "check"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "scope": "Latest recorded repository checks during the October 29 integration and follow-up work."
+    }
+  ],
+  "portal_checks": {
+    "node_checks_passed": 33,
+    "actual_worker_sqlite_checks_passed": 20
+  },
+  "historical_live_execution_history": {
+    "passed": true,
+    "check_count": 112,
+    "passed_check_count": 112,
+    "failed_check_count": 0,
+    "http_requests": 65,
+    "cleanup_requests": 2,
+    "provider_calls": 0,
+    "fingerprint": "aee353a4cccc32baa8a03f62fc6efbcca425c9edee1f613b36ab92ddedd7e09a"
+  },
+  "historical_public_checks": {
+    "passed": 24,
+    "total": 24,
+    "scope": "deployed HTTP discovery, public projection and synthetic invalid payloads; no browser or paid-model certification",
+    "fingerprint": "deee74d7c383c6a66ceb29154766aa5f5124961f7f5cc357bbba9ba87396137a"
+  },
+  "native_execution_history": {
+    "public_evidence": "https://github.com/ta-amps/tessera/blob/775f7647c0b6f858bc95bf08f52c7fa27ebd5d93/docs/evidence/native-history-observation.json",
+    "observed_date": "2026-10-29",
+    "harness": "OpenCode 2.1.2",
+    "provider": "Ollama Cloud",
+    "model": "kimi-k2.7-code",
+    "interface": "Direct deployed Tessera MCP; no context shim or Frontier connector",
+    "scope": "One synthetic execution-report and recall loop per principal. Worker observations do not qualify public artifact admission or universal client compatibility.",
+    "worker_inference_requests": 30,
+    "server_model_requests": 0,
+    "runs": [
+      {
+        "mode": "anonymous",
+        "passed": true,
+        "native_event_counts": {
+          "step_start": 14,
+          "tool_use": 13,
+          "step_finish": 13,
+          "text": 1
+        },
+        "native_calls": [
+          "tessera_whoami",
+          "tessera_claim",
+          "tessera_heartbeat",
+          "tessera_put_record",
+          "tessera_get_record",
+          "tessera_submit",
+          "tessera_list_executions",
+          "tessera_get_execution",
+          "tessera_enqueue",
+          "tessera_claim",
+          "tessera_recall_execution",
+          "tessera_cancel",
+          "tessera_my_audit"
+        ],
+        "provider_requests": 15,
+        "provider_usage_records": 15,
+        "provider_reported_prompt_tokens_sum": 68975,
+        "provider_reported_completion_tokens_sum": 3180,
+        "exact_input_recall": true,
+        "independent_http_readback": true,
+        "fresh_key_revoked": null,
+        "run_fingerprint": "db1d178ad17a37cfd2c661e4398f733e10beed19edff767a73e9e9243806dc74",
+        "cost_usd": null,
+        "cost_reason": "Subscription use is not a per-run invoice."
+      },
+      {
+        "mode": "keyed",
+        "passed": true,
+        "native_event_counts": {
+          "step_start": 14,
+          "text": 2,
+          "tool_use": 13,
+          "step_finish": 13
+        },
+        "native_calls": [
+          "tessera_whoami",
+          "tessera_claim",
+          "tessera_heartbeat",
+          "tessera_put_record",
+          "tessera_get_record",
+          "tessera_submit",
+          "tessera_list_executions",
+          "tessera_get_execution",
+          "tessera_enqueue",
+          "tessera_claim",
+          "tessera_recall_execution",
+          "tessera_cancel",
+          "tessera_my_audit"
+        ],
+        "provider_requests": 15,
+        "provider_usage_records": 15,
+        "provider_reported_prompt_tokens_sum": 62803,
+        "provider_reported_completion_tokens_sum": 3437,
+        "exact_input_recall": true,
+        "independent_http_readback": true,
+        "fresh_key_revoked": true,
+        "run_fingerprint": "46b9f15a1bd21503f4115657086e8fe744483570a7a83e0e5b811e446cdef2f7",
+        "cost_usd": null,
+        "cost_reason": "Subscription use is not a per-run invoice."
+      }
+    ],
+    "retained_setup_failures": [
+      {
+        "mode": "anonymous",
+        "provider_requests": 0,
+        "reason": "Test driver module-name collision before any network request; corrected."
+      },
+      {
+        "mode": "keyed",
+        "provider_requests": 0,
+        "reason": "Test driver used an unsupported enqueue HTTP path before inference; corrected to the documented route; fresh key revoked."
+      }
+    ],
+    "limits": [
+      "One run per principal, not a reliability estimate.",
+      "Native Muse, Grokbot, Muse.ai and other model/version combinations are not established by this evidence.",
+      "No automatic output replay, generated-code admission, general category resolver or new shim activation was enabled."
+    ]
+  },
+  "native_matrix": {
+    "schema_version": 1,
+    "observed_at": "2026-10-29T15:32:01.469721+00:00",
+    "scope": "Maintainer-recorded synthetic native-process lifecycle and creative-worker observations. No universal harness certification.",
+    "response_policy": {
+      "transport_output_override": false,
+      "caller_fields_preserved": [
+        "max_tokens",
+        "max_completion_tokens",
+        "max_output_tokens"
+      ],
+      "unspecified_output_limit_preserved": true,
+      "offline_regression": {
+        "tests_passed": 1,
+        "request_cases": 4,
+        "provider_calls": 0,
+        "test_source_sha256": "7741feb3b75dbfa97d11f0c4ee59549729b69b26e82fff87155b293672b385a5"
+      },
+      "current_runner_sha256": "1300ca56ad68b4c6139a4915b86b289143ec1fbd807c07b01a0e70c8fb8dca3e",
+      "pi_native_requested_output_tokens_in_corrected_run": 16384,
+      "opencode_muse_hermes": "No response-token setting is injected by the current fixture configuration.",
+      "pi_nanomuse": "The former 2,048-token configuration is removed; native harness defaults pass through.",
+      "openclaw": "Its configured model output maximum is 128000, matching the observed provider catalog for muse-spark-1.3; it is not a test transport clamp.",
+      "run_level_allowances": "Deadlines, provider-attempt allowances and financial allowances still bound these experiments.",
+      "transport_scope_limits": "The private fixture still bounds request/response bytes and native log size; it is not an unlimited general-purpose proxy.",
+      "historical_attempts_preserved": true
+    },
+    "native_lifecycle_matrix": [
+      {
+        "attempt": "hermes-1",
+        "harness": "hermes",
+        "version": "0.20.1",
+        "provider": "ollama-cloud",
+        "model": "kimi-k2.7-code",
+        "status": "incomplete",
+        "provider_attempts": 10,
+        "native_tool_calls": [
+          "claim",
+          "get_record",
+          "heartbeat",
+          "put_record",
+          "get_record"
+        ],
+        "artifact_readback": true,
+        "execution_report_observed": false,
+        "independent_report_readback": false,
+        "fresh_key_revoked": true,
+        "started_at": "2026-10-29T14:15:29.265784+00:00",
+        "finished_at": "2026-10-29T14:16:12.748526+00:00",
+        "tool_contract": "Original MCP descriptors; no payload repair.",
+        "source_result_sha256": "7d4fe1bd52ab7a1e3b9621196d952e4433ad7e432627765aa8060c618adf05ca",
+        "failure_classification": "Ten-call experiment allowance reached before submission. Artifact existed; execution receipt did not.",
+        "run_fingerprint": "579908cf2559c52d8118fc0510764336c297388e2853408b358fddd1a399c784"
+      },
+      {
+        "attempt": "hermes-2",
+        "harness": "hermes",
+        "version": "0.20.1",
+        "provider": "ollama-cloud",
+        "model": "kimi-k2.7-code",
+        "status": "passed",
+        "provider_attempts": 9,
+        "native_tool_calls": [
+          "claim",
+          "get_record",
+          "heartbeat",
+          "put_record",
+          "get_record",
+          "submit"
+        ],
+        "artifact_readback": true,
+        "execution_report_observed": true,
+        "independent_report_readback": true,
+        "fresh_key_revoked": true,
+        "started_at": "2026-10-29T15:02:01.759484+00:00",
+        "finished_at": "2026-10-29T15:02:59.265858+00:00",
+        "tool_contract": "fixture-specific typed schema, no payload repair",
+        "source_result_sha256": "a9c78e8c994ffc970f43109120cabe7c437a63b94df00a5558453c1457650df6",
+        "run_fingerprint": "a22d85b8ff8e807134b0529381da11526d9c88ae907d513aeb23ed6f306987e9"
+      },
+      {
+        "attempt": "muse-1",
+        "harness": "muse",
+        "version": "1.4.14-R7309.1",
+        "provider": "meta",
+        "model": "muse-spark-1.3",
+        "status": "incomplete",
+        "provider_attempts": 8,
+        "native_tool_calls": [
+          "claim",
+          "get_record",
+          "heartbeat",
+          "put_record"
+        ],
+        "artifact_readback": false,
+        "execution_report_observed": false,
+        "independent_report_readback": false,
+        "fresh_key_revoked": true,
+        "started_at": "2026-10-29T14:10:45.129895+00:00",
+        "finished_at": "2026-10-29T14:14:51.439753+00:00",
+        "tool_contract": "Original MCP descriptors; no payload repair.",
+        "source_result_sha256": "e7cda7bcca15bd759b0db54470f1e6ed705c23225f6cea70783253fd2ee2718e",
+        "failure_classification": "Untyped output contract produced a string artifact; the experiment reservation allowance was reached before completion.",
+        "run_fingerprint": "8f6557cac7440e3208d91aa3561881a24308367aaa4475108a4b40e09ee09fd3"
+      },
+      {
+        "attempt": "muse-2",
+        "harness": "muse",
+        "version": "1.4.14-R7309.1",
+        "provider": "meta",
+        "model": "muse-spark-1.3",
+        "status": "passed",
+        "provider_attempts": 13,
+        "native_tool_calls": [
+          "claim",
+          "get_record",
+          "heartbeat",
+          "put_record",
+          "get_record",
+          "submit"
+        ],
+        "artifact_readback": true,
+        "execution_report_observed": true,
+        "independent_report_readback": true,
+        "fresh_key_revoked": true,
+        "started_at": "2026-10-29T14:36:33.329725+00:00",
+        "finished_at": "2026-10-29T14:37:14.337020+00:00",
+        "tool_contract": "fixture-specific typed schema, no payload repair",
+        "source_result_sha256": "cb905452d9838c52ec44c62b4be74c29d0f7d48af34de1bb997b3e1fa3932c81",
+        "run_fingerprint": "fbfc19dc9bd0a9e4d82c26516cfb23d0e61c739a62146cff37396a510ea2cf98"
+      },
+      {
+        "attempt": "nanomuse-1",
+        "harness": "nanomuse",
+        "version": "1.0.8",
+        "provider": "meta",
+        "model": "muse-spark-1.3",
+        "status": "blocked",
+        "provider_attempts": 2,
+        "native_tool_calls": [
+          "claim"
+        ],
+        "artifact_readback": false,
+        "execution_report_observed": false,
+        "independent_report_readback": false,
+        "fresh_key_revoked": true,
+        "started_at": "2026-10-29T14:18:28.304483+00:00",
+        "finished_at": "2026-10-29T14:18:48.702029+00:00",
+        "tool_contract": "Original MCP descriptors; no payload repair.",
+        "source_result_sha256": "54214029803dae24f34c69af06ab3eb2373e4bbe6c79c5213a148e785dccceb4",
+        "failure_classification": "Normal Sentinel egress approval could not complete in the initial headless fixture.",
+        "run_fingerprint": "22c0cfe1ba7c0b84a9fb08be9b55f2e284de5416999f3e2a893fdfb8f88947bd"
+      },
+      {
+        "attempt": "nanomuse-2",
+        "harness": "nanomuse",
+        "version": "1.0.8",
+        "provider": "meta",
+        "model": "muse-spark-1.3",
+        "status": "incomplete",
+        "provider_attempts": 7,
+        "native_tool_calls": [
+          "claim",
+          "get_record",
+          "heartbeat",
+          "put_record",
+          "get_record"
+        ],
+        "artifact_readback": false,
+        "execution_report_observed": false,
+        "independent_report_readback": false,
+        "fresh_key_revoked": true,
+        "started_at": "2026-10-29T14:29:40.644650+00:00",
+        "finished_at": "2026-10-29T14:30:33.071143+00:00",
+        "tool_contract": "Original MCP descriptors; no payload repair.",
+        "source_result_sha256": "4b98d00ebf58bb0a9104b5cb8d3b053b15d5f21ef7d298f475aa68a9f8a86e12",
+        "failure_classification": "Untyped output contract produced a string artifact; no successful submission.",
+        "run_fingerprint": "1f9e6e6d42e1acb015bbf6bf23449ef98cf63823d8cd4c660f9ff688600eb3b8"
+      },
+      {
+        "attempt": "nanomuse-3",
+        "harness": "nanomuse",
+        "version": "1.0.8",
+        "provider": "meta",
+        "model": "muse-spark-1.3",
+        "status": "passed",
+        "provider_attempts": 7,
+        "native_tool_calls": [
+          "claim",
+          "get_record",
+          "heartbeat",
+          "put_record",
+          "get_record",
+          "submit"
+        ],
+        "artifact_readback": true,
+        "execution_report_observed": true,
+        "independent_report_readback": true,
+        "fresh_key_revoked": true,
+        "started_at": "2026-10-29T15:13:09.073550+00:00",
+        "finished_at": "2026-10-29T15:13:47.681866+00:00",
+        "tool_contract": "fixture-specific typed schema, no payload repair",
+        "source_result_sha256": "fc183c869b0dbbf1bcfadcde0bb3d3374fdc5e9cd34311ce870cb119de3f6ab5",
+        "run_fingerprint": "15113eb61aceec104f65e6d8c0805c32cb4d53fb2d1d1351c20f5753b0213238"
+      },
+      {
+        "attempt": "openclaw-1",
+        "harness": "openclaw",
+        "version": "2026.10.8",
+        "provider": "meta",
+        "model": "muse-spark-1.3",
+        "status": "setup_failure",
+        "provider_attempts": 0,
+        "native_tool_calls": [],
+        "artifact_readback": false,
+        "execution_report_observed": false,
+        "independent_report_readback": false,
+        "fresh_key_revoked": true,
+        "started_at": "2026-10-29T14:19:54.980684+00:00",
+        "finished_at": "2026-10-29T14:20:19.192196+00:00",
+        "tool_contract": "Original MCP descriptors; no payload repair.",
+        "source_result_sha256": "aed79bb6dbb2ec9c4d4b520cecc5e21512dd52085fce8f4f702f65d489270f31",
+        "failure_classification": "Native plugin tools were unavailable in the selected tool profile; zero provider calls.",
+        "run_fingerprint": "8f7b9b8f7c18371df67cbe43df1bff6f3a94f12b0c733f050b07580716156af7"
+      },
+      {
+        "attempt": "openclaw-2",
+        "harness": "openclaw",
+        "version": "2026.10.8",
+        "provider": "meta",
+        "model": "muse-spark-1.3",
+        "status": "setup_failure",
+        "provider_attempts": 0,
+        "native_tool_calls": [],
+        "artifact_readback": false,
+        "execution_report_observed": false,
+        "independent_report_readback": false,
+        "fresh_key_revoked": true,
+        "started_at": "2026-10-29T14:22:46.453112+00:00",
+        "finished_at": "2026-10-29T14:23:10.896123+00:00",
+        "tool_contract": "Original MCP descriptors; no payload repair.",
+        "source_result_sha256": "e442f4cd7d8aa9c4fd9231f371291b6309c273ad21b53ced76674578fe4cd182",
+        "failure_classification": "Adding the plugin allow entry alone did not expose its tools in the selected profile; zero provider calls.",
+        "run_fingerprint": "dc82a5d0b59c75e56f91d7a4a6c40d09b63d99a4376f19e8851bcd61eb8a1c89"
+      },
+      {
+        "attempt": "openclaw-3",
+        "harness": "openclaw",
+        "version": "2026.10.8",
+        "provider": "meta",
+        "model": "muse-spark-1.3",
+        "status": "passed",
+        "provider_attempts": 9,
+        "native_tool_calls": [
+          "claim",
+          "get_record",
+          "heartbeat",
+          "put_record",
+          "get_record",
+          "submit"
+        ],
+        "artifact_readback": true,
+        "execution_report_observed": true,
+        "independent_report_readback": true,
+        "fresh_key_revoked": true,
+        "started_at": "2026-10-29T14:26:12.310872+00:00",
+        "finished_at": "2026-10-29T14:27:13.064866+00:00",
+        "tool_contract": "Original MCP descriptors; no payload repair.",
+        "source_result_sha256": "a5b115bf66b64a8abed59d7a074ba86f944867f0420b124d7b053d3ee9330bde",
+        "run_fingerprint": "cdc4193b753f6a9e9a683e3229c8c83535c0d077810e5af317f2e52ed6ff0f9e"
+      },
+      {
+        "attempt": "opencode-1",
+        "harness": "opencode",
+        "version": "2.1.2",
+        "provider": "ollama-cloud",
+        "model": "kimi-k2.7-code",
+        "status": "setup_failure",
+        "provider_attempts": 0,
+        "native_tool_calls": [],
+        "artifact_readback": false,
+        "execution_report_observed": false,
+        "independent_report_readback": false,
+        "fresh_key_revoked": true,
+        "started_at": "2026-10-29T14:06:59.196311+00:00",
+        "finished_at": "2026-10-29T14:07:03.801299+00:00",
+        "tool_contract": "Original MCP descriptors; no payload repair.",
+        "source_result_sha256": "e60dc2097f730c7b750e6deb8c86571c994d6fe43946127d67efe4c317cc8694",
+        "failure_classification": "Driver prompt-file collision before inference.",
+        "run_fingerprint": "6114d458f711d31bb8bd24d7996d52e1a4e6094ac17807893197ceed4b44b01f"
+      },
+      {
+        "attempt": "opencode-2",
+        "harness": "opencode",
+        "version": "2.1.2",
+        "provider": "ollama-cloud",
+        "model": "kimi-k2.7-code",
+        "status": "passed",
+        "provider_attempts": 7,
+        "native_tool_calls": [
+          "claim",
+          "get_record",
+          "heartbeat",
+          "put_record",
+          "get_record",
+          "submit"
+        ],
+        "artifact_readback": true,
+        "execution_report_observed": true,
+        "independent_report_readback": true,
+        "fresh_key_revoked": true,
+        "started_at": "2026-10-29T14:07:53.634131+00:00",
+        "finished_at": "2026-10-29T14:08:28.066571+00:00",
+        "tool_contract": "Original MCP descriptors; no payload repair.",
+        "source_result_sha256": "16cb79ddafe2e7ac4d19a2e07c8c55036af7ff1871160fb006e56c085f453452",
+        "run_fingerprint": "2ec5c5f358ed4247f008578c2742d950076e695ab930d50d7a930b6fdcfa67f9"
+      },
+      {
+        "attempt": "pi-1",
+        "harness": "pi",
+        "version": "0.73.1",
+        "provider": "ollama-cloud",
+        "model": "kimi-k2.7-code",
+        "status": "driver_failure",
+        "provider_attempts": 5,
+        "native_tool_calls": [
+          "claim",
+          "get_record",
+          "heartbeat",
+          "put_record",
+          "get_record",
+          "put_record"
+        ],
+        "artifact_readback": false,
+        "execution_report_observed": false,
+        "independent_report_readback": false,
+        "fresh_key_revoked": true,
+        "started_at": "2026-10-29T14:04:01.726121+00:00",
+        "finished_at": "2026-10-29T14:04:35.149071+00:00",
+        "tool_contract": "Original MCP descriptors; no payload repair.",
+        "source_result_sha256": "2f1b5167ca3950b2c2fd6befd9242359590bb8c59a762626cc999df552819e76",
+        "failure_classification": "Driver persistence collision and native output-size bound; not a successful lifecycle.",
+        "run_fingerprint": "744459090bf2c7436893280afd21d7f3cfa22c436e9b53b65ad396a11902f22c"
+      },
+      {
+        "attempt": "pi-2",
+        "harness": "pi",
+        "version": "0.73.1",
+        "provider": "ollama-cloud",
+        "model": "kimi-k2.7-code",
+        "status": "passed",
+        "provider_attempts": 6,
+        "native_tool_calls": [
+          "claim",
+          "get_record",
+          "heartbeat",
+          "put_record",
+          "get_record",
+          "submit"
+        ],
+        "artifact_readback": true,
+        "execution_report_observed": true,
+        "independent_report_readback": true,
+        "fresh_key_revoked": true,
+        "started_at": "2026-10-29T14:06:11.149901+00:00",
+        "finished_at": "2026-10-29T14:06:50.243852+00:00",
+        "tool_contract": "Original MCP descriptors; no payload repair.",
+        "source_result_sha256": "422f555f0d499ab24aab1e3856902e32af8232c57f1ff92641464121f0499029",
+        "run_fingerprint": "17659a0576f1e2176b4bba43177096aac55b32b3b52e65ab8c9d3cfeeeba6ff0"
+      }
+    ],
+    "successful_harnesses": [
+      "hermes",
+      "muse",
+      "nanomuse",
+      "openclaw",
+      "opencode",
+      "pi"
+    ],
+    "unverified_harnesses": [
+      {
+        "name": "OpenMuse TypeScript",
+        "version": "0.1.0",
+        "status": "source_inspected",
+        "reason": "No native Tessera connector or complete E2E lifecycle verified. This project is distinct from nanoMuse."
+      }
+    ],
+    "creative_waves": [
+      {
+        "wave": "creative-pilot",
+        "native_processes": 10,
+        "passed": 7,
+        "failed": 3,
+        "harness": "Pi",
+        "version": "0.73.1",
+        "provider": "ollama-cloud",
+        "model": "kimi-k2.7-code",
+        "provider_attempts": 58,
+        "provider_http_status_counts": {
+          "200": 58
+        },
+        "provider_transport_errors": {},
+        "unique_successful_tasks": 7,
+        "successful_submission_receipts_observed": 7,
+        "unique_candidate_artifacts": 7,
+        "idea_proposals": 14,
+        "theme_count": 5,
+        "shared_briefs_with_distinct_alternatives": 2,
+        "peak_native_activity_overlap": 10,
+        "all_native_activity_overlap_seconds": 3.312,
+        "overlap_measurement": "Intervals from each process first to last recorded native tool call. This is observed worker activity, not an operating-system process sampler.",
+        "started_at": "2026-10-29T14:57:37.325013+00:00",
+        "finished_at": "2026-10-29T14:58:41.754151+00:00",
+        "elapsed_seconds": 64.429,
+        "transport_output_override": true,
+        "recorded_output_limits": {
+          "2048": 58
+        },
+        "recovered_tool_rejections": [],
+        "fresh_key_revoked": true,
+        "cancelled_unclaimed_or_incomplete_attempts": 15,
+        "candidates": [
+          {
+            "theme": "robot-components",
+            "attempt_index": 0,
+            "shared_brief_sha256": "305b7197a932b629646b25934b189c3e1e413244f1625d47b35303dec62b0c0b",
+            "artifact_sha256": "2998dcc42f134822d3dbf2bccbda335e9b1cd9ead304a7a4ab36c10c8fdd9a74",
+            "artifact_version": 1,
+            "idea_count": 2
+          },
+          {
+            "theme": "cheap-orbit",
+            "attempt_index": 0,
+            "shared_brief_sha256": "c302d5fe209e99310e644d71d0461d43593b2648f60e84f4a3e57e42a4f09ed2",
+            "artifact_sha256": "a4b5bbc8dd34434b381ccd97302b6bdf8b7f87d58bb5ad89ed13a8388a16921d",
+            "artifact_version": 1,
+            "idea_count": 2
+          },
+          {
+            "theme": "cheap-orbit",
+            "attempt_index": 1,
+            "shared_brief_sha256": "c302d5fe209e99310e644d71d0461d43593b2648f60e84f4a3e57e42a4f09ed2",
+            "artifact_sha256": "581e311455c6db1a260a845466cae4104d2087eac044abab60fdf904d1cc6f75",
+            "artifact_version": 1,
+            "idea_count": 2
+          },
+          {
+            "theme": "assisted-expertise",
+            "attempt_index": 1,
+            "shared_brief_sha256": "0492628280a0a533f81539778f6393aa4d6e9ebf07aec174bce2ca36b8521851",
+            "artifact_sha256": "d0fc3027b1975183f09ae6e8467cc975bde9bcafd64e86a1df6637df2ef979f9",
+            "artifact_version": 1,
+            "idea_count": 2
+          },
+          {
+            "theme": "benefit-evidence",
+            "attempt_index": 1,
+            "shared_brief_sha256": "4e85a0c5ba97d77d5cb3335e47214d9a24c537571393b51e0eccd2d0a97c2410",
+            "artifact_sha256": "172f386e8beea99b746a56a5998495b8e702856215830403ae22d9930898222c",
+            "artifact_version": 1,
+            "idea_count": 2
+          },
+          {
+            "theme": "expressive-writing",
+            "attempt_index": 0,
+            "shared_brief_sha256": "381bd38a4697c4778ea39755e8ddafad2dc7ed75769e1294cc02ec626250da5e",
+            "artifact_sha256": "e30a9c4485714a5bdd552271ead880bf45ac70088f618bc0bf97b915d96b8e0f",
+            "artifact_version": 1,
+            "idea_count": 2
+          },
+          {
+            "theme": "robot-components",
+            "attempt_index": 1,
+            "shared_brief_sha256": "305b7197a932b629646b25934b189c3e1e413244f1625d47b35303dec62b0c0b",
+            "artifact_sha256": "5af6c2ce40c744932d708f6078e48b699cb2a2a9e475978aeeb4f6852f2d71f7",
+            "artifact_version": 1,
+            "idea_count": 2
+          }
+        ],
+        "source_result_sha256": "1a637cafef2459d9cd6bf65b6e2603b2ca3703307420162e63820aaf8dabb4d6",
+        "limitations": [
+          "One short synthetic wave with one scoped cohort principal, not distinct account grants.",
+          "Proposal structure and exact artifact/report readback were checked; novelty, utility and implementation quality were not measured.",
+          "Candidate nouns remain private; no public admission, deployment or recursive follow-up was activated."
+        ],
+        "failure_classification": "Three workers stopped at the imposed 2,048-token transport ceiling before artifact submission. Original attempts are retained.",
+        "run_fingerprint": "d0d9ce5ae7e8aa1e998c4d06b9626a60efb5863a7b9844d0b10c6e825c1e3b01"
+      },
+      {
+        "wave": "creative-retry",
+        "native_processes": 3,
+        "passed": 3,
+        "failed": 0,
+        "harness": "Pi",
+        "version": "0.73.1",
+        "provider": "ollama-cloud",
+        "model": "kimi-k2.7-code",
+        "provider_attempts": 20,
+        "provider_http_status_counts": {
+          "200": 20
+        },
+        "provider_transport_errors": {},
+        "unique_successful_tasks": 3,
+        "successful_submission_receipts_observed": 3,
+        "unique_candidate_artifacts": 3,
+        "idea_proposals": 6,
+        "theme_count": 3,
+        "shared_briefs_with_distinct_alternatives": 0,
+        "peak_native_activity_overlap": 3,
+        "all_native_activity_overlap_seconds": 44.364,
+        "overlap_measurement": "Intervals from each process first to last recorded native tool call. This is observed worker activity, not an operating-system process sampler.",
+        "started_at": "2026-10-29T15:09:19.083328+00:00",
+        "finished_at": "2026-10-29T15:10:31.977844+00:00",
+        "elapsed_seconds": 72.895,
+        "transport_output_override": false,
+        "recorded_output_limits": {
+          "16384": 20
+        },
+        "recovered_tool_rejections": [],
+        "fresh_key_revoked": true,
+        "cancelled_unclaimed_or_incomplete_attempts": 0,
+        "candidates": [
+          {
+            "theme": "expressive-writing",
+            "attempt_index": 0,
+            "shared_brief_sha256": "381bd38a4697c4778ea39755e8ddafad2dc7ed75769e1294cc02ec626250da5e",
+            "artifact_sha256": "a82807891ee2fd0f18a2adf16c8e3e5c75369312d7d8c1bc638a48b2c2f71503",
+            "artifact_version": 1,
+            "idea_count": 2
+          },
+          {
+            "theme": "assisted-expertise",
+            "attempt_index": 0,
+            "shared_brief_sha256": "0492628280a0a533f81539778f6393aa4d6e9ebf07aec174bce2ca36b8521851",
+            "artifact_sha256": "228e8ff82359bfb935ba0c253fcd53dbb3a4e5c8ef63d6bf0a47ec69d3d4e56b",
+            "artifact_version": 1,
+            "idea_count": 2
+          },
+          {
+            "theme": "benefit-evidence",
+            "attempt_index": 0,
+            "shared_brief_sha256": "4e85a0c5ba97d77d5cb3335e47214d9a24c537571393b51e0eccd2d0a97c2410",
+            "artifact_sha256": "9afa23a40d01c95797d35ea817349e235ace42fb4f7929be822bf88ca9207b2c",
+            "artifact_version": 1,
+            "idea_count": 2
+          }
+        ],
+        "source_result_sha256": "64df1e32debe5255ec44a28517a0d3eeb62f2227bedc58b934e0b27a72a417e3",
+        "limitations": [
+          "One short synthetic wave with one scoped cohort principal, not distinct account grants.",
+          "Proposal structure and exact artifact/report readback were checked; novelty, utility and implementation quality were not measured.",
+          "Candidate nouns remain private; no public admission, deployment or recursive follow-up was activated."
+        ],
+        "run_fingerprint": "3564d32041a7768b7d71bd5b87fc9a8a1042175e77b28636f671ebc790d3560b"
+      },
+      {
+        "wave": "creative-corrected",
+        "native_processes": 10,
+        "passed": 10,
+        "failed": 0,
+        "harness": "Pi",
+        "version": "0.73.1",
+        "provider": "ollama-cloud",
+        "model": "kimi-k2.7-code",
+        "provider_attempts": 71,
+        "provider_http_status_counts": {
+          "200": 70,
+          "unrecorded": 1
+        },
+        "provider_transport_errors": {
+          "RemoteDisconnected": 1
+        },
+        "unique_successful_tasks": 10,
+        "successful_submission_receipts_observed": 10,
+        "unique_candidate_artifacts": 10,
+        "idea_proposals": 20,
+        "theme_count": 5,
+        "shared_briefs_with_distinct_alternatives": 5,
+        "peak_native_activity_overlap": 10,
+        "all_native_activity_overlap_seconds": 35.52,
+        "overlap_measurement": "Intervals from each process first to last recorded native tool call. This is observed worker activity, not an operating-system process sampler.",
+        "started_at": "2026-10-29T15:23:56.890945+00:00",
+        "finished_at": "2026-10-29T15:25:13.037776+00:00",
+        "elapsed_seconds": 76.147,
+        "transport_output_override": false,
+        "recorded_output_limits": {
+          "16384": 71
+        },
+        "recovered_tool_rejections": [
+          {
+            "worker": 0,
+            "event": "MCP tool rejection",
+            "tool": "submit",
+            "code": "invalid_request",
+            "worker_completed": true
+          }
+        ],
+        "fresh_key_revoked": true,
+        "cancelled_unclaimed_or_incomplete_attempts": 12,
+        "candidates": [
+          {
+            "theme": "cheap-orbit",
+            "attempt_index": 0,
+            "shared_brief_sha256": "08e5775c3484dd981c77d4d9b627fed34683a1ff6c7f4ab53f733ebcd3edf75b",
+            "artifact_sha256": "682a67d1ef030e9596b12cf89a3c81c376e64c71471792b541750e327b9025d4",
+            "artifact_version": 1,
+            "idea_count": 2
+          },
+          {
+            "theme": "benefit-evidence",
+            "attempt_index": 1,
+            "shared_brief_sha256": "981a69cf9b11c4931c2f1bbef29564316669912e5ac770a79b20733e5a909242",
+            "artifact_sha256": "0b5cae2c0245b7bb40e11d8dc5c70b637a7fc449a0d67d900b89a83f361c5279",
+            "artifact_version": 1,
+            "idea_count": 2
+          },
+          {
+            "theme": "robot-components",
+            "attempt_index": 0,
+            "shared_brief_sha256": "138f0ba2eb7053300bdff7ba6c657f168eb4adf76808a3e596589959e5d8496b",
+            "artifact_sha256": "2c98c404fc02cc8aafdbf682e414814f94eb0ac4cb2be510b4dfaf3ec5bbe0d4",
+            "artifact_version": 1,
+            "idea_count": 2
+          },
+          {
+            "theme": "assisted-expertise",
+            "attempt_index": 1,
+            "shared_brief_sha256": "b77e01702bf3a6d74d38c71577be5f789751750693612a9a427c091cfdad6587",
+            "artifact_sha256": "51399b5beda12c03e99a0068891bc3aaa1145db947b43900873df93398f374a2",
+            "artifact_version": 1,
+            "idea_count": 2
+          },
+          {
+            "theme": "cheap-orbit",
+            "attempt_index": 1,
+            "shared_brief_sha256": "08e5775c3484dd981c77d4d9b627fed34683a1ff6c7f4ab53f733ebcd3edf75b",
+            "artifact_sha256": "dc9df9581dccf73b42154a83421d0ed0f4d15ce5369ec0a2c6ba9eb743bc091f",
+            "artifact_version": 1,
+            "idea_count": 2
+          },
+          {
+            "theme": "assisted-expertise",
+            "attempt_index": 0,
+            "shared_brief_sha256": "b77e01702bf3a6d74d38c71577be5f789751750693612a9a427c091cfdad6587",
+            "artifact_sha256": "af780eaa415016678203e519a61ca2579d5f4a8a1e29f3e9a89d86f4c9018653",
+            "artifact_version": 1,
+            "idea_count": 2
+          },
+          {
+            "theme": "robot-components",
+            "attempt_index": 1,
+            "shared_brief_sha256": "138f0ba2eb7053300bdff7ba6c657f168eb4adf76808a3e596589959e5d8496b",
+            "artifact_sha256": "369609bbe9cf653ad65d9071e5c223705de20cc7f8bb02523980b0cfb3f4a840",
+            "artifact_version": 1,
+            "idea_count": 2
+          },
+          {
+            "theme": "benefit-evidence",
+            "attempt_index": 0,
+            "shared_brief_sha256": "981a69cf9b11c4931c2f1bbef29564316669912e5ac770a79b20733e5a909242",
+            "artifact_sha256": "debbe85873cf97bc825b7ec2fa5c8814e6b609bc116460d00e09deeebdd2d094",
+            "artifact_version": 1,
+            "idea_count": 2
+          },
+          {
+            "theme": "expressive-writing",
+            "attempt_index": 0,
+            "shared_brief_sha256": "4190a3e7e37e1429821a579a9ccf4d0906c8d843f47c599109dbff14e82f442e",
+            "artifact_sha256": "da8ef2f9d26d64a0513566c86207189609eb6ebfdc57ebb099dbcd98e83c8538",
+            "artifact_version": 1,
+            "idea_count": 2
+          },
+          {
+            "theme": "expressive-writing",
+            "attempt_index": 1,
+            "shared_brief_sha256": "4190a3e7e37e1429821a579a9ccf4d0906c8d843f47c599109dbff14e82f442e",
+            "artifact_sha256": "c94b9fc3f6b1a74abfdf347a7430f99053b70a9ff983993ad8ce015b4e3eb84c",
+            "artifact_version": 1,
+            "idea_count": 2
+          }
+        ],
+        "source_result_sha256": "6e3c569c77d90c925d5ff01531fe2957ce0d1c3b39c28f5efb803b512dc5e34c",
+        "limitations": [
+          "One short synthetic wave with one scoped cohort principal, not distinct account grants.",
+          "Proposal structure and exact artifact/report readback were checked; novelty, utility and implementation quality were not measured.",
+          "Candidate nouns remain private; no public admission, deployment or recursive follow-up was activated."
+        ],
+        "recovery_notes": [
+          "One worker corrected a rejected execution report with unknown summary fields.",
+          "One provider attempt disconnected without a recorded response or usage; the harness recovered and completed."
+        ],
+        "run_fingerprint": "7bb8bc34fd4f9045f69ccd40b1cbf6351051deb2a0e082f402181e4beff32f57"
+      }
+    ],
+    "provider_accounting": [
+      {
+        "cycle": "native-matrix-20261029",
+        "provider": "ollama-cloud",
+        "provider_attempts": 28,
+        "http_status_counts": {
+          "200": 28
+        },
+        "complete_usage_records": 28,
+        "attempts_with_unknown_usage": 0,
+        "observed_input_tokens": 68516,
+        "observed_output_tokens": 5899,
+        "token_totals_scope": "Sum of complete usage reports only; unknown requests are not estimated.",
+        "historical_reservation_usd": 0,
+        "reservation_is_billed_cost": false,
+        "actual_billed_cost_usd": null,
+        "source_ledger_sha256": "0d2b52e27b63c184c3194e56663b70b41ce0c3d95586be7500b7054869435c11"
+      },
+      {
+        "cycle": "native-matrix-20261029",
+        "provider": "meta",
+        "provider_attempts": 26,
+        "http_status_counts": {
+          "200": 26
+        },
+        "complete_usage_records": 24,
+        "attempts_with_unknown_usage": 2,
+        "observed_input_tokens": 249334,
+        "observed_output_tokens": 4754,
+        "token_totals_scope": "Sum of complete usage reports only; unknown requests are not estimated.",
+        "historical_reservation_usd": 1.75268025,
+        "reservation_is_billed_cost": false,
+        "actual_billed_cost_usd": null,
+        "source_ledger_sha256": "0d2b52e27b63c184c3194e56663b70b41ce0c3d95586be7500b7054869435c11"
+      },
+      {
+        "cycle": "followup-provider-ledger",
+        "provider": "meta",
+        "provider_attempts": 20,
+        "http_status_counts": {
+          "200": 20
+        },
+        "complete_usage_records": 20,
+        "attempts_with_unknown_usage": 0,
+        "observed_input_tokens": 302446,
+        "observed_output_tokens": 4531,
+        "token_totals_scope": "Sum of complete usage reports only; unknown requests are not estimated.",
+        "historical_reservation_usd": 1.97829925,
+        "reservation_is_billed_cost": false,
+        "actual_billed_cost_usd": null,
+        "source_ledger_sha256": "f8ee14d33fd2962d3c8ab1947cee91770cc8336e7d40f00ef7c9fad274aa4b1d"
+      },
+      {
+        "cycle": "followup-provider-ledger",
+        "provider": "ollama-cloud",
+        "provider_attempts": 87,
+        "http_status_counts": {
+          "200": 87
+        },
+        "complete_usage_records": 87,
+        "attempts_with_unknown_usage": 0,
+        "observed_input_tokens": 446448,
+        "observed_output_tokens": 42834,
+        "token_totals_scope": "Sum of complete usage reports only; unknown requests are not estimated.",
+        "historical_reservation_usd": 0,
+        "reservation_is_billed_cost": false,
+        "actual_billed_cost_usd": null,
+        "source_ledger_sha256": "f8ee14d33fd2962d3c8ab1947cee91770cc8336e7d40f00ef7c9fad274aa4b1d"
+      },
+      {
+        "cycle": "corrected-provider-ledger",
+        "provider": "ollama-cloud",
+        "provider_attempts": 71,
+        "http_status_counts": {
+          "200": 70,
+          "unrecorded": 1
+        },
+        "complete_usage_records": 70,
+        "attempts_with_unknown_usage": 1,
+        "observed_input_tokens": 409948,
+        "observed_output_tokens": 37004,
+        "token_totals_scope": "Sum of complete usage reports only; unknown requests are not estimated.",
+        "historical_reservation_usd": 0,
+        "reservation_is_billed_cost": false,
+        "actual_billed_cost_usd": null,
+        "source_ledger_sha256": "1890f3781a19c4e87f1ea0b2a2b0759fcbc932d2da5009e48917a5aa207362f2"
+      }
+    ],
+    "total_provider_attempts_in_listed_cycles": 232,
+    "accounting_exclusions": "Earlier integration execution-history trials used a separate retained ledger and are not included in these totals. This is not lifetime account billing.",
+    "limitations": [
+      "Six harnesses passed specific synthetic lifecycles; broad feature coverage, sustained reliability and other model/harness combinations remain unverified.",
+      "Muse, Hermes and nanoMuse calibration runs use fixture-specific typed output schemas without payload repair. They do not certify general shim behavior.",
+      "The creative run uses ten native Pi processes sharing one cohort grant; it does not demonstrate one hundred reasoning workers or ten independent principals.",
+      "No raw prompts, hidden reasoning, credentials, private account metadata, task identifiers or namespace identifiers are included in this public summary."
+    ],
+    "fingerprint": "2d6d2fa5e0dbf21fe670933cf490013c7ebd5bcf0485b8ecf570064e7fa02f1a"
+  },
+  "onboarding": {
+    "surfaces": 7,
+    "rendered_browser": "Firefox",
+    "live_cases_passed": 16,
+    "clipboard_api_stubbed": true,
+    "operating_system_clipboard_certified": false,
+    "cases": [
+      {
+        "surface": "home",
+        "path": "/",
+        "mobile": false,
+        "passed": true,
+        "interest_context": true,
+        "no_interest_egress": true,
+        "manual_fallback": true
+      },
+      {
+        "surface": "home",
+        "path": "/frontier",
+        "mobile": false,
+        "passed": true,
+        "interest_context": true,
+        "no_interest_egress": true,
+        "manual_fallback": true
+      },
+      {
+        "surface": "home",
+        "path": "/",
+        "mobile": true,
+        "passed": true,
+        "interest_context": true,
+        "no_interest_egress": true,
+        "manual_fallback": true
+      },
+      {
+        "surface": "home",
+        "path": "/frontier",
+        "mobile": true,
+        "passed": true,
+        "interest_context": true,
+        "no_interest_egress": true,
+        "manual_fallback": true
+      },
+      {
+        "surface": "tessera",
+        "path": "/",
+        "mobile": false,
+        "passed": true,
+        "interest_context": true,
+        "no_interest_egress": true,
+        "manual_fallback": true
+      },
+      {
+        "surface": "tessera",
+        "path": "/",
+        "mobile": true,
+        "passed": true,
+        "interest_context": true,
+        "no_interest_egress": true,
+        "manual_fallback": true
+      },
+      {
+        "surface": "herma",
+        "path": "/",
+        "mobile": false,
+        "passed": true,
+        "interest_context": true,
+        "no_interest_egress": true,
+        "manual_fallback": true
+      },
+      {
+        "surface": "herma",
+        "path": "/",
+        "mobile": true,
+        "passed": true,
+        "interest_context": true,
+        "no_interest_egress": true,
+        "manual_fallback": true
+      },
+      {
+        "surface": "shamash",
+        "path": "/",
+        "mobile": false,
+        "passed": true,
+        "interest_context": true,
+        "no_interest_egress": true,
+        "manual_fallback": true
+      },
+      {
+        "surface": "shamash",
+        "path": "/",
+        "mobile": true,
+        "passed": true,
+        "interest_context": true,
+        "no_interest_egress": true,
+        "manual_fallback": true
+      },
+      {
+        "surface": "eranos",
+        "path": "/",
+        "mobile": false,
+        "passed": true,
+        "interest_context": true,
+        "no_interest_egress": true,
+        "manual_fallback": true
+      },
+      {
+        "surface": "eranos",
+        "path": "/",
+        "mobile": true,
+        "passed": true,
+        "interest_context": true,
+        "no_interest_egress": true,
+        "manual_fallback": true
+      },
+      {
+        "surface": "kothar",
+        "path": "/",
+        "mobile": false,
+        "passed": true,
+        "interest_context": true,
+        "no_interest_egress": true,
+        "manual_fallback": true
+      },
+      {
+        "surface": "kothar",
+        "path": "/",
+        "mobile": true,
+        "passed": true,
+        "interest_context": true,
+        "no_interest_egress": true,
+        "manual_fallback": true
+      },
+      {
+        "surface": "kinema",
+        "path": "/",
+        "mobile": false,
+        "passed": true,
+        "interest_context": true,
+        "no_interest_egress": true,
+        "manual_fallback": true
+      },
+      {
+        "surface": "kinema",
+        "path": "/",
+        "mobile": true,
+        "passed": true,
+        "interest_context": true,
+        "no_interest_egress": true,
+        "manual_fallback": true
+      }
+    ]
+  },
+  "protocol_stress": {
+    "model_calls": 0,
+    "scope": "Concurrent logical HTTP workers in one connection pool with one fresh scoped cohort principal per wave; not separate native processes or independent accounts.",
+    "fixed_quota_observations": [
+      {
+        "experiment": "fixed-quota-baseline",
+        "wave": 10,
+        "client_type": "concurrent logical HTTP workers in one connection pool sharing one fresh scoped cohort key",
+        "model_calls": 0,
+        "started_at": 1793283971.2579174,
+        "elapsed_seconds": 6.137,
+        "max_active_clients": 10,
+        "completed": 10,
+        "unique_claims": 10,
+        "cas_winners": 1,
+        "requests": 103,
+        "http_statuses": {
+          "200": 83,
+          "201": 11,
+          "409": 9
+        },
+        "latency_ms": {
+          "median": 360.011,
+          "p95": 638.413,
+          "max": 1112.804
+        },
+        "passed": true,
+        "fresh_key_revoked": true,
+        "source_result_sha256": "572229bb0f3648ead51b36c3b8ace6ad5c35f3a6e7963472200f55f6cedcebb9"
+      },
+      {
+        "experiment": "fixed-quota-baseline",
+        "wave": 25,
+        "client_type": "concurrent logical HTTP workers in one connection pool sharing one fresh scoped cohort key",
+        "model_calls": 0,
+        "started_at": 1793283977.635861,
+        "elapsed_seconds": 8.251,
+        "max_active_clients": 25,
+        "completed": 25,
+        "unique_claims": 25,
+        "cas_winners": 1,
+        "requests": 253,
+        "http_statuses": {
+          "200": 203,
+          "201": 26,
+          "409": 24
+        },
+        "latency_ms": {
+          "median": 366.204,
+          "p95": 697.051,
+          "max": 1644.901
+        },
+        "passed": true,
+        "fresh_key_revoked": true,
+        "source_result_sha256": "72d01528b4cc69bfd798aca7e56496a057482d8b80aa308e2d072dc13a86c268"
+      },
+      {
+        "experiment": "fixed-quota-baseline",
+        "wave": 50,
+        "client_type": "concurrent logical HTTP workers in one connection pool sharing one fresh scoped cohort key",
+        "model_calls": 0,
+        "started_at": 1793283986.0854456,
+        "elapsed_seconds": 10.433,
+        "max_active_clients": 50,
+        "completed": 50,
+        "unique_claims": 50,
+        "cas_winners": 1,
+        "requests": 503,
+        "http_statuses": {
+          "200": 403,
+          "201": 51,
+          "409": 49
+        },
+        "latency_ms": {
+          "median": 480.423,
+          "p95": 1158.155,
+          "max": 3162.817
+        },
+        "passed": true,
+        "fresh_key_revoked": true,
+        "source_result_sha256": "5bf3483c12d0c91cf5a629822aa4f33880120bbf03b11101c0573b5bd41aa6a4"
+      },
+      {
+        "experiment": "fixed-quota-baseline",
+        "wave": 100,
+        "client_type": "concurrent logical HTTP workers in one connection pool sharing one fresh scoped cohort key",
+        "model_calls": 0,
+        "started_at": 1793283996.6828983,
+        "elapsed_seconds": 21.208,
+        "max_active_clients": 100,
+        "completed": 60,
+        "unique_claims": 60,
+        "cas_winners": 1,
+        "requests": 682,
+        "http_statuses": {
+          "200": 483,
+          "201": 101,
+          "409": 59,
+          "429": 39
+        },
+        "latency_ms": {
+          "median": 522.4705,
+          "p95": 3017.057,
+          "max": 7747.779
+        },
+        "passed": false,
+        "fresh_key_revoked": true,
+        "source_result_sha256": "3de129c0e3bc1a4f27e4e9fb74e6d53a1dec138b1b7e41f3819183f9c97192ca"
+      },
+      {
+        "experiment": "fixed-quota-with-retry-after",
+        "wave": 100,
+        "client_type": "concurrent logical HTTP workers in one connection pool sharing one fresh scoped cohort key",
+        "model_calls": 0,
+        "started_at": 1793284179.511485,
+        "elapsed_seconds": 73.025,
+        "max_active_clients": 100,
+        "completed": 100,
+        "unique_claims": 100,
+        "cas_winners": 1,
+        "requests": 1043,
+        "http_statuses": {
+          "200": 803,
+          "201": 101,
+          "409": 99,
+          "429": 40
+        },
+        "latency_ms": {
+          "median": 457.911,
+          "p95": 2248.465,
+          "max": 9908.167
+        },
+        "passed": true,
+        "fresh_key_revoked": true,
+        "source_result_sha256": "51e4048695ddb25ce7455e9c1c13e73bb599067548014efedb7733760e60dec9"
+      }
+    ],
+    "adaptive_admission_observations": [
+      {
+        "experiment": "adaptive-admission",
+        "wave": 10,
+        "client_type": "concurrent logical HTTP workers in one connection pool sharing one fresh scoped cohort key",
+        "model_calls": 0,
+        "started_at": 1793288024.3762257,
+        "elapsed_seconds": 6.081,
+        "max_active_clients": 10,
+        "completed": 10,
+        "unique_claims": 10,
+        "cas_winners": 1,
+        "requests": 103,
+        "http_statuses": {
+          "200": 83,
+          "201": 11,
+          "409": 9
+        },
+        "latency_ms": {
+          "median": 321.565,
+          "p95": 639.127,
+          "max": 1242.265
+        },
+        "passed": true,
+        "fresh_key_revoked": true,
+        "source_result_sha256": "8301e4f93389cf30c64dd80a266b09fb990628191bed0df15d3f0846bd202107",
+        "claim_responses": 10,
+        "admission_headers_observed": true,
+        "max_claim_wait_ms": 0.0,
+        "observed_admission_concurrency": [
+          32
+        ]
+      },
+      {
+        "experiment": "adaptive-admission",
+        "wave": 25,
+        "client_type": "concurrent logical HTTP workers in one connection pool sharing one fresh scoped cohort key",
+        "model_calls": 0,
+        "started_at": 1793288030.6169515,
+        "elapsed_seconds": 6.139,
+        "max_active_clients": 25,
+        "completed": 25,
+        "unique_claims": 25,
+        "cas_winners": 1,
+        "requests": 253,
+        "http_statuses": {
+          "200": 203,
+          "201": 26,
+          "409": 24
+        },
+        "latency_ms": {
+          "median": 311.918,
+          "p95": 705.635,
+          "max": 1104.133
+        },
+        "passed": true,
+        "fresh_key_revoked": true,
+        "source_result_sha256": "a7a12a401adcd65cc62f1a4c832d0b71089f9870516a1b36f14e79e3e422b4f9",
+        "claim_responses": 25,
+        "admission_headers_observed": true,
+        "max_claim_wait_ms": 0.0,
+        "observed_admission_concurrency": [
+          32
+        ]
+      },
+      {
+        "experiment": "adaptive-admission",
+        "wave": 50,
+        "client_type": "concurrent logical HTTP workers in one connection pool sharing one fresh scoped cohort key",
+        "model_calls": 0,
+        "started_at": 1793288036.9116056,
+        "elapsed_seconds": 12.964,
+        "max_active_clients": 50,
+        "completed": 50,
+        "unique_claims": 50,
+        "cas_winners": 1,
+        "requests": 503,
+        "http_statuses": {
+          "200": 403,
+          "201": 51,
+          "409": 49
+        },
+        "latency_ms": {
+          "median": 381.591,
+          "p95": 1250.904,
+          "max": 6837.895
+        },
+        "passed": true,
+        "fresh_key_revoked": true,
+        "source_result_sha256": "629076064cf947471b467c5a788eac69cb1dfa03527a9ab61ced01bf031c03b7",
+        "claim_responses": 50,
+        "admission_headers_observed": true,
+        "max_claim_wait_ms": 0.0,
+        "observed_admission_concurrency": [
+          32
+        ]
+      },
+      {
+        "experiment": "adaptive-admission",
+        "wave": 100,
+        "client_type": "concurrent logical HTTP workers in one connection pool sharing one fresh scoped cohort key",
+        "model_calls": 0,
+        "started_at": 1793288050.0147147,
+        "elapsed_seconds": 25.663,
+        "max_active_clients": 100,
+        "completed": 100,
+        "unique_claims": 100,
+        "cas_winners": 1,
+        "requests": 1003,
+        "http_statuses": {
+          "200": 803,
+          "201": 101,
+          "409": 99
+        },
+        "latency_ms": {
+          "median": 476.18,
+          "p95": 2631.336,
+          "max": 18492.579
+        },
+        "passed": true,
+        "fresh_key_revoked": true,
+        "source_result_sha256": "f9e12b5e93eaa929c832c87e6d916681df8a85a3fdc9e8e6e15f039839496c75",
+        "claim_responses": 100,
+        "admission_headers_observed": true,
+        "max_claim_wait_ms": 0.0,
+        "observed_admission_concurrency": [
+          32
+        ]
+      }
+    ],
+    "retained_driver_failures": [
+      "Initial ten-client fixture expected an MCP envelope at the HTTP claim route; zero completions.",
+      "A second ten-client fixture omitted the HTTP Idempotency-Key header; zero completions."
+    ]
+  },
+  "adaptive_admission": {
+    "public_implementation": "https://github.com/ta-amps/tessera/blob/89803665d61d5156f85d8adbc4679d25ad6b91a1/docs/claim-admission.md",
+    "deployed_version": "7785ff2f-9b47-4fd6-a1e4-fa962f29f11a",
+    "default_claims_per_minute_quota": null,
+    "observed_signals": [
+      "admitted claim service latency",
+      "in-flight count",
+      "pending count"
+    ],
+    "claim_waiting": "Fair rotation by principal, FIFO within principal, configurable pending/deadline resource bounds.",
+    "lease_maintenance_bypasses_admission": true,
+    "python_explicit_legacy_quota_supported": true,
+    "anonymous_demo_quotas_preserved": true,
+    "independent_review": "No blockers; actual workerd overload fixture verified heartbeat and submission availability while new claims were paced.",
+    "live_window_adaptation_observed": false,
+    "live_claim_wait_observed_ms": 0,
+    "live_observed_concurrency_window": 32,
+    "injected_pressure_test_is_separate": true
+  },
+  "seed_authoring": {
+    "research_stages": [
+      "discover_sources",
+      "build_collector",
+      "propose_schedule",
+      "scan_source"
+    ],
+    "showcase_themes": 11,
+    "showcase_seed_nouns": 21,
+    "showcase_default_initial_verbs": 22,
+    "independent_attempts_per_theme": 2,
+    "creative_procedures": [
+      "discover",
+      "ideate",
+      "remix",
+      "evaluate",
+      "design_benchmark",
+      "propose_seeds",
+      "map_system"
+    ],
+    "initial_activated_procedure": "ideate",
+    "automatic_followups": 0,
+    "mailbox_provisioned": false,
+    "recurring_research_scheduler_activated": false,
+    "reasoning_location": "authorized_worker",
+    "public_candidate_admission": false
+  },
+  "existing_local_work_preserved": true,
+  "limits": [
+    "Dated maintainer observations for specific revisions and fixtures, not continuous monitoring or third-party certification.",
+    "Six native harnesses passed a scoped lifecycle; this does not establish every feature, model, version or reliability rate. OpenMuse TypeScript has no verified connector.",
+    "Ten native creative processes and up to one hundred logical HTTP workers shared scoped cohort principals; separate-account scale and sustained load remain unverified.",
+    "The corrected native wave recovered from one rejected submission and one provider disconnect with unknown usage. Earlier failed and truncated attempts remain recorded.",
+    "Browser checks used real rendered Firefox with clipboard API stubs; operating-system clipboard interoperability is not certified.",
+    "Executable bundle parity establishes byte identity, not complete configuration, assets, global capacity or long-running operational certification.",
+    "Admission timing observes service I/O; in-flight and pending counts are resource proxies, not exact RAM or CPU measurements.",
+    "General category/profile resolution, general shim admission/activation/rollback and independent Frontier candidate admission remain incomplete.",
+    "Research task authoring and creative seeds exist; no newsletter mailbox, active feed/inbox collector or recurring research scheduler is enabled.",
+    "Creative outputs are private proposals, not verified novelty, useful businesses, deployed systems or admitted artifacts.",
+    "No complete reconstruction of inaccessible session histories is claimed."
+  ]
+}

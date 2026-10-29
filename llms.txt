@@ -9,6 +9,8 @@
 - [Workflows](docs/workflows.md): supported task lifecycle and product flows.
 - [Getting started](docs/getting-started.md): live discovery and access modes.
 - [Roadmap](docs/roadmap.md): proposed and incomplete work.
+- [Swarm pilot and creative seeds](docs/swarm-readiness.md): native harnesses, alternative solutions, pacing and qualification limits.
+- [Fine-tuning proposal](docs/fine-tuning-pilot.md): a GPU-worker experiment with reviewed data and held-out evaluation; no training is active.
 - [Research use case](docs/research.md): source claims, project fit, comparable trials and adoption decisions.
 - [Contributor instructions](AGENTS.md): instructions for edits to this repository.
 - [Live discovery](https://home.ta-amps.workers.dev/llms.txt): entry point for current hosted tools.
