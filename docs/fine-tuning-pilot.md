@@ -1,72 +1,111 @@
-# Proposed fine-tuning pilot
+# Fine-tuning workers and the research pilot
 
-A specialist could strengthen the submission if it measurably improves the
-research-to-work workflow. Meta's event page includes open-weight models and
-judges the indie track on creativity, technical ambition and a working result.
-That supports a measured adaptation experiment; fine-tuning by itself is not
-evidence of a better product. [Hackathon scope and criteria](https://dev.meta.ai/events/global-hackathon).
+Updated October 29, 2026. Tessera now includes an optional training-worker
+example, and real CPU and GPU adapter smoke runs passed. The useful research
+specialist remains a proposed experiment: no pretrained Meta model was adapted,
+and no improvement in research quality has been demonstrated.
 
-This is a proposal. No model has been downloaded or trained, no adapter exists,
-and no GPU has been provisioned for this pilot.
+The implementation merged in [Tessera PR 9](https://github.com/ta-amps/tessera/pull/9).
+Read the [worker guide at the merged revision](https://github.com/ta-amps/tessera/blob/36526860b0048df2dec675051ec6681023bda3d9/docs/fine-tuning-workers.md)
+for runnable commands and the [dated smoke evidence](https://github.com/ta-amps/tessera/blob/36526860b0048df2dec675051ec6681023bda3d9/examples/finetuning/evidence/smoke-2026-10-29.json)
+for versions, hardware, losses, artifact hashes and implementation fingerprints.
+
+## What actually ran
+
+| Observation | Result | Limit |
+| --- | --- | --- |
+| Training data | 20 owned synthetic examples, split 12/4/4 with disjoint source and project families | Template examples test the pipeline; they are not a research benchmark |
+| Model and update | Random-initialized Llama architecture, 110,784 total parameters including 3,584 trainable LoRA parameters; 12 optimizer steps | No pretrained Llama or Muse Glimmer weights |
+| CPU and GPU | Both completed; the GPU was an RTX 3060 with about 11.62 GiB available VRAM | This does not establish memory fit for a 1B, 3B or 30B model |
+| Synthetic test loss | Approximately 5.586128 to 5.396280 on each device | Diagnostic loss only; factual grounding and useful task quality remain unmeasured |
+| Save/reload | Frozen base unchanged; adapter changed; fresh base plus saved adapter reproduced probe logits with zero measured difference | Verifies saved training artifacts, not their usefulness |
+| Private fabric lifecycle | Curate/train claims, heartbeats, six saved base/adapter blobs per run, execution capture and readback; cross-principal record/blob/execution reads denied | Real in-process Store coverage, not a native-harness or hosted training lifecycle |
+
+Data preparation, provenance and contract authoring are independent of the ML
+framework. The PEFT backend and its dependencies live in a separate worker
+environment. The Tessera server does not acquire torch or a GPU trainer, and
+the example adds no scheduler.
+Full sequences must fit the explicit memory recipe; over-length examples are
+rejected with their identity and length. There is no silent truncation, padding
+target or added inference-output ceiling.
 
 ## One useful specialist
 
-Give the worker a permitted source and a versioned project profile. Ask it to
-produce an evidence-grounded capability noun, a relevance judgment with explicit
-unknowns, and a candidate verb worth doing next. This directly addresses the
-[feed and newsletter research problem](research.md): convert announcements into
-useful work for a particular architecture, hardware and set of interests.
+Give a worker a permitted source and a versioned project profile: architecture,
+hardware, costs, interests, constraints and evaluation goals. Ask it to produce
+an evidence-grounded capability noun, a relevance judgment with explicit
+unknowns, and a candidate verb worth doing next. This addresses the
+[feed and newsletter research problem](research.md): turn incompatible
+announcements and benchmark claims into useful work for a particular project.
 
-Start by testing the unchanged model with a fixed prompt and output schema.
-Only consider training when reviewed examples reveal a repeatable model failure.
-Fix transport, schema and harness bugs in their owning code; do not train a model
-to compensate for truncated responses or broken tool integration.
+Start with the unchanged model, a fixed prompt and an output schema. Only
+consider training when reviewed examples reveal a repeatable model failure.
+Fix transport, schema and harness bugs in their owning code; do not train around
+truncated responses or broken tool integration. A defensible no-action or
+no-improvement result is useful evidence.
 
-## Candidate model and method
+## Nouns, verbs and admission
 
-Muse Glimmer is a 30B model released under Apache 2.0. It is a candidate base for
-this experiment, not a selected deployment. [Official model card](https://huggingface.co/meta-models/Muse-Glimmer-30B).
+Reusable training assets must be nouns and independently schedulable work must
+be verbs. A training seed pack bundles them; a project name groups a purpose or
+surface and does not introduce another primitive or authority.
 
-Meta documents supervised fine-tuning with LoRA and QLoRA, including a QLoRA
-recipe verified on one H100. That is a practical starting recipe to evaluate
-once training hardware is available; it does not establish the memory, runtime
-or result for this dataset. [Meta post-training guide](https://dev.meta.ai/docs/muse-glimmer/post-training).
+| Noun | Existing category | What it records |
+| --- | --- | --- |
+| Dataset and split manifest | `noun.benchmark_suite` | Permitted inputs, reviewed targets, evidence, fingerprints and family splits |
+| Base and candidate adapter | `noun.model_spec` | Exact base/tokenizer revision, license, adapter digest and lineage |
+| Training recipe | `noun.code_node` | Implementation, dependency versions, device, adapter settings and run allowance |
+| Evaluation and execution evidence | `noun.eval_run` and existing execution records | Baseline, adapter, failures, resource use, receipts and admission decision |
 
-No suitable GPU worker is confirmed here. Muse API and Ollama Cloud credentials
-do not establish access to training hardware. Job cost and duration cannot be
-estimated responsibly until the dataset, GPU and training configuration are
-specified.
+The example authors curate/split and train as `verb.solve_draft`, evaluation as
+`verb.benchmark_harness`, and review as `verb.verify_gate`. These are existing
+contracts, not new ontology types. An authorized worker executes the training
+verb; Tessera retains scope, version, lease, CAS, blob and receipt authority.
+Server-side management also uses scoped nouns and verbs under the
+[architecture checkpoint](architecture-checkpoint.md).
 
-## Keep training in the noun/verb lifecycle
+The local example completed curation and training. Its evaluation/admission
+task templates do not mean those later stages ran. Offline payload previews do
+not enqueue work, validate predicted record versions or admit an adapter.
+No artifact is promoted automatically.
 
-| Noun | What it records |
-| --- | --- |
-| Dataset manifest | Permitted sources, reviewed task inputs and final outputs, evidence references, hashes and splits |
-| Base revision | Exact model/tokenizer versions and license reference |
-| Training recipe | Framework versions, adapter configuration, hardware and run allowance |
-| Adapter | Immutable output with lineage to the base, dataset and recipe |
-| Evaluation report | Baseline and adapter results, failures, resource use and decision |
+Use only reviewed, permitted task inputs, final outputs and supporting evidence.
+Exclude raw session histories, credentials, private material without permission,
+and hidden reasoning. A successful receipt alone does not make an output a
+valid training example.
 
-Verbs curate and split the examples, train the adapter, evaluate it, then review
-and decide admission. An authorized GPU worker claims the training verb and
-performs the compute. Tessera coordinates and records evidence; the server does
-not perform ordinary model reasoning. No adapter is promoted automatically.
+## Pretrained recipes remain unrun
 
-Use only reviewed task inputs, final outputs and supporting evidence with
-permission for this use. Exclude raw session histories, credentials, private
-material and hidden reasoning. A successful execution receipt alone does not
-make an output a valid training example.
+Pinned Llama 3.2 Instruct 1B and 3B QLoRA recipes are available for a small pilot
+on one 12 GB RTX 3060 or 16 GB T4. Actual fit and throughput still need measurement.
+The runner uses an existing cache by default; downloads require explicit
+authorization and existing model access. It does not accept a license. A Kaggle
+wrapper runs inside an already authorized notebook; it creates no notebook or
+GPU allocation. See [providers and compute](providers-and-compute.md).
 
-## The test that decides whether it helps
+Muse Glimmer is a 30B model under Apache 2.0. Its official post-training guide
+includes LoRA and QLoRA, with QLoRA verified on one H100. Tessera's optional
+bridge prepares a pinned official configuration and checks complete example
+lengths; it has not run Glimmer training. The H100 recipe is not evidence that
+30B training fits the smaller GPUs. [Official model card](https://huggingface.co/meta-models/Muse-Glimmer-30B),
+[Meta post-training guide](https://dev.meta.ai/docs/muse-glimmer/post-training).
+
+No pretrained model download, Kaggle training job, paid GPU rental or Glimmer
+training run was performed for this pilot. Muse and Ollama inference credentials
+do not supply training weights or hardware. Estimate time and cost only after
+the dataset, permitted base, device and recipe are selected and a measured
+training/reload/evaluation slice establishes their behavior.
+
+## The comparison that decides whether it helps
 
 Hold out whole source and project families before training. Compare the adapter
 with the unchanged prompted, schema-constrained base on the same held-out inputs
-and compatible generation settings. Keep the test set out of training and
-selection. Independent review should check factual grounding against the pinned
-sources and whether the proposed work is useful and correctly decomposed.
+and compatible generation settings. For QLoRA, compare against the same quantized
+base. Keep the test set out of training and model selection.
 
-Report unsupported claims, missed uncertainty, invalid outputs, failed tasks,
-latency and resource use alongside any improvement. Retain the unchanged model
-if the adapter does not improve the declared criteria. The showcase result would
-be a reproducible before/after comparison and a reviewable adapter noun, not a
-claim that fine-tuning solves research automatically.
+Independent review should check factual grounding against pinned sources,
+relevance to the project, useful task decomposition, valid noun references and
+acceptance checks. Report unsupported claims, missed uncertainty, invalid
+outputs, failed tasks, latency and resource use alongside any improvement.
+Retain the baseline when the adapter does not improve the declared criteria.
+The showcase should be a reproducible comparison and a reviewable adapter noun.

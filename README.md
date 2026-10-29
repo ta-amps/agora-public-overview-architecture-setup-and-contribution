@@ -1,16 +1,34 @@
 # Agora
 
-**The map of the ta-amps ecosystem: what each repository does, how they fit together, and what has been verified.**
+**Nouns, verbs, surfaces and infrastructure: the map of what ta-amps does, how its parts fit together, and what has been verified.**
 
 [Live hub](https://home.ta-amps.workers.dev) · [Connect an agent](docs/getting-started.md) · [Current status](docs/status.md) · [Architecture](docs/architecture.md) · [Roadmap](docs/roadmap.md)
 
 ## Status: October 29, 2026
 
-All **34 reviewed product and support PRs** are merged across the eight existing repositories, with green CI at the recorded main revisions. Seven hosted sites now offer copyable agent starting briefs. Tessera uses adaptive claim pacing instead of a default claims-per-minute quota, and its new creative seed tool gives workers separate attempts at shared briefs.
+At the **October 29, 19:43 UTC** GitHub observation, **50 product/support PRs
+were merged**, with green CI on every recorded main across eight repositories. The latest work adds optional training
+workers, explicit provider protocols and attempt evidence, operator pause and
+shared managed-conversation recovery, Kothar/Kinema seed exports, storage-quota
+handling and mandatory noun/verb guidance.
 
-Six native harnesses completed a scoped synthetic lifecycle. A corrected ten-process Pi wave completed **10/10**, producing twenty private idea proposals. The live protocol stress test completed **100/100** logical clients in **25.7 seconds**, with **0 HTTP 429 responses**. These are different tests: one measures native worker completion, the other exercises queue and storage concurrency.
+**Fresh public Tessera health/instructions reads passed at 19:54 UTC.** Latest
+recorded concurrent receipts cover Tessera PR13 and home; five other deployment
+observations remain historical. The read probe does not identify an executable
+version or qualify native artifact/report readback, new learning paths or a
+completed Frontier cycle. Herma's availability and accounting guards are merged
+with green CI and offline checks; deployment is held, and changed provider
+request fields have no new live qualification.
 
-These are dated results for specific implementations and fixtures. The [status report](docs/status.md) records exact revisions, checks, deployment versions and limits. Agora is the ninth public repository and contains documentation and offline validation; it runs no application service.
+Fresh local native Claude Code, Pi and Muse lifecycles passed. CPU/GPU LoRA smoke
+training passed on a tiny random model; pretrained adaptation and useful research
+improvement remain unverified. Six community-inspired draft bundles have checked
+noun/verb shapes, with no installation or admission. Earlier ten-process and
+100-protocol-client successes remain historical scale evidence.
+
+The [status report](docs/status.md) records exact revisions, CI, deployment
+versions, successful and rejected provider attempts, and limits. Agora is the
+ninth public repository and contains documentation and offline validation only.
 
 ## The repositories
 
@@ -20,8 +38,8 @@ These are dated results for specific implementations and fixtures. The [status r
 | [Shamash](https://github.com/ta-amps/shamash) | Synthetic harm and scam evidence workflows | Evidence extraction, deterministic arithmetic, supported model-assisted analysis, tier routing and human review boundaries |
 | [Eranos](https://github.com/ta-amps/eranos) | Donated-worker workflows for NGO tools | Draft, test and independently review reusable kits before steward release |
 | [Herma](https://github.com/ta-amps/herma) | Optional context shim and explicit model interfaces | Scoped context retrieval, deterministic or configured model-assisted routing, bounded typed conversations |
-| [Kothar](https://github.com/ta-amps/kothar) | Deterministic recipe compiler and runtime | Compose typed graphs from verified prewritten code nodes |
-| [Kinema](https://github.com/ta-amps/kinema) | Deterministic motion and video recipes | Evaluate frames, retarget motion, compile captions and check layout metadata |
+| [Kothar](https://github.com/ta-amps/kothar) | Code and recipe seed pack with compiler/runtime tools | Reuse verified code-node nouns; compose, execute and verify recipes through verbs |
+| [Kinema](https://github.com/ta-amps/kinema) | Motion seed pack with deterministic execution tools | Reuse scene, motion and caption nouns; evaluate, retarget and review through verbs |
 | [hackathon-context](https://github.com/ta-amps/hackathon-context) | Project-neutral participant kit | Shared instructions, event context, review templates and validation tools |
 | [pack-contributions](https://github.com/ta-amps/pack-contributions) | Pack authoring instructions and examples | Describe proposed workflows with synthetic examples and explicit admission requirements |
 | [Agora](https://github.com/ta-amps/agora) | Ecosystem documentation | Find the owning repository, current evidence and remaining work |
@@ -30,23 +48,31 @@ The [home portal](https://home.ta-amps.workers.dev) provides discovery and conne
 
 ## How the pieces fit
 
+**Nouns** are reusable knowledge, tools, models, recipes and artifacts. **Verbs**
+describe work for authorized workers. **Surfaces** expose them through websites,
+apps and APIs; **infrastructure** supplies scope, storage and coordination.
+**Seed packs contain nouns and verbs.** A project name is a convenient label for
+a surface and its contents, not another architectural primitive.
+
 ```mermaid
-flowchart TD
-    A[People and authorized agent workers] --> P[Home: discover and connect]
-    A --> T[Tessera: nouns, verbs, scope, leases, receipts]
-    A -. optional context and explicit model interface .-> H[Herma]
-    H --> T
-    S[Shamash: evidence workflows] --> T
-    E[Eranos: NGO kit workflows] --> T
-    A --> S
-    A --> E
-    A --> K[Kothar: verified code recipes]
-    A --> V[Kinema: motion and frame recipes]
-    K -. worker saves outputs .-> T
-    V -. worker saves outputs .-> T
-    F[Frontier: discovery and contract work] --> T
-    P --> F
+flowchart LR
+    A[People and agents] --> P[Surfaces: websites, apps and APIs]
+    subgraph T[Tessera: scope, versions, leases and receipts]
+      N[Nouns: knowledge, tools, models and artifacts]
+      V[Verbs: work and acceptance checks]
+    end
+    P --> N
+    P --> V
+    N --> W[Authorized workers]
+    V --> W
+    W -->|results and evidence| N
 ```
+
+Kothar and Kinema supply reusable seed packs and tested tools. Their existing
+project surfaces remain useful showcases and integration interfaces. Herma
+provides optional context and explicit provider transport. The
+[required architecture checkpoint](docs/architecture-checkpoint.md) defines these
+boundaries and the checks that enforce them.
 
 Independently schedulable reasoning belongs in a **verb** that an authorized worker claims. Inputs, guidance, contracts, artifacts and evidence are **nouns**. Workers reason, use tools and self-check. Tessera handles deterministic coordination. Additional judgment becomes a review verb when the applicable policy requires it.
 
@@ -56,12 +82,15 @@ Server inference needs an explicit, scoped capability or bounded exception. An o
 
 - [Getting started](docs/getting-started.md): live discovery, access modes and local development.
 - [Workflows](docs/workflows.md): a task from claim to receipt, plus product-specific flows.
+- [Required checkpoint](docs/architecture-checkpoint.md) and [architecture inventory](architecture.json): nouns, verbs, surfaces and infrastructure boundaries.
 - [Status](docs/status.md): repository revisions, CI, deployed surfaces and evidence limits.
 - [Roadmap](docs/roadmap.md): remaining work and the evidence needed to call it complete.
 - [Research for your projects](docs/research.md): turn overloaded feeds into evidence-backed decisions about what to test and adopt.
 - [Swarm pilot and creative seeds](docs/swarm-readiness.md): harness results, alternative solutions and launch limits.
-- [Proposed fine-tuning pilot](docs/fine-tuning-pilot.md): test whether a research specialist improves on the unchanged model.
-- [Machine-readable snapshot](status.json), [current readiness evidence](evidence/readiness-2026-10-29.json) and [earlier integration evidence](evidence/integration-2026-10-29.json).
+- [Fine-tuning workers and research pilot](docs/fine-tuning-pilot.md): actual CPU/GPU smoke and the unrun useful-task comparison.
+- [Providers and compute](docs/providers-and-compute.md): protocol/harness distinctions, observed coverage, hardware and credit boundaries.
+- [Community seed ideas](docs/community-seeds.md): source-backed mappings and unadmitted noun/verb candidates.
+- [Machine-readable snapshot](status.json), [current evidence](evidence/training-and-community-2026-10-29.json), [historical readiness](evidence/readiness-2026-10-29.json) and [earlier integration evidence](evidence/integration-2026-10-29.json).
 - [Agent entry point](llms.txt) and [contribution rules](CONTRIBUTING.md).
 
 Run `make check` to validate this guide offline. Status is maintained through reviewed snapshots; the date does not advance automatically.
