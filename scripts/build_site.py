@@ -785,34 +785,42 @@ def use_terms(item: dict, uses: dict) -> str:
             "</dl>")
 
 
+def use_href(href: str, prefix: str) -> str:
+    """A link on the use cases page: an outside address as it is, a page of this site from the page's folder."""
+    return attr(href) if href.startswith("https://") else prefix + attr(href)
+
+
+def use_link(link: dict, prefix: str) -> str:
+    return f'<a class="use-link" href="{use_href(link["href"], prefix)}">{text(link["label"])}{CHEVRON}</a>'
+
+
+def flagship_card(item: dict, uses: dict, prefix: str, lead: bool) -> str:
+    """One flagship idea: its name, a line or two, example nouns and verbs, and where to read more. The first one
+    leads, with buttons. An idea has no status and no evidence."""
+    rest = f' <span class="use-name-rest">{text(item["rest"])}</span>' if item.get("rest") else ""
+    if lead:
+        links = "".join(f'<a class="button{" secondary" if n else ""}" href="{use_href(link["href"], prefix)}">'
+                        f'{text(link["label"])}</a>' for n, link in enumerate(item["links"]))
+    else:
+        links = "".join(use_link(link, prefix) for link in item["links"])
+    detail = f'<p class="use-detail">{text(item["detail"])}</p>' if item.get("detail") else ""
+    return "\n".join([
+        f'<li class="use-card{" use-lead" if lead else ""}">',
+        '<div class="use-head">',
+        f"<h2>{text(item['name'])}{rest}</h2>",
+        f'<div class="use-text"><p class="use-line">{text(item["line"])}</p>{detail}</div>',
+        "</div>",
+        use_terms(item, uses),
+        f'<p class="use-links">{links}</p>',
+        "</li>",
+    ])
+
+
 def render_use_cases(nouns: Nouns) -> str:
     uses = nouns.uses
     prefix = "../"
-    flag = uses["flagship"]
-    flag_links = "".join(
-        f'<a class="button{" secondary" if n else ""}" href="{attr(item["href"]) if item["href"].startswith("https://") else prefix + attr(item["href"])}">'
-        f'{text(item["label"])}</a>' for n, item in enumerate(flag["links"]))
-    cards = [
-        "\n".join([
-            '<li class="use-card flagship">',
-            '<div class="use-flag-text">',
-            f'<p class="use-kicker">{text(flag["kicker"])}</p>',
-            f'<h2>{text(flag["name"])}</h2>',
-            f'<p class="use-line">{text(flag["line"])}</p>',
-            f'<p class="use-links">{flag_links}</p>',
-            "</div>",
-            use_terms(flag, uses),
-            "</li>",
-        ])
-    ]
-    for idea in uses["ideas"]:
-        tag = f'<p class="use-tag">{text(uses["public_label"])}</p>' if idea.get("public") else ""
-        cards.append(f'<li class="use-card">{tag}<h2>{text(idea["name"])}</h2><p class="use-line">{text(idea["line"])}</p>'
-                     f'{use_terms(idea, uses)}</li>')
-    yours = uses["yours"]
-    cards.append(f'<li class="use-card yours"><div><h2>{text(yours["name"])}</h2><p class="use-line">{text(yours["line"])}</p></div>'
-                 f'<p class="use-links"><a class="use-yours-link" href="{prefix}{attr(yours["link"]["href"])}">'
-                 f'{text(yours["link"]["label"])}{CHEVRON}</a></p></li>')
+    cards = [flagship_card(item, uses, prefix, lead=n == 0) for n, item in enumerate(uses["flagships"])]
+    fields = uses["fields"]
     main = "\n".join([
         '<main id="main">',
         page_head(uses["heading"], uses["lead"]),
@@ -820,6 +828,14 @@ def render_use_cases(nouns: Nouns) -> str:
         '<ul class="use-grid">',
         "\n".join(cards),
         "</ul>",
+        '<section class="use-fields" aria-labelledby="use-fields-title">',
+        '<div class="use-head">',
+        f'<h2 id="use-fields-title">{text(fields["name"])}</h2>',
+        f'<p class="use-line">{text(fields["line"])}</p>',
+        "</div>",
+        chips(fields["items"], "plain"),
+        f'<p class="use-links">{use_link(fields["link"], prefix)}</p>',
+        "</section>",
         "</div>",
         "</main>",
     ])

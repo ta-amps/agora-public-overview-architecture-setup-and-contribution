@@ -766,33 +766,49 @@ h3[id] { scroll-margin-top: var(--space-6); }
 
 .earlier-link a { font-weight: 600; margin-inline-end: var(--space-2); }
 
-/* Use cases: ideas in a grid, the marketplace first */
+/* Use cases: seven flagship ideas, Tokens for Good leading, then the fields the same pieces fit */
 
-.use-wrap { padding-bottom: var(--space-9); }
+.use-wrap { padding-bottom: var(--space-9); display: grid; gap: var(--space-5); }
 
 .use-grid {
   list-style: none;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--space-4);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5);
 }
 
+/* A flagship spans four rows of the grid and shares them with its neighbour, so the heads, the nouns, the verbs
+   and the links line up across a row and the cards in a row end level. */
 .use-card {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
+  display: grid;
+  grid-row: span 4;
+  grid-template-rows: subgrid;
+  row-gap: var(--space-5);
   min-width: 0;
-  padding: var(--space-5);
+  padding: var(--space-6);
   border: 1px solid var(--color-rule);
   border-radius: var(--radius-3);
   background: var(--color-paper-2);
 }
 
-.use-card h2 { font-size: 1.25rem; line-height: 1.2; }
-.use-line { color: var(--color-ink-2); font-size: var(--text-small); line-height: 1.5; }
+.use-head { display: grid; gap: var(--space-3); align-content: start; }
+.use-card h2 { font-size: var(--text-title); line-height: 1.15; }
 
-.use-terms { margin-top: auto; padding-top: var(--space-2); display: grid; gap: var(--space-3); }
+.use-name-rest {
+  display: block;
+  margin-top: var(--space-1);
+  font-size: var(--text-body);
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: 0;
+  color: var(--color-muted);
+}
+
+.use-line,
+.use-detail { color: var(--color-ink-2); line-height: 1.55; max-width: 62ch; text-wrap: pretty; }
+
+.use-terms { grid-row: span 2; display: grid; grid-template-rows: subgrid; row-gap: var(--space-3); }
 .use-terms dt { font-size: var(--text-micro); }
 .use-terms dd { margin-top: var(--space-1); }
 
@@ -808,64 +824,105 @@ h3[id] { scroll-margin-top: var(--space-6); }
 .chips.noun li { background: var(--color-noun-wash); color: var(--color-noun-ink); }
 .chips.verb li { background: var(--color-verb-wash); color: var(--color-verb-ink); }
 
-.use-card.flagship {
+.use-links { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-5); }
+
+.use-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding-block: var(--space-1);
+  font-size: var(--text-small);
+  font-weight: 600;
+  color: var(--color-noun-ink);
+}
+
+.use-link .chevron { flex: none; transform: rotate(-90deg); }
+
+/* The lead, Tokens for Good: across the grid, its name over its text, and its nouns and verbs on a panel beside
+   the text and buttons */
+
+.use-card.use-lead {
   grid-column: 1 / -1;
-  display: grid;
+  grid-row: auto;
+  grid-template-rows: none;
   grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  grid-template-areas: "title title" "text terms" "links terms";
   gap: var(--space-5) var(--space-8);
-  align-items: end;
-  padding: var(--space-7) var(--space-7);
+  padding: var(--space-7);
   border-color: var(--color-rule-strong);
   border-top: 6px solid var(--color-noun);
 }
 
-.use-flag-text { display: grid; gap: var(--space-3); justify-items: start; }
-.use-kicker { font-size: var(--text-micro); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-verb-ink); }
-.use-card.flagship h2 { font-size: var(--text-section); line-height: 1.05; letter-spacing: -0.02em; }
-.use-card.flagship .use-line { font-size: var(--text-lead); line-height: 1.45; max-width: 36ch; }
-.use-card.flagship .use-terms { margin-top: 0; }
-.use-card.flagship .chips li { font-size: var(--text-small); }
-.use-links { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-2); }
+.use-card.use-lead .use-head { display: contents; }
+.use-card.use-lead h2 { grid-area: title; font-size: var(--text-section); line-height: 1.05; letter-spacing: -0.02em; }
+.use-card.use-lead .use-text { grid-area: text; display: grid; gap: var(--space-4); align-content: start; }
+.use-card.use-lead .use-line { font-size: var(--text-lead); line-height: 1.45; color: var(--color-ink); max-width: 40ch; }
+.use-card.use-lead .use-links { grid-area: links; align-self: end; gap: var(--space-3); }
 
-.use-tag {
-  align-self: flex-start;
-  font-size: var(--text-micro);
-  font-weight: 600;
-  line-height: 1.4;
-  padding: 0.125rem var(--space-2);
-  border: 1px solid var(--color-rule-strong);
-  border-radius: 999px;
-  color: var(--color-ink-2);
+.use-card.use-lead .use-terms {
+  grid-area: terms;
+  grid-template-rows: none;
+  align-content: center;
+  gap: var(--space-5);
+  padding: var(--space-6);
+  border-radius: var(--radius-2);
+  background: var(--color-paper-3);
 }
 
-.use-card.yours {
-  grid-column: 1 / -1;
-  flex-direction: row;
-  flex-wrap: wrap;
+.use-card.use-lead .chips li { font-size: var(--text-small); }
+
+/* The fields band: the same pieces fit almost any field */
+
+.use-fields {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  grid-template-areas: "head chips" "links chips";
   align-items: center;
-  justify-content: space-between;
-  gap: var(--space-3) var(--space-7);
+  gap: var(--space-3) var(--space-8);
   padding: var(--space-6) var(--space-7);
+  border-radius: var(--radius-3);
   background: var(--color-band);
-  border-color: var(--color-band);
 }
 
-.use-card.yours > div { display: grid; gap: var(--space-2); max-width: 46rem; }
-.use-card.yours h2 { font-size: var(--text-title); }
-.use-card.yours h2 { color: var(--color-band-ink); }
-.use-card.yours .use-line { color: var(--color-band-ink-2); }
-.use-yours-link { display: inline-flex; align-items: center; gap: var(--space-1); color: var(--color-band-noun); font-weight: 600; font-size: var(--text-small); }
-.use-yours-link .chevron { transform: rotate(-90deg); }
-.use-card.yours .use-links { margin-top: 0; }
+.use-fields .use-head { grid-area: head; gap: var(--space-2); align-self: end; }
+.use-fields h2 { font-size: var(--text-title); color: var(--color-band-ink); }
+.use-fields .use-line { color: var(--color-band-ink-2); }
+.use-fields .chips { grid-area: chips; gap: var(--space-2); }
+
+.use-fields .chips li {
+  font-size: var(--text-small);
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--color-band-ink-2);
+  border-color: color-mix(in srgb, var(--color-band-ink) 30%, transparent);
+  color: var(--color-band-ink);
+}
+
+.use-fields .use-links { grid-area: links; align-self: start; }
+.use-fields .use-link { color: var(--color-band-noun); }
 
 @media (max-width: 64rem) {
-  .use-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .use-card.flagship { grid-template-columns: minmax(0, 1fr); padding: var(--space-6); align-items: start; }
+  .use-card.use-lead {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+    grid-template-areas: "title" "text" "terms" "links";
+    padding: var(--space-6);
+  }
+
+  .use-fields { grid-template-columns: minmax(0, 1fr); grid-template-areas: "head" "chips" "links"; }
+  .use-fields .use-head,
+  .use-fields .use-links { align-self: auto; }
+}
+
+@media (max-width: 56rem) {
+  .use-grid { grid-template-columns: minmax(0, 1fr); }
 }
 
 @media (max-width: 40rem) {
-  .use-grid { grid-template-columns: minmax(0, 1fr); }
-  .use-card.flagship { padding: var(--space-5); }
+  .use-card,
+  .use-card.use-lead { padding: var(--space-5); }
+  .use-card.use-lead .use-terms { padding: var(--space-5); }
+  .use-card.use-lead .use-links .button { flex: 1 1 auto; }
+  .use-fields { padding: var(--space-6) var(--space-5); }
 }
 
 /* Earlier drafts and storyboards */
