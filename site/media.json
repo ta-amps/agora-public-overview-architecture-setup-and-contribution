@@ -1,0 +1,21 @@
+{
+  "kind": "draft_media",
+  "publication_does_not_certify_claims": true,
+  "items": [
+    {
+      "path": "video/2026-10-29/animatic-60s-v1/eranos-animatic-60s.mp4",
+      "sha256": "08c50ff98250725fc729efbe84077d0aab1d48ae6e4c9f518a69ad678787fada",
+      "bytes": 7544380
+    },
+    {
+      "path": "video/2026-10-29/animatic-60s-v1/eranos-animatic-60s-open-captions.mp4",
+      "sha256": "157aa01862b39593590cfb3b58b7d12e69e2df9b8343fb18de44f2fa351b9f7c",
+      "bytes": 8036494
+    },
+    {
+      "path": "video/2026-10-29/animatic-60s-v1/contact-sheet-60s.png",
+      "sha256": "1829d144d5f1f1b01aa839882946b9bfb6d5d0d64855a584028ce4bfecd2b89c",
+      "bytes": 484722
+    }
+  ]
+}
