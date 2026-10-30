@@ -31,6 +31,26 @@
       "path": "video/2026-10-30/storyboard-3m.png",
       "sha256": "8506851b433b321b1c59a067f5ced443d1c5f90e048829b14f2a49b2d6b9c624",
       "bytes": 2000577
+    },
+    {
+      "path": "video/2026-10-30/short/eranos-60s.mp4",
+      "sha256": "1fc2b44d9b57da71af6024d69334ce3e80985bfa7193ff39ac2cb865a88fd417",
+      "bytes": 16641769
+    },
+    {
+      "path": "video/2026-10-30/short/eranos-60s-poster.png",
+      "sha256": "1d62f523feaa1b07d867ea856ebefcdf6560f5eec3c033d118e5ca4c3206da34",
+      "bytes": 224364
+    },
+    {
+      "path": "video/2026-10-30/full/eranos-3m.mp4",
+      "sha256": "2fe24b1e5e8267c461b2edabf13e07eeeb0c633962e18f91a258f5a8f7d9a10f",
+      "bytes": 34742093
+    },
+    {
+      "path": "video/2026-10-30/full/eranos-3m-poster.png",
+      "sha256": "e7d66165878370a899f287f9e871875e409be0bfe9b5c117fe709ce40e39dfcd",
+      "bytes": 256685
     }
   ]
 }

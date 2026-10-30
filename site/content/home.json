@@ -3,7 +3,7 @@
  "title": "Agora, the ta-amps overview",
  "description": "Agora is the ta-amps overview: a draft video, five decks, use cases and how the system keeps learning. Everything is nouns and verbs; Eranos is the two-sided marketplace.",
  "videos": {
-  "default": "short",
+  "default": "full",
   "choose": "Choose a cut",
   "captions_label": "English",
   "captions_lang": "en",
@@ -11,14 +11,24 @@
   "fallback_link": "Download the video",
   "cuts": [
    {
+    "id": "full",
+    "tab": "Full · 3 min",
+    "src": "video/2026-10-30/full/eranos-3m.mp4",
+    "type": "video/mp4",
+    "captions": "video/2026-10-30/full/eranos-3m.vtt",
+    "poster": "video/2026-10-30/full/eranos-3m-poster.png",
+    "title": "Eranos: spare tokens for good. The full three-minute film, with an AI-generated voice.",
+    "label": "The full three-minute film · AI-generated voice"
+   },
+   {
     "id": "short",
     "tab": "Short · 1 min",
-    "src": "video/2026-10-29/animatic-60s-v1/eranos-animatic-60s.mp4",
+    "src": "video/2026-10-30/short/eranos-60s.mp4",
     "type": "video/mp4",
-    "captions": "video/2026-10-29/animatic-60s-v1/eranos-animatic-60s.vtt",
-    "poster": "video/2026-10-30/spare-tokens-for-good-poster.png",
-    "title": "Eranos: spare tokens for good. Unused AI capacity doing real work for nonprofits. A draft animatic, 60 seconds.",
-    "label": "Draft video · the full three-minute cut is coming today"
+    "captions": "video/2026-10-30/short/eranos-60s.vtt",
+    "poster": "video/2026-10-30/short/eranos-60s-poster.png",
+    "title": "Eranos: spare tokens for good. The one-minute film, with an AI-generated voice.",
+    "label": "The one-minute film · AI-generated voice"
    }
   ],
   "outline": {
