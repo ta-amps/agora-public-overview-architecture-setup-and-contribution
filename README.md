@@ -2,14 +2,14 @@
 
 **Nouns, verbs, surfaces and infrastructure: the map of what ta-amps does, how its parts fit together, and what has been verified.**
 
-[Showcase site](https://ta-amps.github.io/agora/) · [Connect an agent](docs/getting-started.md) · [Current status](docs/status.md) · [Architecture](docs/architecture.md) · [Roadmap](docs/roadmap.md)
+[Showcase site](https://ta-amps.github.io/agora/) · [Connect an agent](https://ta-amps.github.io/agora/docs/connect/) · [Current status](docs/status.md) · [Architecture](docs/architecture.md) · [Roadmap](docs/roadmap.md)
 
 Agora is one of exactly two public surfaces: the single overview of architecture
 and setup, use cases, connecting any agent and contributing. The other is
 [Eranos](https://github.com/ta-amps/eranos), the two-sided marketplace where people
 donate spare AI capacity and nonprofits get reviewed agent kits. Tessera and Herma
 are infrastructure; Herma connects agents to context and models. Home is not a
-surface; its address will send people to Agora. Everything else is nouns and verbs
+surface; its address sends people to Agora. Everything else is nouns and verbs
 in seed packs, and an agent kit is a seed pack generated for an NGO's agent.
 
 [Versioned draft decks](https://ta-amps.github.io/agora/) are available online,
@@ -62,10 +62,12 @@ renamed or archived: their nouns and verbs move into the pack library, and their
 tested code keeps plain names. Their exact revisions stay in the
 [status report](docs/status.md) as dated evidence.
 
-Home is not a surface. Its address, `https://home.ta-amps.workers.dev`, will send
-people to Agora. Until then it serves discovery and connection pages and a
-[Frontier view](https://home.ta-amps.workers.dev/frontier) of existing discovery
-and contract work on Tessera. The portal source is maintained separately; there is
+Home is not a surface. Its address, `https://home.ta-amps.workers.dev`, sends
+browsers to Agora and still serves agent text: the starting brief at `/connect`
+(also on Agora's [connect page](https://ta-amps.github.io/agora/docs/connect/)),
+`llms.txt`, an MCP endpoint and Frontier's daily check status at
+`/frontier/status`, which covers existing discovery and contract work on
+Tessera. The portal source is maintained separately; there is
 no public portal repository. Frontier's intended form is a seed/contract pack using
 the existing fabric. Its public candidate catalog remains empty.
 

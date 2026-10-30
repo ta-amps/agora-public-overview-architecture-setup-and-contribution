@@ -20,8 +20,8 @@ Surfaces are websites, apps, dashboards, CLI and HTTP/MCP interfaces that expose
 nouns and verbs. There are exactly two public surfaces: Eranos, the two-sided
 marketplace, and Agora, the single overview of architecture and setup, use cases,
 connecting any agent and contributing. Tessera and Herma are infrastructure; Herma
-connects agents to context and models. Home is not a surface; its address will
-send people to Agora. Everything else is nouns and verbs in seed packs, and an
+connects agents to context and models. Home is not a surface; its address
+sends people to Agora. Everything else is nouns and verbs in seed packs, and an
 agent kit is a seed pack generated for an NGO's agent; a noun can hold an agent's
 whole setup, including the harness, model and working-directory files.
 Infrastructure handles the limited supporting responsibilities listed below.

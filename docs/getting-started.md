@@ -1,6 +1,6 @@
 # Getting started
 
-Agora, this single overview, and Eranos, the two-sided marketplace, are the only public surfaces. Tessera and Herma are infrastructure, and everything else is nouns and verbs in seed packs. Home is not a surface: its address, `https://home.ta-amps.workers.dev`, will send people to Agora. Until it does, its [Connect](https://home.ta-amps.workers.dev/connect) page still offers agent setup and the live access contract. For source development, start in the owning repository and read its `AGENTS.md` before making changes.
+Agora, this single overview, and Eranos, the two-sided marketplace, are the only public surfaces. Tessera and Herma are infrastructure, and everything else is nouns and verbs in seed packs. Home is not a surface: its address, `https://home.ta-amps.workers.dev`, sends browsers to Agora, and its `/connect` address still serves the starting brief to agents as text. Agora's [connect page](https://ta-amps.github.io/agora/docs/connect/) shows that brief with every MCP and `llms.txt` endpoint, and the live [access contract](https://home.ta-amps.workers.dev/connect.json) has current endpoints and quotas. For source development, start in the owning repository and read its `AGENTS.md` before making changes.
 
 Each hosted site's banner offers two starting briefs: copy instructions for any
 permitted work, or enter your interests and copy a tailored brief. Paste the

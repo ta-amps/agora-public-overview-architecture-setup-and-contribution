@@ -7,8 +7,8 @@ outcomes for authorized workers. Tessera owns the shared task and artifact
 lifecycle. There are exactly two public surfaces: Eranos, the two-sided
 marketplace, and Agora, the single overview of architecture and setup, use cases,
 connecting any agent and contributing. Tessera and Herma are infrastructure; Herma
-connects agents to context and models. Home is not a surface; its address will
-send people to Agora. Everything else is nouns and verbs in seed packs, and an
+connects agents to context and models. Home is not a surface; its address
+sends people to Agora. Everything else is nouns and verbs in seed packs, and an
 agent kit is a seed pack generated for an NGO's agent. Follow the
 [required checkpoint](architecture-checkpoint.md).
 
@@ -108,7 +108,7 @@ a fixed claims-per-minute quota or a measured capacity guarantee.
 
 ## Frontier and contribution packs
 
-Frontier's existing discovery work, shown on the home portal until that address sends people to Agora, uses Tessera's namespace, nouns, tasks and admission boundaries. Its scheduled discovery can leave repair work for external workers. Live server repair is off. Scheduled discovery does not edit repositories or qualify generated candidates for publication.
+Frontier's existing discovery work uses Tessera's namespace, nouns, tasks and admission boundaries; Home still serves its daily check status to agents. Its scheduled discovery can leave repair work for external workers. Live server repair is off. Scheduled discovery does not edit repositories or qualify generated candidates for publication.
 
 Frontier's intended packaging is a declarative seed/contract pack. `pack-contributions` describes ten proposed meta-pack workflows and synthetic examples; it contains no importer or active learning service. General pinned category/profile resolution and general rule activation/rollback still require implementation and verification.
 

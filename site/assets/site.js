@@ -25,3 +25,22 @@
   });
   if (media && media.addEventListener) media.addEventListener("change", render);
 })();
+
+// Copy buttons. A button with data-copy="ID" copies the text of the element with that id.
+// Without this script, or without the clipboard API, the button stays hidden and the text can be selected.
+(function () {
+  if (!navigator.clipboard || !navigator.clipboard.writeText) return;
+  Array.prototype.forEach.call(document.querySelectorAll("[data-copy]"), function (button) {
+    var target = document.getElementById(button.getAttribute("data-copy"));
+    var status = document.getElementById(button.getAttribute("data-copy") + "-status");
+    if (!target) return;
+    button.hidden = false;
+    button.addEventListener("click", function () {
+      navigator.clipboard.writeText(target.textContent).then(function () {
+        if (status) status.textContent = "Copied.";
+      }, function () {
+        if (status) status.textContent = "Copying failed. Select the text and copy it instead.";
+      });
+    });
+  });
+})();
