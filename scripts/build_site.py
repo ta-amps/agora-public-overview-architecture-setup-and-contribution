@@ -6,8 +6,10 @@ Everything a page says is a noun kept as data, and this script holds only markup
                                       privacy line;
   * site/content/home.json            the home page: the film, one sentence, the decks;
   * site/content/decks-page.json      the decks page;
-  * site/content/use-cases.json       the use cases page;
+  * site/content/use-cases.json       the use cases page; each flagship names its library packs by id;
   * site/content/learning.json        the learning page: the loop, measured results with evidence, rules, limits;
+  * site/content/library.json         the library page: every seed pack at one pinned commit, by category. Its
+                                      measured part comes from scripts/sync_library.py, never from the network;
   * site/content/film.json            the full film's transcript and scene descriptions;
   * site/content/earlier-drafts.json  earlier drafts, and the storyboards page;
   * site/content/moved.json           pages that moved, which the not-found page lists;
@@ -17,7 +19,7 @@ What it writes:
   * every current deck, site/decks/<deck>/index.html, from its source folder. The slide format's custom
     elements become HTML: <x-shape> and <x-icon> become inline SVG, <x-brief> the starting brief and
     <x-endpoints> the endpoint table. Each slide's <aside> becomes its speaker notes;
-  * the home, decks, earlier drafts, storyboards, use cases, learning, film and not-found pages;
+  * the home, decks, earlier drafts, storyboards, use cases, learning, library, film and not-found pages;
   * the shared head, header, agent banner and footer, between marker comments, into every other page
     that is not frozen;
   * the "decks" list in site/decks.json. The frozen "versions" entries stay byte-identical.
@@ -37,6 +39,7 @@ Nothing here touches the network, except --pdf, where the pages load their web f
 from __future__ import annotations
 
 import argparse
+import datetime as dt
 import hashlib
 import html
 import json
@@ -57,6 +60,16 @@ MANIFEST = SITE / "decks.json"
 PAGES_PREFIX = "/agora-public-overview-architecture-setup-and-contribution/"
 CANVAS_W, CANVAS_H = 1920, 1080
 CLAIM_STATUSES = {"measured", "pending", "planned"}
+LIBRARY_REPOSITORY = "https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs"
+SLUG = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*\Z")
+CATEGORY_ID = re.compile(r"[a-z][a-z0-9]*(?:-[a-z0-9]+)*\Z")  # starts with a letter: the page's style names it
+FULL_SHA = re.compile(r"[0-9a-f]{40}\Z")
+PACK_FIELDS = {"id", "title", "purpose", "version", "status", "nouns", "verbs", "worked_examples", "kit", "code", "url"}
+CODE_FIELDS = {"files", "tests", "workflow"}
+# Ids the shared chrome and the library page's own parts use, which no pack or category may take.
+LIBRARY_IDS = {"main", "agent-panel", "agent-brief", "agent-brief-title", "agent-brief-status", "categories",
+               "library-numbers"}
+USE_PACKS = (2, 5)  # how many library packs a use case names, at least and at most
 
 FONTS = ("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700"
          "&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400..700&display=swap")
@@ -93,6 +106,10 @@ COPY_ICON = ('<svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"
 CHEVRON = ('<svg class="chevron" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" '
            'focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.75" '
            'stroke-linecap="round" stroke-linejoin="round"/></svg>')
+# Angle brackets for a pack that ships its own code and tests.
+CODE_GLYPH = ('<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false">'
+              '<path d="M5.5 4.5 2 8l3.5 3.5M10.5 4.5 14 8l-3.5 3.5" fill="none" stroke="currentColor" '
+              'stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>')
 
 
 def arrow(cls: str) -> str:
@@ -153,6 +170,8 @@ class Nouns:
         self.uses = load_json(CONTENT / "use-cases.json")
         self.film = load_json(CONTENT / "film.json")
         self.learning = load_json(CONTENT / "learning.json")
+        self.library = load_json(CONTENT / "library.json")
+        check_library(self.library)
         self.drafts = load_json(CONTENT / "earlier-drafts.json")
         self.moved = load_json(CONTENT / "moved.json")
         self.manifest = load_json(MANIFEST)
@@ -166,6 +185,94 @@ def frozen_pages(manifest: dict, drafts: dict) -> set[Path]:
     for group in drafts["groups"]:
         pages |= {SITE / item["href"] / "index.html" for item in group["items"] if "html_sha256" in item}
     return pages
+
+
+def whole(value, what: str, least: int) -> int:
+    if type(value) is not int or value < least:
+        fail(f"library.json: {what} must be a whole number of at least {least}")
+    return value
+
+
+def words_of(value, what: str) -> str:
+    if not isinstance(value, str) or not value.strip():
+        fail(f"library.json: {what} needs words")
+    return value
+
+
+def check_library(library: dict) -> None:
+    """The library noun is well formed: one pinned commit of the seed-pack library, every pack with its counts and
+    its folder at that commit, totals that are the packs' sums, a status the page has words for, and categories that
+    hold every pack exactly once. scripts/sync_library.py writes the measured part and runs this same check."""
+    source = library.get("source") or {}
+    if source.get("repository") != LIBRARY_REPOSITORY:
+        fail("library.json: the source must be the seed-pack library")
+    commit = source.get("commit", "")
+    if FULL_SHA.fullmatch(commit) is None or FULL_SHA.fullmatch(source.get("tessera_commit", "")) is None:
+        fail("library.json: the source needs the library's full commit and the Tessera commit its receipt names")
+    try:
+        when = dt.datetime.fromisoformat(source.get("committed_at", ""))
+    except ValueError:
+        when = None
+    if when is None or when.tzinfo is None:
+        fail("library.json: committed_at must be the commit's date with its time zone")
+    words = library["words"]
+    packs = library.get("packs")
+    if not isinstance(packs, list) or not packs:
+        fail("library.json: no packs; run scripts/sync_library.py")
+    ids = []
+    for pack in packs:
+        if not isinstance(pack, dict) or set(pack) != PACK_FIELDS:
+            fail(f"library.json: a pack needs exactly the fields {sorted(PACK_FIELDS)}")
+        pack_id = pack["id"]
+        if not isinstance(pack_id, str) or SLUG.fullmatch(pack_id) is None:
+            fail(f"library.json: {pack_id!r} is not a pack id")
+        for key in ("title", "purpose", "version"):
+            words_of(pack[key], f"{pack_id}'s {key}")
+        if pack["purpose"].lower().startswith("a collection of nouns and verbs"):
+            fail(f"library.json: {pack_id}'s purpose leaves out the opening the library puts on every pack")
+        if pack["status"] not in words["status"]:
+            fail(f"library.json: {pack_id} has the status {pack['status']!r}, which the page has no words for")
+        whole(pack["nouns"], f"{pack_id}'s nouns", 1)
+        whole(pack["verbs"], f"{pack_id}'s verbs", 1)
+        whole(pack["worked_examples"], f"{pack_id}'s worked examples", 0)
+        if type(pack["kit"]) is not bool:
+            fail(f"library.json: {pack_id}'s kit is true or false")
+        code = pack["code"]
+        if code is not None:
+            if not isinstance(code, dict) or set(code) != CODE_FIELDS:
+                fail(f"library.json: {pack_id}'s code needs exactly {sorted(CODE_FIELDS)}")
+            whole(code["files"], f"{pack_id}'s code files", 1)
+            whole(code["tests"], f"{pack_id}'s test files", 1)
+            if not str(code["workflow"]).startswith(".github/workflows/"):
+                fail(f"library.json: {pack_id}'s code needs the CI workflow that tests it")
+        if pack["url"] != f"{LIBRARY_REPOSITORY}/tree/{commit}/packs/{pack_id}":
+            fail(f"library.json: {pack_id} must link to its folder at the pinned commit")
+        ids.append(pack_id)
+    if len(set(ids)) != len(ids):
+        fail("library.json: a pack is listed twice")
+    totals = {"packs": len(packs), "nouns": sum(p["nouns"] for p in packs), "verbs": sum(p["verbs"] for p in packs),
+              "worked_examples": sum(p["worked_examples"] for p in packs),
+              "with_code": sum(1 for p in packs if p["code"])}
+    if library.get("totals") != totals:
+        fail(f"library.json: the totals must be the packs' sums, {totals}")
+    categories = library.get("categories")
+    if not isinstance(categories, list) or not categories:
+        fail("library.json: no categories")
+    names = [category.get("id") for category in categories]
+    if any(not isinstance(name, str) or CATEGORY_ID.fullmatch(name) is None for name in names) or \
+            len(set(names)) != len(names):
+        fail("library.json: every category needs its own id, starting with a letter")
+    taken = (set(names) & set(ids)) | ((set(names) | set(ids)) & LIBRARY_IDS)
+    if taken:
+        fail("library.json: a category and a pack, or the page itself, share the id " + ", ".join(sorted(taken)))
+    for category in categories:
+        for key in ("name", "short", "intro"):
+            words_of(category.get(key), f"the {category['id']} category's {key}")
+        if not isinstance(category.get("packs"), list) or not category["packs"]:
+            fail(f"library.json: the {category['id']} category holds no packs")
+    placed = [pack_id for category in categories for pack_id in category["packs"]]
+    if len(placed) != len(set(placed)) or set(placed) != set(ids):
+        fail("library.json: every pack sits in exactly one category, and every category entry is a pack")
 
 
 # Shared page chrome -------------------------------------------------------------------------------
@@ -813,10 +920,26 @@ def chips(items: list[str], kind: str) -> str:
     return f'<ul class="chips {kind}">' + "".join(f"<li>{text(item)}</li>" for item in items) + "</ul>"
 
 
-def use_terms(item: dict, uses: dict) -> str:
+def pack_links(ids: list[str], library: dict, prefix: str, what: str) -> str:
+    """A use case's library packs by title, each linking to its card on the library page. The titles come from the
+    library noun, so a use case names its packs by id only."""
+    packs = {pack["id"]: pack for pack in library["packs"]}
+    low, high = USE_PACKS
+    if not isinstance(ids, list) or not low <= len(ids) <= high or len(set(ids)) != len(ids):
+        fail(f"use-cases.json: {what} names {low} to {high} different library packs")
+    unknown = [pack_id for pack_id in ids if pack_id not in packs]
+    if unknown:
+        fail(f"use-cases.json: {what} names packs the library does not have: {', '.join(unknown)}")
+    return ('<ul class="chips pack">' + "".join(f'<li><a href="{prefix}library/#{attr(pack_id)}">'
+                                                f'{text(packs[pack_id]["title"])}</a></li>' for pack_id in ids) + "</ul>")
+
+
+def use_terms(item: dict, uses: dict, library: dict, prefix: str) -> str:
     return ('<dl class="use-terms">'
             f'<div><dt class="noun-word">{text(uses["nouns_label"])}</dt><dd>{chips(item["nouns"], "noun")}</dd></div>'
             f'<div><dt class="verb-word">{text(uses["verbs_label"])}</dt><dd>{chips(item["verbs"], "verb")}</dd></div>'
+            f'<div><dt class="pack-word">{text(uses["packs_label"])}</dt>'
+            f'<dd>{pack_links(item["packs"], library, prefix, item["name"])}</dd></div>'
             "</dl>")
 
 
@@ -829,9 +952,9 @@ def use_link(link: dict, prefix: str) -> str:
     return f'<a class="use-link" href="{use_href(link["href"], prefix)}">{text(link["label"])}{CHEVRON}</a>'
 
 
-def flagship_card(item: dict, uses: dict, prefix: str, lead: bool) -> str:
-    """One flagship idea: its name, a line or two, example nouns and verbs, and where to read more. The first one
-    leads, with buttons. An idea has no status and no evidence."""
+def flagship_card(item: dict, uses: dict, library: dict, prefix: str, lead: bool) -> str:
+    """One flagship idea: its name, a line or two, example nouns and verbs, the library packs that hold them, and
+    where to read more. The first one leads, with buttons. An idea has no status and no evidence."""
     rest = f' <span class="use-name-rest">{text(item["rest"])}</span>' if item.get("rest") else ""
     if lead:
         links = "".join(f'<a class="button{" secondary" if n else ""}" href="{use_href(link["href"], prefix)}">'
@@ -845,7 +968,7 @@ def flagship_card(item: dict, uses: dict, prefix: str, lead: bool) -> str:
         f"<h2>{text(item['name'])}{rest}</h2>",
         f'<div class="use-text"><p class="use-line">{text(item["line"])}</p>{detail}</div>',
         "</div>",
-        use_terms(item, uses),
+        use_terms(item, uses, library, prefix),
         f'<p class="use-links">{links}</p>',
         "</li>",
     ])
@@ -854,7 +977,7 @@ def flagship_card(item: dict, uses: dict, prefix: str, lead: bool) -> str:
 def render_use_cases(nouns: Nouns) -> str:
     uses = nouns.uses
     prefix = "../"
-    cards = [flagship_card(item, uses, prefix, lead=n == 0) for n, item in enumerate(uses["flagships"])]
+    cards = [flagship_card(item, uses, nouns.library, prefix, lead=n == 0) for n, item in enumerate(uses["flagships"])]
     fields = uses["fields"]
     main = "\n".join([
         '<main id="main">',
@@ -941,6 +1064,104 @@ def render_learning(nouns: Nouns) -> str:
         "</main>",
     ])
     return page_shell(page["title"], page["description"], main)
+
+
+def human_date(iso: str) -> str:
+    when = dt.datetime.fromisoformat(iso)
+    return f"{when:%B} {when.day}, {when.year}"
+
+
+def counted(n: int, one: str, many: str, cls: str = "") -> str:
+    """A count and its word. The number sits in its own element, so every word on the page is the noun's."""
+    klass = f' class="{cls}"' if cls else ""
+    return f'<span{klass}><span class="lib-n">{n:,}</span> {text(one if n == 1 else many)}</span>'
+
+
+def pack_card(pack: dict, words: dict) -> str:
+    """One pack: its status, its title linking to its folder at the pinned commit, its one-line purpose, its noun and
+    verb counts, and a badge when it ships its own code and tests. The whole card is the title's link."""
+    kinds = [words["status"][pack["status"]]] + ([words["kit"]] if pack["kit"] else [])
+    badge = f'<span class="lib-badge">{CODE_GLYPH}{text(words["badge"])}</span>' if pack["code"] else ""
+    return "\n".join([
+        f'<li class="lib-card" id="{pack["id"]}">',
+        '<p class="lib-card-meta"><span class="lib-card-kind">'
+        + " ".join(f"<span>{text(kind)}</span>" for kind in kinds) + f"</span> {badge}</p>",
+        f'<h3 class="lib-card-title"><a class="lib-card-link" href="{attr(pack["url"])}" '
+        f'aria-label="{attr(pack["title"] + " " + words["on_github"])}">{text(pack["title"])}</a></h3>',
+        f'<p class="lib-card-purpose">{text(pack["purpose"])}</p>',
+        '<p class="lib-card-foot"><span class="lib-card-counts">'
+        + counted(pack["nouns"], words["noun"], words["nouns"], "noun-word") + " "
+        + counted(pack["verbs"], words["verb"], words["verbs"], "verb-word")
+        + f'</span> <span class="lib-card-cta" aria-hidden="true">{text(words["github"])}{CHEVRON}</span></p>',
+        "</li>",
+    ])
+
+
+def render_library(nouns: Nouns) -> str:
+    """The library page: every seed pack at one pinned commit of the library, grouped by category, under the totals
+    measured at that commit. A page of Agora, not a surface; the packs are nouns and verbs, and every one is a
+    proposal. Every word comes from site/content/library.json. A category link shows only that category through
+    :target, so the filter works without a script, and the page's one style rule marks the link on show."""
+    library = nouns.library
+    words, source, totals = library["words"], library["source"], library["totals"]
+    packs = {pack["id"]: pack for pack in library["packs"]}
+    commit = source["commit"]
+    stats = "".join(
+        f'<li class="lib-stat{" " + kind if kind else ""}"><span class="lib-stat-n">{totals[key]:,}</span> '
+        f'<span class="lib-stat-label">{text(words["stats"][key])}</span></li>'
+        for key, kind in (("packs", ""), ("nouns", "noun"), ("verbs", "verb"), ("worked_examples", ""),
+                          ("with_code", "")))
+    filters = [f'<li><a href="#categories">{text(words["all"])} <span class="lib-filter-n">{totals["packs"]:,}</span>'
+               "</a></li>"]
+    filters += [f'<li><a href="#{category["id"]}">{text(category["short"])} '
+                f'<span class="lib-filter-n">{len(category["packs"]):,}</span></a></li>'
+                for category in library["categories"]]
+    groups = []
+    for category in library["categories"]:
+        key = category["id"]
+        cards = "\n".join(pack_card(packs[pack_id], words) for pack_id in category["packs"])
+        groups.append("\n".join([
+            f'<section class="lib-group" id="{key}" aria-labelledby="{key}-title">',
+            '<div class="lib-group-body">',
+            '<div class="lib-group-head">',
+            f'<h2 id="{key}-title">{text(category["name"])} <span class="lib-group-count">'
+            f'{counted(len(category["packs"]), words["pack"], words["packs"])}</span></h2>',
+            f'<p class="lib-group-intro">{text(category["intro"])}</p>',
+            f'<a class="lib-show-all" href="#categories">{text(words["show_all"])}</a>',
+            "</div>",
+            f'<ul class="lib-cards">\n{cards}\n</ul>',
+            "</div>",
+            "</section>",
+        ]))
+    on_show = ",".join(f'.library:has(#{category["id"]}:target) .lib-filter a[href="#{category["id"]}"]'
+                       for category in library["categories"])
+    tree = f"{LIBRARY_REPOSITORY}/tree/{commit}"
+    receipt = f"{LIBRARY_REPOSITORY}/blob/{commit}/packs/VALIDATION.json"
+    main = "\n".join([
+        '<main id="main">',
+        page_head(library["heading"], library["lead"], dateline=library["dateline"]),
+        '<div class="wrap library">',
+        '<section class="lib-summary" aria-labelledby="library-numbers">',
+        f'<h2 class="visually-hidden" id="library-numbers">{text(words["numbers_label"])}</h2>',
+        f'<ul class="lib-stats">{stats}</ul>',
+        '<div class="lib-about">',
+        f'<p class="lib-source">{text(words["counted"])} <a href="{attr(tree)}"><code>{commit[:7]}</code></a> · '
+        f'<time datetime="{attr(source["committed_at"])}">{human_date(source["committed_at"])}</time></p>',
+        f'<p class="lib-source">{text(words["checked"])} <a href="{attr(receipt)}">{text(words["receipt"])}</a></p>',
+        f'<p class="lib-legend"><span class="lib-badge">{CODE_GLYPH}{text(words["badge"])}</span> '
+        f'<span>{text(words["badge_note"])}</span></p>',
+        "</div>",
+        f'<p class="use-links">{"".join(use_link(item, "../") for item in words["links"])}</p>',
+        "</section>",
+        '<div class="lib-groups">',
+        f'<nav class="lib-filter" id="categories" aria-label="{attr(words["filter_label"])}"><ul>{"".join(filters)}'
+        "</ul></nav>",
+        "\n".join(groups),
+        "</div>",
+        "</div>",
+        "</main>",
+    ])
+    return page_shell(library["title"], library["description"], main, extra_head=f"<style>{on_show}{{--on:1}}</style>")
 
 
 def render_not_found(nouns: Nouns) -> str:
@@ -1053,6 +1274,7 @@ def outputs_for(nouns: Nouns) -> dict[Path, str]:
     generated[SITE / "storyboards" / "index.html"] = render_storyboards(nouns)
     generated[SITE / "film" / "index.html"] = render_film(nouns)
     generated[SITE / "learning" / "index.html"] = render_learning(nouns)
+    generated[SITE / "library" / "index.html"] = render_library(nouns)
     generated[SITE / "404.html"] = render_not_found(nouns)
     if set(generated) & nouns.frozen:
         fail("a frozen page is never written")

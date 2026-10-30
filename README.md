@@ -2,7 +2,7 @@
 
 **Nouns, verbs, surfaces and infrastructure: the map of what ta-amps does, how its parts fit together, and what has been verified.**
 
-[Site](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/) · [Decks](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/decks/) · [Use cases](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/use-cases/) · [Learning](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/learning/) · [Connect an agent](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/decks/roll-your-own/#connect) · [Current status](docs/status.md) · [Architecture](docs/architecture.md) · [Roadmap](docs/roadmap.md)
+[Site](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/) · [Decks](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/decks/) · [Use cases](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/use-cases/) · [Learning](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/learning/) · [Library](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/library/) · [Connect an agent](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/decks/roll-your-own/#connect) · [Current status](docs/status.md) · [Architecture](docs/architecture.md) · [Roadmap](docs/roadmap.md)
 
 Agora is one of exactly two public surfaces: the single overview of architecture
 and setup, use cases, connecting any agent and contributing. The other is
@@ -19,11 +19,13 @@ in seed packs, and an agent kit is a seed pack generated for an NGO's agent.
 [always-on server workers](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/decks/server-workers/) and
 [post-training tuning and continuous learning](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/decks/continuous-learning/), each with speaker notes and a PDF.
 [Use cases](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/use-cases/) collects ideas,
-[Learning](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/learning/) shows how the system keeps learning after it ships, with measured results and limits, and every page carries an agent banner
+[Learning](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/learning/) shows how the system keeps learning after it ships, with measured results and limits,
+[Library](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/library/) lists every seed pack in the pack library by category, counted at one pinned commit, and every page carries an agent banner
 that copies the starting brief. Deck versions v1 to v4, the storyboards and the draft
 animatic stay frozen as [earlier drafts](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/decks/earlier-drafts/). Page text and
 slides are data in `site/content/`, `site/agent-brief.txt` and `site/decks/<deck>/source/`,
-which `scripts/build_site.py` renders. The static site makes no runtime, provider, queue
+which `scripts/build_site.py` renders. The library page's counts come from `scripts/sync_library.py`, run by hand on a clean
+library checkout; the build itself never fetches anything. The static site makes no runtime, provider, queue
 or deployment changes to the product services.
 
 ## Status: October 29, 2026

@@ -30,6 +30,11 @@
       "section": "learning",
       "href": "learning/",
       "label": "Learning"
+    },
+    {
+      "section": "library",
+      "href": "library/",
+      "label": "Library"
     }
   ],
   "banner": {
@@ -124,6 +129,10 @@
       {
         "href": "learning/",
         "label": "Learning"
+      },
+      {
+        "href": "library/",
+        "label": "Library"
       },
       {
         "href": "decks/earlier-drafts/",

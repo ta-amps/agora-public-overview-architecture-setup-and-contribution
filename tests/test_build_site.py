@@ -27,6 +27,14 @@ def strings(value) -> list[str]:
     return [found for item in items for found in strings(item)]
 
 
+def numbers(value) -> list[int]:
+    """Every whole number in a noun, however deeply it sits."""
+    if type(value) is int:
+        return [value]
+    items = value.values() if isinstance(value, dict) else value if isinstance(value, list) else []
+    return [found for item in items for found in numbers(item)]
+
+
 class ShownText(HTMLParser):
     def __init__(self) -> None:
         super().__init__()
@@ -152,15 +160,18 @@ class Builder(unittest.TestCase):
         nouns.site = copy.deepcopy(self.nouns.site)
         nouns.site["banner"]["lead"] = "A banner from data."
         self.assertIn("A banner from data.", build.header_block(build.SITE / "index.html", "", nouns))
-        # Every word the use cases page shows, outside the shared header and footer, is a string of its noun.
-        written = set(strings(self.nouns.uses))
+        # Every word the use cases page shows, outside the shared header and footer, is a string of its noun, or the
+        # title of a pack it names, which comes from the library noun.
+        titles = {pack["id"]: pack["title"] for pack in self.nouns.library["packs"]}
+        written = set(strings(self.nouns.uses)) | {titles[pack_id] for item in self.nouns.uses["flagships"]
+                                                    for pack_id in item["packs"]}
         for shown in shown_text(build.main_of(self.outputs[build.SITE / "use-cases" / "index.html"])):
             self.assertIn(shown, written)
 
     def test_use_cases_are_ideas_without_status_or_evidence(self):
         uses = self.nouns.uses
         self.assertLessEqual(set(uses), {"about", "title", "description", "heading", "lead", "nouns_label", "verbs_label",
-                                         "flagships", "fields"})
+                                         "packs_label", "flagships", "fields"})
         # The owner's seven flagships, in the owner's order and words; Tokens for Good leads.
         self.assertEqual(["Tokens for Good", "Motion Graphics and Video Gen", "Feed Systems to Keep Your Agent Informed",
                           "Shimming Systems", "Code Reusability", "Continuous Learning",
@@ -173,8 +184,10 @@ class Builder(unittest.TestCase):
         self.assertEqual(1, main.count('<li class="use-card use-lead">'))
         self.assertLess(main.index("use-lead"), main.index(uses["flagships"][1]["name"]))
         for item in uses["flagships"]:
-            # An idea is a name, a line or two, example nouns and verbs and where to read more: no status, badge or evidence.
-            self.assertLessEqual(set(item), {"name", "rest", "line", "detail", "nouns", "verbs", "links"}, item["name"])
+            # An idea is a name, a line or two, example nouns and verbs, the library packs that hold them and where to
+            # read more: no status, badge or evidence.
+            self.assertLessEqual(set(item), {"name", "rest", "line", "detail", "nouns", "verbs", "packs", "links"},
+                                 item["name"])
             self.assertTrue(3 <= len(item["nouns"]) <= 5 and 3 <= len(item["verbs"]) <= 5, item["name"])
             self.assertTrue(1 <= len(item["links"]) <= 2, item["name"])
             words = [item["name"], item.get("rest", ""), item["line"], item.get("detail", "")] + item["nouns"] + item["verbs"]
@@ -266,8 +279,9 @@ class Builder(unittest.TestCase):
                 self.assertIn(f'class="slide-frame" id="{anchor}"', self.outputs[build.SITE / path / "index.html"])
 
     def test_learning_is_a_tab_of_agora_built_from_its_noun(self):
-        # A page of Agora, not a new surface: the header reads Home, Decks, Use cases, Learning.
-        self.assertEqual(["Home", "Decks", "Use cases", "Learning"], [item["label"] for item in self.nouns.site["nav"]])
+        # A page of Agora, not a new surface: the header reads Home, Decks, Use cases, Learning, Library.
+        self.assertEqual(["Home", "Decks", "Use cases", "Learning", "Library"],
+                         [item["label"] for item in self.nouns.site["nav"]])
         page = self.outputs[build.SITE / "learning" / "index.html"]
         self.assertIn('<a href="../learning/" aria-current="page">Learning</a>', page)
         main = build.main_of(page)
@@ -302,6 +316,121 @@ class Builder(unittest.TestCase):
             listed = " ".join(claim["number"] for claim in about)
             for number in re.findall(r"\d+(?:\.\d+)?", item["line"]):
                 self.assertIn(number, listed, (item["model"], number))
+
+    def test_the_library_is_a_page_of_agora_built_from_its_noun(self):
+        library = self.nouns.library
+        page = self.outputs[build.SITE / "library" / "index.html"]
+        self.assertIn('<a href="../library/" aria-current="page">Library</a>', page)
+        main = build.main_of(page)
+        # Every word the page shows is a string of its noun. The rest is the measured part: numbers, the commit and
+        # its date.
+        sizes = {len(category["packs"]) for category in library["categories"]}
+        measured = {f"{n:,}" for n in set(numbers(library)) | sizes}
+        measured |= {library["source"]["commit"][:7], build.human_date(library["source"]["committed_at"]), "·"}
+        written = set(strings(library))
+        for shown in shown_text(main):
+            self.assertIn(shown, written | measured)
+        # One card per pack, inside its category's section and in its order, linking to its folder at the commit.
+        packs = {pack["id"]: pack for pack in library["packs"]}
+        self.assertEqual(len(packs), main.count('<li class="lib-card"'))
+        for category in library["categories"]:
+            section = main[main.index(f'<section class="lib-group" id="{category["id"]}"'):]
+            section = section[:section.index("</section>")]
+            self.assertEqual(len(category["packs"]), section.count('<li class="lib-card"'), category["id"])
+            places = [section.index(f'<li class="lib-card" id="{pack_id}">') for pack_id in category["packs"]]
+            self.assertEqual(sorted(places), places, category["id"])
+            for pack_id in category["packs"]:
+                self.assertIn(f'href="{html.escape(packs[pack_id]["url"])}"', section)
+                self.assertIn(f"/tree/{library['source']['commit']}/packs/{pack_id}", packs[pack_id]["url"])
+        # The totals shown are the noun's, and every code + tests badge but the legend's is a pack's that ships code.
+        for key, value in library["totals"].items():
+            self.assertIn(f'<span class="lib-stat-n">{value:,}</span>', main, key)
+        self.assertEqual(library["totals"]["with_code"] + 1, main.count('<span class="lib-badge">'))
+        # Every pack is a proposal, and the page says so at the top and on every card.
+        self.assertEqual({"proposal_only"}, {pack["status"] for pack in packs.values()})
+        self.assertIn(build.text(library["dateline"]), main)
+        self.assertEqual(len(packs), main.count(f'<span class="lib-card-kind"><span>'
+                                                f'{library["words"]["status"]["proposal_only"]}</span>'))
+        # The filter: "All", then a link per category, and the page's one style rule marks each when it is on show.
+        nav = main[main.index('<nav class="lib-filter"'):]
+        nav = nav[:nav.index("</nav>")]
+        self.assertEqual(["categories"] + [category["id"] for category in library["categories"]],
+                         re.findall(r'href="#([a-z0-9-]+)"', nav))
+        style = page[page.index("<style>"):page.index("</style>")]
+        for category in library["categories"]:
+            self.assertIn(f'.library:has(#{category["id"]}:target) .lib-filter a[href="#{category["id"]}"]', style)
+
+    def test_the_overview_deck_and_the_library_page_agree_at_the_same_commit(self):
+        # The overview deck's measured pack count and the library page are counted separately; when they name the
+        # same library commit, they must give the same numbers.
+        library = self.nouns.library
+        deck = next(deck for deck in self.nouns.decks if deck["id"] == "overview-and-architecture")
+        claim = next(claim for claim in deck["claims"]["claims"] if claim["slide"] == "seed-packs")
+        commit = re.search(r"/blob/([0-9a-f]{40})/", claim["link"]).group(1)
+        if commit == library["source"]["commit"]:
+            totals = library["totals"]
+            self.assertTrue(claim["number"].startswith(
+                f'{totals["packs"]:,} seed packs in one library, with {totals["nouns"]:,} nouns, {totals["verbs"]:,} '
+                f'verb templates and {totals["worked_examples"]:,} worked examples'), claim["number"])
+
+    def test_library_categories_follow_what_the_packs_are(self):
+        library = self.nouns.library
+        home = {pack_id: category["id"] for category in library["categories"] for pack_id in category["packs"]}
+        self.assertEqual(sorted(home), sorted(pack["id"] for pack in library["packs"]))
+        # The nine agent kits pin a kit noun in the library, and they all sit with the nonprofit packs.
+        kits = [pack["id"] for pack in library["packs"] if pack["kit"]]
+        self.assertTrue(kits)
+        for pack_id in kits:
+            self.assertEqual("nonprofit-kits", home[pack_id], pack_id)
+        # Hand-written words state no counts, which only the measured part holds.
+        for text_ in [library["lead"], library["dateline"], library["description"]] + \
+                     [category["intro"] for category in library["categories"]]:
+            self.assertIsNone(re.search(r"\b\d+\s+(?:packs?|nouns?|verbs?)\b", text_), text_)
+
+    def test_the_build_refuses_a_malformed_library_noun(self):
+        base = self.nouns.library
+        build.check_library(base)
+        first, other = base["packs"][0]["id"], base["categories"][1]["packs"][0]
+
+        def refused(change):
+            noun = copy.deepcopy(base)
+            change(noun)
+            with self.assertRaises(build.BuildError):
+                build.check_library(noun)
+
+        refused(lambda n: n["totals"].update(nouns=n["totals"]["nouns"] + 1))
+        refused(lambda n: n["packs"][0].update(verbs=n["packs"][0]["verbs"] + 1))
+        refused(lambda n: n["categories"][0]["packs"].append(other))
+        refused(lambda n: n["categories"][0]["packs"].pop())
+        refused(lambda n: n["categories"][0]["packs"].append("no-such-pack"))
+        refused(lambda n: n["packs"][0].update(url=n["packs"][0]["url"].replace(n["source"]["commit"], "main")))
+        refused(lambda n: n["packs"][0].update(status="admitted"))
+        refused(lambda n: n["packs"][0].update(purpose="A collection of nouns and verbs for everything"))
+        refused(lambda n: n["packs"][0].update(code={"files": 3, "tests": 0, "workflow": ".github/workflows/x.yml"}))
+        refused(lambda n: n["packs"][0].update(installed=True))
+        refused(lambda n: n["packs"].append(copy.deepcopy(n["packs"][0])))
+        refused(lambda n: n["source"].update(commit=n["source"]["commit"][:7]))
+        refused(lambda n: n["source"].update(committed_at="2026-10-30"))
+        refused(lambda n: n["source"].update(repository="https://github.com/someone/fork"))
+        refused(lambda n: n["categories"][0].update(id=first))
+        refused(lambda n: n["categories"][0].update(id="3d-and-video"))
+        refused(lambda n: n["categories"][0].update(id="categories"))
+
+    def test_every_use_case_names_library_packs_that_link_to_their_cards(self):
+        packs = {pack["id"]: pack for pack in self.nouns.library["packs"]}
+        main = build.main_of(self.outputs[build.SITE / "use-cases" / "index.html"])
+        library_page = self.outputs[build.SITE / "library" / "index.html"]
+        for item in self.nouns.uses["flagships"]:
+            self.assertTrue(2 <= len(item["packs"]) <= 5, item["name"])
+            for pack_id in item["packs"]:
+                self.assertIn(f'<a href="../library/#{pack_id}">{build.text(packs[pack_id]["title"])}</a>', main)
+                self.assertIn(f'<li class="lib-card" id="{pack_id}">', library_page)
+        for wrong in (["no-such-pack", "video-qa"], ["video-qa"], ["video-qa", "video-qa"], sorted(packs)[:6]):
+            nouns = copy.copy(self.nouns)
+            nouns.uses = copy.deepcopy(self.nouns.uses)
+            nouns.uses["flagships"][1]["packs"] = wrong
+            with self.assertRaises(build.BuildError):
+                build.render_use_cases(nouns)
 
     def test_every_number_in_the_learning_deck_has_a_claim_with_public_evidence(self):
         deck = next(deck for deck in self.nouns.decks if deck["id"] == "continuous-learning")

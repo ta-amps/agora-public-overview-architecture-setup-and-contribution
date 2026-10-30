@@ -1,4 +1,4 @@
-/* Design record: theme custom, inherited from the October 29 draft deck. Idea: every piece of AI work is a tile; blue tiles are nouns (reusable things), rust tiles are verbs (work), and the page lays them into a path. Paper #F5F2EA and ink #11161F with the deck's blue and rust; Space Grotesk display, IBM Plex Sans body, JetBrains Mono for commands only. Modes: light and dark from one token set. October 30: a home page that opens on the draft video, three decks and use cases, in a quieter frame: a slim header with four links, an agent banner under it on every current page, wide cards with live cover thumbnails, and generous space. Nav: wordmark, Home, Decks, Use cases, Learning and a mode switch. Footer: one row of links and the date of the snapshot. */
+/* Design record: theme custom, inherited from the October 29 draft deck. Idea: every piece of AI work is a tile; blue tiles are nouns (reusable things), rust tiles are verbs (work), and the page lays them into a path. Paper #F5F2EA and ink #11161F with the deck's blue and rust; Space Grotesk display, IBM Plex Sans body, JetBrains Mono for commands only. Modes: light and dark from one token set. October 30: a home page that opens on the draft video, three decks and use cases, in a quieter frame: a slim header with four links, an agent banner under it on every current page, wide cards with live cover thumbnails, and generous space. Nav: wordmark, Home, Decks, Use cases, Learning, Library and a mode switch; on a phone the five links share one row at 390px, with fallback fonts too. Footer: one row of links and the date of the snapshot. */
 
 :root {
   color-scheme: light dark;
@@ -279,7 +279,7 @@ kbd {
   padding-inline: var(--gutter);
 }
 
-/* Header: the wordmark, four links and the mode switch */
+/* Header: the wordmark, five links and the mode switch */
 
 .site-header {
   border-bottom: 1px solid var(--color-rule);
@@ -364,7 +364,7 @@ kbd {
 @media (max-width: 30rem) {
   .site-header .wrap { gap: 0 var(--space-4); padding-block: var(--space-1) 0; }
   .site-nav { order: 3; width: 100%; margin-inline-start: 0; }
-  .site-nav ul { gap: 0 var(--space-5); }
+  .site-nav ul { gap: 0 var(--space-4); }
   .mode-toggle { margin-inline-start: auto; }
 }
 
@@ -576,6 +576,7 @@ main { display: block; }
   font-size: var(--text-small);
   color: var(--color-muted);
   max-width: 70ch;
+  text-wrap: pretty;
 }
 
 .crumbs { font-size: var(--text-small); margin-bottom: var(--space-3); }
@@ -781,11 +782,11 @@ h3[id] { scroll-margin-top: var(--space-6); }
   gap: var(--space-5);
 }
 
-/* A flagship spans four rows of the grid and shares them with its neighbour, so the heads, the nouns, the verbs
-   and the links line up across a row and the cards in a row end level. */
+/* A flagship spans five rows of the grid and shares them with its neighbour, so the heads, the nouns, the verbs,
+   the packs and the links line up across a row and the cards in a row end level. */
 .use-card {
   display: grid;
-  grid-row: span 4;
+  grid-row: span 5;
   grid-template-rows: subgrid;
   row-gap: var(--space-5);
   min-width: 0;
@@ -811,8 +812,9 @@ h3[id] { scroll-margin-top: var(--space-6); }
 .use-line,
 .use-detail { color: var(--color-ink-2); line-height: 1.55; max-width: 62ch; text-wrap: pretty; }
 
-.use-terms { grid-row: span 2; display: grid; grid-template-rows: subgrid; row-gap: var(--space-3); }
+.use-terms { grid-row: span 3; display: grid; grid-template-rows: subgrid; row-gap: var(--space-3); }
 .use-terms dt { font-size: var(--text-micro); }
+.use-terms dt.pack-word { font-weight: 600; color: var(--color-ink); }
 .use-terms dd { margin-top: var(--space-1); }
 
 .chips { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-2); }
@@ -826,6 +828,23 @@ h3[id] { scroll-margin-top: var(--space-6); }
 
 .chips.noun li { background: var(--color-noun-wash); color: var(--color-noun-ink); }
 .chips.verb li { background: var(--color-verb-wash); color: var(--color-verb-ink); }
+
+/* A use case's packs: links to their cards on the library page, outlined so they read as links, not terms */
+.chips.pack li { padding: 0; }
+
+.chips.pack a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.75rem;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--color-rule-strong);
+  border-radius: 999px;
+  color: var(--color-ink);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.chips.pack a:hover { border-color: var(--color-ink-2); background: var(--color-paper-3); }
 
 .use-links { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-5); }
 
@@ -1364,4 +1383,228 @@ tbody th { font-weight: 600; }
   .learn-mean,
   .result { padding: var(--space-5); }
   .learn-run { padding: var(--space-6) var(--space-5); }
+}
+
+/* Library: every seed pack at one pinned commit, under the totals measured there, grouped by category. A category
+   link shows only that category through :target, so the filter needs no script. The category on show spans the
+   filter's grid row as well as its own, so the browser scrolls to the filter and the filter stays above it; its
+   content sits in the second row. The page's one style rule sets --on for the link of the category on show, and
+   "All" is on while no category is. */
+
+.library { display: grid; gap: var(--space-7); padding-bottom: var(--space-9); }
+
+.lib-summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-5);
+  padding: var(--space-6);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-3);
+  background: var(--color-paper-2);
+}
+
+.lib-stats {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+
+.lib-stat {
+  display: grid;
+  gap: var(--space-2);
+  align-content: start;
+  min-width: 0;
+  padding-inline-start: var(--space-4);
+  border-inline-start: 3px solid var(--color-rule-strong);
+}
+
+.lib-stat.noun { border-inline-start-color: var(--color-noun); }
+.lib-stat.verb { border-inline-start-color: var(--color-verb); }
+
+.lib-stat-n {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 1.5rem + 1.3vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink);
+}
+
+.lib-stat.noun .lib-stat-n { color: var(--color-noun-ink); }
+.lib-stat.verb .lib-stat-n { color: var(--color-verb-ink); }
+.lib-stat-label { font-size: var(--text-small); line-height: 1.35; color: var(--color-ink-2); text-wrap: balance; }
+
+.lib-about { display: grid; gap: var(--space-2); padding-top: var(--space-5); border-top: 1px solid var(--color-rule); }
+.lib-source { font-size: var(--text-small); color: var(--color-ink-2); max-width: 78ch; }
+.lib-source a { font-weight: 600; }
+.lib-source code { font-size: 0.9em; }
+.lib-legend { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); font-size: var(--text-small); color: var(--color-ink-2); }
+
+/* The category filter: pills that read as links; the one on show is filled */
+
+.lib-filter { position: relative; z-index: 1; grid-row: 1; grid-column: 1; scroll-margin-top: var(--space-6); }
+.lib-filter ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2); }
+
+.lib-filter a {
+  --on: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 40px;
+  padding: 0 var(--space-3);
+  border: 1px solid color-mix(in srgb, var(--color-button) calc(var(--on) * 100%), var(--color-rule-strong));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-button) calc(var(--on) * 100%), var(--color-paper-2));
+  color: color-mix(in srgb, var(--color-button-ink) calc(var(--on) * 100%), var(--color-ink));
+  font-size: var(--text-small);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.lib-filter a:hover { border-color: var(--color-ink-2); }
+
+.lib-filter-n {
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: color-mix(in srgb, var(--color-button-ink) calc(var(--on) * 100%), var(--color-muted));
+}
+
+.library:not(:has(.lib-group:target)) .lib-filter a[href="#categories"] { --on: 1; }
+
+/* Categories and their cards */
+
+.lib-groups { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-8); }
+.library:has(.lib-group:target) .lib-group:not(:target) { display: none; }
+.lib-group:target { grid-row: 1 / span 2; grid-column: 1; display: grid; grid-template-rows: subgrid; }
+.lib-group:target > .lib-group-body { grid-row: 2; }
+
+.lib-group-body { display: grid; gap: var(--space-5); }
+.lib-group-head { display: grid; gap: var(--space-3); max-width: 52rem; }
+
+.lib-group-head h2 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-3);
+  font-size: clamp(1.5rem, 1.15rem + 1.2vw, 2.25rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+
+.lib-group-count {
+  font-family: var(--font-body);
+  font-size: var(--text-small);
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--color-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.lib-group-intro { color: var(--color-ink-2); line-height: 1.55; max-width: 70ch; text-wrap: pretty; }
+.lib-show-all { display: none; justify-self: start; font-size: var(--text-small); font-weight: 600; }
+.lib-group:target .lib-show-all { display: inline-flex; }
+
+.lib-cards {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+  gap: var(--space-4);
+}
+
+.lib-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+  padding: var(--space-4) var(--space-5) var(--space-5);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-2);
+  background: var(--color-paper-2);
+  scroll-margin-top: var(--space-6);
+  transition: border-color 160ms ease-out, box-shadow 160ms ease-out;
+}
+
+.lib-card:hover { border-color: var(--color-rule-strong); box-shadow: var(--shadow-lift); }
+.lib-card:has(.lib-card-link:focus-visible) { outline: 3px solid var(--color-focus); outline-offset: 3px; }
+.lib-card:target { border-color: var(--color-verb); box-shadow: 0 0 0 3px var(--color-verb-wash); }
+
+.lib-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  min-height: 1.625rem;
+}
+
+.lib-card-kind {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-2);
+  font-size: var(--text-micro);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.lib-card-kind span + span::before { content: "·"; margin-inline-end: var(--space-2); }
+
+.lib-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0.0625rem var(--space-2);
+  border: 1px solid var(--color-rule-strong);
+  border-radius: 999px;
+  background: var(--color-paper-3);
+  color: var(--color-ink);
+  font-size: var(--text-micro);
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.lib-badge svg { flex: none; }
+.lib-card-title { font-size: 1.1875rem; line-height: 1.25; }
+.lib-card-link { color: var(--color-ink); text-decoration: none; }
+.lib-card-link::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+.lib-card-link:focus-visible { outline: none; }
+.lib-card-purpose { font-size: var(--text-small); line-height: 1.5; color: var(--color-ink-2); text-wrap: pretty; }
+
+.lib-card-foot {
+  margin-top: auto;
+  padding-top: var(--space-2);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  font-size: var(--text-micro);
+}
+
+.lib-card-counts { display: inline-flex; flex-wrap: wrap; gap: var(--space-1) var(--space-3); font-variant-numeric: tabular-nums; }
+.lib-card-cta { display: inline-flex; align-items: center; gap: var(--space-1); font-weight: 600; color: var(--color-noun-ink); }
+.lib-card-cta .chevron { transform: rotate(-90deg); }
+
+@media (max-width: 64rem) {
+  .lib-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 40rem) {
+  .library { gap: var(--space-6); }
+  .lib-summary { padding: var(--space-5); }
+  .lib-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
+  .lib-groups { gap: var(--space-7); }
+  .lib-card { padding: var(--space-4); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lib-card { transition: none; }
 }

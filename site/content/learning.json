@@ -157,15 +157,15 @@
   "run": {
     "heading": "Run it yourself",
     "text": "Tessera’s continuous-tuning guide has the loop, its commands and its tests. Without a GPU, a stand-in backend runs every verb, receipt and decision on a CPU, so you can check the plumbing first.",
-    "pack": "A seed pack for continuous tuning is being written for the library now. Finished packs are in its packs folder.",
+    "pack": "The library’s continuous tuning pack holds the same loop as nouns and verbs, with its own tested code. Like every pack in the library, it is a proposal.",
     "links": [
       {
         "href": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md",
         "label": "The continuous-tuning guide"
       },
       {
-        "href": "https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs/tree/main/packs",
-        "label": "The seed-pack library’s packs"
+        "href": "library/#continuous-tuning",
+        "label": "The continuous tuning pack"
       },
       {
         "href": "decks/continuous-learning/",
