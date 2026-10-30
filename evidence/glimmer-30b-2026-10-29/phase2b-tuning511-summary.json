@@ -1,0 +1,254 @@
+{
+ "kernel": "taylorsamarel/glimmer-t4-tuning511",
+ "version": "1",
+ "phase": "phase2b-tuning511",
+ "finished": true,
+ "elapsed_s": 8789.5,
+ "stage_status": {
+  "environment": "ok",
+  "model_files": "ok",
+  "data": "ok",
+  "load_base": "ok",
+  "precision_probe": "ok",
+  "eval_base": "ok",
+  "attach_lora": "ok",
+  "train": "ok",
+  "save_adapter": "ok",
+  "eval_adapter": "ok"
+ },
+ "stage_seconds": {
+  "environment": 21.63,
+  "model_files": 267.76,
+  "data": 8.05,
+  "load_base": 353.51,
+  "precision_probe": 9.52,
+  "eval_base": 2133.0,
+  "attach_lora": 1.62,
+  "train": 4997.55,
+  "save_adapter": 11.54,
+  "eval_adapter": 949.19
+ },
+ "errors": [],
+ "versions": {
+  "torch": "2.11.0+cu128",
+  "transformers": "5.22.0",
+  "peft": "0.21.2",
+  "accelerate": "1.15.0",
+  "bitsandbytes": "0.50.2",
+  "safetensors": "0.8.0",
+  "huggingface_hub": "1.33.0",
+  "hf_xet": "1.6.0",
+  "tokenizers": "0.23.1"
+ },
+ "docker_image": "gcr.io/kaggle-gpu-images/python@sha256:9a6bcfda6d03b2cd9aa347ee8c1bae62043328ed0f4afe9bda014e4f8bbf9435",
+ "model_source": "huggingface.co (anonymous, pinned revision)",
+ "download_seconds": 264.6,
+ "hashes": {
+  "model-00002-of-00002.safetensors": {
+   "sha256": "b58cc2144ba1ba1af4420f67f4ca3ced7f09298510b80464cc75018a0be14381",
+   "matches_official": true,
+   "finished_after_s": 387.1,
+   "returncode": 0
+  },
+  "tokenizer.json": {
+   "sha256": "c9dbee66967b58f31a7c27f723c3760da3526ccd0427578e8905b0abb0031c4d",
+   "matches_official": true,
+   "finished_after_s": 387.1,
+   "returncode": 0
+  },
+  "model-00001-of-00002.safetensors": {
+   "sha256": "8eef61530e1283642c77ce2e6721feb5c6f348fa055c00e90f2844a136372694",
+   "matches_official": true,
+   "finished_after_s": 8493.4,
+   "returncode": 0
+  }
+ },
+ "load_seconds": 353.0,
+ "mem_after_drop_mib": {
+  "0": 8281,
+  "1": 9235
+ },
+ "fp16_max_layer_maxabs": 1629.0,
+ "precision_mode": "fp16",
+ "base_probe_loss": 0.53263,
+ "trainable_params": 95846400,
+ "lora_modules": 364,
+ "train": {
+  "steps_done": 64,
+  "skipped_steps": 0,
+  "nonfinite_losses": 0,
+  "train_seconds": 4997.5,
+  "step_seconds_mean_excl_first": 75.04,
+  "tokens_per_s": 69.7,
+  "first_loss": 0.73139,
+  "last_loss": 0.00011,
+  "dev_curve": [
+   {
+    "step": 16,
+    "dev_loss": 0.03153
+   },
+   {
+    "step": 32,
+    "dev_loss": 0.05051
+   },
+   {
+    "step": 48,
+    "dev_loss": 0.00809
+   },
+   {
+    "step": 64,
+    "dev_loss": 0.00448
+   }
+  ],
+  "peak": {
+   "0": {
+    "alloc_mib": 10277,
+    "reserved_mib": 11396
+   },
+   "1": {
+    "alloc_mib": 11357,
+    "reserved_mib": 12672
+   }
+  },
+  "smi_peak_mib": {
+   "0": 11539,
+   "1": 12813
+  }
+ },
+ "tuned_probe_loss": 1e-05,
+ "adapter_effect_max_abs": 22.2421875,
+ "disabled_equals_base_max_abs": 0.0,
+ "adapter_files": {
+  "README.md": {
+   "bytes": 5184,
+   "sha256": "521301cd45e3f0ab9cf78a65f2d46f94ea94f075e5b5d3f209641641a3ff9e9c"
+  },
+  "adapter_config.json": {
+   "bytes": 1159,
+   "sha256": "4b16e9001ea8a0193731ecdf5b46027bef09a4c034502b04f2de6736da77b854"
+  },
+  "adapter_model.safetensors": {
+   "bytes": 383494648,
+   "sha256": "0cfeb8d0d76beb8c1a053a349291b42aefb613859e1d5b0debce17efd26d2b5a"
+  }
+ },
+ "eval": {
+  "base": {
+   "n": 150,
+   "n_calls": 120,
+   "n_refusals": 30,
+   "exact_match_strict": 0.873333,
+   "exact_match_lenient": 0.873333,
+   "json_valid_rate": 0.966667,
+   "shape_valid_rate": 0.966667,
+   "schema_valid_rate": 0.966667,
+   "type_correct_rate": 0.966667,
+   "stringified_rate": 0.0,
+   "refusal_accuracy": 0.906667,
+   "refusal_recall": 0.533333,
+   "false_refusal_rate": 0.0,
+   "exact_by_family": {
+    "buckets": 0.893617,
+    "feeds": 0.956522,
+    "unsupported": 0.3
+   },
+   "failure_counts": {
+    "invalid_json": 5,
+    "missed_refusal": 6,
+    "wrong_refusal_reason": 6,
+    "wrong_tool": 1,
+    "wrong_value": 1
+   },
+   "reply_channels": {
+    "user": 147,
+    "tool": 2,
+    "self": 1
+   },
+   "hit_cap": 3
+  },
+  "base-sanity": {
+   "n": 40,
+   "accuracy": 1.0,
+   "tool_json_rate": 0.0,
+   "by_kind": {
+    "add": 1.0,
+    "count_items": 1.0,
+    "larger": 1.0,
+    "multiply": 1.0,
+    "next_letter": 1.0,
+    "repeat": 1.0,
+    "subtract": 1.0,
+    "upper": 1.0
+   },
+   "hit_cap": 0
+  },
+  "adapter": {
+   "n": 150,
+   "n_calls": 120,
+   "n_refusals": 30,
+   "exact_match_strict": 0.986667,
+   "exact_match_lenient": 0.986667,
+   "json_valid_rate": 1.0,
+   "shape_valid_rate": 1.0,
+   "schema_valid_rate": 0.983333,
+   "type_correct_rate": 0.983333,
+   "stringified_rate": 0.0,
+   "refusal_accuracy": 0.986667,
+   "refusal_recall": 1.0,
+   "false_refusal_rate": 0.016667,
+   "exact_by_family": {
+    "buckets": 0.989362,
+    "feeds": 0.978261,
+    "unsupported": 1.0
+   },
+   "failure_counts": {
+    "false_refusal": 2
+   },
+   "reply_channels": {
+    "user": 150
+   },
+   "hit_cap": 0
+  },
+  "adapter-sanity": {
+   "n": 40,
+   "accuracy": 1.0,
+   "tool_json_rate": 0.0,
+   "by_kind": {
+    "add": 1.0,
+    "count_items": 1.0,
+    "larger": 1.0,
+    "multiply": 1.0,
+    "next_letter": 1.0,
+    "repeat": 1.0,
+    "subtract": 1.0,
+    "upper": 1.0
+   },
+   "hit_cap": 0
+  }
+ },
+ "eval_speed": {
+  "base": null,
+  "adapter": null
+ },
+ "batch_consistency": null,
+ "reload": {
+  "passed": null,
+  "reloaded_vs_tuned_max_abs": null,
+  "reloaded_vs_tuned_argmax_agree": null,
+  "fresh_base_vs_first_base_max_abs": null,
+  "load_seconds": null
+ },
+ "smi_peak_mib": {
+  "0": 13239,
+  "1": 13935
+ },
+ "disk_end": {
+  "/kaggle/working": {
+   "free_gb": 20.6
+  },
+  "/tmp": {
+   "free_gb": 1066.2
+  },
+  "du": "367M\t/kaggle/working\n27M\t/tmp/glimmer-run\n56G\t/tmp/hf-glimmer"
+ }
+}

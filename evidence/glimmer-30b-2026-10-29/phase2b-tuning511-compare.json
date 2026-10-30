@@ -1,0 +1,114 @@
+{
+ "run_phase": "phase2b-tuning511",
+ "rule_id": "tool-call-specialist.promotion",
+ "rule_version": 1,
+ "note": "Analysis with the tuning-loop's pre-registered thresholds; nothing is promoted or admitted.",
+ "test_paired_bootstrap_exact_strict": {
+  "delta": 0.113333,
+  "lower": 0.053333,
+  "upper": 0.18,
+  "improved_rows": 19,
+  "regressed_rows": 2,
+  "rows": 150
+ },
+ "min_delta": 0.03,
+ "primary_passes": true,
+ "no_regression_guards": [
+  {
+   "name": "test JSON validity does not drop more than 0.02",
+   "base": 0.966667,
+   "adapter": 1.0,
+   "drop": -0.033333,
+   "status": "ok"
+  },
+  {
+   "name": "test schema validity does not drop more than 0.02",
+   "base": 0.966667,
+   "adapter": 0.983333,
+   "drop": -0.016666,
+   "status": "ok"
+  },
+  {
+   "name": "test refusal accuracy does not drop more than 0.03",
+   "base": 0.906667,
+   "adapter": 0.986667,
+   "drop": -0.08,
+   "status": "ok"
+  },
+  {
+   "name": "sanity accuracy does not drop more than 0.05 against the champion",
+   "base": 1.0,
+   "adapter": 1.0,
+   "drop": 0.0,
+   "status": "ok"
+  },
+  {
+   "name": "sanity accuracy stays within 0.10 of the unchanged base",
+   "base": 1.0,
+   "adapter": 1.0,
+   "drop": 0.0,
+   "status": "ok"
+  },
+  {
+   "name": "fresh holdout exact match does not drop below the champion",
+   "status": "not_measured"
+  }
+ ],
+ "integrity": {
+  "adapter_reload_equivalent": null,
+  "frozen_base_unchanged": 0.0,
+  "test_sha256": "9b57ce366cb60767d952734c5b2dde92177440fcf0ff4ed15708dbb220194242"
+ },
+ "metrics": {
+  "base": {
+   "n": 150,
+   "exact_match_strict": 0.873333,
+   "exact_match_lenient": 0.873333,
+   "json_valid_rate": 0.966667,
+   "schema_valid_rate": 0.966667,
+   "type_correct_rate": 0.966667,
+   "refusal_accuracy": 0.906667,
+   "reply_channels": {
+    "user": 147,
+    "tool": 2,
+    "self": 1
+   },
+   "hit_cap": 3,
+   "failure_counts": {
+    "invalid_json": 5,
+    "missed_refusal": 6,
+    "wrong_refusal_reason": 6,
+    "wrong_tool": 1,
+    "wrong_value": 1
+   }
+  },
+  "base-sanity": {
+   "n": 40,
+   "accuracy": 1.0,
+   "tool_json_rate": 0.0,
+   "hit_cap": 0
+  },
+  "adapter": {
+   "n": 150,
+   "exact_match_strict": 0.986667,
+   "exact_match_lenient": 0.986667,
+   "json_valid_rate": 1.0,
+   "schema_valid_rate": 0.983333,
+   "type_correct_rate": 0.983333,
+   "refusal_accuracy": 0.986667,
+   "reply_channels": {
+    "user": 150
+   },
+   "hit_cap": 0,
+   "failure_counts": {
+    "false_refusal": 2
+   }
+  },
+  "adapter-sanity": {
+   "n": 40,
+   "accuracy": 1.0,
+   "tool_json_rate": 0.0,
+   "hit_cap": 0
+  }
+ }
+}

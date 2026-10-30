@@ -4,7 +4,7 @@
   "claims": [
     {
       "slide": "seed-packs",
-      "number": "Twenty seed packs in one library",
+      "number": "31 seed packs in one library, with 556 nouns and 182 verb templates",
       "status": "measured",
       "source": "A count of the packs in the seed-pack library on October 30, 2026. They are proposals and validated examples: none is installed, imported, admitted or activated.",
       "link": "https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs#seed-pack-library"
@@ -27,7 +27,8 @@
       "slide": "learning",
       "number": "Muse Glimmer 30B: exact match 93.3% to 99.3%, +6.0 points, 95% CI +2.0 to +10.7; promotion rule 12 of 12",
       "status": "measured",
-      "source": "QLoRA on free cloud GPUs for the same kind of synthetic task, scored on a fresh 150-row test whose hashes were registered before scoring. A fresh reload reproduced its outputs. The rule said promote; nothing has been promoted or admitted. The run record is not published yet."
+      "source": "QLoRA on free cloud GPUs for the same kind of synthetic task, scored on a fresh 150-row test whose hashes were registered before scoring. A fresh reload reproduced its outputs. The rule said promote; nothing has been promoted or admitted. The run record, with every file's hash, is published with this deck's evidence.",
+      "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/glimmer-30b-2026-10-29/README.md"
     },
     {
       "slide": "evidence",

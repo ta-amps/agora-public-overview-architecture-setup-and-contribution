@@ -21,6 +21,11 @@
       "path": "video/2026-10-29/animatic-60s-v1/eranos-animatic-60s-poster.png",
       "sha256": "368124ec290352d43732d767c76fd510350bb90b62fa00db22858f60f10d3871",
       "bytes": 174963
+    },
+    {
+      "path": "video/2026-10-30/spare-tokens-for-good-poster.png",
+      "sha256": "f7d93a785ae48fcc18715babe3698b73c8f3d4e37ab9c0a82f232072d1635737",
+      "bytes": 59067
     }
   ]
 }

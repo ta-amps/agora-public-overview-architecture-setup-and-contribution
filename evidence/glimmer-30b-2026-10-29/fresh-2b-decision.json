@@ -1,0 +1,239 @@
+{
+ "rule_id": "tool-call-specialist.promotion",
+ "rule_version": 1,
+ "rule_sha256": "bf0fa821717c2400faab77652f067ea85f2616eea329c6e139af33a423e4b3b7",
+ "note": "Analysis with the loop's pre-registered rule. Nothing is promoted, admitted or registered.",
+ "fresh_pairs": 150,
+ "fresh_complete": true,
+ "fresh_paired_bootstrap": {
+  "delta": 0.06,
+  "lower": 0.02,
+  "upper": 0.106667,
+  "improved_rows": 10,
+  "regressed_rows": 1
+ },
+ "fresh_primary": {
+  "delta_ok": true,
+  "lower_bound_ok": true
+ },
+ "fresh_metrics": {
+  "base": {
+   "n": 150,
+   "n_calls": 124,
+   "n_refusals": 26,
+   "exact_match_strict": 0.933333,
+   "exact_match_lenient": 0.933333,
+   "json_valid_rate": 0.966667,
+   "shape_valid_rate": 0.966667,
+   "schema_valid_rate": 0.967742,
+   "type_correct_rate": 0.967742,
+   "stringified_rate": 0.0,
+   "refusal_accuracy": 0.973333,
+   "refusal_recall": 0.846154,
+   "false_refusal_rate": 0.0,
+   "exact_by_family": {
+    "buckets": 0.91,
+    "feeds": 1.0,
+    "unsupported": 0.8
+   },
+   "failure_counts": {
+    "invalid_json": 5,
+    "missed_refusal": 1,
+    "wrong_tool": 2,
+    "wrong_value": 2
+   }
+  },
+  "adapter": {
+   "n": 150,
+   "n_calls": 124,
+   "n_refusals": 26,
+   "exact_match_strict": 0.993333,
+   "exact_match_lenient": 0.993333,
+   "json_valid_rate": 1.0,
+   "shape_valid_rate": 1.0,
+   "schema_valid_rate": 0.991935,
+   "type_correct_rate": 0.991935,
+   "stringified_rate": 0.0,
+   "refusal_accuracy": 0.993333,
+   "refusal_recall": 1.0,
+   "false_refusal_rate": 0.008065,
+   "exact_by_family": {
+    "buckets": 0.99,
+    "feeds": 1.0,
+    "unsupported": 1.0
+   },
+   "failure_counts": {
+    "false_refusal": 1
+   }
+  }
+ },
+ "frozen_metrics": {
+  "base": {
+   "n": 150,
+   "n_calls": 120,
+   "n_refusals": 30,
+   "exact_match_strict": 0.873333,
+   "exact_match_lenient": 0.873333,
+   "json_valid_rate": 0.966667,
+   "shape_valid_rate": 0.966667,
+   "schema_valid_rate": 0.966667,
+   "type_correct_rate": 0.966667,
+   "stringified_rate": 0.0,
+   "refusal_accuracy": 0.906667,
+   "refusal_recall": 0.533333,
+   "false_refusal_rate": 0.0,
+   "exact_by_family": {
+    "buckets": 0.893617,
+    "feeds": 0.956522,
+    "unsupported": 0.3
+   },
+   "failure_counts": {
+    "invalid_json": 5,
+    "missed_refusal": 6,
+    "wrong_refusal_reason": 6,
+    "wrong_tool": 1,
+    "wrong_value": 1
+   }
+  },
+  "adapter": {
+   "n": 150,
+   "n_calls": 120,
+   "n_refusals": 30,
+   "exact_match_strict": 0.986667,
+   "exact_match_lenient": 0.986667,
+   "json_valid_rate": 1.0,
+   "shape_valid_rate": 1.0,
+   "schema_valid_rate": 0.983333,
+   "type_correct_rate": 0.983333,
+   "stringified_rate": 0.0,
+   "refusal_accuracy": 0.986667,
+   "refusal_recall": 1.0,
+   "false_refusal_rate": 0.016667,
+   "exact_by_family": {
+    "buckets": 0.989362,
+    "feeds": 0.978261,
+    "unsupported": 1.0
+   },
+   "failure_counts": {
+    "false_refusal": 2
+   }
+  }
+ },
+ "sanity": {
+  "source": "fresh run (re-measured)",
+  "base": {
+   "accuracy": 1.0,
+   "tool_json_rate": 0.0
+  },
+  "adapter": {
+   "accuracy": 1.0,
+   "tool_json_rate": 0.0
+  }
+ },
+ "integrity": {
+  "no_contamination": true,
+  "frozen_base_unchanged": true,
+  "adapter_reload_equivalent": true,
+  "holdout_digests_match": true
+ },
+ "reload_check": {
+  "reloaded_vs_base_max_abs": 22.2421875,
+  "recorded_2b_effect_max_abs": 22.2421875,
+  "effect_abs_diff": 0.0,
+  "disabled_vs_base_max_abs": 0.0,
+  "regen_rows": 8,
+  "regen_match": 8,
+  "reloaded_probe_loss": 1e-05,
+  "passed": true
+ },
+ "loop_decide": {
+  "rule_id": "tool-call-specialist.promotion",
+  "rule_sha256": "bf0fa821717c2400faab77652f067ea85f2616eea329c6e139af33a423e4b3b7",
+  "outcome": "promote_candidate",
+  "paired_test": {
+   "delta": 0.113333,
+   "lower": 0.053333,
+   "upper": 0.18,
+   "improved_rows": 19,
+   "regressed_rows": 2
+  },
+  "checks": [
+   {
+    "check": "test exact_match_strict improves by at least 0.03",
+    "passed": true,
+    "observed": 0.113333
+   },
+   {
+    "check": "paired bootstrap lower bound above zero",
+    "passed": true,
+    "observed": 0.053333
+   },
+   {
+    "check": "test JSON validity does not drop more than 0.02",
+    "passed": true,
+    "observed": [
+     0.966667,
+     1.0
+    ]
+   },
+   {
+    "check": "test schema validity does not drop more than 0.02",
+    "passed": true,
+    "observed": [
+     0.966667,
+     0.983333
+    ]
+   },
+   {
+    "check": "test refusal accuracy does not drop more than 0.03",
+    "passed": true,
+    "observed": [
+     0.906667,
+     0.986667
+    ]
+   },
+   {
+    "check": "sanity accuracy does not drop more than 0.05 against the champion",
+    "passed": true,
+    "observed": [
+     1.0,
+     1.0
+    ]
+   },
+   {
+    "check": "sanity accuracy stays within 0.10 of the unchanged base",
+    "passed": true,
+    "observed": [
+     1.0,
+     1.0
+    ]
+   },
+   {
+    "check": "fresh holdout exact match does not drop below the champion",
+    "passed": true,
+    "observed": [
+     0.933333,
+     0.993333
+    ]
+   },
+   {
+    "check": "integrity: no_contamination",
+    "passed": true
+   },
+   {
+    "check": "integrity: frozen_base_unchanged",
+    "passed": true
+   },
+   {
+    "check": "integrity: adapter_reload_equivalent",
+    "passed": true
+   },
+   {
+    "check": "integrity: holdout_digests_match",
+    "passed": true
+   }
+  ],
+  "effects": "Moves only the private local champion pointer that the next round compares against. No deployment, publication, admission or serving change."
+ },
+ "would_promote": true
+}

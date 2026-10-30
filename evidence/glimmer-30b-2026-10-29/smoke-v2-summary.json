@@ -1,0 +1,155 @@
+{
+ "kernel": "taylorsamarel/glimmer-t4-smoke",
+ "version": "2",
+ "phase": "phase1-smoke",
+ "finished": true,
+ "elapsed_s": 1043.7,
+ "stage_status": {
+  "environment": "ok",
+  "model_files": "ok",
+  "data": "ok",
+  "load_base": "ok",
+  "precision_probe": "ok",
+  "eval_base": "failed",
+  "attach_lora": "ok",
+  "train": "ok",
+  "save_adapter": "ok",
+  "eval_adapter": "failed",
+  "reload_check": "ok"
+ },
+ "stage_seconds": {
+  "environment": 20.76,
+  "model_files": 270.68,
+  "data": 4.94,
+  "load_base": 357.61,
+  "precision_probe": 10.94,
+  "eval_base": 44.1,
+  "attach_lora": 0.7,
+  "train": 42.15,
+  "save_adapter": 11.33,
+  "eval_adapter": 28.56,
+  "reload_check": 223.55
+ },
+ "errors": [
+  {
+   "stage": "eval_base",
+   "error": "AttributeError: module 'glimmer_common' has no attribute 'row_format'"
+  },
+  {
+   "stage": "eval_adapter",
+   "error": "AttributeError: module 'glimmer_common' has no attribute 'row_format'"
+  }
+ ],
+ "versions": {
+  "torch": "2.11.0+cu128",
+  "transformers": "5.22.0",
+  "peft": "0.21.2",
+  "accelerate": "1.15.0",
+  "bitsandbytes": "0.50.2",
+  "safetensors": "0.8.0",
+  "huggingface_hub": "1.33.0",
+  "hf_xet": "1.6.0",
+  "tokenizers": "0.23.1"
+ },
+ "docker_image": "gcr.io/kaggle-gpu-images/python@sha256:9a6bcfda6d03b2cd9aa347ee8c1bae62043328ed0f4afe9bda014e4f8bbf9435",
+ "model_source": "huggingface.co (anonymous, pinned revision)",
+ "download_seconds": 260.0,
+ "hashes": {
+  "model-00002-of-00002.safetensors": {
+   "sha256": "b58cc2144ba1ba1af4420f67f4ca3ced7f09298510b80464cc75018a0be14381",
+   "matches_official": true,
+   "finished_after_s": 383.7,
+   "returncode": 0
+  },
+  "tokenizer.json": {
+   "sha256": "c9dbee66967b58f31a7c27f723c3760da3526ccd0427578e8905b0abb0031c4d",
+   "matches_official": true,
+   "finished_after_s": 383.7,
+   "returncode": 0
+  },
+  "model-00001-of-00002.safetensors": {
+   "sha256": "8eef61530e1283642c77ce2e6721feb5c6f348fa055c00e90f2844a136372694",
+   "matches_official": true,
+   "finished_after_s": 755.5,
+   "returncode": 0
+  }
+ },
+ "load_seconds": 357.2,
+ "mem_after_drop_mib": {
+  "0": 8281,
+  "1": 9235
+ },
+ "fp16_max_layer_maxabs": 1629.0,
+ "precision_mode": "fp16",
+ "base_probe_loss": 0.30359,
+ "trainable_params": 29392896,
+ "lora_modules": 208,
+ "train": {
+  "steps_done": 4,
+  "skipped_steps": 0,
+  "nonfinite_losses": 0,
+  "train_seconds": 42.1,
+  "step_seconds_mean_excl_first": 10.31,
+  "tokens_per_s": 78.2,
+  "first_loss": 0.20807,
+  "last_loss": 3e-05,
+  "dev_curve": [],
+  "peak": {
+   "0": {
+    "alloc_mib": 9534,
+    "reserved_mib": 9886
+   },
+   "1": {
+    "alloc_mib": 10513,
+    "reserved_mib": 10954
+   }
+  },
+  "smi_peak_mib": {
+   "0": 10029,
+   "1": 11095
+  }
+ },
+ "tuned_probe_loss": 0.00081,
+ "adapter_effect_max_abs": 18.091796875,
+ "disabled_equals_base_max_abs": 0.0,
+ "adapter_files": {
+  "README.md": {
+   "bytes": 5184,
+   "sha256": "521301cd45e3f0ab9cf78a65f2d46f94ea94f075e5b5d3f209641641a3ff9e9c"
+  },
+  "adapter_config.json": {
+   "bytes": 1131,
+   "sha256": "b0ed046b2e149acaee109c040bebe1423563e56af270bfca44db6a2142300656"
+  },
+  "adapter_model.safetensors": {
+   "bytes": 117633880,
+   "sha256": "0c2cdaf092f6879954810e528535af9bb2b168de99dbc2e007b1f13ce5fb9d62"
+  }
+ },
+ "eval": null,
+ "eval_speed": {
+  "base": null,
+  "adapter": null
+ },
+ "batch_consistency": null,
+ "reload": {
+  "passed": true,
+  "reloaded_vs_tuned_max_abs": 0.0,
+  "reloaded_vs_tuned_argmax_agree": 1.0,
+  "fresh_base_vs_first_base_max_abs": 0.0,
+  "load_seconds": 214.8
+ },
+ "smi_peak_mib": {
+  "0": 10029,
+  "1": 11095
+ },
+ "disk_end": {
+  "/kaggle/working": {
+   "free_gb": 20.8
+  },
+  "/tmp": {
+   "free_gb": 1066.1
+  },
+  "du": "113M\t/kaggle/working\n54M\t/tmp/glimmer-run\n56G\t/tmp/hf-glimmer"
+ }
+}

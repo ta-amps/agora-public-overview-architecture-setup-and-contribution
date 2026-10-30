@@ -1,0 +1,83 @@
+{
+ "alt_snapshot_check": {
+  "identical": true,
+  "sha256": "308f68977a9d47006880678e442582527958610996ff1806070cee1df66860a1",
+  "snapshot": "<local snapshot path, removed for publication>"
+ },
+ "batch_seed": "test-fresh-glimmer-kaggle-r1",
+ "contamination_vs_511_training_rows": {
+  "exact": 0,
+  "held_out_family_rows": 0,
+  "request": 0,
+  "shape": 0
+ },
+ "converted_sha256": "03e5a0187ac196f648d44ea673455cd0ae27addd5eb4b7ab49b4c906d07e2870",
+ "count": 150,
+ "families": [
+  "buckets",
+  "feeds"
+ ],
+ "fingerprint_overlap_vs_old_holdouts": {
+  "dev": {
+   "exact": 0,
+   "request": 0,
+   "shape": 0
+  },
+  "sanity": {
+   "exact": 0,
+   "request": 0,
+   "shape": 0
+  },
+  "test": {
+   "exact": 0,
+   "request": 0,
+   "shape": 54
+  }
+ },
+ "format": "glimmer-kaggle.fresh-holdout.v1",
+ "generation": {
+  "dropped_duplicate_request": 5,
+  "dropped_prior_request_overlap": 63,
+  "pool": 450
+ },
+ "generator_snapshot": "data/tuning-d3961c8/tuning_src",
+ "kinds": {
+  "call": 124,
+  "refusal": 26
+ },
+ "loop_manifest": {
+  "format": "tessera.continuous-tuning.dataset.v1",
+  "generator_version": 1,
+  "instruction_sha256": "221266e0d79756add08d8af5e08ec77a55a4357579de8a4b81daf9f135c52a09",
+  "parts": {
+   "fresh": {
+    "families": [
+     "buckets",
+     "feeds"
+    ],
+    "fingerprints_sha256": "205511d6f8230f19af6564f0b3ad0bef015ba1ae754db404ffa69b35fab02759",
+    "ids_sha256": "611eea6d8093ede240c81d7d96e03884d11b8b8c477a52d6fdef9169ddc4ce1e",
+    "jsonl_sha256": "308f68977a9d47006880678e442582527958610996ff1806070cee1df66860a1",
+    "origins": [
+     "fresh_holdout"
+    ],
+    "refusals": 26,
+    "rows": 150,
+    "templates": 21
+   }
+  },
+  "provenance": {
+   "external_sources": [],
+   "license": "MIT",
+   "model_generated_training_data": false,
+   "origin": "repository-authored deterministic templates and computed labels"
+  },
+  "role": "fresh_holdout",
+  "split_policy": "Whole tool families and their templates and frames belong to one split; dev selects, the frozen test decides promotion, training never sees either."
+ },
+ "note": "Prior rows are the regenerated frozen dev/test/sanity. The loop's own stored fresh holdouts were not read, so overlap with them is unchecked; none were used to train the evaluated adapter.",
+ "origin": "fresh_holdout",
+ "procedure": "loop generate_examples(kind=fresh) + curate_dataset(mode=freeze_fresh), reproduced",
+ "raw_sha256": "308f68977a9d47006880678e442582527958610996ff1806070cee1df66860a1",
+ "split": "test"
+}
