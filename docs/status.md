@@ -1,5 +1,7 @@
 # Current status
 
+> Note, October 29, 2026, evening: this dated snapshot predates the current model, in which Eranos and Agora are the only public surfaces, Tessera and Herma are infrastructure, Home is not a surface, and everything else is nouns and verbs in seed packs; rows for the three older pack repositories now use plain descriptions, and their URLs stay as provenance until those repositories are renamed or archived into the [pack library](https://github.com/ta-amps/pack-contributions).
+
 Snapshot reconciled **2026-10-29T19:59:57.770230+00:00**. Exact main and CI were read at
 **2026-10-29T19:43:24.521020+00:00**. Other evidence retains its own date and scope.
 
@@ -16,7 +18,8 @@ At the dated GitHub observation above, **50 product/support PRs were merged**
 across eight repositories, with **zero open PRs** and successful CI at every
 exact main revision below. Concurrent work may change this after the observation.
 This adds sixteen PRs to the earlier 34: Tessera 9–13, Herma 8–11, Eranos 5,
-Kothar 4–5, Kinema 4 and hackathon-context 2–4. Agora is the ninth repository and provides documentation
+the older code composition repository 4–5, the older video and motion repository 4
+and hackathon-context 2–4. Agora is the ninth repository and provides documentation
 and offline validation, with no application runtime.
 
 The [current evidence](../evidence/training-and-community-2026-10-29.json) lists all 50 PR URLs and the new merge
@@ -31,11 +34,11 @@ described below. This is a dated cutoff, not continuous monitoring.
 | Repository | Main revision | CI at that revision |
 | --- | --- | --- |
 | [tessera](https://github.com/ta-amps/tessera) | [`182bcaee`](https://github.com/ta-amps/tessera/commit/182bcaeec9b0112739360f8778fe855401a16390) | [pass 40940844592](https://github.com/ta-amps/tessera/actions/runs/40940844592) |
-| [shamash](https://github.com/ta-amps/shamash) | [`b9f3b409`](https://github.com/ta-amps/shamash/commit/b9f3b409b0b9345ca0f3de3923296f11b65ebc7c) | [pass 40890070406](https://github.com/ta-amps/shamash/actions/runs/40890070406) |
+| [exploitation and scam pack, older repository](https://github.com/ta-amps/shamash) | [`b9f3b409`](https://github.com/ta-amps/shamash/commit/b9f3b409b0b9345ca0f3de3923296f11b65ebc7c) | [pass 40890070406](https://github.com/ta-amps/shamash/actions/runs/40890070406) |
 | [eranos](https://github.com/ta-amps/eranos) | [`cea0ee69`](https://github.com/ta-amps/eranos/commit/cea0ee69ef82fc307c4b4e6827c49c91579b3a31) | [pass 40936822893](https://github.com/ta-amps/eranos/actions/runs/40936822893) |
 | [herma](https://github.com/ta-amps/herma) | [`03429c1b`](https://github.com/ta-amps/herma/commit/03429c1b4c25aa649969ecd56ab0f6856dc8b34f) | [pass 40940519144](https://github.com/ta-amps/herma/actions/runs/40940519144) |
-| [kothar](https://github.com/ta-amps/kothar) | [`6bfee07f`](https://github.com/ta-amps/kothar/commit/6bfee07feb7ed3c7ba9111b0a0678bff5cbf2078) | [pass 40935132204](https://github.com/ta-amps/kothar/actions/runs/40935132204); [pass 40935119870](https://github.com/ta-amps/kothar/actions/runs/40935119870) |
-| [kinema](https://github.com/ta-amps/kinema) | [`9e31c68c`](https://github.com/ta-amps/kinema/commit/9e31c68c321b2acb1f910b9cf5d013b71b38d40d) | [pass 40917939711](https://github.com/ta-amps/kinema/actions/runs/40917939711) |
+| [code composition pack, older repository](https://github.com/ta-amps/kothar) | [`6bfee07f`](https://github.com/ta-amps/kothar/commit/6bfee07feb7ed3c7ba9111b0a0678bff5cbf2078) | [pass 40935132204](https://github.com/ta-amps/kothar/actions/runs/40935132204); [pass 40935119870](https://github.com/ta-amps/kothar/actions/runs/40935119870) |
+| [video and motion pack, older repository](https://github.com/ta-amps/kinema) | [`9e31c68c`](https://github.com/ta-amps/kinema/commit/9e31c68c321b2acb1f910b9cf5d013b71b38d40d) | [pass 40917939711](https://github.com/ta-amps/kinema/actions/runs/40917939711) |
 | [hackathon-context](https://github.com/ta-amps/hackathon-context) | [`7b02420d`](https://github.com/ta-amps/hackathon-context/commit/7b02420d610ea7b174b04d0c6a5014ffd6a05e20) | [pass 40937626114](https://github.com/ta-amps/hackathon-context/actions/runs/40937626114) |
 | [pack-contributions](https://github.com/ta-amps/pack-contributions) | [`1d01d34d`](https://github.com/ta-amps/pack-contributions/commit/1d01d34d39de64b912c43365c9e4b72c5287f93d) | [pass 40899915665](https://github.com/ta-amps/pack-contributions/actions/runs/40899915665) |
 
@@ -48,16 +51,17 @@ described below. This is a dated cutoff, not continuous monitoring.
 | Herma | Scoped context, explicit provider protocols/plans, attempt evidence, operator pause and shared managed-conversation recovery; typed worker-side Jev adapter | Accounting guards merged with exact-head/main CI; new source not deployed; changed request fields lack new live qualification; legacy attribution and general shim lifecycle incomplete |
 | Execution learning | PR13 reports fingerprints, observation summaries and swappable worker learner specs | Worker observation read is not HTTP-routed; current learners use Python; advisory matching/weights have no demonstrated real-work improvement |
 | Training workers | Optional framework-independent data/contract modules and PEFT backend; actual CPU/GPU tiny random-model runs | No pretrained adaptation or demonstrated research-quality improvement |
-| Kothar / Kinema | Exported 22/8 candidate nouns and three verb seeds each; six real local deterministic executions | No general importer or public admission; test-process worker code is not a native harness |
+| Code composition and video and motion packs | Exported 22/8 candidate nouns and three verb seeds each; six real local deterministic executions | No general importer or public admission; test-process worker code is not a native harness |
 | Community packs | Six private bundles with 14 noun and 12 verb candidate shapes checked | No installation, import, enqueue, execution or admission; nine external repositories reviewed statically at different depths |
 | Research and Opportunity Lab | Pinned research authoring; eleven themes, 21 seed nouns, 22 initial alternative attempts and seven procedure nouns | No mailbox, active feed collector, recurring research scheduler or verified novelty |
 | Agent onboarding | Seven recorded copyable starting briefs; 16 historical rendered Firefox cases | Copy grants no credentials; OS clipboard and fresh onboarding against the recovered fabric remain unqualified |
-| Shamash / Eranos | Synthetic evidence and donated-worker workflows with their existing review boundaries | Synthetic coverage; Shamash T3/T4 remain human-only and Eranos requires independent review/steward release |
+| Exploitation and scam pack / Eranos | Synthetic evidence and donated-worker workflows with their existing review boundaries | Synthetic coverage; the pack's holds and referrals remain human-only and Eranos requires independent review/steward release |
 | Home / Frontier | Recorded home release configures hourly due checks for a 24-hour cycle anchored 13:00 UTC, plus manual runs | Server repair off; 10-minute manual cooldown; no completed hosted daily/manual cycle or fresh home smoke demonstrated |
 
 Follow the [mandatory architecture checkpoint](architecture-checkpoint.md):
-only nouns, verbs, surfaces and narrow infrastructure. Seed packs bundle nouns
-and verbs; projects are labels, not another primitive. Ordinary reasoning belongs
+only nouns, verbs, surfaces and narrow infrastructure. Eranos and Agora are the
+only public surfaces, Tessera and Herma are the infrastructure, and seed packs
+bundle everything else as nouns and verbs; projects are labels, not another primitive. Ordinary reasoning belongs
 to authorized workers. Documentation guards do not establish universal runtime
 migration or grant an effect, provider or spending permission.
 
@@ -73,14 +77,14 @@ or download those executables or independently retrieve deployment-created times
 The table records receipt observations. Five other versions retain historical
 parity evidence, and Herma's new source is undeployed.
 
-| Surface | Recorded version | Receipt/parity observation |
+| Worker | Recorded version | Receipt/parity observation |
 | --- | --- | --- |
 | [tessera](https://tessera.ta-amps.workers.dev) | `d9c3326a-9226-40e6-a2dd-2ec74a7ebc0e` | 2026-10-29T19:33:16.805970+00:00 |
 | [herma](https://herma.ta-amps.workers.dev) | `d711cea9-c465-44d9-aba7-410cd4ae7cb5` | 2026-10-29T15:16:21.739921+00:00 |
-| [shamash](https://shamash.ta-amps.workers.dev) | `0e56a982-81e2-419a-b8ea-c8d8b85dbb63` | 2026-10-29T15:16:22.464008+00:00 |
+| [older exploitation and scam site](https://shamash.ta-amps.workers.dev) | `0e56a982-81e2-419a-b8ea-c8d8b85dbb63` | 2026-10-29T15:16:22.464008+00:00 |
 | [eranos](https://eranos.ta-amps.workers.dev) | `6fd1e64e-aa4a-481a-8b93-ecbff463eec7` | 2026-10-29T15:16:23.702645+00:00 |
-| [kothar](https://kothar.ta-amps.workers.dev) | `a768492b-52c9-4b06-b077-d925acde8195` | 2026-10-29T15:16:24.997967+00:00 |
-| [kinema](https://kinema.ta-amps.workers.dev) | `b7b784a3-4b46-4792-a3f6-e277602c87e5` | 2026-10-29T15:16:26.061231+00:00 |
+| [older code composition site](https://kothar.ta-amps.workers.dev) | `a768492b-52c9-4b06-b077-d925acde8195` | 2026-10-29T15:16:24.997967+00:00 |
+| [older video and motion site](https://kinema.ta-amps.workers.dev) | `b7b784a3-4b46-4792-a3f6-e277602c87e5` | 2026-10-29T15:16:26.061231+00:00 |
 | [home](https://home.ta-amps.workers.dev) | `3a52ee50-34ed-4f21-b213-e78a41f4988b` | 2026-10-29T19:30:40.280249+00:00 |
 
 The Tessera tail recorded `Exceeded allowed rows written in Durable Objects free
@@ -127,11 +131,11 @@ does not extend earlier local results to those newer commits.
 | Repository | Recorded result |
 | --- | --- |
 | tessera | Concurrent PR13 reports 327 Python passed/6 skipped and 38 workerd tests. Python totals were found in the inspected log;38 is from the PR body. PR12 reports 313/6 and 34 workerd plus32/4 HTTP; earlier counts remain historical. |
-| shamash | 259 tests passed; synthetic development cases, adapter conformance (30 passed, 6 skipped), TypeScript and frontend build passed. |
+| exploitation and scam pack, older repository | 259 tests passed; synthetic development cases, adapter conformance (30 passed, 6 skipped), TypeScript and frontend build passed. |
 | eranos | 56 tests passed; example verification, adapter conformance (30 passed, 6 skipped), TypeScript and frontend build passed. |
 | herma | Accounting source passed 197 Python and 150 Worker checks plus an offline demo/index check; independent review passed 132 Python and 115 Worker checks across 36 unchanged source fingerprints. Counts overlap; exact-head and merged-main CI passed. |
-| kothar | Prior source: 42 owning tests plus a local three-task Tessera integration passed. Concurrent PR5 has independently observed green exact-head/main CI; this reviewer did not rerun its local checks. |
-| kinema | 41 owning tests passed; optional local Tessera integration separately passed, completing three deterministic worker tasks. |
+| code composition pack, older repository | Prior source: 42 owning tests plus a local three-task Tessera integration passed. Concurrent PR5 has independently observed green exact-head/main CI; this reviewer did not rerun its local checks. |
+| video and motion pack, older repository | 41 owning tests passed; optional local Tessera integration separately passed, completing three deterministic worker tasks. |
 | hackathon-context | 12 transcription and 13 script tests passed, with public scan, JSON/links and index freshness. Documentation policy is not universal runtime enforcement. |
 | pack-contributions | 10 tests, 12 JSON examples, local documentation links and public hygiene passed. |
 
@@ -224,11 +228,12 @@ execution reads. This is training plumbing and access evidence, not pretrained
 Meta adaptation, a native/network training lifecycle or useful research gains.
 Pretrained 1B/3B, Glimmer, Kaggle and paid GPU pilots remain unrun.
 
-Kothar and Kinema use existing noun and TaskSpec contracts. Their local HTTP
+The code composition and video and motion packs use existing noun and TaskSpec
+contracts. Their local HTTP
 lifecycles validate pinned inputs, actual deterministic execution, private writes,
 fenced submit/CAS and cross-principal/namespace denial. The worker implementation
-runs in the test process through FastAPI TestClient. Kinema media attribution
-digests remain synthetic examples.
+runs in the test process through FastAPI TestClient. The video and motion pack's
+media attribution digests remain synthetic examples.
 
 [Community seed ideas](community-seeds.md) came from four selected source/test
 reviews and five README reviews. Six private draft bundles contain 14 noun and

@@ -35,6 +35,10 @@ RETIRED_NAME_HASHES = {
     "4322a6b237d4d0f47990bad6edf90913cd88d2a1a6a9698a756b73e4dfd69329",
     "d488476689bd8ff0424956c989ae7508815f2821f9524dfd3ea5aea931911978",
 }
+# Owner rule, October 29: exactly two public surfaces, and Tessera and Herma are the infrastructure.
+# Everything else, agent kits included, is nouns and verbs in seed packs.
+PUBLIC_SURFACES = ["eranos", "agora"]
+INFRASTRUCTURE = ["tessera", "herma"]
 
 
 def require(condition: bool, message: str) -> None:
@@ -119,6 +123,8 @@ def architecture(data: dict, repo_names: set[str], root: Path) -> None:
     require(data.get("core_entities") == ["noun", "verb"] and
             data.get("supporting_boundaries") == ["surface", "infrastructure"],
             "only nouns and verbs with surfaces and supporting infrastructure")
+    require(data.get("public_surfaces") == PUBLIC_SURFACES and data.get("infrastructure") == INFRASTRUCTURE,
+            "exactly two public surfaces, Eranos and Agora; Tessera and Herma are the infrastructure")
     require(data.get("seed_pack_contents") == ["noun", "verb"] and
             data.get("project_is_primitive") is False,
             "seed packs bundle nouns and verbs; projects are not primitives")
@@ -128,15 +134,19 @@ def architecture(data: dict, repo_names: set[str], root: Path) -> None:
     repos = data["repositories"]
     require({r["name"] for r in repos} == repo_names and len(repos) == len(repo_names),
             "architecture must classify every product repository once")
-    roles = {"fabric", "adapter", "workflow_pack", "seed_pack", "authoring_kit"}
+    roles = {"fabric", "adapter", "surface", "seed_pack", "authoring_kit"}
     for repo in repos:
         require(set(repo) == {"name", "role", "nouns", "verbs", "checks"},
                 "unexpected repository authority or architecture field")
         require(repo["role"] in roles, "unknown architecture role")
         require((repo["role"] == "fabric") == (repo["name"] == "tessera"),
                 "domain packs must not own the work lifecycle")
-        if repo["name"] in {"kothar", "kinema"}:
-            require(repo["role"] == "seed_pack", "Kothar and Kinema must be seed packs")
+        require((repo["role"] == "surface") == (repo["name"] in PUBLIC_SURFACES),
+                "only Eranos and Agora are surfaces, and a pack is never a surface")
+        require((repo["role"] in {"fabric", "adapter"}) == (repo["name"] in INFRASTRUCTURE),
+                "only Tessera and Herma are infrastructure")
+        if retired_names(repo["name"]):
+            require(repo["role"] == "seed_pack", "a repository under a retired pack name must be a seed pack")
         for field in ("nouns", "verbs", "checks"):
             require(isinstance(repo[field], list) and bool(repo[field]) and
                     all(isinstance(v, str) and bool(v.strip()) for v in repo[field]),

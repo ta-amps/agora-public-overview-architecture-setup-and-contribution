@@ -4,17 +4,22 @@ Only nouns, verbs, surfaces and narrow supporting infrastructure. Seed packs
 contain nouns and verbs. Nouns hold reusable knowledge,
 tools, models, recipes and artifacts. Verbs describe independently schedulable
 outcomes for authorized workers. Tessera owns the shared task and artifact
-lifecycle. The home portal helps people and agents find projects; Agora documents
-the relationships. Follow the [required checkpoint](architecture-checkpoint.md).
+lifecycle. There are exactly two public surfaces: Eranos, the two-sided
+marketplace, and Agora, the single overview of architecture and setup, use cases,
+connecting any agent and contributing. Tessera and Herma are infrastructure; Herma
+connects agents to context and models. Home is not a surface; its address
+sends people to Agora. Everything else is nouns and verbs in seed packs, and an
+agent kit is a seed pack generated for an NGO's agent. Follow the
+[required checkpoint](architecture-checkpoint.md).
 
 ## Nouns, verbs and their surfaces
 
 | Concept | Meaning | Examples |
 | --- | --- | --- |
-| Noun | A scoped, versioned input, definition, artifact or observation | A synthetic evidence bundle, recipe, task contract, test result or execution report |
+| Noun | A scoped, versioned input, definition, artifact or observation | A synthetic evidence bundle, recipe, task contract, test result, execution report or an agent's whole setup |
 | Verb | An independently schedulable outcome with a claimant, lease and acceptance contract | Analyze a bundle, draft a kit, verify a recipe or review a proposed artifact |
-| Surface | An interface exposing permitted nouns and verbs | Website, dashboard, CLI or HTTP/MCP interface |
-| Infrastructure | Narrow supporting coordination and management | Identity, storage, leases, CAS, transport and backpressure |
+| Surface | Where people and agents come in; there are exactly two public surfaces | Eranos, the two-sided marketplace, and Agora, the single overview |
+| Infrastructure | Narrow supporting coordination, management and connections | Tessera (identity, storage, leases, CAS, transport and backpressure) and Herma (context and models) |
 
 Seed packs bundle nouns and verb templates/seeds. They are not an additional
 primitive, autonomous runtime or activation authority. Deterministic operations
@@ -39,7 +44,7 @@ The full policy and examples live with [Tessera](https://github.com/ta-amps/tess
 
 Tessera supplies authenticated scope, queue permissions, claims, fencing tokens, heartbeats, task dependencies, compare-and-set records, content-addressed blobs, named buckets and durable receipts. Its HTTP, MCP, CLI and web interfaces expose the owning contracts. A frontend or shim cannot grant broader authority.
 
-Shamash and Eranos use Tessera for staged work and artifacts. Herma can read permitted context and expose explicitly requested model interfaces. The Python dependencies of all three pin a tested, merged Tessera revision. Kothar and Kinema distribute seed packs: versioned code, recipes and deterministic tools a worker can invoke while holding a verb. Their existing project interfaces remain compatibility and showcase surfaces. The worker stores outputs using its own authorized fabric interface; exporting a pack or producing a tool result does not install, activate or admit an artifact by itself.
+Eranos uses Tessera for staged work and artifacts. Herma can read permitted context and expose explicitly requested model interfaces. The Python dependencies of both pin a tested, merged Tessera revision. The pack library distributes seed packs: versioned code references, recipes and deterministic tools a worker can invoke while holding a verb, such as the collections for composing verified code without rewriting it and for video and motion made with code. A pack has no surface or brand name of its own; the older pack websites will retire behind archive notices. The worker stores outputs using its own authorized fabric interface; exporting a pack or producing a tool result does not install, activate or admit an artifact by itself.
 
 Execution observations are protected nouns associated with accepted completion. They retain server-observed task and lease facts separately from optional worker-reported telemetry. Bounded recall can return permitted prior evidence. Recall does not authorize automatic replay, establish correctness or grant a new effect. See [execution reports and recall](https://github.com/ta-amps/tessera/blob/main/docs/execution-memory.md).
 
@@ -64,7 +69,7 @@ sequenceDiagram
     end
 ```
 
-Workers perform ordinary reasoning, repair and self-checks. Deterministic server gates validate identity, types, versions, leases and receipts. Product policies still apply: Eranos requires a different reviewer from the drafter, Shamash keeps T3/T4 decisions human-only, and shared generated-artifact admission requires independent evidence and review.
+Workers perform ordinary reasoning, repair and self-checks. Deterministic server gates validate identity, types, versions, leases and receipts. Product policies still apply: Eranos requires a different reviewer from the drafter, the pack for spotting exploitation and scams leaves every hold and referral to a person, and shared generated-artifact admission requires independent evidence and review.
 
 A worker may run on a contributor's machine, in an approved cloud service or in an operator environment. Placement does not establish who pays, whether the work is private or which actions are allowed. Private work uses authenticated ownership, queue scope, storage restrictions and effect limits. A `private` tag grants nothing.
 
@@ -103,7 +108,7 @@ a fixed claims-per-minute quota or a measured capacity guarantee.
 
 ## Frontier and contribution packs
 
-The existing Frontier portal uses Tessera's namespace, nouns, tasks and admission boundaries. Its scheduled discovery can leave repair work for external workers. Live server repair is off. Scheduled discovery does not edit repositories or qualify generated candidates for publication.
+Frontier's existing discovery work uses Tessera's namespace, nouns, tasks and admission boundaries; Home still serves its daily check status to agents. Its scheduled discovery can leave repair work for external workers. Live server repair is off. Scheduled discovery does not edit repositories or qualify generated candidates for publication.
 
 Frontier's intended packaging is a declarative seed/contract pack. `pack-contributions` describes ten proposed meta-pack workflows and synthetic examples; it contains no importer or active learning service. General pinned category/profile resolution and general rule activation/rollback still require implementation and verification.
 

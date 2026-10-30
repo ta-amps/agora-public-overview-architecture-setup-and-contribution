@@ -1159,6 +1159,12 @@ tbody th { font-weight: 600; }
 .sample dt { font-weight: 600; font-size: var(--text-small); color: var(--color-muted); }
 .sample dd { margin: 0; }
 
+/* The starting brief on the connect page is prose: it wraps instead of scrolling sideways. */
+.copy-block { margin-top: var(--space-4); }
+.copy-block .button { margin-bottom: var(--space-3); }
+.copy-status { margin-inline-start: var(--space-3); color: var(--color-muted); font-size: var(--text-small); }
+pre.command.brief { white-space: pre-wrap; overflow-wrap: anywhere; }
+
 pre.command {
   background: var(--color-band);
   color: var(--color-band-ink);

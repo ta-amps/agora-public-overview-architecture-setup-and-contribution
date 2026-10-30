@@ -17,8 +17,15 @@ permissions. A deterministic helper can run inside a verb without becoming a
 separate task.
 
 Surfaces are websites, apps, dashboards, CLI and HTTP/MCP interfaces that expose
-nouns and verbs. Infrastructure handles the limited supporting responsibilities
-listed below. Neither a surface nor a pack gets an independent work authority.
+nouns and verbs. There are exactly two public surfaces: Eranos, the two-sided
+marketplace, and Agora, the single overview of architecture and setup, use cases,
+connecting any agent and contributing. Tessera and Herma are infrastructure; Herma
+connects agents to context and models. Home is not a surface; its address
+sends people to Agora. Everything else is nouns and verbs in seed packs, and an
+agent kit is a seed pack generated for an NGO's agent; a noun can hold an agent's
+whole setup, including the harness, model and working-directory files.
+Infrastructure handles the limited supporting responsibilities listed below.
+Neither a surface nor a pack gets an independent work authority.
 “Project” may name a surface and scoped collection; it is not an additional core
 primitive or lifecycle. Store any needed description as an existing noun.
 Seed packs are bundles of nouns and verb templates/seeds, not a separate entity
@@ -54,21 +61,27 @@ Missing workers, a malformed payload or an empty review queue must not trigger
 an automatic model fallback. Moving inference to a server-owned worker changes
 its location, not its cost, identity or permissions.
 
-## Kothar and Kinema are seed packs
+## Seed packs carry no names and are never surfaces
 
-Kothar packages verified code nodes, recipes, compiler/runtime tools and checks.
-Kinema packages motion and scene recipes, formulas, assets, caption tools and
-checks. These are noun collections with verb templates describing useful work.
-Their repositories remain source and distribution locations. Their project
-surfaces can provide discovery, showcases and existing deterministic HTTP/MCP
-tools while workers use the packs through Tessera. Packaging does not create
-another scheduler or admission
-authority, and exporting a pack does not install or activate it.
+Seed packs live in one pack library, `ta-amps/pack-contributions`, named only for
+what they do and kept separate from both surfaces. The collection of nouns and
+verbs for composing verified code without rewriting it packages verified code
+nodes, recipes, compiler/runtime tools and checks. The collection for video and
+motion made with code packages motion and scene recipes, formulas, assets, caption
+tools and checks. The collection for spotting exploitation and scams in synthetic
+cases, never accusing anyone, packages harm areas, pattern rules, dated rule
+cards, money-flow checks and routing rules. These are noun collections with verb
+templates describing useful work. The three older repositories that held them are
+being renamed or archived, their tested code keeps plain names, and their old
+websites will retire behind archive notices. Packaging does not create another
+scheduler or admission authority, and exporting a pack does not install or
+activate it.
 
 | Pack | Nouns | Claimed work |
 | --- | --- | --- |
-| Kothar | Node catalog, code, recipe, compiler, execution result, validation evidence | Compose, compile, execute and verify a recipe |
-| Kinema | Scene, motion formula, asset reference, captions, evaluator, frame/QA result | Generate, retarget, evaluate and review motion |
+| Code composition | Node catalog, code, recipe, compiler, execution result, validation evidence | Compose, compile, execute and verify a recipe |
+| Video and motion | Scene, motion formula, asset reference, captions, evaluator, frame/QA result | Generate, retarget, evaluate and review motion |
+| Exploitation evidence | Synthetic case, harm area, pattern rule, rule card, money-flow check, evidence summary | Index evidence, extract indicators, recheck the money, write and review a summary; a person decides every hold and referral |
 | Training | Dataset, base revision, recipe, adapter and evaluation | Curate, train, evaluate and decide admission |
 | Research | Source, observation, project profile, collector and comparison | Discover feeds, scan, extract, benchmark, compare and propose adoption |
 
@@ -81,7 +94,10 @@ usefulness nor admission.
 
 The [architecture inventory](../architecture.json) is a documentation index,
 not a new runtime policy registry. Agora's `make check` rejects missing repository
-classifications, domain packs presented as work authorities, unexplained server
+classifications, any surface other than Eranos and Agora, infrastructure other
+than Tessera and Herma, a repository under a retired pack name that is not a seed
+pack, retired pack names on the public site, domain packs presented as work
+authorities, unexplained server
 exceptions and architecture claims without declared checks. Owning repositories
 must test runtime behavior: no implicit model fallback, scoped effects, valid
 payloads, deterministic pack exports and preserved existing interfaces.

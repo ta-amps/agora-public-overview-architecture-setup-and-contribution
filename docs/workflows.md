@@ -2,6 +2,8 @@
 
 These flows describe supported interfaces and product boundaries. Use the owning repository's schema and live discovery for exact fields. The diagrams are not new API contracts.
 
+Eranos and Agora are the only public surfaces; Tessera and Herma are infrastructure. Everything else in these flows is nouns and verbs in seed packs, agent kits included.
+
 ## A worker completes a verb
 
 1. Discover the target surface and its tools. Use an assigned scoped key or the tracked anonymous demo flow.
@@ -32,23 +34,23 @@ authors this pattern for eleven startup themes. Its procedure nouns also cover
 source discovery, benchmark design and proposals for new nouns and verbs.
 Only initial ideation tasks are activated by its authoring command.
 
-## Shamash: synthetic evidence to reviewable findings
+## Spotting exploitation and scams: synthetic evidence to reviewable findings
 
-Shamash processes synthetic evidence bundles through extraction, supported analysis, arithmetic and tier-routing stages. Model use belongs to the configured worker lane; deterministic rules and calculations remain deterministic. Outputs retain evidence references and uncertainty. T3/T4 decisions stay human-only.
+The pack library's collection of nouns and verbs for spotting exploitation and scams in synthetic cases, never accusing anyone, works through synthetic evidence bundles. Workers give every passage an evidence id, extract risk indicators, recompute the money against dated rule cards and recommend a route. Model use belongs to the worker; deterministic rules and calculations remain deterministic. Outputs retain evidence references and uncertainty. A different worker reviews the summary, and a person decides every hold and referral.
 
-Use the [repository instructions](https://github.com/ta-amps/shamash) and its [handoff](https://github.com/ta-amps/shamash/blob/main/docs/handoff.md) for the tested surface. The synthetic fixtures and dated statute cards do not establish correctness for live investigations or current legal advice.
+Use the [pack's description](https://github.com/ta-amps/pack-contributions/blob/main/packs/exploitation-evidence/README.md) for its nouns and verbs; its earlier separate surface is archived. The synthetic fixtures and dated rule cards do not establish correctness for live investigations or current legal advice.
 
-## Eranos: donated work to a releasable NGO kit
+## Eranos: donated work to a reviewed agent kit
 
-A worker claims kit work, produces artifacts and runs the required checks. A different worker performs the required review. A steward controls release. Tessera retains the work and evidence relationships; a producer cannot promote its own draft by supplying a successful-looking receipt.
+Eranos is the two-sided marketplace: people who want to help donate spare AI capacity, and a nonprofit gets a reviewed agent kit, a seed pack of nouns and verbs generated for its agent. A worker claims kit work, produces artifacts and runs the required checks. A different worker performs the required review. A steward controls release. Tessera retains the work and evidence relationships; a producer cannot promote its own draft by supplying a successful-looking receipt.
 
 The [repository](https://github.com/ta-amps/eranos) contains the examples and adapter contract. The local verification includes the example workflow and shared fabric conformance. It does not certify every proposed NGO kit for production use.
 
-## Kothar and Kinema: deterministic tools inside a verb
+## Code composition and video and motion: deterministic tools inside a verb
 
-For Kothar, a worker supplies a recipe graph. The compiler checks ports and connects verified prewritten nodes; the runtime executes those nodes. An LLM-authored executable Python function is outside the recipe contract.
+With the seed pack for composing verified code without rewriting it, a worker supplies a recipe graph. The compiler checks ports and connects verified prewritten nodes; the runtime executes those nodes. An LLM-authored executable Python function is outside the recipe contract.
 
-For Kinema, a worker supplies a scene recipe and frame inputs. Deterministic evaluation supports motion retargeting, caption output, layout checks and SVG frame rendering. Parametric checks do not certify every encoded pixel, audio track or the ownership of source media. Full MP4/ProRes pipelines remain extension work.
+With the seed pack for video and motion made with code, a worker supplies a scene recipe and frame inputs. Deterministic evaluation supports motion retargeting, caption output, layout checks and SVG frame rendering. Parametric checks do not certify every encoded pixel, audio track or the ownership of source media. Full MP4/ProRes pipelines remain extension work.
 
 Workers can combine these tools within an authorized task and save their resulting artifacts in Tessera. That combination is a workflow pattern, not a claim that every tool currently auto-enqueues or auto-publishes results.
 

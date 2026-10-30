@@ -41,6 +41,9 @@ V3_PAGE = DECKS / "v3" / "index.html"
 V4_DIR = DECKS / "v4"
 V4_PAGE = V4_DIR / "index.html"
 STANDALONE = {SITE / "storyboards" / "2026-10-29" / "eranos-video-v1" / "index.html"}
+# Published pages keep the footer they were published with: the v4 deck, whose page hash and printed PDF
+# are recorded, and the dated two-video storyboard draft. Every other page gets the current footer.
+PUBLISHED_FOOTER = {V4_PAGE, SITE / "storyboards" / "2026-10-29" / "two-videos" / "index.html"}
 SOURCE = V4_DIR / "source"
 MANIFEST = SITE / "decks.json"
 PDF_NAME = "ta-amps-hackathon-v4.pdf"
@@ -63,7 +66,8 @@ NAV = [("deck", DECK_HREF, "Deck"), ("storyboards", "storyboards/", "Storyboard"
        ("docs", "docs/", "Docs"), ("contribute", "contribute/", "Contribute")]
 
 DOCS = [("docs/", "Overview"), ("docs/how-it-works/", "How it works"),
-        ("docs/surfaces-and-seed-packs/", "The map"), ("docs/seed-pack-ideas/", "Seed pack ideas"),
+        ("docs/surfaces-and-seed-packs/", "The map"), ("docs/connect/", "Connect an agent"),
+        ("docs/seed-pack-ideas/", "Seed pack ideas"),
         ("docs/status/", "Status and evidence"), ("docs/roadmap/", "Roadmap")]
 
 MARK = ('<svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true" focusable="false">'
@@ -153,14 +157,18 @@ def header_block(page: Path, prefix: str) -> str:
     ])
 
 
-def footer_block(prefix: str) -> str:
+def footer_block(prefix: str, published: bool = False) -> str:
     site_links = [(DECK_HREF, "Draft deck"), ("decks/", "All deck versions"), ("storyboards/", "Video storyboard"),
-                  ("docs/", "Docs"), ("docs/status/", "Status and evidence"), ("contribute/", "Contribute")]
-    outside = [("https://home.ta-amps.workers.dev", "Home portal"),
-               ("https://eranos.ta-amps.workers.dev", "Eranos"),
+                  ("docs/", "Docs"), ("docs/connect/", "Connect an agent"), ("docs/status/", "Status and evidence"),
+                  ("contribute/", "Contribute")]
+    outside = [("https://eranos.ta-amps.workers.dev", "Eranos"),
                ("https://github.com/ta-amps", "ta-amps on GitHub"),
                ("https://github.com/ta-amps/agora", "Source of this site"),
                (prefix + "THIRD-PARTY-NOTICES.txt", "Third-party notices")]
+    if published:
+        # A published page keeps the footer it was published with (see PUBLISHED_FOOTER).
+        site_links = [link for link in site_links if link[0] != "docs/connect/"]
+        outside = [("https://home.ta-amps.workers.dev", "Home portal")] + outside
     first = "".join(f'<li><a href="{prefix}{href}">{label}</a></li>' for href, label in site_links)
     second = "".join(f'<li><a href="{href}">{label}</a></li>' for href, label in outside)
     return "\n".join([
@@ -204,7 +212,7 @@ def render_page(page: Path, text: str) -> str:
     text = replace_block(text, "header", header_block(page, prefix), page)
     if "<!-- site:docnav -->" in text:
         text = replace_block(text, "docnav", docnav_block(page), page)
-    return replace_block(text, "footer", footer_block(prefix), page)
+    return replace_block(text, "footer", footer_block(prefix, page in PUBLISHED_FOOTER), page)
 
 
 # v4 deck ----------------------------------------------------------------------------------------
