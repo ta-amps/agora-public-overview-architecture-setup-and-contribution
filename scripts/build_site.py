@@ -52,7 +52,6 @@ BRIEF = SITE / "agent-brief.txt"
 DECKS = SITE / "decks"
 MANIFEST = SITE / "decks.json"
 PAGES_PREFIX = "/agora-public-overview-architecture-setup-and-contribution/"
-SITE_URL = "https://ta-amps.github.io" + PAGES_PREFIX
 CANVAS_W, CANVAS_H = 1920, 1080
 CLAIM_STATUSES = {"measured", "pending", "planned"}
 
@@ -465,7 +464,7 @@ def load_deck(deck_id: str, brief: str, endpoints: dict) -> dict:
             "claims": claims, "sections": sections, "pdf_name": spec["page"]["pdf"]}
 
 
-def render_slide(i: int, slide: dict, total: int, ui: dict) -> str:
+def render_slide(i: int, slide: dict, total: int, ui: dict, sources: str = "") -> str:
     label = f"{i + 1} {ui['of']} {total}: {slide['title']}"
     parts = [
         f'<section class="slide" id="slide-{i + 1}" aria-roledescription="slide" aria-label="{attr(label)}" '
@@ -484,46 +483,20 @@ def render_slide(i: int, slide: dict, total: int, ui: dict) -> str:
     if slide["links"]:
         items = "".join(f'<li><a href="{attr(href)}">{text(label)}</a></li>' for href, label in slide["links"])
         parts.append(f'<div class="slide-links"><h2>{text(ui["links_heading"])}</h2><ul>{items}</ul></div>')
-    parts += [f'<div class="slide-notes"><h2>{text(ui["notes"])}</h2><p>{slide["notes"]}</p></div>', "</section>"]
+    parts += [f'<div class="slide-notes"><h2>{text(ui["notes"])}</h2><p>{slide["notes"]}</p>{sources}</div>',
+              "</section>"]
     return "\n".join(parts)
 
 
-def claim_where(claim: dict, deck: dict, ui: dict) -> str:
-    number = [s["name"] for s in deck["slides"]].index(claim["slide"]) + 1
-    return f"{ui['slide']} {number}"
-
-
-def claims_block(deck: dict, ui: dict) -> tuple[str, str]:
-    """The claim review on the page, and its table on the PDF's last page."""
-    claims = deck["claims"]
-    items, rows = [], []
-    for claim in claims["claims"]:
-        where = text(claim_where(claim, deck, ui))
-        status = claim["status"]
+def slide_sources(name: str, deck: dict, ui: dict) -> str:
+    """Every number on one slide, with its source: shown with the speaker notes, never under the slides."""
+    claims = [claim for claim in (deck["claims"] or {"claims": []})["claims"] if claim["slide"] == name]
+    items = []
+    for claim in claims:
         evidence = (f' <a href="{attr(claim["link"])}">{text(ui["evidence"])}</a>' if claim.get("link") else "")
-        items.append(f'<li><div class="claim-head"><span class="claim-status {status}">{text(status.capitalize())}</span>'
-                     f'<span class="claim-where">{where}</span></div>'
-                     f'<p class="claim-number">{text(claim["number"])}</p>'
-                     f'<p class="claim-source">{text(claim["source"])}{evidence}</p></li>')
-        source = text(claim["source"]) + (f" {text(claim['link'])}" if claim.get("link") else "")
-        rows.append(f'<tr><th scope="row">{where}</th><td>{text(claim["number"])}</td>'
-                    f'<td><span class="claim-status {status}">{text(status.capitalize())}</span></td><td>{source}</td></tr>')
-    heading = text(ui["claims_heading"])
-    web = "\n".join([
-        '<section class="wrap deck-claims" id="claim-review" aria-labelledby="claims-title">',
-        f'<h2 id="claims-title">{heading}</h2>',
-        f'<p>{text(claims["about"])}</p>',
-        '<ul class="claim-list">' + "".join(items) + "</ul>",
-        "</section>",
-    ])
-    head = "".join(f'<th scope="col">{text(c)}</th>' for c in ui["claims_columns"])
-    printed = "\n".join([
-        f'<section class="print-colophon print-claims" aria-label="{attr(ui["claims_heading"])}">',
-        f"<h2>{heading}</h2>",
-        f"<table><thead><tr>{head}</tr></thead><tbody>{''.join(rows)}</tbody></table>",
-        "</section>",
-    ])
-    return web, printed
+        items.append(f'<li><span class="claim-status {claim["status"]}">{text(claim["status"].capitalize())}</span> '
+                     f'{text(claim["number"])}. {text(claim["source"])}{evidence}</li>')
+    return f'<ul class="slide-sources">{"".join(items)}</ul>' if items else ""
 
 
 def render_deck(deck: dict, nouns: Nouns) -> str:
@@ -536,11 +509,8 @@ def render_deck(deck: dict, nouns: Nouns) -> str:
         + "".join(f'<li><a href="#slide-{i + 1}" data-goto="{i}">{text(slides[i]["title"])}</a></li>'
                   for i in range(part["start"], part["stop"]))
         + "</ol></div>" for part in deck["sections"])
-    body = "\n".join(render_slide(i, slide, total, ui) for i, slide in enumerate(slides))
-    others = [d for d in nouns.decks if d["id"] != deck["id"]]
-    more = " · ".join([f'<a href="../{d["id"]}/">{text(d["spec"]["title"])}</a>' for d in others]
-                      + [f'<a href="../earlier-drafts/">{text(ui["earlier"])}</a>'])
-    web_claims, print_claims = claims_block(deck, ui) if deck["claims"] else ("", "")
+    body = "\n".join(render_slide(i, slide, total, ui, slide_sources(slide["name"], deck, ui))
+                     for i, slide in enumerate(slides))
     main = "\n".join(filter(None, [
         f'<main id="main" class="deck" data-total="{total}">',
         '<div class="wrap deck-bar">',
@@ -571,18 +541,6 @@ def render_deck(deck: dict, nouns: Nouns) -> str:
         "</div>",
         f'<p class="wrap deck-help" data-help hidden>{ui["help_html"]}</p>',
         f'<p class="visually-hidden" aria-live="polite" data-announce data-prefix="{attr(ui["announce"])}"></p>',
-        '<div class="wrap deck-intro">',
-        f"<p>{text(page['intro'])}</p>",
-        f'<p class="deck-more"><span>{text(ui["more"])}:</span> {more}</p>',
-        "</div>",
-        web_claims,
-        f'<section class="print-colophon" aria-label="{attr(ui["colophon_heading"])}">',
-        f"<h2>{text(ui['colophon_heading'])}</h2>",
-        f"<p>{text(nouns.site['name'])} · {text(spec['title'])}, {text(page['date_text'])}. "
-        f"{text(ui['colophon_note'])}</p>",
-        f"<p>{text(ui['colophon_web'])} {SITE_URL}decks/{deck['id']}/</p>",
-        "</section>",
-        print_claims,
         "</main>",
     ]))
     prefix = prefix_for(deck["page"])

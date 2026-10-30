@@ -85,6 +85,17 @@ class Builder(unittest.TestCase):
         for path, page in pages.items():
             self.assertIsNone(asking.search(page), path)
 
+    def test_deck_pages_are_only_slides_with_sources_in_the_notes(self):
+        for deck in self.nouns.decks:
+            page = self.outputs[deck["page"]]
+            main = page[page.index('<main id="main"'):page.index("</main>")]
+            for leftover in ('id="claim-review"', "deck-intro", "deck-more", "print-colophon", "print-claims"):
+                self.assertNotIn(leftover, main, deck["id"])
+            for claim in (deck["claims"] or {"claims": []})["claims"]:
+                start = main.index(f'data-name="{claim["slide"]}"')
+                notes = main[main.index('class="slide-notes"', start):main.index("</section>", start)]
+                self.assertIn(html.escape(claim["number"], quote=False), notes, claim["number"])
+
     def test_slide_elements_become_html(self):
         endpoints = self.nouns.site["endpoints"]
         with tempfile.TemporaryDirectory() as directory:
