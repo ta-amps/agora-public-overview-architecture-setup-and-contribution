@@ -1,4 +1,4 @@
-# Agora
+# Agora – the overview
 
 **Nouns, verbs, surfaces and infrastructure: the map of what ta-amps does, how its parts fit together, and what has been verified.**
 
