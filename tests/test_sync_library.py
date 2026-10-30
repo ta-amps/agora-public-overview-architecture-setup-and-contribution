@@ -120,6 +120,20 @@ class SyncLibrary(unittest.TestCase):
         with self.assertRaisesRegex(sync.SyncError, "after the library's validation receipt"):
             sync.sync(self.root, self.noun)
 
+    def test_a_missing_or_broken_payload_fails_with_a_message_not_a_traceback(self):
+        # Hunt, October 30: these raised a bare FileNotFoundError, JSONDecodeError or KeyError.
+        verbs = self.root / "packs/kit-pantry/verbs.json"
+        for content, message in ((None, "missing .*verbs.json"), ("{not json", "verbs.json is not JSON"),
+                                 ('{"records": []}', "verbs.json has no 'tasks' list")):
+            with self.subTest(content=content):
+                if content is None:
+                    verbs.unlink()
+                else:
+                    write(verbs, content)
+                self.noun["source"]["commit"] = self.save(f"break verbs.json: {message}")
+                with self.assertRaisesRegex(sync.SyncError, message):
+                    sync.sync(self.root, self.noun)
+
     def test_every_pack_sits_in_a_category_and_every_entry_is_a_pack(self):
         noun = copy.deepcopy(self.noun)
         noun["categories"][1]["packs"] = []

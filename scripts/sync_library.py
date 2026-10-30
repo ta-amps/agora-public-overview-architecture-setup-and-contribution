@@ -127,14 +127,29 @@ def read_workflows(library: Path) -> dict[str, str]:
     return {path.relative_to(library).as_posix(): path.read_text(encoding="utf-8") for path in files}
 
 
+def read_payload(path: Path, key: str) -> tuple[bytes, list]:
+    """A pack's nouns.json or verbs.json: its exact bytes, which the receipt hashes, and its list of entries."""
+    try:
+        raw = path.read_bytes()
+        data = json.loads(raw)
+    except FileNotFoundError:
+        fail(f"missing {path}")
+    except (UnicodeDecodeError, json.JSONDecodeError) as error:
+        fail(f"{path} is not JSON: {error}")
+    entries = data.get(key) if isinstance(data, dict) else None
+    if not isinstance(entries, list):
+        fail(f"{path} has no {key!r} list")
+    return raw, entries
+
+
 def measure_pack(library: Path, pack_id: str, commit: str, receipt: dict, workflows: dict[str, str]) -> dict:
     """One pack's catalog entry, from its own files and the library's receipt."""
     folder = library / "packs" / pack_id
     manifest = read_json(folder / "manifest.json")
     if manifest.get("pack_id") != pack_id:
         fail(f"packs/{pack_id}/manifest.json names the pack {manifest.get('pack_id')!r}")
-    raw_nouns, raw_verbs = (folder / "nouns.json").read_bytes(), (folder / "verbs.json").read_bytes()
-    records, tasks = json.loads(raw_nouns)["records"], json.loads(raw_verbs)["tasks"]
+    raw_nouns, records = read_payload(folder / "nouns.json", "records")
+    raw_verbs, tasks = read_payload(folder / "verbs.json", "tasks")
     if (len(records), len(tasks)) != (len(manifest["nouns"]), len(manifest["verbs"])):
         fail(f"{pack_id}: nouns.json and verbs.json differ from the manifest's counts")
     checked = receipt["packs"].get(pack_id)
