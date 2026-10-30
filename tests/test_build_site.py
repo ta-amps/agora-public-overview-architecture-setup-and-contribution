@@ -156,18 +156,20 @@ class Builder(unittest.TestCase):
         nouns = copy.copy(self.nouns)
         nouns.home = copy.deepcopy(self.nouns.home)
         videos = nouns.home["videos"]
+        one = dict(videos["cuts"][0], id="one")
+        videos["cuts"], videos["default"] = [one], "one"
         self.assertNotIn("data-film-cuts", build.render_home(nouns))
-        full = dict(videos["cuts"][0], id="full", tab="Full · 3 min", label="The full cut")
-        full["src"] = "video/2026-10-29/animatic-60s-v1/eranos-animatic-60s-open-captions.mp4"
-        videos["cuts"].insert(0, full)
-        videos["default"] = "full"
+        other = dict(one, id="other", tab="Other cut", label="The other cut")
+        other["src"] = "video/2026-10-29/animatic-60s-v1/eranos-animatic-60s-open-captions.mp4"
+        videos["cuts"].insert(0, other)
+        videos["default"] = "other"
         page = build.render_home(nouns)
         self.assertEqual(1, page.count("<video"))
         self.assertEqual(2, page.count('class="film-cut"'))
-        self.assertIn(f'<source src="{full["src"]}"', page)
-        self.assertIn('aria-pressed="true" data-cut="full"', page)
-        self.assertIn('aria-pressed="false" data-cut="short"', page)
-        self.assertIn('id="film-label">The full cut</span>', page)
+        self.assertIn(f'<source src="{other["src"]}"', page)
+        self.assertIn('aria-pressed="true" data-cut="other"', page)
+        self.assertIn('aria-pressed="false" data-cut="one"', page)
+        self.assertIn('id="film-label">The other cut</span>', page)
         videos["default"] = "missing"
         with self.assertRaises(build.BuildError):
             build.render_home(nouns)
