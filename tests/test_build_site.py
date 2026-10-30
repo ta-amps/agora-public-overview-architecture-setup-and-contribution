@@ -2,6 +2,7 @@ import copy
 import html
 import importlib.util
 import json
+import re
 import tempfile
 import unittest
 from pathlib import Path
@@ -75,6 +76,14 @@ class Builder(unittest.TestCase):
         self.assertIn(" default>", main)
         self.assertEqual(3, main.count('class="deck-card"'))
         self.assertLess(home.index('class="agent-banner"'), home.index("<video"))
+
+    def test_nonprofits_never_choose_a_kind_of_request(self):
+        # A nonprofit types what it needs; the request's first step sorts it into a kit, public work or both.
+        asking = re.compile(r"request(s|ing)? (a|an) (verb|agent kit|kit)\b|verb requests?\b|an agent kit or a verb", re.I)
+        pages = {path: page for path, page in self.outputs.items() if isinstance(page, str)}
+        self.assertIn(build.SITE / "decks" / "public-good-marketplace" / "index.html", pages)
+        for path, page in pages.items():
+            self.assertIsNone(asking.search(page), path)
 
     def test_slide_elements_become_html(self):
         endpoints = self.nouns.site["endpoints"]

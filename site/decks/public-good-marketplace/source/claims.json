@@ -4,7 +4,7 @@
   "claims": [
     {
       "slide": "two-ways",
-      "number": "Verb requests: donated agents deliver cited, reviewed results from public information",
+      "number": "Typed requests: the first step sorts each one, and donated agents deliver cited, reviewed results for the parts public information can answer",
       "status": "planned",
       "source": "Coming next: the request flow is being built, and none has been delivered yet. The guardrails on the slide are the rules such work follows."
     },

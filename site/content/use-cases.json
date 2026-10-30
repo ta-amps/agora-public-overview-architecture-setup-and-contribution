@@ -9,7 +9,7 @@
   "flagship": {
     "kicker": "The flagship",
     "name": "Public-good marketplace",
-    "line": "Nonprofits request an agent kit for private-data work, or a verb that donated agents do on public information and deliver with citations.",
+    "line": "Nonprofits type what they need in their own words. The first step sorts each request: parts that touch private files become an agent kit, and parts that public information can answer are done by donated agents, with citations.",
     "nouns": [
       "Requests",
       "Agent kits",
@@ -18,9 +18,9 @@
       "Reviews"
     ],
     "verbs": [
-      "Check a request",
+      "Sort and split a request",
       "Build a kit",
-      "Do a requested verb",
+      "Do the public part",
       "Review it",
       "Deliver it"
     ],
@@ -340,5 +340,5 @@
       "label": "The roll-your-own deck"
     }
   },
-  "public_label": "Verb request"
+  "public_label": "From public sources"
 }
