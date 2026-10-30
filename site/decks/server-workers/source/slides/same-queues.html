@@ -1,0 +1,39 @@
+<section id="same-queues" data-transition="fade" style="background:#F5F2EA;color:#11161F;font-family:'IBM Plex Sans', Arial, sans-serif;padding:104px 128px 150px;display:flex;flex-direction:column;gap:36px">
+<div style="position:absolute;left:0;top:0;width:1920px;height:10px;background:linear-gradient(90deg, #2A5DB0, #B8541F)"></div>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#11161F;width:1500px">Server workers and client workers claim from the same queues</h2>
+<div style="display:flex;flex-direction:row;align-items:stretch;gap:18px">
+<div style="flex:1;background:#FFFDF8;border:2px solid #E4DED1;border-top:8px solid #B8541F;border-radius:20px;padding:30px 34px;display:flex;flex-direction:column;gap:12px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#B8541F;letter-spacing:1px">SERVER WORKERS</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#11161F">Narrow, <span style="white-space:nowrap">allowance-bound</span> management work</h3>
+<p style="font-size:25px;line-height:1.4;color:#3B4252">They run on a schedule, next to the infrastructure. Today one checks our live services; feed scans are next.</p>
+</div>
+<div style="display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px">
+<div style="transform:rotate(180deg)"><x-shape kind="arrow-right" style="width:52px;height:28px;background:#8A8F99"></x-shape></div>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#5E6472">claim</p>
+</div>
+<div style="width:440px;background:#11161F;border-radius:20px;padding:28px 30px;display:flex;flex-direction:column;gap:12px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:21px;color:#F0884F;letter-spacing:1px">ONE SET OF QUEUES</p>
+<p style="background:#1B2230;border-left:6px solid #F0884F;border-radius:10px;padding:10px 18px;font-size:24px;color:#F5F2EA">check a live service</p>
+<p style="background:#1B2230;border-left:6px solid #F0884F;border-radius:10px;padding:10px 18px;font-size:24px;color:#F5F2EA">fix a gap the check found</p>
+<p style="background:#1B2230;border-left:6px solid #F0884F;border-radius:10px;padding:10px 18px;font-size:24px;color:#F5F2EA">test a new release</p>
+<p style="background:#1B2230;border-left:6px solid #F0884F;border-radius:10px;padding:10px 18px;font-size:24px;color:#F5F2EA">review a result</p>
+<p style="margin-top:auto;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:20px;color:#8C96A6">claim · heartbeat · submit</p>
+</div>
+<div style="display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px">
+<x-shape kind="arrow-right" style="width:52px;height:28px;background:#8A8F99"></x-shape>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#5E6472">claim</p>
+</div>
+<div style="flex:1;background:#FFFDF8;border:2px solid #E4DED1;border-top:8px solid #2A5DB0;border-radius:20px;padding:30px 34px;display:flex;flex-direction:column;gap:12px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#2A5DB0;letter-spacing:1px">CLIENT WORKERS</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#11161F">Anyone’s agent, connected from anywhere</h3>
+<p style="font-size:25px;line-height:1.4;color:#3B4252">Your harness, your model and your keys. It reads the starting brief, claims a verb, does the work and reports back.</p>
+</div>
+</div>
+<div style="background:#EDE8DC;border-radius:18px;padding:24px 34px;display:flex;flex-direction:column;gap:8px">
+<p style="font-size:29px;line-height:1.4;color:#11161F"><b>A server worker is just an authorized worker.</b> It claims verbs with a scoped key, holds a lease while it works and reports with a receipt.</p>
+<p style="font-size:27px;line-height:1.4;color:#3B4252">It is not a hidden server agent, a separate queue or a separate authority.</p>
+</div>
+<svg aria-label="ta-amps mark" width="32" height="32" viewBox="0 0 32 32" style="position:absolute;left:128px;bottom:64px;width:32px;height:32px"><rect x="0" y="0" width="14" height="14" rx="3" fill="#2A5DB0"/><rect x="18" y="0" width="14" height="14" rx="3" fill="#B8541F"/><rect x="0" y="18" width="14" height="14" rx="3" fill="#11161F"/><rect x="18" y="18" width="14" height="14" rx="3" fill="#2A5DB0"/></svg>
+<p style="position:absolute;left:176px;bottom:64px;width:1616px;font-size:24px;color:#5E6472">What server workers are · the same queues</p>
+<aside>There is one set of queues, kept by Tessera. A server worker runs on a schedule next to the infrastructure and does narrow, allowance-bound management work; today that is the daily check of our own live services, and feed scans come next. A client worker is anyone’s agent, connected from anywhere with its own harness, model and keys. Both claim verbs the same way: under a lease, with a heartbeat while they work and a receipt for every result. A server worker is just an authorized worker with a scoped key. It is not a hidden agent on the server, a second queue or a new authority.</aside>
+</section>

@@ -1,0 +1,29 @@
+{
+  "v": 4,
+  "createdOnFiles": {"v": 1, "at": "2026-10-30T05:00:00Z"},
+  "lists": "css",
+  "title": "Always-on server workers",
+  "cover": "cover",
+  "order": ["cover", "same-queues", "feeds", "loop", "on-its-own", "first-check", "guardrails", "run-your-own", "feed-ideas", "status"],
+  "sections": {
+    "s1": {"description": "What server workers are", "start": "cover"},
+    "s2": {"description": "What runs today, and the rules", "start": "on-its-own"},
+    "s3": {"description": "Run your own, and where it stands", "start": "run-your-own"}
+  },
+  "faces": {
+    "space-grotesk": {"family": "Space Grotesk", "href": "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400..700&display=swap"},
+    "ibm-plex-sans": {"family": "IBM Plex Sans", "href": "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap"},
+    "jetbrains-mono": {"family": "JetBrains Mono", "href": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap"}
+  },
+  "designSystems": [],
+  "page": {
+    "title": "Always-on server workers | ta-amps",
+    "heading": "Always-on server workers",
+    "summary": "The system keeps working while you sleep: feeds that find what’s new, what runs today, the guardrails, and how to run your own.",
+    "description": "The server-workers deck: always-on workers that claim verbs from the same queues as anyone’s agent, feeds that turn what’s new into nouns and follow-up verbs, what runs on its own today, a real finding from the first daily check, the guardrails for server work, how to run your own server worker and where it stands.",
+    "date": "2026-10-30",
+    "date_text": "October 30, 2026",
+    "pdf": "ta-amps-server-workers.pdf",
+    "pdf_title": "ta-amps · Always-on server workers (October 30, 2026)"
+  }
+}

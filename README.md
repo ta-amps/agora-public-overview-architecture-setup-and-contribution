@@ -12,10 +12,11 @@ are infrastructure; Herma connects agents to context and models. Home is not a
 surface; its address sends people to Agora. Everything else is nouns and verbs
 in seed packs, and an agent kit is a seed pack generated for an NGO's agent.
 
-[The site](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/) opens with the draft video, then three decks:
+[The site](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/) opens with the draft video, then four decks:
 [overview and architecture](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/decks/overview-and-architecture/),
-[a public-good marketplace](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/decks/public-good-marketplace/) and
-[roll your own](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/decks/roll-your-own/), each with speaker notes and a PDF.
+[a public-good marketplace](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/decks/public-good-marketplace/),
+[roll your own](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/decks/roll-your-own/) and
+[always-on server workers](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/decks/server-workers/), each with speaker notes and a PDF.
 [Use cases](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/use-cases/) collects ideas, and every page carries an agent banner
 that copies the starting brief. Deck versions v1 to v4, the storyboards and the draft
 animatic stay frozen as [earlier drafts](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/decks/earlier-drafts/). Page text and

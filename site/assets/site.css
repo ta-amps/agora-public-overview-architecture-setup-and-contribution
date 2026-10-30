@@ -664,7 +664,7 @@ h3[id] { scroll-margin-top: var(--space-6); }
   list-style: none;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-5);
 }
 
@@ -744,7 +744,7 @@ h3[id] { scroll-margin-top: var(--space-6); }
 .deck-card-pdf { position: relative; z-index: 1; color: var(--color-muted); font-weight: 600; }
 .deck-card-pdf:hover { color: var(--color-ink); }
 
-@media (max-width: 60rem) {
+@media (max-width: 40rem) {
   .deck-cards { grid-template-columns: minmax(0, 1fr); max-width: 34rem; }
 }
 
