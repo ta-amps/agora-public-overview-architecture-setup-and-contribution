@@ -17,10 +17,17 @@
 
   button.hidden = false;
   render();
+  // A choice that matches the system setting is not stored, so the page follows the system again
+  // from then on, in this tab and the next.
   button.addEventListener("click", function () {
     var next = current() === "dark" ? "light" : "dark";
-    root.dataset.mode = next;
-    try { localStorage.setItem("ta-amps-mode", next); } catch (error) { /* storage can be unavailable */ }
+    var system = media && media.matches ? "dark" : "light";
+    try {
+      if (next === system) localStorage.removeItem("ta-amps-mode");
+      else localStorage.setItem("ta-amps-mode", next);
+    } catch (error) { /* storage can be unavailable */ }
+    if (next === system) delete root.dataset.mode;
+    else root.dataset.mode = next;
     render();
   });
   if (media && media.addEventListener) media.addEventListener("change", render);
@@ -137,24 +144,42 @@
 })();
 
 // The film's cuts: one video element, and a button per cut that swaps its source, captions, poster and label.
+// The address keeps the choice (?cut=short), so a cut can be linked and survives a reload. Captions stay
+// as the viewer left them: on by default, and off after switching cuts only if they were turned off.
 (function () {
   var group = document.querySelector("[data-film-cuts]");
   var video = document.querySelector(".film-video");
   if (!group || !video) return;
   var label = document.getElementById("film-label");
   var buttons = group.querySelectorAll("[data-cut]");
-  function showCaptions() {
+  var captionsOn = true;
+  function captionTrack() {
     var tracks = video.textTracks;
     for (var i = 0; tracks && i < tracks.length; i++) {
-      if (tracks[i].kind === "captions" || tracks[i].kind === "subtitles") { tracks[i].mode = "showing"; break; }
+      if (tracks[i].kind === "captions" || tracks[i].kind === "subtitles") return tracks[i];
     }
+    return null;
+  }
+  function showCaptions() {
+    var track = captionTrack();
+    if (track) track.mode = captionsOn ? "showing" : "hidden";
+  }
+  function remember(cut, first) {
+    if (!window.history || !history.replaceState || !window.URL) return;
+    var url = new URL(location.href);
+    if (cut === first) url.searchParams.delete("cut");
+    else url.searchParams.set("cut", cut);
+    if (url.href !== location.href) history.replaceState(history.state, "", url.href);
   }
   Array.prototype.forEach.call(buttons, function (button) {
     button.addEventListener("click", function () {
       if (button.getAttribute("aria-pressed") === "true") return;
+      var shown = captionTrack();
+      captionsOn = !shown || shown.mode === "showing";
       Array.prototype.forEach.call(buttons, function (other) {
         other.setAttribute("aria-pressed", other === button ? "true" : "false");
       });
+      remember(button.getAttribute("data-cut"), buttons[0].getAttribute("data-cut"));
       video.pause();
       var source = video.querySelector("source");
       source.src = button.getAttribute("data-src");
@@ -176,4 +201,8 @@
     });
   });
   group.hidden = false;
+  var asked = window.URLSearchParams ? new URLSearchParams(location.search).get("cut") : null;
+  Array.prototype.forEach.call(buttons, function (button) {
+    if (asked && button.getAttribute("data-cut") === asked) button.click();
+  });
 })();

@@ -737,10 +737,18 @@ def film_cuts(videos: dict) -> tuple[dict, str]:
     return default, f'<div class="film-cuts" role="group" aria-label="{attr(videos["choose"])}" data-film-cuts hidden>{buttons}</div>'
 
 
+def other_cut_links(videos: dict, default: dict) -> str:
+    """Without JavaScript the cut buttons stay hidden, so the other cuts are plain links to their files."""
+    return "".join(
+        f'<span data-no-script> · <a href="{attr(cut["src"])}">{text(cut["tab"])}</a></span>'
+        for cut in videos["cuts"] if cut is not default)
+
+
 def render_home(nouns: Nouns) -> str:
     home, ui = nouns.home, nouns.site["deck"]
     videos = home["videos"]
     video, selector = film_cuts(videos)
+    others = other_cut_links(videos, video) if selector else ""
     cards = "\n".join(deck_card(deck, "", ui, 3) for deck in nouns.decks)
     main = "\n".join(filter(None, [
         '<main id="main">',
@@ -756,6 +764,7 @@ def render_home(nouns: Nouns) -> str:
         "</div>",
         selector,
         f'<p class="film-label"><span id="film-label">{text(video["label"])}</span>'
+        + others
         + (f' · <a href="{attr(videos["outline"]["href"])}">{text(videos["outline"]["label"])}</a>' if videos.get("outline") else "")
         + "</p>",
         "</section>",
