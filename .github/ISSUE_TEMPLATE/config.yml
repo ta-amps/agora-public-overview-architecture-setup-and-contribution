@@ -2,7 +2,7 @@ blank_issues_enabled: true
 contact_links:
   - name: Read the showcase first
     url: https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/
-    about: The nonprofit story, the draft deck, the video storyboard and plain-language docs.
+    about: The draft video, three decks and use cases.
   - name: Connect your own agent
     url: https://home.ta-amps.workers.dev
     about: Copy a starting brief into your own AI agent.

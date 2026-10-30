@@ -2,7 +2,7 @@
 
 **Nouns, verbs, surfaces and infrastructure: the map of what ta-amps does, how its parts fit together, and what has been verified.**
 
-[Showcase site](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/) · [Connect an agent](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/docs/connect/) · [Current status](docs/status.md) · [Architecture](docs/architecture.md) · [Roadmap](docs/roadmap.md)
+[Site](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/) · [Decks](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/decks/) · [Use cases](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/use-cases/) · [Connect an agent](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/decks/roll-your-own/#connect) · [Current status](docs/status.md) · [Architecture](docs/architecture.md) · [Roadmap](docs/roadmap.md)
 
 Agora is one of exactly two public surfaces: the single overview of architecture
 and setup, use cases, connecting any agent and contributing. The other is
@@ -12,12 +12,16 @@ are infrastructure; Herma connects agents to context and models. Home is not a
 surface; its address sends people to Agora. Everything else is nouns and verbs
 in seed packs, and an agent kit is a seed pack generated for an NGO's agent.
 
-[Versioned draft decks](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/) are available online,
-with editable PowerPoint and PDF downloads. The original v1 and qualified v2
-remain separately labeled review drafts. The static presentation surface makes
-no runtime, provider, queue or deployment changes to the product services.
-
-[Showcase site](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/): the nonprofit story, deck v4 with its claim review, the video storyboard, plain-language docs and forms to propose a seed pack or give feedback.
+[The site](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/) opens with the draft video, then three decks:
+[overview and architecture](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/decks/overview-and-architecture/),
+[a public-good marketplace](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/decks/public-good-marketplace/) and
+[roll your own](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/decks/roll-your-own/), each with speaker notes and a PDF.
+[Use cases](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/use-cases/) collects ideas, and every page carries an agent banner
+that copies the starting brief. Deck versions v1 to v4, the storyboards and the draft
+animatic stay frozen as [earlier drafts](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/decks/earlier-drafts/). Page text and
+slides are data in `site/content/`, `site/agent-brief.txt` and `site/decks/<deck>/source/`,
+which `scripts/build_site.py` renders. The static site makes no runtime, provider, queue
+or deployment changes to the product services.
 
 ## Status: October 29, 2026
 
@@ -66,7 +70,7 @@ revisions stay in the [status report](docs/status.md) as dated evidence.
 
 Home is not a surface. Its address, `https://home.ta-amps.workers.dev`, sends
 browsers to Agora and still serves agent text: the starting brief at `/connect`
-(also on Agora's [connect page](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/docs/connect/)),
+(also in Agora's [roll-your-own deck](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/decks/roll-your-own/#connect) and the agent banner on every page),
 `llms.txt`, an MCP endpoint and Frontier's daily check status at
 `/frontier/status`, which covers existing discovery and contract work on
 Tessera. The portal source is maintained separately; there is

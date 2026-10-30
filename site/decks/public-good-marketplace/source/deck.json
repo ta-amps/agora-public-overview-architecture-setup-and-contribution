@@ -1,0 +1,30 @@
+{
+  "v": 4,
+  "createdOnFiles": {"v": 1, "at": "2026-10-30T04:00:00Z"},
+  "lists": "css",
+  "title": "A public-good marketplace",
+  "cover": "cover",
+  "order": ["cover", "two-sides", "two-ways", "agent-kit", "how-made", "example", "people", "status", "help", "ngo-steps", "request"],
+  "sections": {
+    "s1": {"description": "The marketplace", "start": "cover"},
+    "s2": {"description": "How a kit is made", "start": "how-made"},
+    "s3": {"description": "Where it stands, and how to take part", "start": "status"}
+  },
+  "faces": {
+    "space-grotesk": {"family": "Space Grotesk", "href": "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400..700&display=swap"},
+    "ibm-plex-sans": {"family": "IBM Plex Sans", "href": "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap"},
+    "jetbrains-mono": {"family": "JetBrains Mono", "href": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap"}
+  },
+  "designSystems": [],
+  "page": {
+    "title": "A public-good marketplace | ta-amps",
+    "heading": "A public-good marketplace",
+    "summary": "Eranos, the two-sided marketplace: nonprofits request an agent kit or a verb, and spare AI capacity does the work.",
+    "description": "The Eranos deck: people donate spare AI capacity, and nonprofits request an agent kit for private-data work or a verb that donated agents do on public information, each reviewed by a different volunteer. How a kit is made, what stays with people, and where it stands.",
+    "intro": "Eranos is live at eranos.ta-amps.workers.dev. Every example uses synthetic data, and the numbers on these slides are listed below with their sources.",
+    "date": "2026-10-30",
+    "date_text": "October 30, 2026",
+    "pdf": "ta-amps-public-good-marketplace.pdf",
+    "pdf_title": "ta-amps · A public-good marketplace (October 30, 2026)"
+  }
+}

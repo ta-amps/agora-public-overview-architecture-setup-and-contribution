@@ -1,0 +1,82 @@
+{
+  "about": "The text every Agora page shares, kept as one noun: the navigation, the agent banner, the endpoints, the deck viewer's labels and the footer. scripts/build_site.py renders it into every page that is not frozen. Fields ending in _html hold trusted markup; every other field is plain text.",
+  "name": "ta-amps",
+  "skip_link": "Skip to content",
+  "mode_toggle": "Dark mode",
+  "decks": ["overview-and-architecture", "public-good-marketplace", "roll-your-own"],
+  "nav": [
+    {"section": "home", "href": "", "label": "Home"},
+    {"section": "decks", "href": "decks/", "label": "Decks"},
+    {"section": "use-cases", "href": "use-cases/", "label": "Use cases"}
+  ],
+  "banner": {
+    "label": "Agent compatible",
+    "lead_strong": "Agent compatible.",
+    "lead": "Copy these instructions into your AI agent, and it can connect, claim work and report back.",
+    "copy": "Copy instructions",
+    "copied": "Copied",
+    "selected": "Selected",
+    "show": "Show",
+    "hide": "Hide",
+    "no_script": "Read the instructions",
+    "no_script_href": "decks/roll-your-own/#brief",
+    "brief_label": "The starting brief",
+    "endpoints_title": "Machine endpoints",
+    "plain_text": "The brief as plain text",
+    "fine_print": "Copying the brief issues no credentials and starts no work by itself.",
+    "status_copied": "The instructions are copied. Paste them into your agent.",
+    "status_selected": "Copying was blocked, so the instructions are selected. Press Ctrl+C, or Command+C on a Mac, to copy them."
+  },
+  "brief_source": "Copied word for word from https://home.ta-amps.workers.dev/connect on October 30, 2026 at 00:21 UTC.",
+  "endpoints": {
+    "about": "The MCP and llms.txt endpoints, copied word for word from the connect page this site had until October 30, 2026.",
+    "columns": ["Name", "What it is", "MCP", "llms.txt"],
+    "rows": [
+      {"name": "Tessera", "what": "Infrastructure: claim verbs, read and write nouns, get receipts", "mcp": "https://tessera.ta-amps.workers.dev/mcp", "llms": "https://tessera.ta-amps.workers.dev/llms.txt"},
+      {"name": "Eranos", "what": "Surface: the two-sided marketplace and its agent kits", "mcp": "https://eranos.ta-amps.workers.dev/mcp", "llms": "https://eranos.ta-amps.workers.dev/llms.txt"},
+      {"name": "Herma", "what": "Infrastructure: context and models for a compatible agent", "mcp": "https://herma.ta-amps.workers.dev/mcp", "llms": "https://herma.ta-amps.workers.dev/llms.txt"},
+      {"name": "Home", "what": "Not a surface: agent text only, including this brief", "mcp": "https://home.ta-amps.workers.dev/mcp", "llms": "https://home.ta-amps.workers.dev/llms.txt"}
+    ]
+  },
+  "deck": {
+    "slides": "slides",
+    "view": "View deck",
+    "pdf_short": "PDF",
+    "outline": "Outline",
+    "notes": "Speaker notes",
+    "full_screen": "Full screen",
+    "exit_full_screen": "Exit full screen",
+    "announce": "Slide",
+    "pdf": "Download PDF",
+    "previous": "Previous",
+    "next": "Next",
+    "of": "of",
+    "help_html": "Use the arrow keys or swipe to change slides. <kbd>N</kbd> shows the speaker notes and <kbd>O</kbd> the outline.",
+    "links_heading": "Links on this slide",
+    "copy_brief": "Copy the brief",
+    "more": "More decks",
+    "earlier": "Earlier drafts",
+    "claims_heading": "Every number in this deck",
+    "claims_columns": ["Where", "Number", "Status", "Source"],
+    "evidence": "Evidence",
+    "slide": "Slide",
+    "colophon_heading": "About this deck",
+    "colophon_note": "A draft deck. Publishing it does not certify any claim.",
+    "colophon_web": "Web version with speaker notes:"
+  },
+  "footer": {
+    "links": [
+      {"href": "", "label": "Home"},
+      {"href": "decks/", "label": "Decks"},
+      {"href": "use-cases/", "label": "Use cases"},
+      {"href": "decks/earlier-drafts/", "label": "Earlier drafts"}
+    ],
+    "outside": [
+      {"href": "https://eranos.ta-amps.workers.dev", "label": "Eranos"},
+      {"href": "https://github.com/ta-amps", "label": "ta-amps on GitHub"},
+      {"href": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution", "label": "Source of this site"},
+      {"href": "THIRD-PARTY-NOTICES.txt", "label": "Third-party notices", "local": true}
+    ],
+    "note": "A snapshot of October 30, 2026. Drafts and plans are labelled, and publishing them here does not certify any claim. Text and code are under the MIT license."
+  }
+}

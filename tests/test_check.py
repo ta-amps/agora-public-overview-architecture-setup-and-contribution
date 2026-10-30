@@ -143,8 +143,13 @@ class PublicationChecks(unittest.TestCase):
             check.architecture(invalid, names, ROOT)
 
 
+# Frozen history: every deck version and the dated storyboards, pinned here as well as in the site's own manifests.
 PUBLISHED = {"v1": "f82b276b2fde16f993c958845de56026a4a2ef50a655d616a93b7f8c377803e4",
-             "v2": "5ebb6fefbd04ed37907d27ab2b07974d1b0e785eadd1bf9550daf05231a5ac02"}
+             "v2": "5ebb6fefbd04ed37907d27ab2b07974d1b0e785eadd1bf9550daf05231a5ac02",
+             "v3": "a2985302395e965631c44c7a7a18b340f3a8c2cc25fd69bd66f156cbd3a18bea",
+             "v4": "1a68ed7af008f15368f37033142d05a69dab832f6f5f37e9530bff1d27a82bc9"}
+FROZEN_DRAFTS = {"storyboards/2026-10-29/eranos-video-v1/": "33b0b50d733799e86291567c18a176a53193740675ef6db5c803e66570cdd1b5",
+                 "storyboards/2026-10-29/two-videos/": "aae6a382379b94a13d2bb92cc0748dcb622f38b10aa811f8517b54b2787237fb"}
 
 
 def page(path: Path, body: str) -> None:
@@ -155,10 +160,79 @@ def page(path: Path, body: str) -> None:
 class SiteChecks(unittest.TestCase):
     def test_published_deck_versions_never_change(self):
         decks = check.load(ROOT / "site/decks.json")
-        for version in decks["versions"][:2]:
+        self.assertEqual(set(PUBLISHED), {version["version"] for version in decks["versions"]})
+        for version in decks["versions"]:
             self.assertEqual(PUBLISHED[version["version"]], version["html_sha256"])
             data = (ROOT / "site" / version["path"] / "index.html").read_bytes()
             self.assertEqual(PUBLISHED[version["version"]], hashlib.sha256(data).hexdigest())
+
+    def test_frozen_drafts_never_change(self):
+        listing = check.load(ROOT / "site/content/earlier-drafts.json")
+        pinned = {item["href"]: item["html_sha256"] for group in listing["groups"] for item in group["items"]
+                  if "html_sha256" in item}
+        self.assertEqual(FROZEN_DRAFTS, pinned)
+        site = ROOT / "site"
+        self.assertEqual({(site / href / "index.html").resolve() for href in pinned}, check.frozen_drafts(listing, site))
+        with tempfile.TemporaryDirectory() as directory:
+            copy = Path(directory)
+            page(copy / "storyboards/2026-10-29/two-videos/index.html", "<p>edited</p>")
+            page(copy / "storyboards/2026-10-29/eranos-video-v1/index.html", "<p>edited</p>")
+            with self.assertRaisesRegex(ValueError, "frozen draft changed"):
+                check.frozen_drafts(listing, copy)
+
+    def test_frozen_pages_may_still_link_to_moved_pages_and_nothing_else(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            site = root / "site"
+            page(site / "decks/index.html", '<h1 id="connect">Decks</h1>')
+            page(site / "old/v1/index.html", '<a href="../../docs/connect/">Connect an agent</a>')
+            listing = {"pages": [{"from": "docs/connect/", "to": "decks/#connect", "what": "Connect an agent"}]}
+            pages = check.site_pages(site)
+            moved = check.moved_pages(listing, site, pages)
+            frozen = (site / "old/v1/index.html").resolve()
+            check.site_links(frozen, site, pages, root, moved)
+            with self.assertRaisesRegex(ValueError, "broken"):
+                check.site_links(frozen, site, pages, root)
+            page(site / "current.html", '<a href="docs/connect/">Connect an agent</a>')
+            pages = check.site_pages(site)
+            with self.assertRaisesRegex(ValueError, "broken"):
+                check.site_links((site / "current.html").resolve(), site, pages, root, frozenset())
+            page(site / "old/v1/index.html", '<a href="../../docs/never-existed/">Gone</a>')
+            pages = check.site_pages(site)
+            with self.assertRaisesRegex(ValueError, "broken"):
+                check.site_links(frozen, site, pages, root, moved)
+
+    def test_moved_pages_are_gone_and_point_to_a_page(self):
+        with tempfile.TemporaryDirectory() as directory:
+            site = Path(directory)
+            page(site / "decks/index.html", '<h1 id="connect">Decks</h1>')
+            pages = check.site_pages(site)
+            for target, message in (("decks/#nowhere", "missing anchor"), ("missing/", "point to a page")):
+                with self.assertRaisesRegex(ValueError, message):
+                    check.moved_pages({"pages": [{"from": "docs/", "to": target, "what": "Docs"}]}, site, pages)
+            page(site / "docs/index.html", "<p>Still here</p>")
+            with self.assertRaisesRegex(ValueError, "must be gone"):
+                check.moved_pages({"pages": [{"from": "docs/", "to": "decks/", "what": "Docs"}]}, site, check.site_pages(site))
+
+    def test_the_real_moved_pages_resolve(self):
+        site = ROOT / "site"
+        listing = check.load(site / "content/moved.json")
+        moved = check.moved_pages(listing, site, check.site_pages(site))
+        self.assertIn((site / "docs/connect/index.html").resolve(), moved)
+        self.assertIn((site / "docs/status/index.html").resolve(), moved)
+
+    def test_current_decks_need_their_source_slides_and_pdf(self):
+        decks = check.load(ROOT / "site/decks.json")
+        site = ROOT / "site"
+        self.assertEqual(3, len(decks["decks"]))
+        frozen = {(site / v["path"] / "index.html").resolve() for v in decks["versions"]}
+        for deck in decks["decks"]:
+            self.assertEqual(1, len(check.current_deck(deck, site, frozen)))
+            for field, value, message in (("downloads", [], "needs its PDF"), ("slides", deck["slides"] + 1, "slide count"),
+                                          ("source", "decks/nowhere/", "needs its source"),
+                                          ("path", "decks/2026-10-29/v4/", "frozen version")):
+                with self.assertRaisesRegex(ValueError, message):
+                    check.current_deck(dict(deck, **{field: value}), site, frozen)
 
     def test_site_links_must_resolve_inside_the_site(self):
         with tempfile.TemporaryDirectory() as directory:

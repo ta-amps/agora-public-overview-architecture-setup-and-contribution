@@ -1,0 +1,30 @@
+{
+  "v": 4,
+  "createdOnFiles": {"v": 1, "at": "2026-10-30T04:00:00Z"},
+  "lists": "css",
+  "title": "Overview and architecture",
+  "cover": "cover",
+  "order": ["cover", "problem", "nouns-and-verbs", "feeds", "seed-packs", "map", "tessera", "herma", "learning", "evidence", "repos", "limits"],
+  "sections": {
+    "s1": {"description": "The problem, and the idea", "start": "cover"},
+    "s2": {"description": "How the pieces fit", "start": "seed-packs"},
+    "s3": {"description": "What works, and what doesn’t yet", "start": "learning"}
+  },
+  "faces": {
+    "space-grotesk": {"family": "Space Grotesk", "href": "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400..700&display=swap"},
+    "ibm-plex-sans": {"family": "IBM Plex Sans", "href": "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap"},
+    "jetbrains-mono": {"family": "JetBrains Mono", "href": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap"}
+  },
+  "designSystems": [],
+  "page": {
+    "title": "Overview and architecture | ta-amps",
+    "heading": "Overview and architecture",
+    "summary": "Why AI work is wasted, how nouns and verbs fix it, the map, Tessera and Herma, measured learning and honest limits.",
+    "description": "The ta-amps overview deck: why AI work is frustratingly dumb, how nouns, verbs and feeds fix it, the map of the six repos, Tessera and Herma, measured learning results and honest limits.",
+    "intro": "A deck for anyone new to ta-amps. Every number on these slides is listed below with its source, and every result comes from synthetic tasks.",
+    "date": "2026-10-30",
+    "date_text": "October 30, 2026",
+    "pdf": "ta-amps-overview-and-architecture.pdf",
+    "pdf_title": "ta-amps · Overview and architecture (October 30, 2026)"
+  }
+}

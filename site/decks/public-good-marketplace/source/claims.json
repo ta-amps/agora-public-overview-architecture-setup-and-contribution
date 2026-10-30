@@ -1,0 +1,31 @@
+{
+  "about": "Every number on these slides, with its source. All examples use synthetic data.",
+  "as_of": "2026-10-30",
+  "claims": [
+    {
+      "slide": "two-ways",
+      "number": "Verb requests: donated agents deliver cited, reviewed results from public information",
+      "status": "planned",
+      "source": "Coming next: the request flow is being built, and none has been delivered yet. The guardrails on the slide are the rules such work follows."
+    },
+    {
+      "slide": "status",
+      "number": "Five example kits pass build, check and review on a local computer",
+      "status": "measured",
+      "source": "Eranos runs all five example kits through building, checking, independent review and publishing to a local catalog, with synthetic data. One sensitive kit waits for a steward's sign-off and then resumes. No hosted volunteer run is claimed.",
+      "link": "https://github.com/ta-amps/eranos-public-marketplace-for-public-good-token-burn/blob/main/docs/status.md"
+    },
+    {
+      "slide": "status",
+      "number": "Hosted volunteer runs",
+      "status": "planned",
+      "source": "Volunteers' agents have not yet taken real tasks through the live site. No nonprofit is claimed to use a kit."
+    },
+    {
+      "slide": "ngo-steps",
+      "number": "Sign-up, requests and tracking on the site",
+      "status": "planned",
+      "source": "Coming next: being built now. Today the kit catalog is live, and requests go through a public form on GitHub."
+    }
+  ]
+}
