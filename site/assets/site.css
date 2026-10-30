@@ -1154,3 +1154,6 @@ tbody th { font-weight: 600; }
 @media (max-width: 40rem) {
   .film-line { grid-template-columns: minmax(0, 1fr); gap: var(--space-1); }
 }
+
+.film-board img { display: block; width: 100%; height: auto; border: 1px solid var(--color-rule-strong); border-radius: var(--radius-2); background: var(--color-paper); }
+.film-board figcaption { margin-top: var(--space-3); font-size: var(--text-small); color: var(--color-ink-2); max-width: 78ch; }
