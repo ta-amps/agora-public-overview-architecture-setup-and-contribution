@@ -33,24 +33,24 @@
       "bytes": 2000577
     },
     {
-      "path": "video/2026-10-30/short/eranos-60s.mp4",
-      "sha256": "1fc2b44d9b57da71af6024d69334ce3e80985bfa7193ff39ac2cb865a88fd417",
-      "bytes": 16641769
+      "path": "video/2026-10-30/short-v2/eranos-60s.mp4",
+      "sha256": "ac84820a99eaa2e8bfebd2abf049e0175ef4d035f96421ef26030b8b650517ce",
+      "bytes": 17206643
     },
     {
-      "path": "video/2026-10-30/short/eranos-60s-poster.png",
-      "sha256": "1d62f523feaa1b07d867ea856ebefcdf6560f5eec3c033d118e5ca4c3206da34",
-      "bytes": 224364
+      "path": "video/2026-10-30/short-v2/eranos-60s-poster.png",
+      "sha256": "13370edc106c5f7229b01e8dfe88530a0fa29600f722c2ef3ccd02f76bf04fa9",
+      "bytes": 225662
     },
     {
-      "path": "video/2026-10-30/full/eranos-3m.mp4",
-      "sha256": "2fe24b1e5e8267c461b2edabf13e07eeeb0c633962e18f91a258f5a8f7d9a10f",
-      "bytes": 34742093
+      "path": "video/2026-10-30/full-v2/eranos-3m.mp4",
+      "sha256": "14aa3f163a434436dfa1447c179ac921edcfe37880f27d5d8c95aac687d24030",
+      "bytes": 33723327
     },
     {
-      "path": "video/2026-10-30/full/eranos-3m-poster.png",
-      "sha256": "e7d66165878370a899f287f9e871875e409be0bfe9b5c117fe709ce40e39dfcd",
-      "bytes": 256685
+      "path": "video/2026-10-30/full-v2/eranos-3m-poster.png",
+      "sha256": "bb9dc69c7aac53e6bfb74a4273ee8b29736d402c04b0245a8a52cbdf9ee961d3",
+      "bytes": 256475
     }
   ]
 }
