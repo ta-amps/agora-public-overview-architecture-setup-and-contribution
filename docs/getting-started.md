@@ -28,7 +28,8 @@ Use Tessera for shared work/storage, Herma for optional context or its explicit 
 | Mode | Suitable use | Boundary |
 | --- | --- | --- |
 | Open deterministic tools | Discovery and supported computations | Use the exposed schemas and limits; no account-wide access follows |
-| Tracked anonymous session | Synthetic practice and compatibility experiments | Server-assigned namespace, short lifetime, quotas and private bearer token |
+| Tracked anonymous session | Synthetic practice and compatibility experiments; since October 30, 2026, also verbs tagged `open:anonymous` in the shared `main` namespace | Server-assigned namespace, short lifetime, quotas and private bearer token; results wait for a different keyed reviewer, and review and publishing queues stay closed |
+| Self-serve requester key | An organization filing its own requests, since October 30, 2026 | Writes nouns only in its own `org.` stores, files requests only on `eq01` and reads only what it filed; the profile holds no personal data |
 | Administrator-issued Tessera key | Authorized persistent or scoped work | Queue, operation, ownership and effect grants apply on every access |
 | Configured Herma caller | Permitted context and explicitly enabled model interfaces | Herma's caller and provider policy applies; it does not replace fabric authorization |
 

@@ -36,9 +36,9 @@
         {
           "format": "pdf",
           "path": "decks/public-good-marketplace/ta-amps-public-good-marketplace.pdf",
-          "sha256": "b7ce28547981e29a35edcfafa1f5258fb171cfb00ec7ea13ee50bda296da65e5",
-          "bytes": 351525,
-          "printed_from_main_sha256": "9345a5728971ff57b8c355363a6dbf0d0301cc9ef8eb20b478cb95893c3ba7e9"
+          "sha256": "82fc9f6faee5ea62cd573ea56b642d074a19ed8e01186155d50f26ea9c2e884a",
+          "bytes": 379538,
+          "printed_from_main_sha256": "1fe1b56de806f64a06b436807b3636b3570f874f6b3f827aacaa8df2ca5f0291"
         }
       ]
     },
@@ -50,13 +50,14 @@
       "source": "decks/roll-your-own/source/",
       "slides": 11,
       "unbranded": true,
+      "claim_review": "decks/roll-your-own/source/claims.json",
       "downloads": [
         {
           "format": "pdf",
           "path": "decks/roll-your-own/ta-amps-roll-your-own.pdf",
-          "sha256": "ef5e63d6a6f374b835a30704c2e06a35cc8cb75bbf6277b4c79cd3bbd4da0ef1",
+          "sha256": "66eea49dca2ab89af0bb18b12dd48a5f16b05ada425e91ef32709d02f07cce4d",
           "bytes": 374650,
-          "printed_from_main_sha256": "abc653b6cd09aa6f1eed1a2d575e4329bbff9c9af62098b5a1c5d667acb839b1"
+          "printed_from_main_sha256": "3cae0b09e4aa3eaa10c96b0fc2cd03fd3e806486b7167ce9f474fc99b7d40514"
         }
       ]
     },
@@ -73,9 +74,9 @@
         {
           "format": "pdf",
           "path": "decks/server-workers/ta-amps-server-workers.pdf",
-          "sha256": "7790bbdae38d53c783932bde66b97b3ec66434d668df5442cd71a96b147e93ff",
-          "bytes": 384448,
-          "printed_from_main_sha256": "2e1564195a8fd9292584fe8eb7460be5f2815894abe779cfa8a274b59f070427"
+          "sha256": "9297509a2103714666ab5a553fb18e3d4c54f851efce791bb17e9a4aa9a7b0c1",
+          "bytes": 389766,
+          "printed_from_main_sha256": "bca6734c482b207deb7fc603bd5e244aab559e1e1fbf41a21d4531c9259e8f66"
         }
       ]
     },

@@ -52,6 +52,14 @@ The [status report](docs/status.md) records exact revisions, CI, deployment
 versions, successful and rejected provider attempts, and limits. Agora is the
 ninth public repository and contains documentation and offline validation only.
 
+**Update, October 30, 2026, 07:09 UTC:** Tessera and Eranos were redeployed at
+06:53 and 06:55 UTC. Public read-only GETs confirmed open verbs, self-serve
+requester keys, a Tessera `llms.txt` that names all 37 tools, Eranos's one-box
+requests, and 14 example kits run on a desktop computer, 5 of them in the
+hosted catalog. What is live and what comes next is on the [marketplace](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/decks/public-good-marketplace/#status)
+and [server-workers](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/decks/server-workers/#status)
+decks' dated status slides; the rest of this section is the October 29 snapshot.
+
 ## The repositories
 
 | Repository | Responsibility | Use it for |

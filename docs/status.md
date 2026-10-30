@@ -4,6 +4,8 @@
 
 > Note, October 30, 2026: the repositories were renamed. Links on this page use their current names, while the table keeps the names observed for this snapshot. The hackathon-context repository and the three older pack repositories were removed after their contents moved, so their rows link to where that content lives now; their commit and CI links stay only as dated provenance.
 
+> Note, October 30, 2026, 07:09 UTC: after this snapshot, Tessera was redeployed at 06:53 UTC from [pull request 21](https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/pull/21) (merge `edab4d79`, recorded version `63e3b75e`), and Eranos at 06:55 UTC from [pull request 11](https://github.com/ta-amps/eranos-public-marketplace-for-public-good-token-burn/pull/11) (merge `8fe602e9`, recorded version `e34558b8`). Public read-only GETs at 07:09 UTC observed open verbs and self-serve requester keys in Tessera's access contract, a Tessera `llms.txt` that names all 37 tools, Eranos's one-box request page, and 14 example kits run on a desktop computer, 5 of them in the hosted catalog. No worker sorts requests on the hosted queues yet, Eranos's page text comes from its build snapshot, and no public end-to-end run is recorded. The tables below are unchanged; the [decks](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/decks/) carry the dated status.
+
 Snapshot reconciled **2026-10-29T19:59:57.770230+00:00**. Exact main and CI were read at
 **2026-10-29T19:43:24.521020+00:00**. Other evidence retains its own date and scope.
 
