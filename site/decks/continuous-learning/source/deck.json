@@ -1,0 +1,29 @@
+{
+  "v": 4,
+  "createdOnFiles": {"v": 1, "at": "2026-10-30T07:00:00Z"},
+  "lists": "css",
+  "title": "Post-training tuning and continuous learning",
+  "cover": "cover",
+  "order": ["cover", "why", "loop", "pre-registration", "small-models", "glimmer-30b", "learners", "free-gpus", "safety", "limits"],
+  "sections": {
+    "s1": {"description": "Why keep learning, and how", "start": "cover"},
+    "s2": {"description": "What we measured", "start": "small-models"},
+    "s3": {"description": "How it runs, the rules, and the limits", "start": "learners"}
+  },
+  "faces": {
+    "space-grotesk": {"family": "Space Grotesk", "href": "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400..700&display=swap"},
+    "ibm-plex-sans": {"family": "IBM Plex Sans", "href": "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap"},
+    "jetbrains-mono": {"family": "JetBrains Mono", "href": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap"}
+  },
+  "designSystems": [],
+  "page": {
+    "title": "Post-training tuning and continuous learning | ta-amps",
+    "heading": "Post-training tuning and continuous learning",
+    "summary": "How the system keeps learning after it ships: the tuning loop, tests fixed before scoring, results measured on 1B, 3B and 30B models, learners, free GPUs, safety and limits.",
+    "description": "The learning deck: why training alone doesn’t fix a model, the tuning loop as nouns and verbs, pre-registered frozen tests, measured results for Llama 3.2 1B and 3B and Muse Glimmer 30B, learners for memory, paths and routing, running it on free GPUs, safety and rollback, and honest limits.",
+    "date": "2026-10-30",
+    "date_text": "October 30, 2026",
+    "pdf": "ta-amps-continuous-learning.pdf",
+    "pdf_title": "ta-amps · Post-training tuning and continuous learning (October 30, 2026)"
+  }
+}

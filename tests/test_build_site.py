@@ -130,7 +130,7 @@ class Builder(unittest.TestCase):
         self.assertEqual(1, main.count("<video"))
         self.assertIn('kind="captions"', main)
         self.assertIn(" default>", main)
-        self.assertEqual(4, main.count('class="deck-card"'))
+        self.assertEqual(5, main.count('class="deck-card"'))
         self.assertLess(home.index('class="agent-banner"'), home.index("<video"))
 
     def test_nonprofits_never_choose_a_kind_of_request(self):
@@ -197,6 +197,58 @@ class Builder(unittest.TestCase):
             path, _, anchor = item["to"].partition("#")
             if anchor:
                 self.assertIn(f'class="slide-frame" id="{anchor}"', self.outputs[build.SITE / path / "index.html"])
+
+    def test_learning_is_a_tab_of_agora_built_from_its_noun(self):
+        # A page of Agora, not a new surface: the header reads Home, Decks, Use cases, Learning.
+        self.assertEqual(["Home", "Decks", "Use cases", "Learning"], [item["label"] for item in self.nouns.site["nav"]])
+        page = self.outputs[build.SITE / "learning" / "index.html"]
+        self.assertIn('<a href="../learning/" aria-current="page">Learning</a>', page)
+        main = build.main_of(page)
+        # Every word the learning page shows, outside the shared header and footer, is a string of its noun.
+        written = set(strings(self.nouns.learning))
+        for shown in shown_text(main):
+            self.assertIn(shown, written)
+        # The loop is an ordered list of its steps, in the noun's order.
+        steps = [step["verb"] for step in self.nouns.learning["loop"]["steps"]]
+        self.assertEqual(len(steps), main.count('<li class="loop-step">'))
+        places = [main.index(f'<h3 class="loop-verb">{build.text(step)}</h3>') for step in steps]
+        self.assertEqual(sorted(places), places)
+        # Every measured result links to public evidence, and the build refuses one that doesn't.
+        for item in self.nouns.learning["results"]["items"]:
+            self.assertTrue(item["link"].startswith("https://github.com/ta-amps/"), item["model"])
+            self.assertIn(f'href="{html.escape(item["link"])}"', main)
+        nouns = copy.copy(self.nouns)
+        nouns.learning = copy.deepcopy(self.nouns.learning)
+        nouns.learning["results"]["items"][0]["link"] = "notes.md"
+        with self.assertRaises(build.BuildError):
+            build.render_learning(nouns)
+
+    def test_the_learning_page_and_deck_give_the_same_numbers(self):
+        deck = next(deck for deck in self.nouns.decks if deck["id"] == "continuous-learning")
+        claims = deck["claims"]["claims"]
+        for item in self.nouns.learning["results"]["items"]:
+            about = [claim for claim in claims if item["model"] in claim["number"]]
+            exact = [claim for claim in about if item["before"] in claim["number"] and item["after"] in claim["number"]]
+            self.assertTrue(exact, item["model"])
+            for claim in exact:
+                self.assertEqual(("measured", item["link"]), (claim["status"], claim["link"]), item["model"])
+            listed = " ".join(claim["number"] for claim in about)
+            for number in re.findall(r"\d+(?:\.\d+)?", item["line"]):
+                self.assertIn(number, listed, (item["model"], number))
+
+    def test_every_number_in_the_learning_deck_has_a_claim_with_public_evidence(self):
+        deck = next(deck for deck in self.nouns.decks if deck["id"] == "continuous-learning")
+        claims = deck["claims"]["claims"]
+        for claim in claims:
+            self.assertTrue(claim["link"].startswith("https://github.com/ta-amps/"), claim["number"])
+        # Model and GPU names, the loop's step labels and the date are names, not numbers to source.
+        names = re.compile(r"Llama 3\.2 [13]B|\b(?:1|3|30)B\b|RTX 3060|\bT4s?\b|October 30, 2026|(?<![\d.])0[1-8](?![\d.])",
+                           re.I)
+        for slide in deck["slides"]:
+            listed = " ".join(claim["number"] for claim in claims if claim["slide"] == slide["name"])
+            for part in (build.plain_text(slide["inner"]), build.plain_text(slide["notes"])):
+                for number in re.findall(r"\d+(?:[.,]\d+)?", names.sub(" ", part)):
+                    self.assertIn(number, listed, (slide["name"], number))
 
 
 if __name__ == "__main__":

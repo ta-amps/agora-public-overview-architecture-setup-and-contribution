@@ -1,0 +1,176 @@
+{
+  "about": "The learning page, as one noun: what continuous learning means here, the loop, the measured results with their evidence, the safety rules, the limits and how to run it. scripts/build_site.py renders it into site/learning/index.html. Its numbers are measured claims of the learning deck, site/decks/continuous-learning/source/claims.json, and a test keeps the two equal.",
+  "title": "Learning | ta-amps",
+  "description": "How ta-amps keeps learning after deployment: learners turn execution reports into memory, path statistics and routing advice, and small open models are tuned on checked examples. The loop, measured results, safety rules, limits and how to run it.",
+  "heading": "Learning",
+  "lead": "Every finished verb leaves a checked result. This is how the system learns from those results after it ships, what has been measured so far, and the rules that keep it honest.",
+  "dateline": "Results from synthetic tasks, measured on October 29, 2026. Nothing here has been promoted, admitted or deployed.",
+  "deck": {
+    "href": "decks/continuous-learning/",
+    "label": "The learning deck"
+  },
+  "meaning": {
+    "heading": "What continuous learning means here",
+    "kinds": {
+      "noun": "Noun",
+      "verb": "Verb"
+    },
+    "items": [
+      {
+        "kind": "noun",
+        "name": "Checked results",
+        "text": "Every finished verb leaves a result with a receipt, and Tessera records how the run went. Workers can add a report of what went right and what went wrong."
+      },
+      {
+        "kind": "verb",
+        "name": "Learners",
+        "text": "Learner runs turn execution reports into memory of similar past work, statistics on which paths succeed, and routing advice. What they write is advice, never a permission."
+      },
+      {
+        "kind": "verb",
+        "name": "Tuning after deployment",
+        "text": "Small open models are tuned on checked examples of one job, and a tuned model replaces its base only when a rule fixed in advance says it wins. So far the examples are synthetic."
+      }
+    ],
+    "note": "Learning is nouns and verbs too: an authorized worker claims each learner run and each tuning step, and everything they write is a versioned noun. There is no hidden learning service."
+  },
+  "loop": {
+    "heading": "The loop",
+    "lead": "One round of tuning. Each step is a verb that an authorized worker claims, and each leaves a noun behind.",
+    "leaves": "Leaves:",
+    "steps": [
+      {
+        "verb": "Generate examples",
+        "noun": "Example batches",
+        "text": "Templates fill typed slots and compute every label. No model writes a request, an example or a label."
+      },
+      {
+        "verb": "Curate",
+        "noun": "A training set",
+        "text": "Repeated rows, and rows that match a test row, its request or its template, are rejected with a reason."
+      },
+      {
+        "verb": "Freeze a test set",
+        "noun": "Frozen tests",
+        "text": "Whole tool families are held out of training, and the test’s hashes are recorded before any model sees it."
+      },
+      {
+        "verb": "Train an adapter",
+        "noun": "A candidate adapter",
+        "text": "A small add-on trains on top of the base model. The base itself never changes."
+      },
+      {
+        "verb": "Evaluate",
+        "noun": "Evaluation runs",
+        "text": "The candidate, the current champion and the unchanged base are scored on the same rows."
+      },
+      {
+        "verb": "Decide by the rule",
+        "noun": "A decision",
+        "text": "The promotion rule, fixed in advance, asks for a real gain and no drop in valid output, refusals or general skills."
+      },
+      {
+        "verb": "Reload check",
+        "noun": "A reload record",
+        "text": "The saved adapter, loaded onto a fresh copy of the base, must reproduce its replies exactly."
+      },
+      {
+        "verb": "Promote or roll back",
+        "noun": "The champion pointer",
+        "text": "The pointer moves, or the champion stays. Every version is kept, so rolling back is moving the pointer back."
+      }
+    ],
+    "back": "Then the next round starts from the champion, with new examples aimed at its failures."
+  },
+  "results": {
+    "heading": "Measured results",
+    "lead": "Exact match is the share of requests a model answered exactly right: the right tool with correctly typed values, or the right refusal. Nothing is repaired before scoring.",
+    "to": "to",
+    "evidence": "Evidence",
+    "items": [
+      {
+        "model": "Llama 3.2 1B",
+        "before": "12.0%",
+        "after": "50.7%",
+        "line": "Exact match on a frozen, synthetic tool-call test of 150 rows, after two promoted rounds on one local GPU.",
+        "source": "Tessera’s continuous-tuning record",
+        "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md"
+      },
+      {
+        "model": "Llama 3.2 3B",
+        "before": "52.0%",
+        "after": "72.7%",
+        "line": "The same frozen test, after one promoted round in the same loop.",
+        "source": "Tessera’s continuous-tuning record",
+        "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md"
+      },
+      {
+        "model": "Muse Glimmer 30B",
+        "before": "93.3%",
+        "after": "99.3%",
+        "line": "On a fresh 150-row test whose hashes were registered before scoring: +6.0 points, with a 95% CI of +2.0 to +10.7. The promotion rule passed 12 of 12 checks.",
+        "source": "The run record, with every file’s hash",
+        "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/glimmer-30b-2026-10-29/README.md"
+      }
+    ]
+  },
+  "safety": {
+    "heading": "Safety rules",
+    "lead": "Every round follows the same rules. A round that fails any check leaves the champion where it was.",
+    "items": [
+      {
+        "name": "Frozen tests",
+        "text": "Whole tool families are held out of training, and every test set is pinned by its hash, so a score always means the same rows."
+      },
+      {
+        "name": "Pre-registration",
+        "text": "The promotion rule was committed before the first training round, and each fresh test’s hashes are recorded before any model sees it."
+      },
+      {
+        "name": "Contamination checks",
+        "text": "Fingerprints reject any training row that matches a test row, its request or its template."
+      },
+      {
+        "name": "Reload equivalence",
+        "text": "A saved adapter must reload onto a fresh copy of the base and reproduce its replies exactly before it can be promoted."
+      },
+      {
+        "name": "A promotion rule fixed in advance",
+        "text": "A gain whose lower bound is above zero, and no drop in valid output, refusals or general skills. Keeping the base is a valid outcome."
+      },
+      {
+        "name": "Rollback",
+        "text": "Adapters are never overwritten, and the champion is one pointer that keeps every version, so rolling back is moving the pointer back."
+      }
+    ]
+  },
+  "limits": {
+    "heading": "Honest limits",
+    "items": [
+      "Everything is synthetic, with one task per result: typed tool calls for Tessera’s own tools.",
+      "Nothing triggers learning on live traffic yet. Rounds start on demand, and exporting real runs for training is designed, not built.",
+      "Adapter weights aren’t published.",
+      "Nothing has been promoted or admitted. A promotion here moves only a private pointer that the next round compares against.",
+      "The learners are implemented and tested, but they haven’t yet been shown to improve real work."
+    ]
+  },
+  "run": {
+    "heading": "Run it yourself",
+    "text": "Tessera’s continuous-tuning guide has the loop, its commands and its tests. Without a GPU, a stand-in backend runs every verb, receipt and decision on a CPU, so you can check the plumbing first.",
+    "pack": "A seed pack for continuous tuning is being written for the library now. Finished packs are in its packs folder.",
+    "links": [
+      {
+        "href": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md",
+        "label": "The continuous-tuning guide"
+      },
+      {
+        "href": "https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs/tree/main/packs",
+        "label": "The seed-pack library’s packs"
+      },
+      {
+        "href": "decks/continuous-learning/",
+        "label": "The learning deck"
+      }
+    ]
+  }
+}

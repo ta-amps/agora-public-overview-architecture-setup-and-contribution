@@ -6,6 +6,8 @@ Everything a page says is a noun kept as data, and this script holds only markup
   * site/content/home.json            the home page: the draft video, one sentence, the decks;
   * site/content/decks-page.json      the decks page;
   * site/content/use-cases.json       the use cases page;
+  * site/content/learning.json        the learning page: the loop, measured results with evidence, rules, limits;
+  * site/content/film.json            the full film's outline;
   * site/content/earlier-drafts.json  earlier drafts, and the storyboards page;
   * site/content/moved.json           pages that moved, which the not-found page lists;
   * site/decks/<deck>/source/         each deck: deck.json, slides/*.html and an optional claims.json.
@@ -14,7 +16,7 @@ What it writes:
   * every current deck, site/decks/<deck>/index.html, from its source folder. The slide format's custom
     elements become HTML: <x-shape> and <x-icon> become inline SVG, <x-brief> the starting brief and
     <x-endpoints> the endpoint table. Each slide's <aside> becomes its speaker notes;
-  * the home, decks, earlier drafts, storyboards, use cases and not-found pages;
+  * the home, decks, earlier drafts, storyboards, use cases, learning, film and not-found pages;
   * the shared head, header, agent banner and footer, between marker comments, into every other page
     that is not frozen;
   * the "decks" list in site/decks.json. The frozen "versions" entries stay byte-identical.
@@ -74,7 +76,7 @@ MARK = ('<svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true" focu
         '<rect x="18" y="18" width="14" height="14" rx="3" fill="var(--color-noun)"/></svg>')
 
 # Plain shapes drawn for this site: a half-filled circle for light and dark, a terminal for agents,
-# two sheets for copying and a chevron for showing more.
+# two sheets for copying, a chevron for showing more and the decks' block arrow for the learning loop.
 THEME_ICON = ('<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">'
               '<circle cx="12" cy="12" r="8.25" fill="none" stroke="currentColor" stroke-width="1.75"/>'
               '<path d="M12 3.75a8.25 8.25 0 0 1 0 16.5z" fill="currentColor"/></svg>')
@@ -91,7 +93,14 @@ CHEVRON = ('<svg class="chevron" viewBox="0 0 16 16" width="14" height="14" aria
            'focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.75" '
            'stroke-linecap="round" stroke-linejoin="round"/></svg>')
 
-MODE_SCRIPT = ('<script>try{var m=localStorage.getItem("ta-amps-mode");'
+
+def arrow(cls: str) -> str:
+    """The block arrow the slides draw, pointing right; a page's styles turn it to point anywhere else."""
+    return (f'<svg class="{cls}" viewBox="0 0 28 24" width="28" height="24" aria-hidden="true" focusable="false">'
+            '<path d="M0 6H17.36V0L28 12L17.36 24V18H0Z" fill="currentColor"/></svg>')
+
+
+MODE_SCRIPT =('<script>try{var m=localStorage.getItem("ta-amps-mode");'
                'if(m==="dark"||m==="light")document.documentElement.dataset.mode=m}catch(e){}'
                'document.documentElement.classList.add("js")</script>')
 
@@ -142,6 +151,7 @@ class Nouns:
         self.decks_page = load_json(CONTENT / "decks-page.json")
         self.uses = load_json(CONTENT / "use-cases.json")
         self.film = load_json(CONTENT / "film.json")
+        self.learning = load_json(CONTENT / "learning.json")
         self.drafts = load_json(CONTENT / "earlier-drafts.json")
         self.moved = load_json(CONTENT / "moved.json")
         self.manifest = load_json(MANIFEST)
@@ -855,6 +865,72 @@ def render_use_cases(nouns: Nouns) -> str:
     return page_shell(uses["title"], uses["description"], main)
 
 
+def learn_part(key: str, heading: str, lead: str, body: str) -> str:
+    """One section of the learning page: its heading, an optional lead, then its body."""
+    intro = f"<p>{text(lead)}</p>" if lead else ""
+    return (f'<section class="learn-part" aria-labelledby="{key}"><div class="learn-head"><h2 id="{key}">'
+            f"{text(heading)}</h2>{intro}</div>{body}</section>")
+
+
+def render_learning(nouns: Nouns) -> str:
+    """The learning page: what continuous learning means here, the loop, the measured results with their evidence,
+    the safety rules, the limits and how to run it. A page of Agora, not a surface of its own. Every word comes from
+    site/content/learning.json, and every measured result links to public evidence. The loop's step numbers are a
+    CSS counter, so the ordered list carries them."""
+    page = nouns.learning
+    prefix = "../"
+    meaning, loop, results, run = page["meaning"], page["loop"], page["results"], page["run"]
+    for item in results["items"]:
+        if not item.get("link", "").startswith("https://github.com/ta-amps/"):
+            fail(f"learning.json: the {item['model']} result needs a public evidence link")
+    means = "".join(
+        f'<li class="learn-mean {attr(item["kind"])}"><p class="learn-kind">{text(meaning["kinds"][item["kind"]])}</p>'
+        f'<h3>{text(item["name"])}</h3><p class="learn-text">{text(item["text"])}</p></li>' for item in meaning["items"])
+    steps = "".join(
+        f'<li class="loop-step"><h3 class="loop-verb">{text(step["verb"])}</h3>'
+        f'<p class="loop-noun"><span class="visually-hidden">{text(loop["leaves"])} </span>{text(step["noun"])}</p>'
+        f'<p class="loop-text">{text(step["text"])}</p>{arrow("loop-arrow")}</li>' for step in loop["steps"])
+    cards = "".join(
+        f'<li class="result"><p class="result-model">{text(item["model"])}</p>'
+        f'<p class="result-figure"><span class="result-before">{text(item["before"])}</span>'
+        f'<span class="visually-hidden"> {text(results["to"])} </span>{arrow("result-arrow")}'
+        f'<span class="result-after">{text(item["after"])}</span></p>'
+        f'<p class="result-line">{text(item["line"])}</p>'
+        f'<p class="result-evidence"><span>{text(results["evidence"])}</span> '
+        f'<a href="{attr(item["link"])}">{text(item["source"])}</a></p></li>' for item in results["items"])
+    rules = "".join(f"<li><h3>{text(rule['name'])}</h3><p>{text(rule['text'])}</p></li>" for rule in page["safety"]["items"])
+    limits = "".join(f"<li>{text(limit)}</li>" for limit in page["limits"]["items"])
+    main = "\n".join([
+        '<main id="main">',
+        '<div class="wrap page-head">',
+        f"<h1>{text(page['heading'])}</h1>",
+        f'<p class="lead">{text(page["lead"])}</p>',
+        f'<p class="dateline">{text(page["dateline"])}</p>',
+        f'<p class="learn-actions"><a class="button secondary" href="{use_href(page["deck"]["href"], prefix)}">'
+        f'{text(page["deck"]["label"])}</a></p>',
+        "</div>",
+        '<div class="wrap learn">',
+        learn_part("meaning", meaning["heading"], "",
+                   f'<ol class="learn-means">{means}</ol><p class="learn-note">{text(meaning["note"])}</p>'),
+        learn_part("loop", loop["heading"], loop["lead"],
+                   f'<ol class="loop">{steps}</ol><p class="loop-back">{text(loop["back"])}</p>'),
+        learn_part("results", results["heading"], results["lead"], f'<ul class="results">{cards}</ul>'),
+        learn_part("safety", page["safety"]["heading"], page["safety"]["lead"], f'<ul class="safety">{rules}</ul>'),
+        learn_part("limits", page["limits"]["heading"], "", f'<ul class="learn-limits">{limits}</ul>'),
+        '<section class="learn-run" aria-labelledby="run">',
+        '<div class="learn-run-text">',
+        f'<h2 id="run">{text(run["heading"])}</h2>',
+        f'<p>{text(run["text"])}</p>',
+        f'<p>{text(run["pack"])}</p>',
+        "</div>",
+        f'<p class="use-links">{"".join(use_link(item, prefix) for item in run["links"])}</p>',
+        "</section>",
+        "</div>",
+        "</main>",
+    ])
+    return page_shell(page["title"], page["description"], main)
+
+
 def render_not_found(nouns: Nouns) -> str:
     moved = nouns.moved
     page = moved["not_found"]
@@ -964,6 +1040,7 @@ def outputs_for(nouns: Nouns) -> dict[Path, str]:
     generated[SITE / "use-cases" / "index.html"] = render_use_cases(nouns)
     generated[SITE / "storyboards" / "index.html"] = render_storyboards(nouns)
     generated[SITE / "film" / "index.html"] = render_film(nouns)
+    generated[SITE / "learning" / "index.html"] = render_learning(nouns)
     generated[SITE / "404.html"] = render_not_found(nouns)
     if set(generated) & nouns.frozen:
         fail("a frozen page is never written")

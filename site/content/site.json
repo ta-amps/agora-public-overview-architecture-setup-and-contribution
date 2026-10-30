@@ -7,7 +7,8 @@
     "overview-and-architecture",
     "public-good-marketplace",
     "roll-your-own",
-    "server-workers"
+    "server-workers",
+    "continuous-learning"
   ],
   "nav": [
     {
@@ -24,6 +25,11 @@
       "section": "use-cases",
       "href": "use-cases/",
       "label": "Use cases"
+    },
+    {
+      "section": "learning",
+      "href": "learning/",
+      "label": "Learning"
     }
   ],
   "banner": {
@@ -111,6 +117,10 @@
       {
         "href": "use-cases/",
         "label": "Use cases"
+      },
+      {
+        "href": "learning/",
+        "label": "Learning"
       },
       {
         "href": "decks/earlier-drafts/",

@@ -17,8 +17,8 @@
         {
           "format": "pdf",
           "path": "decks/overview-and-architecture/ta-amps-overview-and-architecture.pdf",
-          "sha256": "9397d43b2ef35ea11900b9626ea99d0fccd2ff50a3a2443f1c252177d0ee41df",
-          "bytes": 377690,
+          "sha256": "8a6612af5b08cfdfae3aa0c1bc4b4a9a2a76b7dd9eda919d4cc8887a558f1cbf",
+          "bytes": 377229,
           "printed_from_main_sha256": "cc3bfe43d3770ad0531bb541558abd95954aa84d85ded88749ec430bdf36ab64"
         }
       ]
@@ -36,7 +36,7 @@
         {
           "format": "pdf",
           "path": "decks/public-good-marketplace/ta-amps-public-good-marketplace.pdf",
-          "sha256": "a3f204ec1ed05c0b6de837dcb3c3150e6faa87b870d1ae3a18e5f1fa7d0d8efc",
+          "sha256": "b7ce28547981e29a35edcfafa1f5258fb171cfb00ec7ea13ee50bda296da65e5",
           "bytes": 351525,
           "printed_from_main_sha256": "9345a5728971ff57b8c355363a6dbf0d0301cc9ef8eb20b478cb95893c3ba7e9"
         }
@@ -54,7 +54,7 @@
         {
           "format": "pdf",
           "path": "decks/roll-your-own/ta-amps-roll-your-own.pdf",
-          "sha256": "723f72e8627fa2ee97826351e6c401e1021c79809a38c22e9402c0ce592e14aa",
+          "sha256": "ef5e63d6a6f374b835a30704c2e06a35cc8cb75bbf6277b4c79cd3bbd4da0ef1",
           "bytes": 374650,
           "printed_from_main_sha256": "abc653b6cd09aa6f1eed1a2d575e4329bbff9c9af62098b5a1c5d667acb839b1"
         }
@@ -73,9 +73,28 @@
         {
           "format": "pdf",
           "path": "decks/server-workers/ta-amps-server-workers.pdf",
-          "sha256": "7c21e7456c19950615e17ff568b941ec7837e663431a230986d9eff04dea4da2",
+          "sha256": "7790bbdae38d53c783932bde66b97b3ec66434d668df5442cd71a96b147e93ff",
           "bytes": 384448,
           "printed_from_main_sha256": "2e1564195a8fd9292584fe8eb7460be5f2815894abe779cfa8a274b59f070427"
+        }
+      ]
+    },
+    {
+      "id": "continuous-learning",
+      "title": "Post-training tuning and continuous learning",
+      "date": "2026-10-30",
+      "path": "decks/continuous-learning/",
+      "source": "decks/continuous-learning/source/",
+      "slides": 10,
+      "unbranded": true,
+      "claim_review": "decks/continuous-learning/source/claims.json",
+      "downloads": [
+        {
+          "format": "pdf",
+          "path": "decks/continuous-learning/ta-amps-continuous-learning.pdf",
+          "sha256": "888a93e9986eeabcacddefd0644a2cf228e9d84d7d4c12418042758094378d77",
+          "bytes": 360584,
+          "printed_from_main_sha256": "9d27f69e878553ff09cfdea74ce0500db5d49813de985fd4012c08a15cfed29e"
         }
       ]
     }
