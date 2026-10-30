@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Draft animatic | ta-amps</title>
+<meta name="description" content="The first animated 60-second draft of the Eranos video, with its quality checks and labels.">
+<!-- site:head -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;600&amp;family=Space+Grotesk:wght@400..700&amp;display=swap">
+<link rel="stylesheet" href="../../../assets/site.css">
+<link rel="icon" href="../../../assets/mark.svg" type="image/svg+xml">
+<script>try{var m=localStorage.getItem("ta-amps-mode");if(m==="dark"||m==="light")document.documentElement.dataset.mode=m}catch(e){}document.documentElement.classList.add("js")</script>
+<!-- /site:head -->
+</head>
+<body>
+<!-- site:header -->
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+<div class="wrap">
+<a class="wordmark" href="../../../"><svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="0" y="0" width="14" height="14" rx="3" fill="var(--color-noun)"/><rect x="18" y="0" width="14" height="14" rx="3" fill="var(--color-verb)"/><rect x="0" y="18" width="14" height="14" rx="3" fill="var(--color-rule-strong)"/><rect x="18" y="18" width="14" height="14" rx="3" fill="var(--color-noun)"/></svg><span>ta-amps</span></a>
+<nav class="site-nav" aria-label="Site">
+<ul><li><a href="../../../decks/2026-10-29/v4/">Deck</a></li><li><a href="../../../storyboards/">Storyboard</a></li><li><a href="../../../docs/">Docs</a></li><li><a href="../../../contribute/">Contribute</a></li></ul>
+</nav>
+<button class="mode-toggle" type="button" data-mode-toggle aria-pressed="false" hidden>Dark mode</button>
+</div>
+</header>
+<!-- /site:header -->
+<main id="main">
+<div class="wrap doc">
+<div class="prose">
+<h1 class="doc-title">Draft animatic: the 60-second cut</h1>
+<p class="lead">A first animated draft of the Eranos video, made with the video and motion seed pack’s render and check verbs. It follows the storyboard: spare AI capacity, a nonprofit’s need, a volunteer’s agent building a kit, an independent review, and the kit in use.</p>
+<figure>
+<video controls preload="metadata" playsinline style="width:100%;height:auto;border-radius:12px;background:#000">
+<source src="eranos-animatic-60s.mp4" type="video/mp4">
+<track kind="captions" src="eranos-animatic-60s.vtt" srclang="en" label="English" default>
+</video>
+<figcaption>Captions are on by default. A version with captions burned into the picture is linked below.</figcaption>
+</figure>
+
+<h2 id="labels">What is real, and what is not yet</h2>
+<ul>
+<li>This is a draft. Every frame says so.</li>
+<li>The voice is AI-generated, made by an open text-to-speech model on a local computer. Taylor will record the final voiceover.</li>
+<li>The interface shots are illustrations, not screen captures. The final cut will film a real kit task on the live site.</li>
+<li>All example data is synthetic.</li>
+<li>The closing line, that the whole video was made from nouns and verbs, is labeled planned. It counts only when the production run leaves a receipt for every step.</li>
+<li>The music is a quiet piano bed made for this draft.</li>
+</ul>
+
+<h2 id="checks">Quality checks</h2>
+<p>The video pack’s check verb measured both files. The caption-free master fails the caption check by design, because its captions are a separate file.</p>
+<div class="table-scroll">
+<table class="map-table">
+<thead><tr><th>Check</th><th>Master</th><th>Burned-in captions</th></tr></thead>
+<tbody>
+<tr><td>container_and_streams</td><td>pass</td><td>pass</td></tr>
+<tr><td>duration_and_frames</td><td>pass</td><td>pass</td></tr>
+<tr><td>frame_hash_spot_checks</td><td>pass</td><td>pass</td></tr>
+<tr><td>black_frames</td><td>pass</td><td>pass</td></tr>
+<tr><td>frozen_frames</td><td>pass</td><td>pass</td></tr>
+<tr><td>integrated_loudness</td><td>pass</td><td>pass</td></tr>
+<tr><td>caption_timing_coverage</td><td>fail</td><td>pass</td></tr>
+<tr><td>synthetic_disclosure</td><td>pass</td><td>pass</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="files">Files</h2>
+<ul>
+<li><a href="eranos-animatic-60s.mp4">Master video, captions as a separate file</a> (MP4, 1920×1080, 60 seconds)</li>
+<li><a href="eranos-animatic-60s-open-captions.mp4">Video with captions burned in</a> (MP4)</li>
+<li><a href="eranos-animatic-60s.vtt">Captions, WebVTT</a> and <a href="eranos-animatic-60s.srt">SRT</a></li>
+<li><a href="contact-sheet-60s.png">Contact sheet: one frame per shot</a></li>
+<li><a href="../../../storyboards/2026-10-29/eranos-video-v1/">The storyboard it follows</a></li>
+</ul>
+
+<h2 id="next">Before the final cut</h2>
+<ul>
+<li>Film a real kit task on the live Eranos site, so the interface shots are real.</li>
+<li>Run the production as verbs on Tessera, so the closing line is backed by receipts.</li>
+<li>Match the site’s colors: nouns in blue, verbs in rust.</li>
+<li>Record Taylor’s voiceover, and make the three-minute cut.</li>
+</ul>
+<p><img src="contact-sheet-60s.png" alt="Contact sheet with one frame from each of the nine shots." style="width:100%;height:auto;border-radius:12px"></p>
+<p class="item-meta">Draft, October 29, 2026. Publishing it here does not certify any claim.</p>
+</div>
+</div>
+</main>
+<!-- site:footer -->
+<footer class="site-footer">
+<div class="wrap">
+<nav aria-label="Footer">
+<ul><li><a href="../../../decks/2026-10-29/v4/">Draft deck</a></li><li><a href="../../../decks/">All deck versions</a></li><li><a href="../../../storyboards/">Video storyboard</a></li><li><a href="../../../docs/">Docs</a></li><li><a href="../../../docs/connect/">Connect an agent</a></li><li><a href="../../../docs/status/">Status and evidence</a></li><li><a href="../../../contribute/">Contribute</a></li></ul>
+</nav>
+<ul aria-label="Elsewhere"><li><a href="https://eranos.ta-amps.workers.dev">Eranos</a></li><li><a href="https://github.com/ta-amps">ta-amps on GitHub</a></li><li><a href="https://github.com/ta-amps/agora">Source of this site</a></li><li><a href="../../../THIRD-PARTY-NOTICES.txt">Third-party notices</a></li></ul>
+<p>A snapshot of October 29, 2026. Drafts and plans are labelled; publishing them here does not certify any claim. Text and code are under the MIT license.</p>
+</div>
+</footer>
+<script src="../../../assets/site.js" defer></script>
+<!-- /site:footer -->
+</body>
+</html>
