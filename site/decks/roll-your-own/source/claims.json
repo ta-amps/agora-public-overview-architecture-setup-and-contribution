@@ -1,0 +1,20 @@
+{
+  "about": "The numbers in these slides' speaker notes, with their sources. Live facts were read from public, read-only endpoints on October 30, 2026 at 07:09 UTC; nothing that changes state was called.",
+  "as_of": "2026-10-30",
+  "claims": [
+    {
+      "slide": "connect",
+      "number": "Open verbs and self-serve requester keys, live since Tessera's redeploy on October 30, 2026 at 06:53 UTC",
+      "status": "measured",
+      "source": "Tessera's access contract at /connect.json, read at 07:09 UTC: a tracked anonymous session may claim, heartbeat and submit verbs tagged open:anonymous in the main namespace, and requester.enabled is true at POST /v1/session/requester. Keyed worker keys stay admin-assisted. Both came in Tessera pull request 21, merge commit edab4d7, deployed at 06:53 UTC as version 63e3b75e. This check signed up for nothing and claimed nothing.",
+      "link": "https://tessera.ta-amps.workers.dev/connect.json"
+    },
+    {
+      "slide": "own-surface",
+      "number": "Self-serve requester keys, live since October 30, 2026, write only in their organization's own space",
+      "status": "measured",
+      "source": "Tessera's access contract at 07:09 UTC: a requester key writes nouns only in its own org. stores, files requests only on eq01 of the shared namespace and reads only its own nouns and the requests it filed. A key for a front end's own namespace is still issued by an operator.",
+      "link": "https://tessera.ta-amps.workers.dev/connect.json"
+    }
+  ]
+}
