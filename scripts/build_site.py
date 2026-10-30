@@ -725,6 +725,18 @@ def render_earlier(nouns: Nouns) -> str:
     return page_shell(page["title"], page["description"], main)
 
 
+def film_board(board: dict | None) -> str:
+    """The storyboard image, linked to its full size, when the film noun has one."""
+    if not board:
+        return ""
+    if not (SITE / board["src"]).is_file():
+        fail(f"film.json: the storyboard is missing: {board['src']}")
+    src = attr("../" + board["src"])
+    return (f'<figure class="film-board"><a href="{src}"><img src="{src}" alt="{attr(board["alt"])}" '
+            f'width="{board["width"]}" height="{board["height"]}" loading="lazy" decoding="async"></a>'
+            f'<figcaption>{text(board["caption"])} <a href="{src}">{text(board["link"])}</a></figcaption></figure>')
+
+
 def render_film(nouns: Nouns) -> str:
     """The full film's outline: its acts, and every narration line with its time and what is on screen."""
     film = nouns.film
@@ -745,6 +757,7 @@ def render_film(nouns: Nouns) -> str:
         '<main id="main">',
         page_head(film["heading"], film["lead"], ("../", film["crumb"])),
         '<div class="wrap film-outline">',
+        film_board(film.get("storyboard")),
         "\n".join(sections),
         f'<p class="film-note">{text(film["note"])}</p>',
         "</div>",

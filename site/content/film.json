@@ -4,7 +4,7 @@
  "description": "The three-minute Eranos film in four acts: spare tokens for good, why AI work is frustratingly dumb and the fix, any project and any agent, and how the film itself was made.",
  "crumb": "Home",
  "heading": "The full film, outlined",
- "lead": "Three minutes in four acts. Every line of narration, when it plays and what is on screen. The render is in progress; this outline comes from the same production plan.",
+ "lead": "Three minutes in four acts. Every line of narration, when it plays and what is on screen, with the storyboard drawn from the production run.",
  "words_label": "Narration",
  "picture_label": "On screen",
  "acts": [
@@ -189,5 +189,13 @@
    "on_screen": "Start at Agora · Point your agent at Eranos"
   }
  ],
- "note": "Narration is an AI voice (Kokoro, af_heart). Every example in the film uses synthetic data, and every number comes from a measured, synthetic task."
+ "note": "Narration is an AI voice (Kokoro, af_heart). Every example in the film uses synthetic data, and every number comes from a measured, synthetic task.",
+ "storyboard": {
+  "src": "video/2026-10-30/storyboard-3m.png",
+  "width": 2680,
+  "height": 3534,
+  "alt": "The storyboard of the three-minute cut: 21 frames, one per shot, each with its time, act and narration line.",
+  "caption": "The storyboard: one frame per shot, drawn by the video's own stage from live captures taken on October 30. The search panel on the fixes slide shows preview data here; the render fills it from the production run's own store.",
+  "link": "Open the full-size storyboard"
+ }
 }
