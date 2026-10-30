@@ -57,6 +57,27 @@
       "status": "measured",
       "source": "Compiled recipes run as plain code; six local deterministic runs are recorded. Making or checking a recipe can still use a model.",
       "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/docs/status.md#training-seeds-and-community-research"
+    },
+    {
+      "slide": "proof",
+      "number": "16 of 16 receipts recompute for the film's production run",
+      "status": "measured",
+      "source": "The film's production ran as 16 claimed tasks of 7 verbs on a local Tessera store, with no model calls. The published bundle's verify.py recomputes every receipt with Tessera's rule, checks that 132 of 151 input pins are outputs of earlier receipted tasks (the rest are setup nouns), and ties all 12 published files to receipts. The store itself is not public.",
+      "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/video-production-2026-10-30/README.md"
+    },
+    {
+      "slide": "proof",
+      "number": "705 of 739 public repos in the event directory scanned into nouns and verbs",
+      "status": "measured",
+      "source": "A deterministic scan (hackscan 1.2.0) cloned each repo shallowly and read its tree without running any code, on October 29, 2026; 34 failed (24 empty, 5 not found or private, 5 timed out). Aggregate counts only.",
+      "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/hackathon-repo-scan-2026-10-29/summary.md"
+    },
+    {
+      "slide": "proof",
+      "number": "58.9% of scanned repos reference Meta's model API; 4.3% use MCP",
+      "status": "measured",
+      "source": "415 of 705 scanned repos contain the text api.meta.ai, and 30 show an MCP signal (an SDK dependency, server code, tool definitions or client config). Mentions are text matches, not proof of use.",
+      "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/hackathon-repo-scan-2026-10-29/summary.md"
     }
   ]
 }
