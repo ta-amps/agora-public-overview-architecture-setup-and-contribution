@@ -5,6 +5,7 @@ import json
 import re
 import tempfile
 import unittest
+from html.parser import HTMLParser
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -16,6 +17,32 @@ SPEC.loader.exec_module(build)
 def slide(folder: Path, name: str, body: str) -> None:
     (folder / "slides").mkdir(parents=True, exist_ok=True)
     (folder / "slides" / f"{name}.html").write_text(f'<section id="{name}" style="color:#111">{body}</section>')
+
+
+def strings(value) -> list[str]:
+    """Every string in a noun, however deeply it sits."""
+    if isinstance(value, str):
+        return [value]
+    items = value.values() if isinstance(value, dict) else value if isinstance(value, list) else []
+    return [found for item in items for found in strings(item)]
+
+
+class ShownText(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__()
+        self.shown: list[str] = []
+
+    def handle_data(self, data: str) -> None:
+        if data.strip():
+            self.shown.append(data.strip())
+
+
+def shown_text(fragment: str) -> list[str]:
+    """The text a page shows, piece by piece, without its markup."""
+    parser = ShownText()
+    parser.feed(fragment)
+    parser.close()
+    return parser.shown
 
 
 class Builder(unittest.TestCase):
@@ -52,20 +79,49 @@ class Builder(unittest.TestCase):
         nouns.home = dict(self.nouns.home, statement={"lead": "Everything is nouns and verbs:", "rest": "A new line."})
         self.assertIn("A new line.", build.render_home(nouns))
         nouns.uses = copy.deepcopy(self.nouns.uses)
-        nouns.uses["ideas"].append({"name": "An idea from data", "line": "One line.", "nouns": ["A noun"], "verbs": ["A verb"]})
-        self.assertIn("An idea from data", build.render_use_cases(nouns))
+        nouns.uses["flagships"][1]["name"] = "A flagship from data"
+        nouns.uses["fields"]["items"].append("A field from data")
+        uses_page = build.render_use_cases(nouns)
+        self.assertIn("A flagship from data", uses_page)
+        self.assertIn("A field from data", uses_page)
         nouns.site = copy.deepcopy(self.nouns.site)
         nouns.site["banner"]["lead"] = "A banner from data."
         self.assertIn("A banner from data.", build.header_block(build.SITE / "index.html", "", nouns))
+        # Every word the use cases page shows, outside the shared header and footer, is a string of its noun.
+        written = set(strings(self.nouns.uses))
+        for shown in shown_text(build.main_of(self.outputs[build.SITE / "use-cases" / "index.html"])):
+            self.assertIn(shown, written)
 
     def test_use_cases_are_ideas_without_status_or_evidence(self):
         uses = self.nouns.uses
-        self.assertEqual("Public-good marketplace", uses["flagship"]["name"])
-        for idea in uses["ideas"]:
-            self.assertLessEqual(set(idea), {"name", "line", "nouns", "verbs", "public"}, idea["name"])
+        self.assertLessEqual(set(uses), {"about", "title", "description", "heading", "lead", "nouns_label", "verbs_label",
+                                         "flagships", "fields"})
+        # The owner's seven flagships, in the owner's order and words; Tokens for Good leads.
+        self.assertEqual(["Tokens for Good", "Motion Graphics and Video Gen", "Feed Systems to Keep Your Agent Informed",
+                          "Shimming Systems", "Code Reusability", "Continuous Learning",
+                          "Long-Horizon Tasks via Atomic Steps and Decentralized Solutioning"],
+                         [" ".join(filter(None, (item["name"], item.get("rest")))) for item in uses["flagships"]])
+        self.assertTrue(uses["flagships"][0]["line"].startswith("Spare tokens for good."))
         page = self.outputs[build.SITE / "use-cases" / "index.html"]
-        self.assertNotIn("claim-status", page)
-        self.assertIn(uses["yours"]["link"]["href"], page)
+        main = build.main_of(page)
+        self.assertEqual(7, main.count('<li class="use-card'))
+        self.assertEqual(1, main.count('<li class="use-card use-lead">'))
+        self.assertLess(main.index("use-lead"), main.index(uses["flagships"][1]["name"]))
+        for item in uses["flagships"]:
+            # An idea is a name, a line or two, example nouns and verbs and where to read more: no status, badge or evidence.
+            self.assertLessEqual(set(item), {"name", "rest", "line", "detail", "nouns", "verbs", "links"}, item["name"])
+            self.assertTrue(3 <= len(item["nouns"]) <= 5 and 3 <= len(item["verbs"]) <= 5, item["name"])
+            self.assertTrue(1 <= len(item["links"]) <= 2, item["name"])
+            words = [item["name"], item.get("rest", ""), item["line"], item.get("detail", "")] + item["nouns"] + item["verbs"]
+            self.assertIsNone(re.search(r"\d", " ".join(words)), item["name"])
+            for link in item["links"]:
+                href = link["href"] if link["href"].startswith("https://") else "../" + link["href"]
+                self.assertIn(f'href="{html.escape(href)}"', main, item["name"])
+        # Other fields are plain names, with no nouns or verbs of their own, and point to the roll-your-own deck.
+        self.assertTrue(all(isinstance(field, str) for field in uses["fields"]["items"]))
+        self.assertIn(f'href="../{uses["fields"]["link"]["href"]}"', main)
+        for leftover in ("claim-status", 'class="badge', "use-tag"):
+            self.assertNotIn(leftover, main)
 
     def test_the_home_page_is_the_video_one_sentence_and_the_decks(self):
         home = self.outputs[build.SITE / "index.html"]
