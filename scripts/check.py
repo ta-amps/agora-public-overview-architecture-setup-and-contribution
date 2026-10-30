@@ -21,7 +21,8 @@ SENSITIVE = {
     "local home path": re.compile(r"/(?:home|Users)/[A-Za-z0-9_.-]+/"),
     "credential URL": re.compile(r"https?://[^/\s]+:[^/\s]+@"),
 }
-BINARY_SUFFIXES = {".pdf", ".pptx"}
+BINARY_SUFFIXES = {".pdf", ".pptx", ".mp4", ".png"}
+MEDIA_MAGIC = {".mp4": lambda b: b[4:8] == b"ftyp", ".png": lambda b: b.startswith(b"\x89PNG\r\n\x1a\n")}
 RELEASE_PREFIX = "https://github.com/ta-amps/agora/releases/download/"
 PAGES_PREFIX = "/agora/"
 HTML_REF = re.compile(r'\s(?:href|src)="([^"]*)"')
@@ -201,6 +202,19 @@ def deck_download(download: dict, site: Path) -> str | None:
     return file.relative_to(site.resolve()).as_posix()
 
 
+def media_item(item: dict, site: Path) -> str:
+    """A declared draft video or image: inside the site, hash-pinned and of the type its name says."""
+    require(isinstance(item.get("path"), str) and SHA256.fullmatch(str(item.get("sha256", ""))) is not None,
+            "media items need a path and a content hash")
+    file = (site / item["path"]).resolve()
+    require(file.is_relative_to(site.resolve()) and file.is_file(), "media item missing from the static site")
+    data = file.read_bytes()
+    require(hashlib.sha256(data).hexdigest() == item["sha256"] and len(data) == item.get("bytes"),
+            "media item changed without updating its recorded hash")
+    require(file.suffix in MEDIA_MAGIC and MEDIA_MAGIC[file.suffix](data), "media item is not the type its name says")
+    return file.relative_to(site.resolve()).as_posix()
+
+
 def site_pages(site: Path) -> dict[Path, set[str]]:
     pages = {}
     for page in sorted(site.rglob("*.html")):
@@ -266,6 +280,13 @@ def check(root: Path = ROOT) -> dict:
                 local = deck_download(download, manifest.parent)
                 if local:
                     declared.add(local)
+    media = root / "site/media.json"
+    if media.exists():
+        listing = load(media)
+        require(listing["kind"] == "draft_media" and listing["publication_does_not_certify_claims"] is True,
+                "media must retain draft status")
+        for item in listing["items"]:
+            declared.add(media_item(item, media.parent))
     files = [p for p in root.rglob("*") if p.is_file() and not SKIP.intersection(p.relative_to(root).parts)]
     site = root / "site"
     for path in files:

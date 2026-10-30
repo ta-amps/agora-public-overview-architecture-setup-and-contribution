@@ -161,12 +161,31 @@ class SiteChecks(unittest.TestCase):
             with self.assertRaises(ValueError):
                 check.deck_download({"format": "pdf", "url": "https://example.invalid/deck.pdf", "sha256": "0" * 64}, site)
 
+    def test_site_media_is_hash_checked(self):
+        with tempfile.TemporaryDirectory() as directory:
+            site = Path(directory)
+            data = b"\x00\x00\x00\x18ftypmp42 synthetic"
+            (site / "clip.mp4").write_bytes(data)
+            entry = {"path": "clip.mp4", "sha256": hashlib.sha256(data).hexdigest(), "bytes": len(data)}
+            self.assertEqual("clip.mp4", check.media_item(entry, site))
+            for field, value in (("sha256", "0" * 64), ("bytes", 1), ("path", "../clip.mp4")):
+                with self.assertRaises(ValueError):
+                    check.media_item(dict(entry, **{field: value}), site)
+            (site / "fake.mp4").write_bytes(b"not a video")
+            fake = {"path": "fake.mp4", "sha256": hashlib.sha256(b"not a video").hexdigest(), "bytes": 11}
+            with self.assertRaisesRegex(ValueError, "not the type"):
+                check.media_item(fake, site)
+
     def test_undeclared_binary_files_are_rejected(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory) / "repo"
             shutil.copytree(ROOT, root, ignore=shutil.ignore_patterns(".git", "__pycache__", ".venv"))
             self.assertTrue(check.check(root)["offline_only"])
             (root / "site/extra.pdf").write_bytes(b"%PDF-1.7 not declared")
+            with self.assertRaisesRegex(ValueError, "undeclared binary"):
+                check.check(root)
+            (root / "site/extra.pdf").unlink()
+            (root / "site/extra.mp4").write_bytes(b"\x00\x00\x00\x18ftypmp42 not declared")
             with self.assertRaisesRegex(ValueError, "undeclared binary"):
                 check.check(root)
 
