@@ -1,0 +1,131 @@
+{
+  "aspect": "landscape_16x9",
+  "checks": [
+    {
+      "check": "container_and_streams",
+      "detail": "Streams match the output contract.",
+      "limits": {
+        "audio": "aac 48000 Hz stereo",
+        "video": "h264 yuv420p 1920x1080 30 fps"
+      },
+      "measured": {
+        "audio_codec": "aac",
+        "channels": "stereo",
+        "color": "tv, bt709, progressive",
+        "duration_s": 60,
+        "fps": 30,
+        "height": 1080,
+        "pix_fmt": "yuv420p",
+        "sample_rate_hz": 48000,
+        "video_codec": "h264",
+        "width": 1920
+      },
+      "passed": true
+    },
+    {
+      "check": "duration_and_frames",
+      "detail": "1800 of 1800 planned frames decoded.",
+      "limits": {
+        "duration_s": 60,
+        "frames": 1800,
+        "tolerance_s": 0.083333
+      },
+      "measured": {
+        "container_duration_s": 60,
+        "decoded_frames": 1800
+      },
+      "passed": true
+    },
+    {
+      "check": "frame_hash_spot_checks",
+      "detail": "12 of 12 sampled frames match their scene evaluation.",
+      "limits": {
+        "frame_hash": "equal",
+        "min_ssim": 0.95,
+        "png_sha256": "equal"
+      },
+      "measured": {
+        "discriminating_spots": 12,
+        "failures": [],
+        "min_ssim": 0.999297,
+        "spots": 12
+      },
+      "passed": true
+    },
+    {
+      "check": "black_frames",
+      "detail": "No black run.",
+      "limits": {
+        "max_black_run_s": 0.5
+      },
+      "measured": {
+        "segments": []
+      },
+      "passed": true
+    },
+    {
+      "check": "frozen_frames",
+      "detail": "Every freeze is a planned hold.",
+      "limits": {
+        "allowed": "inside planned holds",
+        "min_freeze_s": 2
+      },
+      "measured": {
+        "segments": [],
+        "unexplained": []
+      },
+      "passed": true
+    },
+    {
+      "check": "integrated_loudness",
+      "detail": "Integrated -16.0 LUFS, true peak -1.5 dBTP.",
+      "limits": {
+        "target_lufs": -16,
+        "tolerance_lu": 1,
+        "true_peak_max_dbtp": -1
+      },
+      "measured": {
+        "integrated_lufs": -16,
+        "lra_lu": 2.4,
+        "true_peak_dbfs": -1.5
+      },
+      "passed": true
+    },
+    {
+      "check": "caption_timing_coverage",
+      "detail": "Captions cover 99.4% of measured narration speech.",
+      "limits": {
+        "min_coverage": 0.95,
+        "sidecar": "equal to the caption track"
+      },
+      "measured": {
+        "coverage": 0.994,
+        "covered_s": 47.998,
+        "cues": 16,
+        "cues_without_speech": [],
+        "sidecar_cues": 16,
+        "speech_s": 48.287
+      },
+      "passed": true
+    },
+    {
+      "check": "synthetic_disclosure",
+      "detail": "File metadata states what is synthetic or generated.",
+      "limits": {
+        "comment": "Synthetic visuals: procedural motion graphics rendered from code. Generated media: AI-generated voice (Kokoro-82M v1.0, voice af_heart, run locally), labeled on screen; not a person. Motion graphics rendered from code by this video's stage; example data on screen is synthetic. The music bed is procedural synthesis written for this video, with no samples or third-party audio. Narration is an AI-generated voice (Kokoro-82M v1.0, voice af_heart), labeled on screen. Interface shots are real captures: the live public pages of eranos.ta-amps.workers.dev and the Agora overview, and a local Eranos and Tessera run with scripted agents and synthetic data. The reveal board shows what the local production Tessera store held when the board was composed; the render and check receipts were written after it."
+      },
+      "measured": {
+        "comment": "Synthetic visuals: procedural motion graphics rendered from code. Generated media: AI-generated voice (Kokoro-82M v1.0, voice af_heart, run locally), labeled on screen; not a person. Motion graphics rendered from code by this video's stage; example data on screen is synthetic. The music bed is procedural synthesis written for this video, with no samples or third-party audio. Narration is an AI-generated voice (Kokoro-82M v1.0, voice af_heart), labeled on screen. Interface shots are real captures: the live public pages of eranos.ta-amps.workers.dev and the Agora overview, and a local Eranos and Tessera run with scripted agents and synthetic data. The reveal board shows what the local production Tessera store held when the board was composed; the render and check receipts were written after it.",
+        "title": "Eranos \u00b7 60 s \u00b7 open captions"
+      },
+      "passed": true
+    }
+  ],
+  "format": "video_motion.video-qa.v1",
+  "mp4_sha256": "1ede144737989c49e53381bba3d2647763ee6b514230229e7fc4dd527461cfe1",
+  "passed": true,
+  "plan_sha256": "e1fef20719554d14cf107e0170290c8d86b19e12b5c35ed6fee5e92a5c93f964",
+  "receipt_sha256": "b58fd9ccd85b5446615b29800d1f050c655efff9d8b5c952f59a547f80a80d7c",
+  "render_manifest_sha256": "36974d837b47df54d96d5b3f4c58ceefb95abfe8994253b7fc464bdf814fdc69",
+  "sequence_id": "eranos-60s-open-captions"
+}
