@@ -1,7 +1,7 @@
 {
  "about": "The home page, as one noun: the film (one or more cuts, with a default), one sentence and the decks. scripts/build_site.py renders it into site/index.html.",
  "title": "Agora, the ta-amps overview",
- "description": "Agora is the ta-amps overview: a draft video, four decks and use cases. Everything is nouns and verbs; Eranos is the two-sided marketplace.",
+ "description": "Agora is the ta-amps overview: a draft video, five decks, use cases and how the system keeps learning. Everything is nouns and verbs; Eranos is the two-sided marketplace.",
  "videos": {
   "default": "short",
   "choose": "Choose a cut",
