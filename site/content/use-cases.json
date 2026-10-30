@@ -61,7 +61,7 @@
       "nouns": ["Verified results", "Memory", "Routing advice", "Frozen tests", "Tuned models"],
       "verbs": ["Curate", "Train", "Evaluate", "Compare", "Decide"],
       "links": [
-        {"href": "decks/overview-and-architecture/#learning", "label": "How learning works"}
+        {"href": "learning/", "label": "The Learning page"}
       ]
     },
     {
