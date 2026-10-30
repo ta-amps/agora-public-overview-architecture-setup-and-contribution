@@ -1,7 +1,33 @@
 {
-  "about": "Every number on these slides and in their speaker notes, with its source. All of them come from synthetic tasks.",
+  "about": "Every number on these slides and in their speaker notes, with its source. The measured results come from synthetic tasks and published evidence; the two worked examples are illustrations, not measured runs.",
   "as_of": "2026-10-30",
   "claims": [
+    {
+      "slide": "worked-example",
+      "number": "0 tokens when the same pipeline is asked for again",
+      "status": "illustration",
+      "source": "An illustration of how the work is organized, not a measured run: when search and retrieval return a stored solution, no model is called and no work is repeated. The zero-token result that is measured is narrower: compiled code recipes run as plain code, on the evidence slide."
+    },
+    {
+      "slide": "memory-systems",
+      "number": "Hundreds of new memory systems for agents on GitHub within days",
+      "status": "illustration",
+      "source": "The premise of this illustration, not a count we have recorded. No feed counts new memory systems yet."
+    },
+    {
+      "slide": "memory-systems",
+      "number": "Feeds for new repos and papers, run by server workers",
+      "status": "planned",
+      "source": "Planned, not running. Tessera already serves the feed tools, and today the only feed that runs is the daily check of our own live services. Feeds for new repos, papers and model releases come next, starting from the tool-discovery and freshness-checks packs; the always-on server workers deck has the dated status.",
+      "link": "https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/decks/server-workers/#status"
+    },
+    {
+      "slide": "memory-systems",
+      "number": "705 of 739 public repos in the event directory scanned into nouns and verbs",
+      "status": "measured",
+      "source": "The real precedent for this illustration, and the same scan as the proof slide: a deterministic scan (hackscan 1.2.0) cloned each repo shallowly and read its tree without running any code, on October 29, 2026; 34 failed (24 empty, 5 not found or private, 5 timed out). Aggregate counts only.",
+      "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/hackathon-repo-scan-2026-10-29/summary.md"
+    },
     {
       "slide": "seed-packs",
       "number": "59 seed packs in one library, with 1,177 nouns, 381 verb templates and 37 worked examples",

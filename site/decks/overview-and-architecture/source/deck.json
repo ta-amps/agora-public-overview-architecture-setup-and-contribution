@@ -4,7 +4,7 @@
   "lists": "css",
   "title": "Overview and architecture",
   "cover": "cover",
-  "order": ["cover", "problem", "nouns-and-verbs", "fixes", "feeds", "seed-packs", "map", "tessera", "herma", "learning", "evidence", "proof", "repos", "limits"],
+  "order": ["cover", "problem", "nouns-and-verbs", "worked-example", "fixes", "feeds", "memory-systems", "seed-packs", "map", "tessera", "herma", "learning", "evidence", "proof", "repos", "limits"],
   "sections": {
     "s1": {"description": "The problem, and the idea", "start": "cover"},
     "s2": {"description": "How the pieces fit", "start": "seed-packs"},
@@ -19,8 +19,8 @@
   "page": {
     "title": "Overview and architecture | ta-amps",
     "heading": "Overview and architecture",
-    "summary": "Why AI work is wasted, how nouns and verbs fix it with feeds, search and retrieval, shared queues and learning, the map, Tessera and Herma, and honest limits.",
-    "description": "The ta-amps overview deck: why AI work is frustratingly dumb, how nouns and verbs fix each problem with feeds, search and retrieval, shared queues and learning, the map of the six repos, Tessera and Herma, measured learning results and honest limits.",
+    "summary": "Why AI work is wasted, what nouns and verbs are, with two illustrated examples, how they fix it with feeds, search and retrieval, shared queues and learning, the map, Tessera and Herma, and honest limits.",
+    "description": "The ta-amps overview deck: why AI work is frustratingly dumb, what nouns and verbs are in plain words, two illustrated examples, how nouns and verbs fix each problem with feeds, search and retrieval, shared queues and learning, the map of the six repos, Tessera and Herma, measured learning results and honest limits.",
     "intro": "A deck for anyone new to ta-amps. Every number on these slides is listed below with its source, and every result comes from synthetic tasks.",
     "date": "2026-10-30",
     "date_text": "October 30, 2026",

@@ -3,14 +3,14 @@
   "title": "Use cases | ta-amps",
   "description": "Ideas for what you can build from the same nouns and verbs: tokens for good, videos made from code, feeds, shims, reusable code, continuous learning and long-horizon tasks.",
   "heading": "Use cases",
-  "lead": "What you can build from the same nouns and verbs: ideas, not results.",
+  "lead": "Each card is a use case: an idea for what you can build, not a result. The architecture underneath is the same for all of them, nouns and verbs, where verbs are tasks and nouns are everything a task uses or makes.",
   "nouns_label": "Example nouns",
   "verbs_label": "Example verbs",
   "packs_label": "Packs",
   "flagships": [
     {
       "name": "Tokens for Good",
-      "line": "Spare tokens for good. People donate AI capacity they won’t use, and nonprofits type what they need in plain words.",
+      "line": "Spare tokens for good. It comes first because AI has to help everyone, not just the tech world. People donate AI capacity they won’t use, and nonprofits type what they need in plain words.",
       "detail": "Donated agents do the parts that public information can answer, with citations. Parts that touch private files become agent kits the nonprofit’s own agent runs.",
       "nouns": ["Requests", "Cited reports", "Agent kits", "Synthetic test cases", "Reviews"],
       "verbs": ["Sort and split a request", "Do the public part", "Build a kit", "Review it", "Deliver it"],
@@ -32,7 +32,7 @@
     },
     {
       "name": "Feed Systems to Keep Your Agent Informed",
-      "line": "Feeds watch repos, papers, releases and your own services. New items become nouns with their sources and follow-ups become verbs, so your agent knows what shipped yesterday.",
+      "line": "Feeds watch repos, papers, releases and your own services. New items become nouns with their sources and follow-ups become verbs, so your agent knows what shipped yesterday. For example, server workers could track new memory systems and their benchmarks, so your agent can ask each week whether one fits its setup and is faster or cheaper.",
       "nouns": ["Sources", "New items", "Digests"],
       "verbs": ["Scan", "Summarize", "Test", "Compare", "Update a pack"],
       "packs": ["tool-discovery", "freshness-checks", "benchmark-scores", "policy-and-law-watch"],
