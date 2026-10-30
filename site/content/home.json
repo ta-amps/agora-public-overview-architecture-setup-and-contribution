@@ -13,20 +13,20 @@
    {
     "id": "full",
     "tab": "Full · 3 min",
-    "src": "video/2026-10-30/full/eranos-3m.mp4",
+    "src": "video/2026-10-30/full-v2/eranos-3m.mp4",
     "type": "video/mp4",
-    "captions": "video/2026-10-30/full/eranos-3m.vtt",
-    "poster": "video/2026-10-30/full/eranos-3m-poster.png",
+    "captions": "video/2026-10-30/full-v2/eranos-3m.vtt",
+    "poster": "video/2026-10-30/full-v2/eranos-3m-poster.png",
     "title": "Eranos: spare tokens for good. The full three-minute film, with an AI-generated voice.",
     "label": "The full three-minute film · AI-generated voice"
    },
    {
     "id": "short",
     "tab": "Short · 1 min",
-    "src": "video/2026-10-30/short/eranos-60s.mp4",
+    "src": "video/2026-10-30/short-v2/eranos-60s.mp4",
     "type": "video/mp4",
-    "captions": "video/2026-10-30/short/eranos-60s.vtt",
-    "poster": "video/2026-10-30/short/eranos-60s-poster.png",
+    "captions": "video/2026-10-30/short-v2/eranos-60s.vtt",
+    "poster": "video/2026-10-30/short-v2/eranos-60s-poster.png",
     "title": "Eranos: spare tokens for good. The one-minute film, with an AI-generated voice.",
     "label": "The one-minute film · AI-generated voice"
    }

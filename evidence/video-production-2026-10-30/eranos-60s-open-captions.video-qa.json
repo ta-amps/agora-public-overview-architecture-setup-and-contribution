@@ -47,7 +47,7 @@
       "measured": {
         "discriminating_spots": 12,
         "failures": [],
-        "min_ssim": 0.999297,
+        "min_ssim": 0.99887,
         "spots": 12
       },
       "passed": true
@@ -122,10 +122,10 @@
     }
   ],
   "format": "video_motion.video-qa.v1",
-  "mp4_sha256": "1ede144737989c49e53381bba3d2647763ee6b514230229e7fc4dd527461cfe1",
+  "mp4_sha256": "a750451ebf220400b38fba40a1a026349ef5fb4c21b54c79ff234eae29a99812",
   "passed": true,
-  "plan_sha256": "e1fef20719554d14cf107e0170290c8d86b19e12b5c35ed6fee5e92a5c93f964",
-  "receipt_sha256": "b58fd9ccd85b5446615b29800d1f050c655efff9d8b5c952f59a547f80a80d7c",
-  "render_manifest_sha256": "36974d837b47df54d96d5b3f4c58ceefb95abfe8994253b7fc464bdf814fdc69",
+  "plan_sha256": "f04bc9d7515fdb95aa8dcc2fce15dae969b0577e2e1c7c53ebbb30587a273bfa",
+  "receipt_sha256": "20a06d2dc2a1776f648714196d319cd6da5a01e9ca3928f5d2e04f1ce5b927ad",
+  "render_manifest_sha256": "23ab3fb220c76c7d4140349618d6b1cf866b904da4a6d54aaaf555ffe8739617",
   "sequence_id": "eranos-60s-open-captions"
 }
