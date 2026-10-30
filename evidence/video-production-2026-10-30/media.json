@@ -1,0 +1,138 @@
+{
+ "cuts": {
+  "3m": {
+   "draft": false,
+   "store": "production-run",
+   "files": [
+    {
+     "path": "eranos-3m-open-captions.video-qa.json",
+     "sha256": "0cf68fe4c03958fca3249f64b8c315c2507f4da892eea37d8e143b1525b7dd32",
+     "bytes": 5029
+    },
+    {
+     "path": "eranos-3m-poster.png",
+     "sha256": "e7d66165878370a899f287f9e871875e409be0bfe9b5c117fe709ce40e39dfcd",
+     "bytes": 256685
+    },
+    {
+     "path": "eranos-3m.mp4",
+     "sha256": "2fe24b1e5e8267c461b2edabf13e07eeeb0c633962e18f91a258f5a8f7d9a10f",
+     "bytes": 34742093
+    },
+    {
+     "path": "eranos-3m.srt",
+     "sha256": "9e0854abf0e217cc539b1057508b6a53cd1a6c6e3ec1e3f3e1135e71d78ed9bf",
+     "bytes": 3914
+    },
+    {
+     "path": "eranos-3m.video-qa.json",
+     "sha256": "e5109265a1504e4617cda8c871b82f5c34bffaa13b9404a745e9737e284bad70",
+     "bytes": 4981
+    },
+    {
+     "path": "eranos-3m.vtt",
+     "sha256": "57aa86e2f27c0c99809d3d69d4546b1f30589d2e1afaf618f04e1fdd5a98740a",
+     "bytes": 5792
+    }
+   ]
+  },
+  "60s": {
+   "draft": false,
+   "store": "production-run",
+   "files": [
+    {
+     "path": "eranos-60s-open-captions.video-qa.json",
+     "sha256": "f7c1303c3dc948eb6808cf8d6b75b4bc412312d1927b7ce55d048541f073615e",
+     "bytes": 5024
+    },
+    {
+     "path": "eranos-60s-poster.png",
+     "sha256": "1d62f523feaa1b07d867ea856ebefcdf6560f5eec3c033d118e5ca4c3206da34",
+     "bytes": 224364
+    },
+    {
+     "path": "eranos-60s.mp4",
+     "sha256": "1fc2b44d9b57da71af6024d69334ce3e80985bfa7193ff39ac2cb865a88fd417",
+     "bytes": 16641769
+    },
+    {
+     "path": "eranos-60s.srt",
+     "sha256": "953befae099113781da98593c12831725fac865adb6a3ef9e7343655886efe68",
+     "bytes": 1307
+    },
+    {
+     "path": "eranos-60s.video-qa.json",
+     "sha256": "ecd2875d2e6cfa8b032cbce9774ac2065b71817ebcaef013598a6cba4c5daf39",
+     "bytes": 4979
+    },
+    {
+     "path": "eranos-60s.vtt",
+     "sha256": "e76ab6ee6033fdf46d03e800064a953b199022b3cd59ea1642f5bd299a5c8161",
+     "bytes": 1962
+    }
+   ]
+  }
+ },
+ "files": [
+  {
+   "path": "eranos-3m-open-captions.video-qa.json",
+   "sha256": "0cf68fe4c03958fca3249f64b8c315c2507f4da892eea37d8e143b1525b7dd32",
+   "bytes": 5029
+  },
+  {
+   "path": "eranos-3m-poster.png",
+   "sha256": "e7d66165878370a899f287f9e871875e409be0bfe9b5c117fe709ce40e39dfcd",
+   "bytes": 256685
+  },
+  {
+   "path": "eranos-3m.mp4",
+   "sha256": "2fe24b1e5e8267c461b2edabf13e07eeeb0c633962e18f91a258f5a8f7d9a10f",
+   "bytes": 34742093
+  },
+  {
+   "path": "eranos-3m.srt",
+   "sha256": "9e0854abf0e217cc539b1057508b6a53cd1a6c6e3ec1e3f3e1135e71d78ed9bf",
+   "bytes": 3914
+  },
+  {
+   "path": "eranos-3m.video-qa.json",
+   "sha256": "e5109265a1504e4617cda8c871b82f5c34bffaa13b9404a745e9737e284bad70",
+   "bytes": 4981
+  },
+  {
+   "path": "eranos-3m.vtt",
+   "sha256": "57aa86e2f27c0c99809d3d69d4546b1f30589d2e1afaf618f04e1fdd5a98740a",
+   "bytes": 5792
+  },
+  {
+   "path": "eranos-60s-open-captions.video-qa.json",
+   "sha256": "f7c1303c3dc948eb6808cf8d6b75b4bc412312d1927b7ce55d048541f073615e",
+   "bytes": 5024
+  },
+  {
+   "path": "eranos-60s-poster.png",
+   "sha256": "1d62f523feaa1b07d867ea856ebefcdf6560f5eec3c033d118e5ca4c3206da34",
+   "bytes": 224364
+  },
+  {
+   "path": "eranos-60s.mp4",
+   "sha256": "1fc2b44d9b57da71af6024d69334ce3e80985bfa7193ff39ac2cb865a88fd417",
+   "bytes": 16641769
+  },
+  {
+   "path": "eranos-60s.srt",
+   "sha256": "953befae099113781da98593c12831725fac865adb6a3ef9e7343655886efe68",
+   "bytes": 1307
+  },
+  {
+   "path": "eranos-60s.video-qa.json",
+   "sha256": "ecd2875d2e6cfa8b032cbce9774ac2065b71817ebcaef013598a6cba4c5daf39",
+   "bytes": 4979
+  },
+  {
+   "path": "eranos-60s.vtt",
+   "sha256": "e76ab6ee6033fdf46d03e800064a953b199022b3cd59ea1642f5bd299a5c8161",
+   "bytes": 1962
+  }
+ ]
+}
