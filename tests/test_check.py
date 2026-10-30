@@ -224,7 +224,7 @@ class SiteChecks(unittest.TestCase):
     def test_current_decks_need_their_source_slides_and_pdf(self):
         decks = check.load(ROOT / "site/decks.json")
         site = ROOT / "site"
-        self.assertEqual(3, len(decks["decks"]))
+        self.assertEqual(4, len(decks["decks"]))
         frozen = {(site / v["path"] / "index.html").resolve() for v in decks["versions"]}
         for deck in decks["decks"]:
             self.assertEqual(1, len(check.current_deck(deck, site, frozen)))

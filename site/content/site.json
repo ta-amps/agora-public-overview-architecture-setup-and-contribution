@@ -6,7 +6,8 @@
   "decks": [
     "overview-and-architecture",
     "public-good-marketplace",
-    "roll-your-own"
+    "roll-your-own",
+    "server-workers"
   ],
   "nav": [
     {

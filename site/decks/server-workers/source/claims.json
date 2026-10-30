@@ -1,0 +1,90 @@
+{
+  "about": "Every number on these slides, with its source. Live facts were read from public, read-only endpoints on October 30, 2026 at 04:52 UTC; nothing that changes state was called.",
+  "as_of": "2026-10-30",
+  "claims": [
+    {
+      "slide": "on-its-own",
+      "number": "Lease reaping runs shortly after each lease expires, and on a cron every six hours",
+      "status": "measured",
+      "source": "Tessera's Cloudflare configuration sets the cron 0 */6 * * *, whose handler runs the reaper, and the coordinator also wakes itself just after the earliest lease expiry. Its public health reported the last run at 00:00:41 UTC on October 30, 2026.",
+      "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/deploy/cloudflare/wrangler.jsonc"
+    },
+    {
+      "slide": "on-its-own",
+      "number": "The daily check runs every 24 hours from 13:00 UTC, or on demand, and reads four services",
+      "status": "measured",
+      "source": "The daily check's public status, read on October 30, 2026 at 04:52 UTC: a 24-hour interval starting 13:00 UTC, on-demand runs only with a Tessera admin key, four services per check (Eranos, Tessera, Herma and Home's agent endpoints) and server repair off.",
+      "link": "https://home.ta-amps.workers.dev/frontier/status"
+    },
+    {
+      "slide": "first-check",
+      "number": "The first full check ran on October 29, 2026 at 19:31 UTC, started by hand",
+      "status": "measured",
+      "source": "The daily check's public status, read on October 30, 2026 at 04:52 UTC: the latest run completed, with a manual trigger, started at 19:31:25 UTC and headed \"First daily check\".",
+      "link": "https://home.ta-amps.workers.dev/frontier/status"
+    },
+    {
+      "slide": "first-check",
+      "number": "Tessera's llms.txt named 26 of the 37 tools that its tools/list serves",
+      "status": "measured",
+      "source": "The check's open finding of kind llms_tool_mismatch, severity low, in its public status. At 04:52 UTC on October 30, 2026, Tessera's live llms.txt still named 26 tools and its agent card listed 37.",
+      "link": "https://home.ta-amps.workers.dev/frontier/status"
+    },
+    {
+      "slide": "first-check",
+      "number": "A fix merged in Tessera on October 30, 2026, not yet deployed",
+      "status": "pending",
+      "source": "Tessera pull request 20, merged at 02:49 UTC, renders every tool list from the tools/list registry. Its commit says the daily check recorded the gap and that the hosted pages need a redeploy; the live llms.txt was unchanged at 04:52 UTC. Nothing shows that a worker claimed the repair verb.",
+      "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/pull/20"
+    },
+    {
+      "slide": "guardrails",
+      "number": "The daily check claims one scan a run and queues at most eight verbs",
+      "status": "measured",
+      "source": "The limits in the daily check's public status, read on October 30, 2026 at 04:52 UTC: one claim and eight verbs per cycle. Verbs beyond the cap are deferred to the next run, never dropped.",
+      "link": "https://home.ta-amps.workers.dev/frontier/status"
+    },
+    {
+      "slide": "guardrails",
+      "number": "Herma's merged code refuses an operator-paid turn without the caller's own grant",
+      "status": "pending",
+      "source": "Herma pull request 12, merged on October 29, 2026, with main CI passing: operator grants are empty by default, so no caller may use operator-funded inference, and Anthropic and OpenRouter stay paused. Herma's deployment was held in the October 29 status report, so the hosted behavior is not verified.",
+      "link": "https://github.com/ta-amps/herma-infrastructure-shim-for-intelligent-agents/pull/12"
+    },
+    {
+      "slide": "status",
+      "number": "Read on October 30, 2026 at 04:52 UTC",
+      "status": "measured",
+      "source": "Public GET requests to Tessera's health, agent card and llms.txt and to the daily check's status, with no key; nothing that changes state was called.",
+      "link": "https://tessera.ta-amps.workers.dev/v1/health"
+    },
+    {
+      "slide": "status",
+      "number": "Last lease-reaper run: 00:00 UTC on October 30, 2026",
+      "status": "measured",
+      "source": "reaper_last_run in Tessera's public health was 00:00:41 UTC, matching the cron every six hours. The same read returned ok and db_ok true.",
+      "link": "https://tessera.ta-amps.workers.dev/v1/health"
+    },
+    {
+      "slide": "status",
+      "number": "The daily check's first full run was started by hand on October 29, 2026",
+      "status": "measured",
+      "source": "The daily check's public status: completed at 19:31 UTC with a manual trigger, server repair off and no model call.",
+      "link": "https://home.ta-amps.workers.dev/frontier/status"
+    },
+    {
+      "slide": "status",
+      "number": "First scheduled run due October 30, 2026 at 13:00 UTC",
+      "status": "pending",
+      "source": "next_scheduled_at in the daily check's public status. Scheduled checks stop on November 4, 2026 at 17:00 UTC, when their keys expire, unless new keys are issued.",
+      "link": "https://home.ta-amps.workers.dev/frontier/status"
+    },
+    {
+      "slide": "status",
+      "number": "Tessera serves list_feeds, poll_feed and publish_feed",
+      "status": "measured",
+      "source": "The tools listed in Tessera's public agent card. Reading or publishing a feed needs a key; the unauthenticated feed list returned 401.",
+      "link": "https://tessera.ta-amps.workers.dev/.well-known/agent-card.json"
+    }
+  ]
+}

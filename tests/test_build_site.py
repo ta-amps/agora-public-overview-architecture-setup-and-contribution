@@ -130,7 +130,7 @@ class Builder(unittest.TestCase):
         self.assertEqual(1, main.count("<video"))
         self.assertIn('kind="captions"', main)
         self.assertIn(" default>", main)
-        self.assertEqual(3, main.count('class="deck-card"'))
+        self.assertEqual(4, main.count('class="deck-card"'))
         self.assertLess(home.index('class="agent-banner"'), home.index("<video"))
 
     def test_nonprofits_never_choose_a_kind_of_request(self):

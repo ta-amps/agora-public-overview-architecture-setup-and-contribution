@@ -1,9 +1,9 @@
 {
   "about": "The decks page, as one noun. Each deck's card text comes from that deck's own deck.json.",
   "title": "Decks | ta-amps",
-  "description": "Three decks: the overview and architecture, the public-good marketplace, and how to roll your own. Each has speaker notes, an outline and a PDF.",
+  "description": "Four decks: the overview and architecture, the public-good marketplace, how to roll your own, and always-on server workers. Each has speaker notes, an outline and a PDF.",
   "heading": "Decks",
-  "lead": "Three decks, each with speaker notes, an outline and a PDF. Use the arrow keys or swipe to move through the slides.",
+  "lead": "Four decks, each with speaker notes, an outline and a PDF. Use the arrow keys or swipe to move through the slides.",
   "earlier": "Earlier drafts",
   "earlier_about": "Deck versions v1 to v4, the video storyboards and the draft animatic, kept as they were published."
 }

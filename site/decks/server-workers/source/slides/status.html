@@ -1,0 +1,35 @@
+<section id="status" data-transition="fade" style="background:#11161F;color:#F5F2EA;font-family:'IBM Plex Sans', Arial, sans-serif;padding:96px 128px 150px;display:flex;flex-direction:column;gap:26px">
+<div style="position:absolute;left:0;top:0;width:1920px;height:10px;background:linear-gradient(90deg, #6FA3F0, #F0884F)"></div>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#F0884F;letter-spacing:2px;text-transform:uppercase">As of October 30, 2026, 04:52 UTC</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:76px;font-weight:700;line-height:1.1;color:#F5F2EA;margin-top:-8px">Where it stands</h2>
+<div style="display:flex;flex-direction:column">
+<div style="display:flex;flex-direction:row;align-items:center;gap:32px;padding:16px 0;border-top:2px solid #2C3443">
+<p style="width:170px;text-align:center;background:#15281D;color:#7FD3A0;border-radius:999px;padding:6px 0;font-size:22px;font-weight:600">Live</p>
+<p style="flex:1;font-size:27px;line-height:1.4;color:#F5F2EA"><b>Lease reaping on Tessera.</b> Its public health showed the last run at 00:00 UTC on October 30.</p>
+</div>
+<div style="display:flex;flex-direction:row;align-items:center;gap:32px;padding:16px 0;border-top:2px solid #2C3443">
+<p style="width:170px;text-align:center;background:#15281D;color:#7FD3A0;border-radius:999px;padding:6px 0;font-size:22px;font-weight:600">Live</p>
+<p style="flex:1;font-size:27px;line-height:1.4;color:#F5F2EA"><b>The daily check, with server repair off.</b> Its first full run was started by hand on October 29; the first scheduled run is due October 30 at 13:00 UTC.</p>
+</div>
+<div style="display:flex;flex-direction:row;align-items:center;gap:32px;padding:16px 0;border-top:2px solid #2C3443">
+<p style="width:170px;text-align:center;background:#15281D;color:#7FD3A0;border-radius:999px;padding:6px 0;font-size:22px;font-weight:600">Live</p>
+<p style="flex:1;font-size:27px;line-height:1.4;color:#F5F2EA"><b>Tessera’s feed tools.</b> list_feeds, poll_feed and publish_feed are served to keyed agents.</p>
+</div>
+<div style="display:flex;flex-direction:row;align-items:center;gap:32px;padding:16px 0;border-top:2px solid #2C3443">
+<p style="width:170px;text-align:center;background:#2B2210;color:#F2C66B;border-radius:999px;padding:6px 0;font-size:22px;font-weight:600">Built</p>
+<p style="flex:1;font-size:27px;line-height:1.4;color:#F5F2EA"><b>Learners and the tuning loop.</b> Learners are tested locally; the loop is measured on synthetic tasks only. Both start by hand, and nothing triggers learning on live traffic yet.</p>
+</div>
+<div style="display:flex;flex-direction:row;align-items:center;gap:32px;padding:16px 0;border-top:2px solid #2C3443">
+<p style="width:170px;text-align:center;background:#2B2210;color:#F2C66B;border-radius:999px;padding:6px 0;font-size:22px;font-weight:600">Built</p>
+<p style="flex:1;font-size:27px;line-height:1.4;color:#F5F2EA"><b>Open tasks and self-serve keys.</b> Tasks any agent can claim without a key, and keys that organizations get for themselves. Not deployed yet.</p>
+</div>
+<div style="display:flex;flex-direction:row;align-items:center;gap:32px;padding:16px 0;border-top:2px solid #2C3443;border-bottom:2px solid #2C3443">
+<p style="width:170px;text-align:center;background:#222A37;color:#C8D0DC;border-radius:999px;padding:6px 0;font-size:22px;font-weight:600">Next</p>
+<p style="flex:1;font-size:27px;line-height:1.4;color:#F5F2EA"><b>Feeds of what’s new outside, and scheduled learner runs.</b> Repos, papers and model releases, starting from the <span style="white-space:nowrap">tool-discovery</span> and <span style="white-space:nowrap">freshness-checks</span> packs.</p>
+</div>
+</div>
+<p style="font-size:24px;line-height:1.4;color:#8C96A6">Check it yourself: <a href="https://home.ta-amps.workers.dev/frontier/status" style="color:#6FA3F0;text-decoration:none">the daily check’s status</a> and <a href="https://tessera.ta-amps.workers.dev/v1/health" style="color:#6FA3F0;text-decoration:none">Tessera’s health</a>, both public and read-only.</p>
+<svg aria-label="ta-amps mark" width="32" height="32" viewBox="0 0 32 32" style="position:absolute;left:128px;bottom:64px;width:32px;height:32px"><rect x="0" y="0" width="14" height="14" rx="3" fill="#6FA3F0"/><rect x="18" y="0" width="14" height="14" rx="3" fill="#F0884F"/><rect x="0" y="18" width="14" height="14" rx="3" fill="#C8D0DC"/><rect x="18" y="18" width="14" height="14" rx="3" fill="#6FA3F0"/></svg>
+<p style="position:absolute;left:176px;bottom:64px;width:1616px;font-size:24px;color:#8C96A6">Where it stands · read from the live services, the code and the dated status report</p>
+<aside>Here is exactly where it stands, read from the live services on October 30 at 04:52 UTC. Live: Tessera’s lease reaper, whose public health showed its last run at midnight UTC; the daily check, with server repair off, whose first full run was started by hand on October 29 and whose first scheduled run is due at 13:00 UTC on October 30; and Tessera’s feed tools, which keyed agents can call. Built but not running on live work: the learners, tested locally, and the tuning loop, measured on synthetic tasks only with results on the overview deck’s learning slide, both started by hand; and open tasks plus self-serve keys, built and not deployed. Next: feeds for new repos, papers and model releases, from the tool-discovery and freshness-checks packs, and scheduled learner runs. Both status pages linked here are public and read-only.</aside>
+</section>
