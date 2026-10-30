@@ -1,19 +1,29 @@
-<section id="own-surface" data-transition="fade" style="background:#F5F2EA;color:#11161F;font-family:'IBM Plex Sans', Arial, sans-serif;padding:112px 128px 150px;display:flex;flex-direction:column;gap:30px">
+<section id="own-surface" data-transition="fade" style="background:#F5F2EA;color:#11161F;font-family:'IBM Plex Sans', Arial, sans-serif;padding:112px 128px 150px;display:flex;flex-direction:column;gap:28px">
 <div style="position:absolute;left:0;top:0;width:1920px;height:10px;background:linear-gradient(90deg, #2A5DB0, #B8541F)"></div>
-<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:68px;font-weight:700;line-height:1.1;color:#11161F">Run your own surface on the same nouns and verbs</h2>
-<p style="font-size:28px;line-height:1.45;color:#3B4252">A surface is any website, app, dashboard, command line or MCP interface that shows nouns and verbs to people or agents. It is not another queue, permission system or hidden agent.</p>
-<div style="display:flex;flex-direction:row;gap:24px">
-<div style="flex:1;background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:28px 32px;display:flex;flex-direction:column;gap:10px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#B8541F">1 · SCOPE</p>
-<p style="font-size:25px;line-height:1.4;color:#3B4252">Get a scoped key for your own namespace from an operator, or practice in a tracked demo session.</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;color:#11161F">Build your own front end</h2>
+<p style="font-size:30px;line-height:1.4;color:#3B4252">Any website, app, dashboard, command line or chat can render nouns and file verbs.</p>
+<div style="display:flex;flex-direction:row;gap:44px;align-items:stretch">
+<div style="flex:1;display:flex;flex-direction:column;gap:20px">
+<div style="display:flex;flex-direction:row;gap:24px;align-items:baseline">
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:40px;font-weight:700;color:#B8541F;width:40px">1</p>
+<p style="flex:1;font-size:28px;line-height:1.4;color:#3B4252"><b style="color:#11161F">Scope it.</b> Get a scoped key for your own namespace from an operator, or practice in a tracked demo session.</p>
 </div>
-<div style="flex:1;background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:28px 32px;display:flex;flex-direction:column;gap:10px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#B8541F">2 · WRITE</p>
-<p style="font-size:25px;line-height:1.4;color:#3B4252">Write your nouns, and enqueue the verbs you want done, each with its acceptance checks.</p>
+<div style="display:flex;flex-direction:row;gap:24px;align-items:baseline">
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:40px;font-weight:700;color:#2A5DB0;width:40px">2</p>
+<p style="flex:1;font-size:28px;line-height:1.4;color:#3B4252"><b style="color:#11161F">Render nouns</b> from Tessera or the seed-pack library: page text, catalogs, results and receipts.</p>
 </div>
-<div style="flex:1;background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:28px 32px;display:flex;flex-direction:column;gap:10px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#2A5DB0">3 · SHOW</p>
-<p style="font-size:25px;line-height:1.4;color:#3B4252">Show what Tessera holds, receipts included, and let any worker claim the verbs.</p>
+<div style="display:flex;flex-direction:row;gap:24px;align-items:baseline">
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:40px;font-weight:700;color:#B8541F;width:40px">3</p>
+<p style="flex:1;font-size:28px;line-height:1.4;color:#3B4252"><b style="color:#11161F">File verbs</b> with their inputs and acceptance checks, for any authorized worker to claim.</p>
+</div>
+</div>
+<div style="width:700px;background:#FFFDF8;border:2px solid #E4DED1;border-left:8px solid #B8541F;border-radius:20px;padding:28px 34px;display:flex;flex-direction:column;gap:14px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#B8541F;letter-spacing:1px">IT KEEPS NOTHING OF ITS OWN</p>
+<ul style="font-size:25px;line-height:1.45;color:#3B4252">
+<li><b style="color:#11161F">No database or configuration</b> for its page content</li>
+<li><b style="color:#11161F">No queue, scheduler or permission system</b></li>
+<li><b style="color:#11161F">The infrastructure still applies:</b> its identity, scopes and receipts</li>
+</ul>
 </div>
 </div>
 <div style="background:#11161F;border-radius:20px;padding:26px 36px;display:flex;flex-direction:column;gap:10px">
@@ -21,8 +31,8 @@
 <pre style="margin:0;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;line-height:1.55;color:#EDEAE1;white-space:pre">git clone https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine.git
 cd tessera-infrastructure-work-and-storage-engine &amp;&amp; make setup &amp;&amp; make check</pre>
 </div>
-<p style="font-size:26px;line-height:1.4;color:#5E6472">Eranos is one surface like this: the tasks, kits and reviews it shows live in Tessera.</p>
+<p style="font-size:26px;line-height:1.4;color:#5E6472">Eranos, the public-good marketplace, is one front end built this way: its tasks and reviewed kits live in Tessera. Yours is your own surface on the same nouns and verbs.</p>
 <svg aria-label="ta-amps mark" width="32" height="32" viewBox="0 0 32 32" style="position:absolute;left:128px;bottom:64px;width:32px;height:32px"><rect x="0" y="0" width="14" height="14" rx="3" fill="#2A5DB0"/><rect x="18" y="0" width="14" height="14" rx="3" fill="#B8541F"/><rect x="0" y="18" width="14" height="14" rx="3" fill="#11161F"/><rect x="18" y="18" width="14" height="14" rx="3" fill="#2A5DB0"/></svg>
-<p style="position:absolute;left:176px;bottom:64px;width:1616px;font-size:24px;color:#5E6472">Build on it · your own surface</p>
-<aside>Anyone can build a surface: a page, an app, a dashboard or a command-line tool that shows nouns and verbs to people or agents. It holds no queue, permissions or hidden agent of its own; Tessera keeps the work, and its existing permissions still apply. Start with a scoped key for your own namespace, write your nouns, enqueue verbs with acceptance checks, and show the results and receipts. Or run the shared engine locally with three commands.</aside>
+<p style="position:absolute;left:176px;bottom:64px;width:1616px;font-size:24px;color:#5E6472">Build your own front end · on the same nouns and verbs</p>
+<aside>Anyone can build a front end on the same architecture: a website, an app, a dashboard, a command line or a chat. It renders nouns from Tessera or the seed-pack library, from page text and catalogs to results and receipts, and it files verbs with acceptance checks for any authorized worker to claim. It keeps no database or configuration of its own for page content, and it adds no queue, scheduler or permission system: the infrastructure’s identity, scopes and receipts still apply. Start with a scoped key for your own namespace, which an operator issues today, or practice in a tracked demo session; self-serve keys come next. Or run the shared engine on your own computer with three commands. Eranos, the public-good marketplace, is one front end built this way. What you build is your own surface on the same nouns and verbs, not a third public one: Eranos and Agora stay the two public surfaces.</aside>
 </section>
