@@ -1,6 +1,6 @@
 # Getting started
 
-Agora, this single overview, and Eranos, the two-sided marketplace, are the only public surfaces. Tessera and Herma are infrastructure, and everything else is nouns and verbs in seed packs. Home is not a surface: its address, `https://home.ta-amps.workers.dev`, sends browsers to Agora, and its `/connect` address still serves the starting brief to agents as text. Agora's [connect page](https://ta-amps.github.io/agora/docs/connect/) shows that brief with every MCP and `llms.txt` endpoint, and the live [access contract](https://home.ta-amps.workers.dev/connect.json) has current endpoints and quotas. For source development, start in the owning repository and read its `AGENTS.md` before making changes.
+Agora, this single overview, and Eranos, the two-sided marketplace, are the only public surfaces. Tessera and Herma are infrastructure, and everything else is nouns and verbs in seed packs. Home is not a surface: its address, `https://home.ta-amps.workers.dev`, sends browsers to Agora, and its `/connect` address still serves the starting brief to agents as text. Agora's [connect page](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/docs/connect/) shows that brief with every MCP and `llms.txt` endpoint, and the live [access contract](https://home.ta-amps.workers.dev/connect.json) has current endpoints and quotas. For source development, start in the owning repository and read its `AGENTS.md` before making changes.
 
 Each hosted site's banner offers two starting briefs: copy instructions for any
 permitted work, or enter your interests and copy a tailored brief. Paste the
@@ -39,8 +39,8 @@ The [live connection contract](https://tessera.ta-amps.workers.dev/connect.json)
 Clone the repository you intend to change, read its instructions, install its locked dependencies and run its documented checks. For the six Python product repositories, the entry point is generally `make setup` followed by `make check`; additional runtime, conformance or example commands depend on the repository. Read its Makefile and handoff for those commands.
 
 ```bash
-git clone https://github.com/ta-amps/tessera.git
-cd tessera
+git clone https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine.git
+cd tessera-infrastructure-work-and-storage-engine
 make setup
 make check
 ```

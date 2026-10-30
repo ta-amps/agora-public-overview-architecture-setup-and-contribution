@@ -48,6 +48,10 @@ SOURCE = V4_DIR / "source"
 MANIFEST = SITE / "decks.json"
 PDF_NAME = "ta-amps-hackathon-v4.pdf"
 DECK_HREF = "decks/2026-10-29/v4/"
+PAGES_PREFIX = "/agora-public-overview-architecture-setup-and-contribution/"
+SOURCE_URL = "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution"
+# Published pages keep the source link they were published with, from before the repository was renamed.
+PUBLISHED_SOURCE_URL = "https://github.com/ta-amps/agora"
 CANVAS_W, CANVAS_H = 1920, 1080
 
 FONTS = ("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700"
@@ -111,7 +115,7 @@ def sha256(data: bytes) -> str:
 
 def prefix_for(page: Path) -> str:
     if page.relative_to(SITE).as_posix() == "404.html":
-        return "/agora/"  # GitHub Pages serves this page at any missing path, so its links are absolute.
+        return PAGES_PREFIX  # GitHub Pages serves this page at any missing path, so its links are absolute.
     depth = len(page.relative_to(SITE).parts) - 1
     return "../" * depth
 
@@ -163,7 +167,7 @@ def footer_block(prefix: str, published: bool = False) -> str:
                   ("contribute/", "Contribute")]
     outside = [("https://eranos.ta-amps.workers.dev", "Eranos"),
                ("https://github.com/ta-amps", "ta-amps on GitHub"),
-               ("https://github.com/ta-amps/agora", "Source of this site"),
+               (PUBLISHED_SOURCE_URL if published else SOURCE_URL, "Source of this site"),
                (prefix + "THIRD-PARTY-NOTICES.txt", "Third-party notices")]
     if published:
         # A published page keeps the footer it was published with (see PUBLISHED_FOOTER).

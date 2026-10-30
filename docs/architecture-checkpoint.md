@@ -63,7 +63,7 @@ its location, not its cost, identity or permissions.
 
 ## Seed packs carry no names and are never surfaces
 
-Seed packs live in one pack library, `ta-amps/pack-contributions`, named only for
+Seed packs live in one pack library, `ta-amps/seed-packs-library-of-nouns-and-verbs`, named only for
 what they do and kept separate from both surfaces. The collection of nouns and
 verbs for composing verified code without rewriting it packages verified code
 nodes, recipes, compiler/runtime tools and checks. The collection for video and

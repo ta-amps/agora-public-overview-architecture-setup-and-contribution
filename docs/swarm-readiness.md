@@ -35,7 +35,7 @@ general shim admission, activation and rollback lifecycle remains unfinished.
 
 ## Creative alternatives
 
-[Opportunity Lab](https://github.com/ta-amps/tessera/blob/main/docs/opportunity-lab.md)
+[Opportunity Lab](https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/opportunity-lab.md)
 turns eleven startup themes into 21 versioned seed nouns and 22 initial verbs.
 The source context comes from the public YC Requests for Startups page; the
 showcase is not endorsed by YC and does not independently validate its claims.
@@ -85,7 +85,7 @@ Adaptive admission removes the default claims-per-minute ceiling. Bursts wait
 fairly, concurrency follows observed service latency, and heartbeat/submission
 traffic bypasses the claim queue. Pending-request and waiting-time bounds protect
 resources. They are configurable deployment settings, not a throughput claim.
-See [the owning implementation](https://github.com/ta-amps/tessera/blob/main/docs/claim-admission.md).
+See [the owning implementation](https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/claim-admission.md).
 
 ## Before a broad public launch
 

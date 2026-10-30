@@ -33,6 +33,19 @@ class PublicationChecks(unittest.TestCase):
             with self.assertRaises(ValueError):
                 check.snapshot(invalid, evidence)
 
+    def test_renamed_repositories_link_by_their_github_names(self):
+        data = check.load(ROOT / "status.json")
+        evidence = check.load(ROOT / data["evidence_path"])
+        renamed = [r for r in data["repositories"] if r["name"] in check.GITHUB_NAMES]
+        self.assertTrue(renamed, "the snapshot lists renamed repositories")
+        for repo in renamed:
+            self.assertEqual("https://github.com/ta-amps/" + check.GITHUB_NAMES[repo["name"]], repo["url"])
+            invalid = copy.deepcopy(data)
+            next(r for r in invalid["repositories"] if r["name"] == repo["name"])["url"] = (
+                "https://github.com/ta-amps/" + repo["name"])
+            with self.assertRaises(ValueError):
+                check.snapshot(invalid, evidence)
+
     def test_rejects_mutable_revision_and_inconsistent_counts(self):
         data = check.load(ROOT / "status.json")
         evidence = check.load(ROOT / data["evidence_path"])
@@ -151,7 +164,7 @@ class SiteChecks(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             site = root / "site"
-            page(site / "index.html", '<a href="docs/">Docs</a><a href="/agora/docs/#top">Top</a><p id="here"></p>')
+            page(site / "index.html", '<a href="docs/">Docs</a><a href="/agora-public-overview-architecture-setup-and-contribution/docs/#top">Top</a><p id="here"></p>')
             page(site / "docs/index.html", '<h1 id="top">Docs</h1><a href="../#here">Back</a>')
             pages = check.site_pages(site)
             for path in pages:
@@ -167,7 +180,7 @@ class SiteChecks(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             site = root / "site"
-            link = '<a href="https://github.com/ta-amps/agora/issues/new?template=feedback.yml">Feedback</a>'
+            link = '<a href="https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/issues/new?template=feedback.yml">Feedback</a>'
             page(site / "index.html", link)
             pages = check.site_pages(site)
             with self.assertRaises(ValueError):

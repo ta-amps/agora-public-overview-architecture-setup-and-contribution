@@ -1,6 +1,8 @@
 # Current status
 
-> Note, October 29, 2026, evening: this dated snapshot predates the current model, in which Eranos and Agora are the only public surfaces, Tessera and Herma are infrastructure, Home is not a surface, and everything else is nouns and verbs in seed packs; rows for the three older pack repositories now use plain descriptions, and their URLs stay as provenance until those repositories are renamed or archived into the [pack library](https://github.com/ta-amps/pack-contributions).
+> Note, October 29, 2026, evening: this dated snapshot predates the current model, in which Eranos and Agora are the only public surfaces, Tessera and Herma are infrastructure, Home is not a surface, and everything else is nouns and verbs in seed packs; rows for the three older pack repositories now use plain descriptions, and their URLs stay as provenance until those repositories are renamed or archived into the [pack library](https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs).
+
+> Note, October 30, 2026: the repositories were renamed. Links on this page use their current names, while the table keeps the names observed for this snapshot. The hackathon-context repository and the three older pack repositories were removed after their contents moved, so their rows link to where that content lives now; their commit and CI links stay only as dated provenance.
 
 Snapshot reconciled **2026-10-29T19:59:57.770230+00:00**. Exact main and CI were read at
 **2026-10-29T19:43:24.521020+00:00**. Other evidence retains its own date and scope.
@@ -33,14 +35,14 @@ described below. This is a dated cutoff, not continuous monitoring.
 
 | Repository | Main revision | CI at that revision |
 | --- | --- | --- |
-| [tessera](https://github.com/ta-amps/tessera) | [`182bcaee`](https://github.com/ta-amps/tessera/commit/182bcaeec9b0112739360f8778fe855401a16390) | [pass 40940844592](https://github.com/ta-amps/tessera/actions/runs/40940844592) |
-| [exploitation and scam pack, older repository](https://github.com/ta-amps/shamash) | [`b9f3b409`](https://github.com/ta-amps/shamash/commit/b9f3b409b0b9345ca0f3de3923296f11b65ebc7c) | [pass 40890070406](https://github.com/ta-amps/shamash/actions/runs/40890070406) |
-| [eranos](https://github.com/ta-amps/eranos) | [`cea0ee69`](https://github.com/ta-amps/eranos/commit/cea0ee69ef82fc307c4b4e6827c49c91579b3a31) | [pass 40936822893](https://github.com/ta-amps/eranos/actions/runs/40936822893) |
-| [herma](https://github.com/ta-amps/herma) | [`03429c1b`](https://github.com/ta-amps/herma/commit/03429c1b4c25aa649969ecd56ab0f6856dc8b34f) | [pass 40940519144](https://github.com/ta-amps/herma/actions/runs/40940519144) |
-| [code composition pack, older repository](https://github.com/ta-amps/kothar) | [`6bfee07f`](https://github.com/ta-amps/kothar/commit/6bfee07feb7ed3c7ba9111b0a0678bff5cbf2078) | [pass 40935132204](https://github.com/ta-amps/kothar/actions/runs/40935132204); [pass 40935119870](https://github.com/ta-amps/kothar/actions/runs/40935119870) |
-| [video and motion pack, older repository](https://github.com/ta-amps/kinema) | [`9e31c68c`](https://github.com/ta-amps/kinema/commit/9e31c68c321b2acb1f910b9cf5d013b71b38d40d) | [pass 40917939711](https://github.com/ta-amps/kinema/actions/runs/40917939711) |
-| [hackathon-context](https://github.com/ta-amps/hackathon-context) | [`7b02420d`](https://github.com/ta-amps/hackathon-context/commit/7b02420d610ea7b174b04d0c6a5014ffd6a05e20) | [pass 40937626114](https://github.com/ta-amps/hackathon-context/actions/runs/40937626114) |
-| [pack-contributions](https://github.com/ta-amps/pack-contributions) | [`1d01d34d`](https://github.com/ta-amps/pack-contributions/commit/1d01d34d39de64b912c43365c9e4b72c5287f93d) | [pass 40899915665](https://github.com/ta-amps/pack-contributions/actions/runs/40899915665) |
+| [tessera](https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine) | [`182bcaee`](https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/commit/182bcaeec9b0112739360f8778fe855401a16390) | [pass 40940844592](https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/actions/runs/40940844592) |
+| [exploitation and scam pack, older repository](https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs/tree/main/packs/exploitation-evidence) | [`b9f3b409`](https://github.com/ta-amps/shamash/commit/b9f3b409b0b9345ca0f3de3923296f11b65ebc7c) | [pass 40890070406](https://github.com/ta-amps/shamash/actions/runs/40890070406) |
+| [eranos](https://github.com/ta-amps/eranos-public-marketplace-for-public-good-token-burn) | [`cea0ee69`](https://github.com/ta-amps/eranos-public-marketplace-for-public-good-token-burn/commit/cea0ee69ef82fc307c4b4e6827c49c91579b3a31) | [pass 40936822893](https://github.com/ta-amps/eranos-public-marketplace-for-public-good-token-burn/actions/runs/40936822893) |
+| [herma](https://github.com/ta-amps/herma-infrastructure-shim-for-intelligent-agents) | [`03429c1b`](https://github.com/ta-amps/herma-infrastructure-shim-for-intelligent-agents/commit/03429c1b4c25aa649969ecd56ab0f6856dc8b34f) | [pass 40940519144](https://github.com/ta-amps/herma-infrastructure-shim-for-intelligent-agents/actions/runs/40940519144) |
+| [code composition pack, older repository](https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs/tree/main/packs/code-composition) | [`6bfee07f`](https://github.com/ta-amps/kothar/commit/6bfee07feb7ed3c7ba9111b0a0678bff5cbf2078) | [pass 40935132204](https://github.com/ta-amps/kothar/actions/runs/40935132204); [pass 40935119870](https://github.com/ta-amps/kothar/actions/runs/40935119870) |
+| [video and motion pack, older repository](https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs/tree/main/packs/video-motion) | [`9e31c68c`](https://github.com/ta-amps/kinema/commit/9e31c68c321b2acb1f910b9cf5d013b71b38d40d) | [pass 40917939711](https://github.com/ta-amps/kinema/actions/runs/40917939711) |
+| [hackathon-context](https://github.com/ta-amps/ta-amps-hackathon/tree/main/hackathon) | [`7b02420d`](https://github.com/ta-amps/hackathon-context/commit/7b02420d610ea7b174b04d0c6a5014ffd6a05e20) | [pass 40937626114](https://github.com/ta-amps/hackathon-context/actions/runs/40937626114) |
+| [pack-contributions](https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs) | [`1d01d34d`](https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs/commit/1d01d34d39de64b912c43365c9e4b72c5287f93d) | [pass 40899915665](https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs/actions/runs/40899915665) |
 
 ## Functionality and limits
 
@@ -154,7 +156,7 @@ were 160/114 at `a3139b42`, with runtime review 94/79 at `10f896ad`; the interve
 change only fixed index portability. Those and the earlier 143/90 and 75/55
 observations remain in evidence history.
 
-Herma's [earlier CI failure](https://github.com/ta-amps/herma/actions/runs/40931540528)
+Herma's [earlier CI failure](https://github.com/ta-amps/herma-infrastructure-shim-for-intelligent-agents/actions/runs/40931540528)
 was a checkout-name-dependent generated-index mismatch after all runtime tests
 passed. The corrected head passed the full suite, an offline deterministic demo
 and index checks in a renamed actual checkout. No provider call was made by
@@ -174,10 +176,10 @@ completed lifecycle across those observations. OpenMuse TypeScript still has
 no verified connector. Full feature/version/provider reliability remains unmeasured.
 
 Local Herma called real providers in two bounded waves. The initial three calls
-used source [`bd4d9ff7`](https://github.com/ta-amps/herma/commit/bd4d9ff7981b08231eced14b70c52de8dc206f0a);
+used source [`bd4d9ff7`](https://github.com/ta-amps/herma-infrastructure-shim-for-intelligent-agents/commit/bd4d9ff7981b08231eced14b70c52de8dc206f0a);
 OpenAI `gpt-6-luna` completed that typed proposal check. The initial Anthropic HTTP 400 and OpenRouter
 HTTP 404 remained unexplained in their original receipts. A later two-call wave
-at [`b3715816`](https://github.com/ta-amps/herma/commit/b3715816f18a6be468cab62131ac2a2f3d7f4337)
+at [`b3715816`](https://github.com/ta-amps/herma-infrastructure-shim-for-intelligent-agents/commit/b3715816f18a6be468cab62131ac2a2f3d7f4337)
 captured provider-reported categories: Anthropic reported credit/quota exhaustion
 (`invalid_request_error`); OpenRouter reported no eligible provider endpoint
 (code 404), with the specific routing constraint still unknown. Both attempts

@@ -3,9 +3,9 @@
   "observed_at": "2026-10-29T19:59:57.770230+00:00",
   "guide": {
     "name": "agora",
-    "url": "https://github.com/ta-amps/agora",
+    "url": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution",
     "kind": "documentation",
-    "ci_workflow": "https://github.com/ta-amps/agora/actions/workflows/check.yml"
+    "ci_workflow": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/actions/workflows/check.yml"
   },
   "summary": {
     "ecosystem_repositories": 8,
@@ -33,7 +33,7 @@
   "repositories": [
     {
       "name": "tessera",
-      "url": "https://github.com/ta-amps/tessera",
+      "url": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine",
       "role": "Shared noun/verb fabric, scope, storage and execution evidence",
       "main_revision": "182bcaeec9b0112739360f8778fe855401a16390",
       "open_pull_requests": 0,
@@ -45,7 +45,7 @@
           "head_sha": "182bcaeec9b0112739360f8778fe855401a16390",
           "status": "completed",
           "conclusion": "success",
-          "url": "https://github.com/ta-amps/tessera/actions/runs/40940844592"
+          "url": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/actions/runs/40940844592"
         }
       ],
       "observed_at": "2026-10-29T19:43:24.521020+00:00"
@@ -71,7 +71,7 @@
     },
     {
       "name": "eranos",
-      "url": "https://github.com/ta-amps/eranos",
+      "url": "https://github.com/ta-amps/eranos-public-marketplace-for-public-good-token-burn",
       "role": "Donated-worker NGO kit workflows and independent review",
       "main_revision": "cea0ee69ef82fc307c4b4e6827c49c91579b3a31",
       "open_pull_requests": 0,
@@ -83,14 +83,14 @@
           "head_sha": "cea0ee69ef82fc307c4b4e6827c49c91579b3a31",
           "status": "completed",
           "conclusion": "success",
-          "url": "https://github.com/ta-amps/eranos/actions/runs/40936822893"
+          "url": "https://github.com/ta-amps/eranos-public-marketplace-for-public-good-token-burn/actions/runs/40936822893"
         }
       ],
       "observed_at": "2026-10-29T19:43:24.521020+00:00"
     },
     {
       "name": "herma",
-      "url": "https://github.com/ta-amps/herma",
+      "url": "https://github.com/ta-amps/herma-infrastructure-shim-for-intelligent-agents",
       "role": "Optional scoped context shim and explicit bounded model interfaces",
       "main_revision": "03429c1b4c25aa649969ecd56ab0f6856dc8b34f",
       "open_pull_requests": 0,
@@ -102,7 +102,7 @@
           "head_sha": "03429c1b4c25aa649969ecd56ab0f6856dc8b34f",
           "status": "completed",
           "conclusion": "success",
-          "url": "https://github.com/ta-amps/herma/actions/runs/40940519144"
+          "url": "https://github.com/ta-amps/herma-infrastructure-shim-for-intelligent-agents/actions/runs/40940519144"
         }
       ],
       "observed_at": "2026-10-29T19:43:24.521020+00:00"
@@ -175,7 +175,7 @@
     },
     {
       "name": "pack-contributions",
-      "url": "https://github.com/ta-amps/pack-contributions",
+      "url": "https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs",
       "role": "Pack authoring guidance and synthetic proposals",
       "main_revision": "1d01d34d39de64b912c43365c9e4b72c5287f93d",
       "open_pull_requests": 0,
@@ -187,7 +187,7 @@
           "head_sha": "1d01d34d39de64b912c43365c9e4b72c5287f93d",
           "status": "completed",
           "conclusion": "success",
-          "url": "https://github.com/ta-amps/pack-contributions/actions/runs/40899915665"
+          "url": "https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs/actions/runs/40899915665"
         }
       ],
       "observed_at": "2026-10-29T19:43:24.521020+00:00"
@@ -497,9 +497,9 @@
       "new_live_provider_calls": 0,
       "new_standard_tier_fields_live_qualified": false,
       "merge_revision": "03429c1b4c25aa649969ecd56ab0f6856dc8b34f",
-      "pull_request": "https://github.com/ta-amps/herma/pull/11",
-      "head_ci": "https://github.com/ta-amps/herma/actions/runs/40939907438",
-      "main_ci": "https://github.com/ta-amps/herma/actions/runs/40940519144"
+      "pull_request": "https://github.com/ta-amps/herma-infrastructure-shim-for-intelligent-agents/pull/11",
+      "head_ci": "https://github.com/ta-amps/herma-infrastructure-shim-for-intelligent-agents/actions/runs/40939907438",
+      "main_ci": "https://github.com/ta-amps/herma-infrastructure-shim-for-intelligent-agents/actions/runs/40940519144"
     }
   }
 }

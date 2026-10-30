@@ -15,13 +15,13 @@
       "downloads": [
         {
           "format": "pptx",
-          "url": "https://github.com/ta-amps/agora/releases/download/pitch-drafts-2026-10-29/ta-amps-hackathon-v1.pptx",
+          "url": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/releases/download/pitch-drafts-2026-10-29/ta-amps-hackathon-v1.pptx",
           "sha256": "4f34eab7841412cedd5e5b54d7b5a8919467ed41e5572d78819931feecdb9997",
           "bytes": 110024
         },
         {
           "format": "pdf",
-          "url": "https://github.com/ta-amps/agora/releases/download/pitch-drafts-2026-10-29/ta-amps-hackathon-v1.pdf",
+          "url": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/releases/download/pitch-drafts-2026-10-29/ta-amps-hackathon-v1.pdf",
           "sha256": "01ef560d16fec88c1755c2a2819e36af339013f9dea895a7b8efa09a9c436924",
           "bytes": 157831
         }
@@ -38,13 +38,13 @@
       "downloads": [
         {
           "format": "pptx",
-          "url": "https://github.com/ta-amps/agora/releases/download/pitch-drafts-2026-10-29/ta-amps-hackathon-v2.pptx",
+          "url": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/releases/download/pitch-drafts-2026-10-29/ta-amps-hackathon-v2.pptx",
           "sha256": "d5d5295b85d0b146002f14e435d33c56d1d77d2be54e1f841d2920ff845813e4",
           "bytes": 112687
         },
         {
           "format": "pdf",
-          "url": "https://github.com/ta-amps/agora/releases/download/pitch-drafts-2026-10-29/ta-amps-hackathon-v2.pdf",
+          "url": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/releases/download/pitch-drafts-2026-10-29/ta-amps-hackathon-v2.pdf",
           "sha256": "d094f30149b74775a3921a535fb1b7a7a4c2e2a33e1a51b518d9c12da0dd49b7",
           "bytes": 158316
         }
@@ -98,5 +98,5 @@
       ]
     }
   ],
-  "source_repository": "https://github.com/ta-amps/agora"
+  "source_repository": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution"
 }
