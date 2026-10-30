@@ -17,9 +17,9 @@
         {
           "format": "pdf",
           "path": "decks/overview-and-architecture/ta-amps-overview-and-architecture.pdf",
-          "sha256": "ce7440f3c6398272e8e4cb351675260c132ace00568bbcba77335dbb3e76a975",
-          "bytes": 413220,
-          "printed_from_main_sha256": "df9cf3aa00a2f4f06baf100ca4dc44041e31beebc1889849512929656d5927c9"
+          "sha256": "4cd0608936326b99c4300a9846c1744f18f538f860868aff67e5a65101059404",
+          "bytes": 377690,
+          "printed_from_main_sha256": "cc3bfe43d3770ad0531bb541558abd95954aa84d85ded88749ec430bdf36ab64"
         }
       ]
     },
@@ -36,9 +36,9 @@
         {
           "format": "pdf",
           "path": "decks/public-good-marketplace/ta-amps-public-good-marketplace.pdf",
-          "sha256": "9bcbe4fb93aa07f52df8f1d2399c59a98f60fd9f7449a4573fbe3ab14420b5be",
-          "bytes": 389259,
-          "printed_from_main_sha256": "430130d51b1d59e5cc4f4104e63d28522bd28322b2859898638b19e69121578f"
+          "sha256": "c2ce023a3fe129ff90d65e1ed59569be9722905ed38136262070e01e06500602",
+          "bytes": 351525,
+          "printed_from_main_sha256": "9345a5728971ff57b8c355363a6dbf0d0301cc9ef8eb20b478cb95893c3ba7e9"
         }
       ]
     },
@@ -54,9 +54,9 @@
         {
           "format": "pdf",
           "path": "decks/roll-your-own/ta-amps-roll-your-own.pdf",
-          "sha256": "233004bb77c0dfc6f155aa9fc5d8ec72d5b817cd190b9ba6fb4e5f40ae70252e",
-          "bytes": 282069,
-          "printed_from_main_sha256": "d7d64a6569fd9d2cafd6b9676d90d1d3ea4bfe005736489a2745484a3a71114f"
+          "sha256": "733b6c397978e971d1d110617709d2685e4943b33e31fae9dbd56f4545d96d92",
+          "bytes": 279211,
+          "printed_from_main_sha256": "03b0307150407f76c4e1ddc4b4b98fb081a3f5669cc37e1eea8c3419627c8f19"
         }
       ]
     }

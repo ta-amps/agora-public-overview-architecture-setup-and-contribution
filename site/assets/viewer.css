@@ -83,16 +83,6 @@
   .deck-outline { grid-template-columns: minmax(0, 1fr); }
 }
 
-.deck-intro p {
-  font-size: var(--text-small);
-  color: var(--color-ink-2);
-  max-width: 78ch;
-  padding-block: var(--space-4) 0;
-}
-
-.deck-intro .deck-more { padding-top: var(--space-2); color: var(--color-muted); }
-.deck-more span { font-weight: 600; color: var(--color-ink-2); }
-
 /* Stage. Without scripts every slide is listed; with them one slide shows at a time. */
 
 .deck-stage {
@@ -192,6 +182,8 @@
 
 .slide-notes h2 { font-family: var(--font-body); font-size: var(--text-small); font-weight: 600; color: var(--color-muted); }
 .slide-notes p { margin-top: var(--space-1); max-width: 75ch; }
+.slide-sources { list-style: none; padding: 0; margin-top: var(--space-3); display: grid; gap: var(--space-2); max-width: 75ch; font-size: var(--text-small); color: var(--color-ink-2); }
+.slide-sources .claim-status { margin-right: var(--space-1); font-size: 0.85em; }
 
 .slide-actions {
   max-width: calc(1920px * var(--slide-scale));
@@ -246,29 +238,6 @@
 
 .deck-help { text-align: center; font-size: var(--text-small); color: var(--color-muted); }
 
-.deck-claims { padding-block: var(--space-7) var(--space-4); }
-.deck-claims h2 { font-size: var(--text-title); }
-.deck-claims > p { margin-top: var(--space-3); max-width: 78ch; color: var(--color-ink-2); font-size: var(--text-small); }
-.claim-list { list-style: none; padding: 0; margin-top: var(--space-5); display: grid; gap: 0; max-width: 72rem; }
-
-.claim-list li {
-  display: grid;
-  grid-template-columns: minmax(0, 13rem) minmax(0, 1fr) minmax(0, 1.4fr);
-  gap: var(--space-2) var(--space-5);
-  padding-block: var(--space-4);
-  border-top: 1px solid var(--color-rule-strong);
-}
-
-.claim-head { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-1); }
-.claim-where { font-size: var(--text-small); color: var(--color-muted); }
-.claim-number { font-weight: 600; color: var(--color-ink); }
-.claim-source { font-size: var(--text-small); color: var(--color-ink-2); }
-
-@media (max-width: 56rem) {
-  .claim-list li { grid-template-columns: minmax(0, 1fr); }
-  .claim-head { flex-direction: row; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); }
-}
-
 .claim-status {
   display: inline-flex;
   align-items: center;
@@ -282,8 +251,6 @@
 .claim-status.measured { color: var(--color-real); background: var(--color-real-wash); }
 .claim-status.pending { color: var(--color-building); background: var(--color-building-wash); }
 .claim-status.planned { color: var(--color-needed); background: var(--color-needed-wash); }
-
-.print-colophon { display: none; }
 
 /* Full screen */
 
@@ -313,9 +280,9 @@
   .deck-bar,
   .deck-outline,
   .js .deck-outline.is-open,
-  .deck-intro,
   .deck-controls,
   .deck-help,
+  .deck [data-announce],
   .slide-notes,
   .slide-actions,
   .slide-links,
@@ -337,6 +304,7 @@
     break-inside: avoid;
   }
   .slide + .slide { margin-top: 0; }
+  .slide:last-child { break-after: auto; }
   .slide-frame { width: 1920px; height: 1080px; border-radius: 0; box-shadow: none; }
   .slide-canvas { transform: none; }
   .slide-update {
@@ -357,30 +325,4 @@
     line-height: 1.35;
   }
   .slide-update strong { color: var(--deck-strip-accent); }
-  .print-colophon {
-    display: block;
-    width: 1920px;
-    height: 1080px;
-    padding: var(--space-10);
-    background: var(--deck-print-paper);
-    color: var(--deck-print-ink);
-    font-family: var(--font-body);
-    font-size: 26px;
-    line-height: 1.4;
-    break-before: page;
-    overflow: hidden;
-  }
-  .print-colophon h2 { font-size: 64px; color: var(--deck-print-ink); }
-  .print-colophon h3 { font-size: 34px; margin-top: var(--space-7); color: var(--deck-print-ink); }
-  .print-colophon p { margin-top: var(--space-4); color: var(--deck-print-muted); }
-  .print-colophon ul { margin-top: var(--space-4); padding-left: var(--space-7); color: var(--deck-print-muted); }
-  .print-colophon li + li { margin-top: var(--space-3); }
-  .deck-claims { display: none; }
-  .print-claims { font-size: 19px; line-height: 1.3; padding: var(--space-8) var(--space-9); }
-  .print-claims h2 { font-size: 48px; }
-  .print-claims table { margin-top: var(--space-5); border-collapse: collapse; width: 100%; font-size: 19px; }
-  .print-claims th,
-  .print-claims td { border-top: 1px solid var(--deck-rule); padding: var(--space-2) var(--space-3); text-align: left; vertical-align: top; color: var(--deck-print-ink); }
-  .print-claims thead th { background: var(--deck-rule); }
-  .print-claims .claim-status { border: 0; background: none; padding: 0; color: var(--deck-print-ink); }
 }

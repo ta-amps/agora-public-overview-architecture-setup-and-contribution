@@ -3,11 +3,27 @@
   "name": "ta-amps",
   "skip_link": "Skip to content",
   "mode_toggle": "Dark mode",
-  "decks": ["overview-and-architecture", "public-good-marketplace", "roll-your-own"],
+  "decks": [
+    "overview-and-architecture",
+    "public-good-marketplace",
+    "roll-your-own"
+  ],
   "nav": [
-    {"section": "home", "href": "", "label": "Home"},
-    {"section": "decks", "href": "decks/", "label": "Decks"},
-    {"section": "use-cases", "href": "use-cases/", "label": "Use cases"}
+    {
+      "section": "home",
+      "href": "",
+      "label": "Home"
+    },
+    {
+      "section": "decks",
+      "href": "decks/",
+      "label": "Decks"
+    },
+    {
+      "section": "use-cases",
+      "href": "use-cases/",
+      "label": "Use cases"
+    }
   ],
   "banner": {
     "label": "Agent compatible",
@@ -30,12 +46,37 @@
   "brief_source": "Copied word for word from https://home.ta-amps.workers.dev/connect on October 30, 2026 at 00:21 UTC.",
   "endpoints": {
     "about": "The MCP and llms.txt endpoints, copied word for word from the connect page this site had until October 30, 2026.",
-    "columns": ["Name", "What it is", "MCP", "llms.txt"],
+    "columns": [
+      "Name",
+      "What it is",
+      "MCP",
+      "llms.txt"
+    ],
     "rows": [
-      {"name": "Tessera", "what": "Infrastructure: claim verbs, read and write nouns, get receipts", "mcp": "https://tessera.ta-amps.workers.dev/mcp", "llms": "https://tessera.ta-amps.workers.dev/llms.txt"},
-      {"name": "Eranos", "what": "Surface: the two-sided marketplace and its agent kits", "mcp": "https://eranos.ta-amps.workers.dev/mcp", "llms": "https://eranos.ta-amps.workers.dev/llms.txt"},
-      {"name": "Herma", "what": "Infrastructure: context and models for a compatible agent", "mcp": "https://herma.ta-amps.workers.dev/mcp", "llms": "https://herma.ta-amps.workers.dev/llms.txt"},
-      {"name": "Home", "what": "Not a surface: agent text only, including this brief", "mcp": "https://home.ta-amps.workers.dev/mcp", "llms": "https://home.ta-amps.workers.dev/llms.txt"}
+      {
+        "name": "Tessera",
+        "what": "Infrastructure: claim verbs, read and write nouns, get receipts",
+        "mcp": "https://tessera.ta-amps.workers.dev/mcp",
+        "llms": "https://tessera.ta-amps.workers.dev/llms.txt"
+      },
+      {
+        "name": "Eranos",
+        "what": "Surface: the two-sided marketplace and its agent kits",
+        "mcp": "https://eranos.ta-amps.workers.dev/mcp",
+        "llms": "https://eranos.ta-amps.workers.dev/llms.txt"
+      },
+      {
+        "name": "Herma",
+        "what": "Infrastructure: context and models for a compatible agent",
+        "mcp": "https://herma.ta-amps.workers.dev/mcp",
+        "llms": "https://herma.ta-amps.workers.dev/llms.txt"
+      },
+      {
+        "name": "Home",
+        "what": "Not a surface: agent text only, including this brief",
+        "mcp": "https://home.ta-amps.workers.dev/mcp",
+        "llms": "https://home.ta-amps.workers.dev/llms.txt"
+      }
     ]
   },
   "deck": {
@@ -54,29 +95,46 @@
     "help_html": "Use the arrow keys or swipe to change slides. <kbd>N</kbd> shows the speaker notes and <kbd>O</kbd> the outline.",
     "links_heading": "Links on this slide",
     "copy_brief": "Copy the brief",
-    "more": "More decks",
-    "earlier": "Earlier drafts",
-    "claims_heading": "Every number in this deck",
-    "claims_columns": ["Where", "Number", "Status", "Source"],
-    "evidence": "Evidence",
-    "slide": "Slide",
-    "colophon_heading": "About this deck",
-    "colophon_note": "A draft deck. Publishing it does not certify any claim.",
-    "colophon_web": "Web version with speaker notes:"
+    "evidence": "Evidence"
   },
   "footer": {
     "links": [
-      {"href": "", "label": "Home"},
-      {"href": "decks/", "label": "Decks"},
-      {"href": "use-cases/", "label": "Use cases"},
-      {"href": "decks/earlier-drafts/", "label": "Earlier drafts"}
+      {
+        "href": "",
+        "label": "Home"
+      },
+      {
+        "href": "decks/",
+        "label": "Decks"
+      },
+      {
+        "href": "use-cases/",
+        "label": "Use cases"
+      },
+      {
+        "href": "decks/earlier-drafts/",
+        "label": "Earlier drafts"
+      }
     ],
     "outside": [
-      {"href": "https://eranos.ta-amps.workers.dev", "label": "Eranos"},
-      {"href": "https://github.com/ta-amps", "label": "ta-amps on GitHub"},
-      {"href": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution", "label": "Source of this site"},
-      {"href": "THIRD-PARTY-NOTICES.txt", "label": "Third-party notices", "local": true}
+      {
+        "href": "https://eranos.ta-amps.workers.dev",
+        "label": "Eranos"
+      },
+      {
+        "href": "https://github.com/ta-amps",
+        "label": "ta-amps on GitHub"
+      },
+      {
+        "href": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution",
+        "label": "Source of this site"
+      },
+      {
+        "href": "THIRD-PARTY-NOTICES.txt",
+        "label": "Third-party notices",
+        "local": true
+      }
     ],
-    "note": "A snapshot of October 30, 2026. Drafts and plans are labelled, and publishing them here does not certify any claim. Text and code are under the MIT license."
+    "note": "A snapshot of October 30, 2026 · Drafts are labelled, and nothing here certifies a claim · MIT license"
   }
 }
