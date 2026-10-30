@@ -1,0 +1,1420 @@
+{
+  "schema": "hackscan.summary/1",
+  "scanner": {
+    "name": "hackscan",
+    "version": "1.2.0"
+  },
+  "inputs": {
+    "directory_file_sha256": "93b1c470eb2d92580cac665fe91c5ba47b82454800afd0c9394a63ef4364a135",
+    "directory_rows": 740,
+    "unique_repos": 739,
+    "duplicate_urls": 1,
+    "sources": [
+      {
+        "url": "https://artifacts.watt-mind.com/meta-hackathon-2026/",
+        "sha256": "978a5a3326627f568a462f1968a46d00a4c28e3e29df11873506c18b812e9856",
+        "fetched_at": "2026-10-29T22:54:39Z"
+      },
+      {
+        "url": "https://artifacts.watt-mind.com/meta-hackathon-2026/projects.json",
+        "sha256": "93b1c470eb2d92580cac665fe91c5ba47b82454800afd0c9394a63ef4364a135",
+        "fetched_at": "2026-10-29T22:55:08Z"
+      },
+      {
+        "url": "https://artifacts.watt-mind.com/meta-hackathon-2026/projects.csv",
+        "sha256": "d127f564095769efe43827a3328336849fc95ab788bbab29c4d95eb1c8177fdc",
+        "fetched_at": "2026-10-29T22:55:16Z"
+      }
+    ]
+  },
+  "scan": {
+    "attempted": 739,
+    "scanned_ok": 705,
+    "failed": 34,
+    "failures_by_reason": {
+      "empty_repository": {
+        "count": 24
+      },
+      "not_found_or_private": {
+        "count": 5
+      },
+      "timeout": {
+        "count": 5
+      }
+    }
+  },
+  "licenses": {
+    "none found": 374,
+    "MIT": 253,
+    "Apache-2.0": 51,
+    "AGPL-3.0": 10,
+    "LicenseRef-proprietary": 5,
+    "NOASSERTION": 3,
+    "PolyForm-Noncommercial-1.0.0": 2,
+    "BSD-3-Clause": 1,
+    "CC0-1.0": 1,
+    "GPL-3.0": 1,
+    "LGPL-2.1": 1,
+    "MULTIPLE(Apache-2.0,MIT)": 1,
+    "MULTIPLE(LicenseRef-Meta-SAM-License,MIT)": 1,
+    "PolyForm-Strict-1.0.0": 1
+  },
+  "languages": {
+    "primary_by_files": {
+      "Python": 350,
+      "TypeScript": 153,
+      "(none)": 78,
+      "JavaScript": 67,
+      "HTML": 14,
+      "C#": 9,
+      "Kotlin": 6,
+      "Rust": 6,
+      "Dart": 5,
+      "PHP": 4,
+      "Jupyter Notebook": 3,
+      "Swift": 3,
+      "GDScript": 2,
+      "Go": 2,
+      "C++": 1,
+      "PowerShell": 1,
+      "Shell": 1
+    },
+    "repos_containing": {
+      "Python": 442,
+      "HTML": 341,
+      "JavaScript": 334,
+      "CSS": 305,
+      "TypeScript": 235,
+      "Shell": 155,
+      "Dockerfile": 154,
+      "SQL": 63,
+      "PowerShell": 41,
+      "Batchfile": 30,
+      "Makefile": 26,
+      "Jupyter Notebook": 23,
+      "Swift": 21,
+      "Kotlin": 18,
+      "Rust": 14,
+      "C#": 11,
+      "Dart": 10,
+      "C++": 7,
+      "Groovy": 7,
+      "PHP": 7,
+      "C": 6,
+      "Java": 6,
+      "CMake": 4,
+      "GDScript": 4,
+      "Svelte": 4,
+      "Astro": 3,
+      "Go": 3,
+      "GLSL": 2,
+      "HCL": 2,
+      "HLSL": 2,
+      "SCSS": 2,
+      "ShaderLab": 2,
+      "Nix": 1,
+      "Solidity": 1,
+      "Vue": 1,
+      "WGSL": 1
+    },
+    "files": {
+      "TypeScript": 21813,
+      "Python": 18983,
+      "JavaScript": 3973,
+      "HTML": 1861,
+      "Rust": 1109,
+      "Dart": 717,
+      "Go": 647,
+      "PHP": 605,
+      "CSS": 597,
+      "C#": 529,
+      "Shell": 389,
+      "Kotlin": 357,
+      "SQL": 354,
+      "Swift": 277,
+      "Dockerfile": 207,
+      "PowerShell": 121,
+      "Svelte": 80,
+      "Batchfile": 66,
+      "GDScript": 66,
+      "Jupyter Notebook": 55,
+      "ShaderLab": 31,
+      "Astro": 28,
+      "Makefile": 26,
+      "Solidity": 26,
+      "C++": 25,
+      "Groovy": 24,
+      "C": 22,
+      "Java": 22,
+      "CMake": 14,
+      "SCSS": 13,
+      "HCL": 7,
+      "GLSL": 6,
+      "Nix": 6,
+      "HLSL": 2,
+      "Vue": 1,
+      "WGSL": 1
+    },
+    "lines": {
+      "TypeScript": 3920350,
+      "Python": 3530208,
+      "JavaScript": 728001,
+      "HTML": 633129,
+      "Rust": 336803,
+      "Dart": 191662,
+      "CSS": 189832,
+      "Go": 158588,
+      "C#": 103521,
+      "PHP": 94060,
+      "Jupyter Notebook": 56970,
+      "Kotlin": 54843,
+      "Swift": 47891,
+      "Shell": 34703,
+      "SQL": 22442,
+      "PowerShell": 12214,
+      "Svelte": 8596,
+      "GDScript": 7490,
+      "ShaderLab": 6460,
+      "Astro": 6242,
+      "Dockerfile": 5680,
+      "Java": 4646,
+      "C++": 3700,
+      "Solidity": 3031,
+      "Batchfile": 2625,
+      "Makefile": 1393,
+      "CMake": 1028,
+      "GLSL": 973,
+      "HCL": 769,
+      "Nix": 732,
+      "SCSS": 703,
+      "WGSL": 682,
+      "C": 598,
+      "Groovy": 498,
+      "HLSL": 356,
+      "Vue": 7
+    }
+  },
+  "tree": {
+    "files_total_sum": 120195,
+    "files_total_median": 55,
+    "lines_total_sum": 17854442,
+    "lines_total_median": 5897,
+    "code_lines_sum": 10151410,
+    "code_lines_median": 4368,
+    "repos_with_vendored_files": 46,
+    "vendored_dirs_by_repos": {
+      "__pycache__": 17,
+      "vendor": 12,
+      "build": 7,
+      ".idea": 4,
+      "dist": 3,
+      "coverage": 2,
+      ".pnpm-store": 1,
+      ".wrangler": 1,
+      "node_modules": 1,
+      "openenv_crisis_room.egg-info": 1,
+      "openenv_incident_triage_env.egg-info": 1,
+      "openenv_petclinic_env.egg-info": 1,
+      "third-party": 1,
+      "third_party": 1
+    }
+  },
+  "tests": {
+    "repos_with_tests": 470,
+    "pct": 66.7,
+    "repos_with_evaluation_files": 184,
+    "frameworks_by_repos": {
+      "pytest": 208,
+      "vitest": 90,
+      "@playwright/test": 31,
+      "@testing-library/react": 22,
+      "playwright": 19,
+      "cargo test (#[test])": 14,
+      "hypothesis": 13,
+      "jest": 4,
+      "go test": 3,
+      "karma": 2
+    }
+  },
+  "ci": {
+    "repos_with_ci": 152,
+    "pct": 21.6,
+    "repos_with_github_actions": 151,
+    "other_ci_by_repos": {
+      "google-cloud-build": 1
+    },
+    "github_actions_triggers_by_repos": {
+      "push": 142,
+      "pull_request": 130,
+      "workflow_dispatch": 62,
+      "schedule": 17,
+      "issue_comment": 3,
+      "merge_group": 3,
+      "pull_request_target": 3,
+      "workflow_call": 3,
+      "workflow_run": 3,
+      "issues": 2,
+      "pull_request_review": 1,
+      "pull_request_review_comment": 1,
+      "release": 1
+    }
+  },
+  "docker": {
+    "repos_with_dockerfile": 154,
+    "repos_with_compose": 49,
+    "repos_with_dockerfile_or_compose": 159,
+    "repos_with_devcontainer": 4
+  },
+  "nouns_by_category": {
+    "docs": {
+      "repos_with_any": 694,
+      "total": 10781,
+      "median_per_repo": 5
+    },
+    "code": {
+      "repos_with_any": 626,
+      "total": 37622,
+      "median_per_repo": 23
+    },
+    "tool": {
+      "repos_with_any": 531,
+      "total": 9025,
+      "median_per_repo": 8
+    },
+    "model": {
+      "repos_with_any": 624,
+      "total": 2524,
+      "median_per_repo": 3
+    },
+    "prompt": {
+      "repos_with_any": 178,
+      "total": 1426,
+      "median_per_repo": 0
+    },
+    "dataset": {
+      "repos_with_any": 174,
+      "total": 2272,
+      "median_per_repo": 0
+    },
+    "asset": {
+      "repos_with_any": 372,
+      "total": 9488,
+      "median_per_repo": 1
+    },
+    "config": {
+      "repos_with_any": 641,
+      "total": 14066,
+      "median_per_repo": 7
+    },
+    "test_evaluation": {
+      "repos_with_any": 488,
+      "total": 21167,
+      "median_per_repo": 4
+    }
+  },
+  "dependencies": {
+    "repos_with_manifests": 539,
+    "repos_with_inline_pip_installs": 87,
+    "repos_with_inline_installs_and_no_manifest": 9,
+    "manifest_parse_errors": 0,
+    "ecosystems_by_repos": {
+      "pypi": 323,
+      "npm": 281,
+      "maven": 17,
+      "cargo": 13,
+      "pub": 8,
+      "nuget": 6,
+      "swift": 3,
+      "composer": 2,
+      "go": 2,
+      "gem": 1
+    },
+    "top30": [
+      {
+        "dependency": "npm:typescript",
+        "repos": 218
+      },
+      {
+        "dependency": "pypi:pytest",
+        "repos": 206
+      },
+      {
+        "dependency": "npm:react",
+        "repos": 201
+      },
+      {
+        "dependency": "npm:react-dom",
+        "repos": 195
+      },
+      {
+        "dependency": "npm:@types/react",
+        "repos": 185
+      },
+      {
+        "dependency": "pypi:fastapi",
+        "repos": 184
+      },
+      {
+        "dependency": "pypi:uvicorn",
+        "repos": 181
+      },
+      {
+        "dependency": "npm:@types/node",
+        "repos": 173
+      },
+      {
+        "dependency": "npm:@types/react-dom",
+        "repos": 172
+      },
+      {
+        "dependency": "pypi:openai",
+        "repos": 148
+      },
+      {
+        "dependency": "pypi:pydantic",
+        "repos": 148
+      },
+      {
+        "dependency": "pypi:httpx",
+        "repos": 142
+      },
+      {
+        "dependency": "pypi:pillow",
+        "repos": 121
+      },
+      {
+        "dependency": "npm:tailwindcss",
+        "repos": 115
+      },
+      {
+        "dependency": "npm:vite",
+        "repos": 108
+      },
+      {
+        "dependency": "pypi:numpy",
+        "repos": 105
+      },
+      {
+        "dependency": "pypi:python-dotenv",
+        "repos": 103
+      },
+      {
+        "dependency": "npm:next",
+        "repos": 96
+      },
+      {
+        "dependency": "npm:@vitejs/plugin-react",
+        "repos": 93
+      },
+      {
+        "dependency": "npm:eslint",
+        "repos": 91
+      },
+      {
+        "dependency": "npm:vitest",
+        "repos": 90
+      },
+      {
+        "dependency": "pypi:python-multipart",
+        "repos": 77
+      },
+      {
+        "dependency": "pypi:requests",
+        "repos": 72
+      },
+      {
+        "dependency": "npm:zod",
+        "repos": 65
+      },
+      {
+        "dependency": "npm:eslint-config-next",
+        "repos": 60
+      },
+      {
+        "dependency": "npm:tsx",
+        "repos": 55
+      },
+      {
+        "dependency": "pypi:ruff",
+        "repos": 55
+      },
+      {
+        "dependency": "npm:lucide-react",
+        "repos": 50
+      },
+      {
+        "dependency": "npm:@meta-sam/parser",
+        "repos": 49
+      },
+      {
+        "dependency": "pypi:pyyaml",
+        "repos": 49
+      }
+    ],
+    "top10_by_ecosystem": {
+      "cargo": [
+        {
+          "dependency": "cargo:serde_json",
+          "repos": 12
+        },
+        {
+          "dependency": "cargo:serde",
+          "repos": 10
+        },
+        {
+          "dependency": "cargo:sha2",
+          "repos": 6
+        },
+        {
+          "dependency": "cargo:tempfile",
+          "repos": 5
+        },
+        {
+          "dependency": "cargo:thiserror",
+          "repos": 5
+        },
+        {
+          "dependency": "cargo:axum",
+          "repos": 3
+        },
+        {
+          "dependency": "cargo:base64",
+          "repos": 3
+        },
+        {
+          "dependency": "cargo:clap",
+          "repos": 3
+        },
+        {
+          "dependency": "cargo:futures-util",
+          "repos": 3
+        },
+        {
+          "dependency": "cargo:libc",
+          "repos": 3
+        }
+      ],
+      "maven": [
+        {
+          "dependency": "maven:junit:junit",
+          "repos": 9
+        },
+        {
+          "dependency": "maven:androidx.core:core-ktx",
+          "repos": 6
+        },
+        {
+          "dependency": "maven:androidx.lifecycle:lifecycle-runtime-ktx",
+          "repos": 6
+        },
+        {
+          "dependency": "maven:androidx.activity:activity-compose",
+          "repos": 5
+        },
+        {
+          "dependency": "maven:androidx.compose.material3:material3",
+          "repos": 5
+        },
+        {
+          "dependency": "maven:androidx.lifecycle:lifecycle-runtime-compose",
+          "repos": 5
+        },
+        {
+          "dependency": "maven:androidx.test.espresso:espresso-core",
+          "repos": 5
+        },
+        {
+          "dependency": "maven:androidx.test.ext:junit",
+          "repos": 5
+        },
+        {
+          "dependency": "maven:org.jetbrains.kotlinx:kotlinx-coroutines-android",
+          "repos": 5
+        },
+        {
+          "dependency": "maven:androidx.appcompat:appcompat",
+          "repos": 4
+        }
+      ],
+      "npm": [
+        {
+          "dependency": "npm:typescript",
+          "repos": 218
+        },
+        {
+          "dependency": "npm:react",
+          "repos": 201
+        },
+        {
+          "dependency": "npm:react-dom",
+          "repos": 195
+        },
+        {
+          "dependency": "npm:@types/react",
+          "repos": 185
+        },
+        {
+          "dependency": "npm:@types/node",
+          "repos": 173
+        },
+        {
+          "dependency": "npm:@types/react-dom",
+          "repos": 172
+        },
+        {
+          "dependency": "npm:tailwindcss",
+          "repos": 115
+        },
+        {
+          "dependency": "npm:vite",
+          "repos": 108
+        },
+        {
+          "dependency": "npm:next",
+          "repos": 96
+        },
+        {
+          "dependency": "npm:@vitejs/plugin-react",
+          "repos": 93
+        }
+      ],
+      "nuget": [
+        {
+          "dependency": "nuget:Microsoft.NET.Test.Sdk",
+          "repos": 6
+        },
+        {
+          "dependency": "nuget:coverlet.collector",
+          "repos": 4
+        },
+        {
+          "dependency": "nuget:xunit",
+          "repos": 4
+        },
+        {
+          "dependency": "nuget:xunit.runner.visualstudio",
+          "repos": 4
+        },
+        {
+          "dependency": "nuget:Microsoft.AspNetCore.Mvc.Testing",
+          "repos": 2
+        },
+        {
+          "dependency": "nuget:Microsoft.Data.Sqlite",
+          "repos": 2
+        },
+        {
+          "dependency": "nuget:NUnit",
+          "repos": 2
+        },
+        {
+          "dependency": "nuget:NUnit3TestAdapter",
+          "repos": 2
+        },
+        {
+          "dependency": "nuget:Newtonsoft.Json",
+          "repos": 1
+        },
+        {
+          "dependency": "nuget:PdfPig",
+          "repos": 1
+        }
+      ],
+      "pub": [
+        {
+          "dependency": "pub:flutter",
+          "repos": 7
+        },
+        {
+          "dependency": "pub:flutter_test",
+          "repos": 7
+        },
+        {
+          "dependency": "pub:flutter_lints",
+          "repos": 6
+        },
+        {
+          "dependency": "pub:cloud_firestore",
+          "repos": 3
+        },
+        {
+          "dependency": "pub:firebase_auth",
+          "repos": 3
+        },
+        {
+          "dependency": "pub:firebase_core",
+          "repos": 3
+        },
+        {
+          "dependency": "pub:flutter_localizations",
+          "repos": 3
+        },
+        {
+          "dependency": "pub:http",
+          "repos": 3
+        },
+        {
+          "dependency": "pub:image_picker",
+          "repos": 3
+        },
+        {
+          "dependency": "pub:intl",
+          "repos": 3
+        }
+      ],
+      "pypi": [
+        {
+          "dependency": "pypi:pytest",
+          "repos": 206
+        },
+        {
+          "dependency": "pypi:fastapi",
+          "repos": 184
+        },
+        {
+          "dependency": "pypi:uvicorn",
+          "repos": 181
+        },
+        {
+          "dependency": "pypi:openai",
+          "repos": 148
+        },
+        {
+          "dependency": "pypi:pydantic",
+          "repos": 148
+        },
+        {
+          "dependency": "pypi:httpx",
+          "repos": 142
+        },
+        {
+          "dependency": "pypi:pillow",
+          "repos": 121
+        },
+        {
+          "dependency": "pypi:numpy",
+          "repos": 105
+        },
+        {
+          "dependency": "pypi:python-dotenv",
+          "repos": 103
+        },
+        {
+          "dependency": "pypi:python-multipart",
+          "repos": 77
+        }
+      ],
+      "swift": [
+        {
+          "dependency": "swift:github.com/facebook/meta-wearables-dat-ios",
+          "repos": 1
+        },
+        {
+          "dependency": "swift:github.com/iliasaz/chatterbox-coreml",
+          "repos": 1
+        },
+        {
+          "dependency": "swift:github.com/ionic-team/capacitor-swift-pm",
+          "repos": 1
+        },
+        {
+          "dependency": "swift:github.com/weichsel/zipfoundation",
+          "repos": 1
+        }
+      ]
+    }
+  },
+  "verbs": {
+    "by_kind": {
+      "script": {
+        "repos_with_any": 511,
+        "total": 4965
+      },
+      "http_route": {
+        "repos_with_any": 343,
+        "total": 6969
+      },
+      "npm_script": {
+        "repos_with_any": 288,
+        "total": 2532
+      },
+      "container_build": {
+        "repos_with_any": 154,
+        "total": 207
+      },
+      "ci_job": {
+        "repos_with_any": 151,
+        "total": 408
+      },
+      "console_entry_point": {
+        "repos_with_any": 116,
+        "total": 165
+      },
+      "agent_tool": {
+        "repos_with_any": 95,
+        "total": 552
+      },
+      "cli_command": {
+        "repos_with_any": 80,
+        "total": 650
+      },
+      "compose_service": {
+        "repos_with_any": 48,
+        "total": 164
+      },
+      "scheduled": {
+        "repos_with_any": 32,
+        "total": 67
+      },
+      "make_target": {
+        "repos_with_any": 26,
+        "total": 314
+      },
+      "mcp_tool": {
+        "repos_with_any": 14,
+        "total": 123
+      },
+      "precommit_hook": {
+        "repos_with_any": 9,
+        "total": 30
+      },
+      "procfile_process": {
+        "repos_with_any": 1,
+        "total": 1
+      },
+      "task_target": {
+        "repos_with_any": 1,
+        "total": 12
+      }
+    },
+    "by_category": {
+      "build": {
+        "repos_with_any": 409,
+        "total": 1078
+      },
+      "run_serve": {
+        "repos_with_any": 583,
+        "total": 11713
+      },
+      "test_check": {
+        "repos_with_any": 440,
+        "total": 2702
+      },
+      "deploy": {
+        "repos_with_any": 99,
+        "total": 192
+      },
+      "data_processing": {
+        "repos_with_any": 178,
+        "total": 579
+      },
+      "agent_tool": {
+        "repos_with_any": 106,
+        "total": 675
+      },
+      "scheduled": {
+        "repos_with_any": 32,
+        "total": 67
+      },
+      "other": {
+        "repos_with_any": 50,
+        "total": 153
+      }
+    },
+    "top_npm_script_names": [
+      {
+        "name": "dev",
+        "repos": 230
+      },
+      {
+        "name": "build",
+        "repos": 223
+      },
+      {
+        "name": "test",
+        "repos": 176
+      },
+      {
+        "name": "start",
+        "repos": 148
+      },
+      {
+        "name": "lint",
+        "repos": 116
+      },
+      {
+        "name": "typecheck",
+        "repos": 107
+      },
+      {
+        "name": "preview",
+        "repos": 86
+      },
+      {
+        "name": "check",
+        "repos": 23
+      },
+      {
+        "name": "test:watch",
+        "repos": 20
+      },
+      {
+        "name": "test:e2e",
+        "repos": 17
+      },
+      {
+        "name": "db:migrate",
+        "repos": 15
+      },
+      {
+        "name": "deploy",
+        "repos": 15
+      },
+      {
+        "name": "format",
+        "repos": 15
+      },
+      {
+        "name": "eval",
+        "repos": 14
+      },
+      {
+        "name": "demo",
+        "repos": 13
+      }
+    ],
+    "top_make_target_names": [
+      {
+        "name": "test",
+        "repos": 23
+      },
+      {
+        "name": "demo",
+        "repos": 10
+      },
+      {
+        "name": "check",
+        "repos": 8
+      },
+      {
+        "name": "dev",
+        "repos": 8
+      },
+      {
+        "name": "lint",
+        "repos": 8
+      },
+      {
+        "name": "setup",
+        "repos": 8
+      },
+      {
+        "name": "smoke",
+        "repos": 6
+      },
+      {
+        "name": "help",
+        "repos": 5
+      },
+      {
+        "name": "bench",
+        "repos": 4
+      },
+      {
+        "name": "clean",
+        "repos": 4
+      },
+      {
+        "name": "eval",
+        "repos": 4
+      },
+      {
+        "name": "install",
+        "repos": 4
+      },
+      {
+        "name": "audit",
+        "repos": 3
+      },
+      {
+        "name": "record",
+        "repos": 3
+      },
+      {
+        "name": "replay",
+        "repos": 3
+      }
+    ]
+  },
+  "meta": {
+    "repos_with_any_meta_model_mention": 568,
+    "repos_with_specific_meta_signal": 563,
+    "repos_with_any_muse_model_mention": 507,
+    "models": {
+      "llama": {
+        "repos": 186,
+        "mentions": 6102
+      },
+      "muse-spark": {
+        "repos": 499,
+        "mentions": 55306
+      },
+      "muse-wonder": {
+        "repos": 209,
+        "mentions": 10862
+      },
+      "muse-image": {
+        "repos": 232,
+        "mentions": 7022
+      },
+      "muse-voice": {
+        "repos": 238,
+        "mentions": 4168
+      },
+      "glimmer": {
+        "repos": 148,
+        "mentions": 12297
+      },
+      "sam-3": {
+        "repos": 320,
+        "mentions": 13026
+      },
+      "segment-anything": {
+        "repos": 27,
+        "mentions": 90
+      },
+      "mobilemoe": {
+        "repos": 1,
+        "mentions": 48
+      },
+      "codellama": {
+        "repos": 0,
+        "mentions": 0
+      }
+    },
+    "detail": {
+      "audiocraft/musicgen (extra)": {
+        "repos": 4,
+        "mentions": 61
+      },
+      "detectron2 (extra)": {
+        "repos": 1,
+        "mentions": 1
+      },
+      "dinov2/dinov3 (extra)": {
+        "repos": 8,
+        "mentions": 280
+      },
+      "glimmer:muse-glimmer": {
+        "repos": 133,
+        "mentions": 4949
+      },
+      "llama:guard": {
+        "repos": 9,
+        "mentions": 504
+      },
+      "llama:llama-stack": {
+        "repos": 2,
+        "mentions": 72
+      },
+      "llama:llama.cpp": {
+        "repos": 43,
+        "mentions": 591
+      },
+      "llama:llamaindex": {
+        "repos": 2,
+        "mentions": 2
+      },
+      "llama:model-id": {
+        "repos": 99,
+        "mentions": 1612
+      },
+      "sam-2 (extra)": {
+        "repos": 17,
+        "mentions": 416
+      },
+      "seamless (extra)": {
+        "repos": 6,
+        "mentions": 44
+      },
+      "v-jepa (extra)": {
+        "repos": 3,
+        "mentions": 30
+      }
+    },
+    "meta_api": {
+      "repos_with_api_signal": 420,
+      "signals_by_repos": {
+        "api.meta.ai": 415,
+        "dev.meta.ai (docs link)": 252,
+        "META_API_KEY or LLAMA_API_KEY": 186,
+        "api.llama.com": 11,
+        "llama-api-client": 1
+      }
+    },
+    "meta_tools": {
+      "executorch": {
+        "repos": 12,
+        "mentions": 191
+      },
+      "faiss": {
+        "repos": 5,
+        "mentions": 212
+      },
+      "llama-guard": {
+        "repos": 3,
+        "mentions": 4
+      },
+      "llamafirewall": {
+        "repos": 1,
+        "mentions": 11
+      },
+      "muse-code": {
+        "repos": 176,
+        "mentions": 6256
+      },
+      "prompt-guard": {
+        "repos": 6,
+        "mentions": 343
+      },
+      "synthetic-data-kit": {
+        "repos": 1,
+        "mentions": 6
+      }
+    }
+  },
+  "other_models": {
+    "models": {
+      "gpt-": {
+        "repos": 91,
+        "mentions": 1303
+      },
+      "claude": {
+        "repos": 245,
+        "mentions": 10311
+      },
+      "gemini": {
+        "repos": 89,
+        "mentions": 4087
+      },
+      "mistral": {
+        "repos": 21,
+        "mentions": 226
+      },
+      "qwen": {
+        "repos": 64,
+        "mentions": 1663
+      },
+      "deepseek": {
+        "repos": 36,
+        "mentions": 1158
+      },
+      "whisper": {
+        "repos": 62,
+        "mentions": 762
+      },
+      "stable-diffusion": {
+        "repos": 7,
+        "mentions": 22
+      },
+      "flux": {
+        "repos": 32,
+        "mentions": 637
+      }
+    },
+    "detail": {
+      "claude:model-id": {
+        "repos": 38,
+        "mentions": 1941
+      },
+      "flux:model-id": {
+        "repos": 7,
+        "mentions": 36
+      },
+      "gemini:model-id": {
+        "repos": 32,
+        "mentions": 854
+      }
+    }
+  },
+  "providers": {
+    "meta-model-api": {
+      "repos": 415,
+      "by_signal": {
+        "base url": 415
+      }
+    },
+    "openai": {
+      "repos": 201,
+      "by_signal": {
+        "base url": 37,
+        "sdk dependency": 188
+      }
+    },
+    "baseten": {
+      "repos": 139,
+      "by_signal": {
+        "base url": 139
+      }
+    },
+    "huggingface-inference": {
+      "repos": 52,
+      "by_signal": {
+        "base url": 34,
+        "sdk dependency": 21
+      }
+    },
+    "modal": {
+      "repos": 45,
+      "by_signal": {
+        "base url": 33,
+        "sdk dependency": 23
+      }
+    },
+    "ollama-local": {
+      "repos": 37,
+      "by_signal": {
+        "base url": 35,
+        "sdk dependency": 4
+      }
+    },
+    "fireworks": {
+      "repos": 30,
+      "by_signal": {
+        "base url": 30
+      }
+    },
+    "google-gemini": {
+      "repos": 27,
+      "by_signal": {
+        "base url": 20,
+        "sdk dependency": 9
+      }
+    },
+    "openrouter": {
+      "repos": 20,
+      "by_signal": {
+        "base url": 20
+      }
+    },
+    "anthropic": {
+      "repos": 19,
+      "by_signal": {
+        "base url": 9,
+        "sdk dependency": 13
+      }
+    },
+    "elevenlabs": {
+      "repos": 18,
+      "by_signal": {
+        "base url": 18
+      }
+    },
+    "groq": {
+      "repos": 16,
+      "by_signal": {
+        "base url": 11,
+        "sdk dependency": 5
+      }
+    },
+    "meta-llama-api": {
+      "repos": 11,
+      "by_signal": {
+        "base url": 11
+      }
+    },
+    "nvidia-nim": {
+      "repos": 5,
+      "by_signal": {
+        "base url": 5
+      }
+    },
+    "together": {
+      "repos": 5,
+      "by_signal": {
+        "base url": 5
+      }
+    },
+    "deepseek": {
+      "repos": 3,
+      "by_signal": {
+        "base url": 3
+      }
+    },
+    "google-vertex": {
+      "repos": 2,
+      "by_signal": {
+        "base url": 2
+      }
+    },
+    "xai": {
+      "repos": 2,
+      "by_signal": {
+        "base url": 2
+      }
+    },
+    "aws-bedrock": {
+      "repos": 1,
+      "by_signal": {
+        "base url": 1
+      }
+    },
+    "mistral": {
+      "repos": 1,
+      "by_signal": {
+        "base url": 1
+      }
+    },
+    "replicate": {
+      "repos": 1,
+      "by_signal": {
+        "base url": 1
+      }
+    }
+  },
+  "openai_sdk_and_meta_api": {
+    "repos_with_openai_sdk_dependency": 188,
+    "of_which_reference_api.meta.ai": 130
+  },
+  "local_runtimes_by_repos": {
+    "transformers": 37,
+    "pytorch": 35,
+    "peft": 14,
+    "unsloth": 9,
+    "onnxruntime": 8,
+    "mlx": 2,
+    "vllm": 2,
+    "tensorflow": 1
+  },
+  "frameworks_by_repos": {
+    "streamlit": 14,
+    "gradio": 13,
+    "langgraph": 7,
+    "vercel-ai-sdk": 5,
+    "langchain": 3,
+    "haystack": 1,
+    "livekit-agents": 1,
+    "pipecat": 1
+  },
+  "repos_with_model_weight_files": 11,
+  "mcp": {
+    "repos_adopting": 30,
+    "pct": 4.3,
+    "repos_with_sdk_dependency": 23,
+    "repos_with_server_code": 24,
+    "repos_with_tool_definitions": 14,
+    "total_tool_definitions": 123,
+    "repos_with_client_config": 5,
+    "sdk_dependencies_by_repos": {
+      "pypi:mcp": 13,
+      "npm:@modelcontextprotocol/sdk": 4,
+      "pypi:fastmcp": 4,
+      "npm:@modelcontextprotocol/client": 3,
+      "npm:@modelcontextprotocol/server": 2,
+      "npm:mcp-handler": 1
+    }
+  },
+  "prompts": {
+    "repos_with_prompt_files": 73,
+    "repos_with_system_prompt_mentions": 382,
+    "repos_with_long_system_prompt_strings": 120
+  },
+  "docs": {
+    "repos_with_readme": 679,
+    "repos_with_readme_paragraph": 667,
+    "repos_with_agent_instruction_files": 201,
+    "agent_instruction_files_by_repos": {
+      "agents.md": 141,
+      "claude.md": 75,
+      ".claude/": 21,
+      ".agents/": 14,
+      "llms.txt": 6,
+      ".cursor/rules/": 3,
+      ".cursorrules": 3,
+      "gemini.md": 3,
+      "agent.md": 2,
+      "muse.md": 2,
+      "codex.md": 1,
+      "copilot-instructions.md": 1,
+      "llms-full.txt": 1
+    }
+  },
+  "datasets_assets_config": {
+    "repos_with_dataset_files": 174,
+    "repos_with_asset_files": 372,
+    "repos_with_env_templates": 339,
+    "deploy_hints_by_repos": {
+      "huggingface-spaces (README front matter)": 47,
+      "vercel": 32,
+      "cloudflare-workers": 20,
+      "render": 15,
+      "app.json (heroku/expo)": 13,
+      "firebase": 11,
+      "expo-eas": 5,
+      "supabase": 5,
+      "fly.io": 3,
+      "aws-sam (template.yaml)": 2,
+      "browser-extension (manifest.json)": 2,
+      "netlify": 2,
+      "railway": 2,
+      "google-cloud-build": 1,
+      "procfile (heroku-style)": 1,
+      "sst": 1
+    }
+  },
+  "directory_metadata": {
+    "tracks": {
+      "Build for Your World": 583,
+      "Push the Frontier": 108,
+      "Track 1: Build for Your World": 45,
+      "Track 2: Push the Frontier": 3
+    },
+    "domains": {
+      "General & Emerging Applications": 178,
+      "Multimodal Vision & Video (SAM / Vision)": 123,
+      "Autonomous Agents & Workflow Automation": 59,
+      "Developer Tooling, Infra & Security": 58,
+      "Gaming, Entertainment & Creative Media": 57,
+      "Healthcare, Civic Tech & Sustainability": 56,
+      "Voice, Speech & Audio AI": 44,
+      "Education & Knowledge Systems": 43,
+      "Business, Sales & Commerce": 41,
+      "Developer Tooling & Infrastructure": 27,
+      "Consumer & Productivity": 21,
+      "Robotics, IoT & Manufacturing": 14,
+      "Finance, Crypto & Web3": 12,
+      "Legal & Compliance": 6
+    }
+  },
+  "directory_field_agreement": {
+    "has_tests vs tests.present": {
+      "both_yes": 322,
+      "directory_yes_scanner_no": 6,
+      "directory_no_scanner_yes": 148,
+      "both_no": 229,
+      "agreement_pct": 78.2
+    },
+    "has_ci vs ci.present": {
+      "both_yes": 145,
+      "directory_yes_scanner_no": 5,
+      "directory_no_scanner_yes": 7,
+      "both_no": 548,
+      "agreement_pct": 98.3
+    },
+    "has_docker vs dockerfile or compose": {
+      "both_yes": 119,
+      "directory_yes_scanner_no": 0,
+      "directory_no_scanner_yes": 40,
+      "both_no": 546,
+      "agreement_pct": 94.3
+    },
+    "meta_api_verified vs meta_api.present": {
+      "both_yes": 267,
+      "directory_yes_scanner_no": 39,
+      "directory_no_scanner_yes": 153,
+      "both_no": 246,
+      "agreement_pct": 72.8
+    }
+  },
+  "published_note": "Aggregate counts only: repository names are removed from this published copy. Nothing here ranks, scores or judges any team."
+}

@@ -1,0 +1,97 @@
+{
+ "kernel": "taylorsamarel/glimmer-t4-smoke",
+ "version": "1",
+ "phase": "phase1-smoke",
+ "finished": false,
+ "elapsed_s": 684.8,
+ "stage_status": {
+  "environment": "ok",
+  "model_files": "ok",
+  "data": "ok",
+  "load_base": "ok",
+  "precision_probe": "failed"
+ },
+ "stage_seconds": {
+  "environment": 23.94,
+  "model_files": 263.05,
+  "data": 4.53,
+  "load_base": 347.72,
+  "precision_probe": 7.02
+ },
+ "errors": [
+  {
+   "stage": "precision_probe",
+   "error": "RuntimeError: indices should be either on cpu or on the same device as the indexed tensor (cuda:1)"
+  }
+ ],
+ "versions": {
+  "torch": "2.11.0+cu128",
+  "transformers": "5.22.0",
+  "peft": "0.21.2",
+  "accelerate": "1.15.0",
+  "bitsandbytes": "0.50.2",
+  "safetensors": "0.8.0",
+  "huggingface_hub": "1.33.0",
+  "hf_xet": "1.6.0",
+  "tokenizers": "0.23.1"
+ },
+ "docker_image": "gcr.io/kaggle-gpu-images/python@sha256:9a6bcfda6d03b2cd9aa347ee8c1bae62043328ed0f4afe9bda014e4f8bbf9435",
+ "model_source": "huggingface.co (anonymous, pinned revision)",
+ "download_seconds": 249.0,
+ "hashes": {
+  "model-00002-of-00002.safetensors": {
+   "sha256": "b58cc2144ba1ba1af4420f67f4ca3ced7f09298510b80464cc75018a0be14381",
+   "matches_official": true,
+   "finished_after_s": 382.9,
+   "returncode": 0
+  },
+  "tokenizer.json": {
+   "sha256": "c9dbee66967b58f31a7c27f723c3760da3526ccd0427578e8905b0abb0031c4d",
+   "matches_official": true,
+   "finished_after_s": 382.9,
+   "returncode": 0
+  }
+ },
+ "load_seconds": 347.4,
+ "mem_after_drop_mib": {
+  "0": 8281,
+  "1": 9235
+ },
+ "fp16_max_layer_maxabs": 1629.0,
+ "precision_mode": "fp16",
+ "base_probe_loss": null,
+ "trainable_params": null,
+ "lora_modules": null,
+ "train": {
+  "steps_done": null,
+  "skipped_steps": null,
+  "nonfinite_losses": null,
+  "train_seconds": null,
+  "step_seconds_mean_excl_first": null,
+  "tokens_per_s": null,
+  "first_loss": null,
+  "last_loss": null,
+  "dev_curve": null,
+  "peak": null,
+  "smi_peak_mib": null
+ },
+ "tuned_probe_loss": null,
+ "adapter_effect_max_abs": null,
+ "disabled_equals_base_max_abs": null,
+ "adapter_files": null,
+ "eval": null,
+ "eval_speed": {
+  "base": null,
+  "adapter": null
+ },
+ "batch_consistency": null,
+ "reload": {
+  "passed": null,
+  "reloaded_vs_tuned_max_abs": null,
+  "reloaded_vs_tuned_argmax_agree": null,
+  "fresh_base_vs_first_base_max_abs": null,
+  "load_seconds": null
+ },
+ "smi_peak_mib": null,
+ "disk_end": null
+}
