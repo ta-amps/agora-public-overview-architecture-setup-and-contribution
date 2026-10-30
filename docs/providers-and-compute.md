@@ -17,7 +17,7 @@ merged source, deployed versions, local observations and remaining work.
 | Jev / TypeSafe | Worker-side typed System One decision adapter | Typed state/questions, not a generative-chat fallback; no live qualification |
 | Claude Code, OpenCode, Pi, Muse Code, nanoMuse, Hermes and OpenClaw | Native harnesses with distinct versions and tool integrations | A passing fixture does not qualify every provider, feature or workflow |
 
-Herma's [provider and conversation contracts](https://github.com/ta-amps/herma/blob/main/docs/conversations.md)
+Herma's [provider and conversation contracts](https://github.com/ta-amps/herma-infrastructure-shim-for-intelligent-agents/blob/main/docs/conversations.md)
 own wire protocols and configuration. The ordinary shim preserves supported
 caller generation settings, including an omitted output limit. An explicitly
 enabled server conversation capability requires its own declared allowance;

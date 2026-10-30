@@ -23,12 +23,12 @@ SENSITIVE = {
 }
 BINARY_SUFFIXES = {".pdf", ".pptx", ".mp4", ".png"}
 MEDIA_MAGIC = {".mp4": lambda b: b[4:8] == b"ftyp", ".png": lambda b: b.startswith(b"\x89PNG\r\n\x1a\n")}
-RELEASE_PREFIX = "https://github.com/ta-amps/agora/releases/download/"
-PAGES_PREFIX = "/agora/"
+RELEASE_PREFIX = "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/releases/download/"
+PAGES_PREFIX = "/agora-public-overview-architecture-setup-and-contribution/"
 HTML_REF = re.compile(r'\s(?:href|src)="([^"]*)"')
 HTML_ID = re.compile(r'\sid="([^"]+)"')
 PROVENANCE = re.compile(r'\sdata-provenance="[^"]*"')
-ISSUE_FORM = re.compile(r"https://github\.com/ta-amps/agora/issues/new\?template=([A-Za-z0-9._-]+)")
+ISSUE_FORM = re.compile(r"https://github\.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/issues/new\?template=([A-Za-z0-9._-]+)")
 # Retired pack names (owner rule: packs carry no names). Stored as hashes, so the names never appear here.
 RETIRED_NAME_HASHES = {
     "9410a442dd664c9234966c5ecc0ff595431749474bc67b7e2ce5ccaaed7793ec",
@@ -39,6 +39,15 @@ RETIRED_NAME_HASHES = {
 # Everything else, agent kits included, is nouns and verbs in seed packs.
 PUBLIC_SURFACES = ["eranos", "agora"]
 INFRASTRUCTURE = ["tessera", "herma"]
+# GitHub names of the repositories renamed on October 30, 2026. Snapshot records keep the code names they
+# were observed under, while their links use these names. Removed repositories keep their recorded links.
+GITHUB_NAMES = {
+    "agora": "agora-public-overview-architecture-setup-and-contribution",
+    "eranos": "eranos-public-marketplace-for-public-good-token-burn",
+    "herma": "herma-infrastructure-shim-for-intelligent-agents",
+    "pack-contributions": "seed-packs-library-of-nouns-and-verbs",
+    "tessera": "tessera-infrastructure-work-and-storage-engine",
+}
 
 
 def require(condition: bool, message: str) -> None:
@@ -77,7 +86,7 @@ def snapshot(data: dict, evidence: dict) -> None:
     require(data["summary"]["open_pull_requests"] == sum(r["open_pull_requests"] for r in repos),
             "open PR count mismatch")
     for repo in repos:
-        prefix = "https://github.com/ta-amps/" + repo["name"]
+        prefix = "https://github.com/ta-amps/" + GITHUB_NAMES.get(repo["name"], repo["name"])
         require(repo["url"] == prefix and SHA.fullmatch(repo["main_revision"]) is not None,
                 "invalid repository URL or immutable revision")
         require(type(repo["open_pull_requests"]) is int and repo["open_pull_requests"] >= 0,

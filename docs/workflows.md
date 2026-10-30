@@ -18,7 +18,7 @@ If an outcome is uncertain, reconcile it before retrying an effect. Lease loss s
 The October 29 matrix covers a scoped synthetic lifecycle in six native harnesses.
 The earlier OpenCode/Ollama observation additionally covers exact-input recall
 under a second lease, once per access mode. See the [native matrix and creative
-pilot](swarm-readiness.md) and the [earlier recall evidence](https://github.com/ta-amps/tessera/blob/main/docs/evidence/native-history-observation.json).
+pilot](swarm-readiness.md) and the [earlier recall evidence](https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/evidence/native-history-observation.json).
 
 ## Several workers explore one brief
 
@@ -29,7 +29,7 @@ alternatives against explicit dimensions and evidence, and a remix verb can
 produce another candidate with parent references. Reusing input nouns preserves
 common context while separate receipts preserve who produced each result.
 
-The [Opportunity Lab](https://github.com/ta-amps/tessera/blob/main/docs/opportunity-lab.md)
+The [Opportunity Lab](https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/opportunity-lab.md)
 authors this pattern for eleven startup themes. Its procedure nouns also cover
 source discovery, benchmark design and proposals for new nouns and verbs.
 Only initial ideation tasks are activated by its authoring command.
@@ -38,13 +38,13 @@ Only initial ideation tasks are activated by its authoring command.
 
 The pack library's collection of nouns and verbs for spotting exploitation and scams in synthetic cases, never accusing anyone, works through synthetic evidence bundles. Workers give every passage an evidence id, extract risk indicators, recompute the money against dated rule cards and recommend a route. Model use belongs to the worker; deterministic rules and calculations remain deterministic. Outputs retain evidence references and uncertainty. A different worker reviews the summary, and a person decides every hold and referral.
 
-Use the [pack's description](https://github.com/ta-amps/pack-contributions/blob/main/packs/exploitation-evidence/README.md) for its nouns and verbs; its earlier separate surface is archived. The synthetic fixtures and dated rule cards do not establish correctness for live investigations or current legal advice.
+Use the [pack's description](https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs/blob/main/packs/exploitation-evidence/README.md) for its nouns and verbs; its earlier separate surface is archived. The synthetic fixtures and dated rule cards do not establish correctness for live investigations or current legal advice.
 
 ## Eranos: donated work to a reviewed agent kit
 
 Eranos is the two-sided marketplace: people who want to help donate spare AI capacity, and a nonprofit gets a reviewed agent kit, a seed pack of nouns and verbs generated for its agent. A worker claims kit work, produces artifacts and runs the required checks. A different worker performs the required review. A steward controls release. Tessera retains the work and evidence relationships; a producer cannot promote its own draft by supplying a successful-looking receipt.
 
-The [repository](https://github.com/ta-amps/eranos) contains the examples and adapter contract. The local verification includes the example workflow and shared fabric conformance. It does not certify every proposed NGO kit for production use.
+The [repository](https://github.com/ta-amps/eranos-public-marketplace-for-public-good-token-burn) contains the examples and adapter contract. The local verification includes the example workflow and shared fabric conformance. It does not certify every proposed NGO kit for production use.
 
 ## Code composition and video and motion: deterministic tools inside a verb
 
@@ -58,7 +58,7 @@ Workers can combine these tools within an authorized task and save their resulti
 
 A configured client can ask Herma to find scoped noun, verb or URI context, return a direct response, or call an explicitly enabled model interface. Supported decisions must pass strict validation. Offline behavior must preserve its no-egress contract.
 
-The typed conversation layer supports bounded proposals, clarification and recovery under caller scope and usage controls. It is an explicit interface. Ordinary workers can use Tessera directly without a shim. [Herma repository and connection guidance](https://github.com/ta-amps/herma).
+The typed conversation layer supports bounded proposals, clarification and recovery under caller scope and usage controls. It is an explicit interface. Ordinary workers can use Tessera directly without a shim. [Herma repository and connection guidance](https://github.com/ta-amps/herma-infrastructure-shim-for-intelligent-agents).
 
 ## Frontier: discovery to candidate admission
 

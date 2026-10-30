@@ -9,7 +9,7 @@
 - [Machine-readable snapshot](status.json) and [current evidence](evidence/training-and-community-2026-10-29.json).
 - [Historical readiness](evidence/readiness-2026-10-29.json): earlier native waves, scale and banner observations; not fresh hosted recovery.
 - [Workflows](docs/workflows.md): noun/verb lifecycle and supported domain flows.
-- [Connect an agent](https://ta-amps.github.io/agora/docs/connect/): the starting brief to copy, as a contributor or a consumer, with every MCP and llms.txt endpoint.
+- [Connect an agent](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/docs/connect/): the starting brief to copy, as a contributor or a consumer, with every MCP and llms.txt endpoint.
 - [Getting started](docs/getting-started.md): discovery, access modes and local development; check current availability first.
 - [Roadmap](docs/roadmap.md): recovery, qualification, proposed and incomplete work.
 - [Swarm pilot and creative seeds](docs/swarm-readiness.md): native processes, protocol clients, alternatives and pacing limits.

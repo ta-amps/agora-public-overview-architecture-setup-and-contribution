@@ -2,22 +2,22 @@
 
 **Nouns, verbs, surfaces and infrastructure: the map of what ta-amps does, how its parts fit together, and what has been verified.**
 
-[Showcase site](https://ta-amps.github.io/agora/) · [Connect an agent](https://ta-amps.github.io/agora/docs/connect/) · [Current status](docs/status.md) · [Architecture](docs/architecture.md) · [Roadmap](docs/roadmap.md)
+[Showcase site](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/) · [Connect an agent](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/docs/connect/) · [Current status](docs/status.md) · [Architecture](docs/architecture.md) · [Roadmap](docs/roadmap.md)
 
 Agora is one of exactly two public surfaces: the single overview of architecture
 and setup, use cases, connecting any agent and contributing. The other is
-[Eranos](https://github.com/ta-amps/eranos), the two-sided marketplace where people
+[Eranos](https://github.com/ta-amps/eranos-public-marketplace-for-public-good-token-burn), the two-sided marketplace where people
 donate spare AI capacity and nonprofits get reviewed agent kits. Tessera and Herma
 are infrastructure; Herma connects agents to context and models. Home is not a
 surface; its address sends people to Agora. Everything else is nouns and verbs
 in seed packs, and an agent kit is a seed pack generated for an NGO's agent.
 
-[Versioned draft decks](https://ta-amps.github.io/agora/) are available online,
+[Versioned draft decks](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/) are available online,
 with editable PowerPoint and PDF downloads. The original v1 and qualified v2
 remain separately labeled review drafts. The static presentation surface makes
 no runtime, provider, queue or deployment changes to the product services.
 
-[Showcase site](https://ta-amps.github.io/agora/): the nonprofit story, deck v4 with its claim review, the video storyboard, plain-language docs and forms to propose a seed pack or give feedback.
+[Showcase site](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/): the nonprofit story, deck v4 with its claim review, the video storyboard, plain-language docs and forms to propose a seed pack or give feedback.
 
 ## Status: October 29, 2026
 
@@ -49,22 +49,24 @@ ninth public repository and contains documentation and offline validation only.
 
 | Repository | Responsibility | Use it for |
 | --- | --- | --- |
-| [Eranos](https://github.com/ta-amps/eranos) | Public surface: the two-sided marketplace | Volunteers' agents draft, test and independently review agent kits for nonprofits before steward release |
-| [Agora](https://github.com/ta-amps/agora) | Public surface: the single overview | Architecture and setup, use cases, connecting any agent, contributing, and dated evidence |
-| [Tessera](https://github.com/ta-amps/tessera) | Infrastructure: shared work and storage fabric | Claimable verbs, versioned nouns, leases, permissions, artifacts, receipts and execution recall |
-| [Herma](https://github.com/ta-amps/herma) | Infrastructure: connects agents to context and models | Scoped context retrieval, deterministic or configured model-assisted routing, bounded typed conversations |
-| [pack-contributions](https://github.com/ta-amps/pack-contributions) | The pack library: seed packs of nouns and verbs | Plain-named packs, such as spotting exploitation and scams in synthetic cases, video and motion made with code, and composing verified code without rewriting it |
-| [hackathon-context](https://github.com/ta-amps/hackathon-context) | Project-neutral participant kit | Shared instructions, event context, review templates and validation tools |
+| [Eranos](https://github.com/ta-amps/eranos-public-marketplace-for-public-good-token-burn) | Public surface: the two-sided marketplace | Volunteers' agents draft, test and independently review agent kits for nonprofits before steward release |
+| [Agora](https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution) | Public surface: the single overview | Architecture and setup, use cases, connecting any agent, contributing, and dated evidence |
+| [Tessera](https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine) | Infrastructure: shared work and storage fabric | Claimable verbs, versioned nouns, leases, permissions, artifacts, receipts and execution recall |
+| [Herma](https://github.com/ta-amps/herma-infrastructure-shim-for-intelligent-agents) | Infrastructure: connects agents to context and models | Scoped context retrieval, deterministic or configured model-assisted routing, bounded typed conversations |
+| [seed-packs-library-of-nouns-and-verbs](https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs) | The pack library: seed packs of nouns and verbs | Plain-named packs, such as spotting exploitation and scams in synthetic cases, video and motion made with code, and composing verified code without rewriting it |
+| [ta-amps-hackathon/hackathon](https://github.com/ta-amps/ta-amps-hackathon/tree/main/hackathon) | Project-neutral participant kit | Shared instructions, event context, review templates and validation tools |
 
 Three older repositories held the packs for spotting exploitation and scams, for
-video and motion made with code, and for composing verified code. They are being
-renamed or archived: their nouns and verbs move into the pack library, and their
-tested code keeps plain names. Their exact revisions stay in the
-[status report](docs/status.md) as dated evidence.
+video and motion made with code, and for composing verified code. They were
+removed after their nouns, verbs and tested code moved into the pack library under
+plain names: [packs/exploitation-evidence](https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs/tree/main/packs/exploitation-evidence),
+[packs/video-motion](https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs/tree/main/packs/video-motion) and
+[packs/code-composition](https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs/tree/main/packs/code-composition). Their exact
+revisions stay in the [status report](docs/status.md) as dated evidence.
 
 Home is not a surface. Its address, `https://home.ta-amps.workers.dev`, sends
 browsers to Agora and still serves agent text: the starting brief at `/connect`
-(also on Agora's [connect page](https://ta-amps.github.io/agora/docs/connect/)),
+(also on Agora's [connect page](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/docs/connect/)),
 `llms.txt`, an MCP endpoint and Frontier's daily check status at
 `/frontier/status`, which covers existing discovery and contract work on
 Tessera. The portal source is maintained separately; there is

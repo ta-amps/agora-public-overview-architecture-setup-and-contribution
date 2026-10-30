@@ -38,7 +38,7 @@ solutions are useful. Separate leases, output keys and receipts preserve each
 contribution. Comparison and remixing are later verbs; the queue need not force
 one creative answer per input.
 
-The full policy and examples live with [Tessera](https://github.com/ta-amps/tessera/blob/main/docs/WORKER-FIRST-EXECUTION.md). It is a design and migration requirement; universal coverage across every endpoint has not been measured.
+The full policy and examples live with [Tessera](https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/WORKER-FIRST-EXECUTION.md). It is a design and migration requirement; universal coverage across every endpoint has not been measured.
 
 ## Work and storage authority
 
@@ -46,7 +46,7 @@ Tessera supplies authenticated scope, queue permissions, claims, fencing tokens,
 
 Eranos uses Tessera for staged work and artifacts. Herma can read permitted context and expose explicitly requested model interfaces. The Python dependencies of both pin a tested, merged Tessera revision. The pack library distributes seed packs: versioned code references, recipes and deterministic tools a worker can invoke while holding a verb, such as the collections for composing verified code without rewriting it and for video and motion made with code. A pack has no surface or brand name of its own; the older pack websites will retire behind archive notices. The worker stores outputs using its own authorized fabric interface; exporting a pack or producing a tool result does not install, activate or admit an artifact by itself.
 
-Execution observations are protected nouns associated with accepted completion. They retain server-observed task and lease facts separately from optional worker-reported telemetry. Bounded recall can return permitted prior evidence. Recall does not authorize automatic replay, establish correctness or grant a new effect. See [execution reports and recall](https://github.com/ta-amps/tessera/blob/main/docs/execution-memory.md).
+Execution observations are protected nouns associated with accepted completion. They retain server-observed task and lease facts separately from optional worker-reported telemetry. Bounded recall can return permitted prior evidence. Recall does not authorize automatic replay, establish correctness or grant a new effect. See [execution reports and recall](https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/execution-memory.md).
 
 ## Reasoning and review
 
@@ -110,6 +110,6 @@ a fixed claims-per-minute quota or a measured capacity guarantee.
 
 Frontier's existing discovery work uses Tessera's namespace, nouns, tasks and admission boundaries; Home still serves its daily check status to agents. Its scheduled discovery can leave repair work for external workers. Live server repair is off. Scheduled discovery does not edit repositories or qualify generated candidates for publication.
 
-Frontier's intended packaging is a declarative seed/contract pack. `pack-contributions` describes ten proposed meta-pack workflows and synthetic examples; it contains no importer or active learning service. General pinned category/profile resolution and general rule activation/rollback still require implementation and verification.
+Frontier's intended packaging is a declarative seed/contract pack. `seed-packs-library-of-nouns-and-verbs` describes ten proposed meta-pack workflows and synthetic examples; it contains no importer or active learning service. General pinned category/profile resolution and general rule activation/rollback still require implementation and verification.
 
 Keep category membership, search ranking, execution composition and access control distinct. A category match can help find a noun; it cannot activate a tool, admit a candidate or widen permissions.

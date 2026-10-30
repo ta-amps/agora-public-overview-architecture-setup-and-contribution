@@ -12,7 +12,7 @@ body:
     attributes:
       label: What you looked at
       description: A page, the draft deck, the storyboard, a live site or a repository. A link helps.
-      placeholder: For example, https://ta-amps.github.io/agora/decks/2026-10-29/v4/
+      placeholder: For example, https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/decks/2026-10-29/v4/
     validations:
       required: true
   - type: textarea
