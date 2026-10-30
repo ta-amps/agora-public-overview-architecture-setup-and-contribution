@@ -149,8 +149,15 @@ class Builder(unittest.TestCase):
 
     def test_page_text_comes_from_content_nouns(self):
         nouns = copy.copy(self.nouns)
-        nouns.home = dict(self.nouns.home, statement={"lead": "Everything is nouns and verbs:", "rest": "A new line."})
-        self.assertIn("A new line.", build.render_home(nouns))
+        nouns.home = dict(self.nouns.home, statement={"parts": [{"label": "A label from data",
+                                                                "lead": "Everything is nouns and verbs:",
+                                                                "rest": "A new line."}]})
+        home_page = build.render_home(nouns)
+        self.assertIn("A new line.", home_page)
+        self.assertIn("A label from data", home_page)
+        nouns.home = dict(self.nouns.home, statement={"parts": [{"label": "", "lead": "No label"}]})
+        with self.assertRaises(build.BuildError):
+            build.render_home(nouns)
         nouns.uses = copy.deepcopy(self.nouns.uses)
         nouns.uses["flagships"][1]["name"] = "A flagship from data"
         nouns.uses["fields"]["items"].append("A field from data")
@@ -201,7 +208,7 @@ class Builder(unittest.TestCase):
         for leftover in ("claim-status", 'class="badge', "use-tag"):
             self.assertNotIn(leftover, main)
 
-    def test_the_home_page_is_the_video_one_sentence_and_the_decks(self):
+    def test_the_home_page_is_the_video_a_two_part_statement_and_the_decks(self):
         home = self.outputs[build.SITE / "index.html"]
         main = home[home.index('<main id="main">'):home.index("</main>")]
         self.assertEqual(3, main.count("<section"))
@@ -210,6 +217,79 @@ class Builder(unittest.TestCase):
         self.assertIn(" default>", main)
         self.assertEqual(5, main.count('class="deck-card"'))
         self.assertLess(home.index('class="agent-banner"'), home.index("<video"))
+        # Feedback, October 30: the statement reads in two labelled parts, the use case and then the architecture
+        # underneath, and the second says in plain words what verbs and nouns are. The use case's line is the page's
+        # one heading.
+        parts = self.nouns.home["statement"]["parts"]
+        self.assertEqual(["The use case", "The architecture underneath"], [part["label"] for part in parts])
+        self.assertIn("Eranos", parts[0]["lead"])
+        self.assertIn("verbs are tasks", parts[1]["rest"])
+        statement = main[main.index('<section class="statement"'):]
+        statement = statement[:statement.index("</section>")]
+        self.assertEqual(2, statement.count('<div class="statement-part">'))
+        self.assertLess(statement.index(f'<p class="statement-label">{build.text(parts[0]["label"])}</p>'),
+                        statement.index(f'<p class="statement-label">{build.text(parts[1]["label"])}</p>'))
+        self.assertEqual(1, main.count("<h1"))
+        self.assertIn(f'<h1 id="statement" class="statement-line"><span class="statement-lead">'
+                      f'{build.text(parts[0]["lead"])}</span></h1>', statement)
+
+    def test_nouns_and_verbs_are_glossed_in_plain_words_the_first_time(self):
+        # Feedback, October 30: a viewer took nouns and verbs for a model architecture. The home page, the use cases
+        # page and the overview and roll-your-own decks say in plain words what they are the first time they name
+        # them: verbs are tasks, and nouns are everything a task uses or makes. The overview says plainly that this
+        # is how the work is organized, not a model architecture. The marketplace deck, written for nonprofits,
+        # glosses its first verb once, as a task.
+        named = re.compile(r"\b(?:nouns?|verbs?)\b", re.I)
+
+        def glossed(shown: str, where: str) -> None:
+            found = named.search(shown)
+            self.assertIsNotNone(found, where)
+            self.assertIn("verbs are tasks", shown[found.start():found.start() + 160].lower(), where)
+
+        for path in (build.SITE / "index.html", build.SITE / "use-cases" / "index.html"):
+            glossed(build.plain_text(build.main_of(self.outputs[path])), path.relative_to(build.ROOT).as_posix())
+        decks = {deck["id"]: deck for deck in self.nouns.decks}
+        for deck_id in ("overview-and-architecture", "roll-your-own"):
+            glossed(" ".join(build.plain_text(slide["inner"]) for slide in decks[deck_id]["slides"]), deck_id)
+        overview = {slide["name"]: build.plain_text(slide["inner"]) for slide in decks["overview-and-architecture"]["slides"]}
+        self.assertIn("NOT A MODEL ARCHITECTURE", overview["nouns-and-verbs"])
+        self.assertIn("how the work is organized", overview["nouns-and-verbs"])
+        market = " ".join(build.plain_text(slide["inner"]) for slide in decks["public-good-marketplace"]["slides"])
+        self.assertEqual(1, market.count("(a task)"))
+        first = re.search(r"\bverbs?\b", market)
+        self.assertEqual(" (a task)", market[first.end():first.end() + len(" (a task)")])
+
+    def test_the_worked_examples_are_illustrations_and_their_numbers_have_claims(self):
+        # Feedback, October 30: two worked examples show nouns and verbs at work, one right after the slide that
+        # defines them and one right after feeds. They show how the work is organized, not measured runs, so each
+        # says so on the slide and in its notes, and every number on them has a claim. A measured precedent links to
+        # public evidence; the memory-systems feeds are planned, and the slide says so.
+        deck = next(deck for deck in self.nouns.decks if deck["id"] == "overview-and-architecture")
+        order = [slide["name"] for slide in deck["slides"]]
+        self.assertEqual(order.index("nouns-and-verbs") + 1, order.index("worked-example"))
+        self.assertEqual(order.index("feeds") + 1, order.index("memory-systems"))
+        slides = {slide["name"]: slide for slide in deck["slides"]}
+        claims = deck["claims"]["claims"]
+        for name in ("worked-example", "memory-systems"):
+            shown, notes = build.plain_text(slides[name]["inner"]), build.plain_text(slides[name]["notes"])
+            self.assertIn("ILLUSTRATION · NOT A MEASURED RUN", shown, name)
+            self.assertIn("illustration", notes.lower(), name)
+            mine = [claim for claim in claims if claim["slide"] == name]
+            self.assertTrue(any(claim["status"] == "illustration" for claim in mine), name)
+            listed = " ".join(claim["number"] for claim in mine)
+            for part in (shown, notes):
+                for number in re.findall(r"\d+(?:[.,]\d+)?", part):
+                    self.assertIn(number, listed, (name, number))
+            for claim in mine:
+                if claim["status"] == "measured":
+                    self.assertTrue(claim["link"].startswith("https://github.com/ta-amps/"), claim["number"])
+        self.assertIn("0 tokens", build.plain_text(slides["worked-example"]["inner"]))
+        self.assertIn("PLANNED, NOT RUNNING", build.plain_text(slides["memory-systems"]["inner"]))
+        self.assertTrue(any(claim["status"] == "planned" for claim in claims if claim["slide"] == "memory-systems"))
+        # Every claim status, illustration included, has its own label style in the notes.
+        css = (build.SITE / "assets" / "viewer.css").read_text(encoding="utf-8")
+        for status in build.CLAIM_STATUSES:
+            self.assertIn(f".claim-status.{status} {{", css, status)
 
     def test_nonprofits_never_choose_a_kind_of_request(self):
         # A nonprofit types what it needs; the request's first step sorts it into a kit, public work or both.

@@ -4,7 +4,8 @@ Everything a page says is a noun kept as data, and this script holds only markup
   * site/agent-brief.txt              the starting brief for any agent, word for word;
   * site/content/site.json            navigation, the agent banner, the endpoints, deck labels, the footer and its
                                       privacy line;
-  * site/content/home.json            the home page: the film, one sentence, the decks;
+  * site/content/home.json            the home page: the film, a statement in two labelled parts (the use case
+                                      and the architecture underneath), the decks;
   * site/content/decks-page.json      the decks page;
   * site/content/use-cases.json       the use cases page; each flagship names its library packs by id;
   * site/content/learning.json        the learning page: the loop, measured results with evidence, rules, limits;
@@ -59,7 +60,8 @@ DECKS = SITE / "decks"
 MANIFEST = SITE / "decks.json"
 PAGES_PREFIX = "/agora-public-overview-architecture-setup-and-contribution/"
 CANVAS_W, CANVAS_H = 1920, 1080
-CLAIM_STATUSES = {"measured", "pending", "planned"}
+# "illustration" marks a number in a worked example that shows how the work is organized, not a measured run.
+CLAIM_STATUSES = {"measured", "pending", "planned", "illustration"}
 LIBRARY_REPOSITORY = "https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs"
 SLUG = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*\Z")
 CATEGORY_ID = re.compile(r"[a-z][a-z0-9]*(?:-[a-z0-9]+)*\Z")  # starts with a letter: the page's style names it
@@ -744,6 +746,23 @@ def other_cut_links(videos: dict, default: dict) -> str:
         for cut in videos["cuts"] if cut is not default)
 
 
+def statement_parts(statement: dict) -> str:
+    """The home statement in labelled parts, such as the use case and the architecture underneath. Each part is a
+    label, then its line; the first line is the page's heading."""
+    parts = statement.get("parts")
+    if not isinstance(parts, list) or not parts:
+        fail("home.json: the statement needs at least one part")
+    out = []
+    for n, part in enumerate(parts):
+        if not part.get("label") or not part.get("lead"):
+            fail("home.json: every part of the statement needs a label and a lead")
+        rest = f' <span class="statement-rest">{keep_together(text(part["rest"]))}</span>' if part.get("rest") else ""
+        line = f'<span class="statement-lead">{mark_kinds(part["lead"])}</span>{rest}'
+        line = f'<h1 id="statement" class="statement-line">{line}</h1>' if n == 0 else f'<p class="statement-line">{line}</p>'
+        out.append(f'<div class="statement-part"><p class="statement-label">{text(part["label"])}</p>{line}</div>')
+    return "\n".join(out)
+
+
 def render_home(nouns: Nouns) -> str:
     home, ui = nouns.home, nouns.site["deck"]
     videos = home["videos"]
@@ -769,9 +788,8 @@ def render_home(nouns: Nouns) -> str:
         + "</p>",
         "</section>",
         '<section class="statement" aria-labelledby="statement">',
-        '<div class="wrap">',
-        f'<h1 id="statement"><span class="statement-lead">{mark_kinds(home["statement"]["lead"])}</span> '
-        f'<span class="statement-rest">{keep_together(text(home["statement"]["rest"]))}</span></h1>',
+        '<div class="wrap statement-parts">',
+        statement_parts(home["statement"]),
         "</div>",
         "</section>",
         '<section class="deck-band" aria-labelledby="home-decks">',

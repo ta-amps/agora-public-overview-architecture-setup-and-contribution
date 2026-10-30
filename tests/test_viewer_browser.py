@@ -7,6 +7,7 @@ repository's CI, which installs nothing beyond the standard library. Run them lo
 """
 from __future__ import annotations
 
+import json
 import threading
 import unittest
 from functools import partial
@@ -250,10 +251,11 @@ class Viewer(LocalSite):
         page.wait_for_timeout(100)
         self.assertEqual("#main", page.evaluate("location.hash"))
         self.assertEqual("6", self.state(page)["current"])
-        # A fragment that names a slide still moves to it.
+        # A fragment that names a slide still moves to it, wherever the deck's order puts that slide.
+        order = json.loads((SITE / DECK / "source" / "deck.json").read_text(encoding="utf-8"))["order"]
         page.evaluate("location.hash = '#map'")
         page.wait_for_timeout(100)
-        self.assertEqual("7", self.state(page)["current"])
+        self.assertEqual(str(order.index("map") + 1), self.state(page)["current"])
 
 
 @unittest.skipIf(sync_playwright is None, "needs the Playwright package")

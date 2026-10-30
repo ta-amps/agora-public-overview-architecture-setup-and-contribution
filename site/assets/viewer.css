@@ -280,6 +280,7 @@
 .claim-status.measured { color: var(--color-real); background: var(--color-real-wash); }
 .claim-status.pending { color: var(--color-building); background: var(--color-building-wash); }
 .claim-status.planned { color: var(--color-needed); background: var(--color-needed-wash); }
+.claim-status.illustration { color: var(--color-ink-2); background: transparent; border-style: dashed; }
 
 /* Full screen */
 

@@ -10,16 +10,16 @@
       "date": "2026-10-30",
       "path": "decks/overview-and-architecture/",
       "source": "decks/overview-and-architecture/source/",
-      "slides": 14,
+      "slides": 16,
       "unbranded": true,
       "claim_review": "decks/overview-and-architecture/source/claims.json",
       "downloads": [
         {
           "format": "pdf",
           "path": "decks/overview-and-architecture/ta-amps-overview-and-architecture.pdf",
-          "sha256": "5687bb2a1d182388f67ba9d8999e03ce952fb55147af934c3752ed7083bdc5f4",
-          "bytes": 385090,
-          "printed_from_main_sha256": "121cdf9c5b504a07eb83784dbf3c32a59a3cfc05334bc90c217b8de4002aabf4"
+          "sha256": "3807f3831245015a6691fb68239d887216edeb6f63b9af3540e1bab37adfaa36",
+          "bytes": 552117,
+          "printed_from_main_sha256": "5e423830fcb9ad5b2bba481e11acd3c3886a4f533d7d99e5fc678b156a52b788"
         }
       ]
     },
@@ -36,9 +36,9 @@
         {
           "format": "pdf",
           "path": "decks/public-good-marketplace/ta-amps-public-good-marketplace.pdf",
-          "sha256": "273fe932687b386e414bda0b16bb65dfdd7c2c272c135b0b7392502d81c85dd4",
-          "bytes": 379625,
-          "printed_from_main_sha256": "f158054ef7e02de3ae31c9cba1619e48b744b5431e31bfa1fdd792bb2351ac37"
+          "sha256": "f04d94d79b4938518596581ee0d7ab8140f150edcd6a6aac3758f63f5a8f0519",
+          "bytes": 380497,
+          "printed_from_main_sha256": "d895d66d556e59b9b5935c51458a6a8d27a5bd35c5fd0b26c9052b33517bbf03"
         }
       ]
     },
@@ -55,9 +55,9 @@
         {
           "format": "pdf",
           "path": "decks/roll-your-own/ta-amps-roll-your-own.pdf",
-          "sha256": "b3f4e6ad82f5edea1c3198342944940d2edc2154608313aa3d02d4478e1b1b0a",
-          "bytes": 374817,
-          "printed_from_main_sha256": "54bfcf555b10236118fe5054d1dc2a4413940c703fcd101dace9fa1bd2dd4c71"
+          "sha256": "f8858ce0ab0b6a27be66459235800a0963f9e54873e2223f141636ef8b6408ec",
+          "bytes": 374941,
+          "printed_from_main_sha256": "0759d393c7904017535b4853f2617ad94e86d39989adcf177c9b7c1536071b6f"
         }
       ]
     },

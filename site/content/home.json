@@ -1,7 +1,7 @@
 {
- "about": "The home page, as one noun: the film (one or more cuts, with a default), one sentence and the decks. scripts/build_site.py renders it into site/index.html.",
+ "about": "The home page, as one noun: the film (one or more cuts, with a default), a statement in two labelled parts, the use case and the architecture underneath, and the decks. The first part's line is the page's heading. scripts/build_site.py renders it into site/index.html.",
  "title": "Agora, the ta-amps overview",
- "description": "Agora is the ta-amps overview: the three-minute film, five decks, use cases and how the system keeps learning. Everything is nouns and verbs; Eranos is the two-sided marketplace.",
+ "description": "Agora is the ta-amps overview: the three-minute film, five decks, use cases and how the system keeps learning. The use case is Eranos, spare tokens for good. The architecture underneath is nouns and verbs: verbs are tasks, and nouns are everything they use and make.",
  "videos": {
   "default": "full",
   "choose": "Choose a cut",
@@ -37,8 +37,17 @@
   }
  },
  "statement": {
-  "lead": "Everything is nouns and verbs:",
-  "rest": "Eranos is the two-sided marketplace, and Agora is this overview."
+  "parts": [
+   {
+    "label": "The use case",
+    "lead": "Eranos: spare tokens for good."
+   },
+   {
+    "label": "The architecture underneath",
+    "lead": "Everything is nouns and verbs:",
+    "rest": "verbs are tasks, and nouns are everything they use and make, which any project can reuse."
+   }
+  ]
  },
  "decks_heading": "Decks"
 }

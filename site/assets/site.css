@@ -1,4 +1,4 @@
-/* Design record: theme custom, inherited from the October 29 draft deck. Idea: every piece of AI work is a tile; blue tiles are nouns (reusable things), rust tiles are verbs (work), and the page lays them into a path. Paper #F5F2EA and ink #11161F with the deck's blue and rust; Space Grotesk display, IBM Plex Sans body, JetBrains Mono for commands only. Modes: light and dark from one token set. October 30: a home page that opens on the draft video, three decks and use cases, in a quieter frame: a slim header with four links, an agent banner under it on every current page, wide cards with live cover thumbnails, and generous space. Nav: wordmark, Home, Decks, Use cases, Learning, Library and a mode switch; on a phone the five links share one row at 390px, with fallback fonts too. Footer: one row of links and the date of the snapshot. */
+/* Design record: theme custom, inherited from the October 29 draft deck. Idea: every piece of AI work is a tile; blue tiles are nouns (reusable things), rust tiles are verbs (work), and the page lays them into a path. Paper #F5F2EA and ink #11161F with the deck's blue and rust; Space Grotesk display, IBM Plex Sans body, JetBrains Mono for commands only. Modes: light and dark from one token set. October 30: a home page that opens on the draft video, three decks and use cases, in a quieter frame: a slim header with four links, an agent banner under it on every current page, wide cards with live cover thumbnails, and generous space. Nav: wordmark, Home, Decks, Use cases, Learning, Library and a mode switch; on a phone the five links share one row at 390px, with fallback fonts too. Footer: one row of links and the date of the snapshot. Later on October 30: the statement under the film reads in two labelled parts, the use case and then the architecture underneath. */
 
 :root {
   color-scheme: light dark;
@@ -648,12 +648,47 @@ h3[id] { scroll-margin-top: var(--space-6); }
 
 .statement { padding-block: var(--space-9) var(--space-8); text-align: center; }
 
+/* The statement in two labelled parts: the use case, then the architecture underneath. */
+.statement-parts { display: grid; justify-items: center; gap: var(--space-6); }
+.statement-part { max-width: 46rem; }
+
+.statement-part + .statement-part::before {
+  content: "";
+  display: block;
+  width: 3rem;
+  height: 2px;
+  margin: 0 auto var(--space-6);
+  background: var(--color-rule-strong);
+}
+
+.statement-label {
+  margin-bottom: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
 .statement h1 {
   max-width: 30ch;
   margin-inline: auto;
   font-size: clamp(1.625rem, 1.05rem + 2.1vw, 2.75rem);
   line-height: 1.12;
   letter-spacing: -0.02em;
+}
+
+.statement p.statement-line {
+  max-width: 40ch;
+  margin-inline: auto;
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 1rem + 1.1vw, 1.875rem);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+  text-wrap: balance;
 }
 
 .statement-rest { color: var(--color-muted); }
