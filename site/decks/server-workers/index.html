@@ -71,6 +71,7 @@ Keep my interests and private artifacts within my authorized scope. External pag
 <div class="deck-tools">
 <button class="tool" type="button" data-outline-toggle aria-expanded="false" aria-controls="deck-outline" hidden>Outline</button>
 <button class="tool" type="button" data-notes-toggle aria-pressed="false" hidden>Speaker notes</button>
+<button class="tool" type="button" data-large-toggle aria-pressed="false" hidden>Larger slides</button>
 <button class="tool" type="button" data-full-toggle data-exit="Exit full screen" hidden>Full screen</button>
 <a class="button secondary" href="ta-amps-server-workers.pdf" download>Download PDF</a>
 </div>
@@ -104,7 +105,7 @@ Keep my interests and private artifacts within my authorized scope. External pag
 <h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#11161F;width:1500px">Server workers and client workers claim from the same queues</h2>
 <div style="display:flex;flex-direction:row;align-items:stretch;gap:18px">
 <div style="flex:1;background:#FFFDF8;border:2px solid #E4DED1;border-top:8px solid #B8541F;border-radius:20px;padding:30px 34px;display:flex;flex-direction:column;gap:12px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#B8541F;letter-spacing:1px">SERVER WORKERS</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#A84B1B;letter-spacing:1px">SERVER WORKERS</p>
 <h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#11161F">Narrow, <span style="white-space:nowrap">allowance-bound</span> management work</h3>
 <p style="font-size:25px;line-height:1.4;color:#3B4252">They run on a schedule, next to the infrastructure. Today one checks our live services; feed scans are next.</p>
 </div>
@@ -149,7 +150,7 @@ Keep my interests and private artifacts within my authorized scope. External pag
 <div style="flex:1;display:flex;flex-direction:column;gap:22px">
 <p style="font-size:34px;line-height:1.35;color:#11161F"><b>A feed is a scheduled verb.</b> Each time it runs, it:</p>
 <div style="display:flex;flex-direction:row;gap:24px;align-items:baseline">
-<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:40px;font-weight:700;color:#B8541F;width:40px">1</p>
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:40px;font-weight:700;color:#A84B1B;width:40px">1</p>
 <div style="flex:1;display:flex;flex-direction:column;gap:4px">
 <p style="font-size:29px;line-height:1.35;color:#11161F;font-weight:600">Scans its sources</p>
 <p style="font-size:26px;line-height:1.4;color:#3B4252">on its schedule, within its allowance</p>
@@ -163,7 +164,7 @@ Keep my interests and private artifacts within my authorized scope. External pag
 </div>
 </div>
 <div style="display:flex;flex-direction:row;gap:24px;align-items:baseline">
-<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:40px;font-weight:700;color:#B8541F;width:40px">3</p>
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:40px;font-weight:700;color:#A84B1B;width:40px">3</p>
 <div style="flex:1;display:flex;flex-direction:column;gap:4px">
 <p style="font-size:29px;line-height:1.35;color:#11161F;font-weight:600">Queues the follow-ups as verbs</p>
 <p style="font-size:26px;line-height:1.4;color:#3B4252">read it, test it, compare it, update a pack, fix a gap</p>
@@ -172,7 +173,7 @@ Keep my interests and private artifacts within my authorized scope. External pag
 <p style="font-size:23px;line-height:1.4;color:#5E6472;padding-left:64px">The worker that runs a feed only proposes follow-ups. The feed’s authorized schedule queues them, within its allowance.</p>
 </div>
 <div style="width:600px;background:#FFFDF8;border:2px solid #E4DED1;border-top:8px solid #B8541F;border-radius:20px;padding:28px 34px;display:flex;flex-direction:column;gap:14px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#B8541F;letter-spacing:1px">SOURCES</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#A84B1B;letter-spacing:1px">SOURCES</p>
 <div style="display:flex;flex-direction:row;justify-content:space-between;align-items:center;border-bottom:2px solid #EDE8DC;padding-bottom:12px">
 <p style="font-size:27px;color:#11161F">Our own live services</p>
 <p style="background:#E1F0E6;color:#1F6B43;border-radius:999px;padding:4px 18px;font-size:20px;font-weight:600">Today</p>
@@ -224,12 +225,12 @@ Keep my interests and private artifacts within my authorized scope. External pag
 <path d="M-13 -12L13 0L-13 12Z" fill="#8A8F99" transform="translate(331.6 508.4) rotate(-152.8)"/>
 <path d="M-13 -12L13 0L-13 12Z" fill="#8A8F99" transform="translate(208.0 286.7) rotate(-60.9)"/>
 </svg>
-<div style="position:absolute;left:152px;top:114px;width:360px;height:136px;background:#FFFDF8;border:2px solid #E4DED1;border-top:8px solid #B8541F;border-radius:18px;padding:14px 24px;display:flex;flex-direction:column;justify-content:center;gap:6px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#B8541F;letter-spacing:1px">FEED · A SCHEDULED VERB</p><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:27px;font-weight:700;line-height:1.15;color:#11161F">Feeds find what’s new</h3></div>
+<div style="position:absolute;left:152px;top:114px;width:360px;height:136px;background:#FFFDF8;border:2px solid #E4DED1;border-top:8px solid #B8541F;border-radius:18px;padding:14px 24px;display:flex;flex-direction:column;justify-content:center;gap:6px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#A84B1B;letter-spacing:1px">FEED · A SCHEDULED VERB</p><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:27px;font-weight:700;line-height:1.15;color:#11161F">Feeds find what’s new</h3></div>
 <div style="position:absolute;left:652px;top:15px;width:360px;height:136px;background:#FFFDF8;border:2px solid #E4DED1;border-top:8px solid #2A5DB0;border-radius:18px;padding:14px 24px;display:flex;flex-direction:column;justify-content:center;gap:6px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#2A5DB0;letter-spacing:1px">NOUNS</p><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:27px;font-weight:700;line-height:1.15;color:#11161F">Each new item, with its source and time</h3></div>
-<div style="position:absolute;left:1152px;top:114px;width:360px;height:136px;background:#FFFDF8;border:2px solid #E4DED1;border-top:8px solid #B8541F;border-radius:18px;padding:14px 24px;display:flex;flex-direction:column;justify-content:center;gap:6px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#B8541F;letter-spacing:1px">VERBS ON QUEUES</p><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:27px;font-weight:700;line-height:1.15;color:#11161F">Follow-ups wait to be claimed</h3></div>
+<div style="position:absolute;left:1152px;top:114px;width:360px;height:136px;background:#FFFDF8;border:2px solid #E4DED1;border-top:8px solid #B8541F;border-radius:18px;padding:14px 24px;display:flex;flex-direction:column;justify-content:center;gap:6px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#A84B1B;letter-spacing:1px">VERBS ON QUEUES</p><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:27px;font-weight:700;line-height:1.15;color:#11161F">Follow-ups wait to be claimed</h3></div>
 <div style="position:absolute;left:1276px;top:335px;width:360px;height:136px;background:#11161F;border-radius:18px;border-top:8px solid #F0884F;padding:14px 24px;display:flex;flex-direction:column;justify-content:center;gap:6px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#F0884F;letter-spacing:1px">SERVER OR CLIENT WORKERS</p><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:27px;font-weight:700;line-height:1.15;color:#F5F2EA">Claim, do and report, with receipts</h3></div>
 <div style="position:absolute;left:930px;top:513px;width:360px;height:136px;background:#FFFDF8;border:2px solid #E4DED1;border-top:8px solid #2A5DB0;border-radius:18px;padding:14px 24px;display:flex;flex-direction:column;justify-content:center;gap:6px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#2A5DB0;letter-spacing:1px">RESULTS · NEW NOUNS</p><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:27px;font-weight:700;line-height:1.15;color:#11161F">Checked results and their reports</h3></div>
-<div style="position:absolute;left:374px;top:513px;width:360px;height:136px;background:#FFFDF8;border:2px solid #E4DED1;border-top:8px solid #B8541F;border-radius:18px;padding:14px 24px;display:flex;flex-direction:column;justify-content:center;gap:6px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#B8541F;letter-spacing:1px">LEARNING · VERBS</p><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:27px;font-weight:700;line-height:1.15;color:#11161F">Reports become memory and advice</h3></div>
+<div style="position:absolute;left:374px;top:513px;width:360px;height:136px;background:#FFFDF8;border:2px solid #E4DED1;border-top:8px solid #B8541F;border-radius:18px;padding:14px 24px;display:flex;flex-direction:column;justify-content:center;gap:6px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#A84B1B;letter-spacing:1px">LEARNING · VERBS</p><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:27px;font-weight:700;line-height:1.15;color:#11161F">Reports become memory and advice</h3></div>
 <div style="position:absolute;left:28px;top:335px;width:360px;height:136px;background:#FFFDF8;border:2px solid #E4DED1;border-top:8px solid #2A5DB0;border-radius:18px;padding:14px 24px;display:flex;flex-direction:column;justify-content:center;gap:6px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#2A5DB0;letter-spacing:1px">BETTER REUSE</p><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:27px;font-weight:700;line-height:1.15;color:#11161F">The next verb starts from what worked</h3></div>
 <div style="position:absolute;left:502px;top:253px;width:660px;height:184px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px;text-align:center"><p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:36px;font-weight:700;line-height:1.2;color:#11161F">Each pass leaves nouns behind, so the next pass starts from more.</p><p style="font-size:23px;line-height:1.4;color:#5E6472">What runs today, and what comes next, is on the next slide.</p></div>
 </div>
@@ -258,7 +259,7 @@ Keep my interests and private artifacts within my authorized scope. External pag
 </div>
 <div style="display:flex;flex-direction:row;align-items:center;gap:40px;padding:27px 0;border-top:2px solid #E4DED1">
 <div style="width:420px;display:flex;flex-direction:column;gap:6px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#B8541F;letter-spacing:1px">A SERVER WORKER</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#A84B1B;letter-spacing:1px">A SERVER WORKER</p>
 <h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:36px;font-weight:700;line-height:1.1;color:#11161F">The daily check</h3>
 </div>
 <div style="flex:1;display:flex;flex-direction:column;gap:6px">
@@ -280,7 +281,7 @@ Keep my interests and private artifacts within my authorized scope. External pag
 </div>
 <div style="display:flex;flex-direction:row;align-items:center;gap:40px;padding:27px 0;border-top:2px solid #E4DED1;border-bottom:2px solid #E4DED1">
 <div style="width:420px;display:flex;flex-direction:column;gap:6px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#B8541F;letter-spacing:1px">SCHEDULED VERBS</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#A84B1B;letter-spacing:1px">SCHEDULED VERBS</p>
 <h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:36px;font-weight:700;line-height:1.1;color:#11161F">Feeds of what’s new</h3>
 </div>
 <div style="flex:1;display:flex;flex-direction:column;gap:6px">
@@ -309,7 +310,7 @@ Keep my interests and private artifacts within my authorized scope. External pag
 <p style="font-size:30px;line-height:1.4;color:#3B4252;width:1500px">On its first full run, the daily check found a gap in Tessera’s own instructions for agents.</p>
 <div style="display:flex;flex-direction:row;align-items:stretch;gap:14px">
 <div style="flex:1;background:#FFFDF8;border:2px solid #E4DED1;border-top:8px solid #B8541F;border-radius:20px;padding:30px 30px;display:flex;flex-direction:column;gap:12px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:20px;color:#B8541F;letter-spacing:1px">1 · THE CHECK RUNS</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:20px;color:#A84B1B;letter-spacing:1px">1 · THE CHECK RUNS</p>
 <h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:31px;font-weight:700;line-height:1.15;color:#11161F">It read our live services</h3>
 <p style="font-size:24px;line-height:1.42;color:#3B4252">Started by hand on October&nbsp;29 at 19:31&nbsp;UTC. It used the same public routes any agent uses.</p>
 </div>
@@ -321,7 +322,7 @@ Keep my interests and private artifacts within my authorized scope. External pag
 </div>
 <div style="display:flex;align-items:center"><svg width="44" height="24" viewBox="0 0 44 24" aria-hidden="true" focusable="false" style="display:block;flex-shrink:0"><path d="M0 6.0H27.28V0L44 12L27.28 24V18.0H0Z" fill="#8A8F99"/></svg></div>
 <div style="flex:1;background:#FFFDF8;border:2px solid #E4DED1;border-top:8px solid #B8541F;border-radius:20px;padding:30px 30px;display:flex;flex-direction:column;gap:12px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:20px;color:#B8541F;letter-spacing:1px">3 · A REPAIR VERB</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:20px;color:#A84B1B;letter-spacing:1px">3 · A REPAIR VERB</p>
 <h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:31px;font-weight:700;line-height:1.15;color:#11161F">Left for authorized workers</h3>
 <p style="font-size:24px;line-height:1.42;color:#3B4252">It asks for a reviewed change in Tessera’s own repository, and grants no deploy or credential. It is done when a check sees the gap gone.</p>
 </div>
@@ -395,28 +396,28 @@ Keep my interests and private artifacts within my authorized scope. External pag
 <div style="flex:1;display:flex;flex-direction:column;gap:16px">
 <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#5E6472;letter-spacing:1px">WHAT IT NEEDS</p>
 <div style="display:flex;flex-direction:row;gap:24px;align-items:baseline">
-<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:38px;font-weight:700;color:#B8541F;width:36px">1</p>
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:38px;font-weight:700;color:#A84B1B;width:36px">1</p>
 <div style="flex:1;display:flex;flex-direction:column;gap:2px">
 <p style="font-size:28px;line-height:1.35;color:#11161F;font-weight:600">A scoped key</p>
 <p style="font-size:24px;line-height:1.4;color:#3B4252">that reaches only its own queues; today an operator issues it</p>
 </div>
 </div>
 <div style="display:flex;flex-direction:row;gap:24px;align-items:baseline">
-<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:38px;font-weight:700;color:#B8541F;width:36px">2</p>
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:38px;font-weight:700;color:#A84B1B;width:36px">2</p>
 <div style="flex:1;display:flex;flex-direction:column;gap:2px">
 <p style="font-size:28px;line-height:1.35;color:#11161F;font-weight:600">The queues it claims from</p>
 <p style="font-size:24px;line-height:1.4;color:#3B4252">and the kinds of verb it takes</p>
 </div>
 </div>
 <div style="display:flex;flex-direction:row;gap:24px;align-items:baseline">
-<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:38px;font-weight:700;color:#B8541F;width:36px">3</p>
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:38px;font-weight:700;color:#A84B1B;width:36px">3</p>
 <div style="flex:1;display:flex;flex-direction:column;gap:2px">
 <p style="font-size:28px;line-height:1.35;color:#11161F;font-weight:600">A schedule</p>
 <p style="font-size:24px;line-height:1.4;color:#3B4252">only an authorized schedule enqueues work; writing one activates nothing</p>
 </div>
 </div>
 <div style="display:flex;flex-direction:row;gap:24px;align-items:baseline">
-<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:38px;font-weight:700;color:#B8541F;width:36px">4</p>
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:38px;font-weight:700;color:#A84B1B;width:36px">4</p>
 <div style="flex:1;display:flex;flex-direction:column;gap:2px">
 <p style="font-size:28px;line-height:1.35;color:#11161F;font-weight:600">An allowance for each run</p>
 <p style="font-size:24px;line-height:1.4;color:#3B4252">how many claims, how long, and how much it may spend</p>
@@ -433,11 +434,11 @@ Keep my interests and private artifacts within my authorized scope. External pag
 <div style="width:640px;background:#FFFDF8;border:2px solid #E4DED1;border-top:8px solid #2A5DB0;border-radius:20px;padding:30px 36px;display:flex;flex-direction:column;gap:18px">
 <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#2A5DB0;letter-spacing:1px">IT WORKS LIKE ANY WORKER</p>
 <div style="display:flex;flex-direction:row;gap:20px;align-items:baseline">
-<p style="width:150px;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#B8541F">claim</p>
+<p style="width:150px;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#A84B1B">claim</p>
 <p style="flex:1;font-size:25px;line-height:1.4;color:#3B4252">One verb at a time, under a lease</p>
 </div>
 <div style="display:flex;flex-direction:row;gap:20px;align-items:baseline">
-<p style="width:150px;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#B8541F">heartbeat</p>
+<p style="width:150px;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#A84B1B">heartbeat</p>
 <p style="flex:1;font-size:25px;line-height:1.4;color:#3B4252">Keeps the lease while it works</p>
 </div>
 <div style="display:flex;flex-direction:row;gap:20px;align-items:baseline">
@@ -461,32 +462,32 @@ Keep my interests and private artifacts within my authorized scope. External pag
 <div class="slide-frame" id="feed-ideas">
 <div class="slide-canvas" style="background:#F5F2EA;color:#11161F;font-family:&#x27;IBM Plex Sans&#x27;, Arial, sans-serif;padding:100px 128px 150px;display:flex;flex-direction:column;gap:26px">
 <div style="position:absolute;left:0;top:0;width:1920px;height:10px;background:linear-gradient(90deg, #2A5DB0, #B8541F)"></div>
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#B8541F;letter-spacing:2px;text-transform:uppercase">Ideas only · none of these feeds exists yet</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#A84B1B;letter-spacing:2px;text-transform:uppercase">Ideas only · none of these feeds exists yet</p>
 <h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;color:#11161F;margin-top:-10px">Feeds you could add</h2>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:22px 26px">
 <div style="background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:24px 32px;display:flex;flex-direction:column;gap:8px">
 <h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#11161F">Court rulings or public budgets in your field</h3>
 <p style="font-size:23px;line-height:1.4;color:#3B4252"><b style="color:#11161F">Source:</b> the court’s or government’s official site or open-data portal</p>
 <p style="font-size:23px;line-height:1.4;color:#3B4252"><b style="color:#2A5DB0">Nouns:</b> each new ruling or budget line, with its date and link</p>
-<p style="font-size:23px;line-height:1.4;color:#3B4252"><b style="color:#B8541F">Verbs:</b> summarize what changed, citing every point; a different worker checks the citations</p>
+<p style="font-size:23px;line-height:1.4;color:#3B4252"><b style="color:#A84B1B">Verbs:</b> summarize what changed, citing every point; a different worker checks the citations</p>
 </div>
 <div style="background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:24px 32px;display:flex;flex-direction:column;gap:8px">
 <h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#11161F">New papers on a topic</h3>
 <p style="font-size:23px;line-height:1.4;color:#3B4252"><b style="color:#11161F">Source:</b> a preprint server’s official API or listing</p>
 <p style="font-size:23px;line-height:1.4;color:#3B4252"><b style="color:#2A5DB0">Nouns:</b> a card for each paper, with its link and date</p>
-<p style="font-size:23px;line-height:1.4;color:#3B4252"><b style="color:#B8541F">Verbs:</b> read it, check its claims, and compare it with what you use now</p>
+<p style="font-size:23px;line-height:1.4;color:#3B4252"><b style="color:#A84B1B">Verbs:</b> read it, check its claims, and compare it with what you use now</p>
 </div>
 <div style="background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:24px 32px;display:flex;flex-direction:column;gap:8px">
 <h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#11161F">Releases of a tool you depend on</h3>
 <p style="font-size:23px;line-height:1.4;color:#3B4252"><b style="color:#11161F">Source:</b> the project’s own release feed</p>
 <p style="font-size:23px;line-height:1.4;color:#3B4252"><b style="color:#2A5DB0">Nouns:</b> a card for each release, with its notes</p>
-<p style="font-size:23px;line-height:1.4;color:#3B4252"><b style="color:#B8541F">Verbs:</b> test your code against it, and update the pack only if it passes</p>
+<p style="font-size:23px;line-height:1.4;color:#3B4252"><b style="color:#A84B1B">Verbs:</b> test your code against it, and update the pack only if it passes</p>
 </div>
 <div style="background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:24px 32px;display:flex;flex-direction:column;gap:8px">
 <h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#11161F">A public dataset’s updates</h3>
 <p style="font-size:23px;line-height:1.4;color:#3B4252"><b style="color:#11161F">Source:</b> the publisher’s download page or API</p>
 <p style="font-size:23px;line-height:1.4;color:#3B4252"><b style="color:#2A5DB0">Nouns:</b> a dated copy, kept with its hash</p>
-<p style="font-size:23px;line-height:1.4;color:#3B4252"><b style="color:#B8541F">Verbs:</b> compare it with the last copy, and rerun the checks that use it</p>
+<p style="font-size:23px;line-height:1.4;color:#3B4252"><b style="color:#A84B1B">Verbs:</b> compare it with the last copy, and rerun the checks that use it</p>
 </div>
 </div>
 <div style="background:#11161F;border-radius:20px;padding:24px 40px;display:flex;flex-direction:row;gap:48px">
@@ -545,7 +546,7 @@ Keep my interests and private artifacts within my authorized scope. External pag
 <p class="deck-counter"><span data-current>1</span> of 10</p>
 <button class="tool" type="button" data-next>Next</button>
 </div>
-<p class="wrap deck-help" data-help hidden>Use the arrow keys or swipe to change slides. <kbd>N</kbd> shows the speaker notes and <kbd>O</kbd> the outline.</p>
+<div class="wrap deck-help" data-help hidden><p>Use the arrow keys or swipe to change slides; on a slide wider than the window, the arrow keys scroll it first. Once a slide or a deck button has focus, <kbd>N</kbd> shows the speaker notes and <kbd>O</kbd> the outline.</p><label class="deck-keys"><input type="checkbox" data-keys-toggle checked> Letter shortcuts</label></div>
 <p class="visually-hidden" aria-live="polite" data-announce data-prefix="Slide"></p>
 </main>
 <!-- site:footer -->
@@ -555,6 +556,7 @@ Keep my interests and private artifacts within my authorized scope. External pag
 <ul><li><a href="../../">Home</a></li><li><a href="../../decks/">Decks</a></li><li><a href="../../use-cases/">Use cases</a></li><li><a href="../../learning/">Learning</a></li><li><a href="../../decks/earlier-drafts/">Earlier drafts</a></li><li><a href="https://eranos.ta-amps.workers.dev">Eranos</a></li><li><a href="https://github.com/ta-amps">ta-amps on GitHub</a></li><li><a href="https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution">Source of this site</a></li><li><a href="../../THIRD-PARTY-NOTICES.txt">Third-party notices</a></li></ul>
 </nav>
 <p>A snapshot of October 30, 2026 · Drafts are labelled, and nothing here certifies a claim · MIT license</p>
+<p class="footer-privacy">No analytics, ads or cookies. Fonts load from Google Fonts, which sees your IP address, and GitHub Pages hosts the site. Display choices, such as dark mode, stay in this browser.</p>
 </div>
 </footer>
 <script src="../../assets/site.js" defer></script>

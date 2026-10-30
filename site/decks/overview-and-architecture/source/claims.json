@@ -4,10 +4,10 @@
   "claims": [
     {
       "slide": "seed-packs",
-      "number": "31 seed packs in one library, with 556 nouns and 182 verb templates",
+      "number": "59 seed packs in one library, with 1,177 nouns, 381 verb templates and 37 worked examples",
       "status": "measured",
-      "source": "A count of the packs in the seed-pack library on October 30, 2026. They are proposals and validated examples: none is installed, imported, admitted or activated.",
-      "link": "https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs#seed-pack-library"
+      "source": "A count of the packs in the seed-pack library's README at commit d837b30, on October 30, 2026. They are proposals and validated examples: none is installed, imported, admitted or activated.",
+      "link": "https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs/blob/d837b30bf01f7051d68c8579dfe8415ddb41b75d/README.md#seed-pack-library"
     },
     {
       "slide": "learning",

@@ -45,6 +45,71 @@ def shown_text(fragment: str) -> list[str]:
     return parser.shown
 
 
+class FormLinks(HTMLParser):
+    """For every link to a GitHub issue form, the text of its two nearest enclosing p, li or div elements."""
+
+    BLOCKS = {"p", "li", "div"}
+    VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr"}
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.stack: list[list] = []  # [tag, text pieces, the indexes of the links it encloses]
+        self.links: list[dict] = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag in self.VOID:
+            return
+        self.stack.append([tag, [], []])
+        href = dict(attrs).get("href") or ""
+        if tag == "a" and build.GITHUB_FORM.match(href):
+            self.links.append({"href": href, "context": []})
+            for entry in [e for e in reversed(self.stack) if e[0] in self.BLOCKS][:2]:
+                entry[2].append(len(self.links) - 1)
+
+    def handle_startendtag(self, tag, attrs):
+        pass
+
+    def handle_endtag(self, tag):
+        while self.stack:
+            entry = self.stack.pop()
+            for i in entry[2]:
+                self.links[i]["context"].append(" ".join(entry[1]))
+            if entry[0] == tag:
+                break
+
+    def handle_data(self, data):
+        for entry in self.stack:
+            entry[1].append(data)
+
+
+def css_tokens(css: str, selector: str) -> dict[str, str]:
+    """The custom properties a stylesheet declares in the first block that starts with this selector."""
+    block = css[css.index(selector + " {"):]
+    block = block[:block.index("}")]
+    return dict(re.findall(r"(--[a-z0-9-]+):\s*(#[0-9A-Fa-f]{6})", block))
+
+
+def contrast(a: str, b: str) -> float:
+    def luminance(colour: str) -> float:
+        channels = [int(colour[i:i + 2], 16) / 255 for i in (1, 3, 5)]
+        r, g, b_ = [c / 12.92 if c <= 0.03928 else ((c + 0.055) / 1.055) ** 2.4 for c in channels]
+        return 0.2126 * r + 0.7152 * g + 0.0722 * b_
+    light, dark = sorted((luminance(a), luminance(b)), reverse=True)
+    return (light + 0.05) / (dark + 0.05)
+
+
+def plain_words(value: str) -> list[str]:
+    """Words, lowercased, without punctuation: how a transcript and its captions are compared."""
+    value = value.lower().replace("…", " ").replace("’", "").replace("'", "").replace("—", " ").replace("-", " ")
+    return re.sub(r"[^a-z0-9% ]", "", value).split()
+
+
+def caption_words(vtt: str) -> list[str]:
+    """The words a WebVTT file's cues show."""
+    cues = [block.split("\n") for block in vtt.strip().split("\n\n")]
+    return plain_words(" ".join(line for cue in cues for n, line in enumerate(cue) if any("-->" in c for c in cue[:n])))
+
+
 class Builder(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -251,6 +316,113 @@ class Builder(unittest.TestCase):
             for part in (build.plain_text(slide["inner"]), build.plain_text(slide["notes"])):
                 for number in re.findall(r"\d+(?:[.,]\d+)?", names.sub(" ", part)):
                     self.assertIn(number, listed, (slide["name"], number))
+
+    # Acceptance and accessibility fixes, October 30 ------------------------------------------------------------
+
+    def test_deck_viewer_controls_and_help_come_from_the_site_noun(self):
+        # The letter shortcuts have a visible switch (WCAG 2.1.4), and slides can be shown larger (WCAG 1.4.4).
+        ui = self.nouns.site["deck"]
+        self.assertIn("<kbd>N</kbd>", ui["help_html"])
+        self.assertIn("focus", ui["help_html"])
+        for deck in self.nouns.decks:
+            main = build.main_of(self.outputs[deck["page"]])
+            self.assertEqual(1, main.count(f'data-large-toggle aria-pressed="false" hidden>{build.text(ui["larger"])}</button>'),
+                             deck["id"])
+            self.assertEqual(1, main.count(f'<label class="deck-keys"><input type="checkbox" data-keys-toggle checked> '
+                                           f'{build.text(ui["letter_keys"])}</label>'), deck["id"])
+            self.assertIn(f'<p>{ui["help_html"]}</p>', main)
+
+    def test_links_to_github_forms_say_they_need_a_free_account(self):
+        # Signed-out visitors meet GitHub's sign-in page, so every link to an issue form says what it needs.
+        checked = 0
+        for path, page in self.outputs.items():
+            if path.suffix != ".html":
+                continue
+            parser = FormLinks()
+            parser.feed(page)
+            parser.close()
+            for link in parser.links:
+                checked += 1
+                self.assertTrue(any(re.search(r"\bfree\b.*\baccount\b", text, re.I | re.S) for text in link["context"]),
+                                (path.relative_to(build.ROOT).as_posix(), link["href"]))
+        self.assertGreaterEqual(checked, 5)
+
+    def test_the_film_page_is_its_transcript_and_says_there_is_no_described_cut(self):
+        film, home = self.nouns.film, self.nouns.home
+        page = self.outputs[build.SITE / "film" / "index.html"]
+        self.assertIn("transcript and scene descriptions", film["heading"].lower())
+        self.assertIn(f"<h1>{build.text(film['heading'])}</h1>", page)
+        self.assertIn(f'<p class="dateline">{build.text(film["audio_description"])}</p>', page)
+        self.assertIn("audio-described cut is not available yet", film["audio_description"])
+        self.assertIn("transcript", home["videos"]["outline"]["label"].lower())
+        self.assertIn(f'<a href="film/">{build.text(home["videos"]["outline"]["label"])}</a>',
+                      self.outputs[build.SITE / "index.html"])
+        # A transcript is the narration word for word: the film noun's lines are the full cut's captions.
+        full = next(cut for cut in home["videos"]["cuts"] if cut["id"] == "full")
+        captions = (build.SITE / full["captions"]).read_text(encoding="utf-8")
+        self.assertEqual(caption_words(captions), plain_words(" ".join(line["words"] for line in film["lines"])))
+
+    def test_the_home_description_names_the_film_not_a_draft_video(self):
+        description = self.nouns.home["description"]
+        self.assertNotIn("draft video", description)
+        self.assertIn("three-minute film", description)
+        self.assertIn(f'<meta name="description" content="{build.attr(description)}">', self.outputs[build.SITE / "index.html"])
+
+    def test_the_footer_privacy_line_comes_from_its_noun_and_matches_what_the_pages_load(self):
+        privacy = self.nouns.site["footer"]["privacy"]
+        for path, page in self.outputs.items():
+            if path.suffix == ".html":
+                self.assertEqual(1, page.count(f'<p class="footer-privacy">{build.text(privacy)}</p>'), path)
+        # "Fonts load from Google Fonts": the only outside hosts any current page loads anything from.
+        loads = re.compile(r'<(?:link|script|img|video|source|track|iframe)\b[^>]*?\s(?:href|src)="(https?://[^"/]+)', re.I)
+        hosts = {host for path, page in self.outputs.items() if path.suffix == ".html" for host in loads.findall(page)}
+        self.assertEqual({"https://fonts.googleapis.com", "https://fonts.gstatic.com"}, hosts)
+        self.assertIn("Google Fonts", privacy)
+        # "No analytics, ads or cookies", and "display choices stay in this browser": the scripts set no cookie,
+        # send nothing, and keep only these display choices in local storage.
+        scripts = {path.name: path.read_text(encoding="utf-8") for path in (build.SITE / "assets").glob("*.js")}
+        stored = set()
+        for name, script in scripts.items():
+            self.assertNotIn("cookie", script.lower(), name)
+            self.assertIsNone(re.search(r"\b(fetch|XMLHttpRequest|sendBeacon|WebSocket)\b", script), name)
+            stored |= set(re.findall(r'localStorage\.setItem\("([^"]+)"', script))
+            stored |= set(re.findall(r'write\("([^"]+)"', script))
+        self.assertEqual({"ta-amps-mode", "ta-amps-deck-notes", "ta-amps-deck-large", "ta-amps-deck-letter-keys"}, stored)
+        self.assertIn("No analytics, ads or cookies", privacy)
+
+    def test_slide_and_notes_text_colours_pass_contrast(self):
+        css = (build.SITE / "assets" / "site.css").read_text(encoding="utf-8")
+        light, dark = css_tokens(css, ":root"), css_tokens(css, '[data-mode="dark"]')
+        self.assertEqual(dark, css_tokens(css[css.index("@media (prefers-color-scheme: dark)"):], "  :root:not([data-mode])"))
+        # The speaker-notes and slide-links headings sit on the stage: 4.38:1 before, so a darker grey on light.
+        for tokens in (light, dark):
+            self.assertGreaterEqual(contrast(tokens["--color-muted-on-stage"], tokens["--color-stage"]), 4.5)
+        viewer = (build.SITE / "assets" / "viewer.css").read_text(encoding="utf-8")
+        for selector in (".slide-notes h2", ".slide-links h2"):
+            self.assertIn(f"{selector} {{ font-family: var(--font-body); font-size: var(--text-small); font-weight: 600; "
+                          "color: var(--color-muted-on-stage); }", viewer)
+        # Slide text in rust uses the darker text rust (5.09:1 on the paper, 5.6:1 on cards); #B8541F stays a fill.
+        self.assertLess(contrast("#B8541F", "#F5F2EA"), 4.5)
+        self.assertGreaterEqual(contrast("#A84B1B", "#F5F2EA"), 4.5)
+        for deck in self.nouns.decks:
+            for slide in deck["slides"]:
+                self.assertNotIn("color:#B8541F", slide["inner"], (deck["id"], slide["name"]))
+        # The learning deck's dark result panel: labels in a lighter grey (5.80:1 on #11161F, 3.06:1 before).
+        small = next(s for d in self.nouns.decks for s in d["slides"] if s["name"] == "small-models")
+        self.assertNotIn("color:#5E6472", small["inner"])
+        self.assertEqual(4, small["inner"].count("color:#8A92A2"))
+        self.assertGreaterEqual(contrast("#8A92A2", "#11161F"), 4.5)
+
+    def test_the_seed_pack_count_on_the_slide_matches_its_measured_claim(self):
+        deck = next(deck for deck in self.nouns.decks if deck["id"] == "overview-and-architecture")
+        slide = next(slide for slide in deck["slides"] if slide["name"] == "seed-packs")
+        claim = next(claim for claim in deck["claims"]["claims"] if claim["slide"] == "seed-packs")
+        packs = re.search(r"(\d+) packs live in one library", build.plain_text(slide["inner"])).group(1)
+        self.assertTrue(claim["number"].startswith(f"{packs} seed packs in one library, with "), claim["number"])
+        self.assertEqual("measured", claim["status"])
+        # Measured at one commit of the library, and linked to that commit's README.
+        commit = re.search(r"/blob/([0-9a-f]{40})/README\.md#seed-pack-library$", claim["link"]).group(1)
+        self.assertIn(f"at commit {commit[:7]}", claim["source"])
 
 
 if __name__ == "__main__":

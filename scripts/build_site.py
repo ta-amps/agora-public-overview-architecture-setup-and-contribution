@@ -2,12 +2,13 @@
 
 Everything a page says is a noun kept as data, and this script holds only markup:
   * site/agent-brief.txt              the starting brief for any agent, word for word;
-  * site/content/site.json            navigation, the agent banner, the endpoints, deck labels, the footer;
-  * site/content/home.json            the home page: the draft video, one sentence, the decks;
+  * site/content/site.json            navigation, the agent banner, the endpoints, deck labels, the footer and its
+                                      privacy line;
+  * site/content/home.json            the home page: the film, one sentence, the decks;
   * site/content/decks-page.json      the decks page;
   * site/content/use-cases.json       the use cases page;
   * site/content/learning.json        the learning page: the loop, measured results with evidence, rules, limits;
-  * site/content/film.json            the full film's outline;
+  * site/content/film.json            the full film's transcript and scene descriptions;
   * site/content/earlier-drafts.json  earlier drafts, and the storyboards page;
   * site/content/moved.json           pages that moved, which the not-found page lists;
   * site/decks/<deck>/source/         each deck: deck.json, slides/*.html and an optional claims.json.
@@ -282,6 +283,7 @@ def footer_block(prefix: str, nouns: Nouns) -> str:
         "<ul>" + "".join(links) + "</ul>",
         "</nav>",
         f'<p>{text(footer["note"])}</p>',
+        f'<p class="footer-privacy">{text(footer["privacy"])}</p>',
         "</div>",
         "</footer>",
         f'<script src="{prefix}assets/site.js" defer></script>',
@@ -338,6 +340,8 @@ def page_shell(title: str, description: str, main: str, extra_head: str = "", bo
 
 STYLE_PART = re.compile(r"\s*([a-z-]+)\s*:\s*([^;]+)")
 SLIDE_LINK = re.compile(r'<a\b[^>]*?\shref="([^"]*)"[^>]*>(.*?)</a>', re.S)
+# A GitHub issue form, which signed-out visitors meet as GitHub's sign-in page.
+GITHUB_FORM = re.compile(r"^https://github\.com/[^/]+/[^/]+/issues/new\b")
 
 
 def style_map(style: str) -> dict[str, str]:
@@ -492,7 +496,9 @@ def render_slide(i: int, slide: dict, total: int, ui: dict, sources: str = "") -
                      f'{COPY_ICON}<span>{text(ui["copy_brief"])}</span></button>'
                      f'<span class="copy-status" id="{slide["copy"]}-status" role="status"></span></div>')
     if slide["links"]:
-        items = "".join(f'<li><a href="{attr(href)}">{text(label)}</a></li>' for href, label in slide["links"])
+        items = "".join(f'<li><a href="{attr(href)}">{text(label)}</a>'
+                        + (f' <span class="link-note">{text(ui["form_note"])}</span>' if GITHUB_FORM.match(href) else "")
+                        + "</li>" for href, label in slide["links"])
         parts.append(f'<div class="slide-links"><h2>{text(ui["links_heading"])}</h2><ul>{items}</ul></div>')
     parts += [f'<div class="slide-notes"><h2>{text(ui["notes"])}</h2><p>{slide["notes"]}</p>{sources}</div>',
               "</section>"]
@@ -534,6 +540,7 @@ def render_deck(deck: dict, nouns: Nouns) -> str:
         f'<button class="tool" type="button" data-outline-toggle aria-expanded="false" aria-controls="deck-outline" '
         f'hidden>{text(ui["outline"])}</button>',
         f'<button class="tool" type="button" data-notes-toggle aria-pressed="false" hidden>{text(ui["notes"])}</button>',
+        f'<button class="tool" type="button" data-large-toggle aria-pressed="false" hidden>{text(ui["larger"])}</button>',
         f'<button class="tool" type="button" data-full-toggle data-exit="{attr(ui["exit_full_screen"])}" hidden>'
         f'{text(ui["full_screen"])}</button>',
         f'<a class="button secondary" href="{attr(deck["pdf_name"])}" download>{text(ui["pdf"])}</a>',
@@ -550,7 +557,8 @@ def render_deck(deck: dict, nouns: Nouns) -> str:
         f'<p class="deck-counter"><span data-current>1</span> {text(ui["of"])} {total}</p>',
         f'<button class="tool" type="button" data-next>{text(ui["next"])}</button>',
         "</div>",
-        f'<p class="wrap deck-help" data-help hidden>{ui["help_html"]}</p>',
+        f'<div class="wrap deck-help" data-help hidden><p>{ui["help_html"]}</p>'
+        f'<label class="deck-keys"><input type="checkbox" data-keys-toggle checked> {text(ui["letter_keys"])}</label></div>',
         f'<p class="visually-hidden" aria-live="polite" data-announce data-prefix="{attr(ui["announce"])}"></p>',
         "</main>",
     ]))
@@ -748,7 +756,9 @@ def film_board(board: dict | None) -> str:
 
 
 def render_film(nouns: Nouns) -> str:
-    """The full film's outline: its acts, and every narration line with its time and what is on screen."""
+    """The full film's transcript and scene descriptions: its acts, and every narration line, word for word as its
+    captions give it, with its time and what is on screen. It is the film's text alternative, and says so, along with
+    the note that there is no separate audio-described cut yet."""
     film = nouns.film
     sections = []
     for act in film["acts"]:
@@ -765,7 +775,7 @@ def render_film(nouns: Nouns) -> str:
                         f'{text(act["name"])}</h2><ol class="film-lines">{rows}</ol></section>')
     main = "\n".join([
         '<main id="main">',
-        page_head(film["heading"], film["lead"], ("../", film["crumb"])),
+        page_head(film["heading"], film["lead"], ("../", film["crumb"]), film["audio_description"]),
         '<div class="wrap film-outline">',
         film_board(film.get("storyboard")),
         "\n".join(sections),
