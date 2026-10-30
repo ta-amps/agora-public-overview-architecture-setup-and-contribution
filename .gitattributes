@@ -1,0 +1,6 @@
+# Hunt, October 30: frozen pages are hashed by their bytes, so every checkout keeps LF line endings.
+* text=auto eol=lf
+*.png binary
+*.mp4 binary
+*.pdf binary
+*.pptx binary

@@ -1,7 +1,10 @@
 import copy
 import hashlib
 import importlib.util
+import os
 import shutil
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -313,6 +316,23 @@ class SiteChecks(unittest.TestCase):
             self.assertFalse(check.retired_names("<p>A collection of nouns and verbs</p>"))
         finally:
             check.RETIRED_NAME_HASHES = saved
+
+
+class PortableChecks(unittest.TestCase):
+    """Hunt, October 30: the check failed under an ASCII locale, and a CRLF checkout changed frozen hashes."""
+
+    def test_the_check_reads_utf8_whatever_the_locale(self):
+        env = {key: value for key, value in os.environ.items() if not key.startswith(("LC_", "LANG", "PYTHONUTF8"))}
+        env.update({"LC_ALL": "C", "LANG": "C", "PYTHONCOERCECLOCALE": "0", "PYTHONUTF8": "0"})
+        result = subprocess.run([sys.executable, "-X", "utf8=0", str(ROOT / "scripts/check.py")], cwd=ROOT, env=env,
+                                capture_output=True, text=True, encoding="utf-8", errors="replace")
+        self.assertEqual(0, result.returncode, result.stderr[-2000:])
+
+    def test_checkouts_keep_lf_line_endings_and_binary_media(self):
+        rules = (ROOT / ".gitattributes").read_text(encoding="utf-8").split("\n")
+        self.assertIn("* text=auto eol=lf", rules)
+        for kind in ("png", "mp4", "pdf", "pptx"):
+            self.assertIn(f"*.{kind} binary", rules)
 
 
 if __name__ == "__main__":

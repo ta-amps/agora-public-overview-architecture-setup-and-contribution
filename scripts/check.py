@@ -68,7 +68,7 @@ def nonfinite(value: str) -> None:
 
 
 def load(path: Path) -> dict:
-    data = json.loads(path.read_text(), object_pairs_hook=unique_pairs, parse_constant=nonfinite)
+    data = json.loads(path.read_text(encoding="utf-8"), object_pairs_hook=unique_pairs, parse_constant=nonfinite)
     require(isinstance(data, dict), "JSON document must be an object")
     return data
 
@@ -184,7 +184,7 @@ def public_text(text: str) -> None:
 
 
 def local_links(path: Path, root: Path) -> None:
-    for target in re.findall(r"\[[^\]]*\]\(([^)]+)\)", path.read_text()):
+    for target in re.findall(r"\[[^\]]*\]\(([^)]+)\)", path.read_text(encoding="utf-8")):
         target = target.strip("<>")
         parsed = urlsplit(target)
         if parsed.scheme or parsed.netloc or not parsed.path:
@@ -237,7 +237,7 @@ def media_item(item: dict, site: Path) -> str:
 def site_pages(site: Path) -> dict[Path, set[str]]:
     pages = {}
     for page in sorted(site.rglob("*.html")):
-        pages[page.resolve()] = set(HTML_ID.findall(page.read_text()))
+        pages[page.resolve()] = set(HTML_ID.findall(page.read_text(encoding="utf-8")))
     return pages
 
 
@@ -245,7 +245,7 @@ def site_links(page: Path, site: Path, pages: dict[Path, set[str]], root: Path,
                moved: frozenset[Path] = frozenset()) -> None:
     """Every local link and anchor must resolve inside the site. A frozen page passes in the pages that moved
     after it was published, so its links to them are allowed; nothing else is."""
-    text = page.read_text()
+    text = page.read_text(encoding="utf-8")
     where = page.relative_to(site).as_posix()
     for raw in HTML_REF.findall(text):
         target = html.unescape(raw)
@@ -282,7 +282,7 @@ def current_deck(deck: dict, site: Path, frozen: set[Path]) -> set[str]:
     require(page.is_relative_to(site.resolve()) and page.is_file(), "deck path must remain within the static site")
     require(page not in frozen, "a current deck is never a frozen version")
     require((site / deck["source"] / "deck.json").is_file(), "a current deck needs its source")
-    require(page.read_text().count('aria-roledescription="slide"') == deck["slides"], "deck slide count mismatch")
+    require(page.read_text(encoding="utf-8").count('aria-roledescription="slide"') == deck["slides"], "deck slide count mismatch")
     require(deck.get("unbranded") is True, "current decks name no retired pack")
     require(bool(deck["downloads"]), "a current deck needs its PDF")
     return {local for local in (deck_download(d, site) for d in deck["downloads"]) if local}
@@ -341,7 +341,7 @@ def check(root: Path = ROOT) -> dict:
                     "deck path must remain within the static site")
             require(hashlib.sha256(page.read_bytes()).hexdigest() == version["html_sha256"],
                     "versioned deck changed without updating its recorded hash")
-            require(page.read_text().count('aria-roledescription="slide"') == version["slides"] ==
+            require(page.read_text(encoding="utf-8").count('aria-roledescription="slide"') == version["slides"] ==
                     version["core_slides"] + version["appendix_slides"], "deck slide count mismatch")
             if version.get("unbranded") is not True:
                 historical.add(page.relative_to(manifest.parent.resolve()).as_posix())
@@ -369,7 +369,7 @@ def check(root: Path = ROOT) -> dict:
             require(rel in declared, "undeclared binary file: " + path.relative_to(root).as_posix())
             public_text(path.read_bytes().decode("latin-1"))
             continue
-        text = path.read_text()
+        text = path.read_text(encoding="utf-8")
         public_text(text)
         if path.is_relative_to(site) and path.relative_to(site).as_posix() not in historical:
             require(not retired_names(text), "retired pack name on the public site: " + path.relative_to(root).as_posix())
@@ -386,7 +386,7 @@ def check(root: Path = ROOT) -> dict:
         moved = moved_pages(load(moved_list), site, pages) if moved_list.exists() else frozenset()
         for page in pages:
             site_links(page, site, pages, root, moved if page in frozen else frozenset())
-    report = (root / "docs/status.md").read_text()
+    report = (root / "docs/status.md").read_text(encoding="utf-8")
     for repo in data["repositories"]:
         require(repo["main_revision"] in report, "status page missing exact revision")
         for run in repo["checks"]:

@@ -10,6 +10,8 @@
 // so browser zoom keeps enlarging it (WCAG 1.4.4); a slide wider than the window scrolls sideways
 // inside its stage, and the arrow keys scroll it before they change slides. "Larger slides" shows
 // every slide at its full 1920 by 1080 size, which browser zoom then enlarges in step.
+// October 30, later: a fragment with a broken percent escape opens the first slide instead of stopping
+// the viewer, and a fragment that names no slide, such as the skip link's, no longer changes slides.
 (function () {
   var deck = document.querySelector(".deck");
   var stage = document.querySelector("[data-stage]");
@@ -125,14 +127,21 @@
     fit();
   }
 
-  function fromHash() {
+  // The slide a fragment names, or -1. A fragment with a broken percent escape, such as a link cut off
+  // mid-character, is compared as written instead of stopping the viewer.
+  function slideFromHash() {
     var match = location.hash.match(/^#slide-(\d+)$/);
     if (match) return Number(match[1]) - 1;
-    var name = decodeURIComponent(location.hash.slice(1));
+    var name = location.hash.slice(1);
+    try { name = decodeURIComponent(name); } catch (error) { /* keep the fragment as written */ }
     for (var i = 0; i < slides.length; i++) {
       if (name && slides[i].getAttribute("data-name") === name) return i;
     }
-    return 0;
+    return -1;
+  }
+
+  function fromHash() {
+    return Math.max(slideFromHash(), 0);
   }
 
   function setNotes(on, remember) {
@@ -255,7 +264,12 @@
     if (fullButton) fullButton.textContent = document.fullscreenElement ? fullButton.getAttribute("data-exit") : fullLabel;
     fit();
   });
-  window.addEventListener("hashchange", function () { show(fromHash(), { hash: false }); });
+  // Only a fragment that names a slide changes slides: the skip link's #main, or any other in-page
+  // link, keeps the slide on show.
+  window.addEventListener("hashchange", function () {
+    var index = slideFromHash();
+    if (index >= 0) show(index, { hash: false });
+  });
 
   slides.forEach(function (slide) { slide.tabIndex = -1; });
   var stored = read("ta-amps-deck-notes");

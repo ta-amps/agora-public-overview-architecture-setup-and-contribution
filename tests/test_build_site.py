@@ -248,6 +248,10 @@ class Builder(unittest.TestCase):
         self.assertIn('aria-pressed="true" data-cut="other"', page)
         self.assertIn('aria-pressed="false" data-cut="one"', page)
         self.assertIn('id="film-label">The other cut</span>', page)
+        # Hunt, October 30: without JavaScript the buttons stay hidden, so every other cut is a plain link,
+        # which site.js hides once the buttons work. Before, the short cut was unreachable without JavaScript.
+        self.assertIn(f'<span data-no-script> · <a href="{one["src"]}">{one["tab"]}</a></span>', page)
+        self.assertNotIn(f'<span data-no-script> · <a href="{other["src"]}">', page)
         videos["default"] = "missing"
         with self.assertRaises(build.BuildError):
             build.render_home(nouns)
@@ -490,6 +494,14 @@ class Builder(unittest.TestCase):
         full = next(cut for cut in home["videos"]["cuts"] if cut["id"] == "full")
         captions = (build.SITE / full["captions"]).read_text(encoding="utf-8")
         self.assertEqual(caption_words(captions), plain_words(" ".join(line["words"] for line in film["lines"])))
+
+    def test_the_film_page_says_its_storyboard_is_the_draft_runs(self):
+        # Hunt, October 30: the page said the storyboard was drawn from the production run, but the image is
+        # the draft run's (its own header says "Draft preview", captures from 01:06 EDT).
+        film = self.nouns.film
+        self.assertNotIn("from the production run", film["lead"])
+        self.assertIn("draft run", film["lead"])
+        self.assertIn("draft run", film["storyboard"]["caption"])
 
     def test_the_home_description_names_the_film_not_a_draft_video(self):
         description = self.nouns.home["description"]
