@@ -69,7 +69,7 @@ class PublicationChecks(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "reasoning belongs in workers"):
             check.architecture(invalid, names, ROOT)
         invalid = copy.deepcopy(baseline)
-        next(r for r in invalid["repositories"] if r["name"] == "kinema")["role"] = "fabric"
+        next(r for r in invalid["repositories"] if r["role"] == "seed_pack")["role"] = "fabric"
         with self.assertRaisesRegex(ValueError, "must not own"):
             check.architecture(invalid, names, ROOT)
 
@@ -100,6 +100,34 @@ class PublicationChecks(unittest.TestCase):
             invalid[field] = value
             with self.assertRaises(ValueError):
                 check.architecture(invalid, names, ROOT)
+
+    def test_architecture_has_two_surfaces_and_unnamed_packs(self):
+        baseline = check.load(ROOT / "architecture.json")
+        names = {r["name"] for r in check.load(ROOT / "status.json")["repositories"]}
+        check.architecture(baseline, names, ROOT)
+        for field, value in (("public_surfaces", ["eranos", "agora", "home"]),
+                             ("public_surfaces", ["eranos"]),
+                             ("infrastructure", ["tessera"])):
+            invalid = copy.deepcopy(baseline)
+            invalid[field] = value
+            with self.assertRaisesRegex(ValueError, "exactly two public surfaces"):
+                check.architecture(invalid, names, ROOT)
+        invalid = copy.deepcopy(baseline)
+        next(r for r in invalid["repositories"] if r["role"] == "seed_pack")["role"] = "surface"
+        with self.assertRaisesRegex(ValueError, "never a surface"):
+            check.architecture(invalid, names, ROOT)
+        invalid = copy.deepcopy(baseline)
+        next(r for r in invalid["repositories"] if r["name"] == "herma")["role"] = "authoring_kit"
+        with self.assertRaisesRegex(ValueError, "only Tessera and Herma"):
+            check.architecture(invalid, names, ROOT)
+        retired = [r for r in baseline["repositories"] if check.retired_names(r["name"])]
+        self.assertTrue(retired, "the inventory still lists the older pack repositories")
+        for repo in retired:
+            self.assertEqual("seed_pack", repo["role"])
+        invalid = copy.deepcopy(baseline)
+        next(r for r in invalid["repositories"] if check.retired_names(r["name"]))["role"] = "authoring_kit"
+        with self.assertRaisesRegex(ValueError, "retired pack name"):
+            check.architecture(invalid, names, ROOT)
 
 
 PUBLISHED = {"v1": "f82b276b2fde16f993c958845de56026a4a2ef50a655d616a93b7f8c377803e4",

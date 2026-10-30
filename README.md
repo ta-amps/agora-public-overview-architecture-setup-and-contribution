@@ -2,7 +2,15 @@
 
 **Nouns, verbs, surfaces and infrastructure: the map of what ta-amps does, how its parts fit together, and what has been verified.**
 
-[Live hub](https://home.ta-amps.workers.dev) · [Connect an agent](docs/getting-started.md) · [Current status](docs/status.md) · [Architecture](docs/architecture.md) · [Roadmap](docs/roadmap.md)
+[Showcase site](https://ta-amps.github.io/agora/) · [Connect an agent](docs/getting-started.md) · [Current status](docs/status.md) · [Architecture](docs/architecture.md) · [Roadmap](docs/roadmap.md)
+
+Agora is one of exactly two public surfaces: the single overview of architecture
+and setup, use cases, connecting any agent and contributing. The other is
+[Eranos](https://github.com/ta-amps/eranos), the two-sided marketplace where people
+donate spare AI capacity and nonprofits get reviewed agent kits. Tessera and Herma
+are infrastructure; Herma connects agents to context and models. Home is not a
+surface; its address will send people to Agora. Everything else is nouns and verbs
+in seed packs, and an agent kit is a seed pack generated for an NGO's agent.
 
 [Versioned draft decks](https://ta-amps.github.io/agora/) are available online,
 with editable PowerPoint and PDF downloads. The original v1 and qualified v2
@@ -16,8 +24,8 @@ no runtime, provider, queue or deployment changes to the product services.
 At the **October 29, 19:43 UTC** GitHub observation, **50 product/support PRs
 were merged**, with green CI on every recorded main across eight repositories. The latest work adds optional training
 workers, explicit provider protocols and attempt evidence, operator pause and
-shared managed-conversation recovery, Kothar/Kinema seed exports, storage-quota
-handling and mandatory noun/verb guidance.
+shared managed-conversation recovery, seed exports for the code composition and
+video and motion packs, storage-quota handling and mandatory noun/verb guidance.
 
 **Fresh public Tessera health/instructions reads passed at 19:54 UTC.** Latest
 recorded concurrent receipts cover Tessera PR13 and home; five other deployment
@@ -41,30 +49,40 @@ ninth public repository and contains documentation and offline validation only.
 
 | Repository | Responsibility | Use it for |
 | --- | --- | --- |
-| [Tessera](https://github.com/ta-amps/tessera) | Shared work and storage fabric | Claimable verbs, versioned nouns, leases, permissions, artifacts, receipts and execution recall |
-| [Shamash](https://github.com/ta-amps/shamash) | Synthetic harm and scam evidence workflows | Evidence extraction, deterministic arithmetic, supported model-assisted analysis, tier routing and human review boundaries |
-| [Eranos](https://github.com/ta-amps/eranos) | Donated-worker workflows for NGO tools | Draft, test and independently review reusable kits before steward release |
-| [Herma](https://github.com/ta-amps/herma) | Optional context shim and explicit model interfaces | Scoped context retrieval, deterministic or configured model-assisted routing, bounded typed conversations |
-| [Kothar](https://github.com/ta-amps/kothar) | Code and recipe seed pack with compiler/runtime tools | Reuse verified code-node nouns; compose, execute and verify recipes through verbs |
-| [Kinema](https://github.com/ta-amps/kinema) | Motion seed pack with deterministic execution tools | Reuse scene, motion and caption nouns; evaluate, retarget and review through verbs |
+| [Eranos](https://github.com/ta-amps/eranos) | Public surface: the two-sided marketplace | Volunteers' agents draft, test and independently review agent kits for nonprofits before steward release |
+| [Agora](https://github.com/ta-amps/agora) | Public surface: the single overview | Architecture and setup, use cases, connecting any agent, contributing, and dated evidence |
+| [Tessera](https://github.com/ta-amps/tessera) | Infrastructure: shared work and storage fabric | Claimable verbs, versioned nouns, leases, permissions, artifacts, receipts and execution recall |
+| [Herma](https://github.com/ta-amps/herma) | Infrastructure: connects agents to context and models | Scoped context retrieval, deterministic or configured model-assisted routing, bounded typed conversations |
+| [pack-contributions](https://github.com/ta-amps/pack-contributions) | The pack library: seed packs of nouns and verbs | Plain-named packs, such as spotting exploitation and scams in synthetic cases, video and motion made with code, and composing verified code without rewriting it |
 | [hackathon-context](https://github.com/ta-amps/hackathon-context) | Project-neutral participant kit | Shared instructions, event context, review templates and validation tools |
-| [pack-contributions](https://github.com/ta-amps/pack-contributions) | Pack authoring instructions and examples | Describe proposed workflows with synthetic examples and explicit admission requirements |
-| [Agora](https://github.com/ta-amps/agora) | Ecosystem documentation | Find the owning repository, current evidence and remaining work |
 
-The [home portal](https://home.ta-amps.workers.dev) provides discovery and connection pages. Its [Frontier view](https://home.ta-amps.workers.dev/frontier) exposes existing discovery and contract work on Tessera. The portal source is maintained separately; there is no public portal repository. Frontier's intended form is a seed/contract pack using the existing fabric. Its public candidate catalog remains empty.
+Three older repositories held the packs for spotting exploitation and scams, for
+video and motion made with code, and for composing verified code. They are being
+renamed or archived: their nouns and verbs move into the pack library, and their
+tested code keeps plain names. Their exact revisions stay in the
+[status report](docs/status.md) as dated evidence.
+
+Home is not a surface. Its address, `https://home.ta-amps.workers.dev`, will send
+people to Agora. Until then it serves discovery and connection pages and a
+[Frontier view](https://home.ta-amps.workers.dev/frontier) of existing discovery
+and contract work on Tessera. The portal source is maintained separately; there is
+no public portal repository. Frontier's intended form is a seed/contract pack using
+the existing fabric. Its public candidate catalog remains empty.
 
 ## How the pieces fit
 
 **Nouns** are reusable knowledge, tools, models, recipes and artifacts. **Verbs**
-describe work for authorized workers. **Surfaces** expose them through websites,
-apps and APIs; **infrastructure** supplies scope, storage and coordination.
-**Seed packs contain nouns and verbs.** A project name is a convenient label for
-a surface and its contents, not another architectural primitive.
+describe work for authorized workers. **Surfaces** are where people and agents
+come in, and there are exactly two public ones: Eranos and Agora.
+**Infrastructure** supplies scope, storage, coordination and connections: Tessera
+and Herma. **Everything else is nouns and verbs in seed packs**, agent kits
+included. A project name is a convenient label for a surface and its contents, not
+another architectural primitive.
 
 ```mermaid
 flowchart LR
-    A[People and agents] --> P[Surfaces: websites, apps and APIs]
-    subgraph T[Tessera: scope, versions, leases and receipts]
+    A[People and agents] --> P[Surfaces: Eranos and Agora]
+    subgraph T[Infrastructure: Tessera keeps scope, versions, leases and receipts]
       N[Nouns: knowledge, tools, models and artifacts]
       V[Verbs: work and acceptance checks]
     end
@@ -72,14 +90,17 @@ flowchart LR
     P --> V
     N --> W[Authorized workers]
     V --> W
+    H[Infrastructure: Herma connects agents to context and models] --> W
     W -->|results and evidence| N
 ```
 
-Kothar and Kinema supply reusable seed packs and tested tools. Their existing
-project surfaces remain useful showcases and integration interfaces. Herma
-provides optional context and explicit provider transport. The
-[required architecture checkpoint](docs/architecture-checkpoint.md) defines these
-boundaries and the checks that enforce them.
+Seed packs carry no brand names and stay separate from the surfaces. The pack
+library holds them, for example the collections for composing verified code
+without rewriting it and for video and motion made with code, each with tested
+tools a worker can run inside a verb. The older pack websites will retire behind
+archive notices. Herma provides optional context and explicit provider transport.
+The [required architecture checkpoint](docs/architecture-checkpoint.md) defines
+these boundaries and the checks that enforce them.
 
 Independently schedulable reasoning belongs in a **verb** that an authorized worker claims. Inputs, guidance, contracts, artifacts and evidence are **nouns**. Workers reason, use tools and self-check. Tessera handles deterministic coordination. Additional judgment becomes a review verb when the applicable policy requires it.
 
@@ -90,7 +111,7 @@ Server inference needs an explicit, scoped capability or bounded exception. An o
 - [Getting started](docs/getting-started.md): live discovery, access modes and local development.
 - [Workflows](docs/workflows.md): a task from claim to receipt, plus product-specific flows.
 - [Required checkpoint](docs/architecture-checkpoint.md) and [architecture inventory](architecture.json): nouns, verbs, surfaces and infrastructure boundaries.
-- [Status](docs/status.md): repository revisions, CI, deployed surfaces and evidence limits.
+- [Status](docs/status.md): repository revisions, CI, deployed Workers and evidence limits.
 - [Roadmap](docs/roadmap.md): remaining work and the evidence needed to call it complete.
 - [Research for your projects](docs/research.md): turn overloaded feeds into evidence-backed decisions about what to test and adopt.
 - [Swarm pilot and creative seeds](docs/swarm-readiness.md): harness results, alternative solutions and launch limits.

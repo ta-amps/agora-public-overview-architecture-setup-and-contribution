@@ -25,7 +25,7 @@ The report starts with the few decisions that could change current work, each wi
 
 Research verbs can also produce reusable nouns: a capability description, a benchmark contract, a fixture generator, an adapter proposal or a research procedure. A later verb can use those pinned outputs. Their creation does not automatically admit executable code, activate a shim or authorize adoption.
 
-Tessera supplies scoped work, evidence and receipts. Authorized workers perform the research and trials. Herma can provide optional context. Kothar and Kinema can supply relevant deterministic tools where an implementation exists. The contribution repository holds the proposed pack instructions, and Agora explains where the workflow fits.
+Tessera and Herma are infrastructure: Tessera supplies scoped work, evidence and receipts, and Herma can provide optional context. Authorized workers perform the research and trials. Seed packs in the pack library, such as the ones for composing verified code and for video and motion made with code, can supply relevant deterministic tools where an implementation exists. The pack library holds the proposed pack instructions, and Agora, the single overview and one of the two public surfaces with Eranos, explains where the workflow fits.
 
 The [research seed authoring tool](https://github.com/ta-amps/tessera/blob/main/docs/research-seeds.md) now constructs pinned noun inputs and private worker tasks for source discovery, collector construction, schedule proposals and scans. Its default preview is offline; explicit enqueue uses an existing scoped queue. These authoring stages passed their tests. They do not establish a running collector or scheduler.
 

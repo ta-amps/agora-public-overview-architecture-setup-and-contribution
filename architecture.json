@@ -40,7 +40,7 @@
     },
     {
       "name": "shamash",
-      "role": "workflow_pack",
+      "role": "seed_pack",
       "nouns": [
         "synthetic evidence",
         "analysis",
@@ -56,7 +56,7 @@
     },
     {
       "name": "eranos",
-      "role": "workflow_pack",
+      "role": "surface",
       "nouns": [
         "kit",
         "artifact",
@@ -197,10 +197,19 @@
     "surface",
     "infrastructure"
   ],
+  "public_surfaces": [
+    "eranos",
+    "agora"
+  ],
+  "infrastructure": [
+    "tessera",
+    "herma"
+  ],
   "seed_pack_contents": [
     "noun",
     "verb"
   ],
   "project_is_primitive": false,
-  "project_semantics": "Convenient surface/grouping name represented with existing nouns; no separate core lifecycle"
+  "project_semantics": "Convenient surface/grouping name represented with existing nouns; no separate core lifecycle",
+  "agent_kit_semantics": "Seed pack of nouns and verbs generated for an NGO's agent; not a separate primitive"
 }
