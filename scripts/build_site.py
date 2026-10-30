@@ -769,7 +769,9 @@ def render_film(nouns: Nouns) -> str:
         '<div class="wrap film-outline">',
         film_board(film.get("storyboard")),
         "\n".join(sections),
-        f'<p class="film-note">{text(film["note"])}</p>',
+        f'<p class="film-note">{text(film["note"])}'
+        + (f' <a href="{attr(film["evidence"]["href"])}">{text(film["evidence"]["label"])}</a>' if film.get("evidence") else "")
+        + "</p>",
         "</div>",
         "</main>",
     ])
