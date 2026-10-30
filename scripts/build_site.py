@@ -141,6 +141,7 @@ class Nouns:
         self.home = load_json(CONTENT / "home.json")
         self.decks_page = load_json(CONTENT / "decks-page.json")
         self.uses = load_json(CONTENT / "use-cases.json")
+        self.film = load_json(CONTENT / "film.json")
         self.drafts = load_json(CONTENT / "earlier-drafts.json")
         self.moved = load_json(CONTENT / "moved.json")
         self.manifest = load_json(MANIFEST)
@@ -174,7 +175,7 @@ def section_for(page: Path) -> str:
     if parts == ("404.html",):
         return ""  # a missing page belongs to no section
     first = parts[0] if len(parts) > 1 else "home"
-    return {"storyboards": "decks", "video": "decks"}.get(first, first)
+    return {"storyboards": "decks", "video": "decks", "film": "home"}.get(first, first)
 
 
 def head_block(prefix: str) -> str:
@@ -629,7 +630,9 @@ def render_home(nouns: Nouns) -> str:
         "</video>",
         "</div>",
         selector,
-        f'<p class="film-label" id="film-label">{text(video["label"])}</p>',
+        f'<p class="film-label"><span id="film-label">{text(video["label"])}</span>'
+        + (f' · <a href="{attr(videos["outline"]["href"])}">{text(videos["outline"]["label"])}</a>' if videos.get("outline") else "")
+        + "</p>",
         "</section>",
         '<section class="statement" aria-labelledby="statement">',
         '<div class="wrap">',
@@ -720,6 +723,34 @@ def render_earlier(nouns: Nouns) -> str:
         "</main>",
     ])
     return page_shell(page["title"], page["description"], main)
+
+
+def render_film(nouns: Nouns) -> str:
+    """The full film's outline: its acts, and every narration line with its time and what is on screen."""
+    film = nouns.film
+    sections = []
+    for act in film["acts"]:
+        rows = "".join(
+            f'<li class="film-line"><p class="film-at">{text(line["at"])}</p>'
+            f'<div><p class="film-words"><span class="visually-hidden">{text(film["words_label"])}: </span>'
+            f'{text(line["words"])}</p>'
+            + (f'<p class="film-picture"><span class="film-picture-label">{text(film["picture_label"])}</span> '
+               f'{text(line["picture"])}</p>' if line["picture"] else "")
+            + '</div></li>'
+            for line in film["lines"] if line["act"] == act["id"])
+        sections.append(f'<section class="film-act" aria-labelledby="act-{act["id"]}">'
+                        f'<h2 id="act-{act["id"]}"><span class="film-act-time">{text(act["from"])}–{text(act["to"])}</span> '
+                        f'{text(act["name"])}</h2><ol class="film-lines">{rows}</ol></section>')
+    main = "\n".join([
+        '<main id="main">',
+        page_head(film["heading"], film["lead"], ("../", film["crumb"])),
+        '<div class="wrap film-outline">',
+        "\n".join(sections),
+        f'<p class="film-note">{text(film["note"])}</p>',
+        "</div>",
+        "</main>",
+    ])
+    return page_shell(film["title"], film["description"], main)
 
 
 def render_storyboards(nouns: Nouns) -> str:
@@ -903,6 +934,7 @@ def outputs_for(nouns: Nouns) -> dict[Path, str]:
     generated[DECKS / "earlier-drafts" / "index.html"] = render_earlier(nouns)
     generated[SITE / "use-cases" / "index.html"] = render_use_cases(nouns)
     generated[SITE / "storyboards" / "index.html"] = render_storyboards(nouns)
+    generated[SITE / "film" / "index.html"] = render_film(nouns)
     generated[SITE / "404.html"] = render_not_found(nouns)
     if set(generated) & nouns.frozen:
         fail("a frozen page is never written")
