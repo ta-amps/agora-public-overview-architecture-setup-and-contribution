@@ -10,16 +10,16 @@
       "date": "2026-10-30",
       "path": "decks/overview-and-architecture/",
       "source": "decks/overview-and-architecture/source/",
-      "slides": 12,
+      "slides": 13,
       "unbranded": true,
       "claim_review": "decks/overview-and-architecture/source/claims.json",
       "downloads": [
         {
           "format": "pdf",
           "path": "decks/overview-and-architecture/ta-amps-overview-and-architecture.pdf",
-          "sha256": "c6ae30ab477f0cf3cc0f1dfd29a2461efd1fe3fac3b8940b009babb4a3be6fa6",
-          "bytes": 391430,
-          "printed_from_main_sha256": "c6eca6493cde68318df939de293f7d73595b9526c1e4d1d9b165d0ac19cba174"
+          "sha256": "ed6df9e0360e8f7908b5aa328d4d20463d0a344ad72aae5b03732c5a7a20bf49",
+          "bytes": 412129,
+          "printed_from_main_sha256": "d00ebbcd00afdec198b6236ee965720d5c509102c378166646173a01d2a7d5e1"
         }
       ]
     },
@@ -36,7 +36,7 @@
         {
           "format": "pdf",
           "path": "decks/public-good-marketplace/ta-amps-public-good-marketplace.pdf",
-          "sha256": "58399051d867eb34fdaf05b7d55530bec3733561284ee8e22cb59d0459b0a5bb",
+          "sha256": "44c991a28f3b5450f699c2d61b95c1d7213fe91411bd36d106efb14d05ae2b7c",
           "bytes": 393013,
           "printed_from_main_sha256": "c283fc509ea9338206f6cd84dd7acd6e9f9cc389ce0ac734698bdb87ba431525"
         }
@@ -54,7 +54,7 @@
         {
           "format": "pdf",
           "path": "decks/roll-your-own/ta-amps-roll-your-own.pdf",
-          "sha256": "401fe94c9fd1dd4c418445330556164c835cc8444ce5adeb1485231ea8e065a9",
+          "sha256": "b7719e169de0e1b4095681b71de344101dca2f0d1f9c95c5732d741939cb24c2",
           "bytes": 282069,
           "printed_from_main_sha256": "d7d64a6569fd9d2cafd6b9676d90d1d3ea4bfe005736489a2745484a3a71114f"
         }
