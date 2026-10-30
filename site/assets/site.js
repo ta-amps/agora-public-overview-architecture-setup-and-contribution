@@ -135,3 +135,45 @@
     }
   });
 })();
+
+// The film's cuts: one video element, and a button per cut that swaps its source, captions, poster and label.
+(function () {
+  var group = document.querySelector("[data-film-cuts]");
+  var video = document.querySelector(".film-video");
+  if (!group || !video) return;
+  var label = document.getElementById("film-label");
+  var buttons = group.querySelectorAll("[data-cut]");
+  function showCaptions() {
+    var tracks = video.textTracks;
+    for (var i = 0; tracks && i < tracks.length; i++) {
+      if (tracks[i].kind === "captions" || tracks[i].kind === "subtitles") { tracks[i].mode = "showing"; break; }
+    }
+  }
+  Array.prototype.forEach.call(buttons, function (button) {
+    button.addEventListener("click", function () {
+      if (button.getAttribute("aria-pressed") === "true") return;
+      Array.prototype.forEach.call(buttons, function (other) {
+        other.setAttribute("aria-pressed", other === button ? "true" : "false");
+      });
+      video.pause();
+      var source = video.querySelector("source");
+      source.src = button.getAttribute("data-src");
+      source.type = button.getAttribute("data-type");
+      var old = video.querySelector("track");
+      var track = document.createElement("track");
+      ["kind", "srclang", "label"].forEach(function (name) { track.setAttribute(name, old.getAttribute(name)); });
+      track.src = button.getAttribute("data-captions");
+      track.default = true;
+      video.replaceChild(track, old);
+      video.poster = button.getAttribute("data-poster");
+      video.setAttribute("aria-label", button.getAttribute("data-title"));
+      var download = video.querySelector("a");
+      if (download) download.href = button.getAttribute("data-src");
+      if (label) label.textContent = button.getAttribute("data-label");
+      video.load();
+      track.addEventListener("load", showCaptions);
+      showCaptions();
+    });
+  });
+  group.hidden = false;
+})();

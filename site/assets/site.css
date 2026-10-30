@@ -595,6 +595,11 @@ h3[id] { scroll-margin-top: var(--space-6); }
   margin-inline: auto;
 }
 
+.film.has-cuts .film-stage {
+  width: min(100%, max(20rem, calc((100vh - 13rem) * 16 / 9)));
+  width: min(100%, max(20rem, calc((100svh - 13rem) * 16 / 9)));
+}
+
 .film-video {
   display: block;
   width: 100%;
@@ -602,6 +607,32 @@ h3[id] { scroll-margin-top: var(--space-6); }
   aspect-ratio: 16 / 9;
   background: #000;
 }
+
+.film-cuts {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--gutter) 0;
+}
+
+.film-cuts[hidden] { display: none; }
+
+.film-cut {
+  font: inherit;
+  font-size: var(--text-small);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--color-film-ink);
+  background: transparent;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  padding: var(--space-2) var(--space-4);
+  cursor: pointer;
+}
+
+.film-cut[aria-pressed="true"] { background: var(--color-film-ink); color: var(--color-film); border-color: var(--color-film-ink); }
+.film-cut:focus-visible { outline: 2px solid var(--color-film-ink); outline-offset: 3px; }
 
 .film-label {
   padding: var(--space-3) var(--gutter) 0;

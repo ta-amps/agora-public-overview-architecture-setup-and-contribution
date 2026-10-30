@@ -96,6 +96,26 @@ class Builder(unittest.TestCase):
                 notes = main[main.index('class="slide-notes"', start):main.index("</section>", start)]
                 self.assertIn(html.escape(claim["number"], quote=False), notes, claim["number"])
 
+    def test_the_film_offers_a_selector_only_when_it_has_more_than_one_cut(self):
+        nouns = copy.copy(self.nouns)
+        nouns.home = copy.deepcopy(self.nouns.home)
+        videos = nouns.home["videos"]
+        self.assertNotIn("data-film-cuts", build.render_home(nouns))
+        full = dict(videos["cuts"][0], id="full", tab="Full · 3 min", label="The full cut")
+        full["src"] = "video/2026-10-29/animatic-60s-v1/eranos-animatic-60s-open-captions.mp4"
+        videos["cuts"].insert(0, full)
+        videos["default"] = "full"
+        page = build.render_home(nouns)
+        self.assertEqual(1, page.count("<video"))
+        self.assertEqual(2, page.count('class="film-cut"'))
+        self.assertIn(f'<source src="{full["src"]}"', page)
+        self.assertIn('aria-pressed="true" data-cut="full"', page)
+        self.assertIn('aria-pressed="false" data-cut="short"', page)
+        self.assertIn(">The full cut</p>", page)
+        videos["default"] = "missing"
+        with self.assertRaises(build.BuildError):
+            build.render_home(nouns)
+
     def test_slide_elements_become_html(self):
         endpoints = self.nouns.site["endpoints"]
         with tempfile.TemporaryDirectory() as directory:

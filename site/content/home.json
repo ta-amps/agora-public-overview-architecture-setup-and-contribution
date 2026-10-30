@@ -1,22 +1,30 @@
 {
-  "about": "The home page, as one noun: the draft video, one sentence and the decks. scripts/build_site.py renders it into site/index.html.",
-  "title": "Agora, the ta-amps overview",
-  "description": "Agora is the ta-amps overview: a draft video, three decks and use cases. Everything is nouns and verbs; Eranos is the two-sided marketplace.",
-  "video": {
+ "about": "The home page, as one noun: the film (one or more cuts, with a default), one sentence and the decks. scripts/build_site.py renders it into site/index.html.",
+ "title": "Agora, the ta-amps overview",
+ "description": "Agora is the ta-amps overview: a draft video, three decks and use cases. Everything is nouns and verbs; Eranos is the two-sided marketplace.",
+ "videos": {
+  "default": "short",
+  "choose": "Choose a cut",
+  "captions_label": "English",
+  "captions_lang": "en",
+  "fallback": "Your browser can't play this video here.",
+  "fallback_link": "Download the video",
+  "cuts": [
+   {
+    "id": "short",
+    "tab": "Short · 1 min",
     "src": "video/2026-10-29/animatic-60s-v1/eranos-animatic-60s.mp4",
     "type": "video/mp4",
     "captions": "video/2026-10-29/animatic-60s-v1/eranos-animatic-60s.vtt",
-    "captions_label": "English",
-    "captions_lang": "en",
     "poster": "video/2026-10-30/spare-tokens-for-good-poster.png",
     "title": "Eranos: spare tokens for good. Unused AI capacity doing real work for nonprofits. A draft animatic, 60 seconds.",
-    "label": "Draft video · the final cut is coming",
-    "fallback": "Your browser can't play this video here.",
-    "fallback_link": "Download the video"
-  },
-  "statement": {
-    "lead": "Everything is nouns and verbs:",
-    "rest": "Eranos is the two-sided marketplace, and Agora is this overview."
-  },
-  "decks_heading": "Decks"
+    "label": "Draft video · the final cut is coming"
+   }
+  ]
+ },
+ "statement": {
+  "lead": "Everything is nouns and verbs:",
+  "rest": "Eranos is the two-sided marketplace, and Agora is this overview."
+ },
+ "decks_heading": "Decks"
 }

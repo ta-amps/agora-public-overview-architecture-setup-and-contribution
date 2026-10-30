@@ -590,22 +590,45 @@ def deck_card(deck: dict, prefix: str, ui: dict, level: int) -> str:
     ])
 
 
+def film_cuts(videos: dict) -> tuple[dict, str]:
+    """The film's default cut, and the buttons that switch between cuts when there is more than one."""
+    cuts = videos["cuts"]
+    for cut in cuts:
+        for key in ("src", "captions", "poster"):
+            if not (SITE / cut[key]).is_file():
+                fail(f"home.json: the {cut['id']} cut's {key} is missing: {cut[key]}")
+    default = next((cut for cut in cuts if cut["id"] == videos["default"]), None)
+    if default is None:
+        fail(f"home.json: the default cut {videos['default']!r} is not one of the cuts")
+    if len(cuts) < 2:
+        return default, ""
+    buttons = "".join(
+        f'<button class="film-cut" type="button" aria-pressed="{"true" if cut is default else "false"}" '
+        f'data-cut="{attr(cut["id"])}" data-src="{attr(cut["src"])}" data-type="{attr(cut["type"])}" '
+        f'data-captions="{attr(cut["captions"])}" data-poster="{attr(cut["poster"])}" '
+        f'data-title="{attr(cut["title"])}" data-label="{attr(cut["label"])}">{text(cut["tab"])}</button>'
+        for cut in cuts)
+    return default, f'<div class="film-cuts" role="group" aria-label="{attr(videos["choose"])}" data-film-cuts hidden>{buttons}</div>'
+
+
 def render_home(nouns: Nouns) -> str:
     home, ui = nouns.home, nouns.site["deck"]
-    video = home["video"]
+    videos = home["videos"]
+    video, selector = film_cuts(videos)
     cards = "\n".join(deck_card(deck, "", ui, 3) for deck in nouns.decks)
-    main = "\n".join([
+    main = "\n".join(filter(None, [
         '<main id="main">',
-        '<section class="film" aria-labelledby="film-label">',
+        f'<section class="film{" has-cuts" if selector else ""}" aria-labelledby="film-label">',
         '<div class="film-stage">',
         f'<video class="film-video" controls playsinline preload="metadata" poster="{attr(video["poster"])}" '
         f'aria-label="{attr(video["title"])}" data-captions-default>',
         f'<source src="{attr(video["src"])}" type="{attr(video["type"])}">',
-        f'<track kind="captions" src="{attr(video["captions"])}" srclang="{attr(video["captions_lang"])}" '
-        f'label="{attr(video["captions_label"])}" default>',
-        f'<p>{text(video["fallback"])} <a href="{attr(video["src"])}">{text(video["fallback_link"])}</a></p>',
+        f'<track kind="captions" src="{attr(video["captions"])}" srclang="{attr(videos["captions_lang"])}" '
+        f'label="{attr(videos["captions_label"])}" default>',
+        f'<p>{text(videos["fallback"])} <a href="{attr(video["src"])}">{text(videos["fallback_link"])}</a></p>',
         "</video>",
         "</div>",
+        selector,
         f'<p class="film-label" id="film-label">{text(video["label"])}</p>',
         "</section>",
         '<section class="statement" aria-labelledby="statement">',
@@ -621,7 +644,7 @@ def render_home(nouns: Nouns) -> str:
         "</div>",
         "</section>",
         "</main>",
-    ])
+    ]))
     return page_shell(home["title"], home["description"], main, body_class="home")
 
 
