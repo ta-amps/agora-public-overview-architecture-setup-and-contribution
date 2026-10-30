@@ -17,9 +17,9 @@
         {
           "format": "pdf",
           "path": "decks/overview-and-architecture/ta-amps-overview-and-architecture.pdf",
-          "sha256": "638445c51700fbebe856698c5272a7827085e00ffe7787dc4ded1dd4fe5df123",
-          "bytes": 384975,
-          "printed_from_main_sha256": "35653fbcf07dda30009e5eb946219945c4b8acb6a68d88241eac7ad83f301e14"
+          "sha256": "5687bb2a1d182388f67ba9d8999e03ce952fb55147af934c3752ed7083bdc5f4",
+          "bytes": 385090,
+          "printed_from_main_sha256": "121cdf9c5b504a07eb83784dbf3c32a59a3cfc05334bc90c217b8de4002aabf4"
         }
       ]
     },
@@ -36,9 +36,9 @@
         {
           "format": "pdf",
           "path": "decks/public-good-marketplace/ta-amps-public-good-marketplace.pdf",
-          "sha256": "e155b9abb73f531b8501e0e282c522c1444c58f102766c3963a6363355ca580a",
-          "bytes": 379538,
-          "printed_from_main_sha256": "1fe1b56de806f64a06b436807b3636b3570f874f6b3f827aacaa8df2ca5f0291"
+          "sha256": "273fe932687b386e414bda0b16bb65dfdd7c2c272c135b0b7392502d81c85dd4",
+          "bytes": 379625,
+          "printed_from_main_sha256": "f158054ef7e02de3ae31c9cba1619e48b744b5431e31bfa1fdd792bb2351ac37"
         }
       ]
     },
@@ -55,9 +55,9 @@
         {
           "format": "pdf",
           "path": "decks/roll-your-own/ta-amps-roll-your-own.pdf",
-          "sha256": "a8e5e4520c6d97449f291ced96925f34666a5266fceff7fcd08e1c64e02c0d99",
-          "bytes": 374650,
-          "printed_from_main_sha256": "3cae0b09e4aa3eaa10c96b0fc2cd03fd3e806486b7167ce9f474fc99b7d40514"
+          "sha256": "b3f4e6ad82f5edea1c3198342944940d2edc2154608313aa3d02d4478e1b1b0a",
+          "bytes": 374817,
+          "printed_from_main_sha256": "54bfcf555b10236118fe5054d1dc2a4413940c703fcd101dace9fa1bd2dd4c71"
         }
       ]
     },
@@ -74,9 +74,9 @@
         {
           "format": "pdf",
           "path": "decks/server-workers/ta-amps-server-workers.pdf",
-          "sha256": "0433df423df169b99a33520c323bfd61e59632861cd816b3b7834fdecb604df8",
-          "bytes": 389766,
-          "printed_from_main_sha256": "bca6734c482b207deb7fc603bd5e244aab559e1e1fbf41a21d4531c9259e8f66"
+          "sha256": "4cabce8a470bec4d082e18c27d181fc11b4b3cfa104644a0de95a4f6e36f3025",
+          "bytes": 389853,
+          "printed_from_main_sha256": "c180bd1d8d13e2ca16dd5e545d60a717b153137d3b8fd866dc13679d911e0c66"
         }
       ]
     },
@@ -93,9 +93,9 @@
         {
           "format": "pdf",
           "path": "decks/continuous-learning/ta-amps-continuous-learning.pdf",
-          "sha256": "74bd10bc373a3c4c35e21f616c34b4c1eba8396bcaef8de443e1d8243753a2fc",
-          "bytes": 360584,
-          "printed_from_main_sha256": "9d27f69e878553ff09cfdea74ce0500db5d49813de985fd4012c08a15cfed29e"
+          "sha256": "eada580d566244a1e29e66d1889dc03d4eebae8b2987b26c76657756bdeab86c",
+          "bytes": 360653,
+          "printed_from_main_sha256": "1660a9edb809652125ff5c5158ca314f4a2ce2ec75fbc54897c9dcdc4ae84167"
         }
       ]
     }

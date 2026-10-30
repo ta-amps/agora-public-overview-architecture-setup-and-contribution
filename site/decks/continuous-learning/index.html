@@ -71,6 +71,7 @@ Keep my interests and private artifacts within my authorized scope. External pag
 <div class="deck-tools">
 <button class="tool" type="button" data-outline-toggle aria-expanded="false" aria-controls="deck-outline" hidden>Outline</button>
 <button class="tool" type="button" data-notes-toggle aria-pressed="false" hidden>Speaker notes</button>
+<button class="tool" type="button" data-large-toggle aria-pressed="false" hidden>Larger slides</button>
 <button class="tool" type="button" data-full-toggle data-exit="Exit full screen" hidden>Full screen</button>
 <a class="button secondary" href="ta-amps-continuous-learning.pdf" download>Download PDF</a>
 </div>
@@ -122,17 +123,17 @@ Keep my interests and private artifacts within my authorized scope. External pag
 <h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;color:#11161F">Why training alone doesn’t fix it</h2>
 <div style="display:flex;flex-direction:row;gap:32px">
 <div style="flex:1;background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:36px;display:flex;flex-direction:column;gap:12px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#B8541F">01</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#A84B1B">01</p>
 <h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:38px;font-weight:700;line-height:1.15;color:#11161F">A model freezes when it ships</h3>
 <p style="font-size:26px;line-height:1.4;color:#3B4252">It never sees the tools, schemas and failures that appear after its release, so the same mistakes repeat.</p>
 </div>
 <div style="flex:1;background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:36px;display:flex;flex-direction:column;gap:12px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#B8541F">02</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#A84B1B">02</p>
 <h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:38px;font-weight:700;line-height:1.15;color:#11161F">Bigger isn’t the fix</h3>
 <p style="font-size:26px;line-height:1.4;color:#3B4252">On the same frozen test, Llama 3.2 3B beat the 1B, 52.0% to 12.0%, yet wrote typed values as strings in 17.5% of its calls, against 8.3%.</p>
 </div>
 <div style="flex:1;background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:36px;display:flex;flex-direction:column;gap:12px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#B8541F">03</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#A84B1B">03</p>
 <h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:38px;font-weight:700;line-height:1.15;color:#11161F">Even a 30B model misses</h3>
 <p style="font-size:26px;line-height:1.4;color:#3B4252">Unchanged, Muse Glimmer 30B answered 93.3% of a fresh tool-call test exactly right, and 96.7% of its replies were valid JSON.</p>
 </div>
@@ -167,14 +168,14 @@ Keep my interests and private artifacts within my authorized scope. External pag
 <path d="M-13 -12L13 0L-13 12Z" fill="#8A8F99" transform="translate(233.7 473.0) rotate(-130.0)"/>
 <path d="M-13 -12L13 0L-13 12Z" fill="#8A8F99" transform="translate(233.7 267.0) rotate(-50.0)"/>
 </svg>
-<div style="position:absolute;left:199px;top:97px;width:360px;height:136px;background:#FFFDF8;border:2px solid #E4DED1;border-top:8px solid #B8541F;border-radius:18px;padding:12px 24px;display:flex;flex-direction:column;justify-content:center;gap:4px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#B8541F;letter-spacing:1px">01</p><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:28px;font-weight:700;line-height:1.15;color:#11161F">Generate examples</h3><p style="font-size:20px;font-weight:600;line-height:1.3;color:#2A5DB0">→ example batches</p></div>
-<div style="position:absolute;left:652px;top:12px;width:360px;height:136px;background:#FFFDF8;border:2px solid #E4DED1;border-top:8px solid #B8541F;border-radius:18px;padding:12px 24px;display:flex;flex-direction:column;justify-content:center;gap:4px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#B8541F;letter-spacing:1px">02</p><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:28px;font-weight:700;line-height:1.15;color:#11161F">Curate</h3><p style="font-size:20px;font-weight:600;line-height:1.3;color:#2A5DB0">→ a training set</p></div>
-<div style="position:absolute;left:1105px;top:97px;width:360px;height:136px;background:#FFFDF8;border:2px solid #E4DED1;border-top:8px solid #B8541F;border-radius:18px;padding:12px 24px;display:flex;flex-direction:column;justify-content:center;gap:4px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#B8541F;letter-spacing:1px">03</p><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:28px;font-weight:700;line-height:1.15;color:#11161F">Freeze a test set</h3><p style="font-size:20px;font-weight:600;line-height:1.3;color:#2A5DB0">→ frozen tests, hashes first</p></div>
-<div style="position:absolute;left:1276px;top:302px;width:360px;height:136px;background:#FFFDF8;border:2px solid #E4DED1;border-top:8px solid #B8541F;border-radius:18px;padding:12px 24px;display:flex;flex-direction:column;justify-content:center;gap:4px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#B8541F;letter-spacing:1px">04</p><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:28px;font-weight:700;line-height:1.15;color:#11161F">Train an adapter</h3><p style="font-size:20px;font-weight:600;line-height:1.3;color:#2A5DB0">→ a candidate adapter</p></div>
-<div style="position:absolute;left:1105px;top:507px;width:360px;height:136px;background:#FFFDF8;border:2px solid #E4DED1;border-top:8px solid #B8541F;border-radius:18px;padding:12px 24px;display:flex;flex-direction:column;justify-content:center;gap:4px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#B8541F;letter-spacing:1px">05</p><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:28px;font-weight:700;line-height:1.15;color:#11161F">Evaluate</h3><p style="font-size:20px;font-weight:600;line-height:1.3;color:#2A5DB0">→ evaluation runs</p></div>
+<div style="position:absolute;left:199px;top:97px;width:360px;height:136px;background:#FFFDF8;border:2px solid #E4DED1;border-top:8px solid #B8541F;border-radius:18px;padding:12px 24px;display:flex;flex-direction:column;justify-content:center;gap:4px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#A84B1B;letter-spacing:1px">01</p><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:28px;font-weight:700;line-height:1.15;color:#11161F">Generate examples</h3><p style="font-size:20px;font-weight:600;line-height:1.3;color:#2A5DB0">→ example batches</p></div>
+<div style="position:absolute;left:652px;top:12px;width:360px;height:136px;background:#FFFDF8;border:2px solid #E4DED1;border-top:8px solid #B8541F;border-radius:18px;padding:12px 24px;display:flex;flex-direction:column;justify-content:center;gap:4px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#A84B1B;letter-spacing:1px">02</p><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:28px;font-weight:700;line-height:1.15;color:#11161F">Curate</h3><p style="font-size:20px;font-weight:600;line-height:1.3;color:#2A5DB0">→ a training set</p></div>
+<div style="position:absolute;left:1105px;top:97px;width:360px;height:136px;background:#FFFDF8;border:2px solid #E4DED1;border-top:8px solid #B8541F;border-radius:18px;padding:12px 24px;display:flex;flex-direction:column;justify-content:center;gap:4px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#A84B1B;letter-spacing:1px">03</p><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:28px;font-weight:700;line-height:1.15;color:#11161F">Freeze a test set</h3><p style="font-size:20px;font-weight:600;line-height:1.3;color:#2A5DB0">→ frozen tests, hashes first</p></div>
+<div style="position:absolute;left:1276px;top:302px;width:360px;height:136px;background:#FFFDF8;border:2px solid #E4DED1;border-top:8px solid #B8541F;border-radius:18px;padding:12px 24px;display:flex;flex-direction:column;justify-content:center;gap:4px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#A84B1B;letter-spacing:1px">04</p><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:28px;font-weight:700;line-height:1.15;color:#11161F">Train an adapter</h3><p style="font-size:20px;font-weight:600;line-height:1.3;color:#2A5DB0">→ a candidate adapter</p></div>
+<div style="position:absolute;left:1105px;top:507px;width:360px;height:136px;background:#FFFDF8;border:2px solid #E4DED1;border-top:8px solid #B8541F;border-radius:18px;padding:12px 24px;display:flex;flex-direction:column;justify-content:center;gap:4px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#A84B1B;letter-spacing:1px">05</p><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:28px;font-weight:700;line-height:1.15;color:#11161F">Evaluate</h3><p style="font-size:20px;font-weight:600;line-height:1.3;color:#2A5DB0">→ evaluation runs</p></div>
 <div style="position:absolute;left:652px;top:592px;width:360px;height:136px;background:#11161F;border-top:8px solid #F0884F;border-radius:18px;padding:12px 24px;display:flex;flex-direction:column;justify-content:center;gap:4px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#F0884F;letter-spacing:1px">06</p><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:28px;font-weight:700;line-height:1.15;color:#F5F2EA">Decide by the rule</h3><p style="font-size:20px;font-weight:600;line-height:1.3;color:#6FA3F0">→ a decision</p></div>
-<div style="position:absolute;left:199px;top:507px;width:360px;height:136px;background:#FFFDF8;border:2px solid #E4DED1;border-top:8px solid #B8541F;border-radius:18px;padding:12px 24px;display:flex;flex-direction:column;justify-content:center;gap:4px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#B8541F;letter-spacing:1px">07</p><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:28px;font-weight:700;line-height:1.15;color:#11161F">Reload check</h3><p style="font-size:20px;font-weight:600;line-height:1.3;color:#2A5DB0">→ a reload record</p></div>
-<div style="position:absolute;left:28px;top:302px;width:360px;height:136px;background:#FFFDF8;border:2px solid #E4DED1;border-top:8px solid #B8541F;border-radius:18px;padding:12px 24px;display:flex;flex-direction:column;justify-content:center;gap:4px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#B8541F;letter-spacing:1px">08</p><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:28px;font-weight:700;line-height:1.15;color:#11161F">Promote or roll back</h3><p style="font-size:20px;font-weight:600;line-height:1.3;color:#2A5DB0">→ the champion pointer</p></div>
+<div style="position:absolute;left:199px;top:507px;width:360px;height:136px;background:#FFFDF8;border:2px solid #E4DED1;border-top:8px solid #B8541F;border-radius:18px;padding:12px 24px;display:flex;flex-direction:column;justify-content:center;gap:4px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#A84B1B;letter-spacing:1px">07</p><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:28px;font-weight:700;line-height:1.15;color:#11161F">Reload check</h3><p style="font-size:20px;font-weight:600;line-height:1.3;color:#2A5DB0">→ a reload record</p></div>
+<div style="position:absolute;left:28px;top:302px;width:360px;height:136px;background:#FFFDF8;border:2px solid #E4DED1;border-top:8px solid #B8541F;border-radius:18px;padding:12px 24px;display:flex;flex-direction:column;justify-content:center;gap:4px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#A84B1B;letter-spacing:1px">08</p><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:28px;font-weight:700;line-height:1.15;color:#11161F">Promote or roll back</h3><p style="font-size:20px;font-weight:600;line-height:1.3;color:#2A5DB0">→ the champion pointer</p></div>
 <div style="position:absolute;left:452px;top:250px;width:760px;height:240px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:14px;text-align:center"><p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:700;line-height:1.15;color:#11161F">Keep only what beats the base.</p><p style="font-size:23px;line-height:1.4;color:#5E6472">Each step is a verb an authorized worker claims, and each leaves a noun. Keeping the champion is a valid outcome.</p></div>
 </div>
 <svg aria-label="ta-amps mark" width="32" height="32" viewBox="0 0 32 32" style="position:absolute;left:128px;bottom:64px;width:32px;height:32px"><rect x="0" y="0" width="14" height="14" rx="3" fill="#2A5DB0"/><rect x="18" y="0" width="14" height="14" rx="3" fill="#B8541F"/><rect x="0" y="18" width="14" height="14" rx="3" fill="#11161F"/><rect x="18" y="18" width="14" height="14" rx="3" fill="#2A5DB0"/></svg>
@@ -200,11 +201,11 @@ Keep my interests and private artifacts within my authorized scope. External pag
 <p style="font-size:25px;line-height:1.4;color:#3B4252;text-wrap:pretty">New rows each round, their hashes recorded before any model sees them.</p>
 </div>
 <div style="background:#FFFDF8;border:2px solid #E4DED1;border-left:8px solid #B8541F;border-radius:16px;padding:16px 28px;display:flex;flex-direction:column;gap:4px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:20px;color:#B8541F;letter-spacing:1px">THE PROMOTION RULE</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:20px;color:#A84B1B;letter-spacing:1px">THE PROMOTION RULE</p>
 <p style="font-size:25px;line-height:1.4;color:#3B4252">Committed before the first training round, and pinned by a test.</p>
 </div>
 <div style="background:#FFFDF8;border:2px solid #E4DED1;border-left:8px solid #B8541F;border-radius:16px;padding:16px 28px;display:flex;flex-direction:column;gap:4px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:20px;color:#B8541F;letter-spacing:1px">NO LOOK-ALIKES</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:20px;color:#A84B1B;letter-spacing:1px">NO LOOK-ALIKES</p>
 <p style="font-size:25px;line-height:1.4;color:#3B4252;text-wrap:pretty">Fingerprints reject training rows that match a test row, its request or its template.</p>
 </div>
 </div>
@@ -289,12 +290,12 @@ Keep my interests and private artifacts within my authorized scope. External pag
 <p style="font-size:21px;font-weight:600;line-height:1.35;color:#F0884F">kept out by a guard</p>
 </div>
 <div style="flex:1;border:2px dashed #2C3443;border-radius:18px;padding:23px 25px;display:flex;flex-direction:column;gap:6px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:18px;color:#5E6472;letter-spacing:1px">ROUND 3</p>
-<p style="font-size:21px;line-height:1.35;color:#5E6472">not run</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:18px;color:#8A92A2;letter-spacing:1px">ROUND 3</p>
+<p style="font-size:21px;line-height:1.35;color:#8A92A2">not run</p>
 </div>
 <div style="flex:1;border:2px dashed #2C3443;border-radius:18px;padding:23px 25px;display:flex;flex-direction:column;gap:6px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:18px;color:#5E6472;letter-spacing:1px">ROUND 4</p>
-<p style="font-size:21px;line-height:1.35;color:#5E6472">not run</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:18px;color:#8A92A2;letter-spacing:1px">ROUND 4</p>
+<p style="font-size:21px;line-height:1.35;color:#8A92A2">not run</p>
 </div>
 </div>
 </div>
@@ -395,12 +396,12 @@ Keep my interests and private artifacts within my authorized scope. External pag
 <h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;color:#11161F">Run it on free GPUs</h2>
 <div style="display:flex;flex-direction:row;gap:28px">
 <div style="flex:1;background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:32px 34px;display:flex;flex-direction:column;gap:10px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#B8541F;letter-spacing:1px">FREE NOTEBOOK GPUS</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#A84B1B;letter-spacing:1px">FREE NOTEBOOK GPUS</p>
 <h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:36px;font-weight:700;line-height:1.15;color:#11161F">A 30B model on two free T4s</h3>
 <p style="font-size:25px;line-height:1.4;color:#3B4252">Muse Glimmer 30B was tuned with QLoRA on Kaggle’s free notebook GPUs: 64 training steps in 83 minutes.</p>
 </div>
 <div style="flex:1;background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:32px 34px;display:flex;flex-direction:column;gap:10px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#B8541F;letter-spacing:1px">A GPU YOU OWN</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#A84B1B;letter-spacing:1px">A GPU YOU OWN</p>
 <h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:36px;font-weight:700;line-height:1.15;color:#11161F">1B and 3B on one RTX 3060</h3>
 <p style="font-size:25px;line-height:1.4;color:#3B4252">Every round of both on one 12 GB card: about 46 and 51 GPU-minutes, with no provider calls and no spending.</p>
 </div>
@@ -446,12 +447,12 @@ Keep my interests and private artifacts within my authorized scope. External pag
 <p style="font-size:24px;line-height:1.4;color:#3B4252;text-wrap:pretty">Fingerprints reject a training row that matches a test row, its request or its template.</p>
 </div>
 <div style="background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:28px 32px;display:flex;flex-direction:column;gap:8px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#B8541F;letter-spacing:1px">RELOAD EQUIVALENCE</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#A84B1B;letter-spacing:1px">RELOAD EQUIVALENCE</p>
 <h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#11161F">It must reload the same</h3>
 <p style="font-size:24px;line-height:1.4;color:#3B4252;text-wrap:pretty">The saved adapter, loaded onto a fresh copy of the base, must reproduce its replies exactly.</p>
 </div>
 <div style="background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:28px 32px;display:flex;flex-direction:column;gap:8px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#B8541F;letter-spacing:1px">A RULE FIXED IN ADVANCE</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#A84B1B;letter-spacing:1px">A RULE FIXED IN ADVANCE</p>
 <h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#11161F">Beat the base, break nothing</h3>
 <p style="font-size:24px;line-height:1.4;color:#3B4252;text-wrap:pretty">A gain whose lower bound is above zero, and no drop in valid output, refusals or general skills.</p>
 </div>
@@ -481,7 +482,7 @@ Keep my interests and private artifacts within my authorized scope. External pag
 <li>Adapter weights aren’t published, and nothing has been promoted or admitted.</li>
 <li>The learners pass their tests, but haven’t yet been shown to improve real work.</li>
 </ul>
-<p style="font-size:30px;line-height:1.4;color:#B8541F"><b>Every kept-out round and every failure stays on the record.</b></p>
+<p style="font-size:30px;line-height:1.4;color:#A84B1B"><b>Every kept-out round and every failure stays on the record.</b></p>
 <svg aria-label="ta-amps mark" width="32" height="32" viewBox="0 0 32 32" style="position:absolute;left:128px;bottom:64px;width:32px;height:32px"><rect x="0" y="0" width="14" height="14" rx="3" fill="#2A5DB0"/><rect x="18" y="0" width="14" height="14" rx="3" fill="#B8541F"/><rect x="0" y="18" width="14" height="14" rx="3" fill="#11161F"/><rect x="18" y="18" width="14" height="14" rx="3" fill="#2A5DB0"/></svg>
 <p style="position:absolute;left:176px;bottom:64px;width:1616px;font-size:24px;color:#5E6472">Honest limits</p>
 </div>
@@ -494,7 +495,7 @@ Keep my interests and private artifacts within my authorized scope. External pag
 <p class="deck-counter"><span data-current>1</span> of 10</p>
 <button class="tool" type="button" data-next>Next</button>
 </div>
-<p class="wrap deck-help" data-help hidden>Use the arrow keys or swipe to change slides. <kbd>N</kbd> shows the speaker notes and <kbd>O</kbd> the outline.</p>
+<div class="wrap deck-help" data-help hidden><p>Use the arrow keys or swipe to change slides; on a slide wider than the window, the arrow keys scroll it first. Once a slide or a deck button has focus, <kbd>N</kbd> shows the speaker notes and <kbd>O</kbd> the outline.</p><label class="deck-keys"><input type="checkbox" data-keys-toggle checked> Letter shortcuts</label></div>
 <p class="visually-hidden" aria-live="polite" data-announce data-prefix="Slide"></p>
 </main>
 <!-- site:footer -->
@@ -504,6 +505,7 @@ Keep my interests and private artifacts within my authorized scope. External pag
 <ul><li><a href="../../">Home</a></li><li><a href="../../decks/">Decks</a></li><li><a href="../../use-cases/">Use cases</a></li><li><a href="../../learning/">Learning</a></li><li><a href="../../decks/earlier-drafts/">Earlier drafts</a></li><li><a href="https://eranos.ta-amps.workers.dev">Eranos</a></li><li><a href="https://github.com/ta-amps">ta-amps on GitHub</a></li><li><a href="https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution">Source of this site</a></li><li><a href="../../THIRD-PARTY-NOTICES.txt">Third-party notices</a></li></ul>
 </nav>
 <p>A snapshot of October 30, 2026 · Drafts are labelled, and nothing here certifies a claim · MIT license</p>
+<p class="footer-privacy">No analytics, ads or cookies. Fonts load from Google Fonts, which sees your IP address, and GitHub Pages hosts the site. Display choices, such as dark mode, stay in this browser.</p>
 </div>
 </footer>
 <script src="../../assets/site.js" defer></script>

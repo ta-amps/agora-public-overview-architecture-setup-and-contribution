@@ -1,10 +1,11 @@
 {
- "about": "The full three-minute film, outlined from its production plan (cut-plan.json and narration-plan.json). scripts/build_site.py renders it into site/film/index.html.",
- "title": "The full film, outlined | ta-amps",
- "description": "The three-minute Eranos film in four acts: spare tokens for good, why AI work is frustratingly dumb and the fix, any project and any agent, and how the film itself was made.",
+ "about": "The full three-minute film's transcript and scene descriptions, from its production plan (cut-plan.json and narration-plan.json). The narration is the captions' text word for word, which tests/test_build_site.py checks. scripts/build_site.py renders it into site/film/index.html.",
+ "title": "The full film: transcript and scene descriptions | ta-amps",
+ "description": "The three-minute Eranos film's transcript and scene descriptions, in four acts: spare tokens for good, why AI work is frustratingly dumb and the fix, any project and any agent, and how the film itself was made.",
  "crumb": "Home",
- "heading": "The full film, outlined",
- "lead": "Three minutes in four acts. Every line of narration, when it plays and what is on screen, with the storyboard drawn from the production run. The film plays on the home page.",
+ "heading": "The full film: transcript and scene descriptions",
+ "lead": "Three minutes in four acts. Every line of narration, word for word as the captions give it, with when it plays and a description of what is on screen, and the storyboard drawn from the production run. The film plays on the home page.",
+  "audio_description": "A separate audio-described cut is not available yet. Until then, this page is the film's text alternative.",
  "words_label": "Narration",
  "picture_label": "On screen",
  "acts": [

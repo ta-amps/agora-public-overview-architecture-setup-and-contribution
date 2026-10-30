@@ -1,6 +1,7 @@
 /* Deck viewer, shared by every current deck: the v4 viewer, plus a kicker, a copy button and a list of links under
    a slide, and the agent banner left out of the PDF. Page tokens come from assets/site.css; the slide canvas keeps
-   the deck's own inline design. */
+   the deck's own inline design. October 30: a slide wider than the window (at high browser zoom, or with "Larger
+   slides" on) scrolls sideways inside its stage, while the notes, links and controls stay within the window. */
 
 :root {
   --deck-rule: #E4DED1;
@@ -88,8 +89,11 @@
 .deck-stage {
   background: var(--color-stage);
   padding-block: var(--space-5);
+  overflow-x: auto;
   touch-action: pan-y pinch-zoom;
 }
+
+.deck-stage.is-wide { touch-action: pan-x pan-y pinch-zoom; }
 
 .slide {
   width: 100%;
@@ -160,7 +164,7 @@
 @media (min-width: 90rem) { :root { --slide-scale: 0.66; } }
 
 .slide-update {
-  max-width: calc(1920px * var(--slide-scale));
+  max-width: min(100%, calc(1920px * var(--slide-scale)));
   min-width: min(100%, 20rem);
   margin: var(--space-4) auto 0;
   padding: var(--space-3) var(--space-4);
@@ -174,19 +178,19 @@
 .slide-update strong { color: var(--color-ink); }
 
 .slide-notes {
-  max-width: calc(1920px * var(--slide-scale));
+  max-width: min(100%, calc(1920px * var(--slide-scale)));
   min-width: min(100%, 20rem);
   margin: var(--space-4) auto 0;
   color: var(--color-ink-2);
 }
 
-.slide-notes h2 { font-family: var(--font-body); font-size: var(--text-small); font-weight: 600; color: var(--color-muted); }
+.slide-notes h2 { font-family: var(--font-body); font-size: var(--text-small); font-weight: 600; color: var(--color-muted-on-stage); }
 .slide-notes p { margin-top: var(--space-1); max-width: 75ch; }
 .slide-sources { list-style: none; padding: 0; margin-top: var(--space-3); display: grid; gap: var(--space-2); max-width: 75ch; font-size: var(--text-small); color: var(--color-ink-2); }
 .slide-sources .claim-status { margin-right: var(--space-1); font-size: 0.85em; }
 
 .slide-actions {
-  max-width: calc(1920px * var(--slide-scale));
+  max-width: min(100%, calc(1920px * var(--slide-scale)));
   min-width: min(100%, 20rem);
   margin: var(--space-4) auto 0;
   display: flex;
@@ -200,13 +204,13 @@
 
 /* A slide's links, at page size, for screens where the slide itself is too small to tap. */
 .slide-links {
-  max-width: calc(1920px * var(--slide-scale));
+  max-width: min(100%, calc(1920px * var(--slide-scale)));
   min-width: min(100%, 20rem);
   margin: var(--space-4) auto 0;
   font-size: var(--text-small);
 }
 
-.slide-links h2 { font-family: var(--font-body); font-size: var(--text-small); font-weight: 600; color: var(--color-muted); }
+.slide-links h2 { font-family: var(--font-body); font-size: var(--text-small); font-weight: 600; color: var(--color-muted-on-stage); }
 .slide-links ul { list-style: none; padding: 0; margin-top: var(--space-1); display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-4); }
 .slide-links a { overflow-wrap: anywhere; }
 
@@ -236,7 +240,32 @@
   color: var(--color-ink-2);
 }
 
-.deck-help { text-align: center; font-size: var(--text-small); color: var(--color-muted); }
+.deck-help {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2) var(--space-5);
+  text-align: center;
+  font-size: var(--text-small);
+  color: var(--color-muted);
+}
+
+.deck-help p { max-width: 72ch; }
+
+/* The switch for the letter shortcuts, N and O. */
+.deck-keys {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  color: var(--color-ink-2);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.deck-keys input { width: 1.125rem; height: 1.125rem; margin: 0; accent-color: var(--color-button); cursor: pointer; }
+.deck-keys input:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 3px; }
 
 .claim-status {
   display: inline-flex;
@@ -288,7 +317,7 @@
   .slide-links,
   .js .deck.show-notes .slide-notes { display: none; }
   .deck { padding: 0; }
-  .deck-stage { padding: 0; background: none; }
+  .deck-stage { padding: 0; background: none; overflow: visible; }
   .slide,
   .js .slide,
   .js .slide.is-current {

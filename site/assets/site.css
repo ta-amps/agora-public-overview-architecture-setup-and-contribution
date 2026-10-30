@@ -12,6 +12,7 @@
   --color-ink: #11161F;
   --color-ink-2: #3B4252;
   --color-muted: #5E6472;
+  --color-muted-on-stage: #555B68;
   --color-noun: #2A5DB0;
   --color-noun-ink: #2A5DB0;
   --color-noun-wash: #E5ECF7;
@@ -82,6 +83,7 @@
   --color-ink: #F5F2EA;
   --color-ink-2: #C8D0DC;
   --color-muted: #9AA3B2;
+  --color-muted-on-stage: #9AA3B2;
   --color-noun: #6FA3F0;
   --color-noun-ink: #8DB7F4;
   --color-noun-wash: #1A2741;
@@ -121,6 +123,7 @@
     --color-ink: #F5F2EA;
     --color-ink-2: #C8D0DC;
     --color-muted: #9AA3B2;
+    --color-muted-on-stage: #9AA3B2;
     --color-noun: #6FA3F0;
     --color-noun-ink: #8DB7F4;
     --color-noun-wash: #1A2741;
