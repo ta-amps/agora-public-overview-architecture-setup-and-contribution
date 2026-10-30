@@ -111,7 +111,7 @@ class Builder(unittest.TestCase):
         self.assertIn(f'<source src="{full["src"]}"', page)
         self.assertIn('aria-pressed="true" data-cut="full"', page)
         self.assertIn('aria-pressed="false" data-cut="short"', page)
-        self.assertIn(">The full cut</p>", page)
+        self.assertIn('id="film-label">The full cut</span>', page)
         videos["default"] = "missing"
         with self.assertRaises(build.BuildError):
             build.render_home(nouns)
