@@ -1,0 +1,23 @@
+{
+  "about": "Pages removed on October 30, 2026, when the site became a home page, three decks and use cases, each with the place its content moved to. The not-found page lists them; nothing redirects. Frozen pages may still link to a removed page, and scripts/check.py allows only that.",
+  "date": "2026-10-30",
+  "pages": [
+    {"from": "docs/", "to": "decks/overview-and-architecture/", "what": "Docs"},
+    {"from": "docs/how-it-works/", "to": "decks/overview-and-architecture/#nouns-and-verbs", "what": "How it works"},
+    {"from": "docs/surfaces-and-seed-packs/", "to": "decks/overview-and-architecture/#map", "what": "The map"},
+    {"from": "docs/connect/", "to": "decks/roll-your-own/#connect", "what": "Connect an agent"},
+    {"from": "docs/seed-pack-ideas/", "to": "use-cases/", "what": "Seed pack ideas"},
+    {"from": "docs/status/", "to": "decks/overview-and-architecture/#evidence", "what": "Status and evidence"},
+    {"from": "docs/roadmap/", "to": "decks/overview-and-architecture/#limits", "what": "Roadmap"},
+    {"from": "contribute/", "to": "decks/roll-your-own/#submit", "what": "Contribute"}
+  ],
+  "not_found": {
+    "title": "Page not found | ta-amps",
+    "heading": "This page isn’t here",
+    "lead": "The link may be old, or the page may have moved. Deck versions never move, so a versioned deck link still works.",
+    "home": "Go to the home page",
+    "decks": "See the decks",
+    "moved_heading": "Pages that moved on October 30, 2026",
+    "was": "was"
+  }
+}

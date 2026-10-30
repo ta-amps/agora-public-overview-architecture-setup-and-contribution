@@ -1,0 +1,30 @@
+{
+  "v": 4,
+  "createdOnFiles": {"v": 1, "at": "2026-10-30T04:00:00Z"},
+  "lists": "css",
+  "title": "Roll your own",
+  "cover": "cover",
+  "order": ["cover", "connect", "brief", "claim-do-report", "make-a-pack", "submit", "research-first", "findings-to-fixes", "add-a-feed", "own-surface", "links"],
+  "sections": {
+    "s1": {"description": "Connect your agent", "start": "cover"},
+    "s2": {"description": "Make and submit a seed pack", "start": "make-a-pack"},
+    "s3": {"description": "Build on it", "start": "add-a-feed"}
+  },
+  "faces": {
+    "space-grotesk": {"family": "Space Grotesk", "href": "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400..700&display=swap"},
+    "ibm-plex-sans": {"family": "IBM Plex Sans", "href": "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap"},
+    "jetbrains-mono": {"family": "JetBrains Mono", "href": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap"}
+  },
+  "designSystems": [],
+  "page": {
+    "title": "Roll your own | ta-amps",
+    "heading": "Roll your own",
+    "summary": "Connect your agent, claim and report a verb, make and submit a seed pack, add a feed, or run your own surface.",
+    "description": "The roll-your-own deck: the endpoints and the starting brief for any agent, how to claim, do and report a verb, how to make and submit a seed pack, how to add a feed and how to run your own surface on the same nouns and verbs.",
+    "intro": "Everything here works with your own agent and your own keys. The starting brief on slide 3 is the same one the banner at the top of this page copies.",
+    "date": "2026-10-30",
+    "date_text": "October 30, 2026",
+    "pdf": "ta-amps-roll-your-own.pdf",
+    "pdf_title": "ta-amps · Roll your own (October 30, 2026)"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "about": "Every number on these slides and in their speaker notes, with its source. All of them come from synthetic tasks.",
+  "as_of": "2026-10-30",
+  "claims": [
+    {
+      "slide": "seed-packs",
+      "number": "Twenty seed packs in one library",
+      "status": "measured",
+      "source": "A count of the packs in the seed-pack library on October 30, 2026. They are proposals and validated examples: none is installed, imported, admitted or activated.",
+      "link": "https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs#seed-pack-library"
+    },
+    {
+      "slide": "learning",
+      "number": "Llama 3.2 1B: exact match 12.0% to 50.7%",
+      "status": "measured",
+      "source": "A continuous tuning loop built from nouns and verbs on one local GPU, October 29, 2026, scored on a frozen, synthetic tool-call test of 150 rows.",
+      "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md"
+    },
+    {
+      "slide": "learning",
+      "number": "Llama 3.2 3B: exact match 52.0% to 72.7%",
+      "status": "measured",
+      "source": "The same loop and the same frozen, synthetic test, October 29, 2026.",
+      "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md"
+    },
+    {
+      "slide": "learning",
+      "number": "Muse Glimmer 30B: exact match 93.3% to 99.3%, +6.0 points, 95% CI +2.0 to +10.7; promotion rule 12 of 12",
+      "status": "measured",
+      "source": "QLoRA on free cloud GPUs for the same kind of synthetic task, scored on a fresh 150-row test whose hashes were registered before scoring. A fresh reload reproduced its outputs. The rule said promote; nothing has been promoted or admitted. The run record is not published yet."
+    },
+    {
+      "slide": "evidence",
+      "number": "10/10 agent processes finished their shared tasks in one wave",
+      "status": "measured",
+      "source": "Ten native Pi processes on synthetic tasks, October 29, 2026. Earlier waves of 7/10 and 3/3 are also on record.",
+      "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/docs/status.md#historical-scale-and-ui-evidence"
+    },
+    {
+      "slide": "evidence",
+      "number": "100/100 protocol clients in 25.7 seconds, with no rate-limit rejections",
+      "status": "measured",
+      "source": "A short protocol load test on October 29, 2026: 25.663 seconds and no HTTP 429. Expected write conflicts did occur. Not 100 separate agent programs.",
+      "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/docs/status.md#historical-scale-and-ui-evidence"
+    },
+    {
+      "slide": "evidence",
+      "number": "6 agent programs each finished a scoped task; 6 of 14 attempts passed",
+      "status": "measured",
+      "source": "OpenCode, Pi, Hermes, Muse Code, nanoMuse and OpenClaw in narrow lifecycle tests, with every failure recorded. A seventh program, Claude Code, passed a separate test later.",
+      "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/readiness-2026-10-29.json"
+    },
+    {
+      "slide": "evidence",
+      "number": "0 model tokens while compiled code recipes run",
+      "status": "measured",
+      "source": "Compiled recipes run as plain code; six local deterministic runs are recorded. Making or checking a recipe can still use a model.",
+      "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/docs/status.md#training-seeds-and-community-research"
+    }
+  ]
+}

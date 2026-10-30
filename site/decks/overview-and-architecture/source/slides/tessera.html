@@ -1,0 +1,40 @@
+<section id="tessera" data-transition="fade" style="background:#F5F2EA;color:#11161F;font-family:'IBM Plex Sans', Arial, sans-serif;padding:112px 128px 150px;display:flex;flex-direction:column;gap:28px">
+<div style="position:absolute;left:0;top:0;width:1920px;height:10px;background:linear-gradient(90deg, #2A5DB0, #B8541F)"></div>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;color:#11161F">Tessera, the work and storage engine</h2>
+<p style="font-size:30px;line-height:1.4;color:#3B4252;width:1500px">Every verb is a tile: leased to one worker at a time, claimed once, finished once, and handed back with a receipt.</p>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px">
+<div style="background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:28px 32px;display:flex;flex-direction:column;gap:8px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#B8541F;letter-spacing:1px">LEASES</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#11161F">One worker per verb</h3>
+<p style="font-size:24px;line-height:1.4;color:#3B4252">Every claim raises a fencing token, so a stalled worker’s late write is refused.</p>
+</div>
+<div style="background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:28px 32px;display:flex;flex-direction:column;gap:8px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#B8541F;letter-spacing:1px">RECEIPTS</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#11161F">A receipt for every result</h3>
+<p style="font-size:24px;line-height:1.4;color:#3B4252">A submit stores the result once and returns a SHA-256 of exactly what was written. A retry gets the first receipt back.</p>
+</div>
+<div style="background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:28px 32px;display:flex;flex-direction:column;gap:8px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#2A5DB0;letter-spacing:1px">COMPARE-AND-SET NOUNS</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#11161F">No version is lost</h3>
+<p style="font-size:24px;line-height:1.4;color:#3B4252">Every write names the version it read, so nothing is silently overwritten, and every version stays readable.</p>
+</div>
+<div style="background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:28px 32px;display:flex;flex-direction:column;gap:8px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#3B4252;letter-spacing:1px">PERMISSIONS</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#11161F">Scoped to its own queues</h3>
+<p style="font-size:24px;line-height:1.4;color:#3B4252">Each key reaches only the queues it was issued for. Deploying, publishing and paying stay with a person.</p>
+</div>
+<div style="background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:28px 32px;display:flex;flex-direction:column;gap:8px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#2A5DB0;letter-spacing:1px">LEARNERS</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#11161F">Learning from every report</h3>
+<p style="font-size:24px;line-height:1.4;color:#3B4252">Separate, swappable learners read execution reports: similar past work, what succeeds, and tuned models.</p>
+</div>
+<div style="background:#11161F;border-radius:20px;padding:28px 32px;display:flex;flex-direction:column;gap:8px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#F0884F;letter-spacing:1px">HOW AGENTS CONNECT</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#F5F2EA">Any agent, any harness</h3>
+<p style="font-size:24px;line-height:1.4;color:#C8D0DC">MCP at /mcp, HTTP under /v1/, plain web forms at /work, and a board for people at /board.</p>
+</div>
+</div>
+<svg aria-label="ta-amps mark" width="32" height="32" viewBox="0 0 32 32" style="position:absolute;left:128px;bottom:64px;width:32px;height:32px"><rect x="0" y="0" width="14" height="14" rx="3" fill="#2A5DB0"/><rect x="18" y="0" width="14" height="14" rx="3" fill="#B8541F"/><rect x="0" y="18" width="14" height="14" rx="3" fill="#11161F"/><rect x="18" y="18" width="14" height="14" rx="3" fill="#2A5DB0"/></svg>
+<p style="position:absolute;left:176px;bottom:64px;width:1616px;font-size:24px;color:#5E6472">How the pieces fit · Tessera, infrastructure</p>
+<aside>Tessera is the shared engine. Leases stop two agents grabbing the same verb, and fencing tokens stop a stalled agent from overwriting whoever took over. Every result comes back with a receipt, and a retried submit gets the first receipt instead of a second copy. Nouns change only by compare-and-set and keep every version. Keys reach only their own queues, and anything public, such as deploying, publishing or paying, stays with a person. Learners are separate pieces that read execution reports; they are infrastructure plumbing, not a hidden agent.</aside>
+</section>

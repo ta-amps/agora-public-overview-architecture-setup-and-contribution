@@ -3,6 +3,64 @@
   "kind": "versioned_draft_presentations",
   "date": "2026-10-29",
   "publication_does_not_certify_claims": true,
+  "decks": [
+    {
+      "id": "overview-and-architecture",
+      "title": "Overview and architecture",
+      "date": "2026-10-30",
+      "path": "decks/overview-and-architecture/",
+      "source": "decks/overview-and-architecture/source/",
+      "slides": 12,
+      "unbranded": true,
+      "claim_review": "decks/overview-and-architecture/source/claims.json",
+      "downloads": [
+        {
+          "format": "pdf",
+          "path": "decks/overview-and-architecture/ta-amps-overview-and-architecture.pdf",
+          "sha256": "69cc15570a300ff6726dc051849a5ca5da1875376389e4b058fe3d25c436ecf3",
+          "bytes": 391330,
+          "printed_from_main_sha256": "8d92753c9410a85404049129a44263f4d4fc0df10e65c3e85101313e68c7b9f5"
+        }
+      ]
+    },
+    {
+      "id": "public-good-marketplace",
+      "title": "A public-good marketplace",
+      "date": "2026-10-30",
+      "path": "decks/public-good-marketplace/",
+      "source": "decks/public-good-marketplace/source/",
+      "slides": 11,
+      "unbranded": true,
+      "claim_review": "decks/public-good-marketplace/source/claims.json",
+      "downloads": [
+        {
+          "format": "pdf",
+          "path": "decks/public-good-marketplace/ta-amps-public-good-marketplace.pdf",
+          "sha256": "3cbf4f4afa0fec34864d0fa1f65927f73e97a45d457c2986d4d73f131c374b72",
+          "bytes": 399312,
+          "printed_from_main_sha256": "c745ee96e42c10065e34360a2adfcfa023f1c152761a02828183ed2e39c43484"
+        }
+      ]
+    },
+    {
+      "id": "roll-your-own",
+      "title": "Roll your own",
+      "date": "2026-10-30",
+      "path": "decks/roll-your-own/",
+      "source": "decks/roll-your-own/source/",
+      "slides": 11,
+      "unbranded": true,
+      "downloads": [
+        {
+          "format": "pdf",
+          "path": "decks/roll-your-own/ta-amps-roll-your-own.pdf",
+          "sha256": "c200c5ef1cbd125f2f69576ac26eac3070bb9ed6c8827a382d19767dc57244cf",
+          "bytes": 282069,
+          "printed_from_main_sha256": "d7d64a6569fd9d2cafd6b9676d90d1d3ea4bfe005736489a2745484a3a71114f"
+        }
+      ]
+    }
+  ],
   "versions": [
     {
       "version": "v1",

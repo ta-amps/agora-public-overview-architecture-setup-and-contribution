@@ -1,0 +1,344 @@
+{
+  "about": "The use cases page, as one noun: ideas for useful work made of nouns and verbs. They are ideas, not results. scripts/build_site.py renders them into site/use-cases/index.html.",
+  "title": "Use cases | ta-amps",
+  "description": "Ideas for useful work made of nouns and verbs, from the public-good marketplace to grant writing, literature reviews and checked data pipelines.",
+  "heading": "Use cases",
+  "lead": "Ideas for useful work made of nouns and verbs. The public-good marketplace comes first; the same pieces fit almost any field.",
+  "nouns_label": "Example nouns",
+  "verbs_label": "Example verbs",
+  "flagship": {
+    "kicker": "The flagship",
+    "name": "Public-good marketplace",
+    "line": "Nonprofits request an agent kit for private-data work, or a verb that donated agents do on public information and deliver with citations.",
+    "nouns": [
+      "Requests",
+      "Agent kits",
+      "Cited reports",
+      "Synthetic test cases",
+      "Reviews"
+    ],
+    "verbs": [
+      "Check a request",
+      "Build a kit",
+      "Do a requested verb",
+      "Review it",
+      "Deliver it"
+    ],
+    "links": [
+      {
+        "href": "https://eranos.ta-amps.workers.dev",
+        "label": "Visit Eranos"
+      },
+      {
+        "href": "decks/public-good-marketplace/",
+        "label": "The marketplace deck"
+      }
+    ]
+  },
+  "ideas": [
+    {
+      "name": "Feeds that watch what's new",
+      "line": "A scheduled scan turns new repos, papers and releases into nouns, and their follow-ups into verbs.",
+      "nouns": [
+        "Sources",
+        "New items",
+        "Digests"
+      ],
+      "verbs": [
+        "Scan",
+        "Summarize",
+        "Test",
+        "Compare",
+        "Update a pack"
+      ]
+    },
+    {
+      "name": "Checking new laws that affect tenants",
+      "public": true,
+      "line": "Donated agents read newly passed laws and deliver a cited summary of what changes for tenants. Not legal advice: a person decides.",
+      "nouns": [
+        "New laws",
+        "Tenant questions",
+        "Cited summaries"
+      ],
+      "verbs": [
+        "Watch for new laws",
+        "Summarize changes",
+        "Cite each claim",
+        "Review"
+      ]
+    },
+    {
+      "name": "Scanning public legal briefs for a topic",
+      "public": true,
+      "line": "Agents scan public court briefs on one topic and report each argument with its source.",
+      "nouns": [
+        "Public briefs",
+        "A topic",
+        "Arguments with citations"
+      ],
+      "verbs": [
+        "Search",
+        "Extract arguments",
+        "Cite",
+        "Review"
+      ]
+    },
+    {
+      "name": "Reporting on a state’s shelter funding",
+      "public": true,
+      "line": "Agents read the state’s public budget and report how shelter funding changed, line by line.",
+      "nouns": [
+        "Budget documents",
+        "Line items",
+        "A cited report"
+      ],
+      "verbs": [
+        "Find the lines",
+        "Compare years",
+        "Cite",
+        "Review"
+      ]
+    },
+    {
+      "name": "Watching the news on a policy",
+      "public": true,
+      "line": "A feed follows public news on one policy, through official access, and sends a cited digest to a person.",
+      "nouns": [
+        "Sources",
+        "Articles",
+        "Digests"
+      ],
+      "verbs": [
+        "Scan",
+        "Summarize",
+        "Cite",
+        "Review"
+      ]
+    },
+    {
+      "name": "Making videos from code",
+      "line": "A script, scenes and captions become a video anyone can render again and check.",
+      "nouns": [
+        "Script",
+        "Storyboard",
+        "Scene recipes",
+        "Narration",
+        "Captions"
+      ],
+      "verbs": [
+        "Capture",
+        "Narrate",
+        "Compose",
+        "Render",
+        "Check"
+      ]
+    },
+    {
+      "name": "Self-tuning models",
+      "line": "Small open models retrain on checked results, and replace the base only when they beat it.",
+      "nouns": [
+        "Training examples",
+        "Frozen test sets",
+        "Adapters",
+        "Promotion rules"
+      ],
+      "verbs": [
+        "Generate",
+        "Curate",
+        "Train",
+        "Evaluate",
+        "Decide"
+      ]
+    },
+    {
+      "name": "Reviewing open-source repos at scale",
+      "line": "Every repo gets the same questions, each answered with evidence and pinned to an exact commit.",
+      "nouns": [
+        "Repo profiles",
+        "Review questions",
+        "Findings",
+        "Evidence"
+      ],
+      "verbs": [
+        "Scan",
+        "Profile",
+        "Investigate",
+        "Compare",
+        "Report"
+      ]
+    },
+    {
+      "name": "Composing verified code without rewriting it",
+      "line": "Agents put tested pieces of code together instead of writing the same code again.",
+      "nouns": [
+        "Code nodes",
+        "Recipes",
+        "Compiled programs",
+        "Test results"
+      ],
+      "verbs": [
+        "Compose",
+        "Compile",
+        "Run",
+        "Verify"
+      ]
+    },
+    {
+      "name": "Research before building",
+      "line": "Before anything new is built, find what already exists and compare the alternatives.",
+      "nouns": [
+        "Briefs",
+        "Surveys",
+        "Source catalogs",
+        "Decisions"
+      ],
+      "verbs": [
+        "Survey",
+        "Research alternatives",
+        "Compare",
+        "Decide"
+      ]
+    },
+    {
+      "name": "Turning every bug and annoyance into a fix",
+      "line": "Anything someone notices becomes a recorded finding, fixed by one worker and checked by another.",
+      "nouns": [
+        "Findings",
+        "Reproductions",
+        "Fixes",
+        "Regression guards"
+      ],
+      "verbs": [
+        "Record",
+        "Reproduce",
+        "Fix",
+        "Verify",
+        "Close"
+      ]
+    },
+    {
+      "name": "Customer-support knowledge that stays current",
+      "line": "Each answer names the product version it's true for, and old answers get flagged before they mislead.",
+      "nouns": [
+        "Answers",
+        "Product versions",
+        "Release notes",
+        "Style guide"
+      ],
+      "verbs": [
+        "Draft an answer",
+        "Check against releases",
+        "Flag stale answers",
+        "Review"
+      ]
+    },
+    {
+      "name": "Literature review for research teams",
+      "line": "New papers are screened against the team's question, and every claim keeps its source.",
+      "nouns": [
+        "Research questions",
+        "Papers",
+        "Screening criteria",
+        "Evidence tables"
+      ],
+      "verbs": [
+        "Search",
+        "Screen",
+        "Extract",
+        "Synthesize",
+        "Check citations"
+      ]
+    },
+    {
+      "name": "Course and lesson building for teachers",
+      "line": "Lessons, quizzes and rubrics are drafted to a standard, and a teacher reviews every one.",
+      "nouns": [
+        "Standards",
+        "Lesson plans",
+        "Quizzes",
+        "Rubrics"
+      ],
+      "verbs": [
+        "Draft a lesson",
+        "Write questions",
+        "Check the reading level",
+        "Review"
+      ]
+    },
+    {
+      "name": "Disaster-relief volunteer coordination",
+      "line": "Shift plans and checklists are ready fast, and people keep every safety decision.",
+      "nouns": [
+        "Shift plans",
+        "Station checklists",
+        "Coverage maps",
+        "Contact rules"
+      ],
+      "verbs": [
+        "Draft a plan",
+        "Check coverage",
+        "Translate",
+        "Hand off to a coordinator"
+      ]
+    },
+    {
+      "name": "Grant writing and reporting for nonprofits",
+      "line": "Drafts follow each funder's rules, and a person signs and submits them.",
+      "nouns": [
+        "Funder rules",
+        "Budgets",
+        "Ledgers",
+        "Past reports",
+        "Deadlines"
+      ],
+      "verbs": [
+        "Draft a narrative",
+        "Reconcile spending",
+        "Check requirements",
+        "Review"
+      ]
+    },
+    {
+      "name": "Compliance checklists that cite the rule in force",
+      "line": "Every checklist line points to its rule and the date that rule applies from.",
+      "nouns": [
+        "Rules with their dates",
+        "Checklists",
+        "Sources"
+      ],
+      "verbs": [
+        "Watch sources",
+        "Update a checklist",
+        "Cite the rule",
+        "Review"
+      ]
+    },
+    {
+      "name": "Data pipelines that are checked step by step",
+      "line": "Each step is a verb with its own check, so bad data stops where it starts.",
+      "nouns": [
+        "Datasets",
+        "Schemas",
+        "Step outputs",
+        "Check results"
+      ],
+      "verbs": [
+        "Ingest",
+        "Validate",
+        "Transform",
+        "Compare",
+        "Publish"
+      ]
+    }
+  ],
+  "yours": {
+    "name": "Your system",
+    "line": "Any work can be nouns and verbs. Name the things it reuses and the jobs it repeats, and any agent can pick them up.",
+    "link": {
+      "href": "decks/roll-your-own/",
+      "label": "The roll-your-own deck"
+    }
+  },
+  "public_label": "Verb request"
+}

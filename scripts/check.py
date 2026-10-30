@@ -241,7 +241,10 @@ def site_pages(site: Path) -> dict[Path, set[str]]:
     return pages
 
 
-def site_links(page: Path, site: Path, pages: dict[Path, set[str]], root: Path) -> None:
+def site_links(page: Path, site: Path, pages: dict[Path, set[str]], root: Path,
+               moved: frozenset[Path] = frozenset()) -> None:
+    """Every local link and anchor must resolve inside the site. A frozen page passes in the pages that moved
+    after it was published, so its links to them are allowed; nothing else is."""
     text = page.read_text()
     where = page.relative_to(site).as_posix()
     for raw in HTML_REF.findall(text):
@@ -264,10 +267,56 @@ def site_links(page: Path, site: Path, pages: dict[Path, set[str]], root: Path) 
         local = local.resolve()
         if path.endswith("/") or local.is_dir():
             local = local / "index.html"
+        if local in moved and not local.is_file():
+            continue
         require(local.is_relative_to(site.resolve()) and local.is_file(),
                 "broken or escaping site link in " + where + ": " + target)
         if parsed.fragment and local in pages:
             require(parsed.fragment in pages[local], "missing anchor in " + where + ": " + target)
+
+
+def current_deck(deck: dict, site: Path, frozen: set[Path]) -> set[str]:
+    """A current deck: built from its source, never a frozen version, with its slides counted and its PDF declared.
+    Returns the site paths of its downloads."""
+    page = (site / deck["path"] / "index.html").resolve()
+    require(page.is_relative_to(site.resolve()) and page.is_file(), "deck path must remain within the static site")
+    require(page not in frozen, "a current deck is never a frozen version")
+    require((site / deck["source"] / "deck.json").is_file(), "a current deck needs its source")
+    require(page.read_text().count('aria-roledescription="slide"') == deck["slides"], "deck slide count mismatch")
+    require(deck.get("unbranded") is True, "current decks name no retired pack")
+    require(bool(deck["downloads"]), "a current deck needs its PDF")
+    return {local for local in (deck_download(d, site) for d in deck["downloads"]) if local}
+
+
+def frozen_drafts(listing: dict, site: Path) -> set[Path]:
+    """Drafts pinned by hash in site/content/earlier-drafts.json: their bytes must never change."""
+    frozen = set()
+    for group in listing["groups"]:
+        for item in group["items"]:
+            if "html_sha256" not in item:
+                continue
+            page = (site / item["href"] / "index.html").resolve()
+            require(page.is_relative_to(site.resolve()) and page.is_file(), "frozen draft missing: " + item["href"])
+            require(SHA256.fullmatch(item["html_sha256"]) is not None and
+                    hashlib.sha256(page.read_bytes()).hexdigest() == item["html_sha256"],
+                    "frozen draft changed without updating its recorded hash: " + item["href"])
+            frozen.add(page)
+    return frozen
+
+
+def moved_pages(listing: dict, site: Path, pages: dict[Path, set[str]]) -> frozenset[Path]:
+    """Pages removed on purpose. Each must really be gone and point to a page and anchor that exist."""
+    moved = set()
+    for item in listing["pages"]:
+        old = (site / item["from"] / "index.html").resolve()
+        require(old.is_relative_to(site.resolve()) and not old.exists(),
+                "a moved page must be gone from the site: " + item["from"])
+        target = urlsplit(item["to"])
+        new = (site / target.path / "index.html").resolve() if target.path.endswith("/") else (site / target.path).resolve()
+        require(new in pages, "a moved page must point to a page in the site: " + item["to"])
+        require(not target.fragment or target.fragment in pages[new], "missing anchor for a moved page: " + item["to"])
+        moved.add(old)
+    return frozenset(moved)
 
 
 def check(root: Path = ROOT) -> dict:
@@ -278,6 +327,7 @@ def check(root: Path = ROOT) -> dict:
     manifest = root / "site/decks.json"
     declared: set[str] = set()
     historical: set[str] = set()
+    frozen: set[Path] = set()
     if manifest.exists():
         decks = load(manifest)
         require(decks["kind"] == "versioned_draft_presentations" and
@@ -295,10 +345,15 @@ def check(root: Path = ROOT) -> dict:
                     version["core_slides"] + version["appendix_slides"], "deck slide count mismatch")
             if version.get("unbranded") is not True:
                 historical.add(page.relative_to(manifest.parent.resolve()).as_posix())
+            frozen.add(page)
             for download in version["downloads"]:
                 local = deck_download(download, manifest.parent)
                 if local:
                     declared.add(local)
+        current = decks.get("decks", [])
+        require(len({d["id"] for d in current}) == len(current), "duplicate deck")
+        for deck in current:
+            declared |= current_deck(deck, manifest.parent, frozen)
     media = root / "site/media.json"
     if media.exists():
         listing = load(media)
@@ -324,8 +379,13 @@ def check(root: Path = ROOT) -> dict:
             local_links(path, root)
     if site.is_dir():
         pages = site_pages(site)
+        drafts = site / "content/earlier-drafts.json"
+        if drafts.exists():
+            frozen |= frozen_drafts(load(drafts), site)
+        moved_list = site / "content/moved.json"
+        moved = moved_pages(load(moved_list), site, pages) if moved_list.exists() else frozenset()
         for page in pages:
-            site_links(page, site, pages, root)
+            site_links(page, site, pages, root, moved if page in frozen else frozenset())
     report = (root / "docs/status.md").read_text()
     for repo in data["repositories"]:
         require(repo["main_revision"] in report, "status page missing exact revision")
