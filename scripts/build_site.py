@@ -194,12 +194,14 @@ class Nouns:
         self.contribute = load_json(CONTENT / "contribute.json")
         self.llms = load_json(CONTENT / "llms.json")
         self.links = load_json(CONTENT / "source-links.json")
+        self.feed = load_json(CONTENT / "feeds-memory-systems.json")
+        self.feed_words = load_json(CONTENT / "feeds-page.json")
         self.drafts = load_json(CONTENT / "earlier-drafts.json")
         self.moved = load_json(CONTENT / "moved.json")
         self.manifest = load_json(MANIFEST)
         self.brief = read_brief()
         self.frozen = frozen_pages(self.manifest, self.drafts)
-        self.decks = [load_deck(deck_id, self.brief, self.site["endpoints"]) for deck_id in self.site["decks"]]
+        self.decks = [load_deck(deck_id, self.brief, self.site["endpoints"], self.feed) for deck_id in self.site["decks"]]
 
 
 def frozen_pages(manifest: dict, drafts: dict) -> set[Path]:
@@ -616,7 +618,8 @@ def plain_text(fragment: str) -> str:
     return re.sub(r"\s+", " ", html.unescape(fragment)).strip()
 
 
-def load_slide(source: Path, name: str, brief: str | None = None, endpoints: dict | None = None) -> dict:
+def load_slide(source: Path, name: str, brief: str | None = None, endpoints: dict | None = None,
+               feed: dict | None = None) -> dict:
     """One slide of the v4 format: a <section> with inline styles, custom elements and one <aside>."""
     path = source / "slides" / f"{name}.html"
     if not path.is_file():
@@ -632,6 +635,7 @@ def load_slide(source: Path, name: str, brief: str | None = None, endpoints: dic
         fail(f"{name}: expected one <aside> with speaker notes")
     inner = re.sub(r"\s*<aside>.*?</aside>\s*", "\n", inner, flags=re.S)
     inner = re.sub(r'<x-shape kind="([a-z-]+)" style="([^"]*)"></x-shape>', shape_svg, inner)
+    inner = FEED_TAG.sub(lambda m: feed_status(m, feed), inner)
     inner = re.sub(r'<x-icon name="([A-Za-z]+)" style="([^"]*)"></x-icon>', icon_svg, inner)
     copy = None
     brief_tag = re.compile(r'<x-brief style="([^"]*)"></x-brief>')
@@ -682,7 +686,25 @@ def slide_footer(inner: str, deck_title: str, number: int) -> str:
     return inner[:match.start()] + foot + inner[match.end():]
 
 
-def load_deck(deck_id: str, brief: str, endpoints: dict) -> dict:
+FEED_TAG = re.compile(r'<x-feed-status kind="(line|row)" style="([^"]*)"></x-feed-status>')
+
+
+def feed_status(match: re.Match, feed: dict | None) -> str:
+    """The memory-systems feed's schedule and last run, drawn on a slide only once its scans run on hosted Tessera;
+    until then the element draws nothing, so no slide says a feed runs when it does not."""
+    if not feed or not feed_hosted(feed):
+        return ""
+    last = feed["last_run"]
+    words = (f"The memory-systems feed runs {text(last['schedule'].split(' (')[0])}; last run {text(last['at'][:16].replace('T', ' '))}"
+             f"&nbsp;UTC, receipt {text(last['receipt_hash'][:12])}.")
+    if match.group(1) == "line":
+        return f'<p style="{attr(match.group(2))}">{words}</p>'
+    return (f'<div style="{attr(match.group(2))}"><p style="width:170px;text-align:center;background:#15281D;color:#7FD3A0;'
+            f'border-radius:999px;padding:6px 0;font-size:22px;font-weight:600">Live</p>'
+            f'<p style="flex:1;font-size:27px;line-height:1.4;color:#F5F2EA">{words}</p></div>')
+
+
+def load_deck(deck_id: str, brief: str, endpoints: dict, feed: dict | None = None) -> dict:
     folder = DECKS / deck_id
     source = folder / "source"
     spec = load_json(source / "deck.json")
@@ -691,7 +713,7 @@ def load_deck(deck_id: str, brief: str, endpoints: dict) -> dict:
         fail(f"{deck_id}: deck.json lists a slide twice")
     if spec.get("cover") != order[0]:
         fail(f"{deck_id}: the cover must be the first slide")
-    slides = [load_slide(source, name, brief, endpoints) for name in order]
+    slides = [load_slide(source, name, brief, endpoints, feed) for name in order]
     for number, slide in enumerate(slides, 1):
         slide["inner"] = slide_footer(slide["inner"], spec["title"], number)
     if sum(1 for s in slides if s["copy"]) > 1:
@@ -1628,6 +1650,93 @@ def render_llms(nouns: Nouns, built: set[Path]) -> str:
     return "\n".join(lines)
 
 
+FEED_TOP_ITEMS = 40  # memory systems listed under Everything gathered, most stars first
+
+
+def feed_hosted(feed: dict) -> bool:
+    """The feed's scans ran on hosted Tessera, so its schedule is real and the decks may say so."""
+    return feed["source"].get("hosted") is True
+
+
+def short_hash(value: str) -> str:
+    return f'<code title="{attr(value)}">{text(value[:12])}</code>'
+
+
+def render_feed(nouns: Nouns) -> str:
+    """The memory-systems feed page, from the feed's own data noun: where and when it scanned, the count with its
+    exact search, which project fits which setup, the quoted benchmark claims and what was gathered."""
+    feed, words = nouns.feed, nouns.feed_words
+    last, count = feed["last_run"], feed["count"]
+    hosted = feed_hosted(feed)
+    where = words["where_hosted"] if hosted else words["where_local"]
+    facts = [(words["last_scan"], f'<time datetime="{attr(last["at"])}">{text(last["at"])}</time>'),
+             (words["scan_id"], f'<code>{text(last["scan_id"])}</code>'),
+             (words["receipt"], short_hash(last["receipt_hash"]))]
+    if hosted:
+        facts.insert(1, (words["schedule"], text(last["schedule"])))
+    facts.append((words["scans"], ", ".join(f'<code>{text(scan["scan_id"])}</code>' for scan in feed["scans"])))
+    fact_list = "".join(f"<div><dt>{text(k)}</dt><dd>{v}</dd></div>" for k, v in facts)
+    secondary = "; ".join(f'{text(item["label"])}: {int(item["total_count"]):,}' for item in count.get("secondary", []))
+    candidates = {i["repo"]: i for i in feed["items"]} | {c["repo"]: c for c in feed["candidates"]}
+
+    def candidate(repo: str) -> str:
+        c = candidates.get(repo)
+        if not c:
+            fail(f"feed: setup names a candidate the data does not hold: {repo}")
+        claims = "".join(f'<li><span class="feed-metric">{text(cl["metric"])}</span> '
+                         f'<q>{text(cl["quote"])}</q> <a href="{attr(cl["source_url"])}">source</a></li>'
+                         for cl in c.get("claims", []))
+        claims = f'<ul class="feed-claims">{claims}</ul>' if claims else f'<p class="feed-none">{text(words["not_reported"])}</p>'
+        meta = " · ".join(text(str(x)) for x in (f'{int(c["stars"]):,} {words["stars"]}', c.get("licence") or "", c.get("language") or "",
+                                                 c.get("hosting") or "", f'{words["last_commit"]} {str(c.get("last_commit_at") or "")[:10]}') if x)
+        return (f'<li class="feed-pick"><a href="{attr(c["url"])}">{text(repo)}</a><p class="feed-meta">{meta}</p>{claims}</li>')
+
+    setups = "".join(
+        f'<details class="feed-setup"{" open" if n == 0 else ""}><summary>{text(setup["label"])} '
+        f'<span class="feed-fit">{int(setup["fit_count"]):,} {text(words["fits_count"])}</span></summary>'
+        f'<ol class="feed-picks">{"".join(candidate(repo) for repo in setup["candidates"])}</ol></details>'
+        for n, setup in enumerate(feed["setups"]))
+    claim_rows = "".join(
+        f'<tr><td><a href="{attr(cl["url"])}">{text(cl["source"])}</a></td><td>{text(cl["metric"])}</td>'
+        f'<td><q>{text(cl["quote"])}</q></td></tr>' for cl in feed["claims"])
+    memory = sorted((i for i in feed["items"] if i.get("memory_system")), key=lambda i: -int(i.get("stars") or 0))
+    item_rows = "".join(
+        f'<tr><td><a href="{attr(i["url"])}">{text(i["repo"])}</a></td><td>{int(i.get("stars") or 0):,}</td>'
+        f'<td>{text(i.get("licence") or "")}</td><td>{text(i.get("language") or "")}</td>'
+        f'<td>{text(str(i.get("last_commit_at") or "")[:10])}</td></tr>' for i in memory[:FEED_TOP_ITEMS])
+    papers = "".join(f'<li><a href="{attr(p["url"])}">{text(p["title"])}</a> <span>{text(p["arxiv_id"])} · '
+                     f'{text(p["published"][:10])}</span></li>' for p in feed["papers"])
+    answer = feed["answer_example"]
+    head = lambda cols: "<tr>" + "".join(f"<th scope=\"col\">{text(c)}</th>" for c in cols) + "</tr>"
+    main = "\n".join([
+        '<main id="main">',
+        page_head(words["heading"], words["lead"], dateline=where),
+        '<div class="wrap learn feed-page">',
+        f'<dl class="feed-facts">{fact_list}</dl>',
+        learn_part("count", words["count_heading"], "",
+                   f'<p class="feed-count"><b>{int(count["total_count"]):,}</b> {text(words["count_line"])} '
+                   f'<time datetime="{attr(count["window_utc"]["end"])}">{text(count["window_utc"]["end"])}</time></p>'
+                   f'<p class="feed-query">{text(words["count_query"])}: <a href="{attr(count["url"])}"><code>{text(count["query"])}</code></a></p>'
+                   f'<p class="feed-small">{text(count["reading"])} {text(words["count_secondary"])} {secondary}. '
+                   f'{text(words["count_response"])} {short_hash(count["response_sha256"])}</p>'),
+        learn_part("fits", words["fits_heading"], words["fits_lead"], f'<div class="feed-setups">{setups}</div>'),
+        learn_part("ask", words["answer_heading"], "",
+                   f'<p class="feed-question"><q>{text(answer["question"])}</q></p><p class="feed-small">{text(words["answer_label"])}</p>'
+                   f'<pre class="feed-answer">{text(answer["text"])}</pre>'),
+        learn_part("claims", words["claims_heading"], words["claims_lead"],
+                   f'<div class="feed-table"><table>{head(words["claims_cols"])}{claim_rows}</table></div>'),
+        learn_part("gathered", words["items_heading"], "",
+                   f'<p class="feed-small">{len(memory):,} {text(words["items_summary"])} {int(feed["item_count"]):,} '
+                   f'{text(words["items_summary_tail"])}</p>'
+                   f'<div class="feed-table"><table>{head(words["items_cols"])}{item_rows}</table></div>'),
+        learn_part("papers", words["papers_heading"], "", f'<ul class="feed-papers">{papers}</ul>'),
+        learn_part("how", words["how_heading"], "", '<ol class="contribute-steps">' + "".join(f"<li>{text(x)}</li>" for x in words["how"]) + "</ol>"),
+        "</div>",
+        "</main>",
+    ])
+    return page_shell(words["title"], words["description"], main)
+
+
 def render_not_found(nouns: Nouns) -> str:
     """One shared not-found page, as the NotFound board draws it: the missing address, where things live now, and
     the promise the worker keeps by redirecting every listed old address."""
@@ -1742,6 +1851,7 @@ def outputs_for(nouns: Nouns) -> dict[Path, str]:
     generated[SITE / "library" / "index.html"] = render_library(nouns)
     generated[SITE / "deploy" / "index.html"] = render_deploy(nouns)
     generated[SITE / "contribute" / "index.html"] = render_contribute(nouns)
+    generated[SITE / "feeds" / "memory-systems" / "index.html"] = render_feed(nouns)
     generated[SITE / "404.html"] = render_not_found(nouns)
     if set(generated) & nouns.frozen:
         fail("a frozen page is never written")

@@ -12,23 +12,72 @@
   ],
   "pages_title": "Pages",
   "pages": [
-    {"path": "", "label": "Home", "what": "the film first, then where to start, the decks and the use cases"},
-    {"path": "how-it-works/", "label": "How it works", "what": "tasks and task objects, a real run replayed from its receipts, and what runs underneath"},
-    {"path": "film/", "label": "The film", "what": "the three-minute film's transcript and scene descriptions"},
-    {"path": "use-cases/", "label": "Use cases", "what": "what the same tasks and task objects are used for"},
-    {"path": "decks/", "label": "Decks", "what": "five slide decks with speaker notes and PDFs"},
-    {"path": "evidence/", "label": "Evidence", "what": "dated results, each with the files that back it"},
-    {"path": "contribute/", "label": "Contribute", "what": "connect an agent, do a task, make a seed pack, clone the source"},
-    {"path": "library/", "label": "Library", "what": "every seed pack, by category"},
-    {"path": "learning/", "label": "Learning", "what": "how execution reports become memory and tuned models, with measured results"},
-    {"path": "studio/", "label": "Live Studio", "what": "calls the live Tessera, Herma and Eranos from the browser and shows each request and answer"},
-    {"path": "deploy/", "label": "Run your own", "what": "how to run any part yourself"}
+    {
+      "path": "",
+      "label": "Home",
+      "what": "the film first, then where to start, the decks and the use cases"
+    },
+    {
+      "path": "how-it-works/",
+      "label": "How it works",
+      "what": "tasks and task objects, a real run replayed from its receipts, and what runs underneath"
+    },
+    {
+      "path": "film/",
+      "label": "The film",
+      "what": "the three-minute film's transcript and scene descriptions"
+    },
+    {
+      "path": "use-cases/",
+      "label": "Use cases",
+      "what": "what the same tasks and task objects are used for"
+    },
+    {
+      "path": "decks/",
+      "label": "Decks",
+      "what": "five slide decks with speaker notes and PDFs"
+    },
+    {
+      "path": "evidence/",
+      "label": "Evidence",
+      "what": "dated results, each with the files that back it"
+    },
+    {
+      "path": "contribute/",
+      "label": "Contribute",
+      "what": "connect an agent, do a task, make a seed pack, clone the source"
+    },
+    {
+      "path": "feeds/memory-systems/",
+      "label": "The memory-systems feed",
+      "what": "new memory systems for agents, which fits a setup, and each project's quoted benchmark claims, with the time and place of the scan"
+    },
+    {
+      "path": "library/",
+      "label": "Library",
+      "what": "every seed pack, by category"
+    },
+    {
+      "path": "learning/",
+      "label": "Learning",
+      "what": "how execution reports become memory and tuned models, with measured results"
+    },
+    {
+      "path": "studio/",
+      "label": "Live Studio",
+      "what": "calls the live Tessera, Herma and Eranos from the browser and shows each request and answer"
+    },
+    {
+      "path": "deploy/",
+      "label": "Run your own",
+      "what": "how to run any part yourself"
+    }
   ],
   "endpoints_title": "Machine endpoints",
   "source_title": "Source",
   "source": [
-    "Every repository, read-only, at the commits this site was built from: https://agora.ta-amps.workers.dev/source/",
-    "Clone any of them with plain git: git clone https://agora.ta-amps.workers.dev/git/<repository>.git"
+    "Every repository, read-only, at the commits this site was built from, with archives and SHA-256 hashes: https://agora.ta-amps.workers.dev/source/",
+    "Clone with plain git: git clone https://agora.ta-amps.workers.dev/git/<repository>.git (ta-amps-hackathon, eranos-public-marketplace-for-public-good-token-burn, tessera-infrastructure-work-and-storage-engine, herma-infrastructure-shim-for-intelligent-agents, seed-packs-library-of-nouns-and-verbs)"
   ],
   "rules_title": "Rules",
   "rules": [

@@ -39,7 +39,7 @@
       "nouns": ["Sources", "New items", "Digests"],
       "verbs": ["Scan", "Summarize", "Test", "Compare", "Update a pack"],
       "packs": ["tool-discovery", "freshness-checks", "benchmark-scores", "policy-and-law-watch"],
-      "links": [
+      "links": [{"href": "feeds/memory-systems/", "label": "The memory-systems feed"}, 
         {"href": "decks/overview-and-architecture/#feeds", "label": "How feeds work"},
         {"href": "library/#harness-feeds", "label": "Agent harness research feeds"}
       ]
