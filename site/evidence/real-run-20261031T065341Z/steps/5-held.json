@@ -1,0 +1,104 @@
+{
+  "format": "ta-amps.real-run-step-receipt.v1",
+  "run_id": "20261031T065341Z",
+  "step": 5,
+  "id": "held",
+  "hash": {
+    "value": "0ae5dc2ef738409c70dd914a4a0ef9aee8a89d55ac5ad308fee4ab057bff5d78",
+    "kind": "receipt",
+    "recompute": "sha256 of the canonical JSON of {error, fencing_token, ok, output, task_id} from the result below (sorted keys, no spaces), as Tessera's receiptHash computes it."
+  },
+  "copied_from": {
+    "trace": "../trace.jsonl",
+    "tessera": "../tessera-readback.json"
+  },
+  "trace": [],
+  "tessera_events": [
+    {
+      "seq": 27,
+      "ts": 1793429904.78,
+      "type": "parent_ready",
+      "task_id": "t_f05e739efc644796a94b27c7d9fac0be",
+      "queue": "eq01",
+      "worker": null,
+      "fencing_token": null,
+      "detail": {}
+    }
+  ],
+  "records": {
+    "request task (final record)": {
+      "namespace": "main",
+      "task_id": "t_f05e739efc644796a94b27c7d9fac0be",
+      "queue": "eq01",
+      "parent_id": null,
+      "state": "ready",
+      "kind": "request",
+      "effect_class": "write-internal",
+      "priority": 50,
+      "brief": {
+        "acceptance_checks": [
+          "the kit's own tests pass",
+          "every coverage rule holds on the synthetic CSV"
+        ],
+        "coverage_rules": [
+          "Shifts are Mon, Tue, Wed, Thu, Fri and Sat, each with an AM and a PM slot: 12 shifts, written Day-Slot (for example Mon-AM).",
+          "Every shift has at least 2 volunteers.",
+          "Every shift has at least 1 volunteer whose role is lead.",
+          "A volunteer works only shifts listed in their available column.",
+          "No volunteer works more shifts in the week than their max_shifts.",
+          "No volunteer works both the AM and the PM shift on the same day."
+        ],
+        "deadline": "2026-11-01T00:00:00Z",
+        "inputs": {
+          "availability_csv": "volunteer_id,display_name,role,max_shifts,available\nV01,Volunteer 01,lead,3,Mon-PM;Tue-PM;Thu-AM;Thu-PM;Fri-AM\nV02,Volunteer 02,lead,3,Wed-AM;Wed-PM;Thu-PM;Sat-AM\nV03,Volunteer 03,lead,3,Mon-AM;Mon-PM;Tue-AM;Wed-PM;Fri-AM\nV04,Volunteer 04,lead,3,Mon-AM;Mon-PM;Wed-PM;Thu-PM;Sat-PM\nV05,Volunteer 05,lead,3,Tue-AM;Tue-PM;Fri-PM\nV06,Volunteer 06,general,2,Mon-AM;Fri-AM\nV07,Volunteer 07,general,2,Thu-AM;Thu-PM;Fri-AM\nV08,Volunteer 08,general,2,Mon-AM;Tue-AM;Fri-AM;Sat-AM\nV09,Volunteer 09,general,2,Tue-AM;Wed-PM;Fri-PM;Sat-AM\nV10,Volunteer 10,general,2,Mon-AM;Mon-PM\nV11,Volunteer 11,general,2,Wed-AM;Thu-AM;Fri-PM\nV12,Volunteer 12,general,2,Tue-PM;Thu-AM\nV13,Volunteer 13,general,2,Mon-PM;Thu-AM;Sat-PM\nV14,Volunteer 14,general,2,Mon-AM;Tue-AM;Wed-AM;Thu-AM\n",
+          "format": "volunteer_id,display_name,role,max_shifts,available; available lists Day-Slot shifts separated by semicolons"
+        },
+        "organization_type": "Food pantry",
+        "synthetic": true,
+        "text": "We are a small food pantry (a synthetic example). Each week our volunteers tell us when they can come in. Please build us a small kit that turns our volunteer availability CSV into a weekly shift schedule that meets our coverage rules, with tests and a README, so our own agent or staff can run it. Use only the synthetic data provided.",
+        "title": "SYNTHETIC: weekly volunteer shift schedule kit"
+      },
+      "attempts": 1,
+      "failures": 0,
+      "fencing_token": 1,
+      "not_before": 1793429904.78,
+      "pending_children": 0,
+      "created_at": 1793429623.574,
+      "updated_at": 1793429904.78,
+      "wait_reason": null,
+      "pending_deps": 0,
+      "depends_on": [],
+      "wake_at": null,
+      "parked_by": null,
+      "parks": 0,
+      "idempotency_key": null,
+      "producer_surface": "surface:tessera",
+      "visibility_scope": "allowlist_surfaces",
+      "allowed_surfaces": [
+        "surface:eranos"
+      ],
+      "target_cohorts": [
+        "all"
+      ],
+      "tags": [
+        "origin:requester",
+        "untrusted:true",
+        "kind:request"
+      ],
+      "owner_key_id": "k_f617cd3167ed"
+    },
+    "review result": {
+      "task_id": "t_cc69cdcb8fa3404dbf37eb4d38c684b5",
+      "fencing_token": 1,
+      "idempotency_key": "t_cc69cdcb8fa3404dbf37eb4d38c684b5:review",
+      "ok": true,
+      "output": "{\"approved\": true, \"checks\": {\"coverage_exit_code\": 0, \"coverage_violations\": 0, \"digests_match\": true, \"tests_exit_code\": 0, \"tests_run\": 8}, \"draft_sha256\": \"a30b48b17ba2a20c60a3fdabcb67874760e96c4215d58ed4141288d763f5d34e\", \"draft_task_id\": \"t_06e3ef2acaa54c7297b5c0dfca3e2c70\", \"drafter_key_id\": \"k_cc60da07d74a\", \"kit_id\": \"kit-volunteer-shifts-20261031t065341z\", \"reasons\": [\"all 4 file sha256 and blob_sha256 match build output\", \"8 unit tests pass, exit 0\", \"scheduler CLI exits 0 with 0 violations on synthetic CSV\", \"code enforces and tests exercise all 6 coverage rules; README covers input, rules, running, testing and synthetic-data note\"], \"review_task_id\": \"t_cc69cdcb8fa3404dbf37eb4d38c684b5\", \"reviewer_key_id\": \"k_b514f2a59964\", \"verdict\": \"approve\"}",
+      "error": null,
+      "receipt_hash": "0ae5dc2ef738409c70dd914a4a0ef9aee8a89d55ac5ad308fee4ab057bff5d78",
+      "state_after": "done",
+      "completed_by_key": "k_b514f2a59964",
+      "labels": {},
+      "created_at": 1793429904.78
+    }
+  }
+}

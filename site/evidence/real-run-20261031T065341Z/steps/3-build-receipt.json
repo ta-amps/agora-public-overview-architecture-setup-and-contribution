@@ -1,0 +1,357 @@
+{
+  "format": "ta-amps.real-run-step-receipt.v1",
+  "run_id": "20261031T065341Z",
+  "step": 3,
+  "id": "build-receipt",
+  "hash": {
+    "value": "aee19212277a83ff5c2e69964b9bf7a19a7e32455cb6ecb9d21d5d6c06fc0491",
+    "kind": "receipt",
+    "recompute": "sha256 of the canonical JSON of {error, fencing_token, ok, output, task_id} from the result below (sorted keys, no spaces), as Tessera's receiptHash computes it."
+  },
+  "copied_from": {
+    "trace": "../trace.jsonl",
+    "tessera": "../tessera-readback.json"
+  },
+  "trace": [
+    {
+      "seq": 75,
+      "t": 1793429821.268724,
+      "utc": "2026-10-31T06:57:01.268Z",
+      "from": "muse-code (builder)",
+      "to": "tessera (MCP)",
+      "op": "submit",
+      "kind": "request",
+      "bytes": 1996,
+      "verb_id": "t_06e3ef2acaa54c7297b5c0dfca3e2c70",
+      "ok": true
+    },
+    {
+      "seq": 76,
+      "t": 1793429821.277844,
+      "utc": "2026-10-31T06:57:01.277Z",
+      "from": "tessera (MCP)",
+      "to": "muse-code (builder)",
+      "op": "submit",
+      "kind": "response",
+      "corr": 75,
+      "status": 200,
+      "bytes": 284,
+      "latency_ms": 53,
+      "outcome": "error",
+      "error_code": "invalid_request"
+    },
+    {
+      "seq": 77,
+      "t": 1793429821.295436,
+      "utc": "2026-10-31T06:57:01.295Z",
+      "from": "muse-code (builder)",
+      "to": "meta model api (muse-spark-1.3-contributor)",
+      "op": "model call",
+      "kind": "request",
+      "bytes": 316874,
+      "call": 24,
+      "api": "responses"
+    },
+    {
+      "seq": 78,
+      "t": 1793429827.721625,
+      "utc": "2026-10-31T06:57:07.721Z",
+      "from": "meta model api (muse-spark-1.3-contributor)",
+      "to": "muse-code (builder)",
+      "op": "model call",
+      "kind": "response",
+      "corr": 77,
+      "call": 24,
+      "status": 200,
+      "bytes": 280772,
+      "latency_ms": 6419,
+      "outcome": "completed",
+      "input_tokens": 63021,
+      "cached_tokens": 60785,
+      "output_tokens": 685,
+      "reasoning_tokens": 106,
+      "cost_usd_estimate": 0.000482
+    },
+    {
+      "seq": 79,
+      "t": 1793429827.75577,
+      "utc": "2026-10-31T06:57:07.755Z",
+      "from": "muse-code (builder)",
+      "to": "tessera (MCP)",
+      "op": "submit",
+      "kind": "request",
+      "bytes": 1578,
+      "verb_id": "t_06e3ef2acaa54c7297b5c0dfca3e2c70",
+      "ok": true
+    },
+    {
+      "seq": 80,
+      "t": 1793429827.788453,
+      "utc": "2026-10-31T06:57:07.788Z",
+      "from": "tessera (MCP)",
+      "to": "muse-code (builder)",
+      "op": "submit",
+      "kind": "response",
+      "corr": 79,
+      "status": 200,
+      "bytes": 755,
+      "latency_ms": 59,
+      "outcome": "ok",
+      "verb_id": "t_06e3ef2acaa54c7297b5c0dfca3e2c70",
+      "receipt_hash": "aee19212277a83ff5c2e69964b9bf7a19a7e32455cb6ecb9d21d5d6c06fc0491",
+      "state_after": "done"
+    },
+    {
+      "seq": 81,
+      "t": 1793429827.806844,
+      "utc": "2026-10-31T06:57:07.806Z",
+      "from": "muse-code (builder)",
+      "to": "meta model api (muse-spark-1.3-contributor)",
+      "op": "model call",
+      "kind": "request",
+      "bytes": 320506,
+      "call": 25,
+      "api": "responses"
+    },
+    {
+      "seq": 82,
+      "t": 1793429830.84882,
+      "utc": "2026-10-31T06:57:10.848Z",
+      "from": "meta model api (muse-spark-1.3-contributor)",
+      "to": "muse-code (builder)",
+      "op": "model call",
+      "kind": "response",
+      "corr": 81,
+      "call": 25,
+      "status": 200,
+      "bytes": 278138,
+      "latency_ms": 3020,
+      "outcome": "completed",
+      "input_tokens": 63878,
+      "cached_tokens": 62961,
+      "output_tokens": 86,
+      "reasoning_tokens": 8,
+      "cost_usd_estimate": 0.000235
+    }
+  ],
+  "tessera_events": [
+    {
+      "seq": 21,
+      "ts": 1793429827.76,
+      "type": "dependencies_met",
+      "task_id": "t_cc69cdcb8fa3404dbf37eb4d38c684b5",
+      "queue": "eq03",
+      "worker": null,
+      "fencing_token": null,
+      "detail": {}
+    },
+    {
+      "seq": 22,
+      "ts": 1793429827.76,
+      "type": "submitted",
+      "task_id": "t_06e3ef2acaa54c7297b5c0dfca3e2c70",
+      "queue": "eq02",
+      "worker": "muse-code-builder",
+      "fencing_token": 1,
+      "detail": {
+        "ok": true,
+        "receipt_hash": "aee19212277a83ff5c2e69964b9bf7a19a7e32455cb6ecb9d21d5d6c06fc0491",
+        "state_after": "done"
+      }
+    }
+  ],
+  "records": {
+    "build result": {
+      "task_id": "t_06e3ef2acaa54c7297b5c0dfca3e2c70",
+      "fencing_token": 1,
+      "idempotency_key": "t_06e3ef2acaa54c7297b5c0dfca3e2c70:build",
+      "ok": true,
+      "output": "{\"blob_sha256\": \"a30b48b17ba2a20c60a3fdabcb67874760e96c4215d58ed4141288d763f5d34e\", \"draft\": {\"files\": {\"README.md\": {\"key\": \"docs.README.md\", \"sha256\": \"faa26f17fdde72804043644e45ad7684b23211a8bae724530834e189649099cb\", \"version\": 1}, \"data/availability.csv\": {\"key\": \"data.availability.csv\", \"sha256\": \"6709f71fb10238ebe4ce06c987937b1ba5301646be9b5bd474f1a4844089f795\", \"version\": 1}, \"shift_scheduler.py\": {\"key\": \"code.shift_scheduler.py\", \"sha256\": \"b3c4b5867fa3e26b180a5c3185f9de27a13dc096c92a9ea9f4d2f316eef1908b\", \"version\": 1}, \"tests/test_shift_scheduler.py\": {\"key\": \"tests.test_shift_scheduler.py\", \"sha256\": \"ec0e90bfaf5f0edb51f289168e689932b628d5c86fa46f98005670eb85f29a76\", \"version\": 1}}, \"kit_id\": \"kit-volunteer-shifts-20261031t065341z\", \"store\": \"kit.volunteer-shifts\"}, \"kit_id\": \"kit-volunteer-shifts-20261031t065341z\", \"node\": \"draft\", \"verification\": {\"commands\": [\"python3 -m unittest discover -s tests -v -> exit 0\", \"python3 shift_scheduler.py data/availability.csv -> exit 0\"], \"coverage_violations\": 0, \"passed\": true, \"tests_run\": 8}}",
+      "error": null,
+      "receipt_hash": "aee19212277a83ff5c2e69964b9bf7a19a7e32455cb6ecb9d21d5d6c06fc0491",
+      "state_after": "done",
+      "completed_by_key": "k_cc60da07d74a",
+      "labels": {},
+      "created_at": 1793429827.76
+    },
+    "build execution": {
+      "run_id": "run_4a74a6a561e30087b03aebbee87c5222a681e46a63e421d3377e6165c4614104",
+      "task_id": "t_06e3ef2acaa54c7297b5c0dfca3e2c70",
+      "fencing_token": 1,
+      "receipt_hash": "aee19212277a83ff5c2e69964b9bf7a19a7e32455cb6ecb9d21d5d6c06fc0491",
+      "ok": true,
+      "created_at": 1793429827.76,
+      "expires_at": null
+    },
+    "build execution record": {
+      "allowed_surfaces": [
+        "surface:eranos"
+      ],
+      "category_id": "noun.eval_run",
+      "created_at": 1793429827.76,
+      "evidence": {
+        "claimed_at": 1793429642.68,
+        "key_id": "k_cc60da07d74a",
+        "server_duration_seconds": 185.07999992370605,
+        "worker": "muse-code-builder"
+      },
+      "expires_at": null,
+      "fencing_token": 1,
+      "fingerprints": {
+        "bands": [],
+        "contract_hash": null,
+        "exact_hash": null,
+        "input_hash": "0c9992cffba9595051751abef62990622058c93ea69b37b3fcaa7c7d27d0d624",
+        "shape_hash": null,
+        "simhash": null,
+        "text_hash": null
+      },
+      "input_snapshot": {
+        "brief": {
+          "acceptance": [
+            {
+              "id": "tests",
+              "pass_when": "exit code 0",
+              "run": "python3 -m unittest discover -s tests -v"
+            },
+            {
+              "id": "coverage",
+              "pass_when": "exit code 0 and 0 violations reported",
+              "run": "python3 shift_scheduler.py data/availability.csv"
+            }
+          ],
+          "constraints": [
+            "Python 3 standard library only; no installs and no network",
+            "synthetic data only; no real names or contact details",
+            "deterministic: the same input gives the same schedule"
+          ],
+          "coverage_rules": [
+            "Shifts are Mon, Tue, Wed, Thu, Fri and Sat, each with an AM and a PM slot: 12 shifts, written Day-Slot (for example Mon-AM).",
+            "Every shift has at least 2 volunteers.",
+            "Every shift has at least 1 volunteer whose role is lead.",
+            "A volunteer works only shifts listed in their available column.",
+            "No volunteer works more shifts in the week than their max_shifts.",
+            "No volunteer works both the AM and the PM shift on the same day."
+          ],
+          "deadline": "2026-11-01T00:00:00Z",
+          "deliverables": {
+            "README.md": "What the kit does, the input format, the coverage rules, how to run it, how to run the tests, and that it was built and tested on synthetic data only.",
+            "data/availability.csv": "The input noun, saved unchanged.",
+            "shift_scheduler.py": "Python 3 standard library only. Reads the CSV, builds a weekly schedule that meets every coverage rule (use a search such as backtracking: a simple first-fit pass can fail on this data), and writes it as CSV with columns shift,volunteer_id,display_name,role. Exposes check_coverage(schedule, volunteers) returning a list of violation strings (empty when every rule holds). CLI: python3 shift_scheduler.py data/availability.csv [--out schedule.csv] prints the schedule and the number of violations and exits 0 only when there are none; it exits 2 with a clear message when no valid schedule exists.",
+            "tests/test_shift_scheduler.py": "unittest tests: the synthetic CSV yields a schedule with zero violations; check_coverage reports each rule when it is broken (an unavailable volunteer, over max_shifts, no lead, both shifts on one day, fewer than 2 people); an impossible input is reported, not silently scheduled."
+          },
+          "input_noun": {
+            "field": "csv",
+            "key": "availability-20261031t065341z",
+            "save_as": "data/availability.csv",
+            "sha256": "6709f71fb10238ebe4ce06c987937b1ba5301646be9b5bd474f1a4844089f795",
+            "store": "kit.inputs",
+            "version": 1
+          },
+          "kit_id": "kit-volunteer-shifts-20261031t065341z",
+          "need": "We are a small food pantry (a synthetic example). Each week our volunteers tell us when they can come in. Please build us a small kit that turns our volunteer availability CSV into a weekly shift schedule that meets our coverage rules, with tests and a README, so our own agent or staff can run it. Use only the synthetic data provided.",
+          "next": "A different keyed reviewer re-runs these checks in an eq03 review verb. This verb publishes nothing.",
+          "organization_type": "Food pantry",
+          "output_contract": {
+            "blob_sha256": "sha256 hex of json.dumps({path: sha256_of_that_file}, sort_keys=True, separators=(\",\", \":\")).encode() over the four file paths",
+            "nouns": {
+              "expected_version": 0,
+              "record_key_for_path": {
+                "README.md": "docs.README.md",
+                "data/availability.csv": "data.availability.csv",
+                "shift_scheduler.py": "code.shift_scheduler.py",
+                "tests/test_shift_scheduler.py": "tests.test_shift_scheduler.py"
+              },
+              "store": "kit.volunteer-shifts",
+              "value": {
+                "content": "<the exact full file text>",
+                "path": "<file path>",
+                "sha256": "<sha256 hex of content as UTF-8>"
+              },
+              "visibility_scope": "surface_only"
+            },
+            "submit_output": {
+              "blob_sha256": "<hex>",
+              "draft": {
+                "files": {
+                  "<path>": {
+                    "key": "<record key>",
+                    "sha256": "<hex>",
+                    "version": 1
+                  }
+                },
+                "kit_id": "kit-volunteer-shifts-20261031t065341z",
+                "store": "kit.volunteer-shifts"
+              },
+              "kit_id": "kit-volunteer-shifts-20261031t065341z",
+              "node": "draft",
+              "verification": {
+                "commands": [
+                  "<command> -> exit <code>"
+                ],
+                "coverage_violations": "<int>",
+                "passed": "<true only if both acceptance checks passed>",
+                "tests_run": "<int>"
+              }
+            }
+          },
+          "part": 1,
+          "request_id": "t_f05e739efc644796a94b27c7d9fac0be",
+          "synthetic": true,
+          "title": "SYNTHETIC: weekly volunteer shift schedule kit"
+        },
+        "dependencies_and_children": [],
+        "effect_class": "write-internal",
+        "inputs": [],
+        "kind": "build"
+      },
+      "labels": {},
+      "missing_measurements": {
+        "embedding": {
+          "reason": "worker did not report this field",
+          "value": null
+        },
+        "harness": {
+          "reason": "worker did not report this field",
+          "value": null
+        },
+        "model": {
+          "reason": "worker did not report this field",
+          "value": null
+        },
+        "usage": {
+          "reason": "worker did not report this field",
+          "value": null
+        }
+      },
+      "namespace": "main",
+      "producer_surface": "surface:tessera",
+      "queue": "eq02",
+      "receipt_hash": "aee19212277a83ff5c2e69964b9bf7a19a7e32455cb6ecb9d21d5d6c06fc0491",
+      "record_kind": "execution_run",
+      "report": {},
+      "report_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "run_id": "run_4a74a6a561e30087b03aebbee87c5222a681e46a63e421d3377e6165c4614104",
+      "tags": [
+        "part:1",
+        "kind:build",
+        "category:noun.eval_run",
+        "status:worker_reported"
+      ],
+      "target_cohorts": [
+        "all"
+      ],
+      "task_id": "t_06e3ef2acaa54c7297b5c0dfca3e2c70",
+      "trust": {
+        "correctness": "not_independently_verified",
+        "reuse_requires_validation": true,
+        "submission": "server_receipted",
+        "telemetry": "worker_reported"
+      },
+      "visibility_scope": "allowlist_surfaces",
+      "ok": true,
+      "output": "{\"blob_sha256\": \"a30b48b17ba2a20c60a3fdabcb67874760e96c4215d58ed4141288d763f5d34e\", \"draft\": {\"files\": {\"README.md\": {\"key\": \"docs.README.md\", \"sha256\": \"faa26f17fdde72804043644e45ad7684b23211a8bae724530834e189649099cb\", \"version\": 1}, \"data/availability.csv\": {\"key\": \"data.availability.csv\", \"sha256\": \"6709f71fb10238ebe4ce06c987937b1ba5301646be9b5bd474f1a4844089f795\", \"version\": 1}, \"shift_scheduler.py\": {\"key\": \"code.shift_scheduler.py\", \"sha256\": \"b3c4b5867fa3e26b180a5c3185f9de27a13dc096c92a9ea9f4d2f316eef1908b\", \"version\": 1}, \"tests/test_shift_scheduler.py\": {\"key\": \"tests.test_shift_scheduler.py\", \"sha256\": \"ec0e90bfaf5f0edb51f289168e689932b628d5c86fa46f98005670eb85f29a76\", \"version\": 1}}, \"kit_id\": \"kit-volunteer-shifts-20261031t065341z\", \"store\": \"kit.volunteer-shifts\"}, \"kit_id\": \"kit-volunteer-shifts-20261031t065341z\", \"node\": \"draft\", \"verification\": {\"commands\": [\"python3 -m unittest discover -s tests -v -> exit 0\", \"python3 shift_scheduler.py data/availability.csv -> exit 0\"], \"coverage_violations\": 0, \"passed\": true, \"tests_run\": 8}}",
+      "error": null
+    }
+  }
+}

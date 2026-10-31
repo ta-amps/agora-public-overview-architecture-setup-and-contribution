@@ -1,0 +1,1261 @@
+{
+  "about": "Tessera's own records of run 20261031T065341Z, read back at the end of the run. Each section below is copied unchanged from the run's final-readback.json. The sections named in left_out are not needed to check the replay.",
+  "source": {
+    "file": "final-readback.json",
+    "sha256": "f6e33d1849211345a4d8bec0634bbf7d41da3c6d3908af0b720f841efe170bca",
+    "bytes": 121559
+  },
+  "left_out": [
+    "audit",
+    "counts",
+    "requester_view"
+  ],
+  "sections": {
+    "request": {
+      "namespace": "main",
+      "task_id": "t_f05e739efc644796a94b27c7d9fac0be",
+      "queue": "eq01",
+      "parent_id": null,
+      "state": "ready",
+      "kind": "request",
+      "effect_class": "write-internal",
+      "priority": 50,
+      "brief": {
+        "acceptance_checks": [
+          "the kit's own tests pass",
+          "every coverage rule holds on the synthetic CSV"
+        ],
+        "coverage_rules": [
+          "Shifts are Mon, Tue, Wed, Thu, Fri and Sat, each with an AM and a PM slot: 12 shifts, written Day-Slot (for example Mon-AM).",
+          "Every shift has at least 2 volunteers.",
+          "Every shift has at least 1 volunteer whose role is lead.",
+          "A volunteer works only shifts listed in their available column.",
+          "No volunteer works more shifts in the week than their max_shifts.",
+          "No volunteer works both the AM and the PM shift on the same day."
+        ],
+        "deadline": "2026-11-01T00:00:00Z",
+        "inputs": {
+          "availability_csv": "volunteer_id,display_name,role,max_shifts,available\nV01,Volunteer 01,lead,3,Mon-PM;Tue-PM;Thu-AM;Thu-PM;Fri-AM\nV02,Volunteer 02,lead,3,Wed-AM;Wed-PM;Thu-PM;Sat-AM\nV03,Volunteer 03,lead,3,Mon-AM;Mon-PM;Tue-AM;Wed-PM;Fri-AM\nV04,Volunteer 04,lead,3,Mon-AM;Mon-PM;Wed-PM;Thu-PM;Sat-PM\nV05,Volunteer 05,lead,3,Tue-AM;Tue-PM;Fri-PM\nV06,Volunteer 06,general,2,Mon-AM;Fri-AM\nV07,Volunteer 07,general,2,Thu-AM;Thu-PM;Fri-AM\nV08,Volunteer 08,general,2,Mon-AM;Tue-AM;Fri-AM;Sat-AM\nV09,Volunteer 09,general,2,Tue-AM;Wed-PM;Fri-PM;Sat-AM\nV10,Volunteer 10,general,2,Mon-AM;Mon-PM\nV11,Volunteer 11,general,2,Wed-AM;Thu-AM;Fri-PM\nV12,Volunteer 12,general,2,Tue-PM;Thu-AM\nV13,Volunteer 13,general,2,Mon-PM;Thu-AM;Sat-PM\nV14,Volunteer 14,general,2,Mon-AM;Tue-AM;Wed-AM;Thu-AM\n",
+          "format": "volunteer_id,display_name,role,max_shifts,available; available lists Day-Slot shifts separated by semicolons"
+        },
+        "organization_type": "Food pantry",
+        "synthetic": true,
+        "text": "We are a small food pantry (a synthetic example). Each week our volunteers tell us when they can come in. Please build us a small kit that turns our volunteer availability CSV into a weekly shift schedule that meets our coverage rules, with tests and a README, so our own agent or staff can run it. Use only the synthetic data provided.",
+        "title": "SYNTHETIC: weekly volunteer shift schedule kit"
+      },
+      "attempts": 1,
+      "failures": 0,
+      "fencing_token": 1,
+      "not_before": 1793429904.78,
+      "pending_children": 0,
+      "created_at": 1793429623.574,
+      "updated_at": 1793429904.78,
+      "wait_reason": null,
+      "pending_deps": 0,
+      "depends_on": [],
+      "wake_at": null,
+      "parked_by": null,
+      "parks": 0,
+      "idempotency_key": null,
+      "producer_surface": "surface:tessera",
+      "visibility_scope": "allowlist_surfaces",
+      "allowed_surfaces": [
+        "surface:eranos"
+      ],
+      "target_cohorts": [
+        "all"
+      ],
+      "tags": [
+        "origin:requester",
+        "untrusted:true",
+        "kind:request"
+      ],
+      "owner_key_id": "k_f617cd3167ed"
+    },
+    "request_results": {
+      "results": []
+    },
+    "request_executions": {
+      "executions": [],
+      "next_after": null
+    },
+    "request_execution_records": [],
+    "build": {
+      "namespace": "main",
+      "task_id": "t_06e3ef2acaa54c7297b5c0dfca3e2c70",
+      "queue": "eq02",
+      "parent_id": "t_f05e739efc644796a94b27c7d9fac0be",
+      "state": "done",
+      "kind": "build",
+      "effect_class": "write-internal",
+      "priority": 50,
+      "brief": {
+        "acceptance": [
+          {
+            "id": "tests",
+            "pass_when": "exit code 0",
+            "run": "python3 -m unittest discover -s tests -v"
+          },
+          {
+            "id": "coverage",
+            "pass_when": "exit code 0 and 0 violations reported",
+            "run": "python3 shift_scheduler.py data/availability.csv"
+          }
+        ],
+        "constraints": [
+          "Python 3 standard library only; no installs and no network",
+          "synthetic data only; no real names or contact details",
+          "deterministic: the same input gives the same schedule"
+        ],
+        "coverage_rules": [
+          "Shifts are Mon, Tue, Wed, Thu, Fri and Sat, each with an AM and a PM slot: 12 shifts, written Day-Slot (for example Mon-AM).",
+          "Every shift has at least 2 volunteers.",
+          "Every shift has at least 1 volunteer whose role is lead.",
+          "A volunteer works only shifts listed in their available column.",
+          "No volunteer works more shifts in the week than their max_shifts.",
+          "No volunteer works both the AM and the PM shift on the same day."
+        ],
+        "deadline": "2026-11-01T00:00:00Z",
+        "deliverables": {
+          "README.md": "What the kit does, the input format, the coverage rules, how to run it, how to run the tests, and that it was built and tested on synthetic data only.",
+          "data/availability.csv": "The input noun, saved unchanged.",
+          "shift_scheduler.py": "Python 3 standard library only. Reads the CSV, builds a weekly schedule that meets every coverage rule (use a search such as backtracking: a simple first-fit pass can fail on this data), and writes it as CSV with columns shift,volunteer_id,display_name,role. Exposes check_coverage(schedule, volunteers) returning a list of violation strings (empty when every rule holds). CLI: python3 shift_scheduler.py data/availability.csv [--out schedule.csv] prints the schedule and the number of violations and exits 0 only when there are none; it exits 2 with a clear message when no valid schedule exists.",
+          "tests/test_shift_scheduler.py": "unittest tests: the synthetic CSV yields a schedule with zero violations; check_coverage reports each rule when it is broken (an unavailable volunteer, over max_shifts, no lead, both shifts on one day, fewer than 2 people); an impossible input is reported, not silently scheduled."
+        },
+        "input_noun": {
+          "field": "csv",
+          "key": "availability-20261031t065341z",
+          "save_as": "data/availability.csv",
+          "sha256": "6709f71fb10238ebe4ce06c987937b1ba5301646be9b5bd474f1a4844089f795",
+          "store": "kit.inputs",
+          "version": 1
+        },
+        "kit_id": "kit-volunteer-shifts-20261031t065341z",
+        "need": "We are a small food pantry (a synthetic example). Each week our volunteers tell us when they can come in. Please build us a small kit that turns our volunteer availability CSV into a weekly shift schedule that meets our coverage rules, with tests and a README, so our own agent or staff can run it. Use only the synthetic data provided.",
+        "next": "A different keyed reviewer re-runs these checks in an eq03 review verb. This verb publishes nothing.",
+        "organization_type": "Food pantry",
+        "output_contract": {
+          "blob_sha256": "sha256 hex of json.dumps({path: sha256_of_that_file}, sort_keys=True, separators=(\",\", \":\")).encode() over the four file paths",
+          "nouns": {
+            "expected_version": 0,
+            "record_key_for_path": {
+              "README.md": "docs.README.md",
+              "data/availability.csv": "data.availability.csv",
+              "shift_scheduler.py": "code.shift_scheduler.py",
+              "tests/test_shift_scheduler.py": "tests.test_shift_scheduler.py"
+            },
+            "store": "kit.volunteer-shifts",
+            "value": {
+              "content": "<the exact full file text>",
+              "path": "<file path>",
+              "sha256": "<sha256 hex of content as UTF-8>"
+            },
+            "visibility_scope": "surface_only"
+          },
+          "submit_output": {
+            "blob_sha256": "<hex>",
+            "draft": {
+              "files": {
+                "<path>": {
+                  "key": "<record key>",
+                  "sha256": "<hex>",
+                  "version": 1
+                }
+              },
+              "kit_id": "kit-volunteer-shifts-20261031t065341z",
+              "store": "kit.volunteer-shifts"
+            },
+            "kit_id": "kit-volunteer-shifts-20261031t065341z",
+            "node": "draft",
+            "verification": {
+              "commands": [
+                "<command> -> exit <code>"
+              ],
+              "coverage_violations": "<int>",
+              "passed": "<true only if both acceptance checks passed>",
+              "tests_run": "<int>"
+            }
+          }
+        },
+        "part": 1,
+        "request_id": "t_f05e739efc644796a94b27c7d9fac0be",
+        "synthetic": true,
+        "title": "SYNTHETIC: weekly volunteer shift schedule kit"
+      },
+      "attempts": 1,
+      "failures": 0,
+      "fencing_token": 1,
+      "not_before": 0,
+      "pending_children": 0,
+      "created_at": 1793429623.611,
+      "updated_at": 1793429827.76,
+      "wait_reason": null,
+      "pending_deps": 0,
+      "depends_on": [],
+      "wake_at": null,
+      "parked_by": null,
+      "parks": 0,
+      "idempotency_key": null,
+      "producer_surface": "surface:tessera",
+      "visibility_scope": "allowlist_surfaces",
+      "allowed_surfaces": [
+        "surface:eranos"
+      ],
+      "target_cohorts": [
+        "all"
+      ],
+      "tags": [
+        "part:1",
+        "kind:build"
+      ],
+      "owner_key_id": "k_f617cd3167ed"
+    },
+    "build_results": {
+      "results": [
+        {
+          "task_id": "t_06e3ef2acaa54c7297b5c0dfca3e2c70",
+          "fencing_token": 1,
+          "idempotency_key": "t_06e3ef2acaa54c7297b5c0dfca3e2c70:build",
+          "ok": true,
+          "output": "{\"blob_sha256\": \"a30b48b17ba2a20c60a3fdabcb67874760e96c4215d58ed4141288d763f5d34e\", \"draft\": {\"files\": {\"README.md\": {\"key\": \"docs.README.md\", \"sha256\": \"faa26f17fdde72804043644e45ad7684b23211a8bae724530834e189649099cb\", \"version\": 1}, \"data/availability.csv\": {\"key\": \"data.availability.csv\", \"sha256\": \"6709f71fb10238ebe4ce06c987937b1ba5301646be9b5bd474f1a4844089f795\", \"version\": 1}, \"shift_scheduler.py\": {\"key\": \"code.shift_scheduler.py\", \"sha256\": \"b3c4b5867fa3e26b180a5c3185f9de27a13dc096c92a9ea9f4d2f316eef1908b\", \"version\": 1}, \"tests/test_shift_scheduler.py\": {\"key\": \"tests.test_shift_scheduler.py\", \"sha256\": \"ec0e90bfaf5f0edb51f289168e689932b628d5c86fa46f98005670eb85f29a76\", \"version\": 1}}, \"kit_id\": \"kit-volunteer-shifts-20261031t065341z\", \"store\": \"kit.volunteer-shifts\"}, \"kit_id\": \"kit-volunteer-shifts-20261031t065341z\", \"node\": \"draft\", \"verification\": {\"commands\": [\"python3 -m unittest discover -s tests -v -> exit 0\", \"python3 shift_scheduler.py data/availability.csv -> exit 0\"], \"coverage_violations\": 0, \"passed\": true, \"tests_run\": 8}}",
+          "error": null,
+          "receipt_hash": "aee19212277a83ff5c2e69964b9bf7a19a7e32455cb6ecb9d21d5d6c06fc0491",
+          "state_after": "done",
+          "completed_by_key": "k_cc60da07d74a",
+          "labels": {},
+          "created_at": 1793429827.76
+        }
+      ]
+    },
+    "build_executions": {
+      "executions": [
+        {
+          "run_id": "run_4a74a6a561e30087b03aebbee87c5222a681e46a63e421d3377e6165c4614104",
+          "task_id": "t_06e3ef2acaa54c7297b5c0dfca3e2c70",
+          "fencing_token": 1,
+          "receipt_hash": "aee19212277a83ff5c2e69964b9bf7a19a7e32455cb6ecb9d21d5d6c06fc0491",
+          "ok": true,
+          "created_at": 1793429827.76,
+          "expires_at": null
+        }
+      ],
+      "next_after": null
+    },
+    "build_execution_records": [
+      {
+        "allowed_surfaces": [
+          "surface:eranos"
+        ],
+        "category_id": "noun.eval_run",
+        "created_at": 1793429827.76,
+        "evidence": {
+          "claimed_at": 1793429642.68,
+          "key_id": "k_cc60da07d74a",
+          "server_duration_seconds": 185.07999992370605,
+          "worker": "muse-code-builder"
+        },
+        "expires_at": null,
+        "fencing_token": 1,
+        "fingerprints": {
+          "bands": [],
+          "contract_hash": null,
+          "exact_hash": null,
+          "input_hash": "0c9992cffba9595051751abef62990622058c93ea69b37b3fcaa7c7d27d0d624",
+          "shape_hash": null,
+          "simhash": null,
+          "text_hash": null
+        },
+        "input_snapshot": {
+          "brief": {
+            "acceptance": [
+              {
+                "id": "tests",
+                "pass_when": "exit code 0",
+                "run": "python3 -m unittest discover -s tests -v"
+              },
+              {
+                "id": "coverage",
+                "pass_when": "exit code 0 and 0 violations reported",
+                "run": "python3 shift_scheduler.py data/availability.csv"
+              }
+            ],
+            "constraints": [
+              "Python 3 standard library only; no installs and no network",
+              "synthetic data only; no real names or contact details",
+              "deterministic: the same input gives the same schedule"
+            ],
+            "coverage_rules": [
+              "Shifts are Mon, Tue, Wed, Thu, Fri and Sat, each with an AM and a PM slot: 12 shifts, written Day-Slot (for example Mon-AM).",
+              "Every shift has at least 2 volunteers.",
+              "Every shift has at least 1 volunteer whose role is lead.",
+              "A volunteer works only shifts listed in their available column.",
+              "No volunteer works more shifts in the week than their max_shifts.",
+              "No volunteer works both the AM and the PM shift on the same day."
+            ],
+            "deadline": "2026-11-01T00:00:00Z",
+            "deliverables": {
+              "README.md": "What the kit does, the input format, the coverage rules, how to run it, how to run the tests, and that it was built and tested on synthetic data only.",
+              "data/availability.csv": "The input noun, saved unchanged.",
+              "shift_scheduler.py": "Python 3 standard library only. Reads the CSV, builds a weekly schedule that meets every coverage rule (use a search such as backtracking: a simple first-fit pass can fail on this data), and writes it as CSV with columns shift,volunteer_id,display_name,role. Exposes check_coverage(schedule, volunteers) returning a list of violation strings (empty when every rule holds). CLI: python3 shift_scheduler.py data/availability.csv [--out schedule.csv] prints the schedule and the number of violations and exits 0 only when there are none; it exits 2 with a clear message when no valid schedule exists.",
+              "tests/test_shift_scheduler.py": "unittest tests: the synthetic CSV yields a schedule with zero violations; check_coverage reports each rule when it is broken (an unavailable volunteer, over max_shifts, no lead, both shifts on one day, fewer than 2 people); an impossible input is reported, not silently scheduled."
+            },
+            "input_noun": {
+              "field": "csv",
+              "key": "availability-20261031t065341z",
+              "save_as": "data/availability.csv",
+              "sha256": "6709f71fb10238ebe4ce06c987937b1ba5301646be9b5bd474f1a4844089f795",
+              "store": "kit.inputs",
+              "version": 1
+            },
+            "kit_id": "kit-volunteer-shifts-20261031t065341z",
+            "need": "We are a small food pantry (a synthetic example). Each week our volunteers tell us when they can come in. Please build us a small kit that turns our volunteer availability CSV into a weekly shift schedule that meets our coverage rules, with tests and a README, so our own agent or staff can run it. Use only the synthetic data provided.",
+            "next": "A different keyed reviewer re-runs these checks in an eq03 review verb. This verb publishes nothing.",
+            "organization_type": "Food pantry",
+            "output_contract": {
+              "blob_sha256": "sha256 hex of json.dumps({path: sha256_of_that_file}, sort_keys=True, separators=(\",\", \":\")).encode() over the four file paths",
+              "nouns": {
+                "expected_version": 0,
+                "record_key_for_path": {
+                  "README.md": "docs.README.md",
+                  "data/availability.csv": "data.availability.csv",
+                  "shift_scheduler.py": "code.shift_scheduler.py",
+                  "tests/test_shift_scheduler.py": "tests.test_shift_scheduler.py"
+                },
+                "store": "kit.volunteer-shifts",
+                "value": {
+                  "content": "<the exact full file text>",
+                  "path": "<file path>",
+                  "sha256": "<sha256 hex of content as UTF-8>"
+                },
+                "visibility_scope": "surface_only"
+              },
+              "submit_output": {
+                "blob_sha256": "<hex>",
+                "draft": {
+                  "files": {
+                    "<path>": {
+                      "key": "<record key>",
+                      "sha256": "<hex>",
+                      "version": 1
+                    }
+                  },
+                  "kit_id": "kit-volunteer-shifts-20261031t065341z",
+                  "store": "kit.volunteer-shifts"
+                },
+                "kit_id": "kit-volunteer-shifts-20261031t065341z",
+                "node": "draft",
+                "verification": {
+                  "commands": [
+                    "<command> -> exit <code>"
+                  ],
+                  "coverage_violations": "<int>",
+                  "passed": "<true only if both acceptance checks passed>",
+                  "tests_run": "<int>"
+                }
+              }
+            },
+            "part": 1,
+            "request_id": "t_f05e739efc644796a94b27c7d9fac0be",
+            "synthetic": true,
+            "title": "SYNTHETIC: weekly volunteer shift schedule kit"
+          },
+          "dependencies_and_children": [],
+          "effect_class": "write-internal",
+          "inputs": [],
+          "kind": "build"
+        },
+        "labels": {},
+        "missing_measurements": {
+          "embedding": {
+            "reason": "worker did not report this field",
+            "value": null
+          },
+          "harness": {
+            "reason": "worker did not report this field",
+            "value": null
+          },
+          "model": {
+            "reason": "worker did not report this field",
+            "value": null
+          },
+          "usage": {
+            "reason": "worker did not report this field",
+            "value": null
+          }
+        },
+        "namespace": "main",
+        "producer_surface": "surface:tessera",
+        "queue": "eq02",
+        "receipt_hash": "aee19212277a83ff5c2e69964b9bf7a19a7e32455cb6ecb9d21d5d6c06fc0491",
+        "record_kind": "execution_run",
+        "report": {},
+        "report_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "run_id": "run_4a74a6a561e30087b03aebbee87c5222a681e46a63e421d3377e6165c4614104",
+        "tags": [
+          "part:1",
+          "kind:build",
+          "category:noun.eval_run",
+          "status:worker_reported"
+        ],
+        "target_cohorts": [
+          "all"
+        ],
+        "task_id": "t_06e3ef2acaa54c7297b5c0dfca3e2c70",
+        "trust": {
+          "correctness": "not_independently_verified",
+          "reuse_requires_validation": true,
+          "submission": "server_receipted",
+          "telemetry": "worker_reported"
+        },
+        "visibility_scope": "allowlist_surfaces",
+        "ok": true,
+        "output": "{\"blob_sha256\": \"a30b48b17ba2a20c60a3fdabcb67874760e96c4215d58ed4141288d763f5d34e\", \"draft\": {\"files\": {\"README.md\": {\"key\": \"docs.README.md\", \"sha256\": \"faa26f17fdde72804043644e45ad7684b23211a8bae724530834e189649099cb\", \"version\": 1}, \"data/availability.csv\": {\"key\": \"data.availability.csv\", \"sha256\": \"6709f71fb10238ebe4ce06c987937b1ba5301646be9b5bd474f1a4844089f795\", \"version\": 1}, \"shift_scheduler.py\": {\"key\": \"code.shift_scheduler.py\", \"sha256\": \"b3c4b5867fa3e26b180a5c3185f9de27a13dc096c92a9ea9f4d2f316eef1908b\", \"version\": 1}, \"tests/test_shift_scheduler.py\": {\"key\": \"tests.test_shift_scheduler.py\", \"sha256\": \"ec0e90bfaf5f0edb51f289168e689932b628d5c86fa46f98005670eb85f29a76\", \"version\": 1}}, \"kit_id\": \"kit-volunteer-shifts-20261031t065341z\", \"store\": \"kit.volunteer-shifts\"}, \"kit_id\": \"kit-volunteer-shifts-20261031t065341z\", \"node\": \"draft\", \"verification\": {\"commands\": [\"python3 -m unittest discover -s tests -v -> exit 0\", \"python3 shift_scheduler.py data/availability.csv -> exit 0\"], \"coverage_violations\": 0, \"passed\": true, \"tests_run\": 8}}",
+        "error": null
+      }
+    ],
+    "review": {
+      "namespace": "main",
+      "task_id": "t_cc69cdcb8fa3404dbf37eb4d38c684b5",
+      "queue": "eq03",
+      "parent_id": "t_f05e739efc644796a94b27c7d9fac0be",
+      "state": "done",
+      "kind": "review",
+      "effect_class": "write-internal",
+      "priority": 50,
+      "brief": {
+        "authority": "Approve only if every check passes, otherwise refuse with reasons. Approving records your verdict and publishes nothing. A person decides what happens next.",
+        "blob_sha256_definition": "sha256 hex of json.dumps({path: sha256_of_that_file}, sort_keys=True, separators=(\",\", \":\")).encode() over the four file paths",
+        "checks": [
+          "every file sha256 and the blob_sha256 you recompute equal the build output values",
+          "python3 -m unittest discover -s tests -v exits 0",
+          "python3 shift_scheduler.py data/availability.csv exits 0 and reports 0 violations",
+          "the code enforces, and the tests exercise, every coverage rule; the README covers input, rules, running, testing and the synthetic-data note"
+        ],
+        "coverage_rules": [
+          "Shifts are Mon, Tue, Wed, Thu, Fri and Sat, each with an AM and a PM slot: 12 shifts, written Day-Slot (for example Mon-AM).",
+          "Every shift has at least 2 volunteers.",
+          "Every shift has at least 1 volunteer whose role is lead.",
+          "A volunteer works only shifts listed in their available column.",
+          "No volunteer works more shifts in the week than their max_shifts.",
+          "No volunteer works both the AM and the PM shift on the same day."
+        ],
+        "input_noun": {
+          "key": "availability-20261031t065341z",
+          "sha256": "6709f71fb10238ebe4ce06c987937b1ba5301646be9b5bd474f1a4844089f795",
+          "store": "kit.inputs",
+          "version": 1
+        },
+        "kit_id": "kit-volunteer-shifts-20261031t065341z",
+        "nouns": {
+          "keys": {
+            "README.md": "docs.README.md",
+            "data/availability.csv": "data.availability.csv",
+            "shift_scheduler.py": "code.shift_scheduler.py",
+            "tests/test_shift_scheduler.py": "tests.test_shift_scheduler.py"
+          },
+          "store": "kit.volunteer-shifts"
+        },
+        "output_contract": {
+          "approved": "<true or false>",
+          "checks": {
+            "coverage_exit_code": "<int>",
+            "coverage_violations": "<int>",
+            "digests_match": "<bool>",
+            "tests_exit_code": "<int>",
+            "tests_run": "<int>"
+          },
+          "draft_sha256": "<the blob_sha256 you recomputed>",
+          "draft_task_id": "<dependencies[0].task_id>",
+          "drafter_key_id": "<dependencies[0].completed_by_key>",
+          "kit_id": "kit-volunteer-shifts-20261031t065341z",
+          "reasons": [
+            "<short, specific reasons>"
+          ],
+          "review_task_id": "<the task_id of your own claim>",
+          "reviewer_key_id": "k_b514f2a59964",
+          "verdict": "<approve or refuse>"
+        },
+        "part": 1,
+        "request_id": "t_f05e739efc644796a94b27c7d9fac0be",
+        "review_noun": {
+          "expected_version": 0,
+          "key": "kit-volunteer-shifts-20261031t065341z",
+          "store": "kit.reviews",
+          "value": "the same object you submit as output",
+          "visibility_scope": "surface_only"
+        },
+        "reviewer_key_id": "k_b514f2a59964",
+        "synthetic": true,
+        "title": "SYNTHETIC: independent review of the weekly volunteer shift schedule kit",
+        "what_you_review": "The build verb this review depends on: dependencies[0] in your claim response (task_id, output, receipt_hash, completed_by_key)."
+      },
+      "attempts": 1,
+      "failures": 0,
+      "fencing_token": 1,
+      "not_before": 0,
+      "pending_children": 0,
+      "created_at": 1793429623.611,
+      "updated_at": 1793429904.78,
+      "wait_reason": null,
+      "pending_deps": 0,
+      "depends_on": [
+        "t_06e3ef2acaa54c7297b5c0dfca3e2c70"
+      ],
+      "wake_at": null,
+      "parked_by": null,
+      "parks": 0,
+      "idempotency_key": null,
+      "producer_surface": "surface:tessera",
+      "visibility_scope": "allowlist_surfaces",
+      "allowed_surfaces": [
+        "surface:eranos"
+      ],
+      "target_cohorts": [
+        "all"
+      ],
+      "tags": [
+        "part:1",
+        "kind:review"
+      ],
+      "owner_key_id": "k_f617cd3167ed"
+    },
+    "review_results": {
+      "results": [
+        {
+          "task_id": "t_cc69cdcb8fa3404dbf37eb4d38c684b5",
+          "fencing_token": 1,
+          "idempotency_key": "t_cc69cdcb8fa3404dbf37eb4d38c684b5:review",
+          "ok": true,
+          "output": "{\"approved\": true, \"checks\": {\"coverage_exit_code\": 0, \"coverage_violations\": 0, \"digests_match\": true, \"tests_exit_code\": 0, \"tests_run\": 8}, \"draft_sha256\": \"a30b48b17ba2a20c60a3fdabcb67874760e96c4215d58ed4141288d763f5d34e\", \"draft_task_id\": \"t_06e3ef2acaa54c7297b5c0dfca3e2c70\", \"drafter_key_id\": \"k_cc60da07d74a\", \"kit_id\": \"kit-volunteer-shifts-20261031t065341z\", \"reasons\": [\"all 4 file sha256 and blob_sha256 match build output\", \"8 unit tests pass, exit 0\", \"scheduler CLI exits 0 with 0 violations on synthetic CSV\", \"code enforces and tests exercise all 6 coverage rules; README covers input, rules, running, testing and synthetic-data note\"], \"review_task_id\": \"t_cc69cdcb8fa3404dbf37eb4d38c684b5\", \"reviewer_key_id\": \"k_b514f2a59964\", \"verdict\": \"approve\"}",
+          "error": null,
+          "receipt_hash": "0ae5dc2ef738409c70dd914a4a0ef9aee8a89d55ac5ad308fee4ab057bff5d78",
+          "state_after": "done",
+          "completed_by_key": "k_b514f2a59964",
+          "labels": {},
+          "created_at": 1793429904.78
+        }
+      ]
+    },
+    "review_executions": {
+      "executions": [
+        {
+          "run_id": "run_09305114babf7ee7c4e9ed61a1ecf5fe8398fb19f12c5ba283dad9eb2988dbb4",
+          "task_id": "t_cc69cdcb8fa3404dbf37eb4d38c684b5",
+          "fencing_token": 1,
+          "receipt_hash": "0ae5dc2ef738409c70dd914a4a0ef9aee8a89d55ac5ad308fee4ab057bff5d78",
+          "ok": true,
+          "created_at": 1793429904.78,
+          "expires_at": null
+        }
+      ],
+      "next_after": null
+    },
+    "review_execution_records": [
+      {
+        "allowed_surfaces": [
+          "surface:eranos"
+        ],
+        "category_id": "noun.eval_run",
+        "created_at": 1793429904.78,
+        "evidence": {
+          "claimed_at": 1793429834.603,
+          "key_id": "k_b514f2a59964",
+          "server_duration_seconds": 70.17700004577637,
+          "worker": "nanomuse-reviewer"
+        },
+        "expires_at": null,
+        "fencing_token": 1,
+        "fingerprints": {
+          "bands": [],
+          "contract_hash": null,
+          "exact_hash": null,
+          "input_hash": "f6b67e3e839216f5f0fe266d00b0481dabaf7c3dd6b835b2f28fc32a7741ac7a",
+          "shape_hash": null,
+          "simhash": null,
+          "text_hash": null
+        },
+        "input_snapshot": {
+          "brief": {
+            "authority": "Approve only if every check passes, otherwise refuse with reasons. Approving records your verdict and publishes nothing. A person decides what happens next.",
+            "blob_sha256_definition": "sha256 hex of json.dumps({path: sha256_of_that_file}, sort_keys=True, separators=(\",\", \":\")).encode() over the four file paths",
+            "checks": [
+              "every file sha256 and the blob_sha256 you recompute equal the build output values",
+              "python3 -m unittest discover -s tests -v exits 0",
+              "python3 shift_scheduler.py data/availability.csv exits 0 and reports 0 violations",
+              "the code enforces, and the tests exercise, every coverage rule; the README covers input, rules, running, testing and the synthetic-data note"
+            ],
+            "coverage_rules": [
+              "Shifts are Mon, Tue, Wed, Thu, Fri and Sat, each with an AM and a PM slot: 12 shifts, written Day-Slot (for example Mon-AM).",
+              "Every shift has at least 2 volunteers.",
+              "Every shift has at least 1 volunteer whose role is lead.",
+              "A volunteer works only shifts listed in their available column.",
+              "No volunteer works more shifts in the week than their max_shifts.",
+              "No volunteer works both the AM and the PM shift on the same day."
+            ],
+            "input_noun": {
+              "key": "availability-20261031t065341z",
+              "sha256": "6709f71fb10238ebe4ce06c987937b1ba5301646be9b5bd474f1a4844089f795",
+              "store": "kit.inputs",
+              "version": 1
+            },
+            "kit_id": "kit-volunteer-shifts-20261031t065341z",
+            "nouns": {
+              "keys": {
+                "README.md": "docs.README.md",
+                "data/availability.csv": "data.availability.csv",
+                "shift_scheduler.py": "code.shift_scheduler.py",
+                "tests/test_shift_scheduler.py": "tests.test_shift_scheduler.py"
+              },
+              "store": "kit.volunteer-shifts"
+            },
+            "output_contract": {
+              "approved": "<true or false>",
+              "checks": {
+                "coverage_exit_code": "<int>",
+                "coverage_violations": "<int>",
+                "digests_match": "<bool>",
+                "tests_exit_code": "<int>",
+                "tests_run": "<int>"
+              },
+              "draft_sha256": "<the blob_sha256 you recomputed>",
+              "draft_task_id": "<dependencies[0].task_id>",
+              "drafter_key_id": "<dependencies[0].completed_by_key>",
+              "kit_id": "kit-volunteer-shifts-20261031t065341z",
+              "reasons": [
+                "<short, specific reasons>"
+              ],
+              "review_task_id": "<the task_id of your own claim>",
+              "reviewer_key_id": "k_b514f2a59964",
+              "verdict": "<approve or refuse>"
+            },
+            "part": 1,
+            "request_id": "t_f05e739efc644796a94b27c7d9fac0be",
+            "review_noun": {
+              "expected_version": 0,
+              "key": "kit-volunteer-shifts-20261031t065341z",
+              "store": "kit.reviews",
+              "value": "the same object you submit as output",
+              "visibility_scope": "surface_only"
+            },
+            "reviewer_key_id": "k_b514f2a59964",
+            "synthetic": true,
+            "title": "SYNTHETIC: independent review of the weekly volunteer shift schedule kit",
+            "what_you_review": "The build verb this review depends on: dependencies[0] in your claim response (task_id, output, receipt_hash, completed_by_key)."
+          },
+          "dependencies_and_children": [
+            {
+              "output": "{\"blob_sha256\": \"a30b48b17ba2a20c60a3fdabcb67874760e96c4215d58ed4141288d763f5d34e\", \"draft\": {\"files\": {\"README.md\": {\"key\": \"docs.README.md\", \"sha256\": \"faa26f17fdde72804043644e45ad7684b23211a8bae724530834e189649099cb\", \"version\": 1}, \"data/availability.csv\": {\"key\": \"data.availability.csv\", \"sha256\": \"6709f71fb10238ebe4ce06c987937b1ba5301646be9b5bd474f1a4844089f795\", \"version\": 1}, \"shift_scheduler.py\": {\"key\": \"code.shift_scheduler.py\", \"sha256\": \"b3c4b5867fa3e26b180a5c3185f9de27a13dc096c92a9ea9f4d2f316eef1908b\", \"version\": 1}, \"tests/test_shift_scheduler.py\": {\"key\": \"tests.test_shift_scheduler.py\", \"sha256\": \"ec0e90bfaf5f0edb51f289168e689932b628d5c86fa46f98005670eb85f29a76\", \"version\": 1}}, \"kit_id\": \"kit-volunteer-shifts-20261031t065341z\", \"store\": \"kit.volunteer-shifts\"}, \"kit_id\": \"kit-volunteer-shifts-20261031t065341z\", \"node\": \"draft\", \"verification\": {\"commands\": [\"python3 -m unittest discover -s tests -v -> exit 0\", \"python3 shift_scheduler.py data/availability.csv -> exit 0\"], \"coverage_violations\": 0, \"passed\": true, \"tests_run\": 8}}",
+              "receipt_hash": "aee19212277a83ff5c2e69964b9bf7a19a7e32455cb6ecb9d21d5d6c06fc0491",
+              "state": "done",
+              "task_id": "t_06e3ef2acaa54c7297b5c0dfca3e2c70"
+            }
+          ],
+          "effect_class": "write-internal",
+          "inputs": [],
+          "kind": "review"
+        },
+        "labels": {},
+        "missing_measurements": {
+          "embedding": {
+            "reason": "worker did not report this field",
+            "value": null
+          },
+          "harness": {
+            "reason": "worker did not report this field",
+            "value": null
+          },
+          "model": {
+            "reason": "worker did not report this field",
+            "value": null
+          },
+          "usage": {
+            "reason": "worker did not report this field",
+            "value": null
+          }
+        },
+        "namespace": "main",
+        "producer_surface": "surface:tessera",
+        "queue": "eq03",
+        "receipt_hash": "0ae5dc2ef738409c70dd914a4a0ef9aee8a89d55ac5ad308fee4ab057bff5d78",
+        "record_kind": "execution_run",
+        "report": {},
+        "report_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "run_id": "run_09305114babf7ee7c4e9ed61a1ecf5fe8398fb19f12c5ba283dad9eb2988dbb4",
+        "tags": [
+          "part:1",
+          "kind:review",
+          "category:noun.eval_run",
+          "status:worker_reported"
+        ],
+        "target_cohorts": [
+          "all"
+        ],
+        "task_id": "t_cc69cdcb8fa3404dbf37eb4d38c684b5",
+        "trust": {
+          "correctness": "not_independently_verified",
+          "reuse_requires_validation": true,
+          "submission": "server_receipted",
+          "telemetry": "worker_reported"
+        },
+        "visibility_scope": "allowlist_surfaces",
+        "ok": true,
+        "output": "{\"approved\": true, \"checks\": {\"coverage_exit_code\": 0, \"coverage_violations\": 0, \"digests_match\": true, \"tests_exit_code\": 0, \"tests_run\": 8}, \"draft_sha256\": \"a30b48b17ba2a20c60a3fdabcb67874760e96c4215d58ed4141288d763f5d34e\", \"draft_task_id\": \"t_06e3ef2acaa54c7297b5c0dfca3e2c70\", \"drafter_key_id\": \"k_cc60da07d74a\", \"kit_id\": \"kit-volunteer-shifts-20261031t065341z\", \"reasons\": [\"all 4 file sha256 and blob_sha256 match build output\", \"8 unit tests pass, exit 0\", \"scheduler CLI exits 0 with 0 violations on synthetic CSV\", \"code enforces and tests exercise all 6 coverage rules; README covers input, rules, running, testing and synthetic-data note\"], \"review_task_id\": \"t_cc69cdcb8fa3404dbf37eb4d38c684b5\", \"reviewer_key_id\": \"k_b514f2a59964\", \"verdict\": \"approve\"}",
+        "error": null
+      }
+    ],
+    "nouns:kit.inputs": {
+      "records": [
+        {
+          "namespace": "main",
+          "store": "kit.inputs",
+          "key": "availability-20261031t065341z",
+          "version": 1,
+          "value": {
+            "csv": "volunteer_id,display_name,role,max_shifts,available\nV01,Volunteer 01,lead,3,Mon-PM;Tue-PM;Thu-AM;Thu-PM;Fri-AM\nV02,Volunteer 02,lead,3,Wed-AM;Wed-PM;Thu-PM;Sat-AM\nV03,Volunteer 03,lead,3,Mon-AM;Mon-PM;Tue-AM;Wed-PM;Fri-AM\nV04,Volunteer 04,lead,3,Mon-AM;Mon-PM;Wed-PM;Thu-PM;Sat-PM\nV05,Volunteer 05,lead,3,Tue-AM;Tue-PM;Fri-PM\nV06,Volunteer 06,general,2,Mon-AM;Fri-AM\nV07,Volunteer 07,general,2,Thu-AM;Thu-PM;Fri-AM\nV08,Volunteer 08,general,2,Mon-AM;Tue-AM;Fri-AM;Sat-AM\nV09,Volunteer 09,general,2,Tue-AM;Wed-PM;Fri-PM;Sat-AM\nV10,Volunteer 10,general,2,Mon-AM;Mon-PM\nV11,Volunteer 11,general,2,Wed-AM;Thu-AM;Fri-PM\nV12,Volunteer 12,general,2,Tue-PM;Thu-AM\nV13,Volunteer 13,general,2,Mon-PM;Thu-AM;Sat-PM\nV14,Volunteer 14,general,2,Mon-AM;Tue-AM;Wed-AM;Thu-AM\n",
+            "format": "volunteer_id,display_name,role,max_shifts,available; available lists Day-Slot shifts separated by semicolons",
+            "request_id": "t_f05e739efc644796a94b27c7d9fac0be",
+            "sha256": "6709f71fb10238ebe4ce06c987937b1ba5301646be9b5bd474f1a4844089f795",
+            "synthetic": true
+          },
+          "created_at": 1793429623.598,
+          "producer_surface": "surface:eranos",
+          "visibility_scope": "surface_only",
+          "allowed_surfaces": [],
+          "target_cohorts": [
+            "all"
+          ],
+          "tags": [],
+          "owner_key_id": "k_054b985efbe7"
+        }
+      ]
+    },
+    "nouns:kit.volunteer-shifts": {
+      "records": [
+        {
+          "namespace": "main",
+          "store": "kit.volunteer-shifts",
+          "key": "code.shift_scheduler.py",
+          "version": 1,
+          "value": "{\"content\": \"\\\"\\\"\\\"Weekly volunteer shift scheduler (synthetic data only).\\n\\nReads a volunteer availability CSV, builds a weekly schedule that meets\\nevery coverage rule using deterministic backtracking search, and writes\\nthe schedule as CSV with columns shift,volunteer_id,display_name,role.\\n\\\"\\\"\\\"\\n\\nimport argparse\\nimport csv\\nimport itertools\\nimport sys\\n\\nDAYS = [\\\"Mon\\\", \\\"Tue\\\", \\\"Wed\\\", \\\"Thu\\\", \\\"Fri\\\", \\\"Sat\\\"]\\nSLOTS = [\\\"AM\\\", \\\"PM\\\"]\\nSHIFTS = [d + \\\"-\\\" + s for d in DAYS for s in SLOTS]\\n\\nSCHEDULE_FIELDS = [\\\"shift\\\", \\\"volunteer_id\\\", \\\"display_name\\\", \\\"role\\\"]\\n\\n\\ndef load_volunteers(path):\\n    \\\"\\\"\\\"Read the availability CSV into a list of volunteer dicts.\\\"\\\"\\\"\\n    volunteers = []\\n    with open(path, newline=\\\"\\\", encoding=\\\"utf-8\\\") as fh:\\n        reader = csv.DictReader(fh)\\n        for row in reader:\\n            available = set()\\n            raw = (row.get(\\\"available\\\") or \\\"\\\").strip()\\n            if raw:\\n                for part in raw.split(\\\";\\\"):\\n                    part = part.strip()\\n                    if part:\\n                        available.add(part)\\n            volunteers.append(\\n                {\\n                    \\\"volunteer_id\\\": (row.get(\\\"volunteer_id\\\") or \\\"\\\").strip(),\\n                    \\\"display_name\\\": (row.get(\\\"display_name\\\") or \\\"\\\").strip(),\\n                    \\\"role\\\": (row.get(\\\"role\\\") or \\\"\\\").strip(),\\n                    \\\"max_shifts\\\": int((row.get(\\\"max_shifts\\\") or \\\"0\\\").strip()),\\n                    \\\"available\\\": available,\\n                }\\n            )\\n    volunteers.sort(key=lambda v: v[\\\"volunteer_id\\\"])\\n    return volunteers\\n\\n\\ndef check_coverage(schedule, volunteers):\\n    \\\"\\\"\\\"Return a list of violation strings; empty when every rule holds.\\\"\\\"\\\"\\n    violations = []\\n    by_id = {v[\\\"volunteer_id\\\"]: v for v in volunteers}\\n    by_shift = {s: [] for s in SHIFTS}\\n    for entry in schedule or []:\\n        shift = entry.get(\\\"shift\\\")\\n        vid = entry.get(\\\"volunteer_id\\\")\\n        if shift not in by_shift:\\n            violations.append(\\\"unknown shift: %r\\\" % (shift,))\\n            continue\\n        if vid not in by_id:\\n            violations.append(\\\"unknown volunteer %r on %s\\\" % (vid, shift))\\n            continue\\n        by_shift[shift].append(vid)\\n\\n    for shift in SHIFTS:\\n        assigned = by_shift[shift]\\n        if len(assigned) < 2:\\n            violations.append(\\n                \\\"%s has %d volunteer(s); at least 2 required\\\"\\n                % (shift, len(assigned))\\n            )\\n        if not any(\\n            by_id[vid][\\\"role\\\"] == \\\"lead\\\" for vid in assigned if vid in by_id\\n        ):\\n            violations.append(\\\"%s has no lead volunteer\\\" % shift)\\n\\n    counts = {}\\n    day_of = {}\\n    for entry in schedule or []:\\n        shift = entry.get(\\\"shift\\\")\\n        vid = entry.get(\\\"volunteer_id\\\")\\n        if shift not in by_shift or vid not in by_id:\\n            continue\\n        counts[vid] = counts.get(vid, 0) + 1\\n        day = shift.split(\\\"-\\\")[0]\\n        day_of.setdefault(vid, []).append((day, shift))\\n        if shift not in by_id[vid][\\\"available\\\"]:\\n            violations.append(\\n                \\\"%s works %s but is not available for it\\\" % (vid, shift)\\n            )\\n\\n    for vid, n in sorted(counts.items()):\\n        if n > by_id[vid][\\\"max_shifts\\\"]:\\n            violations.append(\\n                \\\"%s works %d shifts; max is %d\\\"\\n                % (vid, n, by_id[vid][\\\"max_shifts\\\"])\\n            )\\n\\n    for vid in sorted(day_of):\\n        seen_days = {}\\n        for day, shift in day_of[vid]:\\n            seen_days.setdefault(day, []).append(shift)\\n        for day in sorted(seen_days):\\n            if len(seen_days[day]) > 1:\\n                violations.append(\\n                    \\\"%s works both shifts on %s\\\" % (vid, day)\\n                )\\n\\n    return violations\\n\\n\\ndef build_schedule(volunteers):\\n    \\\"\\\"\\\"Build a valid schedule or return None when impossible.\\n\\n    Assigns exactly 2 volunteers to each of the 12 shifts using\\n    deterministic depth-first backtracking. Shifts are attempted in order\\n    of fewest eligible volunteers (ties broken by canonical shift order);\\n    candidate pairs are tried in sorted volunteer_id order.\\n    \\\"\\\"\\\"\\n    by_id = {v[\\\"volunteer_id\\\"]: v for v in volunteers}\\n\\n    def eligible(shift):\\n        return sorted(\\n            vid\\n            for vid, v in by_id.items()\\n            if shift in v[\\\"available\\\"]\\n        )\\n\\n    order = sorted(SHIFTS, key=lambda s: (len(eligible(s)), SHIFTS.index(s)))\\n\\n    assignment = {}\\n    counts = {vid: 0 for vid in by_id}\\n    worked_days = {vid: set() for vid in by_id}\\n\\n    def candidates_for(shift):\\n        day = shift.split(\\\"-\\\")[0]\\n        out = []\\n        for vid in sorted(by_id):\\n            v = by_id[vid]\\n            if shift not in v[\\\"available\\\"]:\\n                continue\\n            if counts[vid] >= v[\\\"max_shifts\\\"]:\\n                continue\\n            if day in worked_days[vid]:\\n                continue\\n            out.append(vid)\\n        return out\\n\\n    def feasible_remaining(pos):\\n        # Forward check: every unassigned shift must still be fillable.\\n        for j in range(pos, len(order)):\\n            shift = order[j]\\n            cands = candidates_for(shift)\\n            if len(cands) < 2:\\n                return False\\n            if not any(by_id[c][\\\"role\\\"] == \\\"lead\\\" for c in cands):\\n                return False\\n        return True\\n\\n    def dfs(pos):\\n        if pos == len(order):\\n            return True\\n        shift = order[pos]\\n        cands = candidates_for(shift)\\n        pairs = [\\n            p\\n            for p in itertools.combinations(cands, 2)\\n            if any(by_id[c][\\\"role\\\"] == \\\"lead\\\" for c in p)\\n        ]\\n        for a, b in pairs:\\n            day = shift.split(\\\"-\\\")[0]\\n            assignment[shift] = (a, b)\\n            counts[a] += 1\\n            counts[b] += 1\\n            worked_days[a].add(day)\\n            worked_days[b].add(day)\\n            if feasible_remaining(pos + 1) and dfs(pos + 1):\\n                return True\\n            counts[a] -= 1\\n            counts[b] -= 1\\n            worked_days[a].discard(day)\\n            worked_days[b].discard(day)\\n            del assignment[shift]\\n        return False\\n\\n    if not dfs(0):\\n        return None\\n\\n    schedule = []\\n    for shift in SHIFTS:\\n        for vid in sorted(assignment[shift]):\\n            v = by_id[vid]\\n            schedule.append(\\n                {\\n                    \\\"shift\\\": shift,\\n                    \\\"volunteer_id\\\": vid,\\n                    \\\"display_name\\\": v[\\\"display_name\\\"],\\n                    \\\"role\\\": v[\\\"role\\\"],\\n                }\\n            )\\n    return schedule\\n\\n\\ndef write_schedule(schedule, path):\\n    with open(path, \\\"w\\\", newline=\\\"\\\", encoding=\\\"utf-8\\\") as fh:\\n        writer = csv.DictWriter(fh, fieldnames=SCHEDULE_FIELDS)\\n        writer.writeheader()\\n        for entry in schedule:\\n            writer.writerow({k: entry.get(k, \\\"\\\") for k in SCHEDULE_FIELDS})\\n\\n\\ndef main(argv=None):\\n    parser = argparse.ArgumentParser(\\n        description=\\\"Build a weekly volunteer shift schedule.\\\"\\n    )\\n    parser.add_argument(\\\"input\\\", help=\\\"availability CSV path\\\")\\n    parser.add_argument(\\n        \\\"--out\\\", default=\\\"schedule.csv\\\", help=\\\"output schedule CSV path\\\"\\n    )\\n    args = parser.parse_args(argv)\\n\\n    try:\\n        volunteers = load_volunteers(args.input)\\n    except (OSError, ValueError) as exc:\\n        print(\\\"error: cannot read input: %s\\\" % exc)\\n        return 2\\n\\n    schedule = build_schedule(volunteers)\\n    if schedule is None:\\n        print(\\\"error: no valid schedule exists for this input\\\")\\n        return 2\\n\\n    write_schedule(schedule, args.out)\\n    for entry in schedule:\\n        print(\\n            \\\"%s,%s,%s,%s\\\"\\n            % (\\n                entry[\\\"shift\\\"],\\n                entry[\\\"volunteer_id\\\"],\\n                entry[\\\"display_name\\\"],\\n                entry[\\\"role\\\"],\\n            )\\n        )\\n    violations = check_coverage(schedule, volunteers)\\n    print(\\\"violations: %d\\\" % len(violations))\\n    for v in violations:\\n        print(\\\"violation: %s\\\" % v)\\n    return 0 if not violations else 1\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    sys.exit(main())\\n\", \"path\": \"shift_scheduler.py\", \"sha256\": \"b3c4b5867fa3e26b180a5c3185f9de27a13dc096c92a9ea9f4d2f316eef1908b\"}",
+          "created_at": 1793429779.015,
+          "producer_surface": "surface:eranos",
+          "visibility_scope": "surface_only",
+          "allowed_surfaces": [],
+          "target_cohorts": [
+            "all"
+          ],
+          "tags": [],
+          "owner_key_id": "k_cc60da07d74a"
+        },
+        {
+          "namespace": "main",
+          "store": "kit.volunteer-shifts",
+          "key": "data.availability.csv",
+          "version": 1,
+          "value": "{\"content\": \"volunteer_id,display_name,role,max_shifts,available\\nV01,Volunteer 01,lead,3,Mon-PM;Tue-PM;Thu-AM;Thu-PM;Fri-AM\\nV02,Volunteer 02,lead,3,Wed-AM;Wed-PM;Thu-PM;Sat-AM\\nV03,Volunteer 03,lead,3,Mon-AM;Mon-PM;Tue-AM;Wed-PM;Fri-AM\\nV04,Volunteer 04,lead,3,Mon-AM;Mon-PM;Wed-PM;Thu-PM;Sat-PM\\nV05,Volunteer 05,lead,3,Tue-AM;Tue-PM;Fri-PM\\nV06,Volunteer 06,general,2,Mon-AM;Fri-AM\\nV07,Volunteer 07,general,2,Thu-AM;Thu-PM;Fri-AM\\nV08,Volunteer 08,general,2,Mon-AM;Tue-AM;Fri-AM;Sat-AM\\nV09,Volunteer 09,general,2,Tue-AM;Wed-PM;Fri-PM;Sat-AM\\nV10,Volunteer 10,general,2,Mon-AM;Mon-PM\\nV11,Volunteer 11,general,2,Wed-AM;Thu-AM;Fri-PM\\nV12,Volunteer 12,general,2,Tue-PM;Thu-AM\\nV13,Volunteer 13,general,2,Mon-PM;Thu-AM;Sat-PM\\nV14,Volunteer 14,general,2,Mon-AM;Tue-AM;Wed-AM;Thu-AM\\n\", \"path\": \"data/availability.csv\", \"sha256\": \"6709f71fb10238ebe4ce06c987937b1ba5301646be9b5bd474f1a4844089f795\"}",
+          "created_at": 1793429765.598,
+          "producer_surface": "surface:eranos",
+          "visibility_scope": "surface_only",
+          "allowed_surfaces": [],
+          "target_cohorts": [
+            "all"
+          ],
+          "tags": [],
+          "owner_key_id": "k_cc60da07d74a"
+        },
+        {
+          "namespace": "main",
+          "store": "kit.volunteer-shifts",
+          "key": "docs.README.md",
+          "version": 1,
+          "value": "{\"content\": \"# Volunteer Shift Schedule Kit (synthetic data only)\\n\\nSmall kit for a fictional food pantry example. It turns a volunteer\\navailability CSV into a weekly shift schedule that meets the coverage\\nrules below. Everything here was built and tested on **synthetic data\\nonly** — all names are placeholders like \\\"Volunteer 01\\\". No real names\\nor contact details are used anywhere.\\n\\n## What the kit does\\n\\n`shift_scheduler.py` (Python 3 standard library only) reads the\\navailability CSV, searches for a weekly assignment with deterministic\\nbacktracking search, writes the schedule as CSV, and checks it against\\nevery coverage rule.\\n\\n## Input format\\n\\n`data/availability.csv` has columns:\\n\\n- `volunteer_id` — e.g. `V01`\\n- `display_name` — placeholder name, e.g. `Volunteer 01`\\n- `role` — `lead` or `general`\\n- `max_shifts` — most shifts this volunteer works in the week\\n- `available` — shifts separated by `;`, each written `Day-Slot`\\n  (e.g. `Mon-PM;Tue-PM;Thu-AM`)\\n\\n## Coverage rules\\n\\n- Shifts are Mon, Tue, Wed, Thu, Fri and Sat, each with an AM and a PM\\n  slot: 12 shifts, written `Day-Slot` (for example `Mon-AM`).\\n- Every shift has at least 2 volunteers.\\n- Every shift has at least 1 volunteer whose role is `lead`.\\n- A volunteer works only shifts listed in their `available` column.\\n- No volunteer works more shifts in the week than their `max_shifts`.\\n- No volunteer works both the AM and the PM shift on the same day.\\n\\n## How to run it\\n\\n```sh\\npython3 shift_scheduler.py data/availability.csv\\npython3 shift_scheduler.py data/availability.csv --out schedule.csv\\n```\\n\\nThe program prints the schedule and the number of violations. It exits\\n`0` only when there are no violations, and exits `2` with a clear\\nmessage when no valid schedule exists. Output CSV columns are\\n`shift,volunteer_id,display_name,role`.\\n\\n`check_coverage(schedule, volunteers)` is importable from\\n`shift_scheduler` and returns a list of violation strings (empty when\\nevery rule holds).\\n\\n## How to run the tests\\n\\n```sh\\npython3 -m unittest discover -s tests -v\\n```\\n\\nThe tests cover: the synthetic CSV yields a schedule with zero\\nviolations; `check_coverage` reports each broken rule (unavailable\\nvolunteer, over `max_shifts`, no lead, both shifts on one day, fewer\\nthan 2 people); and an impossible input is reported, not silently\\nscheduled.\\n\", \"path\": \"README.md\", \"sha256\": \"faa26f17fdde72804043644e45ad7684b23211a8bae724530834e189649099cb\"}",
+          "created_at": 1793429758.27,
+          "producer_surface": "surface:eranos",
+          "visibility_scope": "surface_only",
+          "allowed_surfaces": [],
+          "target_cohorts": [
+            "all"
+          ],
+          "tags": [],
+          "owner_key_id": "k_cc60da07d74a"
+        },
+        {
+          "namespace": "main",
+          "store": "kit.volunteer-shifts",
+          "key": "tests.test_shift_scheduler.py",
+          "version": 1,
+          "value": "{\"content\": \"\\\"\\\"\\\"unittest tests for shift_scheduler (synthetic data only).\\\"\\\"\\\"\\n\\nimport csv\\nimport os\\nimport subprocess\\nimport sys\\nimport tempfile\\nimport unittest\\n\\nsys.path.insert(0, os.path.join(os.path.dirname(__file__), \\\"..\\\"))\\n\\nfrom shift_scheduler import (  # noqa: E402\\n    SHIFTS,\\n    build_schedule,\\n    check_coverage,\\n    load_volunteers,\\n)\\n\\nDATA_CSV = os.path.join(os.path.dirname(__file__), \\\"..\\\", \\\"data\\\",\\n                         \\\"availability.csv\\\")\\n\\n\\ndef make_volunteers():\\n    return [\\n        {\\\"volunteer_id\\\": \\\"L1\\\", \\\"display_name\\\": \\\"Lead One\\\", \\\"role\\\": \\\"lead\\\",\\n         \\\"max_shifts\\\": 6, \\\"available\\\": set(SHIFTS)},\\n        {\\\"volunteer_id\\\": \\\"L2\\\", \\\"display_name\\\": \\\"Lead Two\\\", \\\"role\\\": \\\"lead\\\",\\n         \\\"max_shifts\\\": 6, \\\"available\\\": set(SHIFTS)},\\n        {\\\"volunteer_id\\\": \\\"G1\\\", \\\"display_name\\\": \\\"Gen One\\\", \\\"role\\\": \\\"general\\\",\\n         \\\"max_shifts\\\": 6, \\\"available\\\": set(SHIFTS)},\\n        {\\\"volunteer_id\\\": \\\"G2\\\", \\\"display_name\\\": \\\"Gen Two\\\", \\\"role\\\": \\\"general\\\",\\n         \\\"max_shifts\\\": 6, \\\"available\\\": set(SHIFTS)},\\n    ]\\n\\n\\ndef full_schedule(volunteers):\\n    sched = []\\n    for shift in SHIFTS:\\n        for v in volunteers:\\n            sched.append({\\\"shift\\\": shift, \\\"volunteer_id\\\": v[\\\"volunteer_id\\\"],\\n                          \\\"display_name\\\": v[\\\"display_name\\\"], \\\"role\\\": v[\\\"role\\\"]})\\n    return sched\\n\\n\\nclass TestSyntheticSchedule(unittest.TestCase):\\n    def test_synthetic_csv_yields_zero_violations(self):\\n        volunteers = load_volunteers(DATA_CSV)\\n        schedule = build_schedule(volunteers)\\n        self.assertIsNotNone(schedule,\\n                             \\\"expected a valid schedule for synthetic CSV\\\")\\n        self.assertEqual(check_coverage(schedule, volunteers), [])\\n        # Deterministic: same input gives same schedule.\\n        again = build_schedule(volunteers)\\n        self.assertEqual(schedule, again)\\n\\n    def test_cli_and_output_csv(self):\\n        with tempfile.TemporaryDirectory() as tmp:\\n            out = os.path.join(tmp, \\\"schedule.csv\\\")\\n            proc = subprocess.run(\\n                [sys.executable, \\\"shift_scheduler.py\\\", DATA_CSV,\\n                 \\\"--out\\\", out],\\n                cwd=os.path.join(os.path.dirname(__file__), \\\"..\\\"),\\n                capture_output=True, text=True)\\n            self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)\\n            self.assertIn(\\\"violations: 0\\\", proc.stdout)\\n            with open(out, newline=\\\"\\\", encoding=\\\"utf-8\\\") as fh:\\n                rows = list(csv.DictReader(fh))\\n            self.assertEqual(\\n                [r for r in rows][:1][0].keys() if rows else set(),\\n                {\\\"shift\\\", \\\"volunteer_id\\\", \\\"display_name\\\", \\\"role\\\"})\\n            volunteers = load_volunteers(DATA_CSV)\\n            self.assertEqual(check_coverage(rows, volunteers), [])\\n\\n\\nclass TestCheckCoverageRules(unittest.TestCase):\\n    def test_unavailable_volunteer_reported(self):\\n        volunteers = make_volunteers()\\n        sched = full_schedule(volunteers)\\n        sched[0] = {\\\"shift\\\": \\\"Mon-AM\\\", \\\"volunteer_id\\\": \\\"G1\\\",\\n                    \\\"display_name\\\": \\\"Gen One\\\", \\\"role\\\": \\\"general\\\"}\\n        volunteers[2][\\\"available\\\"] = set(SHIFTS) - {\\\"Mon-AM\\\"}\\n        violations = check_coverage(sched, volunteers)\\n        self.assertTrue(any(\\\"not available\\\" in v for v in violations),\\n                        violations)\\n\\n    def test_over_max_shifts_reported(self):\\n        volunteers = make_volunteers()\\n        volunteers[0][\\\"max_shifts\\\"] = 1\\n        sched = full_schedule(volunteers)\\n        violations = check_coverage(sched, volunteers)\\n        self.assertTrue(any(\\\"max\\\" in v for v in violations), violations)\\n\\n    def test_no_lead_reported(self):\\n        volunteers = make_volunteers()\\n        sched = []\\n        for shift in SHIFTS:\\n            sched.append({\\\"shift\\\": shift, \\\"volunteer_id\\\": \\\"G1\\\",\\n                          \\\"display_name\\\": \\\"Gen One\\\", \\\"role\\\": \\\"general\\\"})\\n            sched.append({\\\"shift\\\": shift, \\\"volunteer_id\\\": \\\"G2\\\",\\n                          \\\"display_name\\\": \\\"Gen Two\\\", \\\"role\\\": \\\"general\\\"})\\n        violations = check_coverage(sched, volunteers)\\n        self.assertTrue(any(\\\"lead\\\" in v for v in violations), violations)\\n\\n    def test_both_shifts_same_day_reported(self):\\n        volunteers = make_volunteers()\\n        sched = []\\n        for shift in SHIFTS:\\n            if shift in (\\\"Mon-AM\\\", \\\"Mon-PM\\\"):\\n                sched.append({\\\"shift\\\": shift, \\\"volunteer_id\\\": \\\"L1\\\",\\n                              \\\"display_name\\\": \\\"Lead One\\\", \\\"role\\\": \\\"lead\\\"})\\n                sched.append({\\\"shift\\\": shift, \\\"volunteer_id\\\": \\\"G1\\\",\\n                              \\\"display_name\\\": \\\"Gen One\\\", \\\"role\\\": \\\"general\\\"})\\n            else:\\n                sched.append({\\\"shift\\\": shift, \\\"volunteer_id\\\": \\\"L2\\\",\\n                              \\\"display_name\\\": \\\"Lead Two\\\", \\\"role\\\": \\\"lead\\\"})\\n                sched.append({\\\"shift\\\": shift, \\\"volunteer_id\\\": \\\"G2\\\",\\n                              \\\"display_name\\\": \\\"Gen Two\\\", \\\"role\\\": \\\"general\\\"})\\n        violations = check_coverage(sched, volunteers)\\n        self.assertTrue(any(\\\"both shifts\\\" in v for v in violations),\\n                        violations)\\n\\n    def test_fewer_than_two_reported(self):\\n        volunteers = make_volunteers()\\n        sched = [{\\\"shift\\\": \\\"Mon-AM\\\", \\\"volunteer_id\\\": \\\"L1\\\",\\n                  \\\"display_name\\\": \\\"Lead One\\\", \\\"role\\\": \\\"lead\\\"}]\\n        violations = check_coverage(sched, volunteers)\\n        self.assertTrue(any(\\\"Mon-AM\\\" in v for v in violations), violations)\\n\\n    def test_impossible_input_reported_not_silently_scheduled(self):\\n        volunteers = [\\n            {\\\"volunteer_id\\\": \\\"L1\\\", \\\"display_name\\\": \\\"Lead One\\\",\\n             \\\"role\\\": \\\"lead\\\", \\\"max_shifts\\\": 1, \\\"available\\\": {\\\"Mon-AM\\\"}},\\n        ]\\n        self.assertIsNone(build_schedule(volunteers))\\n        with tempfile.TemporaryDirectory() as tmp:\\n            inp = os.path.join(tmp, \\\"impossible.csv\\\")\\n            with open(inp, \\\"w\\\", newline=\\\"\\\", encoding=\\\"utf-8\\\") as fh:\\n                w = csv.writer(fh)\\n                w.writerow([\\\"volunteer_id\\\", \\\"display_name\\\", \\\"role\\\",\\n                            \\\"max_shifts\\\", \\\"available\\\"])\\n                w.writerow([\\\"L1\\\", \\\"Lead One\\\", \\\"lead\\\", \\\"1\\\", \\\"Mon-AM\\\"])\\n            proc = subprocess.run(\\n                [sys.executable, \\\"shift_scheduler.py\\\", inp,\\n                 \\\"--out\\\", os.path.join(tmp, \\\"o.csv\\\")],\\n                cwd=os.path.join(os.path.dirname(__file__), \\\"..\\\"),\\n                capture_output=True, text=True)\\n            self.assertEqual(proc.returncode, 2,\\n                             proc.stdout + proc.stderr)\\n            self.assertIn(\\\"no valid schedule\\\", proc.stdout.lower())\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    unittest.main()\\n\", \"path\": \"tests/test_shift_scheduler.py\", \"sha256\": \"ec0e90bfaf5f0edb51f289168e689932b628d5c86fa46f98005670eb85f29a76\"}",
+          "created_at": 1793429790.871,
+          "producer_surface": "surface:eranos",
+          "visibility_scope": "surface_only",
+          "allowed_surfaces": [],
+          "target_cohorts": [
+            "all"
+          ],
+          "tags": [],
+          "owner_key_id": "k_cc60da07d74a"
+        }
+      ]
+    },
+    "nouns:kit.reviews": {
+      "records": [
+        {
+          "namespace": "main",
+          "store": "kit.reviews",
+          "key": "kit-volunteer-shifts-20261031t065341z",
+          "version": 1,
+          "value": "{\"approved\": true, \"checks\": {\"coverage_exit_code\": 0, \"coverage_violations\": 0, \"digests_match\": true, \"tests_exit_code\": 0, \"tests_run\": 8}, \"draft_sha256\": \"a30b48b17ba2a20c60a3fdabcb67874760e96c4215d58ed4141288d763f5d34e\", \"draft_task_id\": \"t_06e3ef2acaa54c7297b5c0dfca3e2c70\", \"drafter_key_id\": \"k_cc60da07d74a\", \"kit_id\": \"kit-volunteer-shifts-20261031t065341z\", \"reasons\": [\"all 4 file sha256 and blob_sha256 match build output\", \"8 unit tests pass, exit 0\", \"scheduler CLI exits 0 with 0 violations on synthetic CSV\", \"code enforces and tests exercise all 6 coverage rules; README covers input, rules, running, testing and synthetic-data note\"], \"review_task_id\": \"t_cc69cdcb8fa3404dbf37eb4d38c684b5\", \"reviewer_key_id\": \"k_b514f2a59964\", \"verdict\": \"approve\"}",
+          "created_at": 1793429901.564,
+          "producer_surface": "surface:eranos",
+          "visibility_scope": "surface_only",
+          "allowed_surfaces": [],
+          "target_cohorts": [
+            "all"
+          ],
+          "tags": [],
+          "owner_key_id": "k_b514f2a59964"
+        }
+      ]
+    },
+    "events": {
+      "events": [
+        {
+          "seq": 1,
+          "ts": 1793429623.504,
+          "type": "key_issued",
+          "task_id": null,
+          "queue": null,
+          "worker": null,
+          "fencing_token": null,
+          "detail": {
+            "key_id": "k_29831230260b",
+            "label": "local-operator",
+            "queues": [
+              "*"
+            ],
+            "scopes": [
+              "admin",
+              "store"
+            ]
+          }
+        },
+        {
+          "seq": 2,
+          "ts": 1793429623.521,
+          "type": "queue_defined",
+          "task_id": null,
+          "queue": "eq02",
+          "worker": null,
+          "fencing_token": null,
+          "detail": {
+            "backoff_base_seconds": 30,
+            "backoff_cap_seconds": 900,
+            "heartbeat_seconds": 120,
+            "lease_seconds": 1800,
+            "max_attempts": 3,
+            "miss_limit": 3,
+            "name": "eq02",
+            "weight": 1
+          }
+        },
+        {
+          "seq": 3,
+          "ts": 1793429623.538,
+          "type": "queue_defined",
+          "task_id": null,
+          "queue": "eq03",
+          "worker": null,
+          "fencing_token": null,
+          "detail": {
+            "backoff_base_seconds": 30,
+            "backoff_cap_seconds": 900,
+            "heartbeat_seconds": 120,
+            "lease_seconds": 1500,
+            "max_attempts": 3,
+            "miss_limit": 3,
+            "name": "eq03",
+            "weight": 1
+          }
+        },
+        {
+          "seq": 4,
+          "ts": 1793429623.546,
+          "type": "key_issued",
+          "task_id": null,
+          "queue": null,
+          "worker": null,
+          "fencing_token": null,
+          "detail": {
+            "key_id": "k_054b985efbe7",
+            "label": "real-run-classifier",
+            "queues": [
+              "eq01",
+              "eq02",
+              "eq03"
+            ],
+            "scopes": [
+              "nouns:read",
+              "cas:write",
+              "verbs:claim",
+              "verbs:submit",
+              "namespace:main",
+              "surface:eranos"
+            ]
+          }
+        },
+        {
+          "seq": 5,
+          "ts": 1793429623.553,
+          "type": "key_issued",
+          "task_id": null,
+          "queue": null,
+          "worker": null,
+          "fencing_token": null,
+          "detail": {
+            "key_id": "k_cc60da07d74a",
+            "label": "real-run-builder",
+            "queues": [
+              "eq02"
+            ],
+            "scopes": [
+              "nouns:read",
+              "cas:write",
+              "verbs:claim",
+              "verbs:submit",
+              "namespace:main",
+              "surface:eranos"
+            ]
+          }
+        },
+        {
+          "seq": 6,
+          "ts": 1793429623.557,
+          "type": "key_issued",
+          "task_id": null,
+          "queue": null,
+          "worker": null,
+          "fencing_token": null,
+          "detail": {
+            "key_id": "k_b514f2a59964",
+            "label": "real-run-reviewer",
+            "queues": [
+              "eq02",
+              "eq03"
+            ],
+            "scopes": [
+              "nouns:read",
+              "cas:write",
+              "verbs:claim",
+              "verbs:submit",
+              "namespace:main",
+              "surface:eranos"
+            ]
+          }
+        },
+        {
+          "seq": 7,
+          "ts": 1793429623.574,
+          "type": "enqueued",
+          "task_id": "t_f05e739efc644796a94b27c7d9fac0be",
+          "queue": "eq01",
+          "worker": null,
+          "fencing_token": null,
+          "detail": {
+            "effect_class": "write-internal",
+            "kind": "request",
+            "parent_id": null
+          }
+        },
+        {
+          "seq": 8,
+          "ts": 1793429623.588,
+          "type": "claimed",
+          "task_id": "t_f05e739efc644796a94b27c7d9fac0be",
+          "queue": "eq01",
+          "worker": "classify-step",
+          "fencing_token": 1,
+          "detail": {
+            "attempt": 1
+          }
+        },
+        {
+          "seq": 9,
+          "ts": 1793429623.598,
+          "type": "records_written",
+          "task_id": null,
+          "queue": null,
+          "worker": null,
+          "fencing_token": null,
+          "detail": {
+            "writes": [
+              {
+                "key": "availability-20261031t065341z",
+                "store": "kit.inputs",
+                "version": 1
+              }
+            ]
+          }
+        },
+        {
+          "seq": 10,
+          "ts": 1793429623.611,
+          "type": "enqueued",
+          "task_id": "t_06e3ef2acaa54c7297b5c0dfca3e2c70",
+          "queue": "eq02",
+          "worker": null,
+          "fencing_token": null,
+          "detail": {
+            "effect_class": "write-internal",
+            "kind": "build",
+            "parent_id": "t_f05e739efc644796a94b27c7d9fac0be"
+          }
+        },
+        {
+          "seq": 11,
+          "ts": 1793429623.611,
+          "type": "enqueued",
+          "task_id": "t_cc69cdcb8fa3404dbf37eb4d38c684b5",
+          "queue": "eq03",
+          "worker": null,
+          "fencing_token": null,
+          "detail": {
+            "depends_on": [
+              "t_06e3ef2acaa54c7297b5c0dfca3e2c70"
+            ],
+            "effect_class": "write-internal",
+            "kind": "review",
+            "parent_id": "t_f05e739efc644796a94b27c7d9fac0be",
+            "unresolved": 1
+          }
+        },
+        {
+          "seq": 12,
+          "ts": 1793429623.611,
+          "type": "split",
+          "task_id": "t_f05e739efc644796a94b27c7d9fac0be",
+          "queue": "eq01",
+          "worker": "classify-step",
+          "fencing_token": 1,
+          "detail": {
+            "children": [
+              "t_06e3ef2acaa54c7297b5c0dfca3e2c70",
+              "t_cc69cdcb8fa3404dbf37eb4d38c684b5"
+            ]
+          }
+        },
+        {
+          "seq": 13,
+          "ts": 1793429642.68,
+          "type": "claimed",
+          "task_id": "t_06e3ef2acaa54c7297b5c0dfca3e2c70",
+          "queue": "eq02",
+          "worker": "muse-code-builder",
+          "fencing_token": 1,
+          "detail": {
+            "attempt": 1
+          }
+        },
+        {
+          "seq": 14,
+          "ts": 1793429669.002,
+          "type": "heartbeat",
+          "task_id": "t_06e3ef2acaa54c7297b5c0dfca3e2c70",
+          "queue": "eq02",
+          "worker": "muse-code-builder",
+          "fencing_token": 1,
+          "detail": {}
+        },
+        {
+          "seq": 15,
+          "ts": 1793429707.162,
+          "type": "heartbeat",
+          "task_id": "t_06e3ef2acaa54c7297b5c0dfca3e2c70",
+          "queue": "eq02",
+          "worker": "muse-code-builder",
+          "fencing_token": 1,
+          "detail": {}
+        },
+        {
+          "seq": 16,
+          "ts": 1793429750.401,
+          "type": "heartbeat",
+          "task_id": "t_06e3ef2acaa54c7297b5c0dfca3e2c70",
+          "queue": "eq02",
+          "worker": "muse-code-builder",
+          "fencing_token": 1,
+          "detail": {}
+        },
+        {
+          "seq": 17,
+          "ts": 1793429758.27,
+          "type": "records_written",
+          "task_id": null,
+          "queue": null,
+          "worker": null,
+          "fencing_token": null,
+          "detail": {
+            "writes": [
+              {
+                "key": "docs.README.md",
+                "store": "kit.volunteer-shifts",
+                "version": 1
+              }
+            ]
+          }
+        },
+        {
+          "seq": 18,
+          "ts": 1793429765.598,
+          "type": "records_written",
+          "task_id": null,
+          "queue": null,
+          "worker": null,
+          "fencing_token": null,
+          "detail": {
+            "writes": [
+              {
+                "key": "data.availability.csv",
+                "store": "kit.volunteer-shifts",
+                "version": 1
+              }
+            ]
+          }
+        },
+        {
+          "seq": 19,
+          "ts": 1793429779.015,
+          "type": "records_written",
+          "task_id": null,
+          "queue": null,
+          "worker": null,
+          "fencing_token": null,
+          "detail": {
+            "writes": [
+              {
+                "key": "code.shift_scheduler.py",
+                "store": "kit.volunteer-shifts",
+                "version": 1
+              }
+            ]
+          }
+        },
+        {
+          "seq": 20,
+          "ts": 1793429790.871,
+          "type": "records_written",
+          "task_id": null,
+          "queue": null,
+          "worker": null,
+          "fencing_token": null,
+          "detail": {
+            "writes": [
+              {
+                "key": "tests.test_shift_scheduler.py",
+                "store": "kit.volunteer-shifts",
+                "version": 1
+              }
+            ]
+          }
+        },
+        {
+          "seq": 21,
+          "ts": 1793429827.76,
+          "type": "dependencies_met",
+          "task_id": "t_cc69cdcb8fa3404dbf37eb4d38c684b5",
+          "queue": "eq03",
+          "worker": null,
+          "fencing_token": null,
+          "detail": {}
+        },
+        {
+          "seq": 22,
+          "ts": 1793429827.76,
+          "type": "submitted",
+          "task_id": "t_06e3ef2acaa54c7297b5c0dfca3e2c70",
+          "queue": "eq02",
+          "worker": "muse-code-builder",
+          "fencing_token": 1,
+          "detail": {
+            "ok": true,
+            "receipt_hash": "aee19212277a83ff5c2e69964b9bf7a19a7e32455cb6ecb9d21d5d6c06fc0491",
+            "state_after": "done"
+          }
+        },
+        {
+          "seq": 23,
+          "ts": 1793429834.603,
+          "type": "claimed",
+          "task_id": "t_cc69cdcb8fa3404dbf37eb4d38c684b5",
+          "queue": "eq03",
+          "worker": "nanomuse-reviewer",
+          "fencing_token": 1,
+          "detail": {
+            "attempt": 1
+          }
+        },
+        {
+          "seq": 24,
+          "ts": 1793429881.821,
+          "type": "heartbeat",
+          "task_id": "t_cc69cdcb8fa3404dbf37eb4d38c684b5",
+          "queue": "eq03",
+          "worker": "nanomuse-reviewer",
+          "fencing_token": 1,
+          "detail": {}
+        },
+        {
+          "seq": 25,
+          "ts": 1793429895.877,
+          "type": "heartbeat",
+          "task_id": "t_cc69cdcb8fa3404dbf37eb4d38c684b5",
+          "queue": "eq03",
+          "worker": "nanomuse-reviewer",
+          "fencing_token": 1,
+          "detail": {}
+        },
+        {
+          "seq": 26,
+          "ts": 1793429901.564,
+          "type": "records_written",
+          "task_id": null,
+          "queue": null,
+          "worker": null,
+          "fencing_token": null,
+          "detail": {
+            "writes": [
+              {
+                "key": "kit-volunteer-shifts-20261031t065341z",
+                "store": "kit.reviews",
+                "version": 1
+              }
+            ]
+          }
+        },
+        {
+          "seq": 27,
+          "ts": 1793429904.78,
+          "type": "parent_ready",
+          "task_id": "t_f05e739efc644796a94b27c7d9fac0be",
+          "queue": "eq01",
+          "worker": null,
+          "fencing_token": null,
+          "detail": {}
+        },
+        {
+          "seq": 28,
+          "ts": 1793429904.78,
+          "type": "submitted",
+          "task_id": "t_cc69cdcb8fa3404dbf37eb4d38c684b5",
+          "queue": "eq03",
+          "worker": "nanomuse-reviewer",
+          "fencing_token": 1,
+          "detail": {
+            "ok": true,
+            "receipt_hash": "0ae5dc2ef738409c70dd914a4a0ef9aee8a89d55ac5ad308fee4ab057bff5d78",
+            "state_after": "done"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,369 @@
+{
+  "format": "ta-amps.real-run-step-receipt.v1",
+  "run_id": "20261031T065341Z",
+  "step": 1,
+  "id": "request",
+  "hash": {
+    "value": "6709f71fb10238ebe4ce06c987937b1ba5301646be9b5bd474f1a4844089f795",
+    "kind": "noun",
+    "recompute": "sha256 of the csv field of the input noun below. kit/data/availability.csv holds the same bytes."
+  },
+  "copied_from": {
+    "trace": "../trace.jsonl",
+    "tessera": "../tessera-readback.json"
+  },
+  "trace": [],
+  "tessera_events": [
+    {
+      "seq": 7,
+      "ts": 1793429623.574,
+      "type": "enqueued",
+      "task_id": "t_f05e739efc644796a94b27c7d9fac0be",
+      "queue": "eq01",
+      "worker": null,
+      "fencing_token": null,
+      "detail": {
+        "effect_class": "write-internal",
+        "kind": "request",
+        "parent_id": null
+      }
+    },
+    {
+      "seq": 8,
+      "ts": 1793429623.588,
+      "type": "claimed",
+      "task_id": "t_f05e739efc644796a94b27c7d9fac0be",
+      "queue": "eq01",
+      "worker": "classify-step",
+      "fencing_token": 1,
+      "detail": {
+        "attempt": 1
+      }
+    },
+    {
+      "seq": 9,
+      "ts": 1793429623.598,
+      "type": "records_written",
+      "task_id": null,
+      "queue": null,
+      "worker": null,
+      "fencing_token": null,
+      "detail": {
+        "writes": [
+          {
+            "key": "availability-20261031t065341z",
+            "store": "kit.inputs",
+            "version": 1
+          }
+        ]
+      }
+    },
+    {
+      "seq": 10,
+      "ts": 1793429623.611,
+      "type": "enqueued",
+      "task_id": "t_06e3ef2acaa54c7297b5c0dfca3e2c70",
+      "queue": "eq02",
+      "worker": null,
+      "fencing_token": null,
+      "detail": {
+        "effect_class": "write-internal",
+        "kind": "build",
+        "parent_id": "t_f05e739efc644796a94b27c7d9fac0be"
+      }
+    },
+    {
+      "seq": 11,
+      "ts": 1793429623.611,
+      "type": "enqueued",
+      "task_id": "t_cc69cdcb8fa3404dbf37eb4d38c684b5",
+      "queue": "eq03",
+      "worker": null,
+      "fencing_token": null,
+      "detail": {
+        "depends_on": [
+          "t_06e3ef2acaa54c7297b5c0dfca3e2c70"
+        ],
+        "effect_class": "write-internal",
+        "kind": "review",
+        "parent_id": "t_f05e739efc644796a94b27c7d9fac0be",
+        "unresolved": 1
+      }
+    },
+    {
+      "seq": 12,
+      "ts": 1793429623.611,
+      "type": "split",
+      "task_id": "t_f05e739efc644796a94b27c7d9fac0be",
+      "queue": "eq01",
+      "worker": "classify-step",
+      "fencing_token": 1,
+      "detail": {
+        "children": [
+          "t_06e3ef2acaa54c7297b5c0dfca3e2c70",
+          "t_cc69cdcb8fa3404dbf37eb4d38c684b5"
+        ]
+      }
+    }
+  ],
+  "records": {
+    "input noun": {
+      "namespace": "main",
+      "store": "kit.inputs",
+      "key": "availability-20261031t065341z",
+      "version": 1,
+      "value": {
+        "csv": "volunteer_id,display_name,role,max_shifts,available\nV01,Volunteer 01,lead,3,Mon-PM;Tue-PM;Thu-AM;Thu-PM;Fri-AM\nV02,Volunteer 02,lead,3,Wed-AM;Wed-PM;Thu-PM;Sat-AM\nV03,Volunteer 03,lead,3,Mon-AM;Mon-PM;Tue-AM;Wed-PM;Fri-AM\nV04,Volunteer 04,lead,3,Mon-AM;Mon-PM;Wed-PM;Thu-PM;Sat-PM\nV05,Volunteer 05,lead,3,Tue-AM;Tue-PM;Fri-PM\nV06,Volunteer 06,general,2,Mon-AM;Fri-AM\nV07,Volunteer 07,general,2,Thu-AM;Thu-PM;Fri-AM\nV08,Volunteer 08,general,2,Mon-AM;Tue-AM;Fri-AM;Sat-AM\nV09,Volunteer 09,general,2,Tue-AM;Wed-PM;Fri-PM;Sat-AM\nV10,Volunteer 10,general,2,Mon-AM;Mon-PM\nV11,Volunteer 11,general,2,Wed-AM;Thu-AM;Fri-PM\nV12,Volunteer 12,general,2,Tue-PM;Thu-AM\nV13,Volunteer 13,general,2,Mon-PM;Thu-AM;Sat-PM\nV14,Volunteer 14,general,2,Mon-AM;Tue-AM;Wed-AM;Thu-AM\n",
+        "format": "volunteer_id,display_name,role,max_shifts,available; available lists Day-Slot shifts separated by semicolons",
+        "request_id": "t_f05e739efc644796a94b27c7d9fac0be",
+        "sha256": "6709f71fb10238ebe4ce06c987937b1ba5301646be9b5bd474f1a4844089f795",
+        "synthetic": true
+      },
+      "created_at": 1793429623.598,
+      "producer_surface": "surface:eranos",
+      "visibility_scope": "surface_only",
+      "allowed_surfaces": [],
+      "target_cohorts": [
+        "all"
+      ],
+      "tags": [],
+      "owner_key_id": "k_054b985efbe7"
+    },
+    "build task, as the split created it (final record)": {
+      "namespace": "main",
+      "task_id": "t_06e3ef2acaa54c7297b5c0dfca3e2c70",
+      "queue": "eq02",
+      "parent_id": "t_f05e739efc644796a94b27c7d9fac0be",
+      "state": "done",
+      "kind": "build",
+      "effect_class": "write-internal",
+      "priority": 50,
+      "brief": {
+        "acceptance": [
+          {
+            "id": "tests",
+            "pass_when": "exit code 0",
+            "run": "python3 -m unittest discover -s tests -v"
+          },
+          {
+            "id": "coverage",
+            "pass_when": "exit code 0 and 0 violations reported",
+            "run": "python3 shift_scheduler.py data/availability.csv"
+          }
+        ],
+        "constraints": [
+          "Python 3 standard library only; no installs and no network",
+          "synthetic data only; no real names or contact details",
+          "deterministic: the same input gives the same schedule"
+        ],
+        "coverage_rules": [
+          "Shifts are Mon, Tue, Wed, Thu, Fri and Sat, each with an AM and a PM slot: 12 shifts, written Day-Slot (for example Mon-AM).",
+          "Every shift has at least 2 volunteers.",
+          "Every shift has at least 1 volunteer whose role is lead.",
+          "A volunteer works only shifts listed in their available column.",
+          "No volunteer works more shifts in the week than their max_shifts.",
+          "No volunteer works both the AM and the PM shift on the same day."
+        ],
+        "deadline": "2026-11-01T00:00:00Z",
+        "deliverables": {
+          "README.md": "What the kit does, the input format, the coverage rules, how to run it, how to run the tests, and that it was built and tested on synthetic data only.",
+          "data/availability.csv": "The input noun, saved unchanged.",
+          "shift_scheduler.py": "Python 3 standard library only. Reads the CSV, builds a weekly schedule that meets every coverage rule (use a search such as backtracking: a simple first-fit pass can fail on this data), and writes it as CSV with columns shift,volunteer_id,display_name,role. Exposes check_coverage(schedule, volunteers) returning a list of violation strings (empty when every rule holds). CLI: python3 shift_scheduler.py data/availability.csv [--out schedule.csv] prints the schedule and the number of violations and exits 0 only when there are none; it exits 2 with a clear message when no valid schedule exists.",
+          "tests/test_shift_scheduler.py": "unittest tests: the synthetic CSV yields a schedule with zero violations; check_coverage reports each rule when it is broken (an unavailable volunteer, over max_shifts, no lead, both shifts on one day, fewer than 2 people); an impossible input is reported, not silently scheduled."
+        },
+        "input_noun": {
+          "field": "csv",
+          "key": "availability-20261031t065341z",
+          "save_as": "data/availability.csv",
+          "sha256": "6709f71fb10238ebe4ce06c987937b1ba5301646be9b5bd474f1a4844089f795",
+          "store": "kit.inputs",
+          "version": 1
+        },
+        "kit_id": "kit-volunteer-shifts-20261031t065341z",
+        "need": "We are a small food pantry (a synthetic example). Each week our volunteers tell us when they can come in. Please build us a small kit that turns our volunteer availability CSV into a weekly shift schedule that meets our coverage rules, with tests and a README, so our own agent or staff can run it. Use only the synthetic data provided.",
+        "next": "A different keyed reviewer re-runs these checks in an eq03 review verb. This verb publishes nothing.",
+        "organization_type": "Food pantry",
+        "output_contract": {
+          "blob_sha256": "sha256 hex of json.dumps({path: sha256_of_that_file}, sort_keys=True, separators=(\",\", \":\")).encode() over the four file paths",
+          "nouns": {
+            "expected_version": 0,
+            "record_key_for_path": {
+              "README.md": "docs.README.md",
+              "data/availability.csv": "data.availability.csv",
+              "shift_scheduler.py": "code.shift_scheduler.py",
+              "tests/test_shift_scheduler.py": "tests.test_shift_scheduler.py"
+            },
+            "store": "kit.volunteer-shifts",
+            "value": {
+              "content": "<the exact full file text>",
+              "path": "<file path>",
+              "sha256": "<sha256 hex of content as UTF-8>"
+            },
+            "visibility_scope": "surface_only"
+          },
+          "submit_output": {
+            "blob_sha256": "<hex>",
+            "draft": {
+              "files": {
+                "<path>": {
+                  "key": "<record key>",
+                  "sha256": "<hex>",
+                  "version": 1
+                }
+              },
+              "kit_id": "kit-volunteer-shifts-20261031t065341z",
+              "store": "kit.volunteer-shifts"
+            },
+            "kit_id": "kit-volunteer-shifts-20261031t065341z",
+            "node": "draft",
+            "verification": {
+              "commands": [
+                "<command> -> exit <code>"
+              ],
+              "coverage_violations": "<int>",
+              "passed": "<true only if both acceptance checks passed>",
+              "tests_run": "<int>"
+            }
+          }
+        },
+        "part": 1,
+        "request_id": "t_f05e739efc644796a94b27c7d9fac0be",
+        "synthetic": true,
+        "title": "SYNTHETIC: weekly volunteer shift schedule kit"
+      },
+      "attempts": 1,
+      "failures": 0,
+      "fencing_token": 1,
+      "not_before": 0,
+      "pending_children": 0,
+      "created_at": 1793429623.611,
+      "updated_at": 1793429827.76,
+      "wait_reason": null,
+      "pending_deps": 0,
+      "depends_on": [],
+      "wake_at": null,
+      "parked_by": null,
+      "parks": 0,
+      "idempotency_key": null,
+      "producer_surface": "surface:tessera",
+      "visibility_scope": "allowlist_surfaces",
+      "allowed_surfaces": [
+        "surface:eranos"
+      ],
+      "target_cohorts": [
+        "all"
+      ],
+      "tags": [
+        "part:1",
+        "kind:build"
+      ],
+      "owner_key_id": "k_f617cd3167ed"
+    },
+    "review task, as the split created it (final record)": {
+      "namespace": "main",
+      "task_id": "t_cc69cdcb8fa3404dbf37eb4d38c684b5",
+      "queue": "eq03",
+      "parent_id": "t_f05e739efc644796a94b27c7d9fac0be",
+      "state": "done",
+      "kind": "review",
+      "effect_class": "write-internal",
+      "priority": 50,
+      "brief": {
+        "authority": "Approve only if every check passes, otherwise refuse with reasons. Approving records your verdict and publishes nothing. A person decides what happens next.",
+        "blob_sha256_definition": "sha256 hex of json.dumps({path: sha256_of_that_file}, sort_keys=True, separators=(\",\", \":\")).encode() over the four file paths",
+        "checks": [
+          "every file sha256 and the blob_sha256 you recompute equal the build output values",
+          "python3 -m unittest discover -s tests -v exits 0",
+          "python3 shift_scheduler.py data/availability.csv exits 0 and reports 0 violations",
+          "the code enforces, and the tests exercise, every coverage rule; the README covers input, rules, running, testing and the synthetic-data note"
+        ],
+        "coverage_rules": [
+          "Shifts are Mon, Tue, Wed, Thu, Fri and Sat, each with an AM and a PM slot: 12 shifts, written Day-Slot (for example Mon-AM).",
+          "Every shift has at least 2 volunteers.",
+          "Every shift has at least 1 volunteer whose role is lead.",
+          "A volunteer works only shifts listed in their available column.",
+          "No volunteer works more shifts in the week than their max_shifts.",
+          "No volunteer works both the AM and the PM shift on the same day."
+        ],
+        "input_noun": {
+          "key": "availability-20261031t065341z",
+          "sha256": "6709f71fb10238ebe4ce06c987937b1ba5301646be9b5bd474f1a4844089f795",
+          "store": "kit.inputs",
+          "version": 1
+        },
+        "kit_id": "kit-volunteer-shifts-20261031t065341z",
+        "nouns": {
+          "keys": {
+            "README.md": "docs.README.md",
+            "data/availability.csv": "data.availability.csv",
+            "shift_scheduler.py": "code.shift_scheduler.py",
+            "tests/test_shift_scheduler.py": "tests.test_shift_scheduler.py"
+          },
+          "store": "kit.volunteer-shifts"
+        },
+        "output_contract": {
+          "approved": "<true or false>",
+          "checks": {
+            "coverage_exit_code": "<int>",
+            "coverage_violations": "<int>",
+            "digests_match": "<bool>",
+            "tests_exit_code": "<int>",
+            "tests_run": "<int>"
+          },
+          "draft_sha256": "<the blob_sha256 you recomputed>",
+          "draft_task_id": "<dependencies[0].task_id>",
+          "drafter_key_id": "<dependencies[0].completed_by_key>",
+          "kit_id": "kit-volunteer-shifts-20261031t065341z",
+          "reasons": [
+            "<short, specific reasons>"
+          ],
+          "review_task_id": "<the task_id of your own claim>",
+          "reviewer_key_id": "k_b514f2a59964",
+          "verdict": "<approve or refuse>"
+        },
+        "part": 1,
+        "request_id": "t_f05e739efc644796a94b27c7d9fac0be",
+        "review_noun": {
+          "expected_version": 0,
+          "key": "kit-volunteer-shifts-20261031t065341z",
+          "store": "kit.reviews",
+          "value": "the same object you submit as output",
+          "visibility_scope": "surface_only"
+        },
+        "reviewer_key_id": "k_b514f2a59964",
+        "synthetic": true,
+        "title": "SYNTHETIC: independent review of the weekly volunteer shift schedule kit",
+        "what_you_review": "The build verb this review depends on: dependencies[0] in your claim response (task_id, output, receipt_hash, completed_by_key)."
+      },
+      "attempts": 1,
+      "failures": 0,
+      "fencing_token": 1,
+      "not_before": 0,
+      "pending_children": 0,
+      "created_at": 1793429623.611,
+      "updated_at": 1793429904.78,
+      "wait_reason": null,
+      "pending_deps": 0,
+      "depends_on": [
+        "t_06e3ef2acaa54c7297b5c0dfca3e2c70"
+      ],
+      "wake_at": null,
+      "parked_by": null,
+      "parks": 0,
+      "idempotency_key": null,
+      "producer_surface": "surface:tessera",
+      "visibility_scope": "allowlist_surfaces",
+      "allowed_surfaces": [
+        "surface:eranos"
+      ],
+      "target_cohorts": [
+        "all"
+      ],
+      "tags": [
+        "part:1",
+        "kind:review"
+      ],
+      "owner_key_id": "k_f617cd3167ed"
+    }
+  }
+}
