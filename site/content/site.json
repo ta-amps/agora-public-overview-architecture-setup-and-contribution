@@ -154,5 +154,12 @@
     "eranos_href": "https://eranos.ta-amps.workers.dev/",
     "eranos_aria": "Open Eranos, the marketplace, on its own site",
     "eranos_short": "Eranos ↗"
+  },
+  "share": {
+    "site_name": "Agora",
+    "image": "https://agora.ta-amps.workers.dev/assets/share/agora-1200x630.png",
+    "width": 1200,
+    "height": 630,
+    "alt": "Agora. AI is smart. The way we use it is dumb. Watch the film, three minutes. agora.ta-amps.workers.dev"
   }
 }

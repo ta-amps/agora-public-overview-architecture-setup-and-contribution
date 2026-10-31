@@ -340,8 +340,17 @@ def section_for(page: Path) -> str:
     return {"storyboards": "decks", "video": "decks"}.get(first, first)
 
 
-def head_block(prefix: str) -> str:
-    return "\n".join([
+def head_block(prefix: str, nouns: Nouns | None = None) -> str:
+    share = nouns.site["share"] if nouns else None
+    tags = [] if not share else [
+        f'<meta property="og:site_name" content="{attr(share["site_name"])}">',
+        f'<meta property="og:image" content="{attr(share["image"])}">',
+        f'<meta property="og:image:width" content="{int(share["width"])}">',
+        f'<meta property="og:image:height" content="{int(share["height"])}">',
+        f'<meta property="og:image:alt" content="{attr(share["alt"])}">',
+        '<meta name="twitter:card" content="summary_large_image">',
+    ]
+    return "\n".join(tags + [
         '<link rel="preconnect" href="https://fonts.googleapis.com">',
         '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',
         f'<link rel="stylesheet" href="{attr(FONTS)}">',
@@ -438,7 +447,7 @@ def render_page(page: Path, content: str, nouns: Nouns) -> str:
     if "<!-- site:head -->" not in content:
         # A page that keeps its own head and header, such as the Studio, still gets the agent banner first.
         return replace_block(content, "banner", banner_block(prefix, nouns), page)
-    content = replace_block(content, "head", head_block(prefix), page)
+    content = replace_block(content, "head", head_block(prefix, nouns), page)
     content = replace_block(content, "header", header_block(page, prefix, nouns), page)
     return replace_block(content, "footer", footer_block(prefix, nouns), page)
 

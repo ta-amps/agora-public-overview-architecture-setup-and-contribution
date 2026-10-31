@@ -266,6 +266,11 @@
       "path": "video/2026-10-31/walkthroughs/walkthrough-eranos-live.mp4",
       "sha256": "27bab450393d3d0b7bc0b8ede4a356278454f8eb9e4bcb2eb6c37b44da195cfb",
       "bytes": 6016258
+    },
+    {
+      "path": "assets/share/agora-1200x630.png",
+      "sha256": "416c85ec3cfcf52a676ff5df4e8b95d0325b2d8b4b48ca3ecc6369904265b84d",
+      "bytes": 40884
     }
   ]
 }
