@@ -114,15 +114,15 @@ evidence in the status report. The new Herma code remains undeployed.
 | Execution environment | Useful role | Observed or required boundary |
 | --- | --- | --- |
 | CPU worker | Deterministic data preparation and tiny adapter smoke | Actual local smoke completed; unsuitable evidence for a large-model training claim |
-| RTX 3060 worker | Small CUDA experiments | Actual tiny training completed with about 11.62 GiB VRAM available; pretrained 1B/3B recipes remain unrun |
-| Kaggle notebook | Candidate bounded GPU training environment | Portable wrapper exists; no notebook/job was launched for this pilot; availability and allowance must be checked for each run |
-| H100 worker | Candidate Glimmer QLoRA environment | Official single-H100 recipe exists; no project Glimmer run or provisioning |
+| RTX 3060 worker | Small CUDA specialist LoRA experiments | Completed tiny smoke plus pretrained Llama 3.2 1B and 3B continuous tuning rounds on synthetic unseen-family tool calls (`12.0% -> 50.7%` on 1B and `52.0% -> 72.7%` on 3B in bf16 LoRA within ~11.62 GiB VRAM); useful-task evaluation and admission remain unrun |
+| Kaggle notebook | Bounded free 2x T4 GPU QLoRA training environment | Completed Muse Glimmer 30B 4-bit QLoRA specialist run across Kaggle's two free 16 GB T4 GPUs (`93.3% -> 99.3%` exact match on pre-registered 150-row synthetic fresh holdout); adapter stays private and unadmitted; availability and allowance must be checked for each run |
+| H100 worker | Optional single-GPU Glimmer QLoRA environment | Official single-H100 recipe exists; unprovisioned and not needed after the free 2x T4 QLoRA run succeeded |
 | Cloudflare Workers | Authorization, storage access, receipts and job coordination | The service runtime is not the optional PyTorch/CUDA trainer |
 | Cloudflare Workers AI | Inference with supported base models and compatible adapters | Adapter compatibility must be checked; no Glimmer serving qualification |
 
 Kaggle documents two T4 GPUs with 16 GB each. Their memories are separate, not
 an automatic 32 GB pool. A multi-GPU recipe needs its own implementation and
-measurement. Account quota is not reserved capacity or permission to create a
+measurement, as recorded in the [Muse Glimmer 30B 2xT4 QLoRA bundle](../evidence/glimmer-30b-2026-10-29/README.md). Account quota is not reserved capacity or permission to create a
 permanent inference service. [Kaggle accelerator announcement](https://www.kaggle.com/discussions/product-announcements/735239).
 
 Workers AI documents uploaded-adapter inference and an external notebook
@@ -132,8 +132,7 @@ does not establish arbitrary GPU training or compatibility with this adapter.
 [Workers AI LoRA support](https://developers.cloudflare.com/workers-ai/features/fine-tunes/loras/),
 [training tutorial](https://developers.cloudflare.com/workers-ai/guides/tutorials/fine-tune-models-with-autotrain/).
 
-The [fine-tuning page](fine-tuning-pilot.md) links the actual CPU/GPU evidence,
-optional worker modules and unrun pretrained recipes. Training, inference,
+The [fine-tuning page](fine-tuning-pilot.md) links the October 29 CPU/GPU smoke, while [training/README.md](../training/README.md), [eval/README.md](../eval/README.md) and the [Glimmer 30B run record](../evidence/glimmer-30b-2026-10-29/README.md) record the completed synthetic LoRA and QLoRA specialist runs. Training, inference,
 model access and artifact admission each need their own evidence and authority.
 
 ## OpenAI subscriber API-credit offer

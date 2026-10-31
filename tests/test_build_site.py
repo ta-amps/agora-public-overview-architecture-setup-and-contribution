@@ -108,7 +108,7 @@ def contrast(a: str, b: str) -> float:
 
 def plain_words(value: str) -> list[str]:
     """Words, lowercased, without punctuation: how a transcript and its captions are compared."""
-    value = value.lower().replace("…", " ").replace("’", "").replace("'", "").replace("—", " ").replace("-", " ")
+    value = value.lower().replace("…", " ").replace("’", "").replace("'", "").replace("\u2014", " ").replace("-", " ")
     return re.sub(r"[^a-z0-9% ]", "", value).split()
 
 
@@ -211,12 +211,15 @@ class Builder(unittest.TestCase):
     def test_the_home_page_is_the_video_a_two_part_statement_and_the_decks(self):
         home = self.outputs[build.SITE / "index.html"]
         main = home[home.index('<main id="main">'):home.index("</main>")]
-        self.assertEqual(3, main.count("<section"))
+        self.assertEqual(4, main.count("<section"))
         self.assertEqual(1, main.count("<video"))
         self.assertIn('kind="captions"', main)
         self.assertIn(" default>", main)
+        self.assertEqual(3, main.count('<li class="hub-card '))
         self.assertEqual(5, main.count('class="deck-card"'))
         self.assertLess(home.index('class="agent-banner"'), home.index("<video"))
+        self.assertLess(main.index('<section class="statement"'), main.index('<section class="hub"'))
+        self.assertLess(main.index('<section class="hub"'), main.index('<section class="deck-band"'))
         # Feedback, October 30: the statement reads in two labelled parts, the use case and then the architecture
         # underneath, and the second says in plain words what verbs and nouns are. The use case's line is the page's
         # one heading.
@@ -232,6 +235,23 @@ class Builder(unittest.TestCase):
         self.assertEqual(1, main.count("<h1"))
         self.assertIn(f'<h1 id="statement" class="statement-line"><span class="statement-lead">'
                       f'{build.text(parts[0]["lead"])}</span></h1>', statement)
+
+    def test_home_product_hub_renders_from_its_noun(self):
+        home_page = self.outputs[build.SITE / "index.html"]
+        main = build.main_of(home_page)
+        hub_html = main[main.index('<section class="hub"'):]
+        hub_html = hub_html[:hub_html.index("</section>") + len("</section>")]
+        written = set(strings(self.nouns.home["hub"]))
+        for shown in shown_text(hub_html):
+            self.assertIn(shown, written)
+        titles = [pillar["title"] for pillar in self.nouns.home["hub"]["pillars"]]
+        self.assertEqual([
+            "1. Public Goods Marketplace",
+            "2. Task & Task-Object Engine",
+            "3. Roll Your Own: Seed Packs, Harness Feeds & Meta Fine-Tuning",
+        ], titles)
+        with self.assertRaises(build.BuildError):
+            build.product_hub({"kicker": "k", "heading": "h", "lead": "l", "pillars": []})
 
     def test_nouns_and_verbs_are_glossed_in_plain_words_the_first_time(self):
         # Feedback, October 30: a viewer took nouns and verbs for a model architecture. The home page, the use cases
@@ -402,16 +422,16 @@ class Builder(unittest.TestCase):
                 self.assertIn(number, listed, (item["model"], number))
 
     def test_the_library_is_a_page_of_agora_built_from_its_noun(self):
-        library = self.nouns.library
+        library, explorer, ecosystem = self.nouns.library, self.nouns.explorer, self.nouns.ecosystem
         page = self.outputs[build.SITE / "library" / "index.html"]
         self.assertIn('<a href="../library/" aria-current="page">Library</a>', page)
         main = build.main_of(page)
-        # Every word the page shows is a string of its noun. The rest is the measured part: numbers, the commit and
+        # Every word the page shows is a string of its nouns. The rest is the measured part: numbers, the commit and
         # its date.
         sizes = {len(category["packs"]) for category in library["categories"]}
-        measured = {f"{n:,}" for n in set(numbers(library)) | sizes}
+        measured = {f"{n:,}" for n in set(numbers(library)) | sizes | set(numbers(explorer)) | set(numbers(ecosystem))}
         measured |= {library["source"]["commit"][:7], build.human_date(library["source"]["committed_at"]), "·"}
-        written = set(strings(library))
+        written = set(strings(library)) | set(strings(explorer)) | set(strings(ecosystem))
         for shown in shown_text(main):
             self.assertIn(shown, written | measured)
         # One card per pack, inside its category's section and in its order, linking to its folder at the commit.
@@ -443,6 +463,31 @@ class Builder(unittest.TestCase):
         style = page[page.index("<style>"):page.index("</style>")]
         for category in library["categories"]:
             self.assertIn(f'.library:has(#{category["id"]}:target) .lib-filter a[href="#{category["id"]}"]', style)
+
+    def test_library_explorer_harness_feeds_and_ecosystem_catalog(self):
+        page = self.outputs[build.SITE / "library" / "index.html"]
+        main = build.main_of(page)
+        for anchor in ("explorer", "harness-feeds", "ecosystem-explorer"):
+            self.assertIn(f'id="{anchor}"', main)
+        for harness in ("Harness Square", "Muse Code", "OpenCode", "Pi"):
+            self.assertIn(f"<h3>{harness}</h3>", main)
+        for tier in ("Tier 0", "Tier 1", "Tier 2", "Tier 3"):
+            self.assertIn(tier, main)
+        match = re.search(r'<script type="application/json" id="agora-explorer-data">(.*?)</script>', page)
+        self.assertIsNotNone(match)
+        payload = json.loads(match.group(1))
+        self.assertEqual(self.nouns.explorer["counts"]["total"], len(payload["items"]))
+        self.assertEqual(self.nouns.library["totals"]["packs"],
+                         sum(1 for item in payload["items"] if item["kind"] == "pack"))
+        self.assertEqual(707, len(payload["projects"]))
+        bad_exp = copy.deepcopy(self.nouns.explorer)
+        bad_exp["counts"]["total"] += 1
+        with self.assertRaises(build.BuildError):
+            build.check_explorer(bad_exp, self.nouns.ecosystem)
+        bad_eco = copy.deepcopy(self.nouns.ecosystem)
+        bad_eco["status"] = "certified"
+        with self.assertRaises(build.BuildError):
+            build.check_explorer(self.nouns.explorer, bad_eco)
 
     def test_the_overview_deck_and_the_library_page_agree_at_the_same_commit(self):
         # The overview deck's measured pack count and the library page are counted separately; when they name the

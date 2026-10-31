@@ -206,3 +206,317 @@
     if (asked && button.getAttribute("data-cut") === asked) button.click();
   });
 })();
+
+// Interactive Task, Task-Object & Meta Hackathon Ecosystem Explorer on the Library page.
+// Reads the static #agora-explorer-data JSON block in the page; zero network traffic and zero browser storage.
+(function () {
+  var dataNode = document.getElementById("agora-explorer-data");
+  var shell = document.getElementById("explorer");
+  if (!dataNode || !shell) return;
+  var data;
+  try {
+    data = JSON.parse(dataNode.textContent);
+  } catch (err) {
+    return;
+  }
+  var controls = shell.querySelector("[data-exp-controls]");
+  var queryInput = shell.querySelector("[data-exp-query]");
+  var kindSelect = shell.querySelector("[data-exp-kind]");
+  var catSelect = shell.querySelector("[data-exp-category]");
+  var ceilSelect = shell.querySelector("[data-exp-ceiling]");
+  var harnSelect = shell.querySelector("[data-exp-harness]");
+  var resetBtn = shell.querySelector("[data-exp-reset]");
+  var moreBtn = shell.querySelector("[data-exp-more]");
+  var statusEl = shell.querySelector("[data-exp-status]");
+  var resultsEl = shell.querySelector("[data-exp-results]");
+  var tabs = Array.prototype.slice.call(shell.querySelectorAll("[data-exp-tab]"));
+  var openEcoBtn = document.querySelector("[data-open-ecosystem]");
+  if (!controls || !resultsEl) return;
+
+  var PAGE_SIZE = 36;
+  var activeTab = "library";
+  var shownLimit = PAGE_SIZE;
+  var labels = data.labels || {};
+  var harnessMap = data.harnesses || {};
+  var ceilingMap = data.ceilings || {};
+
+  function el(tag, cls, txt) {
+    var node = document.createElement(tag);
+    if (cls) node.className = cls;
+    if (txt !== undefined && txt !== null) node.textContent = String(txt);
+    return node;
+  }
+
+  function formatHarnesses(ids) {
+    if (!ids || !ids.length) return labels.human_only || "Human steward";
+    return ids.map(function (id) { return harnessMap[id] || id; }).join(", ");
+  }
+
+  function syncScopeOptions(selectEl) {
+    var opts = Array.prototype.slice.call(selectEl.options);
+    var currentValid = false;
+    opts.forEach(function (opt) {
+      var scope = opt.getAttribute("data-scope");
+      var hide = Boolean(scope && scope !== activeTab);
+      opt.hidden = hide;
+      opt.disabled = hide;
+      if (!hide && opt.value === selectEl.value) currentValid = true;
+    });
+    if (!currentValid) {
+      for (var i = 0; i < opts.length; i++) {
+        if (!opts[i].hidden) { selectEl.value = opts[i].value; break; }
+      }
+    }
+  }
+
+  function makeChipList(values, tone) {
+    var ul = el("ul", "chips " + tone);
+    values.forEach(function (val) {
+      ul.appendChild(el("li", "", val));
+    });
+    return ul;
+  }
+
+  function renderLibraryCard(item) {
+    var li = el("li", "exp-card exp-kind-" + item.kind);
+    var meta = el("p", "exp-card-meta");
+    var pillTone = item.kind === "noun" ? " noun" : (item.kind === "verb" ? " verb" : "");
+    meta.appendChild(el("span", "exp-pill" + pillTone, labels[item.kind] || item.kind));
+    meta.appendChild(el("span", "", labels.proposal || "Proposal"));
+    meta.appendChild(el("span", "", "· " + item.category_label));
+    li.appendChild(meta);
+
+    var h3 = el("h3", "exp-card-title");
+    var link = el("a", "exp-card-link", item.title);
+    link.href = item.url;
+    h3.appendChild(link);
+    li.appendChild(h3);
+
+    var sub = el("p", "exp-card-sub");
+    sub.appendChild(el("code", "", item.subtype));
+    li.appendChild(sub);
+
+    li.appendChild(el("p", "exp-card-summary", item.summary));
+
+    var specs = el("div", "exp-card-group");
+    var specChips = [
+      (labels.ceiling_prefix || "Ceiling:") + " " + (ceilingMap[item.ceiling] || item.ceiling),
+      (labels.harnesses_prefix || "Harnesses:") + " " + formatHarnesses(item.harnesses)
+    ];
+    specs.appendChild(makeChipList(specChips, "plain"));
+    li.appendChild(specs);
+
+    var foot = el("p", "exp-card-foot");
+    var left = el("span", "");
+    if (item.kind === "pack") {
+      left.textContent = item.nouns + " nouns · " + item.verbs + " verbs ";
+      var jump = el("a", "", labels.open_card || "Jump to pack");
+      jump.href = item.anchor;
+      left.appendChild(jump);
+    } else {
+      left.textContent = (labels.pack_ref || "In pack:") + " ";
+      var pjump = el("a", "", item.pack_title || item.pack_id);
+      pjump.href = item.anchor;
+      left.appendChild(pjump);
+    }
+    foot.appendChild(left);
+    var src = el("a", "", labels.open_source || "View JSON source");
+    src.href = item.url;
+    foot.appendChild(src);
+    li.appendChild(foot);
+    return li;
+  }
+
+  function renderProjectCard(proj) {
+    var li = el("li", "exp-card exp-kind-project");
+    var meta = el("p", "exp-card-meta");
+    meta.appendChild(el("span", "exp-pill", "#" + proj.rank + " · " + proj.track));
+    meta.appendChild(el("span", "", labels.scan_mapping || "Public-scan decomposition"));
+    meta.appendChild(el("span", "", "· " + proj.category));
+    li.appendChild(meta);
+
+    var h3 = el("h3", "exp-card-title");
+    var link = el("a", "exp-card-link", proj.repo);
+    link.href = proj.url;
+    h3.appendChild(link);
+    li.appendChild(h3);
+
+    li.appendChild(el("p", "exp-card-summary", proj.summary));
+
+    if (proj.tasks && proj.tasks.length) {
+      var vGroup = el("div", "exp-card-group");
+      vGroup.appendChild(el("p", "exp-card-label", labels.tasks_label || "Candidate Tasks (verbs):"));
+      vGroup.appendChild(makeChipList(proj.tasks, "verb"));
+      li.appendChild(vGroup);
+    }
+
+    if (proj.task_objects && proj.task_objects.length) {
+      var nGroup = el("div", "exp-card-group");
+      nGroup.appendChild(el("p", "exp-card-label", labels.objects_label || "Candidate Task Objects (nouns):"));
+      nGroup.appendChild(makeChipList(proj.task_objects, "noun"));
+      li.appendChild(nGroup);
+    }
+
+    var stackTags = (proj.models || []).slice();
+    if (proj.language) stackTags.push(proj.language);
+    stackTags.push((labels.ceiling_prefix || "Ceiling:") + " " + (ceilingMap[proj.ceiling] || proj.ceiling));
+    var sGroup = el("div", "exp-card-group");
+    sGroup.appendChild(el("p", "exp-card-label", labels.models_label || "Meta & AI stack:"));
+    sGroup.appendChild(makeChipList(stackTags, "plain"));
+    li.appendChild(sGroup);
+
+    var foot = el("p", "exp-card-foot");
+    foot.appendChild(el("span", "", (labels.harnesses_prefix || "Harnesses:") + " " + formatHarnesses(proj.harnesses)));
+    var repoLink = el("a", "", labels.open_repo || "Open repository");
+    repoLink.href = proj.url;
+    foot.appendChild(repoLink);
+    li.appendChild(foot);
+    return li;
+  }
+
+  function matchesTokens(haystack, tokens) {
+    if (!tokens.length) return true;
+    var low = haystack.toLowerCase();
+    for (var i = 0; i < tokens.length; i++) {
+      if (low.indexOf(tokens[i]) === -1) return false;
+    }
+    return true;
+  }
+
+  function filteredItems() {
+    var rawQ = (queryInput.value || "").trim().toLowerCase();
+    var tokens = rawQ ? rawQ.split(/\s+/) : [];
+    var kind = kindSelect.value;
+    var cat = catSelect.value;
+    var ceil = ceilSelect.value;
+    var harn = harnSelect.value;
+
+    if (activeTab === "library") {
+      return (data.items || []).filter(function (item) {
+        if (kind !== "all" && item.kind !== kind) return false;
+        if (cat !== "all" && item.category !== cat) return false;
+        if (ceil !== "all" && item.ceiling !== ceil) return false;
+        if (harn !== "all" && (!item.harnesses || item.harnesses.indexOf(harn) === -1)) return false;
+        if (!tokens.length) return true;
+        var blob = [item.title, item.summary, item.subtype, item.pack_id, item.pack_title || "", item.category_label].join(" ");
+        return matchesTokens(blob, tokens);
+      });
+    }
+
+    return (data.projects || []).filter(function (proj) {
+      if (kind === "open-weights") {
+        var hasOw = (proj.models || []).some(function (m) { return m.toLowerCase().indexOf("open weights") !== -1; });
+        if (!hasOw) return false;
+      } else if (kind !== "all" && proj.track !== kind) {
+        return false;
+      }
+      if (cat !== "all" && proj.category_id !== cat) return false;
+      if (ceil !== "all" && proj.ceiling !== ceil) return false;
+      if (harn !== "all" && (!proj.harnesses || proj.harnesses.indexOf(harn) === -1)) return false;
+      if (!tokens.length) return true;
+      var blob = [
+        proj.repo, proj.summary, proj.category, proj.track, proj.language || "",
+        (proj.models || []).join(" "), (proj.tasks || []).join(" "), (proj.task_objects || []).join(" ")
+      ].join(" ");
+      return matchesTokens(blob, tokens);
+    });
+  }
+
+  function updateView() {
+    var matches = filteredItems();
+    var slice = matches.slice(0, shownLimit);
+    resultsEl.textContent = "";
+    if (!matches.length) {
+      resultsEl.appendChild(el("li", "exp-empty", labels.empty || "No matching items found."));
+    } else {
+      var frag = document.createDocumentFragment();
+      slice.forEach(function (entry) {
+        frag.appendChild(activeTab === "library" ? renderLibraryCard(entry) : renderProjectCard(entry));
+      });
+      resultsEl.appendChild(frag);
+    }
+    if (statusEl) {
+      if (activeTab === "library") {
+        var pCount = 0, vCount = 0, nCount = 0;
+        matches.forEach(function (x) {
+          if (x.kind === "pack") pCount++;
+          else if (x.kind === "verb") vCount++;
+          else if (x.kind === "noun") nCount++;
+        });
+        statusEl.textContent = "Showing " + slice.length + " of " + matches.length +
+          " matching library artifacts (" + pCount + " Seed Packs · " + vCount + " Tasks · " + nCount + " Task Objects)";
+      } else {
+        statusEl.textContent = "Showing " + slice.length + " of " + matches.length +
+          " matching Meta Hackathon 2026 repositories (static public-scan decomposition)";
+      }
+    }
+    if (moreBtn) {
+      moreBtn.hidden = slice.length >= matches.length;
+    }
+  }
+
+  function setTab(nextTab) {
+    activeTab = nextTab === "ecosystem" ? "ecosystem" : "library";
+    shownLimit = PAGE_SIZE;
+    tabs.forEach(function (tab) {
+      tab.setAttribute("aria-selected", tab.getAttribute("data-exp-tab") === activeTab ? "true" : "false");
+    });
+    syncScopeOptions(kindSelect);
+    syncScopeOptions(catSelect);
+    updateView();
+  }
+
+  tabs.forEach(function (tab) {
+    tab.addEventListener("click", function () {
+      setTab(tab.getAttribute("data-exp-tab"));
+    });
+  });
+
+  [queryInput, kindSelect, catSelect, ceilSelect, harnSelect].forEach(function (ctrl) {
+    if (!ctrl) return;
+    var evt = ctrl.tagName === "INPUT" ? "input" : "change";
+    ctrl.addEventListener(evt, function () {
+      shownLimit = PAGE_SIZE;
+      updateView();
+    });
+  });
+
+  if (resetBtn) {
+    resetBtn.addEventListener("click", function () {
+      queryInput.value = "";
+      kindSelect.value = "all";
+      catSelect.value = "all";
+      ceilSelect.value = "all";
+      harnSelect.value = "all";
+      shownLimit = PAGE_SIZE;
+      updateView();
+    });
+  }
+
+  if (moreBtn) {
+    moreBtn.addEventListener("click", function () {
+      shownLimit += PAGE_SIZE;
+      updateView();
+    });
+  }
+
+  if (openEcoBtn) {
+    openEcoBtn.hidden = false;
+    openEcoBtn.addEventListener("click", function () {
+      setTab("ecosystem");
+      shell.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (queryInput) queryInput.focus();
+    });
+  }
+
+  window.addEventListener("hashchange", function () {
+    if (location.hash === "#ecosystem-explorer") setTab("ecosystem");
+  });
+
+  controls.hidden = false;
+  if (location.hash === "#ecosystem-explorer") {
+    setTab("ecosystem");
+  } else {
+    setTab("library");
+  }
+})();

@@ -5,12 +5,14 @@ Everything a page says is a noun kept as data, and this script holds only markup
   * site/content/site.json            navigation, the agent banner, the endpoints, deck labels, the footer and its
                                       privacy line;
   * site/content/home.json            the home page: the film, a statement in two labelled parts (the use case
-                                      and the architecture underneath), the decks;
+                                      and the architecture underneath), the 1x3 product hub, and the decks;
   * site/content/decks-page.json      the decks page;
   * site/content/use-cases.json       the use cases page; each flagship names its library packs by id;
   * site/content/learning.json        the learning page: the loop, measured results with evidence, rules, limits;
   * site/content/library.json         the library page: every seed pack at one pinned commit, by category. Its
                                       measured part comes from scripts/sync_library.py, never from the network;
+  * site/content/explorer.json        the interactive Task and Task-Object explorer and Agent Harness Research Feeds;
+  * site/content/ecosystem-catalog.json the 707-project Meta Hackathon 2026 public-scan decomposition;
   * site/content/film.json            the full film's transcript and scene descriptions;
   * site/content/earlier-drafts.json  earlier drafts, and the storyboards page;
   * site/content/moved.json           pages that moved, which the not-found page lists;
@@ -70,7 +72,10 @@ PACK_FIELDS = {"id", "title", "purpose", "version", "status", "nouns", "verbs", 
 CODE_FIELDS = {"files", "tests", "workflow"}
 # Ids the shared chrome and the library page's own parts use, which no pack or category may take.
 LIBRARY_IDS = {"main", "agent-panel", "agent-brief", "agent-brief-title", "agent-brief-status", "categories",
-               "library-numbers"}
+               "library-numbers", "explorer", "explorer-heading", "tab-library", "tab-ecosystem", "exp-query",
+               "exp-kind", "exp-category", "exp-ceiling", "exp-harness", "exp-status", "harness-feeds",
+               "harness-feeds-heading", "harness-routing-heading", "ecosystem-explorer", "ecosystem-heading",
+               "agora-explorer-data"}
 USE_PACKS = (2, 5)  # how many library packs a use case names, at least and at most
 
 FONTS = ("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700"
@@ -174,6 +179,9 @@ class Nouns:
         self.learning = load_json(CONTENT / "learning.json")
         self.library = load_json(CONTENT / "library.json")
         check_library(self.library)
+        self.explorer = load_json(CONTENT / "explorer.json")
+        self.ecosystem = load_json(CONTENT / "ecosystem-catalog.json")
+        check_explorer(self.explorer, self.ecosystem)
         self.drafts = load_json(CONTENT / "earlier-drafts.json")
         self.moved = load_json(CONTENT / "moved.json")
         self.manifest = load_json(MANIFEST)
@@ -277,6 +285,28 @@ def check_library(library: dict) -> None:
         fail("library.json: every pack sits in exactly one category, and every category entry is a pack")
 
 
+def check_explorer(explorer: dict, ecosystem: dict) -> None:
+    """Validate explorer.json and ecosystem-catalog.json counts and honesty status."""
+    items = explorer.get("items")
+    if not isinstance(items, list) or not items:
+        fail("explorer.json: items must be a non-empty list; run scripts/sync_explorer.py")
+    counts = {
+        "packs": sum(1 for item in items if item.get("kind") == "pack"),
+        "verbs": sum(1 for item in items if item.get("kind") == "verb"),
+        "nouns": sum(1 for item in items if item.get("kind") == "noun"),
+        "total": len(items),
+    }
+    if explorer.get("counts") != counts:
+        fail(f"explorer.json: counts must match items, {counts}")
+    if not isinstance(explorer.get("harness_feeds", {}).get("harnesses"), list) or not explorer["harness_feeds"]["harnesses"]:
+        fail("explorer.json: harness_feeds needs harnesses")
+    if ecosystem.get("status") != "unexecuted_public_scan_mapping":
+        fail("ecosystem-catalog.json: status must remain unexecuted_public_scan_mapping")
+    projects = ecosystem.get("projects")
+    if not isinstance(projects, list) or not projects or ecosystem.get("project_count") != len(projects):
+        fail("ecosystem-catalog.json: project_count must match non-empty projects list")
+
+
 # Shared page chrome -------------------------------------------------------------------------------
 
 def prefix_for(page: Path) -> str:
@@ -313,8 +343,11 @@ def header_block(page: Path, prefix: str, nouns: Nouns) -> str:
     site = nouns.site
     section = section_for(page)
     rel = page.relative_to(SITE).as_posix()
+    nav_entries = list(site["nav"])
+    if (SITE / "studio" / "index.html").is_file() and not any(i["href"] == "studio/" for i in nav_entries):
+        nav_entries.append({"href": "studio/", "label": "Live Studio", "section": "studio"})
     items = []
-    for item in site["nav"]:
+    for item in nav_entries:
         current = ""
         if item["section"] == section:
             current = ' aria-current="page"' if rel == item["href"] + "index.html" else ' aria-current="true"'
@@ -763,6 +796,37 @@ def statement_parts(statement: dict) -> str:
     return "\n".join(out)
 
 
+def product_hub(hub: dict) -> str:
+    """The 1x3 Product Hub on the home page: Public Goods Marketplace, Task & Task-Object Engine, Roll Your Own."""
+    pillars = hub.get("pillars")
+    if not isinstance(pillars, list) or len(pillars) != 3:
+        fail("home.json: hub needs exactly three pillars")
+    cards = []
+    for idx, pillar in enumerate(pillars):
+        links = "".join(use_link(item, "") for item in pillar.get("links", []))
+        tone = ("noun", "verb", "cascade")[idx]
+        cards.append("\n".join([
+            f'<li class="hub-card hub-{tone}">',
+            f'<p class="hub-step">{text(pillar["step"])}</p>',
+            f'<h3 class="hub-card-title">{text(pillar["title"])}</h3>',
+            f'<p class="hub-card-summary">{text(pillar["summary"])}</p>',
+            f'<p class="use-links hub-links">{links}</p>',
+            "</li>",
+        ]))
+    return "\n".join([
+        '<section class="hub" aria-labelledby="home-hub">',
+        '<div class="wrap">',
+        '<div class="hub-head">',
+        f'<p class="statement-label">{text(hub["kicker"])}</p>',
+        f'<h2 class="band-title" id="home-hub">{text(hub["heading"])}</h2>',
+        f'<p class="hub-lead">{text(hub["lead"])}</p>',
+        "</div>",
+        f'<ol class="hub-grid">\n{chr(10).join(cards)}\n</ol>',
+        "</div>",
+        "</section>",
+    ])
+
+
 def render_home(nouns: Nouns) -> str:
     home, ui = nouns.home, nouns.site["deck"]
     videos = home["videos"]
@@ -792,6 +856,7 @@ def render_home(nouns: Nouns) -> str:
         statement_parts(home["statement"]),
         "</div>",
         "</section>",
+        product_hub(home["hub"]),
         '<section class="deck-band" aria-labelledby="home-decks">',
         '<div class="wrap">',
         f'<h2 class="band-title" id="home-decks">{text(home["decks_heading"])}</h2>',
@@ -1124,12 +1189,132 @@ def pack_card(pack: dict, words: dict) -> str:
     ])
 
 
+def explorer_section(explorer: dict, ecosystem: dict, library: dict) -> str:
+    ctrl = explorer["controls"]
+    kind_opts = "".join(
+        f'<option value="{attr(k["id"])}" data-scope="library">{text(k["label"])}</option>'
+        for k in explorer["kinds"]
+    ) + "".join(
+        f'<option value="{attr(k["id"])}" data-scope="ecosystem" hidden>{text(k["label"])}</option>'
+        for k in explorer["eco_kinds"]
+    )
+    cat_opts = f'<option value="all">{text(ctrl["all_categories"])}</option>' + "".join(
+        f'<option value="{attr(cat["id"])}" data-scope="library">{text(cat["short"])}</option>'
+        for cat in library["categories"]
+    ) + "".join(
+        f'<option value="{attr(ecat["id"])}" data-scope="ecosystem" hidden>{text(ecat["label"])}</option>'
+        for ecat in ecosystem["categories"]
+    )
+    ceil_opts = "".join(f'<option value="{attr(c["id"])}">{text(c["label"])}</option>' for c in explorer["ceilings"])
+    harn_opts = "".join(f'<option value="{attr(h["id"])}">{text(h["label"])}</option>' for h in explorer["harnesses"])
+    return "\n".join([
+        '<section class="exp-shell" id="explorer" aria-labelledby="explorer-heading">',
+        '<div class="exp-head">',
+        f'<h2 id="explorer-heading">{text(explorer["heading"])}</h2>',
+        f'<p class="exp-lead">{text(explorer["lead"])}</p>',
+        f'<p class="exp-note">{text(explorer["proposal_note"])}</p>',
+        "</div>",
+        f'<div class="exp-tabs" role="tablist" aria-label="{attr(explorer["tabs_label"])}">',
+        '<button class="exp-tab" type="button" role="tab" id="tab-library" aria-selected="true" data-exp-tab="library">'
+        f'<span>{text(explorer["tabs"]["library"])}</span> <span class="exp-tab-n">{explorer["counts"]["total"]:,}</span></button>',
+        '<button class="exp-tab" type="button" role="tab" id="tab-ecosystem" aria-selected="false" data-exp-tab="ecosystem">'
+        f'<span>{text(explorer["tabs"]["ecosystem"])}</span> <span class="exp-tab-n">{ecosystem["project_count"]:,}</span></button>',
+        "</div>",
+        '<div class="exp-controls" data-exp-controls hidden>',
+        '<label class="exp-field exp-field-wide" for="exp-query">'
+        f'<span>{text(ctrl["search_label"])}</span>'
+        f'<input id="exp-query" type="search" placeholder="{attr(ctrl["search_placeholder"])}" autocomplete="off" data-exp-query>'
+        "</label>",
+        f'<label class="exp-field" for="exp-kind"><span>{text(ctrl["kind_label"])}</span>'
+        f'<select id="exp-kind" data-exp-kind>{kind_opts}</select></label>',
+        f'<label class="exp-field" for="exp-category"><span>{text(ctrl["category_label"])}</span>'
+        f'<select id="exp-category" data-exp-category>{cat_opts}</select></label>',
+        f'<label class="exp-field" for="exp-ceiling"><span>{text(ctrl["ceiling_label"])}</span>'
+        f'<select id="exp-ceiling" data-exp-ceiling>{ceil_opts}</select></label>',
+        f'<label class="exp-field" for="exp-harness"><span>{text(ctrl["harness_label"])}</span>'
+        f'<select id="exp-harness" data-exp-harness>{harn_opts}</select></label>',
+        f'<button class="button secondary exp-reset" type="button" data-exp-reset>{text(ctrl["reset"])}</button>',
+        "</div>",
+        '<p class="exp-status" id="exp-status" role="status" aria-live="polite" data-exp-status></p>',
+        f'<p class="exp-noscript" data-no-script>{text(ctrl["noscript"])}</p>',
+        '<ul class="exp-results" data-exp-results></ul>',
+        f'<div class="exp-more-wrap"><button class="button secondary" type="button" data-exp-more hidden>{text(ctrl["show_more"])}</button></div>',
+        "</section>",
+    ])
+
+
+def harness_feeds_section(explorer: dict) -> str:
+    hf = explorer["harness_feeds"]
+    cards = "".join(
+        '<li class="harness-card">'
+        f'<h3>{text(item["name"])}</h3>'
+        f'<p class="harness-role">{text(item["role"])}</p>'
+        f'<p class="harness-detail">{text(item["detail"])}</p>'
+        "</li>"
+        for item in hf["harnesses"]
+    )
+    rules = "".join(
+        '<li class="routing-item">'
+        f'<p class="routing-mode">{text(rule["mode"])}</p>'
+        f'<p class="routing-when">{text(rule["when"])}</p>'
+        f'<p class="routing-outcome">{text(rule["outcome"])}</p>'
+        "</li>"
+        for rule in hf["routing"]["rules"]
+    )
+    return "\n".join([
+        '<section class="harness-panel" id="harness-feeds" aria-labelledby="harness-feeds-heading">',
+        '<div class="harness-head">',
+        f'<p class="exp-kicker">{text(hf["kicker"])}</p>',
+        f'<h2 id="harness-feeds-heading">{text(hf["heading"])}</h2>',
+        f'<p class="exp-lead">{text(hf["lead"])}</p>',
+        f'<p class="exp-note">{text(hf["status_note"])}</p>',
+        "</div>",
+        f'<ul class="harness-grid">{cards}</ul>',
+        '<div class="harness-routing">',
+        f'<h3 id="harness-routing-heading">{text(hf["routing"]["heading"])}</h3>',
+        f'<p class="harness-routing-lead">{text(hf["routing"]["lead"])}</p>',
+        f'<ol class="routing-list">{rules}</ol>',
+        "</div>",
+        "</section>",
+    ])
+
+
+def ecosystem_banner_section(explorer: dict, ecosystem: dict) -> str:
+    call = explorer["ecosystem_callout"]
+    return "\n".join([
+        '<section class="eco-banner" id="ecosystem-explorer" aria-labelledby="ecosystem-heading">',
+        '<div class="eco-banner-text">',
+        f'<p class="exp-kicker">{text(call["kicker"])}</p>',
+        f'<h2 id="ecosystem-heading">{text(call["heading"])}</h2>',
+        f'<p>{text(call["summary"])}</p>',
+        f'<p class="eco-honesty">{text(ecosystem["honesty_note"])}</p>',
+        "</div>",
+        '<div class="eco-banner-actions">',
+        f'<button class="button" type="button" data-open-ecosystem hidden>{text(call["button"])}</button>',
+        f'<a class="use-link" href="{attr(call["evidence_href"])}">{text(call["evidence_label"])}{CHEVRON}</a>',
+        "</div>",
+        "</section>",
+    ])
+
+
+def explorer_payload_script(explorer: dict, ecosystem: dict) -> str:
+    payload = {
+        "labels": explorer["labels"],
+        "harnesses": {h["id"]: h["label"] for h in explorer["harnesses"] if h["id"] != "all"},
+        "ceilings": {c["id"]: c["label"] for c in explorer["ceilings"] if c["id"] != "all"},
+        "items": explorer["items"],
+        "projects": ecosystem["projects"],
+    }
+    encoded = json.dumps(payload, ensure_ascii=False, separators=(",", ":")).replace("<", "\\u003c")
+    return f'<script type="application/json" id="agora-explorer-data">{encoded}</script>'
+
+
 def render_library(nouns: Nouns) -> str:
     """The library page: every seed pack at one pinned commit of the library, grouped by category, under the totals
-    measured at that commit. A page of Agora, not a surface; the packs are nouns and verbs, and every one is a
-    proposal. Every word comes from site/content/library.json. A category link shows only that category through
-    :target, so the filter works without a script, and the page's one style rule marks the link on show."""
-    library = nouns.library
+    measured at that commit, plus the interactive Task & Task-Object Explorer, Agent Harness Research Feeds, and the
+    Meta Hackathon 2026 Ecosystem Explorer. Every word comes from library.json, explorer.json, and
+    ecosystem-catalog.json. A category link shows only that category through :target without needing a script."""
+    library, explorer, ecosystem = nouns.library, nouns.explorer, nouns.ecosystem
     words, source, totals = library["words"], library["source"], library["totals"]
     packs = {pack["id"]: pack for pack in library["packs"]}
     commit = source["commit"]
@@ -1164,6 +1349,8 @@ def render_library(nouns: Nouns) -> str:
                        for category in library["categories"])
     tree = f"{LIBRARY_REPOSITORY}/tree/{commit}"
     receipt = f"{LIBRARY_REPOSITORY}/blob/{commit}/packs/VALIDATION.json"
+    jump_links = "".join(use_link(item, "") for item in explorer["jump_links"])
+    ext_links = "".join(use_link(item, "../") for item in words["links"])
     main = "\n".join([
         '<main id="main">',
         page_head(library["heading"], library["lead"], dateline=library["dateline"]),
@@ -1178,8 +1365,11 @@ def render_library(nouns: Nouns) -> str:
         f'<p class="lib-legend"><span class="lib-badge">{CODE_GLYPH}{text(words["badge"])}</span> '
         f'<span>{text(words["badge_note"])}</span></p>',
         "</div>",
-        f'<p class="use-links">{"".join(use_link(item, "../") for item in words["links"])}</p>',
+        f'<p class="use-links">{jump_links}{ext_links}</p>',
         "</section>",
+        explorer_section(explorer, ecosystem, library),
+        harness_feeds_section(explorer),
+        ecosystem_banner_section(explorer, ecosystem),
         '<div class="lib-groups">',
         f'<nav class="lib-filter" id="categories" aria-label="{attr(words["filter_label"])}"><ul>{"".join(filters)}'
         "</ul></nav>",
@@ -1188,7 +1378,9 @@ def render_library(nouns: Nouns) -> str:
         "</div>",
         "</main>",
     ])
-    return page_shell(library["title"], library["description"], main, extra_head=f"<style>{on_show}{{--on:1}}</style>")
+    return page_shell(library["title"], library["description"], main,
+                      extra_head=f"<style>{on_show}{{--on:1}}</style>",
+                      extra_body=explorer_payload_script(explorer, ecosystem))
 
 
 def render_not_found(nouns: Nouns) -> str:
@@ -1305,8 +1497,13 @@ def outputs_for(nouns: Nouns) -> dict[Path, str]:
     generated[SITE / "404.html"] = render_not_found(nouns)
     if set(generated) & nouns.frozen:
         fail("a frozen page is never written")
-    written = sorted(p for p in SITE.rglob("*.html")
-                     if "source" not in p.relative_to(SITE).parts and p not in generated and p not in nouns.frozen)
+    written = sorted(
+        p for p in SITE.rglob("*.html")
+        if "source" not in p.relative_to(SITE).parts
+        and p not in generated
+        and p not in nouns.frozen
+        and not ("studio" in p.relative_to(SITE).parts and "<!-- site:head -->" not in p.read_text(encoding="utf-8"))
+    )
     outputs = {path: render_page(path, content, nouns) for path, content in generated.items()}
     for path in written:
         outputs[path] = render_page(path, path.read_text(encoding="utf-8"), nouns)

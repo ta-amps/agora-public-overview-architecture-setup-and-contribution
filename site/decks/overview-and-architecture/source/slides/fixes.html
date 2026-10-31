@@ -33,7 +33,7 @@
 <div style="display:flex;align-items:center"><x-shape kind="arrow-right" style="width:44px;height:24px;background:#8A8F99"></x-shape></div>
 <div style="flex:1;background:#FFFDF8;border:2px solid #E4DED1;border-left:8px solid #2A5DB0;border-radius:16px;padding:15px 28px;display:flex;flex-direction:column;gap:6px">
 <h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#11161F">Verbs on one shared queue</h3>
-<p style="font-size:23px;line-height:1.4;color:#3B4252">Tessera splits a big job into small verbs that many workers claim, check and finish. Every claim is leased, and every result gets a receipt.</p>
+<p style="font-size:23px;line-height:1.4;color:#3B4252">The agent holding a big job splits it into small verbs that many workers claim, check and finish. Every claim is leased, and every result gets a receipt.</p>
 <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:18px;color:#5E6472">split · claim · heartbeat · submit</p>
 </div>
 </div>
@@ -44,12 +44,12 @@
 </div>
 <div style="display:flex;align-items:center"><x-shape kind="arrow-right" style="width:44px;height:24px;background:#8A8F99"></x-shape></div>
 <div style="flex:1;background:#11161F;border-radius:16px;border-left:8px solid #6FA3F0;padding:15px 28px;display:flex;flex-direction:column;gap:6px">
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#F5F2EA">It keeps learning from verified work</h3>
-<p style="font-size:23px;line-height:1.4;color:#C8D0DC">Finished verbs leave checked results. Small open models retrain on them and replace the base only when they beat it on a frozen test, so far on synthetic tasks.</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#F5F2EA">Small open models are tuned in a loop</h3>
+<p style="font-size:23px;line-height:1.4;color:#C8D0DC">A tuned model replaces its base only if it beats it on a test it never saw. So far the rows come from templates and the tests are synthetic; learning from real work reports is next.</p>
 <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:18px;color:#8C96A6">measured on the learning slide</p>
 </div>
 </div>
 <svg aria-label="ta-amps mark" width="32" height="32" viewBox="0 0 32 32" style="position:absolute;left:128px;bottom:64px;width:32px;height:32px"><rect x="0" y="0" width="14" height="14" rx="3" fill="#2A5DB0"/><rect x="18" y="0" width="14" height="14" rx="3" fill="#B8541F"/><rect x="0" y="18" width="14" height="14" rx="3" fill="#11161F"/><rect x="18" y="18" width="14" height="14" rx="3" fill="#2A5DB0"/></svg>
 <p style="position:absolute;left:176px;bottom:64px;width:1616px;font-size:24px;color:#5E6472">The idea · how it fixes each one</p>
-<aside>Each problem has a direct answer. Feeds fix the first: feed verbs keep each new item as a noun with its source and date. Today a daily check watches our own live services; feeds for new repos, papers and model releases come next. Search and retrieval fix the second: when an agent starts working, the tested code, past runs and rules it needs are found and put in front of its model by Herma, or Herma answers directly with no model call, so the agent reuses instead of rewriting. A shared queue fixes the third: Tessera splits a big job into small verbs that many workers claim, check and finish, each leased and receipted, so nobody has to babysit. And because training alone doesn’t fix any of this, the system keeps learning after deployment: finished verbs leave checked results, and small open models retrain on them and replace the base only when they beat it on a frozen test. The measured results are on the learning slide.</aside>
+<aside>Each problem has a direct answer. Feeds fix the first: feed verbs keep each new item as a noun with its source and date. Today a daily check watches our own live services; feeds for new repos, papers and model releases come next. Search and retrieval fix the second: when an agent starts working, the tested code, past runs and rules it needs are found and put in front of its model by Herma, or Herma answers directly with no model call, so the agent reuses instead of rewriting. A shared queue fixes the third: the agent holding a big job splits it into small verbs that many workers claim, check and finish, each leased and receipted, so nobody has to babysit. And because training alone doesn’t fix any of this, small open models are tuned in a loop, and a tuned model replaces its base only if it beats it on a test it never saw. So far the training rows come from templates, not from work reports or provider outputs, and the tests are synthetic; learning from real work reports is next. The measured results are on the learning slide.</aside>
 </section>
