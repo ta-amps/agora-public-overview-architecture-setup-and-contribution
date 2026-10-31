@@ -36,6 +36,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import datetime as dt
 import hashlib
 import json
 import re
@@ -51,7 +52,6 @@ FORBIDDEN = ("/home/", "tan_", "tsk_", "hmk_", "Bearer")
 # Sections of final-readback.json the replay leaves out: the access audit (hashed client addresses and request ids),
 # the queue counts, and the requester's view, which repeats the request record.
 LEFT_OUT = ("audit", "counts", "requester_view")
-HEX64 = re.compile(r"[0-9a-f]{64}\Z")
 RUN_ID = re.compile(r"\d{8}T\d{6}Z\Z")
 
 
@@ -265,7 +265,6 @@ def state_change(event: dict) -> tuple[str | None, str] | None:
 
 
 def utc(seconds: float) -> str:
-    import datetime as dt
     when = dt.datetime.fromtimestamp(seconds, dt.timezone.utc)
     return when.strftime("%Y-%m-%dT%H:%M:%S.") + f"{when.microsecond // 1000:03d}Z"
 
