@@ -188,6 +188,8 @@ class Nouns:
         self.ecosystem = load_json(CONTENT / "ecosystem-catalog.json")
         check_explorer(self.explorer, self.ecosystem)
         self.deploy = load_json(CONTENT / "deploy.json")
+        self.contribute = load_json(CONTENT / "contribute.json")
+        self.llms = load_json(CONTENT / "llms.json")
         self.drafts = load_json(CONTENT / "earlier-drafts.json")
         self.moved = load_json(CONTENT / "moved.json")
         self.manifest = load_json(MANIFEST)
@@ -1449,6 +1451,89 @@ def render_deploy(nouns: Nouns) -> str:
     return page_shell(page["title"], page["description"], main)
 
 
+def live_doors(section: dict) -> list[dict]:
+    """The doors of a section that a recorded live check showed answering. The build refuses a door without one."""
+    doors = section.get("doors", [])
+    for door in doors:
+        check = door.get("check") or {}
+        if not (200 <= int(check.get("status", 0)) < 300 and re.fullmatch(r"\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ",
+                                                                            check.get("checked_utc", ""))):
+            fail(f"contribute: the door {door.get('endpoint')} has no passing live check")
+        if not door["endpoint"].startswith("https://"):
+            fail(f"contribute: the door {door['endpoint']} is not an https address")
+    return doors
+
+
+def render_contribute(nouns: Nouns) -> str:
+    """The contribute page: the ways in that work today, each door with the live check that showed it answering.
+    A section with nothing that works yet is left out rather than promised."""
+    page = nouns.contribute
+    prefix = prefix_for(SITE / "contribute" / "index.html")
+    labels = page["copy_labels"]
+    parts = []
+    for section in page["sections"]:
+        doors = live_doors(section)
+        body = []
+        if section.get("steps"):
+            body.append('<ol class="contribute-steps">' + "".join(f"<li>{text(step)}</li>" for step in section["steps"]) + "</ol>")
+        if section.get("code"):
+            body.append(deploy_code_block(section["code_id"], section["code"], labels))
+        if section.get("repos"):
+            commands = "\n".join(section["clone_prefix"] + repo + ".git" for repo in section["repos"])
+            body.append(deploy_code_block(section["code_id"], commands, labels))
+            body.append(f'<p class="contribute-source"><a href="{link(prefix, section["source_href"])}">'
+                        f'{text(section["source_label"])}</a></p>')
+        if doors:
+            rows = "".join(
+                f'<li class="door"><span class="door-name">{text(door["name"])}</span>'
+                f'<code class="door-endpoint">{text(door["endpoint"])}</code>'
+                f'<span class="door-what">{text(door["what"])}</span>'
+                f'<span class="door-check">{text(page["checked_label"])} {text(door["check"]["checked_utc"])}: '
+                f'{text(door["check"]["method"])} {text(door["check"]["kind"])}, HTTP {int(door["check"]["status"])}</span></li>'
+                for door in doors)
+            body.append(f'<ul class="doors">{rows}</ul>')
+        if section.get("note"):
+            body.append(f'<p class="contribute-note">{text(section["note"])}</p>')
+        if not body:
+            continue  # nothing in this section works yet, so the page does not show it
+        parts.append(learn_part(section["id"], section["heading"], section["lead"], "\n".join(body)))
+    main = "\n".join([
+        '<main id="main">',
+        '<div class="wrap page-head">',
+        f'<h1>{text(page["heading"])}</h1>',
+        f'<p class="lead">{text(page["lead"])}</p>',
+        f'<p class="dateline">{text(page["dateline"])}</p>',
+        "</div>",
+        '<div class="wrap learn contribute-page">',
+        *parts,
+        "</div>",
+        "</main>",
+    ])
+    return page_shell(page["title"], page["description"], main)
+
+
+def render_llms(nouns: Nouns, built: set[Path]) -> str:
+    """Agora's llms.txt, from its noun, the endpoints noun and the pages that exist. The build refuses a page
+    the site does not have."""
+    page = nouns.llms
+    origin = page["origin"].rstrip("/") + "/"
+    lines = [f"# {page['title']}", "", f"> {page['summary']}", "", f"## {page['do_title']}", ""]
+    lines += [f"- {item}" for item in page["do"]]
+    lines += ["", f"## {page['pages_title']}", ""]
+    for item in page["pages"]:
+        target = SITE / item["path"] / "index.html"
+        if target not in built and not target.is_file():
+            fail(f"llms.txt names a page the site does not have: /{item['path']}")
+        lines.append(f"- [{item['label']}]({origin}{item['path']}): {item['what']}")
+    lines += ["", f"## {page['endpoints_title']}", ""]
+    for row in nouns.site["endpoints"]["rows"]:
+        lines.append(f"- {row['name']}: {row['what']}. MCP {row['mcp']}; llms.txt {row['llms']}")
+    lines += ["", f"## {page['source_title']}", ""] + [f"- {item}" for item in page["source"]]
+    lines += ["", f"## {page['rules_title']}", ""] + [f"- {item}" for item in page["rules"]]
+    lines += ["", f"## {page['brief_title']}", "", page["brief_note"], ""]
+    return "\n".join(lines)
+
+
 def render_not_found(nouns: Nouns) -> str:
     """One shared not-found page, as the NotFound board draws it: the missing address, where things live now, and
     the promise the worker keeps by redirecting every listed old address."""
@@ -1562,6 +1647,7 @@ def outputs_for(nouns: Nouns) -> dict[Path, str]:
     generated[SITE / "learning" / "index.html"] = render_learning(nouns)
     generated[SITE / "library" / "index.html"] = render_library(nouns)
     generated[SITE / "deploy" / "index.html"] = render_deploy(nouns)
+    generated[SITE / "contribute" / "index.html"] = render_contribute(nouns)
     generated[SITE / "404.html"] = render_not_found(nouns)
     if set(generated) & nouns.frozen:
         fail("a frozen page is never written")
@@ -1578,6 +1664,7 @@ def outputs_for(nouns: Nouns) -> dict[Path, str]:
         outputs[path] = render_page(path, path.read_text(encoding="utf-8"), nouns)
     for path, content in outputs.items():
         unique_ids(path, content)
+    outputs[SITE / "llms.txt"] = render_llms(nouns, set(outputs))
     return outputs
 
 

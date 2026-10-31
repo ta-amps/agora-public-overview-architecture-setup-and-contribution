@@ -2173,3 +2173,19 @@ pre code {
 @media (max-width: 64rem) {
   .deploy-grid { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* Contribute: the ways in that work today, each door with its live check */
+.contribute-page .learn-part { scroll-margin-top: var(--space-5); }
+.contribute-steps { margin-top: var(--space-4); padding-inline-start: 1.25rem; display: grid; gap: var(--space-2); max-width: var(--measure); }
+.doors { list-style: none; padding: 0; margin-top: var(--space-5); display: grid; gap: var(--space-3); }
+.door { display: grid; grid-template-columns: 9rem minmax(0, 1fr); gap: var(--space-1) var(--space-4); padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--color-rule-strong); border-radius: 14px; background: var(--color-paper-2); }
+.door-name { grid-row: span 3; font-weight: 600; color: var(--color-ink); }
+.door-endpoint { font-family: var(--font-mono); font-size: var(--text-small); overflow-wrap: anywhere; color: var(--color-ink); background: none; padding: 0; }
+.door-what { color: var(--color-ink-2); }
+.door-check { font-size: var(--text-micro); color: var(--color-muted); }
+.contribute-note, .contribute-source { margin-top: var(--space-4); color: var(--color-muted); font-size: var(--text-small); max-width: var(--measure); }
+@media (max-width: 40rem) {
+  .door { grid-template-columns: minmax(0, 1fr); }
+  .door-name { grid-row: auto; }
+}
