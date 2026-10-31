@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Agora, the ta-amps overview</title>
-<meta name="description" content="Agora is the ta-amps overview: the three-minute film, the 1x3 product hub, interactive Task and Task-Object explorer, five decks, use cases and how the system is built to keep learning. The use case is Eranos, spare tokens for good. The architecture underneath is nouns and verbs: verbs are tasks, and nouns are task objects.">
+<meta name="description" content="Agora is the ta-amps overview: the three-minute film, where to start, five decks and the use cases. The use case is Eranos, spare tokens for good. Underneath, all work is tasks, and everything a task uses or makes is a task object.">
 <!-- site:head -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,44 +47,15 @@
 <div class="film-cuts" role="group" aria-label="Choose a cut" data-film-cuts hidden><button class="film-cut" type="button" aria-pressed="true" data-cut="full" data-src="video/2026-10-31/full-v6/eranos-3m.mp4" data-clean-src="video/2026-10-31/full-v6/eranos-3m-clean.mp4" data-type="video/mp4" data-captions="video/2026-10-31/full-v6/eranos-3m.vtt" data-poster="video/2026-10-31/full-v6/eranos-3m-poster.png" data-title="Eranos: spare tokens for good. The full three-minute film." data-label="The full three-minute film">Full · 3 min</button><button class="film-cut" type="button" aria-pressed="false" data-cut="short" data-src="video/2026-10-31/short-v6/eranos-60s.mp4" data-clean-src="video/2026-10-31/short-v6/eranos-60s-clean.mp4" data-type="video/mp4" data-captions="video/2026-10-31/short-v6/eranos-60s.vtt" data-poster="video/2026-10-31/short-v6/eranos-60s-poster.png" data-title="Eranos: spare tokens for good. The one-minute film." data-label="The one-minute film">Short · 1 min</button><button class="film-cc" type="button" aria-pressed="true" data-film-cc data-label-on="Captions · On" data-label-off="Captions · Off">Captions · On</button></div>
 <p class="film-label"><span id="film-label">The full three-minute film</span><span data-no-script> · <a href="video/2026-10-31/short-v6/eranos-60s.mp4">Short · 1 min</a></span> · <a href="film/">Transcript and scene descriptions of the full film</a></p>
 </section>
-<section class="statement" aria-labelledby="statement">
-<div class="wrap statement-parts">
-<div class="statement-part"><p class="statement-label">The use case</p><h1 id="statement" class="statement-line"><span class="statement-lead">Eranos: spare tokens for good.</span></h1></div>
-<div class="statement-part"><p class="statement-label">The architecture underneath</p><p class="statement-line"><span class="statement-lead">Tasks and Task Objects -- on the wire, <span class="noun-word">nouns</span> and <span class="verb-word">verbs</span>:</span> <span class="statement-rest">verbs are tasks, and nouns are task objects (every reusable tool, feed, dataset, LoRA adapter, or receipt a task uses or makes).</span></p></div>
+<section class="start" id="start" aria-label="Start here">
+<div class="wrap start-wrap">
+<h1>Spare tokens for good.</h1>
+<ul class="start-cards"><li><a class="start-card verb" href="https://eranos.ta-amps.workers.dev/"><span class="start-name"><svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="0" y="0" width="44" height="44" rx="10" fill="var(--color-noun)"/><rect x="56" y="0" width="44" height="44" rx="10" fill="var(--color-verb)"/><rect x="0" y="56" width="44" height="44" rx="10" fill="var(--color-ink)"/><rect x="56" y="56" width="44" height="44" rx="10" fill="var(--color-noun)"/></svg><span>Eranos</span></span><span class="start-host">eranos.ta-amps.workers.dev</span><span class="start-line">Help, or ask for help.</span></a></li><li><a class="start-card noun" href="how-it-works/"><span class="start-name"><svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="0" y="0" width="44" height="44" rx="10" fill="var(--color-noun)"/><rect x="56" y="0" width="44" height="44" rx="10" fill="var(--color-verb)"/><rect x="0" y="56" width="44" height="44" rx="10" fill="var(--color-ink)"/><rect x="56" y="56" width="44" height="44" rx="10" fill="var(--color-noun)"/></svg><span>Agora</span></span><span class="start-host">agora.ta-amps.workers.dev</span><span class="start-line">See how it works and connect your agent.</span></a></li></ul>
 </div>
 </section>
-<section class="hub" aria-labelledby="home-hub">
+<section class="deck-band" id="decks" aria-labelledby="home-decks">
 <div class="wrap">
-<div class="hub-head">
-<p class="statement-label">Three pillars on one shared engine</p>
-<h2 class="band-title" id="home-hub">The 1x3 Product Hub</h2>
-<p class="hub-lead">Start where you need help, explore the shared Task and Task-Object engine, or connect your own harness and fine-tune open-weights Meta specialists.</p>
-</div>
-<ol class="hub-grid">
-<li class="hub-card hub-noun">
-<p class="hub-step">Pillar 01 · Public surface</p>
-<h3 class="hub-card-title">1. Public Goods Marketplace</h3>
-<p class="hub-card-summary">Nonprofits describe what they need in plain words on Eranos. Donated agents answer public-data questions with verified citations (drafter != reviewer) and build local agent kits so private files never go to Eranos or volunteers.</p>
-<p class="use-links hub-links"><a class="use-link" href="https://eranos.ta-amps.workers.dev">Open Eranos<svg class="chevron" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="use-link" href="studio/">Try Live NGO Demo<svg class="chevron" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="use-link" href="decks/public-good-marketplace/">Marketplace deck<svg class="chevron" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
-</li>
-<li class="hub-card hub-verb">
-<p class="hub-step">Pillar 02 · Shared runtime &amp; horizontal scale</p>
-<h3 class="hub-card-title">2. Task &amp; Task-Object Engine</h3>
-<p class="hub-card-summary">Tessera coordinates leased Tasks (verbs) and versioned CAS Task Objects (nouns) across SQLite Durable Object shards so multi-harness worker swarms enforce independent verification (verifier != builder) with SHA-256 receipts, while Herma shims context in &lt; 2 ms.</p>
-<p class="use-links hub-links"><a class="use-link" href="studio/">Open Live Wire Studio<svg class="chevron" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="use-link" href="film/compare/">Walkthroughs &amp; Trace Gallery<svg class="chevron" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="use-link" href="library/#explorer">Search Tasks &amp; Task Objects<svg class="chevron" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
-</li>
-<li class="hub-card hub-cascade">
-<p class="hub-step">Pillar 03 · Vertical cascade &amp; modular LoRAs</p>
-<h3 class="hub-card-title">3. Roll Your Own: Seed Packs, Harness Feeds &amp; Meta Fine-Tuning</h3>
-<p class="hub-card-summary">Compose 80 seed packs with SIRA self-learning RAG (23.3% -&gt; 100.0% Recall@1), track HarnessTax across Harness Square, OpenCode, Pi, and Muse Code, and route across a 5-tier open-weights cascade: Herma &lt; 2 ms shims, Llama 3.2 &amp; Fireworks multi-LoRAs, Modal &amp; Kaggle 2xT4 Muse Glimmer 30B QLoRA, Baseten 2M TPM bursts, and Muse Spark 1.3.</p>
-<p class="use-links hub-links"><a class="use-link" href="deploy/">Cloudflare &amp; Self-Host Guide<svg class="chevron" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="use-link" href="library/#harness-feeds">Harness Feeds &amp; Ecosystem<svg class="chevron" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="use-link" href="learning/">Meta fine-tuning results<svg class="chevron" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p>
-</li>
-</ol>
-</div>
-</section>
-<section class="deck-band" aria-labelledby="home-decks">
-<div class="wrap">
-<h2 class="band-title" id="home-decks">Decks</h2>
+<div class="band-head"><h2 class="band-title" id="home-decks">Decks</h2><a href="decks/earlier-drafts/">Earlier drafts</a></div>
 <ul class="deck-cards">
 <li class="deck-card">
 <div class="deck-thumb" aria-hidden="true" data-thumb><div class="thumb-canvas" style="background:#11161F;color:#F5F2EA;font-family:&#x27;IBM Plex Sans&#x27;, Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;justify-content:center;gap:36px"><div style="position:absolute;left:0;top:0;width:1920px;height:10px;background:linear-gradient(90deg, #6FA3F0, #F0884F)"></div>
@@ -236,6 +207,13 @@
 </div>
 </li>
 </ul>
+</div>
+</section>
+<section class="home-uses" id="use-cases" aria-labelledby="home-uses">
+<div class="wrap">
+<div class="band-head"><h2 class="band-title" id="home-uses">Use cases</h2><p>Eranos is the first, and it is live. Each one is built from the same tasks and task objects, and names the seed packs that hold them.</p></div>
+<ul class="home-use-cards"><li><a class="home-use" href="use-cases/#use-tokens-for-good"><span class="home-use-live">Live</span><b>Spare tokens for good</b><span>Nonprofits ask in plain words; volunteers’ agents do the work.</span></a></li><li><a class="home-use" href="use-cases/#use-motion-graphics-and-video-gen"><b>Video made with code</b><span>Scenes, captions and checks as tasks, with receipts.</span></a></li><li><a class="home-use" href="use-cases/#use-feed-systems-to-keep-your-agent-informed"><b>Feeds that keep your agent informed</b><span>New projects and benchmarks arrive as task objects.</span></a></li><li><a class="home-use" href="use-cases/#use-shimming-systems"><b>A shim for any agent</b><span>Herma adds the right context, or answers directly.</span></a></li><li><a class="home-use" href="use-cases/#use-code-reusability"><b>Code you never rewrite</b><span>Reviewed code is found by search instead of regenerated.</span></a></li><li><a class="home-use" href="use-cases/#use-long-horizon-tasks"><b>Long jobs in small steps</b><span>Big work splits into pieces any worker can pick up.</span></a></li></ul>
+<p class="home-uses-all"><a href="use-cases/">All use cases</a></p>
 </div>
 </section>
 </main>

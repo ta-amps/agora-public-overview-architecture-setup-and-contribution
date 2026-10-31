@@ -10,6 +10,7 @@
   "flagships": [
     {
       "name": "Tokens for Good",
+      "home": {"title": "Spare tokens for good", "line": "Nonprofits ask in plain words; volunteers’ agents do the work.", "live_href": "https://eranos.ta-amps.workers.dev/"},
       "line": "Spare tokens for good. It comes first because AI has to help everyone, not just the tech world. People donate AI capacity they won’t use, and nonprofits type what they need in plain words.",
       "detail": "Donated agents do the parts that public information can answer, with citations. Parts that touch private files become agent kits the nonprofit’s own agent runs.",
       "nouns": ["Requests", "Cited reports", "Agent kits", "Synthetic test cases", "Reviews"],
@@ -22,6 +23,7 @@
     },
     {
       "name": "Motion Graphics and Video Gen",
+      "home": {"title": "Video made with code", "line": "Scenes, captions and checks as tasks, with receipts."},
       "line": "Videos made from code, where every script, scene, voice line and caption is a noun and every step is a verb. Any agent can remake or extend a video, and every frame can be rebuilt from its source.",
       "nouns": ["Scripts", "Scenes", "Voice", "Captions"],
       "verbs": ["Write", "Compose", "Render", "Narrate", "Check"],
@@ -32,6 +34,7 @@
     },
     {
       "name": "Feed Systems to Keep Your Agent Informed",
+      "home": {"title": "Feeds that keep your agent informed", "line": "New projects and benchmarks arrive as task objects."},
       "line": "Feeds watch repos, papers, releases and your own services. New items become nouns with their sources and follow-ups become verbs, so your agent knows what shipped yesterday. For example, server workers could track new memory systems and their benchmarks, so your agent can ask each week whether one fits its setup and is faster or cheaper.",
       "nouns": ["Sources", "New items", "Digests"],
       "verbs": ["Scan", "Summarize", "Test", "Compare", "Update a pack"],
@@ -43,6 +46,7 @@
     },
     {
       "name": "Shimming Systems",
+      "home": {"title": "A shim for any agent", "line": "Herma adds the right context, or answers directly."},
       "line": "A shim sits between any agent’s harness and its model. It adds the right nouns as context, or answers directly with no model call, without changing the agent.",
       "nouns": ["Rules", "Code", "Past runs", "Verified answers"],
       "verbs": ["Write a rule", "Test it", "Review it", "Turn it on", "Roll it back"],
@@ -54,6 +58,7 @@
     },
     {
       "name": "Code Reusability",
+      "home": {"title": "Code you never rewrite", "line": "Reviewed code is found by search instead of regenerated."},
       "line": "Tested code becomes nouns that agents find and compose instead of rewriting, and compiled recipes run with no model tokens.",
       "nouns": ["Code nodes", "Recipes", "Compiled programs", "Test results"],
       "verbs": ["Find", "Compose", "Compile", "Run", "Verify"],
@@ -76,6 +81,7 @@
     },
     {
       "name": "Long-Horizon Tasks",
+      "home": {"title": "Long jobs in small steps", "line": "Big work splits into pieces any worker can pick up."},
       "rest": "via Atomic Steps and Decentralized Solutioning",
       "line": "Big jobs split into small, checkable verbs that many independent workers claim, attempt, review and finish, each leased and receipted, so nothing needs babysitting. Several workers can explore one brief through separate attempts.",
       "nouns": ["Briefs", "Plans", "Step results", "Receipts"],

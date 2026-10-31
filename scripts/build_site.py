@@ -843,60 +843,38 @@ def other_cut_links(videos: dict, default: dict) -> str:
         for cut in videos["cuts"] if cut is not default)
 
 
-def statement_parts(statement: dict) -> str:
-    """The home statement in labelled parts, such as the use case and the architecture underneath. Each part is a
-    label, then its line; the first line is the page's heading."""
-    parts = statement.get("parts")
-    if not isinstance(parts, list) or not parts:
-        fail("home.json: the statement needs at least one part")
-    out = []
-    for n, part in enumerate(parts):
-        if not part.get("label") or not part.get("lead"):
-            fail("home.json: every part of the statement needs a label and a lead")
-        rest = f' <span class="statement-rest">{keep_together(text(part["rest"]))}</span>' if part.get("rest") else ""
-        line = f'<span class="statement-lead">{mark_kinds(part["lead"])}</span>{rest}'
-        line = f'<h1 id="statement" class="statement-line">{line}</h1>' if n == 0 else f'<p class="statement-line">{line}</p>'
-        out.append(f'<div class="statement-part"><p class="statement-label">{text(part["label"])}</p>{line}</div>')
-    return "\n".join(out)
+def use_anchor(name: str) -> str:
+    """The id of a use case on the use cases page, from its name."""
+    return "use-" + re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
 
 
-def product_hub(hub: dict) -> str:
-    """The 1x3 Product Hub on the home page: Public Goods Marketplace, Task & Task-Object Engine, Roll Your Own."""
-    pillars = hub.get("pillars")
-    if not isinstance(pillars, list) or len(pillars) != 3:
-        fail("home.json: hub needs exactly three pillars")
-    cards = []
-    for idx, pillar in enumerate(pillars):
-        links = "".join(use_link(item, "") for item in pillar.get("links", []))
-        tone = ("noun", "verb", "cascade")[idx]
-        cards.append("\n".join([
-            f'<li class="hub-card hub-{tone}">',
-            f'<p class="hub-step">{text(pillar["step"])}</p>',
-            f'<h3 class="hub-card-title">{text(pillar["title"])}</h3>',
-            f'<p class="hub-card-summary">{text(pillar["summary"])}</p>',
-            f'<p class="use-links hub-links">{links}</p>',
-            "</li>",
-        ]))
-    return "\n".join([
-        '<section class="hub" aria-labelledby="home-hub">',
-        '<div class="wrap">',
-        '<div class="hub-head">',
-        f'<p class="statement-label">{text(hub["kicker"])}</p>',
-        f'<h2 class="band-title" id="home-hub">{text(hub["heading"])}</h2>',
-        f'<p class="hub-lead">{text(hub["lead"])}</p>',
-        "</div>",
-        f'<ol class="hub-grid">\n{chr(10).join(cards)}\n</ol>',
-        "</div>",
-        "</section>",
-    ])
+def film_made_ready(start: dict) -> bool:
+    """The film's production page is linked only once its production trace noun exists and says it is final."""
+    noun = ROOT / start["film_made"]["requires"]
+    return noun.is_file() and json.loads(noun.read_text(encoding="utf-8")).get("status") == "final"
 
 
 def render_home(nouns: Nouns) -> str:
+    """The home page, as the Agora-Home board lays it out: the film first, then Start here with the two public
+    sites, then the decks, then the use cases."""
     home, ui = nouns.home, nouns.site["deck"]
-    videos = home["videos"]
+    videos, start, uses = home["videos"], home["start"], home["uses"]
     video, selector = film_cuts(videos)
     others = other_cut_links(videos, video) if selector else ""
     cards = "\n".join(deck_card(deck, "", ui, 3) for deck in nouns.decks)
+    doors = "".join(
+        f'<li><a class="start-card {attr(card["tone"])}" href="{attr(card["href"])}">'
+        f'<span class="start-name">{MARK}<span>{text(card["name"])}</span></span>'
+        f'<span class="start-host">{text(card["host"])}</span>'
+        f'<span class="start-line">{text(card["line"])}</span></a></li>'
+        for card in start["cards"])
+    made = (f'<p class="start-made"><a href="{attr(start["film_made"]["href"])}">{text(start["film_made"]["label"])}</a></p>'
+            if film_made_ready(start) else "")
+    use_cards = "".join(
+        f'<li><a class="home-use" href="use-cases/#{use_anchor(item["name"])}">'
+        + (f'<span class="home-use-live">{text(uses["live"])}</span>' if item["home"].get("live_href") else "")
+        + f'<b>{text(item["home"]["title"])}</b><span>{text(item["home"]["line"])}</span></a></li>'
+        for item in nouns.uses["flagships"] if item.get("home"))
     main = "\n".join(filter(None, [
         '<main id="main">',
         f'<section class="film{" has-cuts" if selector else ""}" aria-labelledby="film-label">',
@@ -920,16 +898,26 @@ def render_home(nouns: Nouns) -> str:
         + (f' · <a href="{attr(videos["outline"]["href"])}">{text(videos["outline"]["label"])}</a>' if videos.get("outline") else "")
         + "</p>",
         "</section>",
-        '<section class="statement" aria-labelledby="statement">',
-        '<div class="wrap statement-parts">',
-        statement_parts(home["statement"]),
+        f'<section class="start" id="start" aria-label="{attr(start["label"])}">',
+        '<div class="wrap start-wrap">',
+        f'<h1>{text(start["heading"])}</h1>',
+        f'<ul class="start-cards">{doors}</ul>',
+        made,
         "</div>",
         "</section>",
-        product_hub(home["hub"]),
-        '<section class="deck-band" aria-labelledby="home-decks">',
+        '<section class="deck-band" id="decks" aria-labelledby="home-decks">',
         '<div class="wrap">',
-        f'<h2 class="band-title" id="home-decks">{text(home["decks_heading"])}</h2>',
+        f'<div class="band-head"><h2 class="band-title" id="home-decks">{text(home["decks_heading"])}</h2>'
+        f'<a href="{attr(home["drafts"]["href"])}">{text(home["drafts"]["label"])}</a></div>',
         f'<ul class="deck-cards">\n{cards}\n</ul>',
+        "</div>",
+        "</section>",
+        '<section class="home-uses" id="use-cases" aria-labelledby="home-uses">',
+        '<div class="wrap">',
+        f'<div class="band-head"><h2 class="band-title" id="home-uses">{text(uses["heading"])}</h2>'
+        f'<p>{text(uses["lead"])}</p></div>',
+        f'<ul class="home-use-cards">{use_cards}</ul>',
+        f'<p class="home-uses-all"><a href="use-cases/">{text(uses["all"])}</a></p>',
         "</div>",
         "</section>",
         "</main>",
@@ -1124,7 +1112,7 @@ def flagship_card(item: dict, uses: dict, library: dict, prefix: str, lead: bool
         links = "".join(use_link(link, prefix) for link in item["links"])
     detail = f'<p class="use-detail">{text(item["detail"])}</p>' if item.get("detail") else ""
     return "\n".join([
-        f'<li class="use-card{" use-lead" if lead else ""}">',
+        f'<li class="use-card{" use-lead" if lead else ""}" id="{use_anchor(item["name"])}">',
         '<div class="use-head">',
         f"<h2>{text(item['name'])}{rest}</h2>",
         f'<div class="use-text"><p class="use-line">{text(item["line"])}</p>{detail}</div>',
