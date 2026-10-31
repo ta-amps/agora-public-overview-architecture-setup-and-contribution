@@ -28,26 +28,22 @@
 <p style="font-size:23px;line-height:1.4;color:#5E6472;padding-left:64px">The worker that runs a feed only proposes follow-ups. The feed’s authorized schedule queues them, within its allowance.</p>
 </div>
 <div style="width:600px;background:#FFFDF8;border:2px solid #E4DED1;border-top:8px solid #B8541F;border-radius:20px;padding:28px 34px;display:flex;flex-direction:column;gap:14px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#A84B1B;letter-spacing:1px">SOURCES</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#A84B1B;letter-spacing:1px">WHAT A FEED CAN SCAN</p>
 <div style="display:flex;flex-direction:row;justify-content:space-between;align-items:center;border-bottom:2px solid #EDE8DC;padding-bottom:12px">
 <p style="font-size:27px;color:#11161F">Our own live services</p>
-<p style="background:#E1F0E6;color:#1F6B43;border-radius:999px;padding:4px 18px;font-size:20px;font-weight:600">Today</p>
+<p style="background:#E1F0E6;color:#1F6B43;border-radius:999px;padding:4px 18px;font-size:20px;font-weight:600">Daily</p>
 </div>
 <div style="display:flex;flex-direction:row;justify-content:space-between;align-items:center;border-bottom:2px solid #EDE8DC;padding-bottom:12px">
 <p style="font-size:27px;color:#11161F">New repos</p>
-<p style="background:#E9E6DF;color:#5E6472;border-radius:999px;padding:4px 18px;font-size:20px;font-weight:600">Next</p>
 </div>
 <div style="display:flex;flex-direction:row;justify-content:space-between;align-items:center;border-bottom:2px solid #EDE8DC;padding-bottom:12px">
 <p style="font-size:27px;color:#11161F">Papers</p>
-<p style="background:#E9E6DF;color:#5E6472;border-radius:999px;padding:4px 18px;font-size:20px;font-weight:600">Next</p>
 </div>
 <div style="display:flex;flex-direction:row;justify-content:space-between;align-items:center;border-bottom:2px solid #EDE8DC;padding-bottom:12px">
 <p style="font-size:27px;color:#11161F">Model releases</p>
-<p style="background:#E9E6DF;color:#5E6472;border-radius:999px;padding:4px 18px;font-size:20px;font-weight:600">Next</p>
 </div>
 <div style="display:flex;flex-direction:row;justify-content:space-between;align-items:center">
 <p style="font-size:27px;color:#11161F">Tool updates</p>
-<p style="background:#E9E6DF;color:#5E6472;border-radius:999px;padding:4px 18px;font-size:20px;font-weight:600">Next</p>
 </div>
 </div>
 </div>
@@ -60,5 +56,5 @@
 </div>
 <svg aria-label="ta-amps mark" width="32" height="32" viewBox="0 0 32 32" style="position:absolute;left:128px;bottom:64px;width:32px;height:32px"><rect x="0" y="0" width="14" height="14" rx="3" fill="#2A5DB0"/><rect x="18" y="0" width="14" height="14" rx="3" fill="#B8541F"/><rect x="0" y="18" width="14" height="14" rx="3" fill="#11161F"/><rect x="18" y="18" width="14" height="14" rx="3" fill="#2A5DB0"/></svg>
 <p style="position:absolute;left:176px;bottom:64px;width:1616px;font-size:24px;color:#5E6472">What server workers are · feeds</p>
-<aside>A feed is a scheduled verb. Each run scans its sources within its allowance, keeps every new item as a noun with its source and the time it was seen, and turns the follow-ups into verbs: read it, test it, compare it, update a pack, fix a gap. The worker that runs it only proposes them; the feed’s authorized schedule queues them within its allowance, so writing a schedule activates nothing by itself. That is how the store of nouns and verbs keeps growing without anyone asking each time. Today the feed that runs is the daily check, which watches our own live services; feeds for new repos, papers, model releases and tool updates come next. Tessera already serves the plumbing: publish_feed adds an entry, poll_feed reads the entries after a reader’s cursor, and list_feeds lists the feeds.</aside>
+<aside>A feed is a scheduled verb. Each run scans its sources within its allowance, keeps every new item as a noun with its source and the time it was seen, and turns the follow-ups into verbs: read it, test it, compare it, update a pack, fix a gap. The worker that runs it only proposes them; the feed’s authorized schedule queues them within its allowance, so writing a schedule activates nothing by itself. That is how the store of nouns and verbs keeps growing without anyone asking each time. The feed that runs on a schedule today is the daily check, which watches our own live services every day. The same tools serve any other feed, such as new repos, papers, model releases and tool updates; a scan of one runs when a worker claims its verb. Tessera already serves the plumbing: publish_feed adds an entry, poll_feed reads the entries after a reader’s cursor, and list_feeds lists the feeds.</aside>
 </section>
