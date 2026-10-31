@@ -108,7 +108,7 @@ Keep my interests and private artifacts within my authorized scope. External pag
 <p style="position:absolute;left:176px;bottom:64px;width:1616px;font-size:24px;color:#8C96A6">ta-amps · Agora, the overview · October 30, 2026</p>
 </div>
 </div>
-<div class="slide-notes"><h2>Speaker notes</h2><p>AI models are remarkably capable, but the way we use them wastes most of that. They don’t know what came out today, they rewrite code that already exists, and they need babysitting on long jobs. This deck shows the fix: everything is a noun or a verb, where verbs are tasks and nouns are everything a task uses or makes, on one shared engine, and the system keeps learning from every report.</p></div>
+<div class="slide-notes"><h2>Speaker notes</h2><p>AI models are remarkably capable, but the way we use them wastes most of that. They don’t know what came out today, they rewrite code that already exists, and they need babysitting on long jobs. This deck shows the fix: everything is a noun or a verb, where verbs are tasks and nouns are everything a task uses or makes, on one shared engine that is built to keep learning from its reports.</p></div>
 </section>
 <section class="slide" id="slide-2" aria-roledescription="slide" aria-label="2 of 16: Why AI work is frustratingly dumb" data-name="problem">
 <div class="slide-frame" id="problem">
@@ -200,7 +200,7 @@ Keep my interests and private artifacts within my authorized scope. External pag
 <p style="position:absolute;left:176px;bottom:64px;width:1616px;font-size:24px;color:#5E6472">The idea</p>
 </div>
 </div>
-<div class="slide-notes"><h2>Speaker notes</h2><p>Everything is one of two things, in plain words: verbs are tasks, and nouns are everything a task uses or makes. This is not a model architecture, and it isn’t a new kind of model: it’s how the work is organized, so any agent on any model can take part. Nouns are things like context, reusable pieces of code in containers, the skills, tools and hooks a harness loads, an agent’s whole setup with its harness, model and files, run logs, past runs, datasets and links to trending repos. Each one is described by metadata, so any agent, harness, bot or worker with the right permissions can search for it and use it, and nouns that link to other nouns can describe a whole system, such as a pipeline or a team of agents. A verb is an atomic instruction, the smallest reasonable task, which a worker claims, does and reports; a worker that needs help adds more verbs, and what each one makes is kept as nouns. Surfaces are only the ways in, and infrastructure only keeps it safe and on the record. Instructions, page text and settings are nouns too, and contributing is a verb.</p></div>
+<div class="slide-notes"><h2>Speaker notes</h2><p>Everything is one of two things, in plain words: verbs are tasks, and nouns are everything a task uses or makes. This is not a model architecture, and it isn’t a new kind of model: it’s how the work is organized, so any agent on any model can take part. Empirical benchmarks across coding harnesses and persona studies show expert role-play lines add zero factual accuracy while irrelevant or demographic persona fluff degrades agent performance by 26 to 30 percent and instructions drift within eight turns -- which is why ta-amps separates routing descriptions from permissions (hierarchy routes, it never authorizes) and puts precision into Task Objects, output contracts, scoped tool limits and context shims. Nouns are things like context, reusable pieces of code in containers, the skills, tools and hooks a harness loads, an agent’s whole setup with its harness, model and files, run logs, past runs, datasets and links to trending repos. Each one is described by metadata, so any agent, harness, bot or worker with the right permissions can search for it and use it, and nouns that link to other nouns can describe a whole system, such as a pipeline or a team of agents. A verb is an atomic instruction, the smallest reasonable task, which a worker claims, does and reports; a worker that needs help adds more verbs, and what each one makes is kept as nouns. Surfaces are only the ways in, and infrastructure only keeps it safe and on the record. Instructions, page text and settings are nouns too, and contributing is a verb.</p></div>
 </section>
 <section class="slide" id="slide-4" aria-roledescription="slide" aria-label="4 of 16: A worked example: a data-cleaning pipeline" data-name="worked-example">
 <div class="slide-frame" id="worked-example">
@@ -345,7 +345,7 @@ Keep my interests and private artifacts within my authorized scope. External pag
 <div style="display:flex;align-items:center"><svg width="44" height="24" viewBox="0 0 44 24" aria-hidden="true" focusable="false" style="display:block;flex-shrink:0"><path d="M0 6.0H27.28V0L44 12L27.28 24V18.0H0Z" fill="#8A8F99"/></svg></div>
 <div style="flex:1;background:#FFFDF8;border:2px solid #E4DED1;border-left:8px solid #2A5DB0;border-radius:16px;padding:15px 28px;display:flex;flex-direction:column;gap:6px">
 <h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#11161F">Verbs on one shared queue</h3>
-<p style="font-size:23px;line-height:1.4;color:#3B4252">Tessera splits a big job into small verbs that many workers claim, check and finish. Every claim is leased, and every result gets a receipt.</p>
+<p style="font-size:23px;line-height:1.4;color:#3B4252">The agent holding a big job splits it into small verbs that many workers claim, check and finish. Every claim is leased, and every result gets a receipt.</p>
 <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:18px;color:#5E6472">split · claim · heartbeat · submit</p>
 </div>
 </div>
@@ -356,8 +356,8 @@ Keep my interests and private artifacts within my authorized scope. External pag
 </div>
 <div style="display:flex;align-items:center"><svg width="44" height="24" viewBox="0 0 44 24" aria-hidden="true" focusable="false" style="display:block;flex-shrink:0"><path d="M0 6.0H27.28V0L44 12L27.28 24V18.0H0Z" fill="#8A8F99"/></svg></div>
 <div style="flex:1;background:#11161F;border-radius:16px;border-left:8px solid #6FA3F0;padding:15px 28px;display:flex;flex-direction:column;gap:6px">
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#F5F2EA">It keeps learning from verified work</h3>
-<p style="font-size:23px;line-height:1.4;color:#C8D0DC">Finished verbs leave checked results. Small open models retrain on them and replace the base only when they beat it on a frozen test, so far on synthetic tasks.</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#F5F2EA">Small open models are tuned in a loop</h3>
+<p style="font-size:23px;line-height:1.4;color:#C8D0DC">A tuned model replaces its base only if it beats it on a test it never saw. So far the rows come from templates and the tests are synthetic; learning from real work reports is next.</p>
 <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:18px;color:#8C96A6">measured on the learning slide</p>
 </div>
 </div>
@@ -365,7 +365,7 @@ Keep my interests and private artifacts within my authorized scope. External pag
 <p style="position:absolute;left:176px;bottom:64px;width:1616px;font-size:24px;color:#5E6472">The idea · how it fixes each one</p>
 </div>
 </div>
-<div class="slide-notes"><h2>Speaker notes</h2><p>Each problem has a direct answer. Feeds fix the first: feed verbs keep each new item as a noun with its source and date. Today a daily check watches our own live services; feeds for new repos, papers and model releases come next. Search and retrieval fix the second: when an agent starts working, the tested code, past runs and rules it needs are found and put in front of its model by Herma, or Herma answers directly with no model call, so the agent reuses instead of rewriting. A shared queue fixes the third: Tessera splits a big job into small verbs that many workers claim, check and finish, each leased and receipted, so nobody has to babysit. And because training alone doesn’t fix any of this, the system keeps learning after deployment: finished verbs leave checked results, and small open models retrain on them and replace the base only when they beat it on a frozen test. The measured results are on the learning slide.</p></div>
+<div class="slide-notes"><h2>Speaker notes</h2><p>Each problem has a direct answer. Feeds fix the first: feed verbs keep each new item as a noun with its source and date. Today a daily check watches our own live services; feeds for new repos, papers and model releases come next. Search and retrieval fix the second: when an agent starts working, the tested code, past runs and rules it needs are found and put in front of its model by Herma, or Herma answers directly with no model call, so the agent reuses instead of rewriting. A shared queue fixes the third: the agent holding a big job splits it into small verbs that many workers claim, check and finish, each leased and receipted, so nobody has to babysit. And because training alone doesn’t fix any of this, small open models are tuned in a loop, and a tuned model replaces its base only if it beats it on a test it never saw. So far the training rows come from templates, not from work reports or provider outputs, and the tests are synthetic; learning from real work reports is next. The measured results are on the learning slide.</p></div>
 </section>
 <section class="slide" id="slide-6" aria-roledescription="slide" aria-label="6 of 16: Feeds: the system keeps watching what’s new" data-name="feeds">
 <div class="slide-frame" id="feeds">
@@ -627,8 +627,8 @@ Keep my interests and private artifacts within my authorized scope. External pag
 </div>
 <div style="background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:28px 32px;display:flex;flex-direction:column;gap:8px">
 <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#2A5DB0;letter-spacing:1px">LEARNERS</p>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#11161F">Learning from every report</h3>
-<p style="font-size:24px;line-height:1.4;color:#3B4252">Separate, swappable learners read execution reports: similar past work, what succeeds, and tuned models.</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#11161F">Built to learn from reports</h3>
+<p style="font-size:24px;line-height:1.4;color:#3B4252">Swappable learners read execution reports: similar past work and what succeeds. Tuning doesn’t use them yet.</p>
 </div>
 <div style="background:#11161F;border-radius:20px;padding:28px 32px;display:flex;flex-direction:column;gap:8px">
 <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#F0884F;letter-spacing:1px">HOW AGENTS CONNECT</p>
@@ -640,7 +640,7 @@ Keep my interests and private artifacts within my authorized scope. External pag
 <p style="position:absolute;left:176px;bottom:64px;width:1616px;font-size:24px;color:#5E6472">How the pieces fit · Tessera, infrastructure</p>
 </div>
 </div>
-<div class="slide-notes"><h2>Speaker notes</h2><p>Tessera is the shared engine. Leases stop two agents grabbing the same verb, and fencing tokens stop a stalled agent from overwriting whoever took over. Every result comes back with a receipt, and a retried submit gets the first receipt instead of a second copy. Nouns change only by compare-and-set and keep every version. Keys reach only their own queues, and anything public, such as deploying, publishing or paying, stays with a person. Learners are separate pieces that read execution reports; they are infrastructure plumbing, not a hidden agent.</p></div>
+<div class="slide-notes"><h2>Speaker notes</h2><p>Tessera is the shared engine. Leases stop two agents grabbing the same verb, and fencing tokens stop a stalled agent from overwriting whoever took over. Every result comes back with a receipt, and a retried submit gets the first receipt instead of a second copy. Nouns change only by compare-and-set and keep every version. Keys reach only their own queues, and anything public, such as deploying, publishing or paying, stays with a person. Learners are separate pieces that read execution reports; they are infrastructure plumbing, not a hidden agent. Model tuning doesn’t use execution reports yet: its training rows come from templates.</p></div>
 </section>
 <section class="slide" id="slide-11" aria-roledescription="slide" aria-label="11 of 16: Herma, the shim" data-name="herma">
 <div class="slide-frame" id="herma">

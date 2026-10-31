@@ -51,6 +51,26 @@
       "path": "video/2026-10-30/full-v2/eranos-3m-poster.png",
       "sha256": "bb9dc69c7aac53e6bfb74a4273ee8b29736d402c04b0245a8a52cbdf9ee961d3",
       "bytes": 256475
+    },
+    {
+      "path": "video/2026-10-30/hub-v3/threejs-hub-90s.mp4",
+      "sha256": "fd5d1f5b15fc0c3fe5c8ca23678e4ca660bfd3762501731f6441f318533b790d",
+      "bytes": 9044307
+    },
+    {
+      "path": "video/2026-10-30/hub-v3/threejs-hub-90s-poster.png",
+      "sha256": "37dcbc1482581b90e8d2beb0d4c9a5f64c4235aa7d5ec2f90351fee1baaae585",
+      "bytes": 369741
+    },
+    {
+      "path": "video/2026-10-30/hub-v3/meta-frontier-60s.mp4",
+      "sha256": "43885e2986efc4f177159a7383d448eda985a3b6072447305f4cb1ce5a6a0817",
+      "bytes": 5969477
+    },
+    {
+      "path": "video/2026-10-30/hub-v3/meta-frontier-60s-poster.png",
+      "sha256": "c81cfa8191f83edf0a0e3c578e4ee6cfe10c5bea0119833ef83ebf838c0e6368",
+      "bytes": 151375
     }
   ]
 }

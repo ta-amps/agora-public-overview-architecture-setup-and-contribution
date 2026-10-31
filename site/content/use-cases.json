@@ -37,7 +37,8 @@
       "verbs": ["Scan", "Summarize", "Test", "Compare", "Update a pack"],
       "packs": ["tool-discovery", "freshness-checks", "benchmark-scores", "policy-and-law-watch"],
       "links": [
-        {"href": "decks/overview-and-architecture/#feeds", "label": "How feeds work"}
+        {"href": "decks/overview-and-architecture/#feeds", "label": "How feeds work"},
+        {"href": "library/#harness-feeds", "label": "Agent harness research feeds"}
       ]
     },
     {
@@ -47,7 +48,8 @@
       "verbs": ["Write a rule", "Test it", "Review it", "Turn it on", "Roll it back"],
       "packs": ["retrieval-triggers-and-reuse", "atomic-step-contract", "harness-onboarding-e2e"],
       "links": [
-        {"href": "decks/overview-and-architecture/#herma", "label": "How Herma works"}
+        {"href": "decks/overview-and-architecture/#herma", "label": "How Herma works"},
+        {"href": "library/#explorer", "label": "Search tasks and task objects"}
       ]
     },
     {
@@ -63,12 +65,13 @@
     },
     {
       "name": "Continuous Learning",
-      "line": "Every finished verb leaves a verified result. Learners turn those results into memory and routing advice, and small open models retrain on them, replacing the base only when they beat it on a frozen test.",
-      "nouns": ["Verified results", "Memory", "Routing advice", "Frozen tests", "Tuned models"],
+      "line": "Every finished verb leaves a result with a receipt. Learners turn those results into memory and routing advice, and small open models are tuned on checked examples, replacing the base only when they beat it on a test they never saw.",
+      "nouns": ["Checked results", "Memory", "Routing advice", "Frozen tests", "Tuned models"],
       "verbs": ["Curate", "Train", "Evaluate", "Compare", "Decide"],
       "packs": ["continuous-tuning", "evaluation-design", "retrieval-triggers-and-reuse"],
       "links": [
-        {"href": "learning/", "label": "The Learning page"}
+        {"href": "learning/", "label": "The Learning page"},
+        {"href": "library/#explorer", "label": "Search tasks and task objects"}
       ]
     },
     {
@@ -79,7 +82,8 @@
       "verbs": ["Split", "Claim", "Attempt", "Review", "Finish"],
       "packs": ["decomposition-patterns", "atomic-step-contract", "unattended-run-record", "status-and-handoff"],
       "links": [
-        {"href": "decks/overview-and-architecture/#tessera", "label": "How Tessera works"}
+        {"href": "decks/overview-and-architecture/#tessera", "label": "How Tessera works"},
+        {"href": "library/#explorer", "label": "Search tasks and task objects"}
       ]
     }
   ],

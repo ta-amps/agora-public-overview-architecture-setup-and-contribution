@@ -8,6 +8,7 @@ repository's CI, which installs nothing beyond the standard library. Run them lo
 from __future__ import annotations
 
 import json
+import os
 import threading
 import unittest
 from functools import partial
@@ -54,7 +55,8 @@ class LocalSite(unittest.TestCase):
         cls.base = f"http://127.0.0.1:{cls.server.server_port}/"
         cls.playwright = sync_playwright().start()
         try:
-            cls.browser = cls.playwright.chromium.launch()
+            launch = {"executable_path": os.environ["CHROMIUM_PATH"]} if os.environ.get("CHROMIUM_PATH") else {}
+            cls.browser = cls.playwright.chromium.launch(**launch)
         except Exception as error:  # pragma: no cover - no browser installed
             cls.playwright.stop()
             cls.server.shutdown()
@@ -306,14 +308,32 @@ class SitePages(LocalSite):
                          (state["pressed"], state["src"], state["search"], state["captions"]))
         # The viewer turns captions off; switching cuts keeps them off. Before: they came back on.
         page.evaluate("Array.from(document.querySelector('.film-video').textTracks).forEach(t => { t.mode = 'hidden'; })")
-        page.click("[data-cut=full]")
+        page.click("[data-cut=hub3d]")
         state = self.cut(page)
-        self.assertEqual(("full", "", ["hidden"]), (state["pressed"], state["search"], state["captions"]))
+        self.assertEqual(("hub3d", "", ["hidden"]), (state["pressed"], state["search"], state["captions"]))
         page.click("[data-cut=short]")
         self.assertEqual("?cut=short", self.cut(page)["search"])
         # An unknown cut opens the default one.
         page = self.open("?cut=nope", viewport={"width": 1280, "height": 800})
-        self.assertEqual(("full", ["showing"]), (self.cut(page)["pressed"], self.cut(page)["captions"]))
+        self.assertEqual(("hub3d", ["showing"]), (self.cut(page)["pressed"], self.cut(page)["captions"]))
+
+    def test_library_explorer_filters_and_switches_to_707_ecosystem_offline(self):
+        page = self.open("library/", viewport={"width": 1280, "height": 900})
+        page.wait_for_function("!document.querySelector('[data-exp-controls]').hidden")
+        initial_status = page.locator("[data-exp-status]").text_content()
+        self.assertIn("Seed Packs", initial_status)
+        self.assertEqual(36, page.locator("[data-exp-results] .exp-card").count())
+        page.select_option("[data-exp-kind]", "verb")
+        self.assertIn("0 Seed Packs", page.locator("[data-exp-status]").text_content())
+        page.select_option("[data-exp-harness]", "harness-square")
+        self.assertGreater(page.locator("[data-exp-results] .exp-card").count(), 0)
+        page.click("[data-exp-reset]")
+        page.click("[data-exp-tab=ecosystem]")
+        eco_status = page.locator("[data-exp-status]").text_content()
+        self.assertIn("707 matching Meta Hackathon 2026 repositories", eco_status)
+        page.fill("[data-exp-query]", "sam")
+        self.assertGreater(page.locator("[data-exp-results] .exp-card").count(), 0)
+        self.assertFalse(page.evaluate("document.documentElement.scrollWidth > innerWidth"))
 
 
 if __name__ == "__main__":

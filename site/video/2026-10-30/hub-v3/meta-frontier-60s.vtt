@@ -1,0 +1,46 @@
+WEBVTT
+
+NOTE sequence=meta-frontier-60s aspect=landscape_16x9
+
+f01
+00:00:00.600 --> 00:00:04.633 line:82% position:50% align:center
+AI is smart. The way we use it
+is frustratingly dumb.
+
+f02
+00:00:07.067 --> 00:00:11.933 line:82% position:50% align:center
+Pre-training alone forgets updates,
+and keeps rewriting existing tools.
+
+f03
+00:00:14.267 --> 00:00:19.300 line:82% position:50% align:center
+On Eranos, Meta Muse Code and
+nanoMuse on Muse Spark build kits.
+
+f04
+00:00:21.500 --> 00:00:24.300 line:82% position:50% align:center
+The builder can never approve
+its own kit.
+
+f05a
+00:00:26.733 --> 00:00:30.733 line:82% position:50% align:center
+On dual T4s, Meta Glimmer 30B QLoRA
+
+f05b
+00:00:30.833 --> 00:00:34.900 line:82% position:50% align:center
+hit 99.3% on synthetic holdout.
+
+f06
+00:00:37.167 --> 00:00:43.700 line:82% position:50% align:center
+Llama 3.2 1B and 3B LoRAs pair with
+Herma's shim on synthetic tests.
+
+f07
+00:00:46.100 --> 00:00:51.233 line:82% position:50% align:center
+This video was made the same way,
+checked by Meta SAM and wav2vec2.
+
+f08
+00:00:52.200 --> 00:00:57.300 line:82% position:50% align:center
+Twelve SHA-256 receipts verify
+every step at Eranos.

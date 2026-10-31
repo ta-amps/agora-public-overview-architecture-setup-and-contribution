@@ -1,9 +1,9 @@
 {
   "about": "The learning page, as one noun: what continuous learning means here, the loop, the measured results with their evidence, the safety rules, the limits and how to run it. scripts/build_site.py renders it into site/learning/index.html. Its numbers are measured claims of the learning deck, site/decks/continuous-learning/source/claims.json, and a test keeps the two equal.",
   "title": "Learning | ta-amps",
-  "description": "How ta-amps keeps learning after deployment: learners turn execution reports into memory, path statistics and routing advice, and small open models are tuned on checked examples. The loop, measured results, safety rules, limits and how to run it.",
+  "description": "How ta-amps is built to keep learning after deployment: learners turn execution reports into memory, path statistics and routing advice, and small open models are tuned on synthetic examples made from templates, not on real work so far. The loop, measured results, safety rules, limits and how to run it.",
   "heading": "Learning",
-  "lead": "Every finished verb leaves a checked result. This is how the system learns from those results after it ships, what has been measured so far, and the rules that keep it honest.",
+  "lead": "Every finished verb leaves a result with a receipt. This is how the system is built to learn from those results after it ships, what has been measured so far, and the rules that keep it honest.",
   "dateline": "Results from synthetic tasks, measured on October 29, 2026. Nothing here has been promoted, admitted or deployed.",
   "deck": {
     "href": "decks/continuous-learning/",
@@ -29,7 +29,7 @@
       {
         "kind": "verb",
         "name": "Tuning after deployment",
-        "text": "Small open models are tuned on checked examples of one job, and a tuned model replaces its base only when a rule fixed in advance says it wins. So far the examples are synthetic."
+        "text": "Small open models are tuned on checked examples of one job, and a tuned model replaces its base only when a rule fixed in advance says it wins. So far the examples are synthetic, made from templates, and none come from real work reports."
       }
     ],
     "note": "Learning is nouns and verbs too: an authorized worker claims each learner run and each tuning step, and everything they write is a versioned noun. There is no hidden learning service."
