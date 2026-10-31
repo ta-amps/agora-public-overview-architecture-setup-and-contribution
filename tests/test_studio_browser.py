@@ -158,6 +158,12 @@ class Studio(unittest.TestCase):
         cls.server.shutdown()
         cls.server.server_close()
 
+    def setUp(self):
+        self.page_errors = []
+
+    def tearDown(self):
+        self.assertEqual([], self.page_errors, "the page threw")
+
     def open(self, fake, cached=None):
         ctx = self.browser.new_context(viewport={"width": 1440, "height": 900})
         self.addCleanup(ctx.close)
@@ -165,6 +171,7 @@ class Studio(unittest.TestCase):
             ctx.add_init_script("localStorage.setItem('ta_amps_demo_session_v1', %s)" % json.dumps(json.dumps(cached)))
         page = ctx.new_page()
         page.set_default_timeout(WAIT_MS)
+        page.on("pageerror", lambda error: self.page_errors.append(str(error)))
 
         def handle(route, request):
             url = urlsplit(request.url)

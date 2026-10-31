@@ -2323,11 +2323,11 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       pathFn: nsPath("/v1/tasks"),
       body: {
         queue: "demo.echo",
-        kind: "verb.verify_kit_fixture",
+        kind: "verb.lab_echo",
         priority: 92,
         brief: {
           synthetic: true,
-          target_fixture: "FX-CLINIC-ESCALATE",
+          note: "worker lab: lease, compare-and-set and fencing mechanics",
           seq: seq
         }
       }
@@ -2339,14 +2339,14 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     upsertTask({
       task_id: tid,
       queue: "demo.echo",
-      kind: "verb.verify_kit_fixture",
+      kind: "verb.lab_echo",
       last: "enqueued (HTTP " + res.status + ")",
       tone: "queued"
     });
     $("worker-btn-1").classList.add("is-done");
     updateWorkerTelemetryUI();
     const message = "Tessera queued task " + tid + " in demo.echo.";
-    appendWorkerEvent("[1] Enqueued verb.verify_kit_fixture", statusPill(res), message);
+    appendWorkerEvent("[1] Enqueued verb.lab_echo", statusPill(res), message);
     return { ok: true, res: res, message: message };
   }
 
@@ -2368,7 +2368,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       body: {
         queue: "demo.echo",
         worker: BROWSER_WORKER_ID,
-        kinds: ["verb.verify_kit_fixture"]
+        kinds: ["verb.lab_echo"]
       }
     });
     if (!res.ok) return workerFail("[2] Claim failed", res, failureText(res));
@@ -2378,7 +2378,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       return workerFail(
         "[2] Nothing to claim",
         res,
-        "Tessera answered HTTP " + res.status + " without a lease: no ready verb.verify_kit_fixture in demo.echo. Run step 1 to enqueue one."
+        "Tessera answered HTTP " + res.status + " without a lease: no ready verb.lab_echo in demo.echo. Run step 1 to enqueue one."
       );
     }
     const l = res.data;
@@ -2403,7 +2403,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     upsertTask({
       task_id: l.task_id,
       queue: "demo.echo",
-      kind: "verb.verify_kit_fixture",
+      kind: "verb.lab_echo",
       last: "leased (HTTP " + res.status + ")",
       tone: "leased",
       fencing_token: l.fencing_token,
@@ -2457,14 +2457,13 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       if (!c.ok) return c;
     }
     const lease = state.workerLab.activeLease;
-    const casKey = "verified-obj-" + state.runId + "-" + String(++state.workerLab.casSeq).padStart(2, "0");
+    const casKey = "lab-noun-" + state.runId + "-" + String(++state.workerLab.casSeq).padStart(2, "0");
     const recordPath = nsPath("/v1/stores/demo.artifacts/records/" + casKey);
 
     const valV1 = {
-      category: "noun.evaluation",
+      category: "noun.lab_record",
       synthetic: true,
-      fixture_id: "FX-CLINIC-ESCALATE",
-      stage: "initial_draft",
+      stage: "first_write",
       worker: BROWSER_WORKER_ID
     };
     const rV1 = await tesseraAuthedFetch({
@@ -2481,10 +2480,9 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     const v1 = rV1.data.version;
 
     const valV2 = {
-      category: "noun.evaluation",
+      category: "noun.lab_record",
       synthetic: true,
-      fixture_id: "FX-CLINIC-ESCALATE",
-      stage: "verified_pass",
+      stage: "second_write",
       fencing_token: lease.fencing_token,
       worker: BROWSER_WORKER_ID
     };
@@ -2507,7 +2505,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     state.workerLab.casPrevVersion = v1;
     upsertNoun({
       store: "demo.artifacts",
-      category: "noun.evaluation",
+      category: "noun.lab_record",
       key: casKey,
       version: v2,
       sha256: shaV2,
@@ -2607,7 +2605,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       body: {
         expected_version: staleVersion,
         value: {
-          category: "noun.evaluation",
+          category: "noun.lab_record",
           synthetic: true,
           worker: BROWSER_WORKER_ID,
           stale_overwrite: true,
