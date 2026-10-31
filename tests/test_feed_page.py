@@ -2,10 +2,14 @@
 from __future__ import annotations
 
 import copy
-import re
+import importlib.util
 import unittest
+from pathlib import Path
 
-from test_build_site import build
+ROOT = Path(__file__).resolve().parents[1]
+SPEC = importlib.util.spec_from_file_location("build_site_feed", ROOT / "scripts/build_site.py")
+build = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(build)
 
 
 class Feed(unittest.TestCase):

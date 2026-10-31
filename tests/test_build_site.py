@@ -27,6 +27,11 @@ def strings(value) -> list[str]:
     return [found for item in items for found in strings(item)]
 
 
+def without_number(inner: str) -> str:
+    """A slide's markup without the footer's slide number, which no claim needs to back."""
+    return re.sub(r'<span class="slide-no"[^>]*>\d+</span>', "", inner)
+
+
 def numbers(value) -> list[int]:
     """Every whole number in a noun, however deeply it sits."""
     if type(value) is int:
@@ -133,15 +138,12 @@ class Builder(unittest.TestCase):
 
     def test_page_text_comes_from_content_nouns(self):
         nouns = copy.copy(self.nouns)
-        nouns.home = dict(self.nouns.home, statement={"parts": [{"label": "A label from data",
-                                                                "lead": "Everything is nouns and verbs:",
-                                                                "rest": "A new line."}]})
+        nouns.home = copy.deepcopy(self.nouns.home)
+        nouns.home["start"]["heading"] = "A heading from data."
+        nouns.home["uses"]["lead"] = "A lead from data."
         home_page = build.render_home(nouns)
-        self.assertIn("A new line.", home_page)
-        self.assertIn("A label from data", home_page)
-        nouns.home = dict(self.nouns.home, statement={"parts": [{"label": "", "lead": "No label"}]})
-        with self.assertRaises(build.BuildError):
-            build.render_home(nouns)
+        self.assertIn("A heading from data.", home_page)
+        self.assertIn("A lead from data.", home_page)
         nouns.uses = copy.deepcopy(self.nouns.uses)
         nouns.uses["flagships"][1]["name"] = "A flagship from data"
         nouns.uses["fields"]["items"].append("A field from data")
@@ -174,70 +176,51 @@ class Builder(unittest.TestCase):
         page = self.outputs[build.SITE / "use-cases" / "index.html"]
         main = build.main_of(page)
         self.assertEqual(7, main.count('<li class="use-card'))
-        self.assertEqual(1, main.count('<li class="use-card use-lead">'))
+        self.assertEqual(1, main.count('<li class="use-card use-lead"'))
         self.assertLess(main.index("use-lead"), main.index(uses["flagships"][1]["name"]))
         for item in uses["flagships"]:
             # An idea is a name, a line or two, example nouns and verbs, the library packs that hold them and where to
             # read more: no status, badge or evidence.
-            self.assertLessEqual(set(item), {"name", "rest", "line", "detail", "nouns", "verbs", "packs", "links"},
+            self.assertLessEqual(set(item), {"name", "rest", "line", "detail", "nouns", "verbs", "packs", "links", "home"},
                                  item["name"])
             self.assertTrue(3 <= len(item["nouns"]) <= 5 and 3 <= len(item["verbs"]) <= 5, item["name"])
-            self.assertTrue(1 <= len(item["links"]) <= 2, item["name"])
-            words = [item["name"], item.get("rest", ""), item["line"], item.get("detail", "")] + item["nouns"] + item["verbs"]
+            self.assertTrue(1 <= len(item["links"]) <= 3, item["name"])
+            words = ([item["name"], item.get("rest", ""), item["line"], item.get("detail", "")] + item["nouns"] + item["verbs"]
+                     + list((item.get("home") or {}).values()))
             self.assertIsNone(re.search(r"\d", " ".join(words)), item["name"])
             for link in item["links"]:
                 href = link["href"] if link["href"].startswith("https://") else "../" + link["href"]
-                self.assertIn(f'href="{html.escape(href)}"', main, item["name"])
+                self.assertIn(f'href="{html.escape(build.repoint(href, self.nouns.links))}"', main, item["name"])
         # Other fields are plain names, with no nouns or verbs of their own, and point to the roll-your-own deck.
         self.assertTrue(all(isinstance(field, str) for field in uses["fields"]["items"]))
         self.assertIn(f'href="../{uses["fields"]["link"]["href"]}"', main)
         for leftover in ("claim-status", 'class="badge', "use-tag"):
             self.assertNotIn(leftover, main)
 
-    def test_the_home_page_is_the_video_a_two_part_statement_and_the_decks(self):
+    def test_the_home_page_is_the_film_start_here_the_decks_and_the_use_cases(self):
+        # October 31 (the Agora-Home board): the film first, then Start here with the two public sites, the decks
+        # and the use cases. The start part's heading is the page's one h1.
         home = self.outputs[build.SITE / "index.html"]
         main = home[home.index('<main id="main">'):home.index("</main>")]
         self.assertEqual(4, main.count("<section"))
         self.assertEqual(1, main.count("<video"))
         self.assertIn('kind="captions"', main)
         self.assertIn(" default>", main)
-        self.assertEqual(3, main.count('<li class="hub-card '))
-        self.assertEqual(5, main.count('class="deck-card"'))
-        self.assertLess(home.index('class="agent-banner"'), home.index("<video"))
-        self.assertLess(main.index('<section class="statement"'), main.index('<section class="hub"'))
-        self.assertLess(main.index('<section class="hub"'), main.index('<section class="deck-band"'))
-        # Feedback, October 30: the statement reads in two labelled parts, the use case and then the architecture
-        # underneath, and the second says in plain words what verbs and nouns are. The use case's line is the page's
-        # one heading.
-        parts = self.nouns.home["statement"]["parts"]
-        self.assertEqual(["The use case", "The architecture underneath"], [part["label"] for part in parts])
-        self.assertIn("Eranos", parts[0]["lead"])
-        self.assertIn("verbs are tasks", parts[1]["rest"])
-        statement = main[main.index('<section class="statement"'):]
-        statement = statement[:statement.index("</section>")]
-        self.assertEqual(2, statement.count('<div class="statement-part">'))
-        self.assertLess(statement.index(f'<p class="statement-label">{build.text(parts[0]["label"])}</p>'),
-                        statement.index(f'<p class="statement-label">{build.text(parts[1]["label"])}</p>'))
+        self.assertLess(home.index("<ta-agent-banner "), home.index("<video"))
+        order = [main.index(marker) for marker in ('<section class="film', '<section class="start"', '<section class="deck-band"',
+                                                    '<section class="home-uses"')]
+        self.assertEqual(sorted(order), order)
+        start = self.nouns.home["start"]
         self.assertEqual(1, main.count("<h1"))
-        self.assertIn(f'<h1 id="statement" class="statement-line"><span class="statement-lead">'
-                      f'{build.text(parts[0]["lead"])}</span></h1>', statement)
-
-    def test_home_product_hub_renders_from_its_noun(self):
-        home_page = self.outputs[build.SITE / "index.html"]
-        main = build.main_of(home_page)
-        hub_html = main[main.index('<section class="hub"'):]
-        hub_html = hub_html[:hub_html.index("</section>") + len("</section>")]
-        written = set(strings(self.nouns.home["hub"]))
-        for shown in shown_text(hub_html):
-            self.assertIn(shown, written)
-        titles = [pillar["title"] for pillar in self.nouns.home["hub"]["pillars"]]
-        self.assertEqual([
-            "1. Public Goods Marketplace",
-            "2. Task & Task-Object Engine",
-            "3. Roll Your Own: Seed Packs, Harness Feeds & Meta Fine-Tuning",
-        ], titles)
-        with self.assertRaises(build.BuildError):
-            build.product_hub({"kicker": "k", "heading": "h", "lead": "l", "pillars": []})
+        self.assertIn(f"<h1>{build.text(start['heading'])}</h1>", main)
+        self.assertEqual(["Eranos", "Agora"], [card["name"] for card in start["cards"]])
+        self.assertIn('href="https://eranos.ta-amps.workers.dev/"', main)
+        self.assertIn('href="how-it-works/"', main)
+        self.assertEqual(5, main.count('class="deck-card"'))
+        self.assertEqual(6, main.count('class="home-use"'))
+        self.assertEqual(1, main.count('class="home-use-live"'))  # only Eranos is live, so only it says so
+        # The film's production page is linked only once its production trace is final.
+        self.assertEqual(build.film_made_ready(start), start["film_made"]["href"] in main)
 
     def test_nouns_and_verbs_are_glossed_in_plain_words_the_first_time(self):
         # Feedback, October 30: a viewer took nouns and verbs for a model architecture. The home page, the use cases
@@ -277,7 +260,7 @@ class Builder(unittest.TestCase):
         slides = {slide["name"]: slide for slide in deck["slides"]}
         claims = deck["claims"]["claims"]
         for name in ("worked-example", "memory-systems"):
-            shown, notes = build.plain_text(slides[name]["inner"]), build.plain_text(slides[name]["notes"])
+            shown, notes = build.plain_text(without_number(slides[name]["inner"])), build.plain_text(slides[name]["notes"])
             self.assertIn("ILLUSTRATION · NOT A MEASURED RUN", shown, name)
             self.assertIn("illustration", notes.lower(), name)
             mine = [claim for claim in claims if claim["slide"] == name]
@@ -396,7 +379,7 @@ class Builder(unittest.TestCase):
         # Every measured result links to public evidence, and the build refuses one that doesn't.
         for item in self.nouns.learning["results"]["items"]:
             self.assertTrue(item["link"].startswith("https://github.com/ta-amps/"), item["model"])
-            self.assertIn(f'href="{html.escape(item["link"])}"', main)
+            self.assertIn(f'href="{html.escape(build.repoint(item["link"], self.nouns.links))}"', main)
         nouns = copy.copy(self.nouns)
         nouns.learning = copy.deepcopy(self.nouns.learning)
         nouns.learning["results"]["items"][0]["link"] = "notes.md"
@@ -439,7 +422,7 @@ class Builder(unittest.TestCase):
             places = [section.index(f'<li class="lib-card" id="{pack_id}">') for pack_id in category["packs"]]
             self.assertEqual(sorted(places), places, category["id"])
             for pack_id in category["packs"]:
-                self.assertIn(f'href="{html.escape(packs[pack_id]["url"])}"', section)
+                self.assertIn(f'href="{html.escape(build.repoint(packs[pack_id]["url"], self.nouns.links))}"', section)
                 self.assertIn(f"/tree/{library['source']['commit']}/packs/{pack_id}", packs[pack_id]["url"])
         # The totals shown are the noun's, and every code + tests badge but the legend's is a pack's that ships code.
         for key, value in library["totals"].items():
@@ -566,7 +549,7 @@ class Builder(unittest.TestCase):
                            re.I)
         for slide in deck["slides"]:
             listed = " ".join(claim["number"] for claim in claims if claim["slide"] == slide["name"])
-            for part in (build.plain_text(slide["inner"]), build.plain_text(slide["notes"])):
+            for part in (build.plain_text(without_number(slide["inner"])), build.plain_text(slide["notes"])):
                 for number in re.findall(r"\d+(?:[.,]\d+)?", names.sub(" ", part)):
                     self.assertIn(number, listed, (slide["name"], number))
 

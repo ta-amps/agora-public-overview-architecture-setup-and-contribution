@@ -378,8 +378,8 @@ def check(root: Path = ROOT) -> dict:
         for item in load(links).get("release_files", []):
             file = (root / "site" / item["path"]).resolve()
             require(file.is_relative_to((root / "site").resolve()) and file.is_file(), "release file missing: " + item["path"])
-            data = file.read_bytes()
-            require(hashlib.sha256(data).hexdigest() == item["sha256"] and len(data) == item["bytes"],
+            blob = file.read_bytes()
+            require(hashlib.sha256(blob).hexdigest() == item["sha256"] and len(blob) == item["bytes"],
                     "release file changed without updating its recorded hash: " + item["path"])
             declared.add(item["path"])
     files = [p for p in root.rglob("*") if p.is_file() and not SKIP.intersection(p.relative_to(root).parts)]
@@ -407,8 +407,10 @@ def check(root: Path = ROOT) -> dict:
         moved = moved_pages(load(moved_list), site, pages) if moved_list.exists() else frozenset()
         for page in pages:
             site_links(page, site, pages, root, moved if page in frozen else frozenset())
-            if page not in frozen:
+            rel = page.relative_to(site.resolve() if page.is_absolute() else site).parts
+            if page not in frozen and "source" not in rel and not any(f.parent in page.parents for f in frozen):
                 # F31-014: the GitHub organization and its Pages sites answer 404; pages link the source mirror.
+                # Deck sources keep the old addresses as provenance; the build repoints them in the pages.
                 body = page.read_text(encoding="utf-8")
                 require(RETIRED_HOSTS.search(body) is None,
                         "a page links the retired GitHub organization: " + page.relative_to(site).as_posix())

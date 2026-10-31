@@ -697,7 +697,7 @@ def slide_footer(inner: str, deck_title: str, number: int) -> str:
             f'border-top:1px solid {rule};padding-top:16px">'
             f'<span style="display:flex;align-items:center;gap:14px;min-width:0">{svg}'
             f'<span>ta-amps · {text(deck_title)} · {match.group(2)}</span></span>'
-            f"<span style=\"font-family:'JetBrains Mono', 'Courier New', monospace\">{number}</span></div>")
+            f"<span class=\"slide-no\" style=\"font-family:'JetBrains Mono', 'Courier New', monospace\">{number}</span></div>")
     return inner[:match.start()] + foot + inner[match.end():]
 
 

@@ -7,7 +7,10 @@ from __future__ import annotations
 
 import unittest
 
-from test_viewer_browser import LocalSite, sync_playwright
+try:
+    from test_viewer_browser import LocalSite, sync_playwright
+except ImportError:  # run as tests.test_chrome_browser from the repository root
+    from tests.test_viewer_browser import LocalSite, sync_playwright
 
 LINE = "Read https://agora.ta-amps.workers.dev/llms.txt and follow it."
 
