@@ -761,6 +761,8 @@ def film_cuts(videos: dict) -> tuple[dict, str]:
         for key in ("src", "captions", "poster"):
             if not (SITE / cut[key]).is_file():
                 fail(f"home.json: the {cut['id']} cut's {key} is missing: {cut[key]}")
+        if cut.get("clean_src") and not (SITE / cut["clean_src"]).is_file():
+            fail(f"home.json: the {cut['id']} cut's clean_src is missing: {cut['clean_src']}")
     default = next((cut for cut in cuts if cut["id"] == videos["default"]), None)
     if default is None:
         fail(f"home.json: the default cut {videos['default']!r} is not one of the cuts")
@@ -768,7 +770,9 @@ def film_cuts(videos: dict) -> tuple[dict, str]:
         return default, ""
     buttons = "".join(
         f'<button class="film-cut" type="button" aria-pressed="{"true" if cut is default else "false"}" '
-        f'data-cut="{attr(cut["id"])}" data-src="{attr(cut["src"])}" data-type="{attr(cut["type"])}" '
+        f'data-cut="{attr(cut["id"])}" data-src="{attr(cut["src"])}"'
+        + (f' data-clean-src="{attr(cut["clean_src"])}"' if cut.get("clean_src") else "")
+        + f' data-type="{attr(cut["type"])}" '
         f'data-captions="{attr(cut["captions"])}" data-poster="{attr(cut["poster"])}" '
         f'data-title="{attr(cut["title"])}" data-label="{attr(cut["label"])}">{text(cut["tab"])}</button>'
         for cut in cuts)
@@ -845,7 +849,10 @@ def render_home(nouns: Nouns) -> str:
         f'<section class="film{" has-cuts" if selector else ""}" aria-labelledby="film-label">',
         '<div class="film-stage">',
         f'<video class="film-video" controls playsinline preload="metadata" poster="{attr(video["poster"])}" '
-        f'aria-label="{attr(video["title"])}" data-captions-default>',
+        f'aria-label="{attr(video["title"])}" data-captions-default'
+        + (f' data-open-captions data-open-src="{attr(video["src"])}" data-clean-src="{attr(video["clean_src"])}"'
+           if video.get("clean_src") else "")
+        + ">",
         f'<source src="{attr(video["src"])}" type="{attr(video["type"])}">',
         f'<track kind="captions" src="{attr(video["captions"])}" srclang="{attr(videos["captions_lang"])}" '
         f'label="{attr(videos["captions_label"])}" default>',

@@ -1,0 +1,205 @@
+{
+  "aspect": "landscape_16x9",
+  "checks": [
+    {
+      "check": "container_and_streams",
+      "detail": "Streams match the output contract.",
+      "limits": {
+        "audio": "aac 48000 Hz stereo",
+        "video": "h264 yuv420p 1920x1080 30 fps"
+      },
+      "measured": {
+        "audio_codec": "aac",
+        "channels": "stereo",
+        "color": "tv, bt709, progressive",
+        "duration_s": 180,
+        "fps": 30,
+        "height": 1080,
+        "pix_fmt": "yuv420p",
+        "sample_rate_hz": 48000,
+        "video_codec": "h264",
+        "width": 1920
+      },
+      "passed": true
+    },
+    {
+      "check": "duration_and_frames",
+      "detail": "5400 of 5400 planned frames decoded.",
+      "limits": {
+        "duration_s": 180,
+        "frames": 5400,
+        "tolerance_s": 0.083333
+      },
+      "measured": {
+        "container_duration_s": 180,
+        "decoded_frames": 5400
+      },
+      "passed": true
+    },
+    {
+      "check": "frame_hash_spot_checks",
+      "detail": "12 of 12 sampled frames match their scene evaluation.",
+      "limits": {
+        "frame_hash": "equal",
+        "min_ssim": 0.95,
+        "png_sha256": "equal"
+      },
+      "measured": {
+        "discriminating_spots": 12,
+        "failures": [],
+        "min_ssim": 0.996443,
+        "spots": 12
+      },
+      "passed": true
+    },
+    {
+      "check": "black_frames",
+      "detail": "No black run.",
+      "limits": {
+        "max_black_run_s": 0.5
+      },
+      "measured": {
+        "segments": []
+      },
+      "passed": true
+    },
+    {
+      "check": "frozen_frames",
+      "detail": "2 freeze(s) outside planned holds.",
+      "limits": {
+        "allowed": "inside planned holds",
+        "min_freeze_s": 2
+      },
+      "measured": {
+        "segments": [
+          {
+            "end_s": 4.166667,
+            "start_s": 1.7
+          },
+          {
+            "end_s": 20.733333,
+            "start_s": 18.733333
+          },
+          {
+            "end_s": 51.466667,
+            "start_s": 48.666667
+          },
+          {
+            "end_s": 58.166667,
+            "start_s": 53
+          },
+          {
+            "end_s": 63.833333,
+            "start_s": 61.666667
+          },
+          {
+            "end_s": 67.533333,
+            "start_s": 64.266667
+          },
+          {
+            "end_s": 74.366667,
+            "start_s": 72.266667
+          },
+          {
+            "end_s": 82.9,
+            "start_s": 80.9
+          },
+          {
+            "end_s": 108.1,
+            "start_s": 105.533333
+          },
+          {
+            "end_s": 116.3,
+            "start_s": 113.8
+          },
+          {
+            "end_s": 124.3,
+            "start_s": 121.9
+          },
+          {
+            "end_s": 139.533333,
+            "start_s": 134.6
+          },
+          {
+            "end_s": 142.933333,
+            "start_s": 140.9
+          },
+          {
+            "end_s": 146.3,
+            "start_s": 144.3
+          },
+          {
+            "end_s": 152.8,
+            "start_s": 149.1
+          },
+          {
+            "end_s": 179.6,
+            "start_s": 177.133333
+          }
+        ],
+        "unexplained": [
+          {
+            "end_s": 116.3,
+            "start_s": 113.8
+          },
+          {
+            "end_s": 139.533333,
+            "start_s": 134.6
+          }
+        ]
+      },
+      "passed": false
+    },
+    {
+      "check": "integrated_loudness",
+      "detail": "Integrated -15.6 LUFS, true peak -1.4 dBTP.",
+      "limits": {
+        "target_lufs": -15.6,
+        "tolerance_lu": 1,
+        "true_peak_max_dbtp": -1
+      },
+      "measured": {
+        "integrated_lufs": -15.6,
+        "lra_lu": 2.4,
+        "true_peak_dbfs": -1.4
+      },
+      "passed": true
+    },
+    {
+      "check": "caption_timing_coverage",
+      "detail": "Captions cover 99.9% of measured narration speech.",
+      "limits": {
+        "min_coverage": 0.95,
+        "sidecar": "equal to the caption track"
+      },
+      "measured": {
+        "coverage": 0.9987,
+        "covered_s": 141.039,
+        "cues": 44,
+        "cues_without_speech": [],
+        "sidecar_cues": 44,
+        "speech_s": 141.223
+      },
+      "passed": true
+    },
+    {
+      "check": "synthetic_disclosure",
+      "detail": "File metadata states what is synthetic or generated.",
+      "limits": {
+        "comment": "Synthetic visuals: procedural motion graphics rendered from code. Generated media: AI-generated voice (Kokoro-82M v1.0, voice af_heart, run locally), disclosed in MP4 metadata and deliverables; not a person. Four multi-section instrumental stems generated locally from text prompts with Meta MusicGen (facebook/musicgen-small), EQ-notched at 1850 Hz for speech clarity and lookahead-ducked under narration. Motion graphics rendered from code by this video's stage; example data on screen is synthetic. Narration is an AI-generated voice (Kokoro-82M v1.0, voice af_heart), disclosed in file metadata and delivery manifests. Background underscore is synthesized locally with Meta MusicGen (facebook/musicgen-small) across four acts, EQ-notched and ducked under the voice. Interface shots are real captures: the live public pages of eranos.ta-amps.workers.dev and agora.ta-amps.workers.dev, and a local Eranos and Tessera run with scripted agents and synthetic data. The reveal board shows what the local production Tessera store held when the board was composed; the render and check receipts were written after it."
+      },
+      "measured": {
+        "comment": "Synthetic visuals: procedural motion graphics rendered from code. Generated media: AI-generated voice (Kokoro-82M v1.0, voice af_heart, run locally), disclosed in MP4 metadata and deliverables; not a person. Four multi-section instrumental stems generated locally from text prompts with Meta MusicGen (facebook/musicgen-small), EQ-notched at 1850 Hz for speech clarity and lookahead-ducked under narration. Motion graphics rendered from code by this video's stage; example data on screen is synthetic. Narration is an AI-generated voice (Kokoro-82M v1.0, voice af_heart), disclosed in file metadata and delivery manifests. Background underscore is synthesized locally with Meta MusicGen (facebook/musicgen-small) across four acts, EQ-notched and ducked under the voice. Interface shots are real captures: the live public pages of eranos.ta-amps.workers.dev and agora.ta-amps.workers.dev, and a local Eranos and Tessera run with scripted agents and synthetic data. The reveal board shows what the local production Tessera store held when the board was composed; the render and check receipts were written after it.",
+        "title": "Eranos \u00b7 3:00 \u00b7 open captions"
+      },
+      "passed": true
+    }
+  ],
+  "format": "video_motion.video-qa.v1",
+  "mp4_sha256": "a875bbbd75ad1a66e4200c32d0ee337e6a28db49e09a2cff2bb9f02d999172fc",
+  "passed": false,
+  "plan_sha256": "2e63633b8bd053eed15a1ee54c85e3dd9c0e690eacf96dce0de65dd103e6a630",
+  "receipt_sha256": "a8769c4c97e6f52f1408ef2f86253fe30a07ffd0a92eeab3d0738504d935f82c",
+  "render_manifest_sha256": "d5824b9d88e6797cf5ea4bc9773717b9a2e6432fa96c2669191d229ea770ad4a",
+  "sequence_id": "eranos-3m-open-captions"
+}

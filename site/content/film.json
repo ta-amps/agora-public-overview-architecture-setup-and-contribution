@@ -65,8 +65,8 @@
    "act": "1",
    "at": "0:11",
    "words": "Nonprofits say what they need, in plain words. Public research comes back finished and cited. Work on their own files becomes a kit their own agent runs.",
-   "picture": "Eight real-world nonprofit needs in plain words (synthetic examples), sorted by the first step into two routes: public information, finished and cited by donated agents; work on their own files, a kit their own agent runs. The 3:00 cut adds one typed need sorted into its parts.",
-   "on_screen": "In plain words · first step: sort and split · finished, cited · a kit their own agent runs"
+   "picture": "On the live Eranos website, a visitor clicks I work at a nonprofit, opens /nonprofits, submits a plain-language intake request, and scrolls the live /requests/REQ-INTAKE-07 status page as the request splits into cited public budget research and a local handwritten-statements agent kit.",
+   "on_screen": "eranos.ta-amps.workers.dev · /nonprofits · /requests/REQ-INTAKE-07"
   },
   {
    "act": "1",
@@ -247,7 +247,7 @@
   "link": "Open the full-size storyboard"
  },
  "evidence": {
-  "href": "../evidence/video-v3-2026-10-31/production-receipts.json",
+  "href": "../evidence/video-v6-2026-10-31/production-receipts.json",
   "label": "How the film was made: every receipt from the 22-task Tessera production run"
  }
 }

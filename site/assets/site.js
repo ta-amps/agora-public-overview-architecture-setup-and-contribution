@@ -149,6 +149,8 @@
   var buttons = group ? group.querySelectorAll("[data-cut]") : [];
   var captionsOn = video.hasAttribute("data-captions-default");
   var applyingMode = false;
+  var openSrc = video.getAttribute("data-open-src") || "";
+  var cleanSrc = video.getAttribute("data-clean-src") || "";
 
   function captionTrack() {
     var tracks = video.textTracks;
@@ -163,8 +165,7 @@
   }
 
   function desiredTrackMode() {
-    if (!captionsOn) return "disabled";
-    return document.fullscreenElement === video ? "showing" : "hidden";
+    return captionsOn ? "hidden" : "disabled";
   }
 
   function enforceTrackMode() {
@@ -178,6 +179,32 @@
     }
   }
 
+  function syncVideoSourceForCaptions() {
+    if (!cleanSrc || !openSrc) return;
+    var source = video.querySelector("source");
+    if (!source) return;
+    var wantSrc = captionsOn ? openSrc : cleanSrc;
+    if (source.getAttribute("src") === wantSrc) return;
+    var resumeTime = video.currentTime || 0;
+    var wasPlaying = !video.paused && !video.ended;
+    source.setAttribute("src", wantSrc);
+    var download = video.querySelector("a");
+    if (download) download.setAttribute("href", wantSrc);
+    video.load();
+    if (resumeTime > 0 || wasPlaying) {
+      video.addEventListener("loadedmetadata", function restorePlayback() {
+        video.removeEventListener("loadedmetadata", restorePlayback);
+        if (resumeTime > 0) {
+          try { video.currentTime = resumeTime; } catch (err) {}
+        }
+        if (wasPlaying) {
+          var p = video.play();
+          if (p && p.catch) p.catch(function () {});
+        }
+      });
+    }
+  }
+
   function syncCaptionPill() {
     enforceTrackMode();
     var track = captionTrack();
@@ -187,7 +214,12 @@
         (captionsOn ? "Captions · On" : "Captions · Off");
     }
     if (!captionBar || !captionPill) return;
-    if (!captionsOn || !track || !track.activeCues || !track.activeCues.length || document.fullscreenElement === video) {
+    if (cleanSrc || video.hasAttribute("data-open-captions")) {
+      captionBar.hidden = true;
+      captionPill.textContent = "";
+      return;
+    }
+    if (!captionsOn || !track || !track.activeCues || !track.activeCues.length) {
       captionBar.hidden = true;
       captionPill.textContent = "";
       return;
@@ -246,6 +278,7 @@
   if (ccButton) {
     ccButton.addEventListener("click", function () {
       captionsOn = !captionsOn;
+      syncVideoSourceForCaptions();
       showCaptions();
     });
   }
@@ -268,8 +301,11 @@
       });
       remember(button.getAttribute("data-cut"), buttons[0].getAttribute("data-cut"));
       video.pause();
+      openSrc = button.getAttribute("data-src") || "";
+      cleanSrc = button.getAttribute("data-clean-src") || "";
+      var chosenSrc = (cleanSrc && !captionsOn) ? cleanSrc : openSrc;
       var source = video.querySelector("source");
-      source.src = button.getAttribute("data-src");
+      source.setAttribute("src", chosenSrc);
       source.type = button.getAttribute("data-type");
       var old = video.querySelector("track");
       var track = document.createElement("track");
@@ -280,7 +316,7 @@
       video.poster = button.getAttribute("data-poster");
       video.setAttribute("aria-label", button.getAttribute("data-title"));
       var download = video.querySelector("a");
-      if (download) download.href = button.getAttribute("data-src");
+      if (download) download.setAttribute("href", chosenSrc);
       if (label) label.textContent = button.getAttribute("data-label");
       video.load();
       track.addEventListener("load", showCaptions);

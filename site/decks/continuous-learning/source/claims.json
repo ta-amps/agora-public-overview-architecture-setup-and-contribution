@@ -164,6 +164,20 @@
       "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md"
     },
     {
+      "slide": "learners",
+      "number": "SIRA Self-Learning RAG + Herma Shims: Recall@1 23.3% to 100.0% across 60 queries over 79 seed packs (MRR 0.341 to 1.000 in 1.0 round, 82.8% token reduction, 0.30 ms retrieval, 10 compiled shims at 0.026 ms, 10 of 10 independent reviews)",
+      "status": "measured",
+      "source": "Offline standard-library evaluation over the 79-pack library: RARTF noun enrichment, analogy-aware cross-domain indexing, MR-Search adaptive reflection, and DGM-H independent verification (409 self-approval rejected).",
+      "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/sira-are-cascade-2026-10-31/README.md"
+    },
+    {
+      "slide": "safety",
+      "number": "Meta ARE 4D Scenario Matrix (1,000 Episodes): 32.5% stakeholder-blocked vs 67.5% safely approved (15.1% direct plus 52.4% human-partitioned) across 1,000 4D scenarios spanning 25 domains",
+      "status": "measured",
+      "source": "Deterministic Latin-hypercube evaluation over 10^12 addressable 4D tuples (persona, environment, method, stakeholder constraint), separating direct agent work, human-partitioned drafts, and stakeholder-blocked escalations.",
+      "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/sira-are-cascade-2026-10-31/README.md"
+    },
+    {
       "slide": "limits",
       "number": "Learning from live traffic",
       "status": "planned",

@@ -135,6 +135,22 @@
         "line": "Full route exact match on a 120-row 5-action Herma routing and contributor-privacy test (vs 26.7% keyword rules and 10.0% zero-shot 1B), with 100.0% private-data refusal recall and 0.0% false refusals.",
         "source": "The 1B shim and privacy-router evaluation record",
         "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/meta-evals-2026-10-31/README.md"
+      },
+      {
+        "model": "SIRA Self-Learning RAG + Herma Shims",
+        "before": "23.3%",
+        "after": "100.0%",
+        "line": "Recall@1 across 60 hard retrieval queries over 79 seed packs (MRR 0.341 to 1.000 in 1.0 round), cutting injected tokens by 82.8% at 0.30 ms retrieval and compiling 10 deterministic shims at 0.026 ms with 10 of 10 independent reviews.",
+        "source": "The SIRA self-learning RAG and Herma shim benchmark record",
+        "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/sira-are-cascade-2026-10-31/README.md"
+      },
+      {
+        "model": "Meta ARE 4D Scenario Matrix (1,000 Episodes)",
+        "before": "32.5%",
+        "after": "67.5%",
+        "line": "Stakeholder-blocked episodes (32.5%) vs safely approved episodes (15.1% direct plus 52.4% human-partitioned = 67.5%) across 1,000 4D scenarios spanning 25 domains.",
+        "source": "The 1,000-episode Meta ARE 4D scenario matrix record",
+        "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/sira-are-cascade-2026-10-31/README.md"
       }
     ]
   },
@@ -202,6 +218,18 @@
       {
         "href": "deploy/#slice-gpu",
         "label": "Kaggle 2xT4 & vLLM fine-tuning guide"
+      },
+      {
+        "href": "deploy/#slice-partners",
+        "label": "Modal, Baseten 2M TPM & Fireworks partner cascade"
+      },
+      {
+        "href": "evidence/sira-are-cascade-2026-10-31/sira_rag_benchmark.json",
+        "label": "SIRA self-learning RAG benchmark (JSON)"
+      },
+      {
+        "href": "evidence/sira-are-cascade-2026-10-31/scenario_matrix_1000_digest.json",
+        "label": "Meta ARE 1,000-scenario matrix (JSON)"
       }
     ]
   }

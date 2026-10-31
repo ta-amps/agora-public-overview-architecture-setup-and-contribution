@@ -13,22 +13,24 @@
    {
     "id": "full",
     "tab": "Full · 3 min",
-    "src": "video/2026-10-31/full-v3/eranos-3m.mp4",
+    "src": "video/2026-10-31/full-v6/eranos-3m.mp4",
     "type": "video/mp4",
-    "captions": "video/2026-10-31/full-v3/eranos-3m.vtt",
-    "poster": "video/2026-10-31/full-v3/eranos-3m-poster.png",
+    "captions": "video/2026-10-31/full-v6/eranos-3m.vtt",
+    "poster": "video/2026-10-31/full-v6/eranos-3m-poster.png",
     "title": "Eranos: spare tokens for good. The full three-minute film.",
-    "label": "The full three-minute film"
+    "label": "The full three-minute film",
+    "clean_src": "video/2026-10-31/full-v6/eranos-3m-clean.mp4"
    },
    {
     "id": "short",
     "tab": "Short · 1 min",
-    "src": "video/2026-10-31/short-v3/eranos-60s.mp4",
+    "src": "video/2026-10-31/short-v6/eranos-60s.mp4",
     "type": "video/mp4",
-    "captions": "video/2026-10-31/short-v3/eranos-60s.vtt",
-    "poster": "video/2026-10-31/short-v3/eranos-60s-poster.png",
+    "captions": "video/2026-10-31/short-v6/eranos-60s.vtt",
+    "poster": "video/2026-10-31/short-v6/eranos-60s-poster.png",
     "title": "Eranos: spare tokens for good. The one-minute film.",
-    "label": "The one-minute film"
+    "label": "The one-minute film",
+    "clean_src": "video/2026-10-31/short-v6/eranos-60s-clean.mp4"
    }
   ],
   "outline": {
@@ -95,7 +97,7 @@
    {
     "step": "Pillar 03 · Vertical cascade & modular LoRAs",
     "title": "3. Roll Your Own: Seed Packs, Harness Feeds & Meta Fine-Tuning",
-    "summary": "Compose seed packs, track HarnessTax across Harness Square, OpenCode, Pi, and Muse Code, and route across a 4-tier compute cascade: Herma rules, local Llama 3.2 modular LoRAs, Kaggle 2xT4 Muse Glimmer 30B QLoRA, and Muse Spark 1.3.",
+    "summary": "Compose 80 seed packs with SIRA self-learning RAG (23.3% -> 100.0% Recall@1), track HarnessTax across Harness Square, OpenCode, Pi, and Muse Code, and route across a 5-tier open-weights cascade: Herma < 2 ms shims, Llama 3.2 & Fireworks multi-LoRAs, Modal & Kaggle 2xT4 Muse Glimmer 30B QLoRA, Baseten 2M TPM bursts, and Muse Spark 1.3.",
     "links": [
      {
       "href": "deploy/",
