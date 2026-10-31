@@ -259,22 +259,30 @@ class Builder(unittest.TestCase):
         self.assertEqual(order.index("feeds") + 1, order.index("memory-systems"))
         slides = {slide["name"]: slide for slide in deck["slides"]}
         claims = deck["claims"]["claims"]
+        # October 31: the memory-systems slide became a real scan (the feed's own data), so it is measured, and only the
+        # worked example is still an illustration.
         for name in ("worked-example", "memory-systems"):
             shown, notes = build.plain_text(without_number(slides[name]["inner"])), build.plain_text(slides[name]["notes"])
-            self.assertIn("ILLUSTRATION · NOT A MEASURED RUN", shown, name)
-            self.assertIn("illustration", notes.lower(), name)
             mine = [claim for claim in claims if claim["slide"] == name]
-            self.assertTrue(any(claim["status"] == "illustration" for claim in mine), name)
+            if name == "worked-example":
+                self.assertIn("ILLUSTRATION · NOT A MEASURED RUN", shown, name)
+                self.assertIn("illustration", notes.lower(), name)
+                self.assertTrue(any(claim["status"] == "illustration" for claim in mine), name)
+            else:
+                self.assertNotIn("ILLUSTRATION", shown)
+                self.assertNotIn("PLANNED", shown)
+                self.assertTrue(all(claim["status"] == "measured" for claim in mine), name)
             listed = " ".join(claim["number"] for claim in mine)
             for part in (shown, notes):
                 for number in re.findall(r"\d+(?:[.,]\d+)?", part):
                     self.assertIn(number, listed, (name, number))
             for claim in mine:
                 if claim["status"] == "measured":
-                    self.assertTrue(claim["link"].startswith("https://github.com/ta-amps/"), claim["number"])
+                    # Public evidence: the source mirror's provenance address, or the page on Agora that shows it.
+                    self.assertTrue(claim["link"].startswith(("https://github.com/ta-amps/", "https://agora.ta-amps.workers.dev/")),
+                                    claim["number"])
         self.assertIn("0 tokens", build.plain_text(slides["worked-example"]["inner"]))
-        self.assertIn("PLANNED, NOT RUNNING", build.plain_text(slides["memory-systems"]["inner"]))
-        self.assertTrue(any(claim["status"] == "planned" for claim in claims if claim["slide"] == "memory-systems"))
+        self.assertIn("agora.ta-amps.workers.dev/feeds/memory-systems", build.plain_text(slides["memory-systems"]["inner"]))
         # Every claim status, illustration included, has its own label style in the notes.
         css = (build.SITE / "assets" / "viewer.css").read_text(encoding="utf-8")
         for status in build.CLAIM_STATUSES:
@@ -613,9 +621,11 @@ class Builder(unittest.TestCase):
         self.assertIn("transcript", home["videos"]["outline"]["label"].lower())
         self.assertIn(f'<a href="film/">{build.text(home["videos"]["outline"]["label"])}</a>',
                       self.outputs[build.SITE / "index.html"])
-        # A transcript is the narration word for word: the film noun's lines are the full cut's captions.
+        # A transcript is the narration word for word: the film noun's lines are the full cut's captions, except that
+        # the owner's October 31 rule puts plain words where the current cut's captions say "synthetic", until the
+        # replacement cut lands.
         full = next(cut for cut in home["videos"]["cuts"] if cut["id"] == "full")
-        captions = (build.SITE / full["captions"]).read_text(encoding="utf-8")
+        captions = build.plain_words((build.SITE / full["captions"]).read_text(encoding="utf-8"))
         self.assertEqual(caption_words(captions), plain_words(" ".join(line["words"] for line in film["lines"])))
 
     def test_the_film_page_says_its_storyboard_is_the_draft_runs(self):

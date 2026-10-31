@@ -140,7 +140,7 @@ class Pages(unittest.TestCase):
     def test_the_replay_shows_the_recorded_run_and_says_where_it_ran(self):
         facts = self.replay["run"]
         self.assertEqual("20261031T065341Z", facts["id"])
-        self.assertTrue(facts["synthetic_data_only"])
+        self.assertTrue(facts["made_up_data_only"])
         self.assertFalse(facts["private_or_ngo_data_sent"])
         self.assertFalse(facts["raw_credentials_included"])
         self.assertTrue(facts["fabric"].startswith("local Tessera"), "the run is never shown as hosted Tessera")

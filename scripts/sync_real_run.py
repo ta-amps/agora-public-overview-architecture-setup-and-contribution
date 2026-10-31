@@ -511,7 +511,7 @@ def outputs(folder: Path) -> dict[Path, bytes]:
             "builder": dict(entry["harnesses"]["builder"], key_id=entry["principals"]["builder_key_id"]),
             "reviewer": dict(entry["harnesses"]["reviewer"], key_id=entry["principals"]["reviewer_key_id"]),
             "builder_is_not_reviewer": entry["principals"]["builder_neq_reviewer"],
-            "synthetic_data_only": run.receipt["synthetic_data_only"],
+            "made_up_data_only": run.receipt["synthetic_data_only"],
             "private_or_ngo_data_sent": run.receipt["privacy_and_spend_guardrails"]["private_or_ngo_data_sent"],
             "raw_credentials_included": run.receipt["privacy_and_spend_guardrails"]["raw_credentials_included"],
             "held_for_person": entry["held_for_person"],

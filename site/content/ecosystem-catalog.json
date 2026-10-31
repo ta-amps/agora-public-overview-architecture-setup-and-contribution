@@ -165,7 +165,7 @@
       "track": "Track 2",
       "category": "Developer Tooling, Infra & Security",
       "category_id": "developer-tooling-infra-security",
-      "summary": "A synthetic benchmark for evaluating language models on financial data quality tasks",
+      "summary": "A benchmark we wrote for evaluating language models on financial data quality tasks",
       "models": [
         "Muse Glimmer",
         "Muse Spark",
@@ -2072,7 +2072,7 @@
       "track": "Track 1",
       "category": "Education & Knowledge Systems",
       "category_id": "education-knowledge-systems",
-      "summary": "A synthetic-only slice of the Educational Navigation System (ENS), built for the Meta AI Developer Hackathon (submissions due 4 November 2026).",
+      "summary": "A slice, with made-up data only, of the Educational Navigation System (ENS), built for the Meta AI Developer Hackathon (submissions due 4 November 2026).",
       "models": [
         "Muse Glimmer",
         "Meta API",
@@ -8331,7 +8331,7 @@
       "track": "Track 2",
       "category": "Developer Tooling, Infra & Security",
       "category_id": "developer-tooling-infra-security",
-      "summary": "Usability testing with a crowd that does not exist. Give Footfall a website and a task; a crowd of synthetic people, each with real constraints on how they see and move, tries to do it in real brow...",
+      "summary": "Usability testing with a crowd that does not exist. Give Footfall a website and a task; a crowd of made-up people, each with real constraints on how they see and move, tries to do it in real brow...",
       "models": [
         "Muse Spark",
         "Muse Wonder"
@@ -10553,7 +10553,7 @@
       "track": "Track 2",
       "category": "Developer Tooling, Infra & Security",
       "category_id": "developer-tooling-infra-security",
-      "summary": "Meta Global AI Developer Hackathon 2026 -- Startup track. Real-data-first data intelligence, provable source lineage, and governed synthetic augmentation, with Muse models only.",
+      "summary": "Meta Global AI Developer Hackathon 2026 -- Startup track. Real-data-first data intelligence, provable source lineage, and governed made-up augmentation, with Muse models only.",
       "models": [
         "Meta SAM",
         "Muse Spark"

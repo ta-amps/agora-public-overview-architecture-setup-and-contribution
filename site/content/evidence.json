@@ -194,7 +194,7 @@
         "id": "meta-evals-2026-10-31",
         "date": "2026-10-31",
         "title": "Meta model evaluations",
-        "line": "Synthetic evaluations of Llama 3.2 LoRA memory and the Herma router, SAM and wav2vec2 checks, a many-worker scaling run and a fault-injection test, with each file’s SHA-256 in the README.",
+        "line": "Evaluations, on tests we wrote, of Llama 3.2 LoRA memory and the Herma router, SAM and wav2vec2 checks, a many-worker scaling run and a fault-injection test, with each file’s SHA-256 in the README.",
         "files": [
           {
             "path": "FAULT_INJECTION_EVIDENCE.json",
@@ -234,7 +234,7 @@
         "id": "glimmer-30b-lora-memory-2026-10-31",
         "date": "2026-10-31",
         "title": "Muse Glimmer 30B as LoRA memory",
-        "line": "Muse Glimmer 30B tuned to recall task objects from its weights, on free Kaggle GPUs and synthetic data: the results, a chart and the verification receipt.",
+        "line": "Muse Glimmer 30B tuned to recall task objects from its weights, on free Kaggle GPUs and made-up data: the results, a chart and the verification receipt.",
         "files": [
           {
             "path": "README.md",
@@ -258,7 +258,7 @@
         "id": "glimmer-modular-swarm-2026-10-31",
         "date": "2026-10-31",
         "title": "Llama 3.2 3B as separate LoRA specialists",
-        "line": "Training manifests, adapter configs, GPU telemetry and results for Llama 3.2 3B specialists trained on synthetic swarm traces. Its batched evaluation ran out of GPU memory, so it claims no holdout score.",
+        "line": "Training manifests, adapter configs, GPU telemetry and results for Llama 3.2 3B specialists trained on swarm traces we wrote. Its batched evaluation ran out of GPU memory, so it claims no holdout score.",
         "files": [
           {
             "path": "EVIDENCE_MANIFEST.json",

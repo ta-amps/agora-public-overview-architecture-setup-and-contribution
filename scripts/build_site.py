@@ -564,6 +564,38 @@ def repoint(content: str, links: dict) -> str:
     return content
 
 
+# Plain words instead of "synthetic" (owner, October 31: "DO NOT INCLUDE SYNTHETIC") ---------------------------
+
+WE_WROTE = (r"(?:tool-call |150-row |normalized )?(?:test cases|test data|tests?|holdouts?|benchmarks?|evaluations|"
+            r"slot templates|templates|training rows|rows|tasks?|workloads|swarm traces|periodic scores)")
+PLAIN_RULES = [
+    (re.compile(r"\bsynthetic_disclosure\b"), "made_up_disclosure"),  # a video check's name, shown in a table
+    (re.compile(r"\ba synthetic voice\b", re.I), "an AI voice"),
+    (re.compile(r"\bsynthetic voice\b", re.I), "AI voice"),
+    (re.compile(r"\bsynthetic[- ]only\b", re.I), "made-up-data-only"),
+    (re.compile(r"\banything synthetic\b", re.I), "anything made up"),
+    (re.compile(r"\bsynthetic (" + WE_WROTE + r")\b", re.I), r"\1 we wrote"),
+    (re.compile(r"\bsynthetic\b", re.I), "made-up"),
+]
+
+
+def _match_case(found: str, replacement: str) -> str:
+    if found.isupper() and len(found) > 1:
+        return replacement.upper()
+    if found[:1].isupper():
+        return replacement[:1].upper() + replacement[1:]
+    return replacement
+
+
+def plain_words(content: str) -> str:
+    """Every "synthetic" a page or noun would show, in plain words that keep the same honesty: data and cases are
+    made up, tests and tasks are ones we wrote. Keys and class names are rewritten too, so nothing renders it."""
+    for pattern, replacement in PLAIN_RULES:
+        content = pattern.sub(lambda m: _match_case(m.group(0), m.expand(replacement)), content)
+    return content.replace("made-up-data-only", "made-up data only").replace("Made-up-data-only", "Made-up data only") \
+        .replace("MADE-UP-DATA-ONLY", "MADE-UP DATA ONLY")
+
+
 # Slides --------------------------------------------------------------------------------------------
 
 STYLE_PART = re.compile(r"\s*([a-z-]+)\s*:\s*([^;]+)")
@@ -1837,7 +1869,7 @@ def recorded_number(value) -> str:
 def check_real_run(run: dict) -> dict[str, dict]:
     """The replay noun as scripts/sync_real_run.py writes it. Returns its steps by id."""
     facts = run["run"]
-    if not (facts["synthetic_data_only"] is True and facts["private_or_ngo_data_sent"] is False
+    if not (facts["made_up_data_only"] is True and facts["private_or_ngo_data_sent"] is False
             and facts["raw_credentials_included"] is False):
         fail("real-run.json: the replay shows only a synthetic run that sent no private data and no credential")
     steps = run["steps"]
@@ -2430,7 +2462,7 @@ def outputs_for(nouns: Nouns) -> dict[Path, str]:
     for path, content in outputs.items():
         unique_ids(path, content)
     outputs[SITE / "llms.txt"] = render_llms(nouns, set(outputs))
-    return {path: repoint(content, nouns.links) for path, content in outputs.items()}
+    return {path: plain_words(repoint(content, nouns.links)) for path, content in outputs.items()}
 
 
 def build(check: bool, pdf: bool) -> list[str]:

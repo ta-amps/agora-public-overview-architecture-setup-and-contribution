@@ -21,7 +21,7 @@
       id: "clinic",
       label: "Free Clinic Weekend Shift Roster",
       constraint:
-        "SYNTHETIC ONLY: Match bilingual greeters, supply leads, and licensed nurse leads across Saturday and Sunday shifts using role IDs only; route any clinical or crisis question to human_only medical lead.",
+        "MADE-UP DATA ONLY: Match bilingual greeters, supply leads, and licensed nurse leads across Saturday and Sunday shifts using role IDs only; route any clinical or crisis question to human_only medical lead.",
       hermaPrompt:
         "Design a nonprofit free clinic weekend volunteer intake and shift roster workflow with strict human-only safety boundaries",
       draft: {
@@ -31,7 +31,7 @@
         spdx_license: "Apache-2.0",
         title: "Free Clinic Weekend Shift Roster and Escalation Kit",
         summary:
-          "Equips volunteer-run free clinics with synthetic shift roster checks, bilingual role cards, and strict human-only clinical escalation gates.",
+          "Equips volunteer-run free clinics with made-up shift roster checks, bilingual role cards, and strict human-only clinical escalation gates.",
         target_org: "Community Free Clinic Volunteer Desk (example.org)",
         drafted_by: "agora-studio-preset",
         steps: [
@@ -42,7 +42,7 @@
             boundary: "drafts",
             actor: "Volunteer agent",
             guidance:
-              "Compare synthetic weekend shift slots against required bilingual greeter and nurse-lead roles."
+              "Compare made-up weekend shift slots against required bilingual greeter and nurse-lead roles."
           },
           {
             id: "clinical_safety_escalation",
@@ -66,10 +66,10 @@
         skill: {
           name: "clinic-shift-roster-drafter",
           description:
-            "Drafts privacy-safe weekend volunteer shift rosters and role handoff cards from synthetic slot templates.",
+            "Drafts privacy-safe weekend volunteer shift rosters and role handoff cards from slot templates we wrote.",
           boundary: "drafts",
           instructions:
-            "Verify coverage across intake desk, interpreter support, and supply restock slots using synthetic role IDs only. Flag uncovered shifts and hold all individual schedule approvals for the human coordinator.",
+            "Verify coverage across intake desk, interpreter support, and supply restock slots using made-up role IDs only. Flag uncovered shifts and hold all individual schedule approvals for the human coordinator.",
           refuses: [
             "Triaging medical symptoms or clinical urgency",
             "Storing real volunteer phone numbers or personal email addresses"
@@ -90,7 +90,7 @@
           output_fields: ["covered_roles", "open_gaps", "requires_coordinator_signoff"]
         },
         checklist: [
-          "Confirm every shift slot uses synthetic role placeholders with zero personal contact data.",
+          "Confirm every shift slot uses made-up role placeholders with zero personal contact data.",
           "Verify licensed medical lead sign-off is scheduled before Saturday clinic doors open.",
           "Keep crisis safety planning and individual volunteer assignments strictly human_only."
         ],
@@ -127,7 +127,7 @@
       id: "pantry",
       label: "Community Food Pantry Multilingual Triage",
       constraint:
-        "SYNTHETIC ONLY: Match Spanish, Cantonese, and English pantry hours and allergy-safe box rules from public schedules; keep all household eligibility decisions and interviews strictly human_only.",
+        "MADE-UP DATA ONLY: Match Spanish, Cantonese, and English pantry hours and allergy-safe box rules from public schedules; keep all household eligibility decisions and interviews strictly human_only.",
       hermaPrompt:
         "Design a nonprofit multilingual food pantry intake and warm-referral workflow keeping interviews human-only",
       draft: {
@@ -172,7 +172,7 @@
         skill: {
           name: "pantry-multilingual-matcher",
           description:
-            "Matches synthetic language tags and dietary constraints to published pantry windows and partner hubs.",
+            "Matches made-up language tags and dietary constraints to published pantry windows and partner hubs.",
           boundary: "assists",
           instructions:
             "Compare requested language code and dietary flags against open distribution slots. Never deny eligibility or contact households automatically.",
@@ -198,7 +198,7 @@
         checklist: [
           "Verify published pantry hours and interpreter availability were checked within the last 7 days.",
           "Keep all household interviews and special-delivery approvals strictly human_only.",
-          "Use synthetic household tokens only and never copy names or phone numbers into public prompts."
+          "Use made-up household tokens only and never copy names or phone numbers into public prompts."
         ],
         sources: [
           {
@@ -233,7 +233,7 @@
       id: "shelter",
       label: "Emergency Shelter Bed & Supply Matcher",
       constraint:
-        "SYNTHETIC ONLY: Reconcile synthetic cot counts, blanket inventory, and ADA-accessible bay readiness before night shift handoff; keep crisis safety planning and individual placements human_only.",
+        "MADE-UP DATA ONLY: Reconcile made-up cot counts, blanket inventory, and ADA-accessible bay readiness before night shift handoff; keep crisis safety planning and individual placements human_only.",
       hermaPrompt:
         "Design an emergency winter warming shelter bed and supply readiness workflow keeping crisis safety plans human-only",
       draft: {
@@ -243,7 +243,7 @@
         spdx_license: "Apache-2.0",
         title: "Emergency Shelter Bed and Supply Matcher Kit",
         summary:
-          "Reconciles synthetic warming-shelter cot counts, ADA bay readiness, and blanket stock before night shift handoff under human steward control.",
+          "Reconciles made-up warming-shelter cot counts, ADA bay readiness, and blanket stock before night shift handoff under human steward control.",
         target_org: "Winter Warming Shelter Operations Desk (example.org)",
         drafted_by: "agora-studio-preset",
         steps: [
@@ -254,7 +254,7 @@
             boundary: "drafts",
             actor: "Volunteer agent",
             guidance:
-              "Check synthetic bay capacity and thermal blanket counts before evening intake opens."
+              "Check made-up bay capacity and thermal blanket counts before evening intake opens."
           },
           {
             id: "shelter_crisis_plan",
@@ -278,7 +278,7 @@
         skill: {
           name: "shelter-supply-readiness-drafter",
           description:
-            "Drafts shift-start bed, ADA bay, and winter supply readiness summaries from synthetic shelter counters.",
+            "Drafts shift-start bed, ADA bay, and winter supply readiness summaries from made-up shelter counters.",
           boundary: "drafts",
           instructions:
             "Calculate open standard cots, accessible ground-floor bays, and clean blanket kits against minimum night buffer thresholds. Hold overflow routing for the human supervisor.",
@@ -1720,7 +1720,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
         task_id: lease.task_id,
         fencing_token: lease.fencing_token,
         ok: true,
-        output: { released_for_next_demo: true, synthetic: true }
+        output: { released_for_next_demo: true, made_up: true }
       }
     });
     if (res.ok) {
@@ -1812,7 +1812,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     updateNgoStep(1, "running", "sending", "POST /v1/stores/demo.requests/records/" + reqKey + " (expected_version 0)");
     const reqValue = {
       category: "noun.request",
-      synthetic: true,
+      made_up: true,
       preset_id: preset.id,
       organization: preset.draft.target_org,
       requested_kit_id: preset.draft.kit_id,
@@ -1852,7 +1852,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
         kind: kind,
         priority: 95,
         brief: {
-          synthetic: true,
+          made_up: true,
           request_noun_key: reqKey,
           kit_id: preset.draft.kit_id,
           track_id: preset.draft.track_id
@@ -1995,7 +1995,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     updateNgoStep(6, "running", "sending", "MCP put_record demo.kits/" + kitKey + ", then POST /v1/tasks/submit");
     const kitRecordValue = {
       category: "noun.agent_kit",
-      synthetic: true,
+      made_up: true,
       review_gate: "held_for_person",
       organization_constraint: constraintText,
       eranos_practice_receipt_sha256: d5.receipt_sha256,
@@ -2034,7 +2034,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
         fencing_token: fence,
         ok: true,
         output: {
-          synthetic: true,
+          made_up: true,
           kit_store: "demo.kits",
           kit_key: kitKey,
           kit_sha256: kitSha,
@@ -2159,7 +2159,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     const approvalKey = "steward-signoff-" + res.kitKey;
     const approvalVal = {
       category: "noun.review_receipt",
-      synthetic: true,
+      made_up: true,
       kit_key: res.kitKey,
       kit_sha256: res.kitSha,
       decision: "steward_approved_demo",
@@ -2337,7 +2337,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
         kind: "verb.lab_echo",
         priority: 92,
         brief: {
-          synthetic: true,
+          made_up: true,
           note: "worker lab: lease, compare-and-set and fencing mechanics",
           seq: seq
         }
@@ -2473,7 +2473,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
 
     const valV1 = {
       category: "noun.lab_record",
-      synthetic: true,
+      made_up: true,
       stage: "first_write",
       worker: BROWSER_WORKER_ID
     };
@@ -2492,7 +2492,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
 
     const valV2 = {
       category: "noun.lab_record",
-      synthetic: true,
+      made_up: true,
       stage: "second_write",
       fencing_token: lease.fencing_token,
       worker: BROWSER_WORKER_ID
@@ -2536,7 +2536,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
         fencing_token: lease.fencing_token,
         ok: true,
         output: {
-          synthetic: true,
+          made_up: true,
           artifact_key: casKey,
           committed_version: v2
         }
@@ -2617,7 +2617,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
         expected_version: staleVersion,
         value: {
           category: "noun.lab_record",
-          synthetic: true,
+          made_up: true,
           worker: BROWSER_WORKER_ID,
           stale_overwrite: true,
           note: "sent on purpose with an old expected_version"
@@ -3203,7 +3203,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     clean:
       "---\n" +
       "name: ngo-kit-reviewer\n" +
-      "description: Use when verifying submitted NGO seed-pack JSON manifests and synthetic CSV fixtures; read-only and never mutates live queues.\n" +
+      "description: Use when verifying submitted NGO seed-pack JSON manifests and made-up CSV fixtures; read-only and never mutates live queues.\n" +
       "model: inherit\n" +
       "tools: [read_file, search_nouns, practice_verify_kit]\n" +
       "permissions: read-only\n" +
@@ -3214,7 +3214,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     fluff:
       "---\n" +
       "name: pantry-roster-auditor\n" +
-      "description: Audits synthetic volunteer shift CSV schedules and JSON schemas in read-only local mode without mutating external services.\n" +
+      "description: Audits made-up volunteer shift CSV schedules and JSON schemas in read-only local mode without mutating external services.\n" +
       "model: inherit\n" +
       "tools: [read_file, search_nouns]\n" +
       "permissions: read-only\n" +

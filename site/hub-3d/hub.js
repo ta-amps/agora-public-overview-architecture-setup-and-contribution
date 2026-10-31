@@ -703,7 +703,7 @@
       g.fillText('VOLUNTEER #1 (BUILDER)', rx + 38, ry + 166);
       g.font = `600 27px 'IBM Plex Sans', sans-serif`;
       g.fillStyle = '#f8fafc';
-      g.fillText('Builds synthetic test kit', rx + 38, ry + 208);
+      g.fillText('Builds a made-up test kit', rx + 38, ry + 208);
 
       // Refusal badge for self-approval
       const pulseR = 0.65 + 0.35 * Math.sin(t * 5.0);
@@ -1028,7 +1028,7 @@
         g.fillText(glow > 0.7 ? 'SYNCED' : 'FEED ON', rx + rw - 120, fy + 49);
       });
     } else {
-      // Meta LoRAs as Parametric Memory (Synthetic Benchmarks clearly tagged!)
+      // Meta LoRAs as Parametric Memory (Benchmarks we wrote clearly tagged!)
       const gx = win.cx + 16;
       const gy = win.cy + 14;
       const gw = win.cw - 32;
@@ -1036,26 +1036,26 @@
       fillRoundRect(g, gx, gy, gw, gh, 14, '#091122', '#c084fc', 2);
 
       drawPill(g, gx + 24, gy + 20, 'META LORAS AS PARAMETRIC MEMORY', '#e9d5ff', '#22103b', '#c084fc', 25, true);
-      drawPill(g, gx + gw - 520, gy + 20, 'SYNTHETIC TEMPLATE BENCHMARKS', '#fde047', '#292109', '#f59e0b', 25, true);
+      drawPill(g, gx + gw - 520, gy + 20, 'MADE-UP TEMPLATE BENCHMARKS', '#fde047', '#292109', '#f59e0b', 25, true);
 
       const cards = [
         {
           model: 'Meta Muse Glimmer 30B QLoRA',
-          note: 'Fresh pre-registered synthetic holdout · Free 2xT4 GPUs',
+          note: 'Fresh pre-registered holdout we wrote · Free 2xT4 GPUs',
           before: 93.3,
           after: 99.3,
           col: '#34d399'
         },
         {
           model: 'Meta Llama 3.2 3B PEFT LoRA',
-          note: 'Frozen synthetic tool-call loop + Herma context shim',
+          note: 'Frozen made-up tool-call loop + Herma context shim',
           before: 52.0,
           after: 72.7,
           col: '#38bdf8'
         },
         {
           model: 'Meta Llama 3.2 1B PEFT LoRA',
-          note: 'Compact edge adapter · Frozen synthetic tool-call loop',
+          note: 'Compact edge adapter · Frozen made-up tool-call loop',
           before: 12.0,
           after: 50.7,
           col: '#f59e0b'
@@ -1230,7 +1230,7 @@
 
     const goods = [
       ['Muse Code + nanoMuse on Spark', 'Leased Tessera verbs + 2-agent review'],
-      ['Muse Glimmer 30B QLoRA', '93.3% -> 99.3% on synthetic holdout'],
+      ['Muse Glimmer 30B QLoRA', '93.3% -> 99.3% on holdout we wrote'],
       ['Llama 3.2 LoRAs + Herma Shim', 'Parametric memory + 0-token noun hits']
     ];
     goods.forEach((gd, i) => {
@@ -1249,7 +1249,7 @@
   function drawGlimmerHeroView(g, t) {
     fillRoundRect(g, 118, 86, 1684, 716, 18, 'rgba(8, 14, 28, 0.95)', '#f59e0b', 2.5);
     drawPill(g, 152, 114, 'META MUSE GLIMMER 30B  ·  QLORA TUNING LOOP', '#fde047', '#292109', '#f59e0b', 25, true);
-    drawPill(g, 1260, 114, 'SYNTHETIC HOLDOUT BENCHMARK', '#67e8f9', '#082536', '#38bdf8', 25, true);
+    drawPill(g, 1260, 114, 'HOLDOUT WE WROTE BENCHMARK', '#67e8f9', '#082536', '#38bdf8', 25, true);
 
     g.textAlign = 'left';
     g.textBaseline = 'top';
@@ -1269,7 +1269,7 @@
 
     g.font = `700 32px 'Space Grotesk', sans-serif`;
     g.fillStyle = '#ffffff';
-    g.fillText('+6.0 pts on fresh synthetic holdout', 188, 496);
+    g.fillText('+6.0 pts on fresh holdout we wrote', 188, 496);
 
     // Animated comparison bars
     fillRoundRect(g, 188, 566, 890, 38, 10, '#16243d', '#334155', 1.5);
@@ -1292,7 +1292,7 @@
 
     const facts = [
       ['Compute', 'Free 2x Tesla T4 GPUs'],
-      ['Training Rows', 'Synthetic template rows'],
+      ['Training Rows', 'Made-up template rows'],
       ['Gate Rule', 'Beat base on frozen test'],
       ['Evidence', 'Agora glimmer-30b-2026-10-29']
     ];
