@@ -308,14 +308,14 @@ class SitePages(LocalSite):
                          (state["pressed"], state["src"], state["search"], state["captions"]))
         # The viewer turns captions off; switching cuts keeps them off. Before: they came back on.
         page.evaluate("Array.from(document.querySelector('.film-video').textTracks).forEach(t => { t.mode = 'hidden'; })")
-        page.click("[data-cut=full]")
+        page.click("[data-cut=hub3d]")
         state = self.cut(page)
-        self.assertEqual(("full", "", ["hidden"]), (state["pressed"], state["search"], state["captions"]))
+        self.assertEqual(("hub3d", "", ["hidden"]), (state["pressed"], state["search"], state["captions"]))
         page.click("[data-cut=short]")
         self.assertEqual("?cut=short", self.cut(page)["search"])
         # An unknown cut opens the default one.
         page = self.open("?cut=nope", viewport={"width": 1280, "height": 800})
-        self.assertEqual(("full", ["showing"]), (self.cut(page)["pressed"], self.cut(page)["captions"]))
+        self.assertEqual(("hub3d", ["showing"]), (self.cut(page)["pressed"], self.cut(page)["captions"]))
 
     def test_library_explorer_filters_and_switches_to_707_ecosystem_offline(self):
         page = self.open("library/", viewport={"width": 1280, "height": 900})

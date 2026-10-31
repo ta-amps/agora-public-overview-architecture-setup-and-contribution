@@ -3,13 +3,33 @@
  "title": "Agora, the ta-amps overview",
  "description": "Agora is the ta-amps overview: the three-minute film, the 1x3 product hub, interactive Task and Task-Object explorer, five decks, use cases and how the system is built to keep learning. The use case is Eranos, spare tokens for good. The architecture underneath is nouns and verbs: verbs are tasks, and nouns are task objects.",
  "videos": {
-  "default": "full",
+  "default": "hub3d",
   "choose": "Choose a cut",
   "captions_label": "English",
   "captions_lang": "en",
   "fallback": "Your browser can't play this video here.",
   "fallback_link": "Download the video",
   "cuts": [
+   {
+    "id": "hub3d",
+    "tab": "3D Hub · 90s",
+    "src": "video/2026-10-30/hub-v3/threejs-hub-90s.mp4",
+    "type": "video/mp4",
+    "captions": "video/2026-10-30/hub-v3/threejs-hub-90s.vtt",
+    "poster": "video/2026-10-30/hub-v3/threejs-hub-90s-poster.png",
+    "title": "Eranos and the 1x3 Spatial Hub: Public Goods Marketplace, Tasks and Task Objects Engine, and Roll Your Own, with an AI-generated voice.",
+    "label": "The 90-second 3D spatial 1x3 hub film · AI-generated voice"
+   },
+   {
+    "id": "frontier",
+    "tab": "Meta Frontier · 60s",
+    "src": "video/2026-10-30/hub-v3/meta-frontier-60s.mp4",
+    "type": "video/mp4",
+    "captions": "video/2026-10-30/hub-v3/meta-frontier-60s.vtt",
+    "poster": "video/2026-10-30/hub-v3/meta-frontier-60s-poster.png",
+    "title": "Meta AI Frontier stack: Muse Spark, Muse Code, Muse Glimmer 30B QLoRA, SAM 3, and wav2vec2, with an AI-generated voice.",
+    "label": "The 60-second Meta AI Frontier film · AI-generated voice"
+   },
    {
     "id": "full",
     "tab": "Full · 3 min",
