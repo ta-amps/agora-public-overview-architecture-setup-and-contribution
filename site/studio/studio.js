@@ -2745,7 +2745,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     const out = $("cli-output");
     if (!out || out.children.length > 0) return;
     appendCliLine(
-      "ta-amps Studio CLI · every command below is a real call to Tessera, Herma or Eranos",
+      "ta-amps Studio CLI · commands that reach a service make real calls to Tessera, Herma or Eranos",
       "cli-line-ok"
     );
     appendCliLine(
