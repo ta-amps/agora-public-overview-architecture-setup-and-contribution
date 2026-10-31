@@ -194,10 +194,67 @@ body.is-embedded .quick-links {
   color: #d1fae5;
 }
 
-.session-pill[data-state="fallback"] {
+.session-pill[data-state="waiting"],
+.session-pill[data-state="error"] {
+  border-radius: var(--radius-md);
+  align-items: flex-start;
+  max-width: 640px;
+}
+
+.session-pill[data-state="waiting"] {
   border-color: var(--border-amber);
   background: rgba(120, 53, 15, 0.25);
   color: #fde68a;
+}
+
+.session-pill[data-state="error"] {
+  border-color: var(--border-rose);
+  background: var(--rose-soft);
+  color: #fecdd3;
+}
+
+.session-body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 6px;
+  row-gap: 2px;
+  min-width: 0;
+}
+
+.session-pill[data-state="waiting"] .session-label,
+.session-pill[data-state="error"] .session-label {
+  white-space: normal;
+}
+
+.session-countdown {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.session-detail {
+  flex-basis: 100%;
+  font-size: 10.5px;
+  color: var(--text-muted);
+  overflow-wrap: anywhere;
+}
+
+.session-retry-btn {
+  flex-shrink: 0;
+  padding: 2px 9px;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  background: transparent;
+  color: inherit;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.session-retry-btn:hover,
+.session-retry-btn:focus-visible {
+  background: rgba(253, 230, 138, 0.14);
 }
 
 .session-dot {
@@ -211,6 +268,46 @@ body.is-embedded .quick-links {
 .session-pill[data-state="live"] .session-dot {
   background: var(--emerald-bright);
   box-shadow: 0 0 8px var(--emerald);
+}
+
+.session-pill[data-state="waiting"] .session-dot,
+.session-pill[data-state="error"] .session-dot {
+  margin-top: 4px;
+}
+
+.session-pill[data-state="error"] .session-dot {
+  background: var(--rose-bright);
+}
+
+/* Said next to buttons that need a live Tessera session while they are off */
+.session-gate-note {
+  margin: 6px 0 0;
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: #fde68a;
+}
+
+.session-gate-note-cli {
+  margin: 0;
+  padding: 5px 12px;
+  background: #080c17;
+  border-bottom: 1px solid var(--border-subtle);
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.session-gate-note-inline {
+  margin: 0;
+  font-size: 10.5px;
+}
+
+.sync-status {
+  font-size: 10.5px;
+  color: var(--text-muted);
+}
+
+.sync-status[data-ok="false"] {
+  color: var(--rose-bright);
 }
 
 .session-label {
@@ -794,6 +891,14 @@ body.is-embedded .quick-links {
   text-decoration: underline;
 }
 
+.btn-link:disabled,
+.cli-chip:disabled,
+.worker-step-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  text-decoration: none;
+}
+
 /* NGO SUBMITS TASK PANEL */
 .ngo-form-card {
   background: rgba(8, 13, 24, 0.85);
@@ -941,6 +1046,13 @@ body.is-embedded .quick-links {
   font-weight: 700;
 }
 
+.pipeline-status-badge[data-state="failed"] {
+  border-color: var(--border-rose);
+  background: var(--rose-soft);
+  color: #fecdd3;
+  font-weight: 700;
+}
+
 .pipeline-status-badge[data-state="approved"] {
   border-color: var(--border-emerald);
   background: var(--emerald-soft);
@@ -983,6 +1095,15 @@ body.is-embedded .quick-links {
   background: rgba(120, 53, 15, 0.26);
 }
 
+.step-card[data-status="failed"] {
+  border-color: var(--rose);
+  background: rgba(76, 5, 25, 0.3);
+}
+
+.step-card[data-status="skipped"] {
+  opacity: 0.6;
+}
+
 .step-card-top {
   display: flex;
   align-items: center;
@@ -1015,6 +1136,10 @@ body.is-embedded .quick-links {
 
 .step-card[data-status="held"] .step-pill {
   color: #fde68a;
+}
+
+.step-card[data-status="failed"] .step-pill {
+  color: #fecdd3;
 }
 
 .step-detail {
@@ -1274,7 +1399,8 @@ body.is-embedded .quick-links {
   gap: 4px;
 }
 
-.worker-event[data-tone="conflict"] {
+.worker-event[data-tone="conflict"],
+.worker-event[data-tone="fail"] {
   border-color: rgba(244, 63, 94, 0.5);
   background: rgba(76, 5, 25, 0.24);
 }
@@ -1679,7 +1805,7 @@ body.is-embedded .quick-links {
   overflow: hidden;
 }
 
-.wire-row[data-status-group="4xx"] {
+.wire-row[data-status-group="fail"] {
   border-color: rgba(244, 63, 94, 0.5);
   background: rgba(48, 8, 22, 0.28);
 }
@@ -1727,6 +1853,7 @@ body.is-embedded .quick-links {
   color: #6ee7b7;
 }
 
+.w-status[data-ok="false"],
 .w-status[data-code="409"] {
   background: rgba(244, 63, 94, 0.25);
   border: 1px solid rgba(251, 113, 133, 0.55);
@@ -2062,4 +2189,35 @@ body.is-embedded .quick-links {
   .ngo-constraint-row {
     grid-template-columns: 1fr;
   }
+}
+
+/* Failure text inside a wire-log row, a Herma card or the NGO review gate */
+.wire-problem {
+  margin: 0 10px 6px;
+  padding: 5px 8px;
+  border-radius: 6px;
+  background: var(--rose-soft);
+  color: #fecdd3;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+
+.shim-card[data-ok="false"] {
+  border-left-color: var(--rose-bright);
+}
+
+.ref-badge-fail {
+  background: var(--rose-soft);
+  color: #fecdd3;
+}
+
+.gate-error {
+  color: #fecdd3;
+}
+
+.noun-source {
+  margin: 4px 0;
+  font-size: 11px;
+  color: var(--text-muted);
 }

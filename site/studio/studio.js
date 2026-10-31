@@ -9,6 +9,12 @@
   };
 
   const SESSION_STORAGE_KEY = "ta_amps_demo_session_v1";
+  // Tessera's anonymous mint rule (DEMO_QUOTAS.sessions_per_ip_hour, published at /connect.json).
+  const SESSION_LIMIT_TEXT = "Tessera opens at most 10 new demo sessions per address per hour.";
+  const RETRY_FIRST_MS = 30000;
+  const RETRY_MAX_MS = 300000;
+  // The worker id this page sends when it claims verbs: the browser itself plays the worker.
+  const BROWSER_WORKER_ID = "agora-studio-browser";
 
   const NGO_PRESETS = {
     clinic: {
@@ -27,15 +33,14 @@
         summary:
           "Equips volunteer-run free clinics with synthetic shift roster checks, bilingual role cards, and strict human-only clinical escalation gates.",
         target_org: "Community Free Clinic Volunteer Desk (example.org)",
-        drafted_by: "muse-code-sandbox-01",
-        drafted_by_key: "demo_sandbox_01",
+        drafted_by: "agora-studio-preset",
         steps: [
           {
             id: "parse_shift_slots",
             title: "Check weekend role coverage gaps",
             kind: "roster_check",
             boundary: "drafts",
-            actor: "Muse Code Volunteer Agent",
+            actor: "Volunteer agent",
             guidance:
               "Compare synthetic weekend shift slots against required bilingual greeter and nurse-lead roles."
           },
@@ -134,15 +139,14 @@
         summary:
           "Matches multilingual household language and dietary box notes against public pantry hours while keeping interviews and eligibility human-only.",
         target_org: "Neighborhood Mutual-Aid Food Pantry (example.org)",
-        drafted_by: "muse-code-sandbox-01",
-        drafted_by_key: "demo_sandbox_01",
+        drafted_by: "agora-studio-preset",
         steps: [
           {
             id: "match_pantry_hours",
             title: "Match public pantry hours and dietary box tags",
             kind: "directory_lookup",
             boundary: "assists",
-            actor: "Muse Code Volunteer Agent",
+            actor: "Volunteer agent",
             guidance:
               "Match requested language support and allergy-free box tags against published pantry distribution windows."
           },
@@ -241,15 +245,14 @@
         summary:
           "Reconciles synthetic warming-shelter cot counts, ADA bay readiness, and blanket stock before night shift handoff under human steward control.",
         target_org: "Winter Warming Shelter Operations Desk (example.org)",
-        drafted_by: "muse-code-sandbox-01",
-        drafted_by_key: "demo_sandbox_01",
+        drafted_by: "agora-studio-preset",
         steps: [
           {
             id: "reconcile_cot_supply",
             title: "Reconcile cot, ADA bay, and blanket counts",
             kind: "inventory_check",
             boundary: "drafts",
-            actor: "Muse Code Volunteer Agent",
+            actor: "Volunteer agent",
             guidance:
               "Check synthetic bay capacity and thermal blanket counts before evening intake opens."
           },
@@ -380,7 +383,18 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
 
   const state = {
     session: null,
-    isFallback: false,
+    sessionState: "connecting",
+    sessionInfo: {},
+    sessionOrigin: null,
+    sessionAttempt: null,
+    retryAt: 0,
+    retryDelayMs: 0,
+    retryTimer: null,
+    countdownTimer: null,
+    expiryTimer: null,
+    flowBusy: null,
+    // Makes this page load's record keys new, so a saved session never collides with an earlier visit.
+    runId: makeRunId(),
     uiMode: "gui",
     lastGuiScenario: "chat",
     activeScenario: "chat",
@@ -394,16 +408,17 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     nodeCounts: { browser: 0, herma: 0, tessera: 0, eranos: 0, worker: 0 },
     ngoRunSeq: 0,
     lastNgoResult: null,
-    ngoBusy: false,
     workerLab: {
       seq: 0,
       enqueuedTaskId: null,
       activeLease: null,
       lastSubmittedTaskId: null,
       lastSubmittedFence: null,
+      lastSubmitState: null,
       casKey: null,
+      casSeq: 0,
       casVersion: 0,
-      busy: false
+      casPrevVersion: 0
     },
     cliHistory: [],
     cliHistoryIdx: -1,
@@ -504,74 +519,311 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     });
   }
 
-  function updateSessionBanner() {
-    const pill = $("session-pill");
-    const label = $("session-pill-text");
+  /* DEMO SESSION
+     connecting: a mint or a check of the saved session is on the wire.
+     live:       a session opened by this page, or a saved one Tessera just accepted (GET /v1/me).
+     waiting:    the last try failed; the page tries again after a visible countdown ("Try now" skips it).
+     error:      Tessera answered 2xx with nothing usable; the page waits for "Try now".
+     Only "live" says Connected, and only "live" lets buttons send to Tessera. */
+  function makeRunId() {
+    const alphabet = "abcdefghijklmnopqrstuvwxyz0123456789";
+    const bytes = new Uint8Array(6);
+    if (window.crypto && window.crypto.getRandomValues) {
+      window.crypto.getRandomValues(bytes);
+    } else {
+      for (let i = 0; i < bytes.length; i++) bytes[i] = Math.floor(Math.random() * 256);
+    }
+    return Array.from(bytes)
+      .map(function (b) {
+        return alphabet[b % alphabet.length];
+      })
+      .join("");
+  }
+
+  function formatCountdown(ms) {
+    const total = Math.max(0, Math.ceil(ms / 1000));
+    return Math.floor(total / 60) + ":" + String(total % 60).padStart(2, "0");
+  }
+
+  function sessionNamespaceLabels() {
     const nsCode = $("tasks-ns-label");
     const cliTitle = $("cli-window-title");
     const cliPrompt = $("cli-prompt-label");
-
-    if (!state.session) {
-      pill.dataset.state = "connecting";
-      label.textContent = "Connecting: tessera.ta-amps.workers.dev ...";
-      return;
-    }
-
-    const nsShort = shortNs(state.session.namespace);
-    if (nsCode) nsCode.textContent = state.session.namespace;
-    if (cliTitle) cliTitle.textContent = "muse-code-cli · visitor@ta-amps:~/" + nsShort;
+    const ns = state.session ? state.session.namespace : null;
+    const nsShort = ns ? shortNs(ns) : "no-session";
+    if (nsCode) nsCode.textContent = ns || "(no demo session)";
+    if (cliTitle) cliTitle.textContent = "studio-cli · visitor@ta-amps:~/" + nsShort;
     if (cliPrompt) cliPrompt.textContent = "visitor@ta-amps:~/" + nsShort + "$";
-
-    if (state.isFallback) {
-      pill.dataset.state = "fallback";
-      label.textContent =
-        "Fallback Mode: " + nsShort + " · Rate-Limit Guard · $0 User Tokens";
-    } else {
-      pill.dataset.state = "live";
-      label.textContent =
-        "Connected: " + nsShort + " · Ephemeral Isolated Namespace · $0 User Tokens";
-    }
   }
 
-  function buildFallbackSession() {
-    const nowSec = Math.floor(Date.now() / 1000);
-    return {
-      session_token: "sim_ephemeral_only",
-      principal_id: "a_simfallback01",
-      session_id: "a_simfallback01",
-      namespace: "demo.a_simfallback01",
-      persisted: false,
-      simulated: true,
-      labels: { origin: "anonymous", demo: true, untrusted: true, agent_label: "ta-amps-studio" },
-      expires_at: nowSec + 3600
-    };
+  function renderSessionPill() {
+    const pill = $("session-pill");
+    const label = $("session-pill-text");
+    const detail = $("session-pill-detail");
+    const countdown = $("session-countdown");
+    const retryBtn = $("session-retry-btn");
+    if (!pill || !label) return;
+    const st = state.sessionState;
+    const info = state.sessionInfo || {};
+    let text;
+    let detailText = "";
+    if (st === "live" && state.session) {
+      text =
+        "Connected: Tessera demo session " +
+        shortNs(state.session.namespace) +
+        (state.sessionOrigin === "checked" ? " (saved session, checked by this page)" : " (opened by this page)");
+    } else if (st === "waiting") {
+      text = "Waiting for a demo session. " + SESSION_LIMIT_TEXT;
+      detailText = info.reason || "";
+    } else if (st === "error") {
+      text = "No demo session. " + (info.reason || "");
+    } else {
+      text = info.checking ? "Checking the saved demo session with Tessera..." : "Opening a demo session on Tessera...";
+    }
+    pill.dataset.state = st === "live" && !state.session ? "connecting" : st;
+    if (label.textContent !== text) label.textContent = text;
+    if (detail) {
+      detail.textContent = detailText;
+      detail.hidden = !detailText;
+    }
+    if (countdown) {
+      const counting = st === "waiting" && state.retryAt > 0;
+      countdown.hidden = !counting;
+      countdown.textContent = counting ? "Trying again in " + formatCountdown(state.retryAt - Date.now()) + "." : "";
+    }
+    if (retryBtn) retryBtn.hidden = !(st === "waiting" || st === "error");
+    sessionNamespaceLabels();
+  }
+
+  /* A button can be off for several reasons at once (no session, a run in progress, no lease). */
+  function setBlock(el, reason, on) {
+    if (!el) return;
+    const reasons = new Set(String(el.dataset.blocks || "").split(" ").filter(Boolean));
+    if (on) reasons.add(reason);
+    else reasons.delete(reason);
+    el.dataset.blocks = Array.from(reasons).join(" ");
+    el.disabled = reasons.size > 0;
+  }
+
+  function sessionGateText(short) {
+    const st = state.sessionState;
+    if (st === "live" && state.session) {
+      if (!state.flowBusy) return "";
+      return short
+        ? "Waiting for the current run to finish."
+        : "A run is using Tessera right now. These buttons turn back on when it finishes.";
+    }
+    if (short) {
+      return st === "connecting"
+        ? "Needs a Tessera demo session (opening one now)."
+        : "Needs a Tessera demo session (none yet, see the top of the page).";
+    }
+    if (st === "connecting") return "These buttons use Tessera. They turn on as soon as the demo session is open.";
+    if (st === "waiting") {
+      return "These buttons use Tessera, so they are off while the page waits for a demo session (see the top of the page). They turn on when it opens. Nothing is queued in the meantime.";
+    }
+    return "These buttons use Tessera, so they are off: there is no demo session (see the top of the page).";
+  }
+
+  function applySessionGate() {
+    const live = state.sessionState === "live" && Boolean(state.session);
+    document.querySelectorAll("[data-needs-session]").forEach(function (el) {
+      setBlock(el, "session", !live);
+      setBlock(el, "busy", Boolean(state.flowBusy));
+    });
+    document.querySelectorAll("[data-session-note]").forEach(function (el) {
+      const text = sessionGateText(el.dataset.sessionNote === "short");
+      el.textContent = text;
+      el.hidden = !text;
+    });
+  }
+
+  function setSessionState(next, info) {
+    state.sessionState = next;
+    state.sessionInfo = info || {};
+    if (next !== "live") state.session = null;
+    renderSessionPill();
+    applySessionGate();
+  }
+
+  function clearRetryTimers() {
+    if (state.retryTimer) clearTimeout(state.retryTimer);
+    if (state.countdownTimer) clearInterval(state.countdownTimer);
+    state.retryTimer = null;
+    state.countdownTimer = null;
+    state.retryAt = 0;
+  }
+
+  function scheduleExpiry(sess) {
+    if (state.expiryTimer) clearTimeout(state.expiryTimer);
+    state.expiryTimer = null;
+    const exp = Number(sess.expires_at);
+    if (!Number.isFinite(exp)) return;
+    const ms = Math.max(0, (exp - 60) * 1000 - Date.now());
+    state.expiryTimer = setTimeout(function () {
+      state.expiryTimer = null;
+      if (state.session !== sess) return;
+      // The session is about to end: stop saying Connected and open a new one.
+      clearCachedSession();
+      setSessionState("connecting", {});
+      openSession();
+    }, Math.min(ms, 2147483647));
+  }
+
+  function goLive(sess, origin) {
+    clearRetryTimers();
+    state.retryDelayMs = 0;
+    state.session = sess;
+    state.sessionOrigin = origin;
+    scheduleExpiry(sess);
+    setSessionState("live", {});
+  }
+
+  /* Retry-After when Tessera sends it (seconds or an HTTP date); otherwise 30 s, doubling, at most 5 min. */
+  function retryDelay(res) {
+    const raw = res && res.headers ? res.headers["retry-after"] : null;
+    if (raw != null && String(raw).trim() !== "") {
+      const text = String(raw).trim();
+      const secs = /^\d+$/.test(text) ? Number(text) : (Date.parse(text) - Date.now()) / 1000;
+      if (Number.isFinite(secs) && secs >= 0) {
+        return { ms: Math.max(1000, Math.ceil(secs) * 1000), fromServer: true };
+      }
+    }
+    state.retryDelayMs = state.retryDelayMs ? Math.min(state.retryDelayMs * 2, RETRY_MAX_MS) : RETRY_FIRST_MS;
+    return { ms: state.retryDelayMs, fromServer: false };
+  }
+
+  function enterWaiting(res, reason) {
+    clearRetryTimers();
+    const delay = retryDelay(res);
+    state.retryAt = Date.now() + delay.ms;
+    state.retryTimer = setTimeout(function () {
+      state.retryTimer = null;
+      openSession();
+    }, delay.ms);
+    state.countdownTimer = setInterval(renderSessionPill, 1000);
+    setSessionState("waiting", {
+      reason: reason + (delay.fromServer ? " Tessera's Retry-After header asked for this wait." : "")
+    });
+  }
+
+  function verifySession(sess) {
+    return liveWireFetch({
+      actor: "browser",
+      target: "tessera",
+      method: "GET",
+      url: ENDPOINTS.tessera + "/v1/me",
+      headers: { Authorization: "Bearer " + sess.session_token }
+    });
+  }
+
+  function openSession() {
+    if (state.sessionAttempt) return state.sessionAttempt;
+    clearRetryTimers();
+    state.sessionAttempt = attemptSession().finally(function () {
+      state.sessionAttempt = null;
+    });
+    return state.sessionAttempt;
+  }
+
+  async function attemptSession() {
+    const cached = readCachedSession();
+    if (cached) {
+      setSessionState("connecting", { checking: true });
+      const check = await verifySession(cached);
+      const seenNs = check.data && typeof check.data.namespace === "string" ? check.data.namespace : null;
+      if (check.ok && (!seenNs || seenNs === cached.namespace)) {
+        const seenExpiry = check.data ? Number(check.data.session_expires_at) : NaN;
+        goLive(
+          Number.isFinite(seenExpiry) ? Object.assign({}, cached, { expires_at: seenExpiry }) : cached,
+          "checked"
+        );
+        return;
+      }
+      if (check.ok || check.status === 401 || check.status === 403) {
+        // Tessera no longer accepts the saved session (or it belongs elsewhere): forget it and open a new one.
+        clearCachedSession();
+      } else {
+        enterWaiting(check, "Last try: could not check the saved session, " + failureText(check) + ".");
+        return;
+      }
+    }
+
+    setSessionState("connecting", {});
+    const res = await liveWireFetch({
+      actor: "browser",
+      target: "tessera",
+      method: "POST",
+      url: ENDPOINTS.tessera + "/v1/session/anonymous",
+      body: { agent_label: "ta-amps-studio" }
+    });
+    if (res.ok) {
+      const d = res.data;
+      const missing =
+        !d || typeof d !== "object"
+          ? "JSON body"
+          : typeof d.session_token !== "string" || !d.session_token
+            ? "session_token"
+            : typeof d.namespace !== "string" || !d.namespace
+              ? "namespace"
+              : null;
+      if (!missing) {
+        saveCachedSession(d);
+        goLive(d, "opened");
+        return;
+      }
+      clearRetryTimers();
+      setSessionState("error", {
+        reason: "Tessera answered HTTP " + res.status + ", but the answer has no " + missing + ". Use Try now to ask again."
+      });
+      return;
+    }
+    enterWaiting(res, "Last try: " + failureText(res) + ".");
+  }
+
+  /* A 401 means Tessera no longer accepts the token: open a new session. A 403 may only refuse that one
+     request, so check the session first (GET /v1/me) and keep it when Tessera still accepts it. */
+  async function sessionRejected(sess, res) {
+    if (sess !== state.session || state.sessionAttempt) return;
+    if (res.authStatus === 403) {
+      const check = await verifySession(sess);
+      if (sess !== state.session) return;
+      if (check.ok || (check.status !== 401 && check.status !== 403)) return;
+    }
+    clearCachedSession();
+    setSessionState("connecting", {});
+    openSession();
   }
 
   /* SVG TOPOLOGY ANIMATION */
-  function animateTopologyCall(actor, target, shortVerb, statusCode, latencyMs) {
+  function animateTopologyCall(actor, target, shortVerb, statusCode, latencyMs, ok) {
     const srcNode = $("node-" + actor);
     const dstNode = $("node-" + target);
     const edgeId = "edge-" + actor + "-" + target;
     const edge = $(edgeId);
-    const isConflict = statusCode === 409 || statusCode >= 400;
+    const isConflict = !ok;
 
     state.nodeCounts[actor] = (state.nodeCounts[actor] || 0) + 1;
     state.nodeCounts[target] = (state.nodeCounts[target] || 0) + 1;
 
     const statBrowser = $("stat-browser");
     if (statBrowser) {
-      statBrowser.textContent = state.nodeCounts.browser + " reqs · $0 tokens";
+      statBrowser.textContent = state.nodeCounts.browser + " requests";
     }
     const statTarget = $("stat-" + target);
     if (statTarget) {
       statTarget.textContent =
-        state.nodeCounts[target] + " calls · HTTP " + statusCode + " · " + latencyMs + "ms";
+        state.nodeCounts[target] +
+        " calls · " +
+        (statusCode ? "HTTP " + statusCode : "no answer") +
+        " · " +
+        latencyMs +
+        "ms";
     }
     if (actor === "worker") {
       const statWorker = $("stat-worker");
       if (statWorker) {
-        statWorker.textContent =
-          state.nodeCounts.worker + " ops · muse-code · " + latencyMs + "ms";
+        statWorker.textContent = state.nodeCounts.worker + " calls · this browser · " + latencyMs + "ms";
       }
     }
 
@@ -579,15 +831,18 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     const liveText = $("topology-live-text");
     if (livePill && liveText) {
       livePill.dataset.tone = isConflict ? "conflict" : "ok";
-      const statusWord =
-        statusCode === 200
+      const statusWord = !statusCode
+        ? "no answer"
+        : statusCode === 200
           ? "200 OK"
           : statusCode === 201
             ? "201 Created"
-            : statusCode === 409
-              ? "409 Conflict"
-              : String(statusCode);
-      liveText.textContent = shortVerb + " · " + statusWord + " · " + latencyMs + "ms";
+            : statusCode === 204
+              ? "204 No Content"
+              : statusCode === 409
+                ? "409 Conflict"
+                : String(statusCode);
+      liveText.textContent = shortVerb + " · " + statusWord + (ok ? "" : " · failed") + " · " + latencyMs + "ms";
     }
 
     [srcNode, dstNode].forEach(function (n) {
@@ -636,7 +891,8 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     }
 
     spawnDot(false, "#38bdf8", 0);
-    spawnDot(true, isConflict ? "#fb7185" : "#34d399", 210);
+    // No answer means nothing came back, so no return packet is drawn.
+    if (statusCode) spawnDot(true, isConflict ? "#fb7185" : "#34d399", 210);
   }
 
   function buildCurlCommand(entry) {
@@ -655,7 +911,56 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     return parts.join(" \\\n");
   }
 
-  /* UNIFIED LIVE WIRE CALLER */
+  /* WHAT WENT WRONG, IN THE SERVER'S OWN WORDS */
+  function serverErrorText(data) {
+    if (data && typeof data === "object") {
+      const code = typeof data.code === "string" ? data.code : "";
+      let detail = "";
+      if (typeof data.detail === "string") detail = data.detail;
+      else if (typeof data.error === "string") detail = data.error;
+      else if (data.error && typeof data.error.message === "string") detail = data.error.message;
+      else if (typeof data.message === "string") detail = data.message;
+      else if (typeof data.title === "string") detail = data.title;
+      else if (typeof data.raw_text === "string" && data.raw_text.trim()) detail = data.raw_text.trim().slice(0, 300);
+      if (code && detail) return code + ": " + detail;
+      if (detail || code) return detail || code;
+    }
+    return "the answer has no error text";
+  }
+
+  function failureText(res) {
+    if (!res) return "no request was made";
+    if (res.notSent) return res.error;
+    if (res.networkError) return "no answer from " + res.host + " (" + res.networkError + ")";
+    if (res.readError) return "HTTP " + res.status + ", but the answer could not be read (" + res.readError + ")";
+    if (res.mcpError) {
+      return (
+        "HTTP " +
+        res.status +
+        ", but MCP " +
+        res.mcpTool +
+        " failed" +
+        (res.mcpError.status ? " with status " + res.mcpError.status : "") +
+        ": " +
+        res.mcpError.code +
+        ": " +
+        res.mcpError.detail
+      );
+    }
+    return "HTTP " + res.status + ", " + serverErrorText(res.data);
+  }
+
+  function statusPill(res) {
+    if (!res || res.notSent) return "not sent";
+    if (res.networkError) return "no answer";
+    return "HTTP " + res.status + " · " + res.latencyMs + "ms";
+  }
+
+  function missingField(res, service, field) {
+    return service + " answered HTTP " + res.status + ", but the answer has no " + field + ".";
+  }
+
+  /* UNIFIED LIVE WIRE CALLER: every result shown on this page comes back through here, from the network. */
   async function liveWireFetch(opts) {
     const actor = opts.actor || "browser";
     const target = opts.target || "tessera";
@@ -676,56 +981,76 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       (opts.mcpTool ? "MCP " + opts.mcpTool : httpMethod + " " + shortPath);
 
     const t0 = performance.now();
-    let status = 200;
-    let resHeaders = {};
+    let status = 0;
+    const resHeaders = {};
     let resBody = null;
-    let simulated = false;
+    let networkError = null;
+    let readError = null;
+    let res = null;
 
-    if (state.isFallback && target === "tessera" && typeof opts.fallback === "function") {
-      const fb = await opts.fallback();
-      status = fb.status || 200;
-      resHeaders = { "content-type": "application/json", "x-request-id": "sim-" + Date.now() };
-      resBody = fb.body;
-      simulated = true;
-    } else {
+    try {
+      res = await fetch(url, {
+        method: httpMethod,
+        headers: reqHeaders,
+        body: opts.body !== undefined ? JSON.stringify(opts.body) : undefined
+      });
+    } catch (netErr) {
+      networkError = String((netErr && netErr.message) || netErr || "the request failed");
+    }
+    if (res) {
+      status = res.status;
+      ["content-type", "x-request-id", "etag", "cache-control", "retry-after"].forEach(
+        function (hk) {
+          const hv = res.headers.get(hk);
+          if (hv) resHeaders[hk] = hv;
+        }
+      );
       try {
-        const res = await fetch(url, {
-          method: httpMethod,
-          headers: reqHeaders,
-          body: opts.body !== undefined ? JSON.stringify(opts.body) : undefined
-        });
-        status = res.status;
-        ["content-type", "x-request-id", "etag", "cache-control", "retry-after"].forEach(
-          function (hk) {
-            const hv = res.headers.get(hk);
-            if (hv) resHeaders[hk] = hv;
-          }
-        );
         const text = await res.text();
         try {
           resBody = text ? JSON.parse(text) : null;
         } catch (_e) {
-          resBody = { raw_text: text };
+          resBody = { raw_text: text.slice(0, 4000) };
         }
-      } catch (netErr) {
-        if (typeof opts.fallback === "function") {
-          state.isFallback = true;
-          updateSessionBanner();
-          const fb = await opts.fallback();
-          status = fb.status || 200;
-          resHeaders = {
-            "content-type": "application/json",
-            "x-request-id": "sim-net-" + Date.now()
-          };
-          resBody = fb.body;
-          simulated = true;
-        } else {
-          status = 503;
-          resHeaders = { "x-request-id": "client-network-error" };
-          resBody = { error: "network_unavailable", detail: String(netErr.message || netErr) };
-        }
+      } catch (readErr) {
+        readError = String((readErr && readErr.message) || readErr || "the body could not be read");
       }
     }
+
+    /* An MCP tool call can fail inside an HTTP 200: JSON-RPC error, or result.isError. */
+    let mcpError = null;
+    if (opts.mcpTool && status >= 200 && status < 300 && !readError) {
+      const result = resBody && typeof resBody === "object" ? resBody.result : null;
+      if (resBody && resBody.error) {
+        mcpError = {
+          code: "jsonrpc_" + String(resBody.error.code),
+          status: null,
+          detail: String(resBody.error.message || "JSON-RPC error")
+        };
+      } else if (!result || typeof result !== "object") {
+        mcpError = { code: "no_result", status: null, detail: "the answer has no JSON-RPC result" };
+      } else if (result.isError) {
+        const se = result.structuredContent && result.structuredContent.error;
+        const firstText =
+          Array.isArray(result.content) && result.content[0] && typeof result.content[0].text === "string"
+            ? result.content[0].text
+            : "";
+        mcpError = {
+          code: (se && se.code) || "tool_error",
+          status: (se && Number(se.status)) || null,
+          detail: (se && se.detail) || firstText || "the tool reported an error without text"
+        };
+      }
+    }
+
+    const httpOk = !networkError && !readError && status >= 200 && status < 300;
+    const ok = httpOk && !mcpError;
+    const authStatus =
+      status === 401 || status === 403
+        ? status
+        : mcpError && (mcpError.status === 401 || mcpError.status === 403)
+          ? mcpError.status
+          : null;
 
     const latencyMs = Math.max(1, Math.round(performance.now() - t0));
     const entryId = "w_" + (state.wireLog.length + 1);
@@ -741,125 +1066,90 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       url: url,
       shortPath: parsedUrl.host.split(".")[0] + parsedUrl.pathname,
       status: status,
+      ok: ok,
+      networkError: networkError,
+      readError: readError,
+      mcpError: mcpError,
       latencyMs: latencyMs,
       requestId: resHeaders["x-request-id"] || "-",
       rawReqHeaders: reqHeaders,
       reqHeadersMasked: maskObjectSecrets(reqHeaders),
       reqBody: maskObjectSecrets(opts.body !== undefined ? opts.body : null),
       resHeaders: resHeaders,
-      resBodyMasked: maskObjectSecrets(resBody),
-      simulated: simulated
+      resBodyMasked: maskObjectSecrets(resBody)
     };
     entry.curl = buildCurlCommand(entry);
 
-    if (status === 409) {
+    if (!ok) {
       state.expandedWireIds.clear();
       state.expandedWireIds.add(entryId);
     } else if (state.wireLog.length === 0) {
       state.expandedWireIds.add(entryId);
     }
     state.wireLog.unshift(entry);
-    animateTopologyCall(actor, target, shortVerb, status, latencyMs);
+    animateTopologyCall(actor, target, shortVerb, status, latencyMs, ok);
     renderWireLog();
 
     return {
-      ok: status >= 200 && status < 300,
+      ok: ok,
       status: status,
       headers: resHeaders,
       data: resBody,
       latencyMs: latencyMs,
       requestId: entry.requestId,
+      networkError: networkError,
+      readError: readError,
+      mcpError: mcpError,
+      mcpTool: opts.mcpTool || null,
+      authStatus: authStatus,
+      host: parsedUrl.host,
       entry: entry
     };
   }
 
-  async function ensureDemoSession(forceRefresh) {
-    if (!forceRefresh && state.session && !state.isFallback) {
-      const nowSec = Date.now() / 1000;
-      if (Number(state.session.expires_at) - 60 > nowSec) {
-        return state.session;
-      }
-    }
-    if (!forceRefresh) {
-      const cached = readCachedSession();
-      if (cached) {
-        state.session = cached;
-        state.isFallback = false;
-        updateSessionBanner();
-        return cached;
-      }
-    }
-
-    const res = await liveWireFetch({
-      actor: "browser",
-      target: "tessera",
-      method: "POST",
-      url: ENDPOINTS.tessera + "/v1/session/anonymous",
-      body: { agent_label: "ta-amps-studio" },
-      fallback: async function () {
-        return { status: 201, body: buildFallbackSession() };
-      }
-    });
-
-    if (res.ok && res.data && res.data.session_token) {
-      state.session = res.data;
-      state.isFallback = Boolean(res.data.simulated);
-      if (!state.isFallback) {
-        saveCachedSession(res.data);
-      }
-    } else {
-      state.session = buildFallbackSession();
-      state.isFallback = true;
-    }
-    updateSessionBanner();
-    return state.session;
+  function notSent(text) {
+    return {
+      ok: false,
+      notSent: true,
+      status: null,
+      error: text,
+      data: null,
+      headers: {},
+      latencyMs: 0,
+      requestId: "-",
+      entry: null
+    };
   }
 
-  async function tesseraAuthedFetch(opts) {
-    let sess = await ensureDemoSession(false);
-    const buildUrl = function (s) {
-      return typeof opts.pathFn === "function"
-        ? ENDPOINTS.tessera + opts.pathFn(s.namespace)
-        : opts.url;
-    };
-    const buildHeaders = function (s) {
-      return Object.assign({}, opts.headers || {}, {
-        Authorization: "Bearer " + s.session_token
-      });
-    };
+  function liveSession() {
+    return state.sessionState === "live" && state.session ? state.session : null;
+  }
 
-    let res = await liveWireFetch({
+  /* Calls Tessera with the live session. A run passes the session it started with, so a session that
+     changes halfway through stops the run instead of mixing two namespaces. */
+  async function tesseraAuthedFetch(opts) {
+    const current = liveSession();
+    if (!current) return notSent("Not sent: there is no live Tessera demo session.");
+    const sess = opts.session || current;
+    if (sess !== current) return notSent("Not sent: the demo session changed during this run. Run it again.");
+    const res = await liveWireFetch({
       actor: opts.actor || "browser",
       target: "tessera",
       method: opts.method || "POST",
-      url: buildUrl(sess),
-      headers: buildHeaders(sess),
+      url: typeof opts.pathFn === "function" ? ENDPOINTS.tessera + opts.pathFn(sess.namespace) : opts.url,
+      headers: Object.assign({}, opts.headers || {}, { Authorization: "Bearer " + sess.session_token }),
       body: opts.body,
-      mcpTool: opts.mcpTool,
-      fallback: opts.fallback
+      mcpTool: opts.mcpTool
     });
-
-    if (res.status === 401 && !state.isFallback) {
-      clearCachedSession();
-      sess = await ensureDemoSession(true);
-      res = await liveWireFetch({
-        actor: opts.actor || "browser",
-        target: "tessera",
-        method: opts.method || "POST",
-        url: buildUrl(sess),
-        headers: buildHeaders(sess),
-        body: opts.body,
-        mcpTool: opts.mcpTool,
-        fallback: opts.fallback
-      });
-    }
+    if (res.authStatus) sessionRejected(sess, res);
     return res;
   }
 
-  async function callTesseraMcp(toolName, toolArgs, actor) {
+  function callTesseraMcp(toolName, toolArgs, actor, sess) {
     const rpcId = state.mcpRpcId++;
     return tesseraAuthedFetch({
       actor: actor || "browser",
+      session: sess,
       method: "POST",
       url: ENDPOINTS.tessera + "/mcp",
       mcpTool: toolName,
@@ -868,31 +1158,38 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
         id: rpcId,
         method: "tools/call",
         params: { name: toolName, arguments: toolArgs || {} }
-      },
-      fallback: async function () {
-        return {
-          status: 200,
-          body: {
-            jsonrpc: "2.0",
-            id: rpcId,
-            result: { structuredContent: { simulated: true, tool: toolName, args: toolArgs } }
-          }
-        };
       }
     });
   }
 
+  /* The structured result of a successful MCP tool call, as Tessera returned it. */
+  function mcpContent(res) {
+    const result = res && res.ok && res.data && res.data.result;
+    return result && result.structuredContent && typeof result.structuredContent === "object"
+      ? result.structuredContent
+      : null;
+  }
+
   /* STATE INSPECTOR RENDERERS */
+  /* Fields left undefined keep what an earlier answer said; they are never filled in. */
+  function definedOnly(obj) {
+    const out = {};
+    Object.keys(obj).forEach(function (k) {
+      if (obj[k] !== undefined) out[k] = obj[k];
+    });
+    return out;
+  }
+
   function upsertTask(taskObj) {
     const prev = state.tasks.get(taskObj.task_id) || {};
-    state.tasks.set(taskObj.task_id, Object.assign({}, prev, taskObj));
+    state.tasks.set(taskObj.task_id, Object.assign({}, prev, definedOnly(taskObj)));
     renderTasksInspector();
   }
 
   function upsertNoun(nounObj) {
     const mapKey = (nounObj.store || "store") + "::" + nounObj.key;
     const prev = state.nouns.get(mapKey) || {};
-    state.nouns.set(mapKey, Object.assign({}, prev, nounObj));
+    state.nouns.set(mapKey, Object.assign({}, prev, definedOnly(nounObj)));
     renderNounsInspector();
   }
 
@@ -911,8 +1208,22 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     listEl.innerHTML = state.wireLog
       .map(function (item) {
         const isOpen = state.expandedWireIds.has(item.id);
-        const statusGroup = item.status >= 400 ? "4xx" : "2xx";
+        const statusGroup = item.ok ? "2xx" : "fail";
         const methodBadge = item.mcpTool ? "MCP:" + item.mcpTool : item.displayMethod;
+        const statusBadge =
+          (item.status ? "HTTP " + item.status : "HTTP 0 · no answer") + (item.mcpError ? " · tool error" : "");
+        const problemLine = item.networkError
+          ? "No answer from " + item.url.split("/")[2] + ": " + item.networkError
+          : item.readError
+            ? "The answer could not be read: " + item.readError
+            : item.mcpError
+              ? "MCP tool error" +
+                (item.mcpError.status ? " (status " + item.mcpError.status + ")" : "") +
+                ": " +
+                item.mcpError.code +
+                ": " +
+                item.mcpError.detail
+              : "";
         return (
           '<div class="wire-row" data-status-group="' +
           statusGroup +
@@ -931,8 +1242,10 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
           "</span>" +
           '<span class="w-status" data-code="' +
           escapeHtml(item.status) +
-          '">HTTP ' +
-          escapeHtml(item.status) +
+          '" data-ok="' +
+          (item.ok ? "true" : "false") +
+          '">' +
+          escapeHtml(statusBadge) +
           "</span>" +
           '<span class="w-url" title="' +
           escapeHtml(item.url) +
@@ -956,12 +1269,12 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
               " · x-request-id: <code>" +
               escapeHtml(item.requestId) +
               "</code>" +
-              (item.simulated ? " · <em>(fallback simulation)</em>" : "") +
               "</span>" +
               '<button type="button" class="btn btn-subtle btn-xs" data-copy-curl="' +
               escapeHtml(item.id) +
               '">Copy as curl</button>' +
               "</div>" +
+              (problemLine ? '<div class="wire-problem">' + escapeHtml(problemLine) + "</div>" : "") +
               '<div class="wire-cols">' +
               '<div class="wire-box">' +
               '<div class="wire-box-title">Request Headers &amp; JSON Body</div>' +
@@ -996,6 +1309,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       .join("");
   }
 
+  /* Each row shows what Tessera last said about a task. Blank means Tessera has not said it. */
   function renderTasksInspector() {
     const countEl = $("count-tasks");
     const wrap = $("tasks-table-wrap");
@@ -1005,13 +1319,13 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
 
     if (!rows.length) {
       wrap.innerHTML =
-        '<div class="empty-state">No tasks enqueued or leased in this view yet. Run NGO Submits Task or Worker + 409 Guard, or click Sync via MCP list_verbs.</div>';
+        '<div class="empty-state">No tasks in this view yet. Run NGO Submits Task or Worker + 409 Guard, or click Sync ready verbs via MCP list_verbs.</div>';
       return;
     }
 
     wrap.innerHTML =
       '<table class="state-table">' +
-      "<thead><tr><th>Task ID</th><th>Verb / Queue</th><th>State</th><th>Fence / Worker</th><th>Receipt</th></tr></thead>" +
+      "<thead><tr><th>Task ID</th><th>Verb / Queue</th><th>Last answer from Tessera</th><th>Fence / Worker</th><th>Receipt</th></tr></thead>" +
       "<tbody>" +
       rows
         .map(function (t) {
@@ -1021,19 +1335,19 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
             escapeHtml(String(t.task_id).slice(0, 18)) +
             "</code></td>" +
             "<td><code>" +
-            escapeHtml(t.kind || "task") +
+            escapeHtml(t.kind || "-") +
             "</code><br><small>" +
-            escapeHtml(t.queue || "demo") +
+            escapeHtml(t.queue || "-") +
             "</small></td>" +
             '<td><span class="state-badge" data-st="' +
-            escapeHtml(t.state || "queued") +
+            escapeHtml(t.tone || "") +
             '">' +
-            escapeHtml(t.state || "queued") +
+            escapeHtml(t.last || "-") +
             "</span></td>" +
-            "<td><code>#" +
-            escapeHtml(t.fencing_token != null ? t.fencing_token : "-") +
+            "<td><code>" +
+            escapeHtml(t.fencing_token != null ? "#" + t.fencing_token : "-") +
             "</code> · " +
-            escapeHtml(t.worker || "unclaimed") +
+            escapeHtml(t.worker || "-") +
             "</td>" +
             "<td><code>" +
             escapeHtml(t.receipt_hash ? String(t.receipt_hash).slice(0, 12) + "..." : "-") +
@@ -1054,13 +1368,12 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
 
     if (!items.length) {
       wrap.innerHTML =
-        '<div class="empty-state">No Task Objects stored or matched yet. Send a Herma Shim prompt or run the NGO / Worker flows.</div>';
+        '<div class="empty-state">No nouns stored or matched in this view yet. Send a Herma prompt or run the NGO / Worker flows.</div>';
       return;
     }
 
     wrap.innerHTML = items
       .map(function (n) {
-        const shaShort = n.sha256 ? String(n.sha256).slice(0, 14) + "..." : "shimmed";
         return (
           '<details class="noun-card">' +
           "<summary>" +
@@ -1069,12 +1382,14 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
           "</strong> · <code>" +
           escapeHtml(n.category || n.store || "noun") +
           "</code></span>" +
-          "<span>v" +
-          escapeHtml(n.version != null ? n.version : 1) +
-          " · sha256:<code>" +
-          escapeHtml(shaShort) +
-          "</code></span>" +
+          "<span>" +
+          escapeHtml(Number.isInteger(n.version) ? "v" + n.version : "version not reported") +
+          (n.sha256
+            ? " · sha256 (computed here):<code>" + escapeHtml(String(n.sha256).slice(0, 14)) + "...</code>"
+            : "") +
+          "</span>" +
           "</summary>" +
+          (n.source ? '<p class="noun-source">' + escapeHtml(n.source) + "</p>" : "") +
           "<pre>" +
           escapeHtml(JSON.stringify(n.value, null, 2)) +
           "</pre>" +
@@ -1094,66 +1409,77 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     });
   }
 
-  /* FLOW 1: CHAT + HERMA SHIM */
-  function synthesizeShimExplanation(prompt, data) {
-    if (data && data.responded_directly && data.direct_response_text) {
-      return data.direct_response_text;
+  /* FLOW 1: CHAT + HERMA SHIM
+     A card shows only what Herma returned: the provisions it matched, its direct answer when it gave one,
+     and the system message it added to the payload it would forward. Nothing is written for Herma. */
+  function hermaInjectedSystemText(ap) {
+    if (!ap || typeof ap !== "object") return [];
+    const out = [];
+    const asText = function (c) {
+      return typeof c === "string" ? c : JSON.stringify(c);
+    };
+    if (Array.isArray(ap.messages)) {
+      ap.messages.forEach(function (m) {
+        if (m && m.role === "system" && m.content != null) out.push(asText(m.content));
+      });
     }
-    const matches = (data && data.matches) || [];
-    const sysMsg =
-      data &&
-      data.augmented_payload &&
-      Array.isArray(data.augmented_payload.messages) &&
-      data.augmented_payload.messages[0] &&
-      data.augmented_payload.messages[0].role === "system"
-        ? data.augmented_payload.messages[0].content
-        : "";
+    if (ap.system != null && ap.system !== "") out.push(asText(ap.system));
+    if (typeof ap.instructions === "string" && ap.instructions) out.push(ap.instructions);
+    return out;
+  }
 
-    if (!matches.length) {
-      return (
-        "Zero-Token Herma Preview: 0 system_builtin provisions matched this prompt, so Herma adds 0 bytes of HarnessTax overhead and passes the payload unchanged to your configured worker model."
-      );
-    }
+  /* True only when Herma's payload is the plain prompt it was given, with nothing added. */
+  function hermaPayloadUnchanged(ap, prompt) {
+    return Boolean(
+      ap &&
+        typeof ap === "object" &&
+        Array.isArray(ap.messages) &&
+        ap.messages.length === 1 &&
+        ap.messages[0] &&
+        ap.messages[0].role === "user" &&
+        ap.messages[0].content === prompt &&
+        !("system" in ap) &&
+        !("instructions" in ap)
+    );
+  }
 
-    const topId = matches[0].prov_id;
-    const header =
-      "[Zero-Token Herma Shim Synthesis · Grounded in live " +
-      matches
-        .map(function (m) {
-          return m.prov_id + "@v" + m.version + " (score " + m.score + ")";
-        })
-        .join(", ") +
-      "]\n\n";
+  function readHermaPreview(res, prompt) {
+    const data = res.data && typeof res.data === "object" ? res.data : {};
+    const matches = Array.isArray(data.matches) ? data.matches : null;
+    const ap =
+      data.augmented_payload && typeof data.augmented_payload === "object" ? data.augmented_payload : null;
+    const injected = hermaInjectedSystemText(ap);
+    const direct =
+      data.responded_directly === true && typeof data.direct_response_text === "string"
+        ? data.direct_response_text
+        : null;
+    const lines = [];
+    if (!matches) lines.push("Herma's answer has no matches list.");
+    if (direct != null) lines.push("Herma answered directly:\n" + direct);
+    else if (data.responded_directly === true) {
+      lines.push("Herma marked its answer as direct, but the answer has no direct_response_text.");
+    }
+    if (injected.length) lines.push("System message Herma added to the payload:\n" + injected.join("\n\n"));
+    if (matches && !matches.length) {
+      lines.push(
+        hermaPayloadUnchanged(ap, prompt)
+          ? "Herma matched nothing and returned the payload unchanged."
+          : "Herma matched no provisions."
+      );
+    } else if (matches && direct == null && !injected.length && ap) {
+      lines.push("Herma matched provisions but added no system message to the payload.");
+    }
+    if (!ap) lines.push("Herma's answer has no augmented_payload.");
+    return { data: data, matches: matches, ap: ap, injected: injected, direct: direct, lines: lines };
+  }
 
-    if (topId === "PROV-HARNESS-FEEDS-GUIDE") {
-      return (
-        header +
-        "1. Harness Square: Comparative evaluation baseline tracking static system-prompt and tool-schema token overhead (HarnessTax) across paired trials.\n" +
-        "2. Muse Code (X-Herma-Harness: muse-code): Native Meta coding harness verified claiming Tessera verbs and receiving caller-scoped Herma shims.\n" +
-        "3. OpenCode: Configurable open-source CLI and horizontal swarm harness scaling across sharded Tessera queues (q01..q16).\n" +
-        "4. Pi: Lightweight multi-process worker harness completing fenced Tessera lifecycles with SHA-256 receipts (verifier != builder)."
-      );
-    }
-    if (topId === "PROV-LORA-MEMORY-ROUTING") {
-      return (
-        header +
-        "Herma 3-Regime Memory & Routing Rule:\n" +
-        "• Regime 1 - Context Shim (0 weight updates): Use for volatile, newly minted, or caller-scoped facts, live URIs, and turn-level guardrails (52.0% -> 64.7% tool-call lift on Llama 3.2 3B).\n" +
-        "• Regime 2 - Meta PEFT LoRA as Parametric Memory: Promote recurring, stabilized post-cutoff Task Object schemas into Llama 3.2 1B/3B or Muse Glimmer 30B 4-bit QLoRA adapters to eliminate per-turn HarnessTax tokens.\n" +
-        "• Regime 3 - Frontier Standard Mode: Route novel multi-step synthesis and independent review verbs to Muse Spark 1.3 or Muse Wonder 1.0."
-      );
-    }
-    if (topId === "PROV-NGO-HUMAN-BOUNDARY") {
-      return (
-        header +
-        "Privacy-Safe Clinic Volunteer Intake Checklist (SYNTHETIC Template):\n" +
-        "[x] Use synthetic role or slot tokens only; never paste patient names, phone numbers, or street addresses.\n" +
-        "[x] Agent boundary = drafts / assists: check shift language coverage and public clinic hours.\n" +
-        "[x] Strictly human_only: clinical symptom triage, crisis safety planning, survivor interviews, eligibility decisions, and external sends.\n" +
-        "[x] Enforce two-step verification (drafter != reviewer) before publishing any NGO kit."
-      );
-    }
-    return header + (sysMsg || "Provision matched and injected into augmented_payload.");
+  function hermaMatchLabel(m) {
+    const id = m && typeof m.prov_id === "string" ? m.prov_id : "(no prov_id)";
+    const ver = m && Number.isInteger(m.version) ? "v" + m.version : "version not reported";
+    const score = m && typeof m.score === "number" ? "score " + Number(m.score.toFixed(3)) : "no score";
+    const tiers =
+      m && Array.isArray(m.matched_tiers) && m.matched_tiers.length ? " · " + m.matched_tiers.join("+") : "";
+    return id + " " + ver + " · " + score + tiers;
   }
 
   function appendChatWelcome() {
@@ -1162,10 +1488,10 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     stream.innerHTML =
       '<div class="shim-card" id="chat-welcome-card">' +
       '<div class="shim-head">' +
-      '<div class="shim-prov-badges"><span class="prov-badge">Ready · Live Herma Edge</span><span class="ref-badge">0 API keys needed</span></div>' +
+      '<div class="shim-prov-badges"><span class="prov-badge">Herma public preview</span><span class="ref-badge">no key needed</span></div>' +
       '<span class="shim-latency">herma.ta-amps.workers.dev/api/preview</span>' +
       "</div>" +
-      '<div class="shim-answer">Click any starter chip above or type your own prompt below. Every turn executes a real HTTPS POST to Herma, inspects matched PROV-* Task Objects, and shows the exact before/after context shim diff.</div>' +
+      '<div class="shim-answer">Click a starter prompt above or type your own below. Each prompt is a real POST to Herma. The card that comes back shows only what Herma returned: the provisions it matched, its direct answer when it gives one, and the system message it added to the payload.</div>' +
       "</div>";
   }
 
@@ -1174,142 +1500,113 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     if (!cleanPrompt) return null;
     const stream = $("chat-stream");
     const sendBtn = $("chat-send-btn");
-    if (sendBtn) sendBtn.disabled = true;
+    setBlock(sendBtn, "busy", true);
 
+    const sentBody = { prompt: cleanPrompt, wire_format: "chat_completions" };
     const res = await liveWireFetch({
       actor: "browser",
       target: "herma",
       method: "POST",
       url: ENDPOINTS.herma + "/api/preview",
-      body: { prompt: cleanPrompt, wire_format: "chat_completions" },
-      fallback: async function () {
-        return {
-          status: 200,
-          body: {
-            persisted: false,
-            scope_evaluated: "system_builtin",
-            wire_format: "chat_completions",
-            matches: [
-              {
-                prov_id: "PROV-DIRECT-NOUN-VERB-SCHEMA",
-                version: 7,
-                matched_tiers: ["keyword"],
-                score: 1
-              }
-            ],
-            responded_directly: true,
-            direct_response_text:
-              "Fallback Preview: Verbs are leased Tasks (enqueue -> claim -> heartbeat -> submit) guarded by a fencing token; Nouns are compare-and-set Task Objects guarded by expected_version.",
-            shimmed_context_refs: ["noun:tessera.lease_fence", "verb:tessera.claim"],
-            augmented_payload: {
-              model: "muse-spark-open",
-              messages: [{ role: "user", content: cleanPrompt }]
-            }
-          }
-        };
-      }
+      body: sentBody
     });
+    setBlock(sendBtn, "busy", false);
 
-    if (sendBtn) sendBtn.disabled = false;
-    const data = res.data || {};
-    const matches = Array.isArray(data.matches) ? data.matches : [];
-    const refs = Array.isArray(data.shimmed_context_refs) ? data.shimmed_context_refs : [];
-
+    const preview = res.ok ? readHermaPreview(res, cleanPrompt) : null;
     const metricEl = $("herma-last-metric");
     if (metricEl) {
-      metricEl.textContent =
-        "HTTP " +
-        res.status +
-        " · " +
-        res.latencyMs +
-        "ms · " +
-        matches.length +
-        " PROV matched · $0 tokens";
+      metricEl.textContent = !preview
+        ? statusPill(res) + " · failed"
+        : statusPill(res) +
+          " · " +
+          (preview.matches ? preview.matches.length + " matched" : "no matches list") +
+          (typeof preview.data.persisted === "boolean" ? " · persisted: " + preview.data.persisted : "");
     }
 
-    for (let i = 0; i < matches.length; i++) {
-      const m = matches[i];
-      const digest = await sha256Hex(JSON.stringify(m));
-      upsertNoun({
-        store: "herma.provisions",
-        category: "noun.provision",
-        key: m.prov_id,
-        version: m.version || 1,
-        sha256: digest,
-        value: m
+    if (preview && preview.matches) {
+      preview.matches.forEach(function (m) {
+        if (!m || typeof m.prov_id !== "string") return;
+        upsertNoun({
+          store: "herma.provisions",
+          category: "noun.provision",
+          key: m.prov_id,
+          version: Number.isInteger(m.version) ? m.version : null,
+          source: "Matched by Herma's public preview (HTTP " + res.status + ").",
+          value: m
+        });
       });
     }
 
-    const answerText = synthesizeShimExplanation(cleanPrompt, data);
-    const beforePayload = {
-      model: "muse-spark-open",
-      messages: [{ role: "user", content: cleanPrompt }]
-    };
-    const afterPayload = data.augmented_payload || beforePayload;
+    const answerLines = preview ? preview.lines : ["Herma did not answer the preview: " + failureText(res) + "."];
 
     if (stream) {
       const welcome = $("chat-welcome-card");
       if (welcome) welcome.remove();
       const turnEl = document.createElement("div");
       turnEl.className = "chat-turn";
-      const badgesHtml = matches.length
-        ? matches
-            .map(function (m) {
-              const tier = Array.isArray(m.matched_tiers) ? m.matched_tiers.join("+") : "rule";
-              return (
-                '<span class="prov-badge">' +
-                escapeHtml(m.prov_id) +
-                "@v" +
-                escapeHtml(m.version) +
-                " · " +
-                escapeHtml(tier) +
-                " (" +
-                escapeHtml(m.score) +
-                ")</span>"
-              );
-            })
-            .join("")
-        : '<span class="ref-badge">0 provisions matched (pass-through)</span>';
-
+      let badgesHtml;
+      if (!preview) {
+        badgesHtml = '<span class="ref-badge ref-badge-fail">No preview: the request failed</span>';
+      } else if (preview.matches && preview.matches.length) {
+        badgesHtml = preview.matches
+          .map(function (m) {
+            return '<span class="prov-badge">' + escapeHtml(hermaMatchLabel(m)) + "</span>";
+          })
+          .join("");
+      } else {
+        badgesHtml =
+          '<span class="ref-badge">' + (preview.matches ? "0 provisions matched" : "No matches list") + "</span>";
+      }
+      const refs = preview && Array.isArray(preview.data.shimmed_context_refs) ? preview.data.shimmed_context_refs : [];
       const refBadgesHtml = refs
         .map(function (r) {
           return '<span class="ref-badge">' + escapeHtml(r) + "</span>";
         })
         .join("");
+      const outcome = !preview
+        ? "failed"
+        : preview.direct != null
+          ? "direct answer"
+          : preview.injected.length
+            ? "system message added"
+            : "nothing added";
+      const afterText = !preview
+        ? "No answer from Herma."
+        : preview.ap
+          ? JSON.stringify(preview.ap, null, 2)
+          : "Herma's answer has no augmented_payload.";
 
       turnEl.innerHTML =
         '<div class="chat-user-bubble">' +
         escapeHtml(cleanPrompt) +
         "</div>" +
         '<div class="shim-card" data-direct="' +
-        (data.responded_directly ? "true" : "false") +
+        (preview && preview.direct != null ? "true" : "false") +
+        '" data-ok="' +
+        (preview ? "true" : "false") +
         '">' +
         '<div class="shim-head">' +
         '<div class="shim-prov-badges">' +
         badgesHtml +
         refBadgesHtml +
         "</div>" +
-        '<span class="shim-latency">HTTP ' +
-        escapeHtml(res.status) +
-        " · " +
-        escapeHtml(res.latencyMs) +
-        "ms · " +
-        (data.responded_directly ? "Direct Answer" : "Context Shimmed") +
+        '<span class="shim-latency">' +
+        escapeHtml(statusPill(res) + " · " + outcome) +
         "</span>" +
         "</div>" +
         '<div class="shim-answer">' +
-        escapeHtml(answerText) +
+        escapeHtml(answerLines.join("\n\n")) +
         "</div>" +
         '<details class="shim-diff-details"' +
         (opts && opts.openDiff ? " open" : "") +
         ">" +
-        "<summary>Inspect Injected Shim Diff (Before -&gt; Augmented Wire Payload)</summary>" +
+        "<summary>Inspect what was sent and Herma's augmented_payload</summary>" +
         '<div class="shim-diff-grid">' +
-        '<div class="diff-box"><span class="diff-label">Raw Caller Payload</span><pre>' +
-        escapeHtml(JSON.stringify(beforePayload, null, 2)) +
+        '<div class="diff-box"><span class="diff-label">Sent to Herma (POST /api/preview)</span><pre>' +
+        escapeHtml(JSON.stringify(sentBody, null, 2)) +
         "</pre></div>" +
-        '<div class="diff-box diff-box-added"><span class="diff-label">After Herma Shim (persisted: false)</span><pre>' +
-        escapeHtml(JSON.stringify(afterPayload, null, 2)) +
+        '<div class="diff-box diff-box-added"><span class="diff-label">augmented_payload, as Herma returned it</span><pre>' +
+        escapeHtml(afterText) +
         "</pre></div>" +
         "</div>" +
         "</details>" +
@@ -1319,17 +1616,19 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       stream.scrollTop = stream.scrollHeight;
     }
 
-    return { res: res, data: data, answerText: answerText };
+    return { res: res, ok: Boolean(preview), preview: preview, answerLines: answerLines };
   }
 
-  /* FLOW 2: NGO SUBMITS TASK (AUTO-PICKED UP BY WORKER) */
+  /* FLOW 2: NGO SUBMITS TASK
+     Every step is a real call, and this browser plays the worker that claims the verb. The run stops at the
+     first call that fails and shows the service's own status and error text; a missing field fails the step. */
   const NGO_STEP_DEFS = [
-    { num: 1, title: "1. Write noun.request (Tessera CAS)" },
+    { num: 1, title: "1. Store noun.request (Tessera)" },
     { num: 2, title: "2. Enqueue verb.build_agent_kit" },
-    { num: 3, title: "3. Auto-Worker Claim (muse-code)" },
-    { num: 4, title: "4. Fetch NGO Guardrails (Herma Shim)" },
-    { num: 5, title: "5. Verify Kit Boundaries (Eranos 8/8)" },
-    { num: 6, title: "6. Store noun.agent_kit (MCP) & Hold" }
+    { num: 3, title: "3. Claim it (this browser as worker)" },
+    { num: 4, title: "4. Ask Herma for guardrails" },
+    { num: 5, title: "5. Eranos practice check" },
+    { num: 6, title: "6. Store noun.agent_kit (MCP), submit" }
   ];
 
   function renderInitialNgoSteps() {
@@ -1350,7 +1649,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
         "</div>" +
         '<div class="step-detail" id="ngo-step-detail-' +
         s.num +
-        '">Waiting for NGO brief submission...</div>' +
+        '">Not started.</div>' +
         "</li>"
       );
     }).join("");
@@ -1365,15 +1664,57 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     if (detail) detail.textContent = detailText;
   }
 
-  async function releaseActiveWorkerLeaseIfAny() {
-    const lease = state.workerLab.activeLease;
-    if (!lease || !lease.task_id) return;
-    await tesseraAuthedFetch({
-      actor: "worker",
+  /* One Tessera run at a time: an anonymous session holds one lease, and interleaved runs would mix results. */
+  async function runExclusive(name, fn) {
+    if (state.flowBusy) {
+      return { ok: false, busy: true, error: "Not started: another run (" + state.flowBusy + ") is using Tessera." };
+    }
+    state.flowBusy = name;
+    applySessionGate();
+    try {
+      return await fn();
+    } finally {
+      state.flowBusy = null;
+      applySessionGate();
+    }
+  }
+
+  function nsPath(suffix) {
+    return function (ns) {
+      return "/ns/" + encodeURIComponent(ns) + suffix;
+    };
+  }
+
+  /* A stopped run cancels the verb it enqueued, so the next run does not lease a leftover. */
+  async function cancelTask(sess, taskId, reason, actor) {
+    const res = await tesseraAuthedFetch({
+      actor: actor || "browser",
+      session: sess,
       method: "POST",
-      pathFn: function (ns) {
-        return "/ns/" + encodeURIComponent(ns) + "/v1/tasks/submit";
-      },
+      pathFn: nsPath("/v1/tasks/cancel"),
+      body: { task_id: taskId, reason: reason }
+    });
+    if (res.ok) {
+      const reported = res.data && typeof res.data.state === "string" ? res.data.state : null;
+      upsertTask({
+        task_id: taskId,
+        last: "cancel accepted: state " + (reported || "not reported") + " (HTTP " + res.status + ")",
+        tone: ""
+      });
+      return " Cancelled task " + taskId + " so it does not stay queued (" + statusPill(res) + ").";
+    }
+    return " Could not cancel task " + taskId + ": " + failureText(res) + ".";
+  }
+
+  /* An anonymous session holds one lease at a time, so an open lease from the worker lab is submitted first. */
+  async function releaseActiveWorkerLeaseIfAny(sess) {
+    const lease = state.workerLab.activeLease;
+    if (!lease || !lease.task_id) return null;
+    const res = await tesseraAuthedFetch({
+      actor: "worker",
+      session: sess,
+      method: "POST",
+      pathFn: nsPath("/v1/tasks/submit"),
       headers: { "Idempotency-Key": "idem-release-" + lease.task_id + "-" + lease.fencing_token },
       body: {
         task_id: lease.task_id,
@@ -1382,18 +1723,38 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
         output: { released_for_next_demo: true, synthetic: true }
       }
     });
-    state.workerLab.lastSubmittedTaskId = lease.task_id;
-    state.workerLab.lastSubmittedFence = lease.fencing_token;
-    state.workerLab.activeLease = null;
+    if (res.ok) {
+      state.workerLab.lastSubmittedTaskId = lease.task_id;
+      state.workerLab.lastSubmittedFence = lease.fencing_token;
+      state.workerLab.activeLease = null;
+      upsertTask({
+        task_id: lease.task_id,
+        last:
+          "submitted to free the lease" +
+          (res.data && typeof res.data.state_after === "string" ? ": state_after " + res.data.state_after : ""),
+        tone: "done",
+        receipt_hash: res.data && typeof res.data.receipt_hash === "string" ? res.data.receipt_hash : null
+      });
+      appendWorkerEvent(
+        "Closed the lab's open lease",
+        statusPill(res),
+        "Submitted " + lease.task_id + " so another claim can start (an anonymous session holds one lease at a time)."
+      );
+    } else {
+      if (res.status === 409) state.workerLab.activeLease = null; // Tessera says the lease is no longer live.
+      appendWorkerEvent("Could not close the lab's open lease", statusPill(res), failureText(res), "fail");
+    }
     updateWorkerTelemetryUI();
+    return res;
   }
 
-  async function runNgoPipeline(presetOverride) {
-    if (state.ngoBusy) return null;
-    state.ngoBusy = true;
-    const submitBtn = $("ngo-submit-btn");
-    if (submitBtn) submitBtn.disabled = true;
+  function runNgoPipeline(presetOverride) {
+    return runExclusive("NGO run", function () {
+      return ngoPipeline(presetOverride);
+    });
+  }
 
+  async function ngoPipeline(presetOverride) {
     if (presetOverride && NGO_PRESETS[presetOverride]) {
       selectNgoPreset(presetOverride);
     }
@@ -1408,335 +1769,331 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     if (gateCard) gateCard.hidden = true;
     if (inspectorCard) inspectorCard.hidden = true;
     renderInitialNgoSteps();
+    state.lastNgoResult = null;
 
-    if (badge) {
-      badge.dataset.state = "running";
-      badge.textContent = "Executing live 6-step sequence...";
+    const setBadge = function (st, text) {
+      if (!badge) return;
+      badge.dataset.state = st;
+      badge.textContent = text;
+    };
+    const halt = function (num, res, message) {
+      updateNgoStep(num, "failed", statusPill(res), message);
+      for (let k = num + 1; k <= NGO_STEP_DEFS.length; k++) {
+        updateNgoStep(k, "skipped", "not run", "Not run: step " + num + " failed.");
+      }
+      setBadge("failed", "Stopped at step " + num + " (" + statusPill(res) + ")");
+      return { ok: false, step: num, error: message, res: res };
+    };
+
+    const sess = liveSession();
+    if (!sess) {
+      setBadge("failed", "Not started: there is no live Tessera demo session.");
+      return { ok: false, error: "Not started: there is no live Tessera demo session." };
     }
 
-    try {
-      await ensureDemoSession(false);
-      await releaseActiveWorkerLeaseIfAny();
+    const released = await releaseActiveWorkerLeaseIfAny(sess);
+    if (released && !released.ok && released.status !== 409) {
+      setBadge(
+        "failed",
+        "Not started: the worker lab holds a lease and closing it failed (" + failureText(released) + ")."
+      );
+      return { ok: false, error: failureText(released), res: released };
+    }
 
-      const seq = ++state.ngoRunSeq;
-      const suffix = String(seq).padStart(2, "0");
-      const reqKey = "ngo-req-" + preset.id + "-" + suffix;
-      const kitKey = "ngo-kit-" + preset.id + "-" + suffix;
+    const seq = ++state.ngoRunSeq;
+    const runTag = state.runId + "-" + String(seq).padStart(2, "0");
+    const reqKey = "ngo-req-" + preset.id + "-" + runTag;
+    const kitKey = "ngo-kit-" + preset.id + "-" + runTag;
+    const queue = "demo.situate_sample";
+    const kind = "verb.build_agent_kit";
 
-      /* STEP 1: Write noun.request to Tessera CAS */
-      updateNgoStep(1, "running", "POST ...", "Writing versioned noun.request to demo.requests...");
-      const reqValue = {
-        category: "noun.request",
-        synthetic: true,
-        preset_id: preset.id,
-        organization: preset.draft.target_org,
-        requested_kit_id: preset.draft.kit_id,
-        constraint: constraintText
-      };
-      const reqSha = await sha256Hex(JSON.stringify(reqValue));
-      const r1 = await tesseraAuthedFetch({
-        actor: "browser",
-        method: "POST",
-        pathFn: function (ns) {
-          return "/ns/" + encodeURIComponent(ns) + "/v1/stores/demo.requests/records/" + reqKey;
-        },
-        body: { value: reqValue, expected_version: 0 },
-        fallback: async function () {
-          return {
-            status: 200,
-            body: { store: "demo.requests", key: reqKey, version: 1, value: reqValue }
-          };
+    /* STEP 1: store noun.request with compare-and-set */
+    setBadge("running", "Running step 1 of 6...");
+    updateNgoStep(1, "running", "sending", "POST /v1/stores/demo.requests/records/" + reqKey + " (expected_version 0)");
+    const reqValue = {
+      category: "noun.request",
+      synthetic: true,
+      preset_id: preset.id,
+      organization: preset.draft.target_org,
+      requested_kit_id: preset.draft.kit_id,
+      constraint: constraintText
+    };
+    const reqSha = await sha256Hex(JSON.stringify(reqValue));
+    const r1 = await tesseraAuthedFetch({
+      actor: "browser",
+      session: sess,
+      method: "POST",
+      pathFn: nsPath("/v1/stores/demo.requests/records/" + reqKey),
+      body: { value: reqValue, expected_version: 0 }
+    });
+    if (!r1.ok) return halt(1, r1, "Tessera did not store the request: " + failureText(r1) + ".");
+    if (!r1.data || !Number.isInteger(r1.data.version)) return halt(1, r1, missingField(r1, "Tessera", "version"));
+    upsertNoun({
+      store: "demo.requests",
+      category: "noun.request",
+      key: reqKey,
+      version: r1.data.version,
+      sha256: reqSha,
+      source: "Stored by Tessera (HTTP " + r1.status + ").",
+      value: reqValue
+    });
+    updateNgoStep(1, "done", statusPill(r1), "Tessera stored demo.requests/" + reqKey + " as version " + r1.data.version + ".");
+
+    /* STEP 2: enqueue verb.build_agent_kit */
+    setBadge("running", "Running step 2 of 6...");
+    updateNgoStep(2, "running", "sending", "POST /v1/tasks: " + kind + " in " + queue);
+    const r2 = await tesseraAuthedFetch({
+      actor: "browser",
+      session: sess,
+      method: "POST",
+      pathFn: nsPath("/v1/tasks"),
+      body: {
+        queue: queue,
+        kind: kind,
+        priority: 95,
+        brief: {
+          synthetic: true,
+          request_noun_key: reqKey,
+          kit_id: preset.draft.kit_id,
+          track_id: preset.draft.track_id
         }
-      });
-      if (!r1.ok) {
-        const errDetail = (r1.data && r1.data.detail) || "Refused by Tessera wire guard";
-        updateNgoStep(1, "held", "HTTP " + r1.status, errDetail);
-        if (badge) {
-          badge.dataset.state = "held_for_person";
-          badge.textContent = "Halted: " + errDetail;
-        }
-        return { ok: false, error: errDetail };
       }
-      upsertNoun({
-        store: "demo.requests",
-        category: "noun.request",
-        key: reqKey,
-        version: (r1.data && r1.data.version) || 1,
-        sha256: reqSha,
-        value: reqValue
-      });
-      updateNgoStep(
-        1,
-        "done",
-        "HTTP " + r1.status + " · " + r1.latencyMs + "ms",
-        "Stored demo.requests/" + reqKey + " (v1, sha256:" + reqSha.slice(0, 10) + "...)"
-      );
+    });
+    if (!r2.ok) return halt(2, r2, "Tessera did not enqueue the verb: " + failureText(r2) + ".");
+    const taskId = r2.data && typeof r2.data.task_id === "string" && r2.data.task_id ? r2.data.task_id : null;
+    if (!taskId) return halt(2, r2, missingField(r2, "Tessera", "task_id"));
+    upsertTask({ task_id: taskId, queue: queue, kind: kind, last: "enqueued (HTTP " + r2.status + ")", tone: "queued" });
+    updateNgoStep(2, "done", statusPill(r2), "Tessera enqueued task " + taskId + ".");
 
-      /* STEP 2: Enqueue verb.build_agent_kit */
-      updateNgoStep(2, "running", "POST ...", "Enqueuing verb.build_agent_kit on Tessera...");
-      const r2 = await tesseraAuthedFetch({
-        actor: "browser",
-        method: "POST",
-        pathFn: function (ns) {
-          return "/ns/" + encodeURIComponent(ns) + "/v1/tasks";
-        },
-        body: {
-          queue: "demo.situate_sample",
-          kind: "verb.build_agent_kit",
-          priority: 95,
-          brief: {
-            synthetic: true,
-            request_noun_key: reqKey,
-            kit_id: preset.draft.kit_id,
-            track_id: preset.draft.track_id
-          }
-        },
-        fallback: async function () {
-          return { status: 201, body: { task_id: "t_sim_ngo_" + suffix } };
-        }
-      });
-      const taskId = (r2.data && r2.data.task_id) || "t_ngo_" + suffix;
-      upsertTask({
-        task_id: taskId,
-        queue: "demo.situate_sample",
-        kind: "verb.build_agent_kit",
-        state: "queued",
-        worker: "waiting"
-      });
-      updateNgoStep(
-        2,
-        "done",
-        "HTTP " + r2.status + " · " + r2.latencyMs + "ms",
-        "Enqueued task " + taskId.slice(0, 18) + "... (priority 95)"
-      );
-
-      /* STEP 3: Auto-Worker Pickup (muse-code sandbox claims verb) */
-      updateNgoStep(3, "running", "CLAIM ...", "Sandboxed muse-code worker claiming task...");
-      const r3 = await tesseraAuthedFetch({
-        actor: "worker",
-        method: "POST",
-        pathFn: function (ns) {
-          return "/ns/" + encodeURIComponent(ns) + "/v1/tasks/claim";
-        },
-        body: {
-          queue: "demo.situate_sample",
-          worker: "muse-code-sandbox-01",
-          kinds: ["verb.build_agent_kit"]
-        },
-        fallback: async function () {
-          return {
-            status: 200,
-            body: {
-              task_id: taskId,
-              fencing_token: 1,
-              worker: "muse-code-sandbox-01",
-              expires_at: Math.floor(Date.now() / 1000) + 90
-            }
-          };
-        }
-      });
-      const claimedTaskId = (r3.data && r3.data.task_id) || taskId;
-      const fence = (r3.data && r3.data.fencing_token) || 1;
-      upsertTask({
-        task_id: claimedTaskId,
-        queue: "demo.situate_sample",
-        kind: "verb.build_agent_kit",
-        state: "leased",
-        fencing_token: fence,
-        worker: "muse-code-sandbox-01"
-      });
-      updateNgoStep(
+    /* STEP 3: this browser, as the worker, claims the verb */
+    setBadge("running", "Running step 3 of 6...");
+    updateNgoStep(3, "running", "sending", "POST /v1/tasks/claim as worker " + BROWSER_WORKER_ID + " (this browser)");
+    const r3 = await tesseraAuthedFetch({
+      actor: "worker",
+      session: sess,
+      method: "POST",
+      pathFn: nsPath("/v1/tasks/claim"),
+      body: { queue: queue, worker: BROWSER_WORKER_ID, kinds: [kind] }
+    });
+    const stopReason = "Agora Studio run stopped at step ";
+    if (!r3.ok) {
+      return halt(3, r3, "Tessera did not lease the verb: " + failureText(r3) + "." + (await cancelTask(sess, taskId, stopReason + 3)));
+    }
+    if (r3.status === 204 || !r3.data || typeof r3.data !== "object") {
+      return halt(
         3,
-        "done",
-        "HTTP " + r3.status + " · " + r3.latencyMs + "ms",
-        "Leased by muse-code-sandbox-01 (fencing_token #" + fence + ")"
+        r3,
+        "Tessera answered HTTP " + r3.status + " without a lease: it had no ready task to give." + (await cancelTask(sess, taskId, stopReason + 3))
       );
-
-      /* STEP 4: Worker fetches NGO human-boundary rules from Herma Shim */
-      updateNgoStep(4, "running", "SHIM ...", "Fetching PROV-NGO-HUMAN-BOUNDARY from Herma...");
-      const r4 = await liveWireFetch({
-        actor: "worker",
-        target: "herma",
-        method: "POST",
-        url: ENDPOINTS.herma + "/api/preview",
-        body: { prompt: preset.hermaPrompt, wire_format: "chat_completions" },
-        fallback: async function () {
-          return {
-            status: 200,
-            body: {
-              persisted: false,
-              matches: [{ prov_id: "PROV-NGO-HUMAN-BOUNDARY", version: 7, score: 0.73 }]
-            }
-          };
-        }
-      });
-      const provMatched =
-        (r4.data && r4.data.matches && r4.data.matches[0] && r4.data.matches[0].prov_id) ||
-        "PROV-NGO-HUMAN-BOUNDARY";
-      updateNgoStep(
-        4,
-        "done",
-        "HTTP " + r4.status + " · " + r4.latencyMs + "ms",
-        "Shimmed " + provMatched + " (human_only + SYNTHETIC rules)"
-      );
-
-      /* STEP 5: Worker validates KitDraft against live Eranos /api/practice */
-      updateNgoStep(5, "running", "VERIFY ...", "Running 8/8 Eranos deterministic checks...");
-      const kitDraft = JSON.parse(JSON.stringify(preset.draft));
-      const r5 = await liveWireFetch({
-        actor: "worker",
-        target: "eranos",
-        method: "POST",
-        url: ENDPOINTS.eranos + "/api/practice",
-        body: { draft: kitDraft, track_id: kitDraft.track_id },
-        fallback: async function () {
-          const dSha = await sha256Hex(JSON.stringify(kitDraft));
-          return {
-            status: 200,
-            body: {
-              passed: true,
-              persisted: false,
-              kit_id: kitDraft.kit_id,
-              checks_run: [
-                "track_alignment",
-                "human_only_boundaries",
-                "synthetic_fixtures",
-                "non_accusatory_copy",
-                "prohibited_topics",
-                "spdx_license_allowlist",
-                "cited_sources",
-                "deliverable_alignment"
-              ],
-              receipt_sha256: dSha
-            }
-          };
-        }
-      });
-      const checksCount =
-        (r5.data && Array.isArray(r5.data.checks_run) && r5.data.checks_run.length) || 8;
-      const practiceReceipt = (r5.data && r5.data.receipt_sha256) || "";
-      updateNgoStep(
-        5,
-        "done",
-        "HTTP " + r5.status + " · " + r5.latencyMs + "ms",
-        "Eranos passed=" +
-          Boolean(r5.data && r5.data.passed) +
-          " (" +
-          checksCount +
-          "/8 checks, receipt:" +
-          practiceReceipt.slice(0, 10) +
-          "...)"
-      );
-
-      /* STEP 6: Store noun.agent_kit via MCP put_record + complete build verb -> held_for_person */
-      updateNgoStep(6, "running", "MCP + SUBMIT", "Writing noun.agent_kit via MCP & holding for human review...");
-      const kitRecordValue = {
-        category: "noun.agent_kit",
-        synthetic: true,
-        review_gate: "held_for_person",
-        organization_constraint: constraintText,
-        eranos_practice_receipt_sha256: practiceReceipt,
-        kit: kitDraft
-      };
-      const kitSha = await sha256Hex(JSON.stringify(kitRecordValue));
-      const r6Mcp = await callTesseraMcp(
-        "put_record",
-        {
-          store_name: "demo.kits",
-          key: kitKey,
-          expected_version: 0,
-          value: kitRecordValue
-        },
-        "worker"
-      );
-
-      upsertNoun({
-        store: "demo.kits",
-        category: "noun.agent_kit",
-        key: kitKey,
-        version: 1,
-        sha256: kitSha,
-        value: kitRecordValue
-      });
-
-      const r6Sub = await tesseraAuthedFetch({
-        actor: "worker",
-        method: "POST",
-        pathFn: function (ns) {
-          return "/ns/" + encodeURIComponent(ns) + "/v1/tasks/submit";
-        },
-        headers: { "Idempotency-Key": "idem-ngo-" + claimedTaskId + "-" + fence },
-        body: {
-          task_id: claimedTaskId,
-          fencing_token: fence,
-          ok: true,
-          output: {
-            synthetic: true,
-            kit_store: "demo.kits",
-            kit_key: kitKey,
-            kit_sha256: kitSha,
-            eranos_receipt_sha256: practiceReceipt,
-            review_gate: "held_for_person"
-          }
-        },
-        fallback: async function () {
-          return {
-            status: 200,
-            body: {
-              task_id: claimedTaskId,
-              fencing_token: fence,
-              state_after: "done",
-              receipt_hash: kitSha
-            }
-          };
-        }
-      });
-
-      const buildReceipt = (r6Sub.data && r6Sub.data.receipt_hash) || kitSha;
-      upsertTask({
-        task_id: claimedTaskId,
-        queue: "demo.situate_sample",
-        kind: "verb.build_agent_kit",
-        state: "held_for_person",
-        fencing_token: fence,
-        worker: "muse-code-sandbox-01",
-        receipt_hash: buildReceipt
-      });
-
-      updateNgoStep(
-        6,
-        "held",
-        "MCP " + r6Mcp.status + " · Gate Held",
-        "Stored demo.kits/" +
-          kitKey +
-          " (sha256:" +
-          kitSha.slice(0, 10) +
-          "...) -> Halted at held_for_person"
-      );
-
-      if (badge) {
-        badge.dataset.state = "held_for_person";
-        badge.textContent = "held_for_person · Human Steward Sign-Off Required";
-      }
-
-      state.lastNgoResult = {
-        taskId: claimedTaskId,
-        reqKey: reqKey,
-        kitKey: kitKey,
-        kitSha: kitSha,
-        practiceReceipt: practiceReceipt,
-        buildReceipt: buildReceipt,
-        kitDraft: kitDraft,
-        constraintText: constraintText,
-        approved: false
-      };
-
-      renderNgoHumanGate();
-      return { ok: true, result: state.lastNgoResult };
-    } finally {
-      state.ngoBusy = false;
-      if (submitBtn) submitBtn.disabled = false;
     }
+    const lease = r3.data;
+    const leasedId = typeof lease.task_id === "string" && lease.task_id ? lease.task_id : null;
+    if (!leasedId) {
+      return halt(3, r3, missingField(r3, "Tessera", "task_id") + (await cancelTask(sess, taskId, stopReason + 3)));
+    }
+    if (leasedId !== taskId) {
+      return halt(
+        3,
+        r3,
+        "Tessera leased task " +
+          leasedId +
+          ", not the task enqueued in step 2 (" +
+          taskId +
+          "). An earlier run that stopped probably left it queued." +
+          (await cancelTask(sess, leasedId, stopReason + 3, "worker")) +
+          (await cancelTask(sess, taskId, stopReason + 3))
+      );
+    }
+    if (!Number.isInteger(lease.fencing_token)) {
+      return halt(3, r3, missingField(r3, "Tessera", "fencing_token") + (await cancelTask(sess, taskId, stopReason + 3, "worker")));
+    }
+    const fence = lease.fencing_token;
+    const leaseWorker = typeof lease.worker === "string" ? lease.worker : null;
+    upsertTask({
+      task_id: taskId,
+      queue: queue,
+      kind: kind,
+      last: "leased (HTTP " + r3.status + ")",
+      tone: "leased",
+      fencing_token: fence,
+      worker: leaseWorker
+    });
+    updateNgoStep(
+      3,
+      "done",
+      statusPill(r3),
+      "This browser, as worker " + (leaseWorker || "(worker not reported)") + ", holds the lease on " + taskId + " with fencing_token " + fence + "."
+    );
+    const stopAfterLease = async function (num, res, message) {
+      return halt(num, res, message + (await cancelTask(sess, taskId, stopReason + num, "worker")));
+    };
+
+    /* STEP 4: the worker asks Herma for this brief's guardrails */
+    setBadge("running", "Running step 4 of 6...");
+    updateNgoStep(4, "running", "sending", "POST herma /api/preview with this brief's guardrail prompt");
+    const r4 = await liveWireFetch({
+      actor: "worker",
+      target: "herma",
+      method: "POST",
+      url: ENDPOINTS.herma + "/api/preview",
+      body: { prompt: preset.hermaPrompt, wire_format: "chat_completions" }
+    });
+    if (!r4.ok) return stopAfterLease(4, r4, "Herma did not answer the preview: " + failureText(r4) + ".");
+    const m4 = r4.data && Array.isArray(r4.data.matches) ? r4.data.matches : null;
+    if (!m4) return stopAfterLease(4, r4, missingField(r4, "Herma", "matches list"));
+    updateNgoStep(
+      4,
+      "done",
+      statusPill(r4),
+      m4.length ? "Herma matched " + m4.map(hermaMatchLabel).join(", ") + "." : "Herma matched no provisions for this prompt."
+    );
+
+    /* STEP 5: the worker sends the brief's kit draft to Eranos's practice check */
+    setBadge("running", "Running step 5 of 6...");
+    updateNgoStep(5, "running", "sending", "POST eranos /api/practice with the brief's kit draft");
+    // Eranos records which key drafted a kit (so a reviewer's key must differ). Here that is this
+    // anonymous session's own principal, the key the draft is submitted under.
+    const drafterKey = typeof sess.principal_id === "string" && sess.principal_id ? sess.principal_id : null;
+    if (!drafterKey) {
+      return stopAfterLease(5, null, "Not sent: the demo session's answer had no principal_id to record as the drafter's key.");
+    }
+    const kitDraft = Object.assign(JSON.parse(JSON.stringify(preset.draft)), { drafted_by_key: drafterKey });
+    const r5 = await liveWireFetch({
+      actor: "worker",
+      target: "eranos",
+      method: "POST",
+      url: ENDPOINTS.eranos + "/api/practice",
+      body: { draft: kitDraft, track_id: kitDraft.track_id }
+    });
+    if (!r5.ok) return stopAfterLease(5, r5, "Eranos did not check the draft: " + failureText(r5) + ".");
+    const d5 = r5.data && typeof r5.data === "object" ? r5.data : {};
+    if (typeof d5.passed !== "boolean") return stopAfterLease(5, r5, missingField(r5, "Eranos", "passed field"));
+    if (!Array.isArray(d5.checks_run)) return stopAfterLease(5, r5, missingField(r5, "Eranos", "checks_run list"));
+    if (typeof d5.receipt_sha256 !== "string" || !d5.receipt_sha256) {
+      return stopAfterLease(5, r5, missingField(r5, "Eranos", "receipt_sha256"));
+    }
+    if (!d5.passed) {
+      return stopAfterLease(
+        5,
+        r5,
+        "Eranos ran " +
+          d5.checks_run.length +
+          " checks and did not pass the draft: " +
+          (Array.isArray(d5.issues) && d5.issues.length ? d5.issues.join("; ") : "it listed no issues") +
+          "."
+      );
+    }
+    updateNgoStep(
+      5,
+      "done",
+      statusPill(r5),
+      "Eranos ran " + d5.checks_run.length + " checks (" + d5.checks_run.join(", ") + ") and passed the draft. Receipt " + d5.receipt_sha256.slice(0, 12) + "..."
+    );
+
+    /* STEP 6: store noun.agent_kit over MCP put_record, then submit the verb */
+    setBadge("running", "Running step 6 of 6...");
+    updateNgoStep(6, "running", "sending", "MCP put_record demo.kits/" + kitKey + ", then POST /v1/tasks/submit");
+    const kitRecordValue = {
+      category: "noun.agent_kit",
+      synthetic: true,
+      review_gate: "held_for_person",
+      organization_constraint: constraintText,
+      eranos_practice_receipt_sha256: d5.receipt_sha256,
+      kit: kitDraft
+    };
+    const kitSha = await sha256Hex(JSON.stringify(kitRecordValue));
+    const r6 = await callTesseraMcp(
+      "put_record",
+      { store_name: "demo.kits", key: kitKey, expected_version: 0, value: kitRecordValue },
+      "worker",
+      sess
+    );
+    if (!r6.ok) return stopAfterLease(6, r6, "Tessera did not store the kit: " + failureText(r6) + ".");
+    const rec = (mcpContent(r6) || {}).record;
+    if (!rec || !Number.isInteger(rec.version)) {
+      return stopAfterLease(6, r6, missingField(r6, "Tessera", "record.version in its put_record result"));
+    }
+    upsertNoun({
+      store: "demo.kits",
+      category: "noun.agent_kit",
+      key: kitKey,
+      version: rec.version,
+      sha256: kitSha,
+      source: "Stored by Tessera over MCP put_record (HTTP " + r6.status + ").",
+      value: kitRecordValue
+    });
+
+    const r6s = await tesseraAuthedFetch({
+      actor: "worker",
+      session: sess,
+      method: "POST",
+      pathFn: nsPath("/v1/tasks/submit"),
+      headers: { "Idempotency-Key": "idem-ngo-" + taskId + "-" + fence },
+      body: {
+        task_id: taskId,
+        fencing_token: fence,
+        ok: true,
+        output: {
+          synthetic: true,
+          kit_store: "demo.kits",
+          kit_key: kitKey,
+          kit_sha256: kitSha,
+          eranos_receipt_sha256: d5.receipt_sha256,
+          review_gate: "held_for_person"
+        }
+      }
+    });
+    if (!r6s.ok) {
+      return stopAfterLease(6, r6s, "The kit is stored, but Tessera did not accept the submit: " + failureText(r6s) + ".");
+    }
+    const receipt = r6s.data && typeof r6s.data === "object" ? r6s.data : {};
+    if (typeof receipt.receipt_hash !== "string" || !receipt.receipt_hash) {
+      return halt(6, r6s, missingField(r6s, "Tessera", "receipt_hash"));
+    }
+    if (typeof receipt.state_after !== "string" || !receipt.state_after) {
+      return halt(6, r6s, missingField(r6s, "Tessera", "state_after"));
+    }
+    upsertTask({
+      task_id: taskId,
+      last: "submitted: state_after " + receipt.state_after + " (HTTP " + r6s.status + ")",
+      tone: receipt.state_after === "done" ? "done" : "",
+      receipt_hash: receipt.receipt_hash
+    });
+    updateNgoStep(
+      6,
+      "held",
+      statusPill(r6s),
+      "Tessera stored demo.kits/" +
+        kitKey +
+        " as version " +
+        rec.version +
+        " with review_gate held_for_person, and accepted the submit (state_after " +
+        receipt.state_after +
+        ", receipt " +
+        receipt.receipt_hash.slice(0, 12) +
+        "...)."
+    );
+    setBadge("held_for_person", "Kit stored with review_gate held_for_person: a person decides next");
+
+    state.lastNgoResult = {
+      taskId: taskId,
+      reqKey: reqKey,
+      kitKey: kitKey,
+      kitSha: kitSha,
+      kitVersion: rec.version,
+      practiceReceipt: d5.receipt_sha256,
+      checksRun: d5.checks_run.slice(),
+      stateAfter: receipt.state_after,
+      buildReceipt: receipt.receipt_hash,
+      kitDraft: kitDraft,
+      constraintText: constraintText,
+      approved: false,
+      approval: null,
+      approvalError: null
+    };
+
+    renderNgoHumanGate();
+    return { ok: true, result: state.lastNgoResult };
   }
 
   function renderNgoHumanGate() {
@@ -1750,33 +2107,54 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     if (!res.approved) {
       gateCard.innerHTML =
         '<div class="gate-copy">' +
-        '<span class="gate-kicker">Status: held_for_person · Human-Gated NGO Review</span>' +
-        "<h3>Generated Agent Kit (" +
+        '<span class="gate-kicker">review_gate: held_for_person (stored in the kit noun)</span>' +
+        "<h3>Agent kit draft " +
         escapeHtml(res.kitDraft.kit_id) +
-        ") Halted for Human Steward</h3>" +
-        "<p>Drafter worker <code>muse-code-sandbox-01</code> cannot self-approve or publish. All <code>human_only</code> boundaries verified (8/8). Review and approve inside your isolated demo namespace:</p>" +
+        " is waiting for a person</h3>" +
+        "<p>This browser, as the worker, stored the kit as <code>demo.kits/" +
+        escapeHtml(res.kitKey) +
+        "</code> (version " +
+        escapeHtml(res.kitVersion) +
+        ") after Eranos's practice check passed (" +
+        escapeHtml(res.checksRun.length) +
+        " checks). Approving writes a review noun to <code>demo.reviews</code> in your demo namespace. It does not publish the kit or add it to the Eranos catalog.</p>" +
+        (res.approvalError ? '<p class="gate-error">' + escapeHtml(res.approvalError) + "</p>" : "") +
         "</div>" +
-        '<button type="button" class="btn btn-emerald" id="ngo-approve-btn">' +
-        '<span class="btn-main-line">Approve &amp; Inspect Generated Agent Kit</span>' +
-        '<span class="btn-sub">Records demo steward receipt + opens Seed Pack</span>' +
-        "</button>";
+        '<button type="button" class="btn btn-emerald" id="ngo-approve-btn" data-needs-session>' +
+        '<span class="btn-main-line">Approve &amp; Inspect the Agent Kit</span>' +
+        '<span class="btn-sub">Writes a review noun, then shows the kit</span>' +
+        "</button>" +
+        '<p class="session-gate-note" data-session-note hidden></p>';
+      applySessionGate();
     } else {
       gateCard.innerHTML =
         '<div class="gate-copy">' +
-        '<span class="gate-kicker">Steward Sign-Off Recorded (Demo Sandbox Only)</span>' +
+        '<span class="gate-kicker">Review noun stored: demo.reviews/' +
+        escapeHtml(res.approval.key) +
+        " (version " +
+        escapeHtml(res.approval.version) +
+        ")</span>" +
         "<h3>" +
         escapeHtml(res.kitDraft.kit_id) +
-        " Inspected &amp; Ready for Local NGO Agent</h3>" +
-        "<p>Persisted in private demo store <code>demo.kits/" +
-        escapeHtml(res.kitKey) +
-        "</code> (not admitted to the public catalog without two-donor production review).</p>" +
+        ": kit and review stored in your demo namespace</h3>" +
+        "<p>Nothing was published. The Eranos catalog lists only kits that passed its two-step review.</p>" +
         "</div>";
     }
   }
 
-  async function approveAndInspectNgoKit() {
+  function approveAndInspectNgoKit() {
+    return runExclusive("approval", approveNgoKit);
+  }
+
+  async function approveNgoKit() {
     const res = state.lastNgoResult;
-    if (!res) return;
+    if (!res || res.approved) return null;
+    const sess = liveSession();
+    if (!sess) {
+      res.approvalError = "Not sent: there is no live Tessera demo session.";
+      renderNgoHumanGate();
+      return null;
+    }
 
     const approvalKey = "steward-signoff-" + res.kitKey;
     const approvalVal = {
@@ -1790,37 +2168,39 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     };
     const appSha = await sha256Hex(JSON.stringify(approvalVal));
 
-    await tesseraAuthedFetch({
+    const r = await tesseraAuthedFetch({
       actor: "browser",
+      session: sess,
       method: "POST",
-      pathFn: function (ns) {
-        return "/ns/" + encodeURIComponent(ns) + "/v1/stores/demo.reviews/records/" + approvalKey;
-      },
-      body: { value: approvalVal, expected_version: 0 },
-      fallback: async function () {
-        return { status: 200, body: { store: "demo.reviews", key: approvalKey, version: 1 } };
-      }
+      pathFn: nsPath("/v1/stores/demo.reviews/records/" + approvalKey),
+      body: { value: approvalVal, expected_version: 0 }
     });
+    if (!r.ok || !r.data || !Number.isInteger(r.data.version)) {
+      res.approvalError = r.ok
+        ? missingField(r, "Tessera", "version")
+        : "Tessera did not store the review: " + failureText(r) + ".";
+      renderNgoHumanGate();
+      return r;
+    }
 
     upsertNoun({
       store: "demo.reviews",
       category: "noun.review_receipt",
       key: approvalKey,
-      version: 1,
+      version: r.data.version,
       sha256: appSha,
+      source: "Stored by Tessera (HTTP " + r.status + ").",
       value: approvalVal
     });
 
     res.approved = true;
-    upsertTask({
-      task_id: res.taskId,
-      state: "steward_approved_demo"
-    });
+    res.approvalError = null;
+    res.approval = { key: approvalKey, version: r.data.version };
 
     const badge = $("ngo-pipeline-badge");
     if (badge) {
       badge.dataset.state = "approved";
-      badge.textContent = "Inspected · Steward Sign-Off Recorded (Demo)";
+      badge.textContent = "Review noun stored in demo.reviews (version " + r.data.version + ")";
     }
     renderNgoHumanGate();
 
@@ -1838,28 +2218,32 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
 
       insp.innerHTML =
         '<div class="panel-intro-top">' +
-        '<span class="kicker kicker-emerald">Generated Seed Pack (noun.agent_kit) · ' +
+        '<span class="kicker kicker-emerald">Stored agent kit noun (noun.agent_kit) · ' +
         escapeHtml(res.kitDraft.kit_id) +
         "</span>" +
         '<span class="metric-chip">SPDX: ' +
         escapeHtml(res.kitDraft.spdx_license) +
-        " · Demo Sandbox Artifact</span>" +
+        "</span>" +
         "</div>" +
         '<div class="kit-meta-grid">' +
-        '<div class="kit-meta-box"><span>Kit SHA-256 Digest</span><code>' +
+        '<div class="kit-meta-box"><span>sha256 of the stored value (computed here)</span><code>' +
         escapeHtml(res.kitSha.slice(0, 24)) +
         "...</code></div>" +
-        '<div class="kit-meta-box"><span>Eranos 8/8 Receipt</span><code>' +
+        '<div class="kit-meta-box"><span>Eranos practice receipt</span><code>' +
         escapeHtml(res.practiceReceipt.slice(0, 24)) +
         "...</code></div>" +
-        '<div class="kit-meta-box"><span>Enforced human_only Steps</span><strong>' +
+        '<div class="kit-meta-box"><span>human_only steps in the draft</span><strong>' +
         escapeHtml(humanSteps) +
         "</strong></div>" +
         "</div>" +
+        '<p class="panel-desc">The kit draft below is this brief\'s preset, as stored in <code>demo.kits/' +
+        escapeHtml(res.kitKey) +
+        "</code>.</p>" +
         '<pre class="code-pre">' +
         escapeHtml(JSON.stringify(res.kitDraft, null, 2)) +
         "</pre>";
     }
+    return r;
   }
 
   function selectNgoPreset(presetId) {
@@ -1876,7 +2260,8 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     }
   }
 
-  /* FLOW 3: WORKER GRABS TASK + 409 STALE-LEASE / CAS GUARD */
+  /* FLOW 3: WORKER LAB. This browser plays a contributor's worker: enqueue, claim, compare-and-set writes,
+     submit, then a real request with an old expected_version. Each step stops at the first failed call. */
   function appendWorkerEvent(title, metaText, bodyText, tone) {
     const feed = $("worker-event-feed");
     if (!feed) return;
@@ -1906,11 +2291,11 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     if (wl.activeLease) {
       if (taskEl) taskEl.textContent = wl.activeLease.task_id.slice(0, 16) + "...";
       if (fenceEl) fenceEl.textContent = "fence #" + wl.activeLease.fencing_token;
-      if (hbBtn) hbBtn.disabled = false;
-      const rem = Math.max(0, wl.activeLease.expires_at - Date.now() / 1000);
+      setBlock(hbBtn, "nolease", false);
       if (timerEl) {
+        const rem = Math.max(0, wl.activeLease.expires_at - Date.now() / 1000);
         timerEl.dataset.live = "true";
-        timerEl.textContent = rem.toFixed(1) + "s remaining";
+        timerEl.textContent = rem.toFixed(1) + "s left (Tessera's expires_at)";
       }
     } else {
       if (taskEl) {
@@ -1923,220 +2308,228 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       }
       if (timerEl) {
         timerEl.dataset.live = "false";
-        timerEl.textContent = wl.lastSubmittedTaskId ? "submitted (done)" : "idle";
+        timerEl.textContent = wl.lastSubmittedTaskId
+          ? "submitted" + (wl.lastSubmitState ? " (state_after " + wl.lastSubmitState + ")" : "")
+          : "idle";
       }
-      if (hbBtn) hbBtn.disabled = true;
+      setBlock(hbBtn, "nolease", true);
     }
 
     if (casEl) {
-      casEl.textContent = wl.casKey ? wl.casKey + " @ v" + wl.casVersion : "unwritten";
+      casEl.textContent = wl.casKey ? wl.casKey + " @ v" + wl.casVersion : "not written yet";
     }
   }
 
-  async function workerStep1Enqueue() {
-    await ensureDemoSession(false);
+  function workerFail(title, res, message) {
+    appendWorkerEvent(title, statusPill(res), message, "fail");
+    return { ok: false, res: res, message: message };
+  }
+
+  async function workerEnqueue(sess) {
     const seq = ++state.workerLab.seq;
     const res = await tesseraAuthedFetch({
       actor: "browser",
+      session: sess,
       method: "POST",
-      pathFn: function (ns) {
-        return "/ns/" + encodeURIComponent(ns) + "/v1/tasks";
-      },
+      pathFn: nsPath("/v1/tasks"),
       body: {
         queue: "demo.echo",
-        kind: "verb.verify_kit_fixture",
+        kind: "verb.lab_echo",
         priority: 92,
         brief: {
           synthetic: true,
-          target_fixture: "FX-CLINIC-ESCALATE",
+          note: "worker lab: lease, compare-and-set and fencing mechanics",
           seq: seq
         }
-      },
-      fallback: async function () {
-        return { status: 201, body: { task_id: "t_sim_worker_" + seq } };
       }
     });
-    const tid = (res.data && res.data.task_id) || "t_worker_" + seq;
+    if (!res.ok) return workerFail("[1] Enqueue failed", res, failureText(res));
+    const tid = res.data && typeof res.data.task_id === "string" && res.data.task_id ? res.data.task_id : null;
+    if (!tid) return workerFail("[1] Enqueue answer incomplete", res, missingField(res, "Tessera", "task_id"));
     state.workerLab.enqueuedTaskId = tid;
     upsertTask({
       task_id: tid,
       queue: "demo.echo",
-      kind: "verb.verify_kit_fixture",
-      state: "queued",
-      worker: "unclaimed"
+      kind: "verb.lab_echo",
+      last: "enqueued (HTTP " + res.status + ")",
+      tone: "queued"
     });
     $("worker-btn-1").classList.add("is-done");
     updateWorkerTelemetryUI();
-    appendWorkerEvent(
-      "[1] Enqueued verb.verify_kit_fixture",
-      "HTTP " + res.status + " · " + res.latencyMs + "ms",
-      "Task " + tid + " queued in demo.echo (priority 92)."
-    );
-    return res;
+    const message = "Tessera queued task " + tid + " in demo.echo.";
+    appendWorkerEvent("[1] Enqueued verb.lab_echo", statusPill(res), message);
+    return { ok: true, res: res, message: message };
   }
 
-  async function workerStep2Claim() {
-    await ensureDemoSession(false);
+  async function workerClaim(sess) {
     if (state.workerLab.activeLease) {
-      await releaseActiveWorkerLeaseIfAny();
+      const rel = await releaseActiveWorkerLeaseIfAny(sess);
+      if (rel && !rel.ok && rel.status !== 409) return { ok: false, res: rel, message: failureText(rel) };
     }
     if (!state.workerLab.enqueuedTaskId) {
-      await workerStep1Enqueue();
+      const e = await workerEnqueue(sess);
+      if (!e.ok) return e;
     }
 
     const res = await tesseraAuthedFetch({
       actor: "worker",
+      session: sess,
       method: "POST",
-      pathFn: function (ns) {
-        return "/ns/" + encodeURIComponent(ns) + "/v1/tasks/claim";
-      },
+      pathFn: nsPath("/v1/tasks/claim"),
       body: {
         queue: "demo.echo",
-        worker: "contributor-bot-alpha",
-        kinds: ["verb.verify_kit_fixture"]
-      },
-      fallback: async function () {
-        return {
-          status: 200,
-          body: {
-            task_id: state.workerLab.enqueuedTaskId,
-            fencing_token: 1,
-            worker: "contributor-bot-alpha",
-            expires_at: Date.now() / 1000 + 90
-          }
-        };
+        worker: BROWSER_WORKER_ID,
+        kinds: ["verb.lab_echo"]
       }
     });
-
-    if (res.status === 204 || !res.data || !res.data.task_id) {
-      await workerStep1Enqueue();
-      return workerStep2Claim();
+    if (!res.ok) return workerFail("[2] Claim failed", res, failureText(res));
+    if (res.status === 204 || !res.data || typeof res.data !== "object") {
+      state.workerLab.enqueuedTaskId = null;
+      updateWorkerTelemetryUI();
+      return workerFail(
+        "[2] Nothing to claim",
+        res,
+        "Tessera answered HTTP " + res.status + " without a lease: no ready verb.lab_echo in demo.echo. Run step 1 to enqueue one."
+      );
     }
+    const l = res.data;
+    const missing =
+      typeof l.task_id !== "string" || !l.task_id
+        ? "task_id"
+        : !Number.isInteger(l.fencing_token)
+          ? "fencing_token"
+          : l.expires_at == null || !Number.isFinite(Number(l.expires_at))
+            ? "expires_at"
+            : null;
+    if (missing) return workerFail("[2] Lease answer incomplete", res, missingField(res, "Tessera", missing));
 
     state.workerLab.activeLease = {
-      task_id: res.data.task_id,
-      fencing_token: res.data.fencing_token || 1,
-      worker: res.data.worker || "contributor-bot-alpha",
-      expires_at: Number(res.data.expires_at) || Date.now() / 1000 + 90
+      task_id: l.task_id,
+      fencing_token: l.fencing_token,
+      worker: typeof l.worker === "string" ? l.worker : null,
+      expires_at: Number(l.expires_at)
     };
     state.workerLab.enqueuedTaskId = null;
 
     upsertTask({
-      task_id: state.workerLab.activeLease.task_id,
+      task_id: l.task_id,
       queue: "demo.echo",
-      kind: "verb.verify_kit_fixture",
-      state: "leased",
-      fencing_token: state.workerLab.activeLease.fencing_token,
+      kind: "verb.lab_echo",
+      last: "leased (HTTP " + res.status + ")",
+      tone: "leased",
+      fencing_token: l.fencing_token,
       worker: state.workerLab.activeLease.worker
     });
     $("worker-btn-2").classList.add("is-done");
     updateWorkerTelemetryUI();
-    appendWorkerEvent(
-      "[2] Claimed Live Lease + Monotonic Fence",
-      "HTTP " + res.status + " · " + res.latencyMs + "ms",
-      "contributor-bot-alpha acquired lease on " +
-        state.workerLab.activeLease.task_id +
-        " with fencing_token #" +
-        state.workerLab.activeLease.fencing_token +
-        "."
-    );
-    return res;
+    const message =
+      "This browser, as worker " +
+      (state.workerLab.activeLease.worker || "(worker not reported)") +
+      ", leased " +
+      l.task_id +
+      " with fencing_token " +
+      l.fencing_token +
+      ".";
+    appendWorkerEvent("[2] Claimed a lease", statusPill(res), message);
+    return { ok: true, res: res, message: message };
   }
 
-  async function workerSendHeartbeat() {
+  async function workerHeartbeat(sess) {
     const lease = state.workerLab.activeLease;
-    if (!lease) return;
+    if (!lease) return { ok: false, res: null, message: "There is no open lease to extend." };
     const res = await tesseraAuthedFetch({
       actor: "worker",
+      session: sess,
       method: "POST",
-      pathFn: function (ns) {
-        return "/ns/" + encodeURIComponent(ns) + "/v1/tasks/heartbeat";
-      },
-      body: { task_id: lease.task_id, fencing_token: lease.fencing_token },
-      fallback: async function () {
-        return { status: 200, body: { expires_at: Date.now() / 1000 + 90 } };
-      }
+      pathFn: nsPath("/v1/tasks/heartbeat"),
+      body: { task_id: lease.task_id, fencing_token: lease.fencing_token }
     });
-    if (res.ok && res.data && res.data.expires_at) {
-      lease.expires_at = Number(res.data.expires_at);
-      updateWorkerTelemetryUI();
-      appendWorkerEvent(
-        "Lease Heartbeat Extended",
-        "HTTP " + res.status + " · " + res.latencyMs + "ms",
-        "Extended lease for " + lease.task_id + " under fencing_token #" + lease.fencing_token
-      );
+    if (!res.ok) {
+      if (res.status === 409) {
+        state.workerLab.activeLease = null; // Tessera says the lease is no longer live.
+        updateWorkerTelemetryUI();
+      }
+      return workerFail("Heartbeat failed", res, failureText(res));
     }
+    const exp = res.data ? Number(res.data.expires_at) : NaN;
+    if (res.data == null || res.data.expires_at == null || !Number.isFinite(exp)) {
+      return workerFail("Heartbeat answer incomplete", res, missingField(res, "Tessera", "expires_at"));
+    }
+    lease.expires_at = exp;
+    updateWorkerTelemetryUI();
+    const message = "Tessera extended the lease on " + lease.task_id + " (fencing_token " + lease.fencing_token + ").";
+    appendWorkerEvent("Heartbeat accepted", statusPill(res), message);
+    return { ok: true, res: res, message: message };
   }
 
-  async function workerStep3CommitCasAndSubmit() {
-    await ensureDemoSession(false);
+  async function workerCommit(sess) {
     if (!state.workerLab.activeLease) {
-      await workerStep2Claim();
+      const c = await workerClaim(sess);
+      if (!c.ok) return c;
     }
     const lease = state.workerLab.activeLease;
-    const casKey = "verified-obj-" + String(state.workerLab.seq || 1).padStart(2, "0");
+    const casKey = "lab-noun-" + state.runId + "-" + String(++state.workerLab.casSeq).padStart(2, "0");
+    const recordPath = nsPath("/v1/stores/demo.artifacts/records/" + casKey);
 
-    /* Write v1 (expected_version: 0) */
     const valV1 = {
-      category: "noun.evaluation",
+      category: "noun.lab_record",
       synthetic: true,
-      fixture_id: "FX-CLINIC-ESCALATE",
-      stage: "initial_draft",
-      worker: "contributor-bot-alpha"
+      stage: "first_write",
+      worker: BROWSER_WORKER_ID
     };
     const rV1 = await tesseraAuthedFetch({
       actor: "worker",
+      session: sess,
       method: "POST",
-      pathFn: function (ns) {
-        return "/ns/" + encodeURIComponent(ns) + "/v1/stores/demo.artifacts/records/" + casKey;
-      },
-      body: { value: valV1, expected_version: 0 },
-      fallback: async function () {
-        return { status: 200, body: { store: "demo.artifacts", key: casKey, version: 1 } };
-      }
+      pathFn: recordPath,
+      body: { value: valV1, expected_version: 0 }
     });
+    if (!rV1.ok) return workerFail("[3] First write failed", rV1, failureText(rV1));
+    if (!rV1.data || !Number.isInteger(rV1.data.version)) {
+      return workerFail("[3] First write answer incomplete", rV1, missingField(rV1, "Tessera", "version"));
+    }
+    const v1 = rV1.data.version;
 
-    /* Commit verified update v1 -> v2 (expected_version: 1) */
     const valV2 = {
-      category: "noun.evaluation",
+      category: "noun.lab_record",
       synthetic: true,
-      fixture_id: "FX-CLINIC-ESCALATE",
-      stage: "verified_pass",
+      stage: "second_write",
       fencing_token: lease.fencing_token,
-      worker: "contributor-bot-alpha"
+      worker: BROWSER_WORKER_ID
     };
     const shaV2 = await sha256Hex(JSON.stringify(valV2));
     const rV2 = await tesseraAuthedFetch({
       actor: "worker",
+      session: sess,
       method: "POST",
-      pathFn: function (ns) {
-        return "/ns/" + encodeURIComponent(ns) + "/v1/stores/demo.artifacts/records/" + casKey;
-      },
-      body: { value: valV2, expected_version: 1 },
-      fallback: async function () {
-        return { status: 200, body: { store: "demo.artifacts", key: casKey, version: 2 } };
-      }
+      pathFn: recordPath,
+      body: { value: valV2, expected_version: v1 }
     });
+    if (!rV2.ok) return workerFail("[3] Second write failed", rV2, failureText(rV2));
+    if (!rV2.data || !Number.isInteger(rV2.data.version)) {
+      return workerFail("[3] Second write answer incomplete", rV2, missingField(rV2, "Tessera", "version"));
+    }
+    const v2 = rV2.data.version;
 
     state.workerLab.casKey = casKey;
-    state.workerLab.casVersion = (rV2.data && rV2.data.version) || 2;
-
+    state.workerLab.casVersion = v2;
+    state.workerLab.casPrevVersion = v1;
     upsertNoun({
       store: "demo.artifacts",
-      category: "noun.evaluation",
+      category: "noun.lab_record",
       key: casKey,
-      version: state.workerLab.casVersion,
+      version: v2,
       sha256: shaV2,
+      source: "Stored by Tessera as version " + v1 + ", then version " + v2 + ".",
       value: valV2
     });
+    updateWorkerTelemetryUI();
 
-    /* Submit task receipt */
     const rSub = await tesseraAuthedFetch({
       actor: "worker",
+      session: sess,
       method: "POST",
-      pathFn: function (ns) {
-        return "/ns/" + encodeURIComponent(ns) + "/v1/tasks/submit";
-      },
+      pathFn: nsPath("/v1/tasks/submit"),
       headers: { "Idempotency-Key": "idem-w3-" + lease.task_id + "-" + lease.fencing_token },
       body: {
         task_id: lease.task_id,
@@ -2145,131 +2538,152 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
         output: {
           synthetic: true,
           artifact_key: casKey,
-          committed_version: state.workerLab.casVersion
+          committed_version: v2
         }
-      },
-      fallback: async function () {
-        return {
-          status: 200,
-          body: { task_id: lease.task_id, state_after: "done", receipt_hash: shaV2 }
-        };
       }
     });
+    if (!rSub.ok) {
+      if (rSub.status === 409) {
+        state.workerLab.activeLease = null; // Tessera says the lease is no longer live.
+        updateWorkerTelemetryUI();
+      }
+      return workerFail("[3] Submit failed", rSub, failureText(rSub));
+    }
+    const receipt = rSub.data && typeof rSub.data === "object" ? rSub.data : {};
+    const missing =
+      typeof receipt.receipt_hash !== "string" || !receipt.receipt_hash
+        ? "receipt_hash"
+        : typeof receipt.state_after !== "string" || !receipt.state_after
+          ? "state_after"
+          : null;
+    if (missing) return workerFail("[3] Submit answer incomplete", rSub, missingField(rSub, "Tessera", missing));
 
     state.workerLab.lastSubmittedTaskId = lease.task_id;
     state.workerLab.lastSubmittedFence = lease.fencing_token;
+    state.workerLab.lastSubmitState = receipt.state_after;
     state.workerLab.activeLease = null;
 
     upsertTask({
-      task_id: state.workerLab.lastSubmittedTaskId,
-      state: "done",
-      receipt_hash: (rSub.data && rSub.data.receipt_hash) || shaV2
+      task_id: lease.task_id,
+      last: "submitted: state_after " + receipt.state_after + " (HTTP " + rSub.status + ")",
+      tone: receipt.state_after === "done" ? "done" : "",
+      receipt_hash: receipt.receipt_hash
     });
 
     $("worker-btn-3").classList.add("is-done");
     updateWorkerTelemetryUI();
+    const message =
+      "Tessera stored demo.artifacts/" +
+      casKey +
+      " as version " +
+      v1 +
+      ", then as version " +
+      v2 +
+      " (sent with expected_version " +
+      v1 +
+      "), and accepted the submit for " +
+      lease.task_id +
+      " (state_after " +
+      receipt.state_after +
+      ").";
     appendWorkerEvent(
-      "[3] Committed CAS v1 -> v2 & Closed Verb",
+      "[3] Wrote v" + v1 + " then v" + v2 + ", and submitted",
       "HTTP " + rV1.status + " -> " + rV2.status + " -> " + rSub.status,
-      "Record demo.artifacts/" +
-        casKey +
-        " advanced cleanly to head v" +
-        state.workerLab.casVersion +
-        " and task submitted."
+      message
     );
-    return { rV1: rV1, rV2: rV2, rSub: rSub };
+    return { ok: true, res: rSub, message: message, rV1: rV1, rV2: rV2, rSub: rSub };
   }
 
-  async function workerStep4SimulateConflict() {
-    await ensureDemoSession(false);
-    if (!state.workerLab.casKey || state.workerLab.casVersion < 2) {
-      await workerStep3CommitCasAndSubmit();
+  /* Sends a real overwrite with the old expected_version, and a heartbeat with the closed fencing token,
+     and shows exactly what Tessera answered. Tessera is expected to refuse both with HTTP 409. */
+  async function workerStaleOverwrite(sess) {
+    if (!state.workerLab.casKey || !(state.workerLab.casVersion > state.workerLab.casPrevVersion)) {
+      const c = await workerCommit(sess);
+      if (!c.ok) return c;
     }
 
     const casKey = state.workerLab.casKey;
+    const head = state.workerLab.casVersion;
+    const staleVersion = state.workerLab.casPrevVersion;
     const staleTaskId = state.workerLab.lastSubmittedTaskId;
-    const staleFence = state.workerLab.lastSubmittedFence || 1;
+    const staleFence = state.workerLab.lastSubmittedFence;
 
-    /* 1. Stale CAS expected_version=1 against head v2 -> real HTTP 409 version_conflict */
-    const casConflictRes = await tesseraAuthedFetch({
+    const casRes = await tesseraAuthedFetch({
       actor: "worker",
+      session: sess,
       method: "POST",
-      pathFn: function (ns) {
-        return "/ns/" + encodeURIComponent(ns) + "/v1/stores/demo.artifacts/records/" + casKey;
-      },
+      pathFn: nsPath("/v1/stores/demo.artifacts/records/" + casKey),
       body: {
-        expected_version: 1,
+        expected_version: staleVersion,
         value: {
-          category: "noun.evaluation",
+          category: "noun.lab_record",
           synthetic: true,
-          worker: "zombie-split-brain-worker",
-          corrupted_overwrite: true
+          worker: BROWSER_WORKER_ID,
+          stale_overwrite: true,
+          note: "sent on purpose with an old expected_version"
         }
-      },
-      fallback: async function () {
-        return {
-          status: 409,
-          body: {
-            type: "about:blank",
-            title: "Conflict",
-            status: 409,
-            code: "version_conflict",
-            detail: "demo.artifacts/" + casKey + ": expected version 1, head is 2",
-            current_version: 2
-          }
-        };
       }
     });
+    if (casRes.ok && casRes.data && Number.isInteger(casRes.data.version)) {
+      state.workerLab.casVersion = casRes.data.version; // Tessera accepted it, so the head moved.
+      state.workerLab.casPrevVersion = head;
+      updateWorkerTelemetryUI();
+    }
+    const casRefused = casRes.status === 409;
 
-    /* 2. Stale Lease heartbeat with closed fencing_token -> real HTTP 409 stale_lease */
-    const leaseConflictRes = await tesseraAuthedFetch({
-      actor: "worker",
-      method: "POST",
-      pathFn: function (ns) {
-        return "/ns/" + encodeURIComponent(ns) + "/v1/tasks/heartbeat";
-      },
-      body: {
-        task_id: staleTaskId,
-        fencing_token: staleFence
-      },
-      fallback: async function () {
-        return {
-          status: 409,
-          body: {
-            type: "about:blank",
-            title: "Conflict",
-            status: 409,
-            code: "stale_lease",
-            detail: "task " + staleTaskId + " has no live lease (state done)"
-          }
-        };
-      }
-    });
+    let leaseRes = null;
+    if (casRefused && staleTaskId && Number.isInteger(staleFence)) {
+      leaseRes = await tesseraAuthedFetch({
+        actor: "worker",
+        session: sess,
+        method: "POST",
+        pathFn: nsPath("/v1/tasks/heartbeat"),
+        body: { task_id: staleTaskId, fencing_token: staleFence }
+      });
+    }
+    const leaseRefused = Boolean(leaseRes && leaseRes.status === 409);
 
     $("worker-btn-4").classList.add("is-done");
+    const code = function (res) {
+      return res && res.data && typeof res.data.code === "string" ? res.data.code : "(no code)";
+    };
+    const headline = casRefused
+      ? "Tessera refused the stale overwrite: HTTP 409 " + code(casRes)
+      : casRes.ok
+        ? "Tessera accepted the stale overwrite (" + statusPill(casRes) + ")"
+        : "The stale overwrite got no refusal: " + failureText(casRes);
     const banner = $("worker-conflict-banner");
     if (banner) {
       banner.hidden = false;
       banner.innerHTML =
         '<div class="conflict-head">' +
-        '<span class="conflict-badge">LIVE HTTP ' +
-        escapeHtml(casConflictRes.status) +
-        " CONFLICT · SPLIT-BRAIN OVERWRITE REFUSED</span>" +
-        '<span class="shim-latency">Tessera CAS + Lease Fence · ' +
-        escapeHtml(casConflictRes.latencyMs) +
-        "ms</span>" +
+        '<span class="conflict-badge">' +
+        escapeHtml(headline) +
+        "</span>" +
+        '<span class="shim-latency">' +
+        escapeHtml(statusPill(casRes)) +
+        "</span>" +
         "</div>" +
-        "<div>Lagging worker sent stale <code>expected_version: 1</code> (head is <code>v" +
-        escapeHtml(state.workerLab.casVersion) +
-        "</code>) and stale <code>fencing_token: #" +
-        escapeHtml(staleFence) +
-        "</code>. Live <code>tessera.ta-amps.workers.dev</code> rejected both writes atomically:</div>" +
+        "<div>This browser sent <code>expected_version: " +
+        escapeHtml(staleVersion) +
+        "</code> while the head was <code>v" +
+        escapeHtml(head) +
+        "</code>" +
+        (leaseRes
+          ? ", then a heartbeat with the closed <code>fencing_token: " +
+            escapeHtml(staleFence) +
+            "</code>. " +
+            (leaseRefused
+              ? "Tessera refused the heartbeat too (HTTP 409 " + escapeHtml(code(leaseRes)) + ")."
+              : "The heartbeat answer: " + escapeHtml(failureText(leaseRes)) + ".")
+          : ".") +
+        " Tessera's answers:</div>" +
         "<pre>" +
         escapeHtml(
           JSON.stringify(
             {
-              cas_guard_409: casConflictRes.data,
-              stale_lease_409: leaseConflictRes.data
+              stale_overwrite: { status: casRes.status, body: casRes.data },
+              stale_heartbeat: leaseRes ? { status: leaseRes.status, body: leaseRes.data } : "not sent"
             },
             null,
             2
@@ -2278,20 +2692,42 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
         "</pre>";
     }
 
+    const message =
+      headline +
+      (leaseRes ? "; stale heartbeat: " + (leaseRefused ? "HTTP 409 " + code(leaseRes) : failureText(leaseRes)) : "") +
+      ".";
     appendWorkerEvent(
-      "[4] Split-Brain Overwrite Blocked by Tessera!",
-      "HTTP " + casConflictRes.status + " + HTTP " + leaseConflictRes.status,
-      "CAS returned code=" +
-        (casConflictRes.data && casConflictRes.data.code) +
-        " (head v" +
-        state.workerLab.casVersion +
-        ") and Lease Fence returned code=" +
-        (leaseConflictRes.data && leaseConflictRes.data.code) +
-        ".",
+      casRefused ? "[4] Stale overwrite refused" : "[4] Stale overwrite not refused",
+      statusPill(casRes) + (leaseRes ? " + " + statusPill(leaseRes) : ""),
+      message,
       "conflict"
     );
+    return { ok: casRefused, res: casRes, message: message, casRes: casRes, leaseRes: leaseRes };
+  }
 
-    return { casConflictRes: casConflictRes, leaseConflictRes: leaseConflictRes };
+  /* Each worker button runs one step, with the live session, and only when no other run is using Tessera. */
+  function runWorkerStep(fn) {
+    return runExclusive("worker lab", function () {
+      const sess = liveSession();
+      if (!sess) {
+        const message = "Not sent: there is no live Tessera demo session.";
+        appendWorkerEvent("Not started", "not sent", message, "fail");
+        return { ok: false, res: null, message: message };
+      }
+      return fn(sess);
+    });
+  }
+
+  function runWorkerAll() {
+    return runWorkerStep(async function (sess) {
+      const e = await workerEnqueue(sess);
+      if (!e.ok) return e;
+      const c = await workerClaim(sess);
+      if (!c.ok) return c;
+      const m = await workerCommit(sess);
+      if (!m.ok) return m;
+      return workerStaleOverwrite(sess);
+    });
   }
 
   /* FLOW 4: TERMINAL / CLI MODE */
@@ -2309,13 +2745,34 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     const out = $("cli-output");
     if (!out || out.children.length > 0) return;
     appendCliLine(
-      "ta-amps Interactive CLI · Zero-Token Live Wire Shell (Tessera + Herma + Eranos)",
+      "ta-amps Studio CLI · commands that reach a service make real calls to Tessera, Herma or Eranos",
       "cli-line-ok"
     );
     appendCliLine(
-      "Type 'help' or click any command chip above. Switching between GUI and CLI preserves all tasks, CAS nouns, and wire logs.",
+      "Type 'help' or click a command chip above. The GUI and the CLI share the same session, tasks, nouns and wire log.",
       "cli-line-muted"
     );
+  }
+
+  const CLI_TESSERA_COMMANDS = ["ngo submit", "worker claim", "worker conflict", "nouns ls", "tasks ls"];
+
+  function cliNeedsSession(lower) {
+    return CLI_TESSERA_COMMANDS.some(function (c) {
+      return lower === c || lower.startsWith(c + " ");
+    });
+  }
+
+  function sessionWaitHint() {
+    if (state.sessionState === "waiting" && state.retryAt) {
+      return "The page is waiting for one and tries again in " + formatCountdown(state.retryAt - Date.now()) + ".";
+    }
+    if (state.sessionState === "connecting") return "The page is opening one now.";
+    return "See the status at the top of the page.";
+  }
+
+  function cliResultLine(prefix, out) {
+    if (out && out.busy) return out.error;
+    return prefix + (out && out.res ? "[" + statusPill(out.res) + "] " : "") + ((out && (out.message || out.error)) || "failed");
   }
 
   async function runCliCommand(rawInput) {
@@ -2325,7 +2782,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     state.cliHistory.push(cmdLine);
     state.cliHistoryIdx = state.cliHistory.length;
 
-    const nsShort = state.session ? shortNs(state.session.namespace) : "demo";
+    const nsShort = state.session ? shortNs(state.session.namespace) : "no-session";
     appendCliLine("visitor@ta-amps:~/" + nsShort + "$ " + cmdLine, "cli-line-cmd");
 
     const lower = cmdLine.toLowerCase();
@@ -2337,19 +2794,28 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     if (lower === "help") {
       appendCliLine(
         [
-          "Available live wire commands:",
+          "Commands (each one makes real calls):",
           "  shim <prompt>         -> POST https://herma.ta-amps.workers.dev/api/preview",
-          "  ngo submit [preset]   -> Run 6-step live NGO Agent Kit flow (clinic | pantry | shelter)",
-          "  worker claim          -> Enqueue & claim a live task with monotonic fencing_token",
-          "  worker conflict       -> Trigger real HTTP 409 Conflict (CAS version_conflict + stale_lease)",
+          "  ngo submit [preset]   -> the NGO run, steps 1-6 (clinic | pantry | shelter)",
+          "  worker claim          -> enqueue a verb, then claim it as this browser",
+          "  worker conflict       -> write v1 and v2, then send a stale overwrite (Tessera should answer 409)",
           "  eranos tracks         -> GET https://eranos.ta-amps.workers.dev/api/tracks",
           "  eranos catalog        -> GET https://eranos.ta-amps.workers.dev/api/catalog + /api/examples",
           "  nouns ls              -> MCP search_nouns on https://tessera.ta-amps.workers.dev/mcp",
-          "  tasks ls              -> MCP list_verbs on https://tessera.ta-amps.workers.dev/mcp",
-          "  curl last             -> Print ready-to-run curl for the latest Wire Log call",
-          "  clear                 -> Clear terminal output"
+          "  tasks ls              -> MCP list_verbs (ready verbs) on https://tessera.ta-amps.workers.dev/mcp",
+          "  curl last             -> print a curl command for the latest Wire Log call",
+          "  clear                 -> clear the terminal",
+          "ngo, worker, nouns and tasks need a live Tessera demo session; shim and eranos do not."
         ].join("\n"),
         "cli-line-muted"
+      );
+      return;
+    }
+
+    if (cliNeedsSession(lower) && !liveSession()) {
+      appendCliLine(
+        "Not sent: '" + cmdLine + "' uses Tessera, and there is no live demo session yet. " + sessionWaitHint(),
+        "cli-line-warn"
       );
       return;
     }
@@ -2358,88 +2824,95 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       const promptArg =
         cmdLine.slice(4).trim() || "Explain Tasks and Task Objects simply";
       const out = await runHermaChat(promptArg);
-      if (out) {
-        const matchList =
-          ((out.data && out.data.matches) || [])
-            .map(function (m) {
-              return m.prov_id + "@v" + m.version + " (score=" + m.score + ")";
-            })
-            .join(", ") || "none";
-        appendCliLine(
-          "[HTTP " +
-            out.res.status +
-            " · " +
-            out.res.latencyMs +
-            "ms] Matched: " +
-            matchList,
-          "cli-line-ok"
-        );
-        appendCliLine(out.answerText);
+      if (!out) return;
+      if (!out.ok) {
+        appendCliLine("[" + statusPill(out.res) + "] " + out.answerLines.join(" "), "cli-line-err");
+        return;
       }
+      const ms = out.preview.matches;
+      appendCliLine(
+        "[" +
+          statusPill(out.res) +
+          "] Matched: " +
+          (ms ? (ms.length ? ms.map(hermaMatchLabel).join(", ") : "none") : "(no matches list in the answer)"),
+        "cli-line-ok"
+      );
+      out.answerLines.forEach(function (l) {
+        appendCliLine(l);
+      });
       return;
     }
 
     if (lower.startsWith("ngo submit")) {
       const arg = lower.replace("ngo submit", "").trim() || "clinic";
       const presetKey = NGO_PRESETS[arg] ? arg : "clinic";
-      appendCliLine(
-        "Starting 6-step live NGO pipeline for preset '" + presetKey + "'...",
-        "cli-line-muted"
-      );
+      appendCliLine("Starting the NGO run for preset '" + presetKey + "'...", "cli-line-muted");
       const out = await runNgoPipeline(presetKey);
       if (out && out.ok && out.result) {
+        const r = out.result;
         appendCliLine(
-          "[DONE -> held_for_person] Kit " +
-            out.result.kitDraft.kit_id +
-            " verified (8/8 Eranos checks) & stored at demo.kits/" +
-            out.result.kitKey +
-            " (sha256:" +
-            out.result.kitSha.slice(0, 16) +
-            "...)",
+          "[done] Kit " +
+            r.kitDraft.kit_id +
+            " stored at demo.kits/" +
+            r.kitKey +
+            " (version " +
+            r.kitVersion +
+            "); Eranos practice passed (" +
+            r.checksRun.length +
+            " checks); verb submitted (state_after " +
+            r.stateAfter +
+            "). review_gate: held_for_person.",
           "cli-line-warn"
+        );
+      } else {
+        appendCliLine(
+          out && out.busy
+            ? out.error
+            : (out && out.step ? "[stopped at step " + out.step + "] " : "[not started] ") + ((out && out.error) || ""),
+          "cli-line-err"
         );
       }
       return;
     }
 
     if (lower === "worker claim") {
-      await workerStep1Enqueue();
-      const claimRes = await workerStep2Claim();
+      const out = await runWorkerStep(async function (sess) {
+        const e = await workerEnqueue(sess);
+        if (!e.ok) return e;
+        return workerClaim(sess);
+      });
       const l = state.workerLab.activeLease;
-      appendCliLine(
-        "[HTTP " +
-          claimRes.status +
-          " · " +
-          claimRes.latencyMs +
-          "ms] Leased task=" +
-          (l ? l.task_id : "-") +
-          " fencing_token=#" +
-          (l ? l.fencing_token : "-"),
-        "cli-line-ok"
-      );
+      if (out.ok && l) {
+        appendCliLine(
+          "[" + statusPill(out.res) + "] Leased task=" + l.task_id + " fencing_token=" + l.fencing_token,
+          "cli-line-ok"
+        );
+      } else {
+        appendCliLine(cliResultLine("", out), "cli-line-err");
+      }
       return;
     }
 
     if (lower === "worker conflict") {
       appendCliLine(
-        "Running CAS v1->v2 commit + simulating split-brain stale worker overwrite...",
+        "Writing v1 and v2 if needed, then sending a stale overwrite with the old expected_version...",
         "cli-line-muted"
       );
-      const c = await workerStep4SimulateConflict();
+      const c = await runWorkerStep(workerStaleOverwrite);
+      if (!c.casRes) {
+        appendCliLine(cliResultLine("", c), "cli-line-err");
+        return;
+      }
       appendCliLine(
-        "[HTTP " +
-          c.casConflictRes.status +
-          " Conflict] CAS Guard: " +
-          JSON.stringify(c.casConflictRes.data),
-        "cli-line-err"
+        "[" + statusPill(c.casRes) + "] Stale overwrite answer: " + JSON.stringify(c.casRes.data),
+        c.casRes.status === 409 ? "cli-line-err" : "cli-line-warn"
       );
-      appendCliLine(
-        "[HTTP " +
-          c.leaseConflictRes.status +
-          " Conflict] Lease Fence: " +
-          JSON.stringify(c.leaseConflictRes.data),
-        "cli-line-err"
-      );
+      if (c.leaseRes) {
+        appendCliLine(
+          "[" + statusPill(c.leaseRes) + "] Stale heartbeat answer: " + JSON.stringify(c.leaseRes.data),
+          c.leaseRes.status === 409 ? "cli-line-err" : "cli-line-warn"
+        );
+      }
       return;
     }
 
@@ -2448,40 +2921,23 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
         actor: "browser",
         target: "eranos",
         method: "GET",
-        url: ENDPOINTS.eranos + "/api/tracks",
-        fallback: async function () {
-          return {
-            status: 200,
-            body: {
-              tracks: [
-                {
-                  id: "volunteer-shift-and-sop-builder",
-                  title: "Field Volunteer Onboarding & Incident Escalation SOPs",
-                  required_human_only: ["crisis_safety_plan", "individual_decision"]
-                }
-              ]
-            }
-          };
-        }
+        url: ENDPOINTS.eranos + "/api/tracks"
       });
-      const tracks = (res.data && res.data.tracks) || [];
-      appendCliLine(
-        "[HTTP " +
-          res.status +
-          " · " +
-          res.latencyMs +
-          "ms] " +
-          tracks.length +
-          " live Eranos public-good tracks:",
-        "cli-line-ok"
-      );
+      if (!res.ok) {
+        appendCliLine("[" + statusPill(res) + "] " + failureText(res), "cli-line-err");
+        return;
+      }
+      const tracks = res.data && Array.isArray(res.data.tracks) ? res.data.tracks : null;
+      if (!tracks) {
+        appendCliLine("[" + statusPill(res) + "] " + missingField(res, "Eranos", "tracks list"), "cli-line-err");
+        return;
+      }
+      appendCliLine("[" + statusPill(res) + "] Eranos lists " + tracks.length + " tracks:", "cli-line-ok");
       tracks.forEach(function (t) {
         appendCliLine(
           "  • " +
-            t.id +
-            " -> human_only=[" +
-            (t.required_human_only || []).join(", ") +
-            "]"
+            ((t && t.id) || "(no id)") +
+            (t && Array.isArray(t.required_human_only) ? " -> human_only=[" + t.required_human_only.join(", ") + "]" : "")
         );
       });
       return;
@@ -2494,78 +2950,87 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
         method: "GET",
         url: ENDPOINTS.eranos + "/api/catalog"
       });
+      if (!rCat.ok) {
+        appendCliLine("[" + statusPill(rCat) + "] Catalog: " + failureText(rCat), "cli-line-err");
+        return;
+      }
+      const kits = rCat.data && Array.isArray(rCat.data.kits) ? rCat.data.kits : null;
+      if (!kits) {
+        appendCliLine("[" + statusPill(rCat) + "] " + missingField(rCat, "Eranos", "kits list"), "cli-line-err");
+        return;
+      }
+      appendCliLine("[" + statusPill(rCat) + "] Eranos catalog: " + kits.length + " kits", "cli-line-ok");
+      kits.slice(0, 5).forEach(function (k) {
+        const inner = (k && k.kit) || k || {};
+        appendCliLine("  • " + (inner.kit_id || "(no kit_id)") + ": " + (inner.title || "(no title)"));
+      });
       const rEx = await liveWireFetch({
         actor: "browser",
         target: "eranos",
         method: "GET",
         url: ENDPOINTS.eranos + "/api/examples"
       });
-      const kits = (rCat.data && rCat.data.kits) || [];
-      const needs = (rEx.data && rEx.data.needs) || [];
+      if (!rEx.ok) {
+        appendCliLine("[" + statusPill(rEx) + "] Examples: " + failureText(rEx), "cli-line-err");
+        return;
+      }
+      const needs = rEx.data && Array.isArray(rEx.data.needs) ? rEx.data.needs : null;
       appendCliLine(
-        "[HTTP " +
-          rCat.status +
-          "] Verified catalog kits: " +
-          kits.length +
-          " · Synthetic NGO example needs: " +
-          needs.length,
-        "cli-line-ok"
+        "[" +
+          statusPill(rEx) +
+          "] " +
+          (needs ? "Example needs from organizations: " + needs.length : missingField(rEx, "Eranos", "needs list")),
+        needs ? "cli-line-ok" : "cli-line-err"
       );
-      kits.slice(0, 5).forEach(function (k) {
-        const inner = k.kit || k;
-        appendCliLine("  • " + inner.kit_id + ": " + inner.title);
-      });
       return;
     }
 
     if (lower === "nouns ls") {
-      const mcpRes = await syncNounsFromMcp();
+      const out = await runExclusive("MCP search_nouns", function () {
+        return syncNounsFromMcp(liveSession());
+      });
+      if (!out.ok) {
+        appendCliLine(cliResultLine("[MCP search_nouns] ", out), "cli-line-err");
+        return;
+      }
       appendCliLine(
-        "[MCP search_nouns · HTTP " +
-          mcpRes.status +
-          " · " +
-          mcpRes.latencyMs +
-          "ms] Session Task Objects (" +
-          state.nouns.size +
-          "):",
+        "[MCP search_nouns · " + statusPill(out.res) + "] Tessera returned " + out.scents.length + " nouns:",
         "cli-line-ok"
       );
-      Array.from(state.nouns.values()).forEach(function (n) {
+      out.scents.forEach(function (s) {
         appendCliLine(
           "  • " +
-            (n.store || "store") +
+            ((s && s.container) || "(no store)") +
             "/" +
-            n.key +
-            " (v" +
-            (n.version || 1) +
-            ")"
+            ((s && s.key) || "(no key)") +
+            (s && Number.isInteger(s.version) ? " (v" + s.version + ")" : " (version not reported)")
         );
       });
       return;
     }
 
     if (lower === "tasks ls") {
-      const mcpRes = await syncTasksFromMcp();
+      const out = await runExclusive("MCP list_verbs", function () {
+        return syncTasksFromMcp(liveSession());
+      });
+      if (!out.ok) {
+        appendCliLine(cliResultLine("[MCP list_verbs] ", out), "cli-line-err");
+        return;
+      }
       appendCliLine(
-        "[MCP list_verbs · HTTP " +
-          mcpRes.status +
-          " · " +
-          mcpRes.latencyMs +
-          "ms] Session Tasks (" +
-          state.tasks.size +
-          "):",
+        "[MCP list_verbs · " + statusPill(out.res) + "] Tessera returned " + out.verbs.length + " ready verbs:",
         "cli-line-ok"
       );
-      Array.from(state.tasks.values()).forEach(function (t) {
+      out.verbs.forEach(function (v) {
         appendCliLine(
           "  • " +
-            t.task_id +
+            ((v && v.task_id) || "(no task_id)") +
             " [" +
-            t.state +
+            ((v && v.state) || "state not reported") +
             "] queue=" +
-            (t.queue || "demo") +
-            " fence=#" +
-            (t.fencing_token != null ? t.fencing_token : "-")
+            ((v && v.queue) || "-") +
+            " fence=" +
+            (v && Number.isInteger(v.fencing_token) ? "#" + v.fencing_token : "-")
         );
       });
       return;
@@ -2586,67 +3051,65 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     );
   }
 
-  /* MCP SYNC HELPERS FOR INSPECTOR TABS */
-  async function syncNounsFromMcp() {
-    const res = await callTesseraMcp("search_nouns", { query: "" }, "browser");
-    try {
-      const txt =
-        res.data &&
-        res.data.result &&
-        res.data.result.content &&
-        res.data.result.content[0] &&
-        res.data.result.content[0].text;
-      if (txt) {
-        const parsed = JSON.parse(txt);
-        (parsed.scents || []).forEach(function (s) {
-          upsertNoun({
-            store: s.container || "demo.store",
-            category: s.kind || "noun",
-            key: s.key,
-            version: s.version || 1,
-            sha256: s.sha256 || "",
-            value: s
-          });
-        });
-      }
-    } catch (_e) {
-      // Keep existing local view
+  /* MCP SYNC HELPERS FOR INSPECTOR TABS: they show what Tessera's MCP tools returned, nothing more. */
+  async function syncNounsFromMcp(sess) {
+    if (!sess) return { ok: false, res: null, message: "Not sent: there is no live Tessera demo session." };
+    const res = await callTesseraMcp("search_nouns", { query: "" }, "browser", sess);
+    if (!res.ok) return { ok: false, res: res, message: failureText(res) };
+    const sc = mcpContent(res);
+    const scents = sc && Array.isArray(sc.scents) ? sc.scents : null;
+    if (!scents) {
+      return { ok: false, res: res, message: missingField(res, "Tessera", "scents list in its search_nouns result") };
     }
-    return res;
+    scents.forEach(function (s) {
+      if (!s || typeof s.key !== "string") return;
+      upsertNoun({
+        store: typeof s.container === "string" ? s.container : "(no store)",
+        key: s.key,
+        version: Number.isInteger(s.version) ? s.version : null,
+        sha256: typeof s.sha256 === "string" && s.sha256 ? s.sha256 : null,
+        source: "Summary from Tessera's MCP search_nouns.",
+        value: s
+      });
+    });
+    return { ok: true, res: res, scents: scents };
   }
 
-  async function syncTasksFromMcp() {
-    const res = await callTesseraMcp("list_verbs", { limit: 25 }, "browser");
-    try {
-      const txt =
-        res.data &&
-        res.data.result &&
-        res.data.result.content &&
-        res.data.result.content[0] &&
-        res.data.result.content[0].text;
-      if (txt) {
-        const parsed = JSON.parse(txt);
-        (parsed.verbs || parsed.tasks || []).forEach(function (v) {
-          const tid = v.task_id || v.id;
-          if (!tid) return;
-          const existing = state.tasks.get(tid);
-          upsertTask({
-            task_id: tid,
-            queue: v.queue,
-            kind: v.kind,
-            state:
-              existing &&
-              (existing.state === "held_for_person" || existing.state === "steward_approved_demo")
-                ? existing.state
-                : v.state || "ready",
-            fencing_token: v.fencing_token
-          });
-        });
-      }
-    } catch (_e) {
-      // Keep existing local view
+  async function syncTasksFromMcp(sess) {
+    if (!sess) return { ok: false, res: null, message: "Not sent: there is no live Tessera demo session." };
+    const res = await callTesseraMcp("list_verbs", { limit: 25 }, "browser", sess);
+    if (!res.ok) return { ok: false, res: res, message: failureText(res) };
+    const sc = mcpContent(res);
+    const verbs = sc && Array.isArray(sc.verbs) ? sc.verbs : null;
+    if (!verbs) {
+      return { ok: false, res: res, message: missingField(res, "Tessera", "verbs list in its list_verbs result") };
     }
-    return res;
+    verbs.forEach(function (v) {
+      if (!v || typeof v.task_id !== "string") return;
+      upsertTask({
+        task_id: v.task_id,
+        queue: typeof v.queue === "string" ? v.queue : undefined,
+        kind: typeof v.kind === "string" ? v.kind : undefined,
+        last: "list_verbs: state " + (typeof v.state === "string" ? v.state : "not reported"),
+        tone: v.state === "ready" ? "queued" : typeof v.state === "string" ? v.state : "",
+        fencing_token: Number.isInteger(v.fencing_token) ? v.fencing_token : undefined
+      });
+    });
+    return { ok: true, res: res, verbs: verbs };
+  }
+
+  function inspectorSync(fn, label) {
+    return runExclusive(label, async function () {
+      const out = await fn(liveSession());
+      const target = label.indexOf("list_verbs") >= 0 ? $("tasks-sync-status") : $("nouns-sync-status");
+      if (target) {
+        target.textContent = out.ok
+          ? (out.verbs ? out.verbs.length + " ready verbs" : out.scents.length + " nouns") + " from Tessera (" + statusPill(out.res) + ")"
+          : "Sync failed: " + out.message;
+        target.dataset.ok = out.ok ? "true" : "false";
+      }
+      return out;
+    });
   }
 
   /* UI NAVIGATION & MODE SWITCHING (SEAMLESS STATE PRESERVATION) */
@@ -3081,19 +3544,36 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     }
   }
 
-  async function persistCleanPersonaToTessera() {
+  function persistCleanPersonaToTessera() {
+    return runExclusive("persona store", persistPersona);
+  }
+
+  async function persistPersona() {
     renderPersonaAudit();
-    if (!lastPersonaEval) return;
+    if (!lastPersonaEval) return null;
     const summary = $("persona-audit-summary");
-    if (lastPersonaEval.verdict !== "admit") {
+    const say = function (ok, html) {
       if (summary) {
         summary.insertAdjacentHTML(
           "afterbegin",
-          '<div class="feed-card feed-card-err"><strong>[BLOCKED PRE-PERSIST]</strong> Refusing to write <code>noun.persona</code> to Tessera while supply-chain findings remain unresolved.</div>'
+          '<div class="feed-card ' + (ok ? "feed-card-ok" : "feed-card-err") + '">' + html + "</div>"
         );
       }
-      return;
+    };
+    if (lastPersonaEval.verdict !== "admit") {
+      say(
+        false,
+        "<strong>[NOT SENT]</strong> The linter in this page found supply-chain problems, so nothing was written to Tessera."
+      );
+      return null;
     }
+    const sess = liveSession();
+    if (!sess) {
+      say(false, "<strong>[NOT SENT]</strong> There is no live Tessera demo session.");
+      return null;
+    }
+    // Anonymous demo sessions may write only demo.* stores.
+    const store = "demo.personas";
     const key = "persona." + String(lastPersonaEval.meta.name || "worker").replace(/[^a-zA-Z0-9._-]/g, "-");
     const payload = {
       kind: "noun.persona",
@@ -3104,31 +3584,42 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       cleaned_instructions: lastPersonaEval.cleanedBody,
       targets: Object.keys(lastPersonaEval.compiled)
     };
-    const res = await callTesseraMcp(
-      "put_record",
-      {
-        store: "personas",
-        key: key,
-        value: payload
-      },
-      "browser"
-    );
-    upsertNoun({
-      store: "personas",
-      key: key,
-      version: (res.data && res.data.result && res.data.result.structuredContent && res.data.result.structuredContent.version) || 1,
-      summary: "Audited portable persona (" + lastPersonaEval.clarityScore.toFixed(2) + " clarity, 0 Unicode/hook risks)"
-    });
-    if (summary) {
-      summary.insertAdjacentHTML(
-        "afterbegin",
-        '<div class="feed-card feed-card-ok"><strong>[PERSISTED TO LIVE TESSERA]</strong> Stored <code>personas::' +
-          escapeHtml(key) +
-          "</code> over MCP JSON-RPC (HTTP " +
-          escapeHtml(String(res.status)) +
-          "). Inspect in Wire Log &amp; Task Objects!</div>"
+    const res = await callTesseraMcp("put_record", { store_name: store, key: key, value: payload }, "browser", sess);
+    const rec = (mcpContent(res) || {}).record;
+    if (!res.ok || !rec || !Number.isInteger(rec.version)) {
+      say(
+        false,
+        "<strong>[NOT STORED]</strong> " +
+          escapeHtml(res.ok ? missingField(res, "Tessera", "record.version in its put_record result") : failureText(res))
       );
+      return res;
     }
+    upsertNoun({
+      store: store,
+      category: "noun.persona",
+      key: key,
+      version: rec.version,
+      source:
+        "Stored by Tessera over MCP put_record (HTTP " +
+        res.status +
+        "). The page's linter found " +
+        lastPersonaEval.findings.length +
+        " problems and gave a routing clarity of " +
+        lastPersonaEval.clarityScore.toFixed(2) +
+        ".",
+      value: payload
+    });
+    say(
+      true,
+      "<strong>[STORED IN TESSERA]</strong> <code>" +
+        escapeHtml(store + "/" + key) +
+        "</code> is version " +
+        escapeHtml(rec.version) +
+        " (MCP put_record, HTTP " +
+        escapeHtml(res.status) +
+        "). See the Wire Log and Task Objects tabs."
+    );
+    return res;
   }
 
   /* EVENT BINDINGS & BOOT */
@@ -3195,31 +3686,22 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     });
 
     $("worker-btn-1").addEventListener("click", function () {
-      workerStep1Enqueue();
+      runWorkerStep(workerEnqueue);
     });
     $("worker-btn-2").addEventListener("click", function () {
-      workerStep2Claim();
+      runWorkerStep(workerClaim);
     });
     $("worker-btn-3").addEventListener("click", function () {
-      workerStep3CommitCasAndSubmit();
+      runWorkerStep(workerCommit);
     });
     $("worker-btn-4").addEventListener("click", function () {
-      workerStep4SimulateConflict();
+      runWorkerStep(workerStaleOverwrite);
     });
     $("worker-heartbeat-btn").addEventListener("click", function () {
-      workerSendHeartbeat();
+      runWorkerStep(workerHeartbeat);
     });
-    $("worker-run-all-btn").addEventListener("click", async function () {
-      const btn = $("worker-run-all-btn");
-      btn.disabled = true;
-      try {
-        await workerStep1Enqueue();
-        await workerStep2Claim();
-        await workerStep3CommitCasAndSubmit();
-        await workerStep4SimulateConflict();
-      } finally {
-        btn.disabled = false;
-      }
+    $("worker-run-all-btn").addEventListener("click", function () {
+      runWorkerAll();
     });
 
     document.querySelectorAll("[data-cli-cmd]").forEach(function (chip) {
@@ -3282,10 +3764,14 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     });
 
     $("tasks-refresh-btn").addEventListener("click", function () {
-      syncTasksFromMcp();
+      inspectorSync(syncTasksFromMcp, "MCP list_verbs");
     });
     $("nouns-refresh-btn").addEventListener("click", function () {
-      syncNounsFromMcp();
+      inspectorSync(syncNounsFromMcp, "MCP search_nouns");
+    });
+
+    $("session-retry-btn").addEventListener("click", function () {
+      openSession();
     });
 
     document.querySelectorAll("[data-harness-cfg]").forEach(function (btn) {
@@ -3351,8 +3837,10 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     renderMcpHarnessConfig();
     bindEvents();
 
-    await ensureDemoSession(false);
-    await callTesseraMcp("whoami", {}, "browser");
+    renderSessionPill();
+    applySessionGate();
+    updateWorkerTelemetryUI();
+    await openSession();
   }
 
   if (document.readyState === "loading") {

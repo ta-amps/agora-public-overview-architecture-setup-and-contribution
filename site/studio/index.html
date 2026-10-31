@@ -33,9 +33,14 @@
       </span>
     </a>
 
-    <div class="session-pill" id="session-pill" data-state="connecting" role="status" aria-live="polite" title="Isolated anonymous demo session on tessera.ta-amps.workers.dev (cached locally to protect IP mint quota)">
+    <div class="session-pill" id="session-pill" data-state="connecting" title="Anonymous demo session on tessera.ta-amps.workers.dev. This browser saves it so a reload does not open a new one.">
       <span class="session-dot" aria-hidden="true"></span>
-      <span class="session-label" id="session-pill-text">Connecting: tessera.ta-amps.workers.dev ...</span>
+      <span class="session-body">
+        <span class="session-label" id="session-pill-text" role="status" aria-live="polite">Opening a demo session on Tessera...</span>
+        <span class="session-countdown" id="session-countdown" hidden></span>
+        <span class="session-detail" id="session-pill-detail" hidden></span>
+      </span>
+      <button type="button" class="session-retry-btn" id="session-retry-btn" hidden>Try now</button>
     </div>
   </div>
 
@@ -93,9 +98,9 @@
       <div class="panel-intro">
         <div class="panel-intro-top">
           <span class="kicker kicker-cyan">Infrastructure Shim · POST herma.ta-amps.workers.dev/api/preview</span>
-          <span class="metric-chip" id="herma-last-metric">persisted: false · $0 tokens</span>
+          <span class="metric-chip" id="herma-last-metric">No preview sent yet</span>
         </div>
-        <p class="panel-desc">Ask a question or click a starter prompt. Herma evaluates 3-tier triggers (<code>keyword</code>, <code>semantic</code>, <code>micromodel</code>) against live Cloudflare D1 + Tessera provisions in ~35ms, answering schema queries directly or injecting verified Task Objects before any worker LLM runs.</p>
+        <p class="panel-desc">Ask a question or click a starter prompt. Each one is a real POST to Herma's public preview, which checks its built-in provisions (<code>keyword</code>, <code>semantic</code> and <code>micromodel</code> triggers) and stores nothing. Herma either answers directly or adds a system message to the payload it would forward. The card shows only what Herma returned.</p>
         <div class="starter-chips" aria-label="Starter prompts">
           <button type="button" class="chip-btn" data-chat-prompt="Explain Tasks and Task Objects simply">Explain Tasks &amp; Task Objects simply</button>
           <button type="button" class="chip-btn" data-chat-prompt="Compare Harness Square, OpenCode, Pi &amp; Muse Code">Compare Harness Square, OpenCode, Pi &amp; Muse Code</button>
@@ -124,15 +129,15 @@
         <div class="panel-intro panel-intro-compact">
           <div class="panel-intro-top">
             <span class="kicker kicker-emerald">Public-Good Flow · Tessera CAS + Queue + Herma + Eranos Verifier</span>
-            <span class="synthetic-pill">SYNTHETIC DEMO · NO REAL PII</span>
+            <span class="synthetic-pill">Use made-up details only</span>
           </div>
-          <p class="panel-desc">Choose a synthetic nonprofit brief and click <strong>Submit NGO Task</strong>. Watch the live multi-service pipeline persist <code>noun.request</code>, enqueue <code>verb.build_agent_kit</code>, auto-lease via a sandboxed <code>muse-code</code> worker, pull Herma guardrails, pass Eranos 8/8 deterministic checks, store <code>noun.agent_kit</code> over MCP, and halt at <code>held_for_person</code>.</p>
+          <p class="panel-desc">Choose a nonprofit brief and click <strong>Submit NGO Task</strong>. The page makes real calls in order: it stores the request as <code>noun.request</code> in Tessera, enqueues <code>verb.build_agent_kit</code>, claims that verb itself (this browser plays the worker), asks Herma for guardrails, sends the brief's kit draft to Eranos's practice check, stores it as <code>noun.agent_kit</code> over MCP with <code>review_gate: held_for_person</code>, and submits the verb. It stops at the first call that fails and shows that service's own status and error.</p>
         </div>
 
         <div class="ngo-form-card">
           <div class="field-label-row">
-            <span class="field-label">1. Select Synthetic NGO Brief Preset</span>
-            <span class="field-hint">Never enter real personal, medical, or payment data (screened on wire)</span>
+            <span class="field-label">1. Choose a nonprofit brief</span>
+            <span class="field-hint">Never enter real personal, medical, or payment data (Tessera's demo sessions refuse it)</span>
           </div>
           <div class="preset-grid" role="radiogroup" aria-label="Synthetic NGO presets">
             <button type="button" class="preset-card is-selected" data-ngo-preset="clinic" role="radio" aria-checked="true">
@@ -154,20 +159,21 @@
 
           <div class="ngo-constraint-row">
             <div class="ngo-constraint-col">
-              <label class="field-label" for="ngo-constraint-input">2. Plain-English Organization Constraint (Synthetic Only)</label>
+              <label class="field-label" for="ngo-constraint-input">2. The organization's constraint, in plain words (made-up details only)</label>
               <textarea id="ngo-constraint-input" class="ngo-textarea" rows="2" maxlength="500">SYNTHETIC ONLY: Match bilingual greeters, supply leads, and licensed nurse leads across Saturday and Sunday shifts using role IDs only; route any clinical or crisis question to human_only medical lead.</textarea>
             </div>
             <div class="ngo-submit-col">
-              <button type="button" class="btn btn-emerald btn-tall" id="ngo-submit-btn">
+              <button type="button" class="btn btn-emerald btn-tall" id="ngo-submit-btn" data-needs-session>
                 <span class="btn-main-line">Submit NGO Task</span>
-                <span class="btn-sub">Auto-Picked Up by Worker</span>
+                <span class="btn-sub">This browser claims it as the worker</span>
               </button>
+              <p class="session-gate-note" data-session-note hidden></p>
             </div>
           </div>
         </div>
 
         <div class="pipeline-header">
-          <h2 class="section-heading">Live 6-Step Execution Pipeline</h2>
+          <h2 class="section-heading">The six steps, in order</h2>
           <span class="pipeline-status-badge" id="ngo-pipeline-badge" data-state="idle">Ready to run</span>
         </div>
 
@@ -190,42 +196,43 @@
       <div class="panel-scroll">
         <div class="panel-intro panel-intro-compact">
           <div class="panel-intro-top">
-            <span class="kicker kicker-amber">Contributor Worker Lab · Monotonic Fencing Tokens &amp; CAS expected_version</span>
-            <button type="button" class="btn btn-subtle btn-xs" id="worker-run-all-btn">Run Steps 1 -&gt; 4 Live</button>
+            <span class="kicker kicker-amber">Worker Lab · Fencing Tokens &amp; CAS expected_version</span>
+            <button type="button" class="btn btn-subtle btn-xs" id="worker-run-all-btn" data-needs-session>Run Steps 1 -&gt; 4</button>
           </div>
-          <p class="panel-desc">Step into a contributor worker's harness. Enqueue and lease a live verb, commit a verified Task Object from <code>v1 -&gt; v2</code>, then simulate a lagging split-brain worker attempting a stale overwrite to watch live <code>tessera.ta-amps.workers.dev</code> reject it with a real <strong>HTTP 409 Conflict</strong>.</p>
+          <p class="panel-desc">This browser plays a contributor's worker. Enqueue and lease a real verb, write a noun as <code>v1 -&gt; v2</code> with compare-and-set, then send a stale overwrite: a real request that still carries the old <code>expected_version</code>. The feed shows what <code>tessera.ta-amps.workers.dev</code> answered; it should refuse with <strong>HTTP 409 Conflict</strong>.</p>
         </div>
 
         <div class="worker-actions-grid">
-          <button type="button" class="worker-step-btn" id="worker-btn-1" data-worker-step="1">
+          <button type="button" class="worker-step-btn" id="worker-btn-1" data-worker-step="1" data-needs-session>
             <span class="w-num">[1]</span>
             <span class="w-body">
               <strong>Enqueue Sample Task</strong>
               <small>POST /ns/&lt;demo&gt;/v1/tasks (demo.echo)</small>
             </span>
           </button>
-          <button type="button" class="worker-step-btn" id="worker-btn-2" data-worker-step="2">
+          <button type="button" class="worker-step-btn" id="worker-btn-2" data-worker-step="2" data-needs-session>
             <span class="w-num">[2]</span>
             <span class="w-body">
               <strong>Grab / Claim Task</strong>
-              <small>Acquires live lease + fencing token</small>
+              <small>Lease + fencing token from Tessera</small>
             </span>
           </button>
-          <button type="button" class="worker-step-btn" id="worker-btn-3" data-worker-step="3">
+          <button type="button" class="worker-step-btn" id="worker-btn-3" data-worker-step="3" data-needs-session>
             <span class="w-num">[3]</span>
             <span class="w-body">
-              <strong>Commit Verified Task Object (CAS v1 -&gt; v2)</strong>
-              <small>expected_version 0 -&gt; 1 + submit receipt</small>
+              <strong>Write a Noun v1 -&gt; v2, Then Submit</strong>
+              <small>expected_version 0, then 1, then submit</small>
             </span>
           </button>
-          <button type="button" class="worker-step-btn worker-step-danger" id="worker-btn-4" data-worker-step="4">
+          <button type="button" class="worker-step-btn worker-step-danger" id="worker-btn-4" data-worker-step="4" data-needs-session>
             <span class="w-num">[4]</span>
             <span class="w-body">
-              <strong>Simulate Stale / Split-Brain Worker Overwrite</strong>
-              <small>Triggers REAL HTTP 409 Conflict on wire</small>
+              <strong>Send a Stale Overwrite</strong>
+              <small>A real request with an old expected_version</small>
             </span>
           </button>
         </div>
+        <p class="session-gate-note" data-session-note hidden></p>
 
         <div class="lease-telemetry-bar" id="worker-lease-bar">
           <div class="lease-metric">
@@ -242,17 +249,17 @@
           </div>
           <div class="lease-metric">
             <span class="lease-k">CAS Head Record</span>
-            <code class="lease-v" id="w-cas-head">unwritten</code>
+            <code class="lease-v" id="w-cas-head">not written yet</code>
           </div>
-          <button type="button" class="btn btn-subtle btn-xs" id="worker-heartbeat-btn" disabled>Heartbeat</button>
+          <button type="button" class="btn btn-subtle btn-xs" id="worker-heartbeat-btn" data-needs-session disabled>Heartbeat</button>
         </div>
 
         <div class="conflict-spotlight" id="worker-conflict-banner" hidden>
-          <!-- Populated dynamically when real HTTP 409 Conflict returns from Tessera -->
+          <!-- Filled with Tessera's real answers to the stale overwrite -->
         </div>
 
         <div class="worker-feed" id="worker-event-feed" aria-live="polite">
-          <!-- Step-by-step live worker receipts & 409 problem+json payloads -->
+          <!-- One entry per worker step, with Tessera's status and answer -->
         </div>
       </div>
     </div>
@@ -275,15 +282,16 @@
           </div>
           <div class="starter-chips" style="margin-bottom:0.65rem;" aria-label="Persona linter presets">
             <button type="button" class="chip-btn" data-persona-preset="clean">Clean NGO Kit Reviewer (Admit)</button>
-            <button type="button" class="chip-btn" data-persona-preset="fluff">Expert/Demographic Fluff (-30pp Strip)</button>
+            <button type="button" class="chip-btn" data-persona-preset="fluff">Expert/Demographic Fluff (Strip)</button>
             <button type="button" class="chip-btn" data-persona-preset="backdoor">Rules-File Unicode Backdoor + Bypass (Refuse)</button>
           </div>
           <label class="sr-only" for="persona-source-input">Portable persona Markdown input</label>
           <textarea id="persona-source-input" class="ngo-textarea" rows="7" spellcheck="false" style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:0.78rem;"></textarea>
           <div style="display:flex;gap:0.6rem;flex-wrap:wrap;margin-top:0.65rem;align-items:center;">
             <button type="button" class="btn btn-primary" id="persona-lint-btn">Lint &amp; Compile Persona</button>
-            <button type="button" class="btn btn-emerald" id="persona-persist-btn">Persist Clean <code>noun.persona</code> to Tessera</button>
+            <button type="button" class="btn btn-emerald" id="persona-persist-btn" data-needs-session>Persist Clean <code>noun.persona</code> to Tessera</button>
           </div>
+          <p class="session-gate-note" data-session-note hidden></p>
         </div>
 
         <div id="persona-audit-summary" class="worker-feed" aria-live="polite" style="margin-top:0.75rem;"></div>
@@ -310,29 +318,30 @@
           <div class="cli-dots" aria-hidden="true">
             <span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span>
           </div>
-          <span class="cli-title" id="cli-window-title">muse-code-cli · visitor@ta-amps:~/demo</span>
-          <span class="cli-hint">Same live session, tasks, CAS nouns &amp; wire log</span>
+          <span class="cli-title" id="cli-window-title">studio-cli · visitor@ta-amps:~/no-session</span>
+          <span class="cli-hint">Shares the GUI's session, tasks, nouns &amp; wire log</span>
         </div>
 
         <div class="cli-chips" aria-label="Quick terminal commands">
           <button type="button" class="cli-chip" data-cli-cmd="help">help</button>
           <button type="button" class="cli-chip" data-cli-cmd="shim Explain Tasks and Task Objects simply">shim &lt;prompt&gt;</button>
-          <button type="button" class="cli-chip" data-cli-cmd="ngo submit clinic">ngo submit clinic</button>
-          <button type="button" class="cli-chip" data-cli-cmd="worker claim">worker claim</button>
-          <button type="button" class="cli-chip cli-chip-warn" data-cli-cmd="worker conflict">worker conflict</button>
+          <button type="button" class="cli-chip" data-cli-cmd="ngo submit clinic" data-needs-session>ngo submit clinic</button>
+          <button type="button" class="cli-chip" data-cli-cmd="worker claim" data-needs-session>worker claim</button>
+          <button type="button" class="cli-chip cli-chip-warn" data-cli-cmd="worker conflict" data-needs-session>worker conflict</button>
           <button type="button" class="cli-chip" data-cli-cmd="eranos tracks">eranos tracks</button>
-          <button type="button" class="cli-chip" data-cli-cmd="nouns ls">nouns ls</button>
-          <button type="button" class="cli-chip" data-cli-cmd="tasks ls">tasks ls</button>
+          <button type="button" class="cli-chip" data-cli-cmd="nouns ls" data-needs-session>nouns ls</button>
+          <button type="button" class="cli-chip" data-cli-cmd="tasks ls" data-needs-session>tasks ls</button>
           <button type="button" class="cli-chip" data-cli-cmd="curl last">curl last</button>
           <button type="button" class="cli-chip" data-cli-cmd="clear">clear</button>
         </div>
+        <p class="session-gate-note session-gate-note-cli" data-session-note="short" hidden></p>
 
         <div class="cli-output" id="cli-output" tabindex="0" role="log" aria-live="polite">
           <!-- Live terminal transcript -->
         </div>
 
         <form class="cli-input-row" id="cli-form" autocomplete="off">
-          <label class="cli-prompt" id="cli-prompt-label" for="cli-input">visitor@ta-amps:~/demo$</label>
+          <label class="cli-prompt" id="cli-prompt-label" for="cli-input">visitor@ta-amps:~/no-session$</label>
           <input id="cli-input" class="cli-input" type="text" spellcheck="false" autocomplete="off" placeholder="Type a command (e.g. help, eranos tracks, worker conflict, nouns ls)...">
           <button type="submit" class="btn btn-subtle btn-xs">Run</button>
         </form>
@@ -356,7 +365,7 @@
       </div>
 
       <div class="topology-stage">
-        <svg id="topology-svg" class="topology-svg" viewBox="0 0 820 272" role="img" aria-label="Five-node live architecture topology linking Browser GUI or CLI, Herma Shim, Tessera Engine, Eranos Verifier, and Sandboxed Demo Worker">
+        <svg id="topology-svg" class="topology-svg" viewBox="0 0 820 272" role="img" aria-label="Five-node call topology linking the Browser GUI or CLI, Herma Shim, Tessera Engine, Eranos Verifier, and this browser acting as the worker">
           <defs>
             <linearGradient id="edge-grad-cyan" x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.35"/>
@@ -396,7 +405,7 @@
             <circle cx="18" cy="20" r="4.5" class="node-led"/>
             <text x="30" y="24" class="node-title">Browser GUI / CLI</text>
             <text x="16" y="44" class="node-host">Agora Studio Surface</text>
-            <text x="16" y="63" class="node-stat" id="stat-browser">0 reqs · $0 tokens</text>
+            <text x="16" y="63" class="node-stat" id="stat-browser">0 requests</text>
           </g>
 
           <!-- Node 2: Herma Shim -->
@@ -405,7 +414,7 @@
             <circle cx="18" cy="20" r="4.5" class="node-led"/>
             <text x="30" y="24" class="node-title">Herma Shim</text>
             <text x="16" y="43" class="node-host">herma.ta-amps.workers.dev</text>
-            <text x="16" y="60" class="node-stat" id="stat-herma">D1 + PROV-* · idle</text>
+            <text x="16" y="60" class="node-stat" id="stat-herma">provisions · idle</text>
           </g>
 
           <!-- Node 3: Tessera Engine -->
@@ -423,16 +432,16 @@
             <circle cx="18" cy="20" r="4.5" class="node-led"/>
             <text x="30" y="24" class="node-title">Eranos Verifier</text>
             <text x="16" y="43" class="node-host">eranos.ta-amps.workers.dev</text>
-            <text x="16" y="60" class="node-stat" id="stat-eranos">8/8 deterministic · idle</text>
+            <text x="16" y="60" class="node-stat" id="stat-eranos">practice check · idle</text>
           </g>
 
-          <!-- Node 5: Sandboxed Demo Worker -->
+          <!-- Node 5: this browser, acting as the worker -->
           <g id="node-worker" class="topo-node topo-node-worker" transform="translate(624, 96)">
             <rect width="182" height="80" rx="11" class="node-box"/>
             <circle cx="18" cy="20" r="4.5" class="node-led"/>
-            <text x="30" y="24" class="node-title">Sandboxed Worker</text>
-            <text x="16" y="44" class="node-host">muse-code · tan_ lease</text>
-            <text x="16" y="63" class="node-stat" id="stat-worker">Authorized worker · idle</text>
+            <text x="30" y="24" class="node-title">Worker (this browser)</text>
+            <text x="16" y="44" class="node-host">demo session lease</text>
+            <text x="16" y="63" class="node-stat" id="stat-worker">idle</text>
           </g>
         </svg>
       </div>
@@ -467,15 +476,15 @@
           </div>
         </div>
         <div class="inspector-scroll" id="wire-log-list" aria-live="polite">
-          <!-- Populated dynamically with every real HTTP & MCP call -->
+          <!-- One row per HTTP or MCP call this page made, with the real answer -->
         </div>
       </div>
 
       <!-- INSPECTOR 2: TASKS (VERBS) & LEASES -->
       <div class="inspector-panel" id="insp-panel-tasks" role="tabpanel" aria-labelledby="insp-tab-tasks" hidden>
         <div class="inspector-subbar">
-          <span>Live atomic verbs in isolated namespace <code id="tasks-ns-label">demo</code></span>
-          <button type="button" class="btn-link" id="tasks-refresh-btn">Sync via MCP list_verbs</button>
+          <span>Verbs in demo namespace <code id="tasks-ns-label">(no demo session)</code> <span class="sync-status" id="tasks-sync-status"></span> <span class="session-gate-note session-gate-note-inline" data-session-note="short" hidden></span></span>
+          <button type="button" class="btn-link" id="tasks-refresh-btn" data-needs-session>Sync ready verbs via MCP list_verbs</button>
         </div>
         <div class="inspector-scroll" id="tasks-table-wrap">
           <!-- Live Tasks & Leases table -->
@@ -485,8 +494,8 @@
       <!-- INSPECTOR 3: TASK OBJECTS (NOUNS) -->
       <div class="inspector-panel" id="insp-panel-nouns" role="tabpanel" aria-labelledby="insp-tab-nouns" hidden>
         <div class="inspector-subbar">
-          <span>Live CAS records &amp; shimmed provisions (versioned + SHA-256)</span>
-          <button type="button" class="btn-link" id="nouns-refresh-btn">Sync via MCP search_nouns</button>
+          <span>Records stored in Tessera and provisions matched by Herma <span class="sync-status" id="nouns-sync-status"></span> <span class="session-gate-note session-gate-note-inline" data-session-note="short" hidden></span></span>
+          <button type="button" class="btn-link" id="nouns-refresh-btn" data-needs-session>Sync via MCP search_nouns</button>
         </div>
         <div class="inspector-scroll" id="nouns-list-wrap">
           <!-- Live Task Objects list -->
@@ -497,8 +506,8 @@
       <div class="inspector-panel" id="insp-panel-mcp" role="tabpanel" aria-labelledby="insp-tab-mcp" hidden>
         <div class="inspector-scroll mcp-guide-scroll" id="mcp-guide-wrap">
           <div class="mcp-mapping-intro">
-            <h3>1:1 Mapping: Zero-Token Browser Sandbox -&gt; Real Contributor Bot</h3>
-            <p>Everything you just ran in this browser uses the exact same HTTP + Streamable MCP doors that external coding harnesses use when donating real spare tokens or running an NGO's local Agent Kit:</p>
+            <h3>From this page to your own agent</h3>
+            <p>This page calls the same public HTTP and Streamable MCP addresses that an agent harness uses to donate spare capacity or run an NGO's agent kit:</p>
           </div>
 
           <div class="mcp-map-grid">
