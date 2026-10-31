@@ -1635,6 +1635,13 @@ tbody th { font-weight: 600; }
 .lib-group:target { grid-row: 1 / span 2; grid-column: 1; display: grid; grid-template-rows: subgrid; }
 .lib-group:target > .lib-group-body { grid-row: 2; }
 
+/* F31-005: the whole list runs past 10,000 px, more than Chrome paints in one go at device scale 1.5. Until a
+   category or a pack is chosen, each category shows its first three packs, one row (LIBRARY_FIRST in build_site.py) and a
+   "See all" link, which is the category filter. A link to one pack shows every card. */
+.library:not(:has(.lib-group:target, .lib-card:target)) .lib-cards > li:nth-child(n+4) { display: none; }
+.lib-see-all { display: none; justify-self: start; font-weight: 600; }
+.library:not(:has(.lib-group:target, .lib-card:target)) .lib-see-all { display: inline-flex; gap: 0.35em; }
+
 .lib-group-body { display: grid; gap: var(--space-5); }
 .lib-group-head { display: grid; gap: var(--space-3); max-width: 52rem; }
 

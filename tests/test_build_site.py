@@ -53,43 +53,6 @@ def shown_text(fragment: str) -> list[str]:
     return parser.shown
 
 
-class FormLinks(HTMLParser):
-    """For every link to a GitHub issue form, the text of its two nearest enclosing p, li or div elements."""
-
-    BLOCKS = {"p", "li", "div"}
-    VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr"}
-
-    def __init__(self) -> None:
-        super().__init__()
-        self.stack: list[list] = []  # [tag, text pieces, the indexes of the links it encloses]
-        self.links: list[dict] = []
-
-    def handle_starttag(self, tag, attrs):
-        if tag in self.VOID:
-            return
-        self.stack.append([tag, [], []])
-        href = dict(attrs).get("href") or ""
-        if tag == "a" and build.GITHUB_FORM.match(href):
-            self.links.append({"href": href, "context": []})
-            for entry in [e for e in reversed(self.stack) if e[0] in self.BLOCKS][:2]:
-                entry[2].append(len(self.links) - 1)
-
-    def handle_startendtag(self, tag, attrs):
-        pass
-
-    def handle_endtag(self, tag):
-        while self.stack:
-            entry = self.stack.pop()
-            for i in entry[2]:
-                self.links[i]["context"].append(" ".join(entry[1]))
-            if entry[0] == tag:
-                break
-
-    def handle_data(self, data):
-        for entry in self.stack:
-            entry[1].append(data)
-
-
 def css_tokens(css: str, selector: str) -> dict[str, str]:
     """The custom properties a stylesheet declares in the first block that starts with this selector."""
     block = css[css.index(selector + " {"):]
@@ -622,20 +585,40 @@ class Builder(unittest.TestCase):
                                            f'{build.text(ui["letter_keys"])}</label>'), deck["id"])
             self.assertIn(f'<p>{ui["help_html"]}</p>', main)
 
-    def test_links_to_github_forms_say_they_need_a_free_account(self):
-        # Signed-out visitors meet GitHub's sign-in page, so every link to an issue form says what it needs.
+    def test_no_page_links_the_retired_github_organization(self):
+        # F31-014, October 31: github.com/ta-amps answers 404 since the account was suspended, and so do its Pages
+        # sites. Every page links Agora's source mirror instead, at a pinned commit, and no page names a GitHub
+        # address at all. The nouns keep the old addresses only as machine-readable provenance.
         checked = 0
         for path, page in self.outputs.items():
-            if path.suffix != ".html":
-                continue
-            parser = FormLinks()
-            parser.feed(page)
-            parser.close()
-            for link in parser.links:
+            self.assertNotIn("github.com/ta-amps", page, path)
+            self.assertNotIn("ta-amps.github.io", page, path)
+            for href in re.findall(r'\shref="(/source/[^"]*)"', page):
                 checked += 1
-                self.assertTrue(any(re.search(r"\bfree\b.*\baccount\b", text, re.I | re.S) for text in link["context"]),
-                                (path.relative_to(build.ROOT).as_posix(), link["href"]))
-        self.assertGreaterEqual(checked, 5)
+                self.assertRegex(href, r"^/source/(?:[a-z0-9-]+/(?:[0-9a-f]{12}/.*)?)?$", path)
+        self.assertGreaterEqual(checked, 100)
+        links = self.nouns.links
+        self.assertEqual(set(links["heads"]), {"ta-amps-hackathon", "eranos-public-marketplace-for-public-good-token-burn",
+                                               "agora-public-overview-architecture-setup-and-contribution",
+                                               "tessera-infrastructure-work-and-storage-engine",
+                                               "herma-infrastructure-shim-for-intelligent-agents",
+                                               "seed-packs-library-of-nouns-and-verbs"})
+        for sha in list(links["heads"].values()) + list(links["pulls"].values()):
+            self.assertRegex(sha, r"^[0-9a-f]{40}$")
+        # A branch link means the pinned head, a full commit stays itself, and an address without a home fails.
+        self.assertEqual("/source/tessera-infrastructure-work-and-storage-engine/95e434eb820f/docs/x.md",
+                         build.repoint("https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/x.md", links))
+        with self.assertRaises(build.BuildError):
+            build.repoint("https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/tree/some-branch/x", links)
+        with self.assertRaises(build.BuildError):
+            build.repoint("https://github.com/ta-amps/another-repo", links)
+        # The release files the frozen drafts link are served here, byte for byte as recorded.
+        for version in self.nouns.manifest["versions"]:
+            for download in version.get("downloads", []):
+                if "url" in download:
+                    local = build.SITE / build.repoint(download["url"], links).lstrip("/")
+                    data = local.read_bytes()
+                    self.assertEqual((download["sha256"], download["bytes"]), (build.sha256(data), len(data)), local)
 
     def test_the_film_page_is_its_transcript_and_says_there_is_no_described_cut(self):
         film, home = self.nouns.film, self.nouns.home

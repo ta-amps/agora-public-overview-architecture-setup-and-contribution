@@ -21,7 +21,7 @@ SENSITIVE = {
     "local home path": re.compile(r"/(?:home|Users)/[A-Za-z0-9_.-]+/"),
     "credential URL": re.compile(r"https?://[^/\s]+:[^/\s]+@"),
 }
-BINARY_SUFFIXES = {".pdf", ".pptx", ".mp4", ".png", ".ttf"}
+BINARY_SUFFIXES = {".pdf", ".pptx", ".mp4", ".png", ".ttf", ".zip"}
 MEDIA_MAGIC = {
     ".mp4": lambda b: b[4:8] == b"ftyp",
     ".png": lambda b: b.startswith(b"\x89PNG\r\n\x1a\n"),
@@ -32,6 +32,7 @@ PAGES_PREFIX = "/"
 # Paths the deploy bundle adds next to the site: the source mirror, its file views and the git mirrors. The bundle
 # builder writes them from committed refs and fails on any link into them that does not resolve.
 DEPLOY_PATHS = ("source", "git")
+RETIRED_HOSTS = re.compile(r"github\.com/ta-amps|ta-amps\.github\.io")
 HTML_REF = re.compile(r'\s(?:href|src)="([^"]*)"')
 HTML_ID = re.compile(r'\sid="([^"]+)"')
 PROVENANCE = re.compile(r'\sdata-provenance="[^"]*"')
@@ -211,10 +212,12 @@ def deck_download(download: dict, site: Path) -> str | None:
     """Validate one deck download; return its site-relative path when it is a file in the site."""
     require(SHA256.fullmatch(download["sha256"]) is not None, "deck downloads need a content hash")
     if "path" not in download:
+        # The release is gone with the GitHub organization; its files are served from site/downloads/<tag>/.
         require(download["url"].startswith(RELEASE_PREFIX),
                 "deck downloads need a public release URL and content hash")
-        return None
-    file = (site / download["path"]).resolve()
+        file = (site / "downloads" / download["url"][len(RELEASE_PREFIX):]).resolve()
+    else:
+        file = (site / download["path"]).resolve()
     require(file.is_relative_to(site.resolve()) and file.is_file(), "deck download missing from the static site")
     data = file.read_bytes()
     require(hashlib.sha256(data).hexdigest() == download["sha256"] and len(data) == download["bytes"],
@@ -370,6 +373,15 @@ def check(root: Path = ROOT) -> dict:
                 "media must retain draft status")
         for item in listing["items"]:
             declared.add(media_item(item, media.parent))
+    links = root / "site/content/source-links.json"
+    if links.exists():
+        for item in load(links).get("release_files", []):
+            file = (root / "site" / item["path"]).resolve()
+            require(file.is_relative_to((root / "site").resolve()) and file.is_file(), "release file missing: " + item["path"])
+            data = file.read_bytes()
+            require(hashlib.sha256(data).hexdigest() == item["sha256"] and len(data) == item["bytes"],
+                    "release file changed without updating its recorded hash: " + item["path"])
+            declared.add(item["path"])
     files = [p for p in root.rglob("*") if p.is_file() and not SKIP.intersection(p.relative_to(root).parts)]
     site = root / "site"
     for path in files:
@@ -395,6 +407,14 @@ def check(root: Path = ROOT) -> dict:
         moved = moved_pages(load(moved_list), site, pages) if moved_list.exists() else frozenset()
         for page in pages:
             site_links(page, site, pages, root, moved if page in frozen else frozenset())
+            if page not in frozen:
+                # F31-014: the GitHub organization and its Pages sites answer 404; pages link the source mirror.
+                body = page.read_text(encoding="utf-8")
+                require(RETIRED_HOSTS.search(body) is None,
+                        "a page links the retired GitHub organization: " + page.relative_to(site).as_posix())
+        if (site / "llms.txt").exists():
+            require(RETIRED_HOSTS.search((site / "llms.txt").read_text(encoding="utf-8")) is None,
+                    "llms.txt links the retired GitHub organization")
     report = (root / "docs/status.md").read_text(encoding="utf-8")
     for repo in data["repositories"]:
         require(repo["main_revision"] in report, "status page missing exact revision")

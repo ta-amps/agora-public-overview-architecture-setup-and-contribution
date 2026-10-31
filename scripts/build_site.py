@@ -78,6 +78,9 @@ LIBRARY_IDS = {"main", "agent-panel", "agent-brief", "agent-brief-title", "agent
                "harness-feeds-heading", "harness-routing-heading", "ecosystem-explorer", "ecosystem-heading",
                "agora-explorer-data"}
 USE_PACKS = (2, 5)  # how many library packs a use case names, at least and at most
+# F31-005: how many packs each category shows before its "See all" link. The whole list runs past 10,000 px, more than
+# Chrome paints in one go at device scale 1.5; site.css holds the same number.
+LIBRARY_FIRST = 3
 
 FONTS = ("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700"
          "&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400..700&display=swap")
@@ -190,6 +193,7 @@ class Nouns:
         self.deploy = load_json(CONTENT / "deploy.json")
         self.contribute = load_json(CONTENT / "contribute.json")
         self.llms = load_json(CONTENT / "llms.json")
+        self.links = load_json(CONTENT / "source-links.json")
         self.drafts = load_json(CONTENT / "earlier-drafts.json")
         self.moved = load_json(CONTENT / "moved.json")
         self.manifest = load_json(MANIFEST)
@@ -469,12 +473,75 @@ def page_shell(title: str, description: str, main: str, extra_head: str = "", bo
     ] + ([extra_body] if extra_body else []) + ["</body>", "</html>", ""])
 
 
+# Links into the retired GitHub organization --------------------------------------------------------
+
+GITHUB_LINK = re.compile(r"https://github\.com/ta-amps(?:/(?P<repo>[A-Za-z0-9._-]+?)(?:\.git)?"
+                         r"(?:/(?P<kind>[a-z]+)(?:/(?P<rest>[^\s\"'<>)\]]*))?)?)?(?=[\s\"'<>)\]]|/?$|/[\s\"'<>)\]])/?")
+PAGES_LINK = re.compile(r"https://ta-amps\.github\.io/[A-Za-z0-9._-]+/")
+FULL_OR_SHORT_SHA = re.compile(r"[0-9a-f]{7,40}\Z")
+
+
+def source_link(match: re.Match, links: dict) -> str:
+    """One GitHub address, as the address of the same thing in Agora's source mirror (see source-links.json)."""
+    repo, kind, rest = match.group("repo"), match.group("kind"), match.group("rest") or ""
+    mirror = links["mirror"]
+    if not repo:
+        return mirror
+    if repo not in links["heads"]:
+        fail(f"a link names a repository the source mirror does not hold: {match.group(0)}")
+    if not kind:
+        return f"{mirror}{repo}/"
+    rest, _, query = rest.partition("?")
+    rest = rest.split("#", 1)[0]
+    if kind in ("tree", "blob", "commit"):
+        ref, _, path = rest.partition("/")
+        if FULL_OR_SHORT_SHA.match(ref) and len(ref) == 40:
+            sha = ref
+        elif ref in ("main", "HEAD") or (kind == "commit" and FULL_OR_SHORT_SHA.match(ref)):
+            sha = links["heads"][repo] if ref in ("main", "HEAD") else ref
+        else:
+            fail(f"a link names a branch or short commit the source mirror cannot pin: {match.group(0)}")
+        if kind == "commit" or not path:
+            return f"{mirror}{repo}/{sha[:12]}/"
+        return f"{mirror}{repo}/{sha[:12]}/{path.rstrip('/')}" + ("/" if kind == "tree" else "")
+    if kind == "pull":
+        number = rest.split("/", 1)[0]
+        sha = links["pulls"].get(f"{repo}#{number}")
+        if not sha:
+            fail(f"a link names a pull request without a recorded merge commit: {match.group(0)}")
+        return f"{mirror}{repo}/{sha[:12]}/"
+    if kind == "issues":
+        form = re.search(r"(?:^|&)template=([A-Za-z0-9._-]+)", query)
+        if form:
+            target = links["forms"].get(f"{repo}/{form.group(1)}")
+            if not target:
+                fail(f"a link names an issue form without a new home: {match.group(0)}")
+            return target
+        return f"{mirror}{repo}/"
+    if kind == "releases" and rest.startswith("download/"):
+        tag, _, name = rest[len("download/"):].partition("/")
+        folder = links["releases"].get(f"{repo}/{tag}")
+        if not folder or not (SITE / folder.strip("/") / name).is_file():
+            fail(f"a link names a release file this site does not serve: {match.group(0)}")
+        return folder + name
+    fail(f"a link into GitHub has no home in the source mirror: {match.group(0)}")
+    return ""
+
+
+def repoint(content: str, links: dict) -> str:
+    """Every link into the retired GitHub organization or its Pages sites, as the link that works now."""
+    content = GITHUB_LINK.sub(lambda m: source_link(m, links), content)
+    for old, new in links["pages"].items():
+        content = content.replace(old, new)
+    if PAGES_LINK.search(content):
+        fail(f"a link to a GitHub Pages site has no new home: {PAGES_LINK.search(content).group(0)}")
+    return content
+
+
 # Slides --------------------------------------------------------------------------------------------
 
 STYLE_PART = re.compile(r"\s*([a-z-]+)\s*:\s*([^;]+)")
 SLIDE_LINK = re.compile(r'<a\b[^>]*?\shref="([^"]*)"[^>]*>(.*?)</a>', re.S)
-# A GitHub issue form, which signed-out visitors meet as GitHub's sign-in page.
-GITHUB_FORM = re.compile(r"^https://github\.com/[^/]+/[^/]+/issues/new\b")
 
 
 def style_map(style: str) -> dict[str, str]:
@@ -629,9 +696,7 @@ def render_slide(i: int, slide: dict, total: int, ui: dict, sources: str = "") -
                      f'{COPY_ICON}<span>{text(ui["copy_brief"])}</span></button>'
                      f'<span class="copy-status" id="{slide["copy"]}-status" role="status"></span></div>')
     if slide["links"]:
-        items = "".join(f'<li><a href="{attr(href)}">{text(label)}</a>'
-                        + (f' <span class="link-note">{text(ui["form_note"])}</span>' if GITHUB_FORM.match(href) else "")
-                        + "</li>" for href, label in slide["links"])
+        items = "".join(f'<li><a href="{attr(href)}">{text(label)}</a></li>' for href, label in slide["links"])
         parts.append(f'<div class="slide-links"><h2>{text(ui["links_heading"])}</h2><ul>{items}</ul></div>')
     parts += [f'<div class="slide-notes"><h2>{text(ui["notes"])}</h2><p>{slide["notes"]}</p>{sources}</div>',
               "</section>"]
@@ -1346,6 +1411,9 @@ def render_library(nouns: Nouns) -> str:
             f'<a class="lib-show-all" href="#categories">{text(words["show_all"])}</a>',
             "</div>",
             f'<ul class="lib-cards">\n{cards}\n</ul>',
+            (f'<a class="lib-see-all" href="#{key}">{text(words["see_all"])} '
+             f'{counted(len(category["packs"]), words["pack"], words["packs"])}</a>'
+             if len(category["packs"]) > LIBRARY_FIRST else ""),
             "</div>",
             "</section>",
         ]))
@@ -1665,7 +1733,7 @@ def outputs_for(nouns: Nouns) -> dict[Path, str]:
     for path, content in outputs.items():
         unique_ids(path, content)
     outputs[SITE / "llms.txt"] = render_llms(nouns, set(outputs))
-    return outputs
+    return {path: repoint(content, nouns.links) for path, content in outputs.items()}
 
 
 def build(check: bool, pdf: bool) -> list[str]:

@@ -29,7 +29,7 @@
     "links": [
       {
         "href": "https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs",
-        "label": "The library on GitHub"
+        "label": "The library’s source"
       },
       {
         "href": "https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs/blob/main/docs/submit-a-pack.md",
@@ -39,6 +39,7 @@
     "filter_label": "Categories",
     "all": "All",
     "show_all": "Show every category",
+    "see_all": "See all",
     "pack": "pack",
     "packs": "packs",
     "noun": "noun",
@@ -49,8 +50,8 @@
       "proposal_only": "Proposal"
     },
     "kit": "Agent kit",
-    "github": "GitHub",
-    "on_github": "on GitHub"
+    "github": "Source",
+    "on_github": "source files"
   },
   "categories": [
     {

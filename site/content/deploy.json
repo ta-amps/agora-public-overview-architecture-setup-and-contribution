@@ -57,7 +57,7 @@
         "summary": "Pull any Seed Pack of Task Objects (nouns.json), Task templates (verbs.json), and stdlib Python verifiers straight into Muse Code, Claude Code, OpenCode, Codex, Cursor, or Pi.",
         "when": "Best when you want reusable schemas, deterministic QA checks, or nonprofit agent kits without hosting any backend.",
         "code_id": "cmd-slice-packs",
-        "commands": "# Download directly from our Cloudflare Open-Source Mirror (or git clone once github.com/ta-amps restores):\ncurl -fsSLO https://agora.ta-amps.workers.dev/source/seed-packs-library-of-nouns-and-verbs.tar.gz\ntar -xzf seed-packs-library-of-nouns-and-verbs.tar.gz\ncd seed-packs-library-of-nouns-and-verbs\npython3 scripts/validate_packs.py\n# Run any pack's standalone verifier (stdlib Python, zero cloud keys):\nmake -C packs/frame-by-frame-video-qa/code check"
+        "commands": "# Clone from Agora's read-only git mirror; no account needed:\ngit clone https://agora.ta-amps.workers.dev/git/seed-packs-library-of-nouns-and-verbs.git\ncd seed-packs-library-of-nouns-and-verbs\npython3 scripts/validate_packs.py\n# Run any pack's standalone verifier (stdlib Python, zero cloud keys):\nmake -C packs/frame-by-frame-video-qa/code check"
       },
       {
         "id": "slice-cloudflare",
@@ -75,7 +75,7 @@
         "summary": "Run the Tessera reference server, Seed-Pack verifier, and Agora static docs locally or on any Linux VM (Fly.io, Railway, Render, Hetzner, AWS ECS) with persistent SQLite volumes.",
         "when": "Best for strict data residency, internal CI pipelines, offline demos, or sovereign self-hosting outside Cloudflare.",
         "code_id": "cmd-slice-docker",
-        "commands": "# Download from our Cloudflare Open-Source Mirror (or git clone https://github.com/ta-amps/ta-amps-hackathon.git):\ncurl -fsSLO https://agora.ta-amps.workers.dev/source/ta-amps-hackathon.tar.gz\ntar -xzf ta-amps-hackathon.tar.gz\ncd ta-amps-hackathon\n\n# Build and boot local services with persistent volume storage:\ndocker compose up --build -d\n\n# Verify local health and static site:\ncurl -fsS http://127.0.0.1:8787/v1/health || curl -fsS http://127.0.0.1:8080/"
+        "commands": "# Clone from Agora's read-only git mirror; no account needed:\ngit clone https://agora.ta-amps.workers.dev/git/ta-amps-hackathon.git\ncd ta-amps-hackathon\n\n# Build and boot local services with persistent volume storage:\ndocker compose up --build -d\n\n# Verify local health and static site:\ncurl -fsS http://127.0.0.1:8787/v1/health || curl -fsS http://127.0.0.1:8080/"
       },
       {
         "id": "slice-gpu",

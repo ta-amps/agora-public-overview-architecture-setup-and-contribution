@@ -383,7 +383,8 @@
   var openEcoBtn = document.querySelector("[data-open-ecosystem]");
   if (!controls || !resultsEl) return;
 
-  var PAGE_SIZE = 36;
+  // F31-005: twelve results at a time keep the page short enough for Chrome to paint at device scale 1.5.
+  var PAGE_SIZE = 12;
   var activeTab = "library";
   var shownLimit = PAGE_SIZE;
   var labels = data.labels || {};
