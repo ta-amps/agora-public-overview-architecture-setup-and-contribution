@@ -60,6 +60,33 @@
   });
 })();
 
+// The header's Menu button on narrow screens: it opens and closes the five links. Without this script the
+// button stays hidden and the links wrap under the name instead.
+(function () {
+  var button = document.querySelector("[data-menu-toggle]");
+  var nav = button && document.getElementById(button.getAttribute("aria-controls"));
+  if (!nav) return;
+  var label = button.querySelector("span");
+  function setOpen(open) {
+    nav.classList.toggle("is-open", open);
+    var header = button.closest(".site-header");
+    if (header) header.classList.toggle("menu-open", open);
+    button.setAttribute("aria-expanded", open ? "true" : "false");
+    if (label) label.textContent = button.getAttribute(open ? "data-open" : "data-closed");
+  }
+  button.hidden = false;
+  button.addEventListener("click", function () { setOpen(!nav.classList.contains("is-open")); });
+  nav.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && nav.classList.contains("is-open")) { setOpen(false); button.focus(); }
+  });
+})();
+
+// The not-found page names the address that was asked for, as text.
+(function () {
+  var slot = document.querySelector("[data-missing-path]");
+  if (slot) slot.textContent = window.location.pathname;
+})();
+
 // Copy buttons. A button with data-copy="ID" copies the text of the element with that id, then reads
 // "Copied" for a moment. If the browser blocks the clipboard, the text is shown and selected instead,
 // so it can be copied from the keyboard. A status element with the id "ID-status" announces either one.

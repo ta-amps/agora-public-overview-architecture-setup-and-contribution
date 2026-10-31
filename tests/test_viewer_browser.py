@@ -97,7 +97,8 @@ class Viewer(LocalSite):
         page.keyboard.press("ArrowRight")
         self.assertEqual("2", self.state(page)["current"])
         # Keys typed in the agent banner stay with it.
-        page.focus(".agent-banner [data-copy]")
+        page.wait_for_selector("ta-agent-banner[data-ready] >> button.copy")
+        page.focus("ta-agent-banner button.copy")
         page.keyboard.press("n")
         self.assertFalse(self.state(page)["notes"])
         # With the slide focused, or a deck button, they work.

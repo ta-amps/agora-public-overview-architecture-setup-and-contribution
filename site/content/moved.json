@@ -1,23 +1,58 @@
 {
-  "about": "Pages removed on October 30, 2026, when the site became a home page, three decks and use cases, each with the place its content moved to. The not-found page lists them; nothing redirects. Frozen pages may still link to a removed page, and scripts/check.py allows only that.",
-  "date": "2026-10-30",
+  "about": "Pages that moved, each with its new home. The not-found page lists them, and the Agora worker answers each old address with a permanent redirect (301) to the new one, read from this noun. Frozen pages may still link to an old address, and scripts/check.py allows only that.",
+  "date": "2026-10-31",
   "pages": [
-    {"from": "docs/", "to": "decks/overview-and-architecture/", "what": "Docs"},
-    {"from": "docs/how-it-works/", "to": "decks/overview-and-architecture/#nouns-and-verbs", "what": "How it works"},
-    {"from": "docs/surfaces-and-seed-packs/", "to": "decks/overview-and-architecture/#map", "what": "The map"},
-    {"from": "docs/connect/", "to": "decks/roll-your-own/#connect", "what": "Connect an agent"},
-    {"from": "docs/seed-pack-ideas/", "to": "use-cases/", "what": "Seed pack ideas"},
-    {"from": "docs/status/", "to": "decks/overview-and-architecture/#evidence", "what": "Status and evidence"},
-    {"from": "docs/roadmap/", "to": "decks/overview-and-architecture/#limits", "what": "Roadmap"},
-    {"from": "contribute/", "to": "decks/roll-your-own/#submit", "what": "Contribute"}
+    {
+      "from": "docs/",
+      "to": "how-it-works/",
+      "what": "How it works",
+      "note": "The architecture, in one page."
+    },
+    {
+      "from": "docs/how-it-works/",
+      "to": "how-it-works/",
+      "what": "How it works",
+      "note": "The same page."
+    },
+    {
+      "from": "docs/surfaces-and-seed-packs/",
+      "to": "how-it-works/#map",
+      "what": "The map",
+      "note": "Tasks, task objects, the two surfaces and the infrastructure."
+    },
+    {
+      "from": "docs/connect/",
+      "to": "contribute/#connect",
+      "what": "Connect your agent",
+      "note": "Copy the instructions, or connect over HTTP or MCP."
+    },
+    {
+      "from": "docs/seed-pack-ideas/",
+      "to": "use-cases/",
+      "what": "Use cases",
+      "note": "What the same tasks and task objects are used for."
+    },
+    {
+      "from": "docs/status/",
+      "to": "evidence/",
+      "what": "Evidence and status",
+      "note": "Dated results and what is live."
+    },
+    {
+      "from": "docs/roadmap/",
+      "to": "decks/overview-and-architecture/#limits",
+      "what": "Limits",
+      "note": "What the overview deck says is not done."
+    }
   ],
   "not_found": {
-    "title": "Page not found | ta-amps",
-    "heading": "This page isn’t here",
-    "lead": "The link may be old, or the page may have moved. Deck versions never move, so a versioned deck link still works.",
+    "title": "Page not found | Agora",
+    "code": "404",
+    "heading": "This page isn’t here.",
+    "lead": "The link may be from an older version of the site. Here is where things live now.",
+    "was": "Was",
+    "redirect_note": "Every old link above answers with a permanent redirect (301) to its new home; this page shows only for links we don’t know.",
     "home": "Go to the home page",
-    "decks": "See the decks",
-    "moved_heading": "Pages that moved on October 30, 2026",
-    "was": "was"
+    "home_note": "The film, then where to start."
   }
 }

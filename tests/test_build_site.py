@@ -140,12 +140,33 @@ class Builder(unittest.TestCase):
 
     def test_the_starting_brief_has_one_source(self):
         brief = build.text(build.read_brief())
-        banner = f'aria-labelledby="agent-brief-title">{brief}</pre>'
-        for path, content in self.outputs.items():
-            self.assertEqual(1, content.count(banner), path)
         roll = self.outputs[build.DECKS / "roll-your-own" / "index.html"]
         self.assertEqual(1, roll.count(f'<pre id="slide-brief" '))
-        self.assertEqual(2, roll.count(f">{brief}</pre>"))
+        self.assertEqual(1, roll.count(f">{brief}</pre>"))
+        self.assertEqual(build.read_brief() + "\n", (build.SITE / "agent-brief.txt").read_text(encoding="utf-8"))
+
+    def test_every_page_opens_with_one_agent_banner_from_its_noun(self):
+        # October 31 (AgentBanner, BannerSpec): one thin line above the header on every page, its words embedded
+        # from the agent-banner noun for the shared <ta-agent-banner> element, with a plain line and an llms.txt
+        # link for readers without scripts. The copied line is exactly the noun's.
+        embedded = f'<script type="application/json">{build.banner_json(self.nouns)}</script>'
+        self.assertEqual("Read https://agora.ta-amps.workers.dev/llms.txt and follow it.", self.nouns.banner["copy_text"])
+        for path, content in self.outputs.items():
+            if path.suffix != ".html":
+                continue
+            self.assertEqual(1, content.count("<ta-agent-banner "), path)
+            self.assertEqual(1, content.count(embedded), path)
+            self.assertEqual(1, content.count('assets/agent-banner.js" defer></script>'), path)
+            body = content[content.index("<body"):]
+            if "<!-- site:header -->" in body:
+                # Above the header, and the skip link stays the first thing a keyboard reaches.
+                self.assertLess(body.index("<ta-agent-banner "), body.index('class="site-header"'), path)
+                self.assertLess(body.index('class="skip-link"'), body.index("<ta-agent-banner "), path)
+        data = json.loads(build.banner_json(self.nouns))
+        self.assertNotIn("about", data)
+        for field in ("label", "lead_strong", "lead", "copy_text", "copy", "copied", "copy_failed", "more", "less",
+                      "panel_title", "can", "rules", "links"):
+            self.assertTrue(data[field], field)
 
     def test_page_text_comes_from_content_nouns(self):
         nouns = copy.copy(self.nouns)
@@ -164,9 +185,11 @@ class Builder(unittest.TestCase):
         uses_page = build.render_use_cases(nouns)
         self.assertIn("A flagship from data", uses_page)
         self.assertIn("A field from data", uses_page)
-        nouns.site = copy.deepcopy(self.nouns.site)
-        nouns.site["banner"]["lead"] = "A banner from data."
+        nouns.banner = dict(self.nouns.banner, lead="A banner from data.")
         self.assertIn("A banner from data.", build.header_block(build.SITE / "index.html", "", nouns))
+        nouns.site = copy.deepcopy(self.nouns.site)
+        nouns.site["header"]["eranos_label"] = "Eranos from data"
+        self.assertIn("Eranos from data", build.header_block(build.SITE / "index.html", "", nouns))
         # Every word the use cases page shows, outside the shared header and footer, is a string of its noun, or the
         # title of a pack it names, which comes from the library noun.
         titles = {pack["id"]: pack["title"] for pack in self.nouns.library["packs"]}
@@ -376,18 +399,27 @@ class Builder(unittest.TestCase):
                 with self.assertRaises(build.BuildError):
                     build.load_slide(folder, "b", brief="text", endpoints=endpoints)
 
-    def test_slide_links_use_names_that_moved_pages_can_point_to(self):
+    def test_moved_pages_point_to_places_that_exist(self):
         for item in self.nouns.moved["pages"]:
             path, _, anchor = item["to"].partition("#")
+            target = build.SITE / path / "index.html"
+            page = self.outputs.get(target) or target.read_text(encoding="utf-8")
             if anchor:
-                self.assertIn(f'class="slide-frame" id="{anchor}"', self.outputs[build.SITE / path / "index.html"])
+                self.assertIn(f'id="{anchor}"', page, item["to"])
+        # The not-found page lists every moved page, and says the old addresses redirect (the worker reads the
+        # same noun), so it never sends anyone to a page that is not there.
+        not_found = self.outputs[build.SITE / "404.html"]
+        for item in self.nouns.moved["pages"]:
+            self.assertIn(f'href="/{html.escape(item["to"])}"', not_found)
+        self.assertIn("301", not_found)
 
     def test_learning_is_a_tab_of_agora_built_from_its_noun(self):
-        # A page of Agora, not a new surface: the header reads Home, Decks, Use cases, Learning, Library.
-        self.assertEqual(["Home", "Decks", "Use cases", "Learning", "Library"],
+        # A page of Agora, not a new surface. October 31 (SiteHeader board): the header reads The film, How it works,
+        # Use cases, Decks, Evidence, and Learning sits in the footer of every page.
+        self.assertEqual(["The film", "How it works", "Use cases", "Decks", "Evidence"],
                          [item["label"] for item in self.nouns.site["nav"]])
         page = self.outputs[build.SITE / "learning" / "index.html"]
-        self.assertIn('<a href="../learning/" aria-current="page">Learning</a>', page)
+        self.assertIn('<li><a href="../learning/">Learning</a></li>', page)
         main = build.main_of(page)
         # Every word the learning page shows, outside the shared header and footer, is a string of its noun.
         written = set(strings(self.nouns.learning))
@@ -424,7 +456,7 @@ class Builder(unittest.TestCase):
     def test_the_library_is_a_page_of_agora_built_from_its_noun(self):
         library, explorer, ecosystem = self.nouns.library, self.nouns.explorer, self.nouns.ecosystem
         page = self.outputs[build.SITE / "library" / "index.html"]
-        self.assertIn('<a href="../library/" aria-current="page">Library</a>', page)
+        self.assertIn('<li><a href="../library/">Library</a></li>', page)
         main = build.main_of(page)
         # Every word the page shows is a string of its nouns. The rest is the measured part: numbers, the commit and
         # its date.
@@ -637,7 +669,7 @@ class Builder(unittest.TestCase):
     def test_the_footer_privacy_line_comes_from_its_noun_and_matches_what_the_pages_load(self):
         privacy = self.nouns.site["footer"]["privacy"]
         for path, page in self.outputs.items():
-            if path.suffix == ".html":
+            if path.suffix == ".html" and "<!-- site:footer -->" in page:
                 self.assertEqual(1, page.count(f'<p class="footer-privacy">{build.text(privacy)}</p>'), path)
         # "Fonts load from Google Fonts": the only outside hosts any current page loads anything from.
         loads = re.compile(r'<(?:link|script|img|video|source|track|iframe)\b[^>]*?\s(?:href|src)="(https?://[^"/]+)', re.I)
@@ -647,6 +679,16 @@ class Builder(unittest.TestCase):
         # "No analytics, ads or cookies", and "display choices stay in this browser": the scripts set no cookie,
         # send nothing, and keep only these display choices in local storage.
         scripts = {path.name: path.read_text(encoding="utf-8") for path in (build.SITE / "assets").glob("*.js")}
+        # The shared agent banner can read its noun from a src address, as Eranos does; on Agora the noun is
+        # embedded in the page and no banner has a src, so that one fetch never runs here.
+        banner_script = scripts.pop("agent-banner.js")
+        self.assertEqual(1, len(re.findall(r"\bfetch\(", banner_script)))
+        self.assertIsNone(re.search(r"\b(XMLHttpRequest|sendBeacon|WebSocket)\b", banner_script))
+        self.assertNotIn("cookie", banner_script.lower())
+        self.assertNotIn("localStorage", banner_script)
+        for path, page in self.outputs.items():
+            if path.suffix == ".html":
+                self.assertIsNone(re.search(r"<ta-agent-banner\b[^>]*\ssrc=", page), path)
         stored = set()
         for name, script in scripts.items():
             self.assertNotIn("cookie", script.lower(), name)

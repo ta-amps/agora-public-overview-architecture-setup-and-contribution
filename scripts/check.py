@@ -28,7 +28,10 @@ MEDIA_MAGIC = {
     ".ttf": lambda b: b[:4] in {b"\x00\x01\x00\x00", b"OTTO", b"true"},
 }
 RELEASE_PREFIX = "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/releases/download/"
-PAGES_PREFIX = "/agora-public-overview-architecture-setup-and-contribution/"
+PAGES_PREFIX = "/"
+# Paths the deploy bundle adds next to the site: the source mirror, its file views and the git mirrors. The bundle
+# builder writes them from committed refs and fails on any link into them that does not resolve.
+DEPLOY_PATHS = ("source", "git")
 HTML_REF = re.compile(r'\s(?:href|src)="([^"]*)"')
 HTML_ID = re.compile(r'\sid="([^"]+)"')
 PROVENANCE = re.compile(r'\sdata-provenance="[^"]*"')
@@ -269,6 +272,8 @@ def site_links(page: Path, site: Path, pages: dict[Path, set[str]], root: Path,
             require(not path.startswith("/"), "site link outside the Pages path in " + where + ": " + target)
             local = page.parent / path
         local = local.resolve()
+        if local.is_relative_to(site.resolve()) and local.relative_to(site.resolve()).parts[:1] in {(p,) for p in DEPLOY_PATHS}:
+            continue  # checked by the bundle builder, which writes these paths
         if path.endswith("/") or local.is_dir():
             local = local / "index.html"
         if local in moved and not local.is_file():

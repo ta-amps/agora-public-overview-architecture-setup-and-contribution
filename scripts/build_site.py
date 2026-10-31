@@ -60,7 +60,8 @@ CONTENT = SITE / "content"
 BRIEF = SITE / "agent-brief.txt"
 DECKS = SITE / "decks"
 MANIFEST = SITE / "decks.json"
-PAGES_PREFIX = "/agora-public-overview-architecture-setup-and-contribution/"
+# The site is served from the root of agora.ta-amps.workers.dev; the worker redirects the old GitHub Pages path.
+PAGES_PREFIX = "/"
 CANVAS_W, CANVAS_H = 1920, 1080
 # "illustration" marks a number in a worked example that shows how the work is organized, not a measured run.
 CLAIM_STATUSES = {"measured", "pending", "planned", "illustration"}
@@ -90,22 +91,25 @@ ICONS = {
                  'a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/><path d="M7 10v12"/>'),
 }
 
-MARK = ('<svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true" focusable="false">'
-        '<rect x="0" y="0" width="14" height="14" rx="3" fill="var(--color-noun)"/>'
-        '<rect x="18" y="0" width="14" height="14" rx="3" fill="var(--color-verb)"/>'
-        '<rect x="0" y="18" width="14" height="14" rx="3" fill="var(--color-rule-strong)"/>'
-        '<rect x="18" y="18" width="14" height="14" rx="3" fill="var(--color-noun)"/></svg>')
+MARK = ('<svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true" focusable="false">'
+        '<rect x="0" y="0" width="44" height="44" rx="10" fill="var(--color-noun)"/>'
+        '<rect x="56" y="0" width="44" height="44" rx="10" fill="var(--color-verb)"/>'
+        '<rect x="0" y="56" width="44" height="44" rx="10" fill="var(--color-ink)"/>'
+        '<rect x="56" y="56" width="44" height="44" rx="10" fill="var(--color-noun)"/></svg>')
+# The agent banner's robot head, drawn for the AgentBanner board, and the header's menu lines.
+AGENT_ICON = ('<svg class="agent-fallback-icon" viewBox="0 0 40 40" width="18" height="18" aria-hidden="true" '
+              'focusable="false"><circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2.6"/>'
+              '<path d="M20 12v-3h-3" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>'
+              '<rect x="12" y="14" width="16" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2.6"/>'
+              '<path d="M17 19v2M23 19v2" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>')
+MENU_ICON = ('<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">'
+             '<path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" '
+             'stroke-linecap="round"/></svg>')
 
-# Plain shapes drawn for this site: a half-filled circle for light and dark, a terminal for agents,
-# two sheets for copying, a chevron for showing more and the decks' block arrow for the learning loop.
+# Plain shapes drawn for this site: a half-filled circle for light and dark, two sheets for copying, a chevron for showing more and the decks' block arrow for the learning loop.
 THEME_ICON = ('<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">'
               '<circle cx="12" cy="12" r="8.25" fill="none" stroke="currentColor" stroke-width="1.75"/>'
               '<path d="M12 3.75a8.25 8.25 0 0 1 0 16.5z" fill="currentColor"/></svg>')
-TERMINAL = ('<svg class="agent-glyph" viewBox="0 0 28 28" width="28" height="28" aria-hidden="true" '
-            'focusable="false"><rect x="1" y="3" width="26" height="22" rx="6" class="agent-glyph-box"/>'
-            '<path d="M8 10.5l4 3.5-4 3.5" fill="none" class="agent-glyph-verb" stroke-width="2" '
-            'stroke-linecap="round" stroke-linejoin="round"/><path d="M14.5 18h5.5" class="agent-glyph-noun" '
-            'stroke-width="2" stroke-linecap="round"/></svg>')
 COPY_ICON = ('<svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true" focusable="false">'
              '<rect x="6.5" y="6.5" width="10" height="10" rx="2" fill="none" stroke="currentColor" '
              'stroke-width="1.6"/><path d="M13.5 4.5v-.5a1.5 1.5 0 0 0-1.5-1.5H5A1.5 1.5 0 0 0 3.5 4v7A1.5 1.5 '
@@ -172,6 +176,7 @@ class Nouns:
 
     def __init__(self) -> None:
         self.site = load_json(CONTENT / "site.json")
+        self.banner = load_json(CONTENT / "agent-banner.json")
         self.home = load_json(CONTENT / "home.json")
         self.decks_page = load_json(CONTENT / "decks-page.json")
         self.uses = load_json(CONTENT / "use-cases.json")
@@ -312,7 +317,7 @@ def check_explorer(explorer: dict, ecosystem: dict) -> None:
 
 def prefix_for(page: Path) -> str:
     if page.relative_to(SITE).as_posix() == "404.html":
-        return PAGES_PREFIX  # GitHub Pages serves this page at any missing path, so its links are absolute.
+        return PAGES_PREFIX  # the worker serves this page at any missing path, so its links are absolute.
     depth = len(page.relative_to(SITE).parts) - 1
     return "../" * depth
 
@@ -326,7 +331,7 @@ def section_for(page: Path) -> str:
     if parts == ("404.html",):
         return ""  # a missing page belongs to no section
     first = parts[0] if len(parts) > 1 else "home"
-    return {"storyboards": "decks", "video": "decks", "film": "home"}.get(first, first)
+    return {"storyboards": "decks", "video": "decks"}.get(first, first)
 
 
 def head_block(prefix: str) -> str:
@@ -341,78 +346,56 @@ def head_block(prefix: str) -> str:
 
 
 def header_block(page: Path, prefix: str, nouns: Nouns) -> str:
-    site = nouns.site
+    """The skip link, the agent banner above everything, then the header the SiteHeader board draws: the mark and
+    name, five links, and Eranos in the first screen. On a phone the links fold behind a Menu button."""
+    site, header = nouns.site, nouns.site["header"]
     section = section_for(page)
     rel = page.relative_to(SITE).as_posix()
-    nav_entries = list(site["nav"])
-    if (SITE / "studio" / "index.html").is_file() and not any(i["href"] == "studio/" for i in nav_entries):
-        nav_entries.append({"href": "studio/", "label": "Live Studio", "section": "studio"})
-    if not any(i["href"] == "deploy/" for i in nav_entries):
-        nav_entries.append({"href": "deploy/", "label": "Deploy", "section": "deploy"})
     items = []
-    for item in nav_entries:
+    for item in site["nav"]:
         current = ""
         if item["section"] == section:
             current = ' aria-current="page"' if rel == item["href"] + "index.html" else ' aria-current="true"'
         items.append(f'<li><a href="{link(prefix, item["href"])}"{current}>{text(item["label"])}</a></li>')
     return "\n".join([
         f'<a class="skip-link" href="#main">{text(site["skip_link"])}</a>',
+        banner_block(prefix, nouns),
         '<header class="site-header">',
         '<div class="wrap">',
-        f'<a class="wordmark" href="{link(prefix, "")}">{MARK}<span>{text(site["name"])}</span></a>',
-        '<nav class="site-nav" aria-label="Site">',
+        f'<a class="wordmark" href="{link(prefix, "")}">{MARK}<span>{text(header["brand"])}</span></a>',
+        f'<button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="site-nav" '
+        f'data-open="{attr(header["menu_close"])}" data-closed="{attr(header["menu"])}" hidden>{MENU_ICON}'
+        f'<span>{text(header["menu"])}</span></button>',
+        f'<nav class="site-nav" id="site-nav" aria-label="{attr(header["nav_label"])}" data-menu>',
         "<ul>" + "".join(items) + "</ul>",
         "</nav>",
+        f'<a class="eranos-link" href="{attr(header["eranos_href"])}" aria-label="{attr(header["eranos_aria"])}">'
+        f'<span class="long">{text(header["eranos_label"])}</span><span class="short">{text(header["eranos_short"])}</span></a>',
         f'<button class="mode-toggle" type="button" data-mode-toggle aria-pressed="false" '
         f'aria-label="{attr(site["mode_toggle"])}" hidden>{THEME_ICON}</button>',
         "</div>",
         "</header>",
-        banner_block(prefix, nouns),
     ])
 
 
+def banner_json(nouns: Nouns) -> str:
+    """The agent-banner noun as the JSON the element reads, safe inside a script element."""
+    data = {k: v for k, v in nouns.banner.items() if k not in {"about", "fallback"}}
+    raw = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
+    return raw.replace("<", "\\u003c").replace(">", "\\u003e").replace("&", "\\u0026")
+
+
 def banner_block(prefix: str, nouns: Nouns) -> str:
-    """The agent banner: copy the starting brief, or show it with the machine endpoints."""
-    banner, endpoints = nouns.site["banner"], nouns.site["endpoints"]["rows"]
-    rows = "".join(
-        f'<li><span class="agent-endpoint-name">{text(row["name"])}</span>'
-        f'<code>{text(row["mcp"])}</code>'
-        f'<a href="{attr(row["llms"])}" aria-label="{attr(row["name"] + " llms.txt")}">llms.txt</a></li>'
-        for row in endpoints)
+    """The agent banner: one thin line above the header. The shared <ta-agent-banner> element renders every word
+    from the embedded noun; without scripts, the line and a link to llms.txt stay."""
+    banner = nouns.banner
     return "\n".join([
-        f'<aside class="agent-banner" aria-label="{attr(banner["label"])}" data-own-keys>',
-        '<div class="wrap agent-row">',
-        TERMINAL,
-        f'<p class="agent-lead"><strong>{text(banner["lead_strong"])}</strong> {text(banner["lead"])}</p>',
-        '<div class="agent-actions">',
-        f'<button class="agent-copy" type="button" data-copy="agent-brief" data-copied="{attr(banner["copied"])}" '
-        f'data-selected="{attr(banner["selected"])}" data-status-copied="{attr(banner["status_copied"])}" '
-        f'data-status-selected="{attr(banner["status_selected"])}" data-reveal="agent-panel" hidden>'
-        f'{COPY_ICON}<span>{text(banner["copy"])}</span></button>',
-        f'<button class="agent-show" type="button" data-toggle="agent-panel" aria-expanded="false" '
-        f'aria-controls="agent-panel" data-open="{attr(banner["hide"])}" data-closed="{attr(banner["show"])}" hidden>'
-        f'<span>{text(banner["show"])}</span>{CHEVRON}</button>',
-        f'<a class="agent-no-script" href="{link(prefix, banner["no_script_href"])}" data-no-script>'
-        f'{text(banner["no_script"])}</a>',
-        "</div>",
-        "</div>",
-        '<div class="agent-panel" id="agent-panel" hidden>',
-        '<div class="wrap agent-panel-grid">',
-        '<div class="agent-brief-col">',
-        f'<p class="agent-panel-title" id="agent-brief-title">{text(banner["brief_label"])}</p>',
-        f'<pre class="agent-brief" id="agent-brief" tabindex="0" aria-labelledby="agent-brief-title">'
-        f'{text(nouns.brief)}</pre>',
-        "</div>",
-        '<div class="agent-side">',
-        f'<p class="agent-panel-title">{text(banner["endpoints_title"])}</p>',
-        f'<ul class="agent-endpoints">{rows}</ul>',
-        f'<p class="agent-fine">{text(banner["fine_print"])} '
-        f'<a href="{prefix}agent-brief.txt">{text(banner["plain_text"])}</a></p>',
-        "</div>",
-        "</div>",
-        "</div>",
-        '<p class="visually-hidden" id="agent-brief-status" role="status"></p>',
-        "</aside>",
+        '<ta-agent-banner class="agent-banner" data-site="agora" data-own-keys>',
+        f'<script type="application/json">{banner_json(nouns)}</script>',
+        f'<p class="agent-fallback">{AGENT_ICON}<span class="agent-fallback-lead"><b>{text(banner["lead_strong"])}</b> '
+        f'{text(banner["lead"])}</span> <a href="{prefix}llms.txt">{text(banner["fallback"])}</a></p>',
+        "</ta-agent-banner>",
+        f'<script src="{prefix}assets/agent-banner.js" defer></script>',
     ])
 
 
@@ -424,10 +407,10 @@ def footer_block(prefix: str, nouns: Nouns) -> str:
     return "\n".join([
         '<footer class="site-footer">',
         '<div class="wrap">',
-        '<nav aria-label="Footer">',
+        f'<p class="footer-note">{text(footer["note"])}</p>',
+        f'<nav aria-label="{attr(footer["nav_label"])}">',
         "<ul>" + "".join(links) + "</ul>",
         "</nav>",
-        f'<p>{text(footer["note"])}</p>',
         f'<p class="footer-privacy">{text(footer["privacy"])}</p>',
         "</div>",
         "</footer>",
@@ -446,6 +429,9 @@ def replace_block(content: str, name: str, block: str, page: Path) -> str:
 
 def render_page(page: Path, content: str, nouns: Nouns) -> str:
     prefix = prefix_for(page)
+    if "<!-- site:head -->" not in content:
+        # A page that keeps its own head and header, such as the Studio, still gets the agent banner first.
+        return replace_block(content, "banner", banner_block(prefix, nouns), page)
     content = replace_block(content, "head", head_block(prefix), page)
     content = replace_block(content, "header", header_block(page, prefix, nouns), page)
     return replace_block(content, "footer", footer_block(prefix, nouns), page)
@@ -662,7 +648,7 @@ def slide_sources(name: str, deck: dict, ui: dict) -> str:
 
 
 def render_deck(deck: dict, nouns: Nouns) -> str:
-    ui = nouns.site["deck"] | {"copied": nouns.site["banner"]["copied"], "selected": nouns.site["banner"]["selected"]}
+    ui = nouns.site["deck"]
     spec, slides = deck["spec"], deck["slides"]
     page = spec["page"]
     total = len(slides)
@@ -1464,23 +1450,24 @@ def render_deploy(nouns: Nouns) -> str:
 
 
 def render_not_found(nouns: Nouns) -> str:
+    """One shared not-found page, as the NotFound board draws it: the missing address, where things live now, and
+    the promise the worker keeps by redirecting every listed old address."""
     moved = nouns.moved
     page = moved["not_found"]
     prefix = PAGES_PREFIX
-    items = "".join(f'<li><a href="{prefix}{attr(item["to"])}">{text(item["what"])}</a> '
-                    f'<span>{text(page["was"])} <code>{text(item["from"])}</code></span></li>'
-                    for item in moved["pages"])
+    seen, items = set(), []
+    for item in moved["pages"]:
+        items.append(f'<li><a href="{prefix}{attr(item["to"])}"><b>{text(item["what"])}</b>'
+                     f'<span>{text(page["was"])} <code>/{text(item["from"])}</code>. {text(item["note"])}</span></a></li>')
+    items.append(f'<li><a href="{prefix}"><b>{text(page["home"])}</b><span>{text(page["home_note"])}</span></a></li>')
     main = "\n".join([
         '<main id="main">',
-        '<div class="wrap page-head not-found">',
+        '<div class="wrap not-found">',
+        f'<p class="nf-code">{text(page["code"])}<span data-missing-path></span></p>',
         f"<h1>{text(page['heading'])}</h1>",
         f'<p class="lead">{text(page["lead"])}</p>',
-        '<div class="actions">',
-        f'<a class="button" href="{prefix}">{text(page["home"])}</a>',
-        f'<a class="button secondary" href="{prefix}decks/">{text(page["decks"])}</a>',
-        "</div>",
-        f'<h2 class="moved-title">{text(page["moved_heading"])}</h2>',
-        f'<ul class="moved-list">{items}</ul>',
+        f'<ul class="nf-list">{"".join(items)}</ul>',
+        f'<p class="nf-note">{text(page["redirect_note"])}</p>',
         "</div>",
         "</main>",
     ])
@@ -1583,7 +1570,8 @@ def outputs_for(nouns: Nouns) -> dict[Path, str]:
         if "source" not in p.relative_to(SITE).parts
         and p not in generated
         and p not in nouns.frozen
-        and not (bool({"studio", "hub-3d", "compare"} & set(p.relative_to(SITE).parts)) and "<!-- site:head -->" not in p.read_text(encoding="utf-8"))
+        and not (bool({"studio", "hub-3d", "compare"} & set(p.relative_to(SITE).parts))
+                 and not {"<!-- site:head -->", "<!-- site:banner -->"} & set(re.findall(r"<!-- site:(?:head|banner) -->", p.read_text(encoding="utf-8"))))
     )
     outputs = {path: render_page(path, content, nouns) for path, content in generated.items()}
     for path in written:

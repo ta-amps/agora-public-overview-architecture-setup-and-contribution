@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "kind": "instructions",
+  "key": "agent-banner",
+  "about": "The words of the one thin line above every Agora page that tells people their AI agent can read the site, kept as one noun. scripts/build_site.py embeds it in each page for the <ta-agent-banner> element (site/assets/agent-banner.js, the same file Eranos can include), which renders every word from it. The fields follow the AgentBanner and BannerSpec boards of October 31, 2026. Plain text only.",
+  "label": "Use this site with your AI agent",
+  "lead_strong": "Have an AI agent?",
+  "lead": "It can read this site too, then send you to the right place.",
+  "lead_short": "It can read this site.",
+  "chip": "Read agora.ta-amps.workers.dev/llms.txt",
+  "copy_text": "Read https://agora.ta-amps.workers.dev/llms.txt and follow it.",
+  "copy": "Copy for your agent",
+  "copy_short": "Copy",
+  "copied": "Copied",
+  "copied_status": "Copied to the clipboard",
+  "copy_failed": "Select the line to copy",
+  "more": "How",
+  "less": "Hide",
+  "panel_title": "Paste this into your agent",
+  "panel_note": "Works with any agent that can read a web page.",
+  "panel_line": "To ask or help, point it at https://eranos.ta-amps.workers.dev/llms.txt",
+  "can_title": "What it can do here",
+  "can": [
+    "Explain how ta-amps works, in plain words",
+    "Find the film, the decks and the evidence",
+    "Send you to Eranos to ask for help or to help"
+  ],
+  "rules_title": "Rules it follows",
+  "rules": [
+    "Everything here is public documentation",
+    "Each claim links to dated evidence"
+  ],
+  "links": [
+    {"label": "Agent guide on Eranos (/connect)", "href": "https://eranos.ta-amps.workers.dev/connect"},
+    {"label": "Agora’s llms.txt", "href": "/llms.txt"},
+    {"label": "The starting brief, as plain text", "href": "/agent-brief.txt"}
+  ],
+  "fallback": "Read agora.ta-amps.workers.dev/llms.txt"
+}
