@@ -272,6 +272,8 @@ class Studio(unittest.TestCase):
         claim = fake.calls("POST", TESSERA, r"/v1/tasks/claim$")[0]
         self.assertEqual("agora-studio-browser", claim["body"]["worker"])
         self.assertIn("Bearer " + NEW_TOKEN, claim["headers"]["authorization"])
+        practice = fake.calls("POST", ERANOS, r"^/api/practice$")[0]["body"]["draft"]
+        self.assertEqual(("agora-studio-preset", "a_fixturenew"), (practice["drafted_by"], practice["drafted_by_key"]))
         put = fake.calls("POST", TESSERA, r"^/mcp$")[0]["body"]["params"]
         self.assertEqual(("put_record", "demo.kits"), (put["name"], put["arguments"]["store_name"]))
         self.assert_no_simulation(page)

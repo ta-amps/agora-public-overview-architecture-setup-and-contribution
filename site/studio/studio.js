@@ -1695,7 +1695,12 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       body: { task_id: taskId, reason: reason }
     });
     if (res.ok) {
-      upsertTask({ task_id: taskId, last: "cancelled (" + statusPill(res) + ")", tone: "" });
+      const reported = res.data && typeof res.data.state === "string" ? res.data.state : null;
+      upsertTask({
+        task_id: taskId,
+        last: "cancel accepted: state " + (reported || "not reported") + " (HTTP " + res.status + ")",
+        tone: ""
+      });
       return " Cancelled task " + taskId + " so it does not stay queued (" + statusPill(res) + ").";
     }
     return " Could not cancel task " + taskId + ": " + failureText(res) + ".";
@@ -1946,7 +1951,13 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     /* STEP 5: the worker sends the brief's kit draft to Eranos's practice check */
     setBadge("running", "Running step 5 of 6...");
     updateNgoStep(5, "running", "sending", "POST eranos /api/practice with the brief's kit draft");
-    const kitDraft = JSON.parse(JSON.stringify(preset.draft));
+    // Eranos records which key drafted a kit (so a reviewer's key must differ). Here that is this
+    // anonymous session's own principal, the key the draft is submitted under.
+    const drafterKey = typeof sess.principal_id === "string" && sess.principal_id ? sess.principal_id : null;
+    if (!drafterKey) {
+      return stopAfterLease(5, null, "Not sent: the demo session's answer had no principal_id to record as the drafter's key.");
+    }
+    const kitDraft = Object.assign(JSON.parse(JSON.stringify(preset.draft)), { drafted_by_key: drafterKey });
     const r5 = await liveWireFetch({
       actor: "worker",
       target: "eranos",
