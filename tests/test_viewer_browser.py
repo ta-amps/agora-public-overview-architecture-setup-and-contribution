@@ -343,7 +343,10 @@ class SitePages(LocalSite):
         page.wait_for_function("!document.querySelector('[data-exp-controls]').hidden")
         initial_status = page.locator("[data-exp-status]").text_content()
         self.assertIn("Seed Packs", initial_status)
-        self.assertEqual(36, page.locator("[data-exp-results] .exp-card").count())
+        # F31-005: twelve results at a time keep the library short enough to paint at device scale 1.5.
+        self.assertEqual(12, page.locator("[data-exp-results] .exp-card").count())
+        page.click("[data-exp-more]")
+        self.assertEqual(24, page.locator("[data-exp-results] .exp-card").count())
         page.select_option("[data-exp-kind]", "verb")
         self.assertIn("0 Seed Packs", page.locator("[data-exp-status]").text_content())
         page.select_option("[data-exp-harness]", "harness-square")
