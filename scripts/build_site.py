@@ -16,13 +16,25 @@ Everything a page says is a noun kept as data, and this script holds only markup
   * site/content/film.json            the full film's transcript and scene descriptions;
   * site/content/earlier-drafts.json  earlier drafts, and the storyboards page;
   * site/content/moved.json           pages that moved, which the not-found page lists;
+  * site/content/how-it-works.json    the how-it-works page: why, the map of nouns and verbs, a real run replayed,
+                                      Herma and Tessera underneath, and the Meta model results it names from
+                                      learning.json by model, so no number is typed twice;
+  * site/content/real-run.json        the replayed run: its facts and five steps, each with a hash, a receipt file
+                                      under site/evidence/ and the trace and Tessera events it comes from. Only
+                                      scripts/sync_real_run.py writes it, from the run's own records;
+  * site/content/evidence.json        the evidence page: one line for each served evidence folder and for each
+                                      item of the repository's evidence/, and where the last live check is saved.
+                                      The build fills each folder's files and the check's answers from the files;
   * site/decks/<deck>/source/         each deck: deck.json, slides/*.html and an optional claims.json.
 
 What it writes:
   * every current deck, site/decks/<deck>/index.html, from its source folder. The slide format's custom
     elements become HTML: <x-shape> and <x-icon> become inline SVG, <x-brief> the starting brief and
     <x-endpoints> the endpoint table. Each slide's <aside> becomes its speaker notes;
-  * the home, decks, earlier drafts, storyboards, use cases, learning, library, film and not-found pages;
+  * the home, decks, earlier drafts, storyboards, use cases, learning, library, film, how-it-works, evidence and
+    not-found pages;
+  * the measured part of site/content/evidence.json: each served folder's files and the last live check's answers,
+    read from site/evidence/. Its words stay as written;
   * the shared head, header, agent banner and footer, between marker comments, into every other page
     that is not frozen;
   * the "decks" list in site/decks.json. The frozen "versions" entries stay byte-identical.
@@ -196,6 +208,9 @@ class Nouns:
         self.links = load_json(CONTENT / "source-links.json")
         self.feed = load_json(CONTENT / "feeds-memory-systems.json")
         self.feed_words = load_json(CONTENT / "feeds-page.json")
+        self.how = load_json(CONTENT / "how-it-works.json")
+        self.real_run = load_json(CONTENT / "real-run.json")
+        self.evidence = load_json(CONTENT / "evidence.json")
         self.drafts = load_json(CONTENT / "earlier-drafts.json")
         self.moved = load_json(CONTENT / "moved.json")
         self.manifest = load_json(MANIFEST)
@@ -1762,6 +1777,546 @@ def render_not_found(nouns: Nouns) -> str:
     return page_shell(page["title"], "", main, robots="noindex")
 
 
+# How it works and evidence -----------------------------------------------------------------------
+
+HOW_PAGE = SITE / "how-it-works" / "index.html"
+EVIDENCE_DIR = SITE / "evidence"
+EVIDENCE_PAGE = EVIDENCE_DIR / "index.html"
+EVIDENCE_NOUN = CONTENT / "evidence.json"
+REPO_EVIDENCE = ROOT / "evidence"
+# Labels that stamp a page instead of saying what works. Neither page, nor the run it replays, carries one.
+STAMPS = ("planned", "not yet", "coming soon", "illustration", "synthetic example")
+REPLAY_IDS = ("request", "build", "build-receipt", "review", "held")
+HEX64 = re.compile(r"[0-9a-f]{64}\Z")
+ISO_DAY = re.compile(r"\d{4}-\d{2}-\d{2}\Z")
+NAME_DAY = re.compile(r"(\d{4})-?(\d{2})-?(\d{2})(?:T\d{6}Z)?(?:\.json)?\Z")
+# A thin arrow with a head, as the design board draws its edges; the page's styles turn it to point down.
+RR_ARROW = ('<svg class="rr-arrow" viewBox="0 0 40 12" width="40" height="12" aria-hidden="true" focusable="false">'
+            '<path d="M1 6H33" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'
+            '<path d="M30 1.5 39 6l-9 4.5z" fill="currentColor"/></svg>')
+CHECK_ICON = ('<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">'
+              '<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.5"/>'
+              '<path d="m8.5 12 2.5 2.5 4.5-5" fill="none" stroke="currentColor" stroke-width="2.5" '
+              'stroke-linecap="round" stroke-linejoin="round"/></svg>')
+
+
+def strings_in(value) -> list[str]:
+    if isinstance(value, str):
+        return [value]
+    items = value.values() if isinstance(value, dict) else value if isinstance(value, list) else []
+    return [found for item in items for found in strings_in(item)]
+
+
+def no_stamps(noun: dict, what: str) -> None:
+    for value in strings_in(noun):
+        for stamp in STAMPS:
+            if stamp in value.lower():
+                fail(f"{what}: {stamp!r} stamps the page; say what works instead")
+
+
+def seq_ranges(seqs: list[int]) -> str:
+    """Event numbers as runs: 1, 2, 3, 5 reads 1–3, 5."""
+    parts, start = [], None
+    for i, n in enumerate(seqs):
+        start = n if start is None else start
+        if i + 1 == len(seqs) or seqs[i + 1] != n + 1:
+            parts.append(str(start) if start == n else f"{start}–{n}")
+            start = None
+    return ", ".join(parts)
+
+
+def recorded_number(value) -> str:
+    """A number exactly as its record writes it."""
+    return json.dumps(value)
+
+
+def check_real_run(run: dict) -> dict[str, dict]:
+    """The replay noun as scripts/sync_real_run.py writes it. Returns its steps by id."""
+    facts = run["run"]
+    if not (facts["synthetic_data_only"] is True and facts["private_or_ngo_data_sent"] is False
+            and facts["raw_credentials_included"] is False):
+        fail("real-run.json: the replay shows only a synthetic run that sent no private data and no credential")
+    steps = run["steps"]
+    if [s["id"] for s in steps] != list(REPLAY_IDS) or [s["n"] for s in steps] != list(range(1, len(REPLAY_IDS) + 1)):
+        fail("real-run.json: the replay needs its five steps, in order: " + ", ".join(REPLAY_IDS))
+    for step in steps:
+        receipt = (SITE / step["receipt"]).resolve()
+        if not HEX64.fullmatch(step["hash"]["value"]):
+            fail(f"real-run.json: step {step['n']} needs a SHA-256")
+        if not receipt.is_relative_to(SITE.resolve()) or not receipt.is_file():
+            fail(f"real-run.json: step {step['n']}'s receipt is not a file of the site")
+        if step["hash"]["value"] not in receipt.read_text(encoding="utf-8"):
+            fail(f"real-run.json: step {step['n']}'s hash is not in its receipt file")
+        if not (step["trace"] or step["events"]):
+            fail(f"real-run.json: step {step['n']} comes from no recorded event")
+    for path in run["files"].values():
+        if not (SITE / path).is_file():
+            fail(f"real-run.json: {path} is not a file of the site")
+    no_stamps(run, "real-run.json")
+    return {step["id"]: step for step in steps}
+
+
+def how_toc(toc: dict) -> str:
+    items = "".join(f'<li><a href="#{attr(item["href"])}">{text(item["label"])}</a></li>' for item in toc["items"])
+    return f'<nav class="how-toc" aria-label="{attr(toc["label"])}"><ul>{items}</ul></nav>'
+
+
+def how_why(why: dict) -> str:
+    for line in why["lines"]:
+        if line["kind"] not in {"noun", "verb"}:
+            fail("how-it-works.json: a highlighted word is a noun or a verb colour")
+    lines = "".join(f'<span class="how-line">{text(line["before"])}<span class="{line["kind"]}-word">'
+                    f'{text(line["word"])}</span>{text(line["after"])}</span>' for line in why["lines"])
+    items = "".join(f'<li><h3>{text(item["name"])}</h3><p>{text(item["text"])}</p></li>' for item in why["items"])
+    under = why["under"]
+    return "\n".join([
+        '<section class="how-band how-why" id="why" aria-labelledby="why-heading">',
+        '<div class="wrap how-why-wrap">',
+        f'<h2 class="how-statement" id="why-heading">{lines}</h2>',
+        f'<ul class="how-why-list">{items}</ul>',
+        f'<p class="how-under"><strong>{text(under["strong"])}</strong> {text(under["text"])}</p>',
+        "</div>",
+        "</section>",
+    ])
+
+
+def how_map(words: dict) -> str:
+    def side(part: dict, kind: str) -> str:
+        chips_html = "".join(f"<li>{text(item)}</li>" for item in part["items"])
+        return (f'<div class="how-side {kind}"><h3 class="how-big">{text(part["name"])}</h3>'
+                f'<p class="how-side-text"><strong>{text(part["label"])}</strong> {text(part["text"])}</p>'
+                f'<ul class="how-chips {kind}">{chips_html}</ul></div>')
+    notes = "".join(f"<li><strong>{text(note['name'])}</strong> {text(note['text'])}</li>" for note in words["notes"])
+    return "\n".join([
+        '<section class="how-map" id="map" aria-labelledby="map-heading">',
+        '<div class="wrap">',
+        f'<h2 class="visually-hidden" id="map-heading">{text(words["heading"])}</h2>',
+        f'<div class="how-sides">{side(words["verbs"], "verb")}{side(words["nouns"], "noun")}</div>',
+        f'<ul class="how-notes">{notes}</ul>',
+        "</div>",
+        "</section>",
+    ])
+
+
+def state_track(steps: list[dict]) -> tuple[dict[str, dict[str, str]], dict[str, str]]:
+    """Each task's state after each step that changed it, and each task's kind."""
+    track: dict[str, dict[str, str]] = {}
+    kinds: dict[str, str] = {}
+    for step in steps:
+        for change in step["changes"]:
+            track.setdefault(change["task"], {})[str(step["n"])] = change["states"][-1]
+            kinds[change["task"]] = change["kind"]
+    return track, kinds
+
+
+def replay_stage(words: dict, run: dict, steps: dict[str, dict]) -> str:
+    """The run as the design board draws it: verbs as rust pills, nouns as blue tiles with their hashes, receipts,
+    and the request held for a person. Each part carries the step it appears at, and each task its state after each
+    step, for the replay script. Without the script the stage shows the run's end. The ordered list below says the
+    same in words, so the stage is hidden from assistive technology."""
+    dw, facts = words["diagram"], run["run"]
+    track, kinds = state_track(run["steps"])
+    task_of = {kind: task for task, kind in kinds.items()}
+    for kind in ("request", "build", "review"):
+        if kind not in task_of:
+            fail(f"real-run.json: the replay needs a {kind} task")
+
+    def final(task: str) -> str:
+        states = track[task]
+        return states[max(states, key=int)]
+
+    def verb(kind: str, name: str, extra: str = "") -> str:
+        task = task_of[kind]
+        states = attr(json.dumps(track[task], separators=(",", ":")))
+        return (f'<div class="rr-verb{extra}" data-state="{attr(final(task))}"><span class="rr-kind">{text(kind)}</span>'
+                f'<span class="rr-name">{text(name)}</span><span class="rr-state" data-state="{attr(final(task))}" '
+                f'data-states="{states}">{text(final(task))}</span></div>')
+
+    def link(at: int) -> str:
+        return f'<span class="rr-link" data-at="{at}">{RR_ARROW}</span>'
+
+    def receipt(at: int, value: str) -> str:
+        return (f'<div class="rr-receipt" data-at="{at}"><span class="rr-receipt-label">{CHECK_ICON}'
+                f'{text(dw["receipt"])}</span><code>{text(value[:8])}…</code></div>')
+
+    at = {key: step["n"] for key, step in steps.items()}
+    nouns = "".join(f'<li class="rr-noun"><span class="rr-file">{text(noun["path"])}</span>'
+                    f'<code class="rr-sha">{text(dw["sha"])} {text(noun["sha256"][:8])}…</code></li>'
+                    for noun in steps["build"]["nouns"])
+    verdict = steps["review"]["verdict"]
+    return "\n".join([
+        '<div class="rr-stage" data-rr-stage aria-hidden="true">',
+        f'<div class="rr-request" data-at="{at["request"]}">'
+        + verb("request", steps["request"]["request_label"], " rr-verb-request") + "</div>",
+        f'<div class="rr-lanes" data-at="{at["request"]}">',
+        '<div class="rr-lane rr-lane-build">',
+        verb("build", facts["builder"]["program"]),
+        link(at["build"]),
+        f'<ul class="rr-nouns" data-at="{at["build"]}">{nouns}</ul>',
+        link(at["build-receipt"]),
+        receipt(at["build-receipt"], steps["build-receipt"]["hash"]["value"]),
+        "</div>",
+        '<div class="rr-lane rr-lane-review">',
+        verb("review", facts["reviewer"]["program"]),
+        link(at["review"]),
+        f'<div class="rr-noun rr-verdict" data-at="{at["review"]}"><span class="rr-file">{text(dw["verdict"])}: '
+        f'{text(verdict["verdict"])}</span><span class="rr-sha">{verdict["tests_run"]} {text(dw["tests"])} · '
+        f'{verdict["coverage_violations"]} {text(dw["violations"])}</span></div>',
+        link(at["review"]),
+        receipt(at["review"], steps["review"]["hash"]["value"]),
+        "</div>",
+        "</div>",
+        f'<div class="rr-held" data-at="{at["held"]}">{RR_ARROW}<p class="rr-held-box"><strong>{text(dw["held"])}</strong>'
+        f'<span>{text(dw["held_text"])}</span></p></div>',
+        "</div>",
+    ])
+
+
+def replay_step(step: dict, words: dict, prefix: str, kinds: dict[str, str]) -> str:
+    """One step in words: when, what happened, the actor, the tasks, the state changes, its hash, the events it comes
+    from and its receipt file."""
+    labels = words["labels"]
+    tasks = "".join(f'<li><code>{text(task)}</code> {text(kinds[task])}</li>' for task in step["tasks"])
+    changes = "".join(
+        f'<li>{text(change["kind"])}{" (" + text(labels["new"]) + ")" if change["new"] else ""}: '
+        + " → ".join(text(state) for state in change["states"]) + "</li>" for change in step["changes"])
+    source = []
+    if step["trace"]:
+        source.append(f'{text(labels["trace"])} {seq_ranges(step["trace"])}')
+    if step["events"]:
+        source.append(f'{text(labels["events"])} {seq_ranges(step["events"])}')
+    if step["model_calls"]:
+        source.append(f'{step["model_calls"]} {text(labels["calls"])}')
+    rows = [(labels["actor"], text(step["actor"])), (labels["tasks"], f'<ul class="rr-list">{tasks}</ul>')]
+    if changes:
+        rows.append((labels["state"], f'<ul class="rr-list">{changes}</ul>'))
+    rows.append((step["hash"]["label"], f'<code class="rr-hash">{text(step["hash"]["value"])}</code>'))
+    rows.append((labels["from"], " · ".join(source)))
+    meta = "".join(f"<div><dt>{text(name)}</dt><dd>{value}</dd></div>" for name, value in rows)
+    return (f'<li class="rr-step" data-rr-step="{step["n"]}" id="step-{attr(step["id"])}">'
+            f'<p class="rr-when"><time datetime="{attr(step["at_utc"])}">{text(step["at_utc"][11:19])}</time> '
+            f'{text(labels["utc"])}</p>'
+            f'<h3 class="rr-title">{text(step["title"])}</h3>'
+            f'<p class="rr-text">{text(step["text"])}</p>'
+            f'<dl class="rr-meta">{meta}</dl>'
+            f'<p class="rr-open"><a class="use-link" href="{prefix}{attr(step["receipt"])}">{text(labels["open"])}'
+            f"{CHEVRON}</a></p></li>")
+
+
+def how_run(words: dict, run: dict, prefix: str) -> str:
+    steps = check_real_run(run)
+    facts, fw, labels = run["run"], words["facts"], words["labels"]
+    _, kinds = state_track(run["steps"])
+    spend = facts["spend"]
+    started = facts["started_utc"]
+    fact_rows = [
+        (fw["when"], f'<time datetime="{attr(started)}">{text(human_date(started))}, {text(started[11:19])}</time> '
+                     f'{text(labels["utc"])}'),
+        (fw["where"], text(facts["fabric"])),
+        (fw["revision"], f'<a href="{attr(facts["tessera_repository"])}/tree/{attr(facts["tessera_revision"])}">'
+                         f'<code>{text(facts["tessera_revision"])}</code></a>'),
+        (fw["builder"], f'{text(facts["builder"]["program"])} {text(facts["builder"]["version"])} · '
+                        f'{text(fw["key"])} <code>{text(facts["builder"]["key_id"])}</code>'),
+        (fw["reviewer"], f'{text(facts["reviewer"]["program"])} {text(facts["reviewer"]["version"])} · '
+                         f'{text(fw["key"])} <code>{text(facts["reviewer"]["key_id"])}</code>'),
+        (fw["model"], f'<code>{text(facts["model"])}</code>'),
+        (fw["data"], text(fw["data_text"])),
+        (fw["spend"], f'{recorded_number(spend["total_actual_usd"])} {text(fw["usd"])} {text(fw["actual"])} · '
+                      f'{recorded_number(spend["total_conservative_usd"])} {text(fw["usd"])} {text(fw["conservative"])} '
+                      f'· {text(fw["cap"])} {recorded_number(spend["cap_usd"])} {text(fw["usd"])}'),
+        (fw["records"], f'{facts["trace_events"]} {text(fw["trace_events"])} · {facts["model_calls"]} '
+                        f'{text(fw["model_calls"])}'),
+    ]
+    fact_list = "".join(f"<div><dt>{text(name)}</dt><dd>{value}</dd></div>" for name, value in fact_rows)
+    legend = "".join(f'<li><span class="rr-state" data-state="{attr(item["state"])}">{text(item["state"])}</span> '
+                     f'{text(item["text"])}</li>' for item in words["legend"])
+    files = {**run["files"], "receipt": run["receipt"]}
+    file_links = "".join(use_link({"href": files[item["key"]], "label": item["label"]}, prefix) for item in words["files"])
+    step_items = "".join(replay_step(step, words, prefix, kinds) for step in run["steps"])
+    return "\n".join([
+        '<section class="how-band how-run" id="run" aria-labelledby="run-heading">',
+        '<div class="wrap">',
+        '<div class="rr-head">',
+        f'<h2 id="run-heading">{text(words["heading"])}</h2>',
+        f'<p class="rr-id">{text(words["run_label"])} <code>{text(facts["id"])}</code> · '
+        f'{text(words["from_receipts"])}<button class="button secondary rr-replay" type="button" data-rr-replay '
+        f'aria-controls="run-steps" hidden>{text(words["replay"])}</button></p>',
+        "</div>",
+        f'<p class="rr-lead">{text(words["lead"])}</p>',
+        f'<dl class="rr-facts">{fact_list}</dl>',
+        replay_stage(words, run, steps),
+        f'<div class="rr-legend"><p>{text(words["legend_label"])}</p><ul>{legend}</ul></div>',
+        f'<h3 class="visually-hidden" id="run-steps-heading">{text(words["steps_label"])}</h3>',
+        f'<ol class="rr-steps" id="run-steps" aria-labelledby="run-steps-heading">{step_items}</ol>',
+        f'<p class="visually-hidden" role="status" data-rr-status data-step-word="{attr(labels["step"])}" '
+        f'data-of-word="{attr(labels["of"])}"></p>',
+        f'<p class="rr-check">{text(words["check"])}</p>',
+        f'<div class="rr-files"><p>{text(words["files_label"])}</p><p class="use-links">{file_links}</p></div>',
+        "</div>",
+        "</section>",
+    ])
+
+
+def how_underneath(words: dict) -> str:
+    herma, tessera = words["herma"], words["tessera"]
+    parts = " · ".join(text(item) for item in tessera["items"])
+    return "\n".join([
+        '<section class="how-under-part" id="underneath" aria-labelledby="underneath-heading">',
+        '<div class="wrap">',
+        f'<h2 id="underneath-heading">{text(words["heading"])}</h2>',
+        '<div class="ud-stage">',
+        f'<p class="ud-node ud-harness">{text(words["harness"])}</p>',
+        f'<span class="ud-link">{RR_ARROW}</span>',
+        f'<p class="ud-node ud-herma"><strong>{text(herma["name"])}</strong><span>{text(herma["text"])}</span></p>',
+        f'<span class="ud-link">{RR_ARROW}</span>',
+        f'<p class="ud-node ud-model">{text(words["model"])}</p>',
+        f'<p class="ud-edge">{RR_ARROW}<span>{text(words["edge"])}</span></p>',
+        f'<p class="ud-tessera"><strong>{text(tessera["name"])}</strong><span>{parts}</span></p>',
+        "</div>",
+        f'<p class="ud-note">{text(words["note"])}</p>',
+        f'<p class="ud-note">{text(words["run_note"])}</p>',
+        "</div>",
+        "</section>",
+    ])
+
+
+def how_meta(words: dict, run: dict, learning: dict, prefix: str) -> str:
+    """The measured results the page names, from the learning noun by model: its numbers, line and source. A result
+    whose evidence this site serves links to the served copy."""
+    items = {item["model"]: item for item in learning["results"]["items"]}
+    cards = []
+    for pick in words["results"]:
+        item = items.get(pick["model"])
+        if item is None:
+            fail(f"how-it-works.json: learning.json has no result for {pick['model']}")
+        if "served" in pick:
+            if not (SITE / pick["served"]).is_file():
+                fail(f"how-it-works.json: {pick['served']} is not a file of the site")
+            href = prefix + attr(pick["served"])
+        elif item["link"].startswith("https://github.com/ta-amps/"):
+            href = attr(item["link"])
+        else:
+            fail(f"how-it-works.json: the {pick['model']} result needs public evidence")
+        cards.append(
+            f'<li class="how-result"><p class="how-result-model">{text(item["model"])}</p>'
+            f'<p class="how-result-figure"><span class="how-result-before">{text(item["before"])}</span>'
+            f'<span class="visually-hidden"> {text(words["to"])} </span>{RR_ARROW}'
+            f'<span class="how-result-after">{text(item["after"])}</span></p>'
+            f'<p class="how-result-line">{text(item["line"])}</p>'
+            f'<p class="how-result-evidence"><span>{text(words["evidence"])}</span> '
+            f'<a href="{href}">{text(item["source"])}</a></p></li>')
+    links = "".join(use_link(item, prefix) for item in words["links"])
+    return "\n".join([
+        '<section class="how-meta" id="meta-models" aria-labelledby="meta-heading">',
+        '<div class="wrap">',
+        '<div class="how-meta-head">',
+        f'<h2 id="meta-heading">{text(words["heading"])}</h2>',
+        f'<p>{text(words["lead_before"])} <code>{text(run["run"]["model"])}</code> {text(words["lead_after"])}</p>',
+        "</div>",
+        f'<ul class="how-results">{"".join(cards)}</ul>',
+        f'<p class="use-links how-meta-links">{links}</p>',
+        "</div>",
+        "</section>",
+    ])
+
+
+def render_how_it_works(nouns: Nouns) -> str:
+    """The how-it-works page, after the design board: why, the map, a real run replayed from its receipts, what sits
+    underneath, and the Meta models. Every word comes from site/content/how-it-works.json; the run and its words from
+    site/content/real-run.json; the results from site/content/learning.json. The replay script animates the stage and
+    marks the current step; without it the page shows the run's end and every step in order."""
+    page = nouns.how
+    no_stamps(page, "how-it-works.json")
+    prefix = prefix_for(HOW_PAGE)
+    main = "\n".join([
+        '<main id="main" class="how">',
+        '<div class="wrap page-head how-head">',
+        f"<h1>{text(page['heading'])}</h1>",
+        f'<p class="lead">{text(page["lead"])}</p>',
+        how_toc(page["toc"]),
+        "</div>",
+        how_why(page["why"]),
+        how_map(page["map"]),
+        how_run(page["run"], nouns.real_run, prefix),
+        how_underneath(page["underneath"]),
+        how_meta(page["meta"], nouns.real_run, nouns.learning, prefix),
+        "</main>",
+    ])
+    return page_shell(page["title"], page["description"], main,
+                      extra_head=f'<link rel="stylesheet" href="{prefix}assets/how-it-works.css">',
+                      extra_body=f'<script src="{prefix}assets/how-it-works.js" defer></script>')
+
+
+def folder_day(name: str) -> str | None:
+    """The date a dated evidence name ends with, as YYYY-MM-DD."""
+    found = NAME_DAY.search(name)
+    return f"{found.group(1)}-{found.group(2)}-{found.group(3)}" if found else None
+
+
+def same_files(a: Path, b: Path) -> bool:
+    files_a = {p.relative_to(a).as_posix(): p for p in a.rglob("*") if p.is_file()}
+    files_b = {p.relative_to(b).as_posix(): p for p in b.rglob("*") if p.is_file()}
+    return set(files_a) == set(files_b) and all(files_a[k].read_bytes() == files_b[k].read_bytes() for k in files_a)
+
+
+def fill_evidence(noun: dict) -> dict:
+    """The evidence noun with its measured parts filled from the files: each served folder's files and the last live
+    check's answers. A served folder without a line, a line without a folder, an item of the repository's evidence/
+    without a line, a copy that differs from its served folder, or a saved answer that changed stops the build."""
+    page = json.loads(json.dumps(noun))
+    no_stamps(page, "evidence.json")
+    served = page["served"]["folders"]
+    ids = [folder["id"] for folder in served]
+    on_disk = sorted(p.name for p in EVIDENCE_DIR.iterdir() if p.is_dir())
+    missing, extra = sorted(set(on_disk) - set(ids)), sorted(set(ids) - set(on_disk))
+    if missing:
+        fail("evidence.json: describe each served evidence folder in one line: " + ", ".join(missing))
+    if extra or len(ids) != len(set(ids)):
+        fail("evidence.json: these lines name no served folder, or name one twice: " + ", ".join(extra or ids))
+    days = []
+    for folder in served:
+        if not ISO_DAY.fullmatch(folder["date"]) or folder_day(folder["id"]) not in {None, folder["date"]}:
+            fail(f"evidence.json: {folder['id']} needs the date its name carries")
+        days.append(folder["date"])
+        root = EVIDENCE_DIR / folder["id"]
+        folder["files"] = [{"path": p.relative_to(root).as_posix(), "bytes": p.stat().st_size}
+                           for p in sorted(root.rglob("*")) if p.is_file()]
+    if days != sorted(days, reverse=True):
+        fail("evidence.json: served folders go newest first")
+    items = page["source"]["items"]
+    named = [item["path"].rstrip("/") for item in items]
+    repo = sorted("evidence/" + p.name for p in REPO_EVIDENCE.iterdir())
+    if sorted(named) != repo:
+        fail("evidence.json: give each item of the repository's evidence/ one line: "
+             + ", ".join(sorted(set(repo) ^ set(named))))
+    for item in items:
+        path = ROOT / item["path"]
+        if folder_day(path.name) not in {None, item["date"]}:
+            fail(f"evidence.json: {item['path']} needs the date its name carries")
+        if "same_as" in item:
+            if item["same_as"] not in ids or not same_files(path, EVIDENCE_DIR / item["same_as"]):
+                fail(f"evidence.json: {item['path']} is no longer the same as its served folder; give it its own line")
+        elif not item.get("line"):
+            fail(f"evidence.json: {item['path']} needs its line")
+    live = page["live"]
+    record_path = SITE / live["record"]
+    record = load_json(record_path)
+    checks = []
+    for check in record["checks"]:
+        fields = None
+        if check["body"]:
+            body = (record_path.parent / check["body"]).read_bytes()
+            if sha256(body) != check["body_sha256"]:
+                fail(f"evidence.json: the saved answer {check['body']} changed after the check")
+            answer = json.loads(body)
+            fields = {key: answer[key] for key in live["fields"] if key in answer}
+        checks.append({"name": check["name"], "url": check["url"], "started_utc": check["started_utc"],
+                       "http_status": check["http_status"],
+                       "body": f"{Path(live['record']).parent.as_posix()}/{check['body']}" if check["body"] else None,
+                       "fields": fields})
+    live["snapshot"] = {"checked_at": record["checked_at"], "how": record["how"], "checks": checks}
+    return page
+
+
+def evidence_text(nouns: Nouns) -> str:
+    return json.dumps(fill_evidence(nouns.evidence), indent=2, ensure_ascii=False) + "\n"
+
+
+def size_of(n: int) -> str:
+    return f"{n} B" if n < 1024 else f"{n / 1024:.1f} KB" if n < 1024 * 1024 else f"{n / 1024 / 1024:.1f} MB"
+
+
+def evidence_files(folder: dict, words: dict, prefix: str) -> str:
+    """A served folder's files: the top-level ones in a row, each subfolder behind a disclosure."""
+    def one(path: str, size: int, base: str) -> str:
+        return (f'<li><a href="{prefix}evidence/{attr(folder["id"])}/{attr(path)}">{text(path[len(base):])}</a>'
+                f' <span class="ev-size">{size_of(size)}</span></li>')
+    top = [f for f in folder["files"] if "/" not in f["path"]]
+    groups: dict[str, list[dict]] = {}
+    for f in folder["files"]:
+        if "/" in f["path"]:
+            groups.setdefault(f["path"].split("/", 1)[0], []).append(f)
+    parts = [f'<ul class="ev-files">{"".join(one(f["path"], f["bytes"], "") for f in top)}</ul>'] if top else []
+    for name, files in groups.items():
+        count = f'{len(files)} {text(words["one_file"] if len(files) == 1 else words["many_files"])}'
+        parts.append(f'<details class="ev-group"><summary>{CHEVRON}<code>{text(name)}/</code> · {count}</summary>'
+                     f'<ul class="ev-files">{"".join(one(f["path"], f["bytes"], name + "/") for f in files)}</ul>'
+                     "</details>")
+    return "".join(parts)
+
+
+def render_evidence(nouns: Nouns) -> str:
+    """The evidence page: the last live check with its time, every served evidence folder with its date, one line
+    and its files, and the evidence that is only in the source download, named by path and never linked. Every word
+    comes from site/content/evidence.json; the files and answers are filled from the files themselves."""
+    page = fill_evidence(nouns.evidence)
+    prefix = prefix_for(EVIDENCE_PAGE)
+    live, served, source = page["live"], page["served"], page["source"]
+    snap = live["snapshot"]
+    checked = snap["checked_at"]
+    rows = []
+    for check in snap["checks"]:
+        fields = check["fields"] or {}
+        answer = " · ".join(f"{text(key)}: {text(value if isinstance(value, str) else json.dumps(value))}"
+                                for key, value in fields.items())
+        saved = (f'<a href="{prefix}{attr(check["body"])}">{text(live["saved"])}</a>' if check["body"] else "")
+        note = live["notes"].get(check["url"], "")
+        rows.append(
+            f'<li class="ev-check{" ev-ok" if check["http_status"] == 200 and fields.get("ok") is True else ""}">'
+            f'<p class="ev-check-name">{text(check["name"])}</p><p class="ev-check-url"><code>{text(check["url"])}</code></p>'
+            f'<p class="ev-check-answer"><strong>{text(live["http"])} {check["http_status"]}</strong>'
+            f'{" · " + answer if answer else ""}</p>'
+            + (f'<p class="ev-check-note">{text(note)}</p>' if note else "")
+            + (f'<p class="ev-check-saved">{saved}</p>' if saved else "") + "</li>")
+    folders = []
+    for folder in served["folders"]:
+        link_html = f'<p class="ev-also">{use_link(folder["link"], prefix)}</p>' if "link" in folder else ""
+        folders.append(
+            f'<li class="ev-folder" id="{attr(folder["id"])}">'
+            f'<p class="ev-date"><time datetime="{attr(folder["date"])}">{text(human_date(folder["date"]))}</time>'
+            f' · <code>{text(folder["id"])}/</code></p>'
+            f'<h3>{text(folder["title"])}</h3><p class="ev-line">{text(folder["line"])}</p>'
+            f'<div class="ev-files-wrap"><p class="ev-files-label">{text(served["files"])}</p>'
+            f'{evidence_files(folder, served, prefix)}</div>{link_html}</li>')
+    items = []
+    for item in source["items"]:
+        line = (f'{text(source["same"])} <a href="#{attr(item["same_as"])}"><code>{text(item["same_as"])}/</code></a>.'
+                if "same_as" in item else text(item["line"]))
+        items.append(f'<li><p class="ev-date"><time datetime="{attr(item["date"])}">{text(human_date(item["date"]))}'
+                     f'</time></p><p><code>{text(item["path"])}</code></p><p class="ev-line">{line}</p></li>')
+    main = "\n".join([
+        '<main id="main" class="ev">',
+        '<div class="wrap page-head ev-head">',
+        f"<h1>{text(page['heading'])}</h1>",
+        f'<p class="lead">{text(page["lead"])}</p>',
+        how_toc(page["toc"]),
+        "</div>",
+        '<div class="wrap ev-body">',
+        '<section class="ev-part ev-live" id="live" aria-labelledby="live-heading">',
+        f'<h2 id="live-heading">{text(live["heading"])}</h2>',
+        f'<p class="ev-lead">{text(live["lead"])}</p>',
+        f'<p class="ev-checked">{text(live["checked"])} <time datetime="{attr(checked)}">'
+        f'{text(human_date(checked))} {text(live["at"])} {text(checked[11:16])}</time> {text(live["utc"])}</p>',
+        f'<ul class="ev-checks">{"".join(rows)}</ul>',
+        "</section>",
+        '<section class="ev-part" id="served" aria-labelledby="served-heading">',
+        f'<h2 id="served-heading">{text(served["heading"])}</h2>',
+        f'<p class="ev-lead">{text(served["lead"])}</p>',
+        f'<ol class="ev-folders">{"".join(folders)}</ol>',
+        "</section>",
+        '<section class="ev-part" id="source" aria-labelledby="source-heading">',
+        f'<h2 id="source-heading">{text(source["heading"])}</h2>',
+        f'<p class="ev-lead">{text(source["lead"])}</p>',
+        f'<p class="use-links">{use_link(source["link"], prefix)}</p>',
+        f'<ul class="ev-source">{"".join(items)}</ul>',
+        "</section>",
+        "</div>",
+        "</main>",
+    ])
+    return page_shell(page["title"], page["description"], main,
+                      extra_head=f'<link rel="stylesheet" href="{prefix}assets/evidence.css">')
+
+
 # Manifest ---------------------------------------------------------------------------------------
 
 def manifest_text(nouns: Nouns, pdfs: dict[str, dict]) -> str:
@@ -1852,6 +2407,8 @@ def outputs_for(nouns: Nouns) -> dict[Path, str]:
     generated[SITE / "deploy" / "index.html"] = render_deploy(nouns)
     generated[SITE / "contribute" / "index.html"] = render_contribute(nouns)
     generated[SITE / "feeds" / "memory-systems" / "index.html"] = render_feed(nouns)
+    generated[HOW_PAGE] = render_how_it_works(nouns)
+    generated[EVIDENCE_PAGE] = render_evidence(nouns)
     generated[SITE / "404.html"] = render_not_found(nouns)
     if set(generated) & nouns.frozen:
         fail("a frozen page is never written")
@@ -1883,6 +2440,7 @@ def build(check: bool, pdf: bool) -> list[str]:
             path.write_text(content, encoding="utf-8")
         pdfs = render_pdfs(nouns.decks, mains)
     outputs[MANIFEST] = manifest_text(nouns, pdfs)
+    outputs[EVIDENCE_NOUN] = evidence_text(nouns)
 
     stale = []
     for path, content in outputs.items():

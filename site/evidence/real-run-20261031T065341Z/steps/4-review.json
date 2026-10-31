@@ -1,0 +1,1084 @@
+{
+  "format": "ta-amps.real-run-step-receipt.v1",
+  "run_id": "20261031T065341Z",
+  "step": 4,
+  "id": "review",
+  "hash": {
+    "value": "0ae5dc2ef738409c70dd914a4a0ef9aee8a89d55ac5ad308fee4ab057bff5d78",
+    "kind": "receipt",
+    "recompute": "sha256 of the canonical JSON of {error, fencing_token, ok, output, task_id} from the result below (sorted keys, no spaces), as Tessera's receiptHash computes it."
+  },
+  "copied_from": {
+    "trace": "../trace.jsonl",
+    "tessera": "../tessera-readback.json"
+  },
+  "trace": [
+    {
+      "seq": 83,
+      "t": 1793429832.764748,
+      "utc": "2026-10-31T06:57:12.764Z",
+      "from": "nanomuse (reviewer)",
+      "to": "tessera (MCP)",
+      "op": "initialize",
+      "kind": "request",
+      "bytes": 167
+    },
+    {
+      "seq": 84,
+      "t": 1793429832.768012,
+      "utc": "2026-10-31T06:57:12.768Z",
+      "from": "tessera (MCP)",
+      "to": "nanomuse (reviewer)",
+      "op": "initialize",
+      "kind": "response",
+      "corr": 83,
+      "status": 200,
+      "bytes": 1078,
+      "latency_ms": 24,
+      "outcome": "ok"
+    },
+    {
+      "seq": 85,
+      "t": 1793429832.771556,
+      "utc": "2026-10-31T06:57:12.771Z",
+      "from": "nanomuse (reviewer)",
+      "to": "tessera (MCP)",
+      "op": "notifications/initialized",
+      "kind": "request",
+      "bytes": 57
+    },
+    {
+      "seq": 86,
+      "t": 1793429832.774512,
+      "utc": "2026-10-31T06:57:12.774Z",
+      "from": "tessera (MCP)",
+      "to": "nanomuse (reviewer)",
+      "op": "notifications/initialized",
+      "kind": "response",
+      "corr": 85,
+      "status": 202,
+      "bytes": 0,
+      "outcome": "ok"
+    },
+    {
+      "seq": 87,
+      "t": 1793429832.776766,
+      "utc": "2026-10-31T06:57:12.776Z",
+      "from": "nanomuse (reviewer)",
+      "to": "tessera (MCP)",
+      "op": "tools/list",
+      "kind": "request",
+      "bytes": 51
+    },
+    {
+      "seq": 88,
+      "t": 1793429832.779756,
+      "utc": "2026-10-31T06:57:12.779Z",
+      "from": "tessera (MCP)",
+      "to": "nanomuse (reviewer)",
+      "op": "tools/list",
+      "kind": "response",
+      "corr": 87,
+      "status": 200,
+      "bytes": 2756,
+      "latency_ms": 3,
+      "outcome": "ok",
+      "tools": 5
+    },
+    {
+      "seq": 89,
+      "t": 1793429832.840827,
+      "utc": "2026-10-31T06:57:12.840Z",
+      "from": "nanomuse (reviewer)",
+      "to": "meta model api (muse-spark-1.3-contributor)",
+      "op": "model call",
+      "kind": "request",
+      "bytes": 25575,
+      "call": 26,
+      "api": "chat.completions"
+    },
+    {
+      "seq": 90,
+      "t": 1793429834.589941,
+      "utc": "2026-10-31T06:57:14.589Z",
+      "from": "meta model api (muse-spark-1.3-contributor)",
+      "to": "nanomuse (reviewer)",
+      "op": "model call",
+      "kind": "response",
+      "corr": 89,
+      "call": 26,
+      "status": 200,
+      "bytes": 2198,
+      "latency_ms": 1762,
+      "outcome": "completed",
+      "input_tokens": 6931,
+      "cached_tokens": 0,
+      "output_tokens": 140,
+      "reasoning_tokens": 15,
+      "cost_usd_estimate": 0.000721
+    },
+    {
+      "seq": 91,
+      "t": 1793429834.601402,
+      "utc": "2026-10-31T06:57:14.601Z",
+      "from": "nanomuse (reviewer)",
+      "to": "tessera (MCP)",
+      "op": "claim",
+      "kind": "request",
+      "bytes": 164,
+      "queue": "eq03"
+    },
+    {
+      "seq": 92,
+      "t": 1793429834.606473,
+      "utc": "2026-10-31T06:57:14.606Z",
+      "from": "tessera (MCP)",
+      "to": "nanomuse (reviewer)",
+      "op": "claim",
+      "kind": "response",
+      "corr": 91,
+      "status": 200,
+      "bytes": 9484,
+      "latency_ms": 5,
+      "outcome": "ok",
+      "verb_id": "t_cc69cdcb8fa3404dbf37eb4d38c684b5",
+      "queue": "eq03",
+      "fencing_token": 1,
+      "depends_on": [
+        "t_06e3ef2acaa54c7297b5c0dfca3e2c70"
+      ]
+    },
+    {
+      "seq": 93,
+      "t": 1793429834.636256,
+      "utc": "2026-10-31T06:57:14.636Z",
+      "from": "nanomuse (reviewer)",
+      "to": "meta model api (muse-spark-1.3-contributor)",
+      "op": "model call",
+      "kind": "request",
+      "bytes": 30904,
+      "call": 27,
+      "api": "chat.completions"
+    },
+    {
+      "seq": 94,
+      "t": 1793429838.233779,
+      "utc": "2026-10-31T06:57:18.233Z",
+      "from": "meta model api (muse-spark-1.3-contributor)",
+      "to": "nanomuse (reviewer)",
+      "op": "model call",
+      "kind": "response",
+      "corr": 93,
+      "call": 27,
+      "status": 200,
+      "bytes": 5734,
+      "latency_ms": 3598,
+      "outcome": "completed",
+      "input_tokens": 8441,
+      "cached_tokens": 0,
+      "output_tokens": 463,
+      "reasoning_tokens": 63,
+      "cost_usd_estimate": 0.000937
+    },
+    {
+      "seq": 95,
+      "t": 1793429838.243308,
+      "utc": "2026-10-31T06:57:18.243Z",
+      "from": "nanomuse (reviewer)",
+      "to": "tessera (MCP)",
+      "op": "get_record",
+      "kind": "request",
+      "bytes": 163,
+      "record": {
+        "store": "kit.volunteer-shifts",
+        "key": "docs.README.md"
+      }
+    },
+    {
+      "seq": 96,
+      "t": 1793429838.247625,
+      "utc": "2026-10-31T06:57:18.247Z",
+      "from": "tessera (MCP)",
+      "to": "nanomuse (reviewer)",
+      "op": "get_record",
+      "kind": "response",
+      "corr": 95,
+      "status": 200,
+      "bytes": 6040,
+      "latency_ms": 4,
+      "outcome": "ok",
+      "record": {
+        "store": "kit.volunteer-shifts",
+        "key": "docs.README.md",
+        "version": 1
+      }
+    },
+    {
+      "seq": 97,
+      "t": 1793429838.252478,
+      "utc": "2026-10-31T06:57:18.252Z",
+      "from": "nanomuse (reviewer)",
+      "to": "tessera (MCP)",
+      "op": "get_record",
+      "kind": "request",
+      "bytes": 170,
+      "record": {
+        "store": "kit.volunteer-shifts",
+        "key": "data.availability.csv"
+      }
+    },
+    {
+      "seq": 98,
+      "t": 1793429838.256816,
+      "utc": "2026-10-31T06:57:18.256Z",
+      "from": "tessera (MCP)",
+      "to": "nanomuse (reviewer)",
+      "op": "get_record",
+      "kind": "response",
+      "corr": 97,
+      "status": 200,
+      "bytes": 2662,
+      "latency_ms": 4,
+      "outcome": "ok",
+      "record": {
+        "store": "kit.volunteer-shifts",
+        "key": "data.availability.csv",
+        "version": 1
+      }
+    },
+    {
+      "seq": 99,
+      "t": 1793429838.261876,
+      "utc": "2026-10-31T06:57:18.261Z",
+      "from": "nanomuse (reviewer)",
+      "to": "tessera (MCP)",
+      "op": "get_record",
+      "kind": "request",
+      "bytes": 172,
+      "record": {
+        "store": "kit.volunteer-shifts",
+        "key": "code.shift_scheduler.py"
+      }
+    },
+    {
+      "seq": 100,
+      "t": 1793429838.289324,
+      "utc": "2026-10-31T06:57:18.289Z",
+      "from": "tessera (MCP)",
+      "to": "nanomuse (reviewer)",
+      "op": "get_record",
+      "kind": "response",
+      "corr": 99,
+      "status": 200,
+      "bytes": 20398,
+      "latency_ms": 6,
+      "outcome": "ok",
+      "record": {
+        "store": "kit.volunteer-shifts",
+        "key": "code.shift_scheduler.py",
+        "version": 1
+      }
+    },
+    {
+      "seq": 101,
+      "t": 1793429838.295663,
+      "utc": "2026-10-31T06:57:18.295Z",
+      "from": "nanomuse (reviewer)",
+      "to": "tessera (MCP)",
+      "op": "get_record",
+      "kind": "request",
+      "bytes": 178,
+      "record": {
+        "store": "kit.volunteer-shifts",
+        "key": "tests.test_shift_scheduler.py"
+      }
+    },
+    {
+      "seq": 102,
+      "t": 1793429838.301371,
+      "utc": "2026-10-31T06:57:18.301Z",
+      "from": "tessera (MCP)",
+      "to": "nanomuse (reviewer)",
+      "op": "get_record",
+      "kind": "response",
+      "corr": 101,
+      "status": 200,
+      "bytes": 18180,
+      "latency_ms": 6,
+      "outcome": "ok",
+      "record": {
+        "store": "kit.volunteer-shifts",
+        "key": "tests.test_shift_scheduler.py",
+        "version": 1
+      }
+    },
+    {
+      "seq": 103,
+      "t": 1793429838.312564,
+      "utc": "2026-10-31T06:57:18.312Z",
+      "from": "nanomuse (reviewer)",
+      "to": "meta model api (muse-spark-1.3-contributor)",
+      "op": "model call",
+      "kind": "request",
+      "bytes": 57457,
+      "call": 28,
+      "api": "chat.completions"
+    },
+    {
+      "seq": 104,
+      "t": 1793429849.151548,
+      "utc": "2026-10-31T06:57:29.151Z",
+      "from": "meta model api (muse-spark-1.3-contributor)",
+      "to": "nanomuse (reviewer)",
+      "op": "model call",
+      "kind": "response",
+      "corr": 103,
+      "call": 28,
+      "status": 200,
+      "bytes": 4642,
+      "latency_ms": 10819,
+      "outcome": "completed",
+      "input_tokens": 15040,
+      "cached_tokens": 8433,
+      "output_tokens": 1697,
+      "reasoning_tokens": 1016,
+      "cost_usd_estimate": 0.001017
+    },
+    {
+      "seq": 105,
+      "t": 1793429849.165438,
+      "utc": "2026-10-31T06:57:29.165Z",
+      "from": "nanomuse (reviewer)",
+      "to": "meta model api (muse-spark-1.3-contributor)",
+      "op": "model call",
+      "kind": "request",
+      "bytes": 60341,
+      "call": 29,
+      "api": "chat.completions"
+    },
+    {
+      "seq": 106,
+      "t": 1793429853.120698,
+      "utc": "2026-10-31T06:57:33.120Z",
+      "from": "meta model api (muse-spark-1.3-contributor)",
+      "to": "nanomuse (reviewer)",
+      "op": "model call",
+      "kind": "response",
+      "corr": 105,
+      "call": 29,
+      "status": 200,
+      "bytes": 2990,
+      "latency_ms": 3925,
+      "outcome": "completed",
+      "input_tokens": 15746,
+      "cached_tokens": 14961,
+      "output_tokens": 536,
+      "reasoning_tokens": 75,
+      "cost_usd_estimate": 0.000216
+    },
+    {
+      "seq": 107,
+      "t": 1793429853.13215,
+      "utc": "2026-10-31T06:57:33.132Z",
+      "from": "nanomuse (reviewer)",
+      "to": "meta model api (muse-spark-1.3-contributor)",
+      "op": "model call",
+      "kind": "request",
+      "bytes": 61586,
+      "call": 30,
+      "api": "chat.completions"
+    },
+    {
+      "seq": 108,
+      "t": 1793429865.842506,
+      "utc": "2026-10-31T06:57:45.842Z",
+      "from": "meta model api (muse-spark-1.3-contributor)",
+      "to": "nanomuse (reviewer)",
+      "op": "model call",
+      "kind": "response",
+      "corr": 107,
+      "call": 30,
+      "status": 200,
+      "bytes": 11240,
+      "latency_ms": 12683,
+      "outcome": "completed",
+      "input_tokens": 16233,
+      "cached_tokens": 15729,
+      "output_tokens": 2216,
+      "reasoning_tokens": 264,
+      "cost_usd_estimate": 0.000525
+    },
+    {
+      "seq": 109,
+      "t": 1793429865.854976,
+      "utc": "2026-10-31T06:57:45.854Z",
+      "from": "nanomuse (reviewer)",
+      "to": "meta model api (muse-spark-1.3-contributor)",
+      "op": "model call",
+      "kind": "request",
+      "bytes": 71077,
+      "call": 31,
+      "api": "chat.completions"
+    },
+    {
+      "seq": 110,
+      "t": 1793429878.048352,
+      "utc": "2026-10-31T06:57:58.048Z",
+      "from": "meta model api (muse-spark-1.3-contributor)",
+      "to": "nanomuse (reviewer)",
+      "op": "model call",
+      "kind": "response",
+      "corr": 109,
+      "call": 31,
+      "status": 200,
+      "bytes": 9975,
+      "latency_ms": 12193,
+      "outcome": "completed",
+      "input_tokens": 18211,
+      "cached_tokens": 0,
+      "output_tokens": 1621,
+      "reasoning_tokens": 0,
+      "cost_usd_estimate": 0.002145
+    },
+    {
+      "seq": 111,
+      "t": 1793429878.062524,
+      "utc": "2026-10-31T06:57:58.062Z",
+      "from": "nanomuse (reviewer)",
+      "to": "meta model api (muse-spark-1.3-contributor)",
+      "op": "model call",
+      "kind": "request",
+      "bytes": 79320,
+      "call": 32,
+      "api": "chat.completions"
+    },
+    {
+      "seq": 112,
+      "t": 1793429881.810567,
+      "utc": "2026-10-31T06:58:01.810Z",
+      "from": "meta model api (muse-spark-1.3-contributor)",
+      "to": "nanomuse (reviewer)",
+      "op": "model call",
+      "kind": "response",
+      "corr": 111,
+      "call": 32,
+      "status": 200,
+      "bytes": 1960,
+      "latency_ms": 3740,
+      "outcome": "completed",
+      "input_tokens": 19866,
+      "cached_tokens": 0,
+      "output_tokens": 182,
+      "reasoning_tokens": 54,
+      "cost_usd_estimate": 0.002023
+    },
+    {
+      "seq": 113,
+      "t": 1793429881.817775,
+      "utc": "2026-10-31T06:58:01.817Z",
+      "from": "nanomuse (reviewer)",
+      "to": "tessera (MCP)",
+      "op": "heartbeat",
+      "kind": "request",
+      "bytes": 168,
+      "verb_id": "t_cc69cdcb8fa3404dbf37eb4d38c684b5"
+    },
+    {
+      "seq": 114,
+      "t": 1793429881.824787,
+      "utc": "2026-10-31T06:58:01.824Z",
+      "from": "tessera (MCP)",
+      "to": "nanomuse (reviewer)",
+      "op": "heartbeat",
+      "kind": "response",
+      "corr": 113,
+      "status": 200,
+      "bytes": 9314,
+      "latency_ms": 7,
+      "outcome": "ok",
+      "verb_id": "t_cc69cdcb8fa3404dbf37eb4d38c684b5",
+      "queue": "eq03",
+      "fencing_token": 1,
+      "depends_on": [
+        "t_06e3ef2acaa54c7297b5c0dfca3e2c70"
+      ]
+    },
+    {
+      "seq": 115,
+      "t": 1793429881.890904,
+      "utc": "2026-10-31T06:58:01.890Z",
+      "from": "nanomuse (reviewer)",
+      "to": "meta model api (muse-spark-1.3-contributor)",
+      "op": "model call",
+      "kind": "request",
+      "bytes": 84589,
+      "call": 33,
+      "api": "chat.completions"
+    },
+    {
+      "seq": 116,
+      "t": 1793429884.954593,
+      "utc": "2026-10-31T06:58:04.954Z",
+      "from": "meta model api (muse-spark-1.3-contributor)",
+      "to": "nanomuse (reviewer)",
+      "op": "model call",
+      "kind": "response",
+      "corr": 115,
+      "call": 33,
+      "status": 200,
+      "bytes": 2067,
+      "latency_ms": 3115,
+      "outcome": "completed",
+      "input_tokens": 21344,
+      "cached_tokens": 19825,
+      "output_tokens": 207,
+      "reasoning_tokens": 22,
+      "cost_usd_estimate": 0.000233
+    },
+    {
+      "seq": 117,
+      "t": 1793429885.066013,
+      "utc": "2026-10-31T06:58:05.066Z",
+      "from": "nanomuse (reviewer)",
+      "to": "meta model api (muse-spark-1.3-contributor)",
+      "op": "model call",
+      "kind": "request",
+      "bytes": 86220,
+      "call": 34,
+      "api": "chat.completions"
+    },
+    {
+      "seq": 118,
+      "t": 1793429888.624753,
+      "utc": "2026-10-31T06:58:08.624Z",
+      "from": "meta model api (muse-spark-1.3-contributor)",
+      "to": "nanomuse (reviewer)",
+      "op": "model call",
+      "kind": "response",
+      "corr": 117,
+      "call": 34,
+      "status": 200,
+      "bytes": 1964,
+      "latency_ms": 3320,
+      "outcome": "completed",
+      "input_tokens": 21925,
+      "cached_tokens": 6897,
+      "output_tokens": 170,
+      "reasoning_tokens": 50,
+      "cost_usd_estimate": 0.001551
+    },
+    {
+      "seq": 119,
+      "t": 1793429888.92724,
+      "utc": "2026-10-31T06:58:08.927Z",
+      "from": "nanomuse (reviewer)",
+      "to": "meta model api (muse-spark-1.3-contributor)",
+      "op": "model call",
+      "kind": "request",
+      "bytes": 87781,
+      "call": 35,
+      "api": "chat.completions"
+    },
+    {
+      "seq": 120,
+      "t": 1793429890.53743,
+      "utc": "2026-10-31T06:58:10.537Z",
+      "from": "meta model api (muse-spark-1.3-contributor)",
+      "to": "nanomuse (reviewer)",
+      "op": "model call",
+      "kind": "response",
+      "corr": 119,
+      "call": 35,
+      "status": 200,
+      "bytes": 1976,
+      "latency_ms": 1755,
+      "outcome": "completed",
+      "input_tokens": 22312,
+      "cached_tokens": 21873,
+      "output_tokens": 112,
+      "reasoning_tokens": 0,
+      "cost_usd_estimate": 0.00011
+    },
+    {
+      "seq": 121,
+      "t": 1793429890.671115,
+      "utc": "2026-10-31T06:58:10.671Z",
+      "from": "nanomuse (reviewer)",
+      "to": "meta model api (muse-spark-1.3-contributor)",
+      "op": "model call",
+      "kind": "request",
+      "bytes": 89033,
+      "call": 36,
+      "api": "chat.completions"
+    },
+    {
+      "seq": 122,
+      "t": 1793429895.816138,
+      "utc": "2026-10-31T06:58:15.816Z",
+      "from": "meta model api (muse-spark-1.3-contributor)",
+      "to": "nanomuse (reviewer)",
+      "op": "model call",
+      "kind": "response",
+      "corr": 121,
+      "call": 36,
+      "status": 200,
+      "bytes": 1959,
+      "latency_ms": 5205,
+      "outcome": "completed",
+      "input_tokens": 22765,
+      "cached_tokens": 16113,
+      "output_tokens": 515,
+      "reasoning_tokens": 389,
+      "cost_usd_estimate": 0.0008
+    },
+    {
+      "seq": 123,
+      "t": 1793429895.873879,
+      "utc": "2026-10-31T06:58:15.873Z",
+      "from": "nanomuse (reviewer)",
+      "to": "tessera (MCP)",
+      "op": "heartbeat",
+      "kind": "request",
+      "bytes": 168,
+      "verb_id": "t_cc69cdcb8fa3404dbf37eb4d38c684b5"
+    },
+    {
+      "seq": 124,
+      "t": 1793429895.881263,
+      "utc": "2026-10-31T06:58:15.881Z",
+      "from": "tessera (MCP)",
+      "to": "nanomuse (reviewer)",
+      "op": "heartbeat",
+      "kind": "response",
+      "corr": 123,
+      "status": 200,
+      "bytes": 9314,
+      "latency_ms": 58,
+      "outcome": "ok",
+      "verb_id": "t_cc69cdcb8fa3404dbf37eb4d38c684b5",
+      "queue": "eq03",
+      "fencing_token": 1,
+      "depends_on": [
+        "t_06e3ef2acaa54c7297b5c0dfca3e2c70"
+      ]
+    },
+    {
+      "seq": 125,
+      "t": 1793429895.89605,
+      "utc": "2026-10-31T06:58:15.896Z",
+      "from": "nanomuse (reviewer)",
+      "to": "meta model api (muse-spark-1.3-contributor)",
+      "op": "model call",
+      "kind": "request",
+      "bytes": 94296,
+      "call": 37,
+      "api": "chat.completions"
+    },
+    {
+      "seq": 126,
+      "t": 1793429901.554459,
+      "utc": "2026-10-31T06:58:21.554Z",
+      "from": "meta model api (muse-spark-1.3-contributor)",
+      "to": "nanomuse (reviewer)",
+      "op": "model call",
+      "kind": "response",
+      "corr": 125,
+      "call": 37,
+      "status": 200,
+      "bytes": 3758,
+      "latency_ms": 5576,
+      "outcome": "completed",
+      "input_tokens": 24241,
+      "cached_tokens": 22257,
+      "output_tokens": 771,
+      "reasoning_tokens": 329,
+      "cost_usd_estimate": 0.000397
+    },
+    {
+      "seq": 127,
+      "t": 1793429901.56197,
+      "utc": "2026-10-31T06:58:21.561Z",
+      "from": "nanomuse (reviewer)",
+      "to": "tessera (MCP)",
+      "op": "put_record",
+      "kind": "request",
+      "bytes": 1070,
+      "record": {
+        "store": "kit.reviews",
+        "key": "kit-volunteer-shifts-20261031t065341z",
+        "expected_version": 0
+      }
+    },
+    {
+      "seq": 128,
+      "t": 1793429901.569019,
+      "utc": "2026-10-31T06:58:21.569Z",
+      "from": "tessera (MCP)",
+      "to": "nanomuse (reviewer)",
+      "op": "put_record",
+      "kind": "response",
+      "corr": 127,
+      "status": 200,
+      "bytes": 2515,
+      "latency_ms": 7,
+      "outcome": "ok",
+      "record": {
+        "store": "kit.reviews",
+        "key": "kit-volunteer-shifts-20261031t065341z",
+        "version": 1
+      }
+    },
+    {
+      "seq": 129,
+      "t": 1793429901.582335,
+      "utc": "2026-10-31T06:58:21.582Z",
+      "from": "nanomuse (reviewer)",
+      "to": "meta model api (muse-spark-1.3-contributor)",
+      "op": "model call",
+      "kind": "request",
+      "bytes": 97031,
+      "call": 38,
+      "api": "chat.completions"
+    },
+    {
+      "seq": 130,
+      "t": 1793429904.769594,
+      "utc": "2026-10-31T06:58:24.769Z",
+      "from": "meta model api (muse-spark-1.3-contributor)",
+      "to": "nanomuse (reviewer)",
+      "op": "model call",
+      "kind": "response",
+      "corr": 129,
+      "call": 38,
+      "status": 200,
+      "bytes": 3753,
+      "latency_ms": 3151,
+      "outcome": "completed",
+      "input_tokens": 25077,
+      "cached_tokens": 18161,
+      "output_tokens": 462,
+      "reasoning_tokens": 0,
+      "cost_usd_estimate": 0.00082
+    },
+    {
+      "seq": 131,
+      "t": 1793429904.77755,
+      "utc": "2026-10-31T06:58:24.777Z",
+      "from": "nanomuse (reviewer)",
+      "to": "tessera (MCP)",
+      "op": "submit",
+      "kind": "request",
+      "bytes": 1076,
+      "verb_id": "t_cc69cdcb8fa3404dbf37eb4d38c684b5",
+      "ok": true
+    },
+    {
+      "seq": 132,
+      "t": 1793429904.785562,
+      "utc": "2026-10-31T06:58:24.785Z",
+      "from": "tessera (MCP)",
+      "to": "nanomuse (reviewer)",
+      "op": "submit",
+      "kind": "response",
+      "corr": 131,
+      "status": 200,
+      "bytes": 757,
+      "latency_ms": 8,
+      "outcome": "ok",
+      "verb_id": "t_cc69cdcb8fa3404dbf37eb4d38c684b5",
+      "receipt_hash": "0ae5dc2ef738409c70dd914a4a0ef9aee8a89d55ac5ad308fee4ab057bff5d78",
+      "state_after": "done"
+    },
+    {
+      "seq": 133,
+      "t": 1793429904.874509,
+      "utc": "2026-10-31T06:58:24.874Z",
+      "from": "nanomuse (reviewer)",
+      "to": "meta model api (muse-spark-1.3-contributor)",
+      "op": "model call",
+      "kind": "request",
+      "bytes": 98821,
+      "call": 39,
+      "api": "chat.completions"
+    },
+    {
+      "seq": 134,
+      "t": 1793429913.814596,
+      "utc": "2026-10-31T06:58:33.814Z",
+      "from": "meta model api (muse-spark-1.3-contributor)",
+      "to": "nanomuse (reviewer)",
+      "op": "model call",
+      "kind": "response",
+      "corr": 133,
+      "call": 39,
+      "status": 200,
+      "bytes": 1704,
+      "latency_ms": 8994,
+      "outcome": "completed",
+      "input_tokens": 25698,
+      "cached_tokens": 24177,
+      "output_tokens": 913,
+      "reasoning_tokens": 792,
+      "cost_usd_estimate": 0.000383
+    }
+  ],
+  "tessera_events": [
+    {
+      "seq": 23,
+      "ts": 1793429834.603,
+      "type": "claimed",
+      "task_id": "t_cc69cdcb8fa3404dbf37eb4d38c684b5",
+      "queue": "eq03",
+      "worker": "nanomuse-reviewer",
+      "fencing_token": 1,
+      "detail": {
+        "attempt": 1
+      }
+    },
+    {
+      "seq": 24,
+      "ts": 1793429881.821,
+      "type": "heartbeat",
+      "task_id": "t_cc69cdcb8fa3404dbf37eb4d38c684b5",
+      "queue": "eq03",
+      "worker": "nanomuse-reviewer",
+      "fencing_token": 1,
+      "detail": {}
+    },
+    {
+      "seq": 25,
+      "ts": 1793429895.877,
+      "type": "heartbeat",
+      "task_id": "t_cc69cdcb8fa3404dbf37eb4d38c684b5",
+      "queue": "eq03",
+      "worker": "nanomuse-reviewer",
+      "fencing_token": 1,
+      "detail": {}
+    },
+    {
+      "seq": 26,
+      "ts": 1793429901.564,
+      "type": "records_written",
+      "task_id": null,
+      "queue": null,
+      "worker": null,
+      "fencing_token": null,
+      "detail": {
+        "writes": [
+          {
+            "key": "kit-volunteer-shifts-20261031t065341z",
+            "store": "kit.reviews",
+            "version": 1
+          }
+        ]
+      }
+    },
+    {
+      "seq": 28,
+      "ts": 1793429904.78,
+      "type": "submitted",
+      "task_id": "t_cc69cdcb8fa3404dbf37eb4d38c684b5",
+      "queue": "eq03",
+      "worker": "nanomuse-reviewer",
+      "fencing_token": 1,
+      "detail": {
+        "ok": true,
+        "receipt_hash": "0ae5dc2ef738409c70dd914a4a0ef9aee8a89d55ac5ad308fee4ab057bff5d78",
+        "state_after": "done"
+      }
+    }
+  ],
+  "records": {
+    "review result": {
+      "task_id": "t_cc69cdcb8fa3404dbf37eb4d38c684b5",
+      "fencing_token": 1,
+      "idempotency_key": "t_cc69cdcb8fa3404dbf37eb4d38c684b5:review",
+      "ok": true,
+      "output": "{\"approved\": true, \"checks\": {\"coverage_exit_code\": 0, \"coverage_violations\": 0, \"digests_match\": true, \"tests_exit_code\": 0, \"tests_run\": 8}, \"draft_sha256\": \"a30b48b17ba2a20c60a3fdabcb67874760e96c4215d58ed4141288d763f5d34e\", \"draft_task_id\": \"t_06e3ef2acaa54c7297b5c0dfca3e2c70\", \"drafter_key_id\": \"k_cc60da07d74a\", \"kit_id\": \"kit-volunteer-shifts-20261031t065341z\", \"reasons\": [\"all 4 file sha256 and blob_sha256 match build output\", \"8 unit tests pass, exit 0\", \"scheduler CLI exits 0 with 0 violations on synthetic CSV\", \"code enforces and tests exercise all 6 coverage rules; README covers input, rules, running, testing and synthetic-data note\"], \"review_task_id\": \"t_cc69cdcb8fa3404dbf37eb4d38c684b5\", \"reviewer_key_id\": \"k_b514f2a59964\", \"verdict\": \"approve\"}",
+      "error": null,
+      "receipt_hash": "0ae5dc2ef738409c70dd914a4a0ef9aee8a89d55ac5ad308fee4ab057bff5d78",
+      "state_after": "done",
+      "completed_by_key": "k_b514f2a59964",
+      "labels": {},
+      "created_at": 1793429904.78
+    },
+    "review execution": {
+      "run_id": "run_09305114babf7ee7c4e9ed61a1ecf5fe8398fb19f12c5ba283dad9eb2988dbb4",
+      "task_id": "t_cc69cdcb8fa3404dbf37eb4d38c684b5",
+      "fencing_token": 1,
+      "receipt_hash": "0ae5dc2ef738409c70dd914a4a0ef9aee8a89d55ac5ad308fee4ab057bff5d78",
+      "ok": true,
+      "created_at": 1793429904.78,
+      "expires_at": null
+    },
+    "review execution record": {
+      "allowed_surfaces": [
+        "surface:eranos"
+      ],
+      "category_id": "noun.eval_run",
+      "created_at": 1793429904.78,
+      "evidence": {
+        "claimed_at": 1793429834.603,
+        "key_id": "k_b514f2a59964",
+        "server_duration_seconds": 70.17700004577637,
+        "worker": "nanomuse-reviewer"
+      },
+      "expires_at": null,
+      "fencing_token": 1,
+      "fingerprints": {
+        "bands": [],
+        "contract_hash": null,
+        "exact_hash": null,
+        "input_hash": "f6b67e3e839216f5f0fe266d00b0481dabaf7c3dd6b835b2f28fc32a7741ac7a",
+        "shape_hash": null,
+        "simhash": null,
+        "text_hash": null
+      },
+      "input_snapshot": {
+        "brief": {
+          "authority": "Approve only if every check passes, otherwise refuse with reasons. Approving records your verdict and publishes nothing. A person decides what happens next.",
+          "blob_sha256_definition": "sha256 hex of json.dumps({path: sha256_of_that_file}, sort_keys=True, separators=(\",\", \":\")).encode() over the four file paths",
+          "checks": [
+            "every file sha256 and the blob_sha256 you recompute equal the build output values",
+            "python3 -m unittest discover -s tests -v exits 0",
+            "python3 shift_scheduler.py data/availability.csv exits 0 and reports 0 violations",
+            "the code enforces, and the tests exercise, every coverage rule; the README covers input, rules, running, testing and the synthetic-data note"
+          ],
+          "coverage_rules": [
+            "Shifts are Mon, Tue, Wed, Thu, Fri and Sat, each with an AM and a PM slot: 12 shifts, written Day-Slot (for example Mon-AM).",
+            "Every shift has at least 2 volunteers.",
+            "Every shift has at least 1 volunteer whose role is lead.",
+            "A volunteer works only shifts listed in their available column.",
+            "No volunteer works more shifts in the week than their max_shifts.",
+            "No volunteer works both the AM and the PM shift on the same day."
+          ],
+          "input_noun": {
+            "key": "availability-20261031t065341z",
+            "sha256": "6709f71fb10238ebe4ce06c987937b1ba5301646be9b5bd474f1a4844089f795",
+            "store": "kit.inputs",
+            "version": 1
+          },
+          "kit_id": "kit-volunteer-shifts-20261031t065341z",
+          "nouns": {
+            "keys": {
+              "README.md": "docs.README.md",
+              "data/availability.csv": "data.availability.csv",
+              "shift_scheduler.py": "code.shift_scheduler.py",
+              "tests/test_shift_scheduler.py": "tests.test_shift_scheduler.py"
+            },
+            "store": "kit.volunteer-shifts"
+          },
+          "output_contract": {
+            "approved": "<true or false>",
+            "checks": {
+              "coverage_exit_code": "<int>",
+              "coverage_violations": "<int>",
+              "digests_match": "<bool>",
+              "tests_exit_code": "<int>",
+              "tests_run": "<int>"
+            },
+            "draft_sha256": "<the blob_sha256 you recomputed>",
+            "draft_task_id": "<dependencies[0].task_id>",
+            "drafter_key_id": "<dependencies[0].completed_by_key>",
+            "kit_id": "kit-volunteer-shifts-20261031t065341z",
+            "reasons": [
+              "<short, specific reasons>"
+            ],
+            "review_task_id": "<the task_id of your own claim>",
+            "reviewer_key_id": "k_b514f2a59964",
+            "verdict": "<approve or refuse>"
+          },
+          "part": 1,
+          "request_id": "t_f05e739efc644796a94b27c7d9fac0be",
+          "review_noun": {
+            "expected_version": 0,
+            "key": "kit-volunteer-shifts-20261031t065341z",
+            "store": "kit.reviews",
+            "value": "the same object you submit as output",
+            "visibility_scope": "surface_only"
+          },
+          "reviewer_key_id": "k_b514f2a59964",
+          "synthetic": true,
+          "title": "SYNTHETIC: independent review of the weekly volunteer shift schedule kit",
+          "what_you_review": "The build verb this review depends on: dependencies[0] in your claim response (task_id, output, receipt_hash, completed_by_key)."
+        },
+        "dependencies_and_children": [
+          {
+            "output": "{\"blob_sha256\": \"a30b48b17ba2a20c60a3fdabcb67874760e96c4215d58ed4141288d763f5d34e\", \"draft\": {\"files\": {\"README.md\": {\"key\": \"docs.README.md\", \"sha256\": \"faa26f17fdde72804043644e45ad7684b23211a8bae724530834e189649099cb\", \"version\": 1}, \"data/availability.csv\": {\"key\": \"data.availability.csv\", \"sha256\": \"6709f71fb10238ebe4ce06c987937b1ba5301646be9b5bd474f1a4844089f795\", \"version\": 1}, \"shift_scheduler.py\": {\"key\": \"code.shift_scheduler.py\", \"sha256\": \"b3c4b5867fa3e26b180a5c3185f9de27a13dc096c92a9ea9f4d2f316eef1908b\", \"version\": 1}, \"tests/test_shift_scheduler.py\": {\"key\": \"tests.test_shift_scheduler.py\", \"sha256\": \"ec0e90bfaf5f0edb51f289168e689932b628d5c86fa46f98005670eb85f29a76\", \"version\": 1}}, \"kit_id\": \"kit-volunteer-shifts-20261031t065341z\", \"store\": \"kit.volunteer-shifts\"}, \"kit_id\": \"kit-volunteer-shifts-20261031t065341z\", \"node\": \"draft\", \"verification\": {\"commands\": [\"python3 -m unittest discover -s tests -v -> exit 0\", \"python3 shift_scheduler.py data/availability.csv -> exit 0\"], \"coverage_violations\": 0, \"passed\": true, \"tests_run\": 8}}",
+            "receipt_hash": "aee19212277a83ff5c2e69964b9bf7a19a7e32455cb6ecb9d21d5d6c06fc0491",
+            "state": "done",
+            "task_id": "t_06e3ef2acaa54c7297b5c0dfca3e2c70"
+          }
+        ],
+        "effect_class": "write-internal",
+        "inputs": [],
+        "kind": "review"
+      },
+      "labels": {},
+      "missing_measurements": {
+        "embedding": {
+          "reason": "worker did not report this field",
+          "value": null
+        },
+        "harness": {
+          "reason": "worker did not report this field",
+          "value": null
+        },
+        "model": {
+          "reason": "worker did not report this field",
+          "value": null
+        },
+        "usage": {
+          "reason": "worker did not report this field",
+          "value": null
+        }
+      },
+      "namespace": "main",
+      "producer_surface": "surface:tessera",
+      "queue": "eq03",
+      "receipt_hash": "0ae5dc2ef738409c70dd914a4a0ef9aee8a89d55ac5ad308fee4ab057bff5d78",
+      "record_kind": "execution_run",
+      "report": {},
+      "report_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "run_id": "run_09305114babf7ee7c4e9ed61a1ecf5fe8398fb19f12c5ba283dad9eb2988dbb4",
+      "tags": [
+        "part:1",
+        "kind:review",
+        "category:noun.eval_run",
+        "status:worker_reported"
+      ],
+      "target_cohorts": [
+        "all"
+      ],
+      "task_id": "t_cc69cdcb8fa3404dbf37eb4d38c684b5",
+      "trust": {
+        "correctness": "not_independently_verified",
+        "reuse_requires_validation": true,
+        "submission": "server_receipted",
+        "telemetry": "worker_reported"
+      },
+      "visibility_scope": "allowlist_surfaces",
+      "ok": true,
+      "output": "{\"approved\": true, \"checks\": {\"coverage_exit_code\": 0, \"coverage_violations\": 0, \"digests_match\": true, \"tests_exit_code\": 0, \"tests_run\": 8}, \"draft_sha256\": \"a30b48b17ba2a20c60a3fdabcb67874760e96c4215d58ed4141288d763f5d34e\", \"draft_task_id\": \"t_06e3ef2acaa54c7297b5c0dfca3e2c70\", \"drafter_key_id\": \"k_cc60da07d74a\", \"kit_id\": \"kit-volunteer-shifts-20261031t065341z\", \"reasons\": [\"all 4 file sha256 and blob_sha256 match build output\", \"8 unit tests pass, exit 0\", \"scheduler CLI exits 0 with 0 violations on synthetic CSV\", \"code enforces and tests exercise all 6 coverage rules; README covers input, rules, running, testing and synthetic-data note\"], \"review_task_id\": \"t_cc69cdcb8fa3404dbf37eb4d38c684b5\", \"reviewer_key_id\": \"k_b514f2a59964\", \"verdict\": \"approve\"}",
+      "error": null
+    },
+    "review noun": [
+      {
+        "namespace": "main",
+        "store": "kit.reviews",
+        "key": "kit-volunteer-shifts-20261031t065341z",
+        "version": 1,
+        "value": "{\"approved\": true, \"checks\": {\"coverage_exit_code\": 0, \"coverage_violations\": 0, \"digests_match\": true, \"tests_exit_code\": 0, \"tests_run\": 8}, \"draft_sha256\": \"a30b48b17ba2a20c60a3fdabcb67874760e96c4215d58ed4141288d763f5d34e\", \"draft_task_id\": \"t_06e3ef2acaa54c7297b5c0dfca3e2c70\", \"drafter_key_id\": \"k_cc60da07d74a\", \"kit_id\": \"kit-volunteer-shifts-20261031t065341z\", \"reasons\": [\"all 4 file sha256 and blob_sha256 match build output\", \"8 unit tests pass, exit 0\", \"scheduler CLI exits 0 with 0 violations on synthetic CSV\", \"code enforces and tests exercise all 6 coverage rules; README covers input, rules, running, testing and synthetic-data note\"], \"review_task_id\": \"t_cc69cdcb8fa3404dbf37eb4d38c684b5\", \"reviewer_key_id\": \"k_b514f2a59964\", \"verdict\": \"approve\"}",
+        "created_at": 1793429901.564,
+        "producer_surface": "surface:eranos",
+        "visibility_scope": "surface_only",
+        "allowed_surfaces": [],
+        "target_cohorts": [
+          "all"
+        ],
+        "tags": [],
+        "owner_key_id": "k_b514f2a59964"
+      }
+    ]
+  }
+}

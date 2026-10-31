@@ -64,7 +64,7 @@
     {
       "id": "server-workers",
       "title": "Always-on server workers",
-      "date": "2026-10-30",
+      "date": "2026-10-31",
       "path": "decks/server-workers/",
       "source": "decks/server-workers/source/",
       "slides": 10,

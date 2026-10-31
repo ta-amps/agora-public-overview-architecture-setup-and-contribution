@@ -6,6 +6,12 @@
 <title>Deploy and Self-Host - ta-amps</title>
 <meta name="description" content="Step-by-step deployment guides for running ta-amps Seed Packs, Tessera, Herma, Eranos, and Agora on Cloudflare Workers and D1, Docker Compose, Fly.io, VPS hosts, or custom GPU endpoints.">
 <!-- site:head -->
+<meta property="og:site_name" content="Agora">
+<meta property="og:image" content="https://agora.ta-amps.workers.dev/assets/share/agora-1200x630.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Agora. AI is smart. The way we use it is dumb. Watch the film, three minutes. agora.ta-amps.workers.dev">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;600&amp;family=Space+Grotesk:wght@400..700&amp;display=swap">
@@ -47,9 +53,8 @@
 <button class="agent-copy deploy-copy" type="button" data-copy="cmd-slice-packs" data-copied="Copied" data-selected="Selected" data-status-copied="Commands copied to clipboard." data-status-selected="Commands selected. Press Ctrl+C or Command+C to copy." hidden><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true" focusable="false"><rect x="6.5" y="6.5" width="10" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M13.5 4.5v-.5a1.5 1.5 0 0 0-1.5-1.5H5A1.5 1.5 0 0 0 3.5 4v7A1.5 1.5 0 0 0 5 12.5h.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span>Copy commands</span></button>
 <span class="visually-hidden" id="cmd-slice-packs-status" role="status"></span>
 </div>
-<pre class="deploy-pre" id="cmd-slice-packs" tabindex="0"><code># Download directly from our Cloudflare Open-Source Mirror (or git clone once github.com/ta-amps restores):
-curl -fsSLO https://agora.ta-amps.workers.dev/source/seed-packs-library-of-nouns-and-verbs.tar.gz
-tar -xzf seed-packs-library-of-nouns-and-verbs.tar.gz
+<pre class="deploy-pre" id="cmd-slice-packs" tabindex="0"><code># Clone from Agora's read-only git mirror; no account needed:
+git clone https://agora.ta-amps.workers.dev/git/seed-packs-library-of-nouns-and-verbs.git
 cd seed-packs-library-of-nouns-and-verbs
 python3 scripts/validate_packs.py
 # Run any pack's standalone verifier (stdlib Python, zero cloud keys):
@@ -83,9 +88,8 @@ npx wrangler deploy</code></pre>
 <button class="agent-copy deploy-copy" type="button" data-copy="cmd-slice-docker" data-copied="Copied" data-selected="Selected" data-status-copied="Commands copied to clipboard." data-status-selected="Commands selected. Press Ctrl+C or Command+C to copy." hidden><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true" focusable="false"><rect x="6.5" y="6.5" width="10" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M13.5 4.5v-.5a1.5 1.5 0 0 0-1.5-1.5H5A1.5 1.5 0 0 0 3.5 4v7A1.5 1.5 0 0 0 5 12.5h.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span>Copy commands</span></button>
 <span class="visually-hidden" id="cmd-slice-docker-status" role="status"></span>
 </div>
-<pre class="deploy-pre" id="cmd-slice-docker" tabindex="0"><code># Download from our Cloudflare Open-Source Mirror (or git clone /source/ta-amps-hackathon/):
-curl -fsSLO https://agora.ta-amps.workers.dev/source/ta-amps-hackathon.tar.gz
-tar -xzf ta-amps-hackathon.tar.gz
+<pre class="deploy-pre" id="cmd-slice-docker" tabindex="0"><code># Clone from Agora's read-only git mirror; no account needed:
+git clone https://agora.ta-amps.workers.dev/git/ta-amps-hackathon.git
 cd ta-amps-hackathon
 
 # Build and boot local services with persistent volume storage:

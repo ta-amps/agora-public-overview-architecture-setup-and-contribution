@@ -1,0 +1,15 @@
+volunteer_id,display_name,role,max_shifts,available
+V01,Volunteer 01,lead,3,Mon-PM;Tue-PM;Thu-AM;Thu-PM;Fri-AM
+V02,Volunteer 02,lead,3,Wed-AM;Wed-PM;Thu-PM;Sat-AM
+V03,Volunteer 03,lead,3,Mon-AM;Mon-PM;Tue-AM;Wed-PM;Fri-AM
+V04,Volunteer 04,lead,3,Mon-AM;Mon-PM;Wed-PM;Thu-PM;Sat-PM
+V05,Volunteer 05,lead,3,Tue-AM;Tue-PM;Fri-PM
+V06,Volunteer 06,general,2,Mon-AM;Fri-AM
+V07,Volunteer 07,general,2,Thu-AM;Thu-PM;Fri-AM
+V08,Volunteer 08,general,2,Mon-AM;Tue-AM;Fri-AM;Sat-AM
+V09,Volunteer 09,general,2,Tue-AM;Wed-PM;Fri-PM;Sat-AM
+V10,Volunteer 10,general,2,Mon-AM;Mon-PM
+V11,Volunteer 11,general,2,Wed-AM;Thu-AM;Fri-PM
+V12,Volunteer 12,general,2,Tue-PM;Thu-AM
+V13,Volunteer 13,general,2,Mon-PM;Thu-AM;Sat-PM
+V14,Volunteer 14,general,2,Mon-AM;Tue-AM;Wed-AM;Thu-AM
