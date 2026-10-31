@@ -153,12 +153,16 @@
         "label": "Source of this site"
       },
       {
+        "href": "https://agora.ta-amps.workers.dev/source/",
+        "label": "Open-source mirror"
+      },
+      {
         "href": "THIRD-PARTY-NOTICES.txt",
         "label": "Third-party notices",
         "local": true
       }
     ],
-    "note": "A snapshot of October 30, 2026 · Drafts are labelled, and nothing here certifies a claim · MIT license",
-    "privacy": "No analytics, ads or cookies. Fonts load from Google Fonts, which sees your IP address, and GitHub Pages hosts the site. Display choices, such as dark mode, stay in this browser."
+    "note": "A snapshot of October 31, 2026 · Drafts are labelled, and nothing here certifies a claim · MIT license",
+    "privacy": "No analytics, ads or cookies. Fonts load from Google Fonts, which sees your IP address, and Cloudflare Workers and GitHub Pages host the site. Display choices, such as dark mode, stay in this browser."
   }
 }

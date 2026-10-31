@@ -1,0 +1,710 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1920, height=1080">
+<title>ta-amps · Trace-Driven Architecture Animation</title>
+<style>
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('../video-final/fonts/SpaceGrotesk-wght.ttf') format('truetype'),
+       url('./assets/fonts/SpaceGrotesk-wght.ttf') format('truetype');
+  font-weight: 300 700;
+}
+@font-face {
+  font-family: 'IBM Plex Sans';
+  src: url('../video-final/fonts/IBMPlexSans-wdth-wght.ttf') format('truetype'),
+       url('./assets/fonts/IBMPlexSans-wdth-wght.ttf') format('truetype');
+  font-weight: 100 700;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('../video-final/fonts/JetBrainsMono-wght.ttf') format('truetype'),
+       url('./assets/fonts/JetBrainsMono-wght.ttf') format('truetype');
+  font-weight: 100 800;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  width: 1920px; height: 1080px;
+  overflow: hidden;
+  background: #0D121B;
+  color: #F5F2EA;
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.canvas {
+  position: relative;
+  width: 1920px; height: 1080px;
+  background-color: #0D121B;
+  background-image:
+    radial-gradient(ellipse 1100px 540px at 50% 38%, rgba(42, 93, 176, 0.16), transparent 70%),
+    linear-gradient(rgba(114, 168, 248, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(114, 168, 248, 0.045) 1px, transparent 1px);
+  background-size: 100% 100%, 40px 40px, 40px 40px;
+}
+
+/* Top header strictly inside x: 140..1780, y: 104..156 */
+.top-header {
+  position: absolute;
+  left: 140px; top: 104px;
+  width: 1640px; height: 52px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 22px;
+  background: rgba(22, 30, 44, 0.88);
+  border: 1px solid #2A364B;
+  border-radius: 12px;
+}
+.hdr-left {
+  display: flex; align-items: center; gap: 18px;
+}
+.hdr-kicker {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px; font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #72A8F8;
+  text-transform: uppercase;
+}
+.hdr-sep {
+  width: 1px; height: 22px; background: #2E3B52;
+}
+.hdr-phase {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 20px; font-weight: 600;
+  color: #F5F2EA;
+}
+.hdr-right {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px; font-weight: 600;
+  color: #9BA7BA;
+}
+
+/* SVG Wire Layer (covers 1920x1080, non-text shapes inside y: 160..845) */
+svg.wires {
+  position: absolute;
+  left: 0; top: 0;
+  width: 1920px; height: 1080px;
+  pointer-events: none;
+}
+.wire-base {
+  fill: none;
+  stroke: #263246;
+  stroke-width: 2.5;
+  stroke-dasharray: 6 6;
+}
+.wire-active {
+  fill: none;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  opacity: 0;
+}
+
+/* Architecture Node Cards strictly inside x: 140..1780, y: 224..786 */
+.node {
+  position: absolute;
+  background: #141C29;
+  border: 1.5px solid #2B374D;
+  border-radius: 18px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.32);
+  transition: none;
+}
+.node.active-verb {
+  border-color: #F28B52;
+  background: #19202D;
+  box-shadow: 0 0 0 2px rgba(242, 139, 82, 0.28), 0 16px 36px rgba(0, 0, 0, 0.42);
+}
+.node.active-noun {
+  border-color: #72A8F8;
+  background: #172233;
+  box-shadow: 0 0 0 2px rgba(114, 168, 248, 0.28), 0 16px 36px rgba(0, 0, 0, 0.42);
+}
+.node.active-ok {
+  border-color: #74D69C;
+  background: #152527;
+  box-shadow: 0 0 0 2px rgba(116, 214, 156, 0.30), 0 16px 36px rgba(0, 0, 0, 0.42);
+}
+
+.n-top {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+}
+.n-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13.5px; font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 4px 11px;
+  border-radius: 999px;
+  text-transform: uppercase;
+}
+.nb-verb { background: rgba(242, 139, 82, 0.15); color: #F28B52; border: 1px solid rgba(242, 139, 82, 0.45); }
+.nb-noun { background: rgba(114, 168, 248, 0.15); color: #72A8F8; border: 1px solid rgba(114, 168, 248, 0.45); }
+.nb-ok   { background: rgba(116, 214, 156, 0.15); color: #74D69C; border: 1px solid rgba(116, 214, 156, 0.45); }
+
+.n-status {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px; font-weight: 600;
+  color: #8E9BB0;
+}
+.n-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 31px; font-weight: 700;
+  line-height: 1.14;
+  letter-spacing: -0.015em;
+  color: #F5F2EA;
+}
+.n-mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16.5px; font-weight: 600;
+  line-height: 1.32;
+  color: #B9C6DA;
+}
+.n-desc {
+  font-size: 17.5px; font-weight: 450;
+  line-height: 1.32;
+  color: #96A3B8;
+}
+.worker-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.w-chip {
+  background: #101722;
+  border: 1px solid #2A364B;
+  border-radius: 10px;
+  padding: 7px 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  line-height: 1.28;
+  color: #C7D2E2;
+}
+.w-chip.lit-build { border-color: #F28B52; color: #FFD1B8; background: rgba(242, 139, 82, 0.12); }
+.w-chip.lit-rev   { border-color: #74D69C; color: #C2F5D7; background: rgba(116, 214, 156, 0.12); }
+
+/* Dedicated Disjoint Wire Message Pills */
+.wire-pill {
+  position: absolute;
+  height: 38px;
+  padding: 0 16px;
+  border-radius: 999px;
+  display: flex; align-items: center; justify-content: center; gap: 9px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15.5px; font-weight: 700;
+  background: #162030;
+  border: 1.5px solid #33435E;
+  color: #DCE5F2;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.38);
+  opacity: 0;
+  transform: translateY(4px) scale(0.97);
+}
+.wire-pill .wp-tag {
+  font-size: 12.5px;
+  font-weight: 700;
+  opacity: 0.85;
+}
+.wire-pill.wp-verb { border-color: #F28B52; color: #FFD7C2; background: #241917; }
+.wire-pill.wp-noun { border-color: #72A8F8; color: #CFE2FF; background: #142033; }
+.wire-pill.wp-ok   { border-color: #74D69C; color: #C8F7DC; background: #132620; }
+
+/* Bottom 6-Step Progress Rail strictly inside x: 140..1780, y: 800..842 (<= 850!) */
+.step-rail {
+  position: absolute;
+  left: 140px; top: 800px;
+  width: 1640px; height: 42px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+}
+.rail-item {
+  background: rgba(20, 28, 41, 0.82);
+  border: 1px solid #253145;
+  border-radius: 10px;
+  padding: 0 12px;
+  display: flex; align-items: center; gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13.5px; font-weight: 600;
+  color: #7D8B9F;
+}
+.rail-item.done {
+  border-color: rgba(114, 168, 248, 0.45);
+  color: #C9D6E8;
+}
+.rail-item.current {
+  border-color: #74D69C;
+  background: rgba(21, 42, 37, 0.9);
+  color: #F5F2EA;
+}
+.rail-num {
+  color: #72A8F8;
+  font-weight: 800;
+}
+.rail-item.current .rail-num {
+  color: #74D69C;
+}
+
+/* Interactive controls ONLY shown when ?interactive=1 (never during MP4 rendering) */
+.interactive-bar {
+  display: none;
+  position: absolute;
+  left: 420px; width: 1080px;
+  top: 904px; height: 64px;
+  background: rgba(22, 30, 44, 0.92);
+  border: 1px solid #32415B;
+  border-radius: 16px;
+  backdrop-filter: blur(16px);
+  padding: 0 24px;
+  align-items: center; gap: 18px;
+}
+body.interactive .interactive-bar {
+  display: flex;
+}
+.ib-btn {
+  background: #2A5DB0; color: #FFFDF8;
+  border: none; border-radius: 8px;
+  padding: 8px 16px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 15px; font-weight: 600;
+  cursor: pointer;
+}
+.ib-btn.alt { background: #253247; color: #D4DEEE; }
+.ib-scrub { flex: 1; accent-color: #72A8F8; cursor: pointer; }
+.ib-time { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #B9C6DA; min-width: 110px; text-align: right; }
+</style>
+</head>
+<body>
+<div class="canvas" id="canvas">
+
+  <!-- Top Trace Header (y: 104..156) -->
+  <header class="top-header">
+    <div class="hdr-left">
+      <span class="hdr-kicker">TA-AMPS WIRE TRACE</span>
+      <span class="hdr-sep"></span>
+      <span class="hdr-phase" id="hdr-phase">1/6 &middot; POST /v1/tasks &mdash; Plain-words request enters Tessera</span>
+    </div>
+    <div class="hdr-right" id="hdr-telemetry">trace: muse-2 + T05 &middot; t = 00.0s</div>
+  </header>
+
+  <!-- Curved SVG Conduit Layer -->
+  <svg class="wires" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+        <feGaussianBlur stdDeviation="5" result="blur"/>
+        <feMerge>
+          <feMergeNode in="blur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+    </defs>
+
+    <!-- Base dashed paths -->
+    <!-- P1: Eranos (540, 290) -> Tessera (740, 290) -->
+    <path id="base-1" class="wire-base" d="M 540 290 C 605 245, 675 245, 740 290" />
+    <!-- P2: Tessera (855, 424) -> Workers Builder (855, 576) -->
+    <path id="base-2" class="wire-base" d="M 855 424 C 815 475, 815 525, 855 576" />
+    <!-- P3a: Workers (1180, 645) -> Herma (1460, 424) -->
+    <path id="base-3a" class="wire-base" d="M 1180 645 C 1300 620, 1365 505, 1460 424" />
+    <!-- P3b: Herma (1610, 424) -> Meta AI Stack (1610, 576) -->
+    <path id="base-3b" class="wire-base" d="M 1610 424 C 1645 475, 1645 525, 1610 576" />
+    <!-- P4: Workers (990, 576) -> Tessera CAS (990, 424) -->
+    <path id="base-4" class="wire-base" d="M 990 576 C 1020 525, 1020 475, 990 424" />
+    <!-- P5a: Tessera (1085, 424) -> Reviewer Worker (1085, 576) -->
+    <path id="base-5a" class="wire-base" d="M 1085 424 C 1125 475, 1125 525, 1085 576" />
+    <!-- P5b: Reviewer Worker (1180, 715) -> Meta AI Stack (1380, 715) -->
+    <path id="base-5b" class="wire-base" d="M 1180 715 C 1245 742, 1315 742, 1380 715" />
+    <!-- P6: Tessera (740, 380) -> Verified Task Objects (430, 576) -->
+    <path id="base-6" class="wire-base" d="M 740 380 C 610 415, 505 485, 430 576" />
+
+    <!-- Active colored trails -->
+    <path id="act-1" class="wire-active" stroke="#F28B52" d="M 540 290 C 605 245, 675 245, 740 290" />
+    <path id="act-2" class="wire-active" stroke="#F28B52" d="M 855 424 C 815 475, 815 525, 855 576" />
+    <path id="act-3a" class="wire-active" stroke="#72A8F8" d="M 1180 645 C 1300 620, 1365 505, 1460 424" />
+    <path id="act-3b" class="wire-active" stroke="#74D69C" d="M 1610 424 C 1645 475, 1645 525, 1610 576" />
+    <path id="act-4" class="wire-active" stroke="#72A8F8" d="M 990 576 C 1020 525, 1020 475, 990 424" />
+    <path id="act-5a" class="wire-active" stroke="#74D69C" d="M 1085 424 C 1125 475, 1125 525, 1085 576" />
+    <path id="act-5b" class="wire-active" stroke="#74D69C" d="M 1180 715 C 1245 742, 1315 742, 1380 715" />
+    <path id="act-6" class="wire-active" stroke="#74D69C" d="M 740 380 C 610 415, 505 485, 430 576" />
+
+    <!-- Moving packet orbs -->
+    <g id="orb-1" opacity="0" filter="url(#glow)"><circle r="13" fill="rgba(242,139,82,0.3)"/><circle r="6.5" fill="#F28B52"/></g>
+    <g id="orb-2" opacity="0" filter="url(#glow)"><circle r="13" fill="rgba(242,139,82,0.3)"/><circle r="6.5" fill="#F28B52"/></g>
+    <g id="orb-3a" opacity="0" filter="url(#glow)"><circle r="13" fill="rgba(114,168,248,0.3)"/><circle r="6.5" fill="#72A8F8"/></g>
+    <g id="orb-3b" opacity="0" filter="url(#glow)"><circle r="13" fill="rgba(116,214,156,0.3)"/><circle r="6.5" fill="#74D69C"/></g>
+    <g id="orb-4" opacity="0" filter="url(#glow)"><circle r="13" fill="rgba(114,168,248,0.3)"/><circle r="6.5" fill="#72A8F8"/></g>
+    <g id="orb-5a" opacity="0" filter="url(#glow)"><circle r="13" fill="rgba(116,214,156,0.3)"/><circle r="6.5" fill="#74D69C"/></g>
+    <g id="orb-5b" opacity="0" filter="url(#glow)"><circle r="13" fill="rgba(116,214,156,0.3)"/><circle r="6.5" fill="#74D69C"/></g>
+    <g id="orb-6" opacity="0" filter="url(#glow)"><circle r="14" fill="rgba(116,214,156,0.35)"/><circle r="7" fill="#74D69C"/></g>
+  </svg>
+
+  <!-- Disjoint Wire Message Pills -->
+  <div class="wire-pill wp-verb" id="pill-1" style="left: 485px; top: 170px; width: 310px;">
+    <span>POST /v1/tasks</span><span class="wp-tag">&middot; plain words</span>
+  </div>
+  <div class="wire-pill wp-verb" id="pill-2" style="left: 555px; top: 444px; width: 325px;">
+    <span>claim + lease</span><span class="wp-tag">&middot; fence=1 &middot; 600s</span>
+  </div>
+  <div class="wire-pill wp-noun" id="pill-4" style="left: 900px; top: 444px; width: 365px;">
+    <span>put_record expected_version</span>
+  </div>
+  <div class="wire-pill wp-noun" id="pill-3" style="left: 1285px; top: 444px; width: 365px;">
+    <span>herma /api/preview</span><span class="wp-tag">&middot; 1.4ms</span>
+  </div>
+  <div class="wire-pill wp-ok" id="pill-6" style="left: 330px; top: 506px; width: 380px;">
+    <span>SHA-256 receipt</span><span class="wp-tag">&middot; cb905452&hellip;</span>
+  </div>
+  <div class="wire-pill wp-ok" id="pill-5" style="left: 895px; top: 506px; width: 440px;">
+    <span>independent review</span><span class="wp-tag">&middot; 409 guard</span>
+  </div>
+
+  <!-- NODE 1: Eranos (x: 140..540, y: 224..424) -->
+  <section class="node" id="node-eranos" style="left: 140px; top: 224px; width: 400px; height: 200px;">
+    <div class="n-top">
+      <span class="n-badge nb-verb">Public Surface</span>
+      <span class="n-status" id="st-eranos">Two doors</span>
+    </div>
+    <h2 class="n-title">Eranos</h2>
+    <div class="n-mono">eranos.ta-amps.workers.dev</div>
+    <p class="n-desc">Plain-words need &middot; Private files stay local</p>
+  </section>
+
+  <!-- NODE 2: Tessera (x: 740..1180, y: 224..424) -->
+  <section class="node" id="node-tessera" style="left: 740px; top: 224px; width: 440px; height: 200px;">
+    <div class="n-top">
+      <span class="n-badge nb-noun">Infrastructure</span>
+      <span class="n-status" id="st-tessera">37 MCP tools</span>
+    </div>
+    <h2 class="n-title">Tessera</h2>
+    <div class="n-mono">Leased Tasks + CAS Task Objects</div>
+    <p class="n-desc">Fencing tokens (HTTP 409) &middot; Idempotent receipts</p>
+  </section>
+
+  <!-- NODE 4: Herma (x: 1380..1780, y: 224..424) -->
+  <section class="node" id="node-herma" style="left: 1380px; top: 224px; width: 400px; height: 200px;">
+    <div class="n-top">
+      <span class="n-badge nb-noun">Infrastructure</span>
+      <span class="n-status" id="st-herma">67 seed packs</span>
+    </div>
+    <h2 class="n-title">Herma</h2>
+    <div class="n-mono">&lt;2ms Context Shim</div>
+    <p class="n-desc">Injects matching nouns &middot; 0-token exact hits</p>
+  </section>
+
+  <!-- NODE 6: Verified Task Objects & Receipts (x: 140..540, y: 576..786) -->
+  <section class="node" id="node-verified" style="left: 140px; top: 576px; width: 400px; height: 210px;">
+    <div class="n-top">
+      <span class="n-badge nb-ok">Verified Output</span>
+      <span class="n-status" id="st-verified">CAS @v1</span>
+    </div>
+    <h2 class="n-title" style="font-size: 27px;">Verified Task Objects &amp; SHA-256 Receipts</h2>
+    <div class="n-mono" id="hash-verified">sha256: cb905452&hellip; &middot; fbfc19dc&hellip;</div>
+    <p class="n-desc">Reusable kit runs offline on NGO machine</p>
+  </section>
+
+  <!-- NODE 3: Authorized Workers (x: 740..1180, y: 576..786) -->
+  <section class="node" id="node-workers" style="left: 740px; top: 576px; width: 440px; height: 210px;">
+    <div class="n-top">
+      <span class="n-badge nb-verb">Authorized Workers</span>
+      <span class="n-status" id="st-workers">Scoped keys</span>
+    </div>
+    <h2 class="n-title" style="font-size: 29px;">Builder != Reviewer</h2>
+    <div class="worker-split">
+      <div class="w-chip" id="chip-builder">Builder: Muse Code<br>split &middot; claim &middot; do</div>
+      <div class="w-chip" id="chip-reviewer">Reviewer: Key #2<br>8/8 checks &middot; admit</div>
+    </div>
+  </section>
+
+  <!-- NODE 5: Meta AI Stack (x: 1380..1780, y: 576..786) -->
+  <section class="node" id="node-meta" style="left: 1380px; top: 576px; width: 400px; height: 210px;">
+    <div class="n-top">
+      <span class="n-badge nb-ok">Meta AI Stack</span>
+      <span class="n-status" id="st-meta">41.0s live</span>
+    </div>
+    <h2 class="n-title" style="font-size: 28px;">Muse &amp; Llama Stack</h2>
+    <div class="n-mono">Muse Spark &middot; Muse Code</div>
+    <p class="n-desc">Muse Glimmer 30B LoRA &middot; Llama 3.2</p>
+  </section>
+
+  <!-- Bottom 6-Step Progress Rail (y: 800..842; y: 880..1000 stays 100% empty!) -->
+  <div class="step-rail">
+    <div class="rail-item" id="rail-1"><span class="rail-num">01</span><span>POST /v1/tasks</span></div>
+    <div class="rail-item" id="rail-2"><span class="rail-num">02</span><span>claim + lease</span></div>
+    <div class="rail-item" id="rail-3"><span class="rail-num">03</span><span>herma /api/preview</span></div>
+    <div class="rail-item" id="rail-4"><span class="rail-num">04</span><span>put_record CAS</span></div>
+    <div class="rail-item" id="rail-5"><span class="rail-num">05</span><span>independent review</span></div>
+    <div class="rail-item" id="rail-6"><span class="rail-num">06</span><span>SHA-256 receipt</span></div>
+  </div>
+
+  <!-- Optional Interactive Bar (hidden unless ?interactive=1) -->
+  <div class="interactive-bar" id="ibar">
+    <button class="ib-btn" id="btn-play">Pause</button>
+    <button class="ib-btn alt" id="btn-mode">Mode: 16s</button>
+    <input type="range" class="ib-scrub" id="scrub" min="0" max="16" step="0.033" value="0">
+    <span class="ib-time" id="ib-time">0.0s / 16.0s</span>
+  </div>
+
+</div>
+
+<script>
+(() => {
+  const params = new URLSearchParams(window.location.search);
+  let totalDur = parseFloat(params.get('dur') || '16') || 16;
+  const isInteractive = params.get('interactive') === '1';
+  if (isInteractive) document.body.classList.add('interactive');
+
+  const PHASES = [
+    {
+      idx: 1, u0: 0.00, u1: 0.16,
+      title: '1/6 · POST /v1/tasks — Plain-words request queued on Tessera',
+      nodes: [['node-eranos', 'active-verb'], ['node-tessera', 'active-noun']],
+      wires: [['act-1', 'orb-1', 0.02, 0.14]],
+      pill: 'pill-1',
+      builder: false, reviewer: false,
+      status: { 'st-eranos': 'POST /v1/tasks', 'st-tessera': 'queued verb' }
+    },
+    {
+      idx: 2, u0: 0.16, u1: 0.32,
+      title: '2/6 · claim + lease — Authorized builder claims 600s lease (fence=1)',
+      nodes: [['node-tessera', 'active-noun'], ['node-workers', 'active-verb']],
+      wires: [['act-2', 'orb-2', 0.17, 0.30]],
+      pill: 'pill-2',
+      builder: true, reviewer: false,
+      status: { 'st-tessera': 'fence=1 leased', 'st-workers': 'builder active' }
+    },
+    {
+      idx: 3, u0: 0.32, u1: 0.52,
+      title: '3/6 · herma /api/preview — <2ms noun context into Meta Muse Spark',
+      nodes: [['node-workers', 'active-verb'], ['node-herma', 'active-noun'], ['node-meta', 'active-ok']],
+      wires: [['act-3a', 'orb-3a', 0.33, 0.42], ['act-3b', 'orb-3b', 0.41, 0.50]],
+      pill: 'pill-3',
+      builder: true, reviewer: false,
+      status: { 'st-herma': '1.4ms hit', 'st-meta': 'Muse Spark 1.3' }
+    },
+    {
+      idx: 4, u0: 0.52, u1: 0.68,
+      title: '4/6 · put_record expected_version — Atomic CAS task object @v1',
+      nodes: [['node-workers', 'active-verb'], ['node-tessera', 'active-noun']],
+      wires: [['act-4', 'orb-4', 0.53, 0.66]],
+      pill: 'pill-4',
+      builder: true, reviewer: false,
+      status: { 'st-tessera': 'CAS @v1 written', 'st-workers': 'report @v1' }
+    },
+    {
+      idx: 5, u0: 0.68, u1: 0.85,
+      title: '5/6 · independent review — Reviewer != Builder verifies (409 guard)',
+      nodes: [['node-tessera', 'active-noun'], ['node-workers', 'active-ok'], ['node-meta', 'active-ok']],
+      wires: [['act-5a', 'orb-5a', 0.69, 0.77], ['act-5b', 'orb-5b', 0.76, 0.84]],
+      pill: 'pill-5',
+      builder: false, reviewer: true,
+      status: { 'st-workers': 'reviewer != builder', 'st-tessera': '409 guard armed' }
+    },
+    {
+      idx: 6, u0: 0.85, u1: 1.00,
+      title: '6/6 · SHA-256 receipt — Verified task object & receipt cb905452… sealed',
+      nodes: [['node-tessera', 'active-noun'], ['node-verified', 'active-ok']],
+      wires: [['act-6', 'orb-6', 0.86, 0.96]],
+      pill: 'pill-6',
+      builder: false, reviewer: true,
+      status: { 'st-verified': 'ADMITTED ✓', 'st-tessera': 'receipt sealed' }
+    }
+  ];
+
+  const DEFAULT_STATUS = {
+    'st-eranos': 'Two doors',
+    'st-tessera': '37 MCP tools',
+    'st-herma': '67 seed packs',
+    'st-verified': 'CAS @v1',
+    'st-workers': 'Scoped keys',
+    'st-meta': '41.0s live'
+  };
+
+  const ALL_NODES = ['node-eranos', 'node-tessera', 'node-herma', 'node-verified', 'node-workers', 'node-meta'];
+  const ALL_WIRES = [
+    ['act-1', 'orb-1', 0.02, 0.14],
+    ['act-2', 'orb-2', 0.17, 0.30],
+    ['act-3a', 'orb-3a', 0.33, 0.42],
+    ['act-3b', 'orb-3b', 0.41, 0.50],
+    ['act-4', 'orb-4', 0.53, 0.66],
+    ['act-5a', 'orb-5a', 0.69, 0.77],
+    ['act-5b', 'orb-5b', 0.76, 0.84],
+    ['act-6', 'orb-6', 0.86, 0.96]
+  ];
+
+  const pathLengths = {};
+  for (const [aid] of ALL_WIRES) {
+    const el = document.getElementById(aid);
+    const len = el.getTotalLength();
+    pathLengths[aid] = len;
+    el.style.strokeDasharray = `${len} ${len}`;
+    el.style.strokeDashoffset = `${len}`;
+  }
+
+  function easeInOutCubic(x) {
+    return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+  }
+  function clamp01(v) {
+    return Math.max(0, Math.min(1, v));
+  }
+
+  function renderAt(tSec, durSec) {
+    if (durSec) totalDur = durSec;
+    const t = Math.max(0, Math.min(totalDur, tSec));
+    const u = totalDur > 0 ? t / totalDur : 0;
+
+    // Determine active phase
+    let active = PHASES[PHASES.length - 1];
+    for (const ph of PHASES) {
+      if (u >= ph.u0 && u < ph.u1) {
+        active = ph;
+        break;
+      }
+    }
+
+    // Header
+    document.getElementById('hdr-phase').textContent = active.title;
+    document.getElementById('hdr-telemetry').textContent =
+      `trace: muse-2 (41.0s) + T05 · t = ${t.toFixed(1).padStart(4, '0')}s / ${totalDur.toFixed(0)}s`;
+
+    // Reset node highlights & statuses
+    for (const nid of ALL_NODES) {
+      const nel = document.getElementById(nid);
+      nel.classList.remove('active-verb', 'active-noun', 'active-ok');
+    }
+    for (const [sid, val] of Object.entries(DEFAULT_STATUS)) {
+      document.getElementById(sid).textContent = val;
+    }
+
+    // Finale settle (u >= 0.96): gently highlight end-to-end chain
+    if (u >= 0.96) {
+      document.getElementById('node-eranos').classList.add('active-verb');
+      document.getElementById('node-tessera').classList.add('active-noun');
+      document.getElementById('node-workers').classList.add('active-verb');
+      document.getElementById('node-herma').classList.add('active-noun');
+      document.getElementById('node-meta').classList.add('active-ok');
+      document.getElementById('node-verified').classList.add('active-ok');
+    } else {
+      for (const [nid, cls] of active.nodes) {
+        document.getElementById(nid).classList.add(cls);
+      }
+    }
+    for (const [sid, val] of Object.entries(active.status)) {
+      document.getElementById(sid).textContent = val;
+    }
+
+    // Builder / Reviewer sub-chips
+    document.getElementById('chip-builder').classList.toggle('lit-build', active.builder || u >= 0.96);
+    document.getElementById('chip-reviewer').classList.toggle('lit-rev', active.reviewer || u >= 0.96);
+
+    // Wire trails & moving orbs
+    for (const [aid, oid, w0, w1] of ALL_WIRES) {
+      const pathEl = document.getElementById(aid);
+      const orbEl = document.getElementById(oid);
+      const len = pathLengths[aid];
+      if (u < w0) {
+        pathEl.style.opacity = '0';
+        pathEl.style.strokeDashoffset = `${len}`;
+        orbEl.setAttribute('opacity', '0');
+      } else if (u <= w1) {
+        const p = easeInOutCubic(clamp01((u - w0) / (w1 - w0)));
+        pathEl.style.opacity = '0.95';
+        pathEl.style.strokeDashoffset = `${len * (1 - p)}`;
+        const pt = pathEl.getPointAtLength(len * p);
+        orbEl.setAttribute('transform', `translate(${pt.x.toFixed(2)}, ${pt.y.toFixed(2)})`);
+        const fade = p < 0.08 ? p / 0.08 : (p > 0.92 ? (1 - p) / 0.08 : 1);
+        orbEl.setAttribute('opacity', fade.toFixed(3));
+      } else {
+        pathEl.style.opacity = '0.42';
+        pathEl.style.strokeDashoffset = '0';
+        orbEl.setAttribute('opacity', '0');
+      }
+    }
+
+    // Wire pills: appear smoothly when their phase begins, stay readable at settled opacity
+    for (const ph of PHASES) {
+      const pel = document.getElementById(ph.pill);
+      if (u < ph.u0) {
+        pel.style.opacity = '0';
+        pel.style.transform = 'translateY(4px) scale(0.97)';
+      } else if (u < ph.u1) {
+        const enter = clamp01((u - ph.u0) / 0.03);
+        const e = easeInOutCubic(enter);
+        pel.style.opacity = (0.2 + 0.8 * e).toFixed(3);
+        pel.style.transform = `translateY(${(4 * (1 - e)).toFixed(2)}px) scale(${(0.97 + 0.03 * e).toFixed(4)})`;
+      } else {
+        pel.style.opacity = u >= 0.96 ? '0.92' : '0.68';
+        pel.style.transform = 'translateY(0px) scale(1)';
+      }
+    }
+
+    // Bottom step rail
+    for (const ph of PHASES) {
+      const rel = document.getElementById(`rail-${ph.idx}`);
+      rel.classList.remove('done', 'current');
+      if (ph.idx === active.idx && u < 0.97) {
+        rel.classList.add('current');
+      } else if (u >= ph.u1 || u >= 0.97) {
+        rel.classList.add('done');
+      }
+    }
+
+    if (isInteractive) {
+      const scrub = document.getElementById('scrub');
+      const ibTime = document.getElementById('ib-time');
+      scrub.max = String(totalDur);
+      scrub.value = String(t);
+      ibTime.textContent = `${t.toFixed(1)}s / ${totalDur.toFixed(1)}s`;
+    }
+  }
+
+  window.setTime = renderAt;
+
+  // Initial state from ?t= query or 0
+  if (params.has('t')) {
+    renderAt(parseFloat(params.get('t')) || 0, totalDur);
+  } else if (isInteractive) {
+    let playing = true;
+    let cur = 0;
+    let last = performance.now();
+    const btnPlay = document.getElementById('btn-play');
+    const btnMode = document.getElementById('btn-mode');
+    const scrub = document.getElementById('scrub');
+
+    btnPlay.addEventListener('click', () => {
+      playing = !playing;
+      btnPlay.textContent = playing ? 'Pause' : 'Play';
+      last = performance.now();
+    });
+    btnMode.addEventListener('click', () => {
+      totalDur = totalDur === 16 ? 8 : 16;
+      cur = cur % totalDur;
+      btnMode.textContent = `Mode: ${totalDur}s`;
+      renderAt(cur, totalDur);
+    });
+    scrub.addEventListener('input', (e) => {
+      playing = false;
+      btnPlay.textContent = 'Play';
+      cur = parseFloat(e.target.value) || 0;
+      renderAt(cur, totalDur);
+    });
+
+    function tick(now) {
+      if (playing) {
+        const dt = (now - last) / 1000;
+        cur = (cur + dt) % totalDur;
+        renderAt(cur, totalDur);
+      }
+      last = now;
+      requestAnimationFrame(tick);
+    }
+    renderAt(0, totalDur);
+    requestAnimationFrame(tick);
+  } else {
+    // Default poster state when opened statically without ?t=
+    renderAt(totalDur * 0.97, totalDur);
+  }
+})();
+</script>
+</body>
+</html>

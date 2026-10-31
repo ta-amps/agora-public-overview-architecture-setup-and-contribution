@@ -21,8 +21,12 @@ SENSITIVE = {
     "local home path": re.compile(r"/(?:home|Users)/[A-Za-z0-9_.-]+/"),
     "credential URL": re.compile(r"https?://[^/\s]+:[^/\s]+@"),
 }
-BINARY_SUFFIXES = {".pdf", ".pptx", ".mp4", ".png"}
-MEDIA_MAGIC = {".mp4": lambda b: b[4:8] == b"ftyp", ".png": lambda b: b.startswith(b"\x89PNG\r\n\x1a\n")}
+BINARY_SUFFIXES = {".pdf", ".pptx", ".mp4", ".png", ".ttf"}
+MEDIA_MAGIC = {
+    ".mp4": lambda b: b[4:8] == b"ftyp",
+    ".png": lambda b: b.startswith(b"\x89PNG\r\n\x1a\n"),
+    ".ttf": lambda b: b[:4] in {b"\x00\x01\x00\x00", b"OTTO", b"true"},
+}
 RELEASE_PREFIX = "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/releases/download/"
 PAGES_PREFIX = "/agora-public-overview-architecture-setup-and-contribution/"
 HTML_REF = re.compile(r'\s(?:href|src)="([^"]*)"')

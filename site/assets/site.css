@@ -594,9 +594,13 @@ h3[id] { scroll-margin-top: var(--space-6); }
 }
 
 .film-stage {
+  position: relative;
   width: min(100%, max(20rem, calc((100vh - 8rem) * 16 / 9)));
   width: min(100%, max(20rem, calc((100svh - 8rem) * 16 / 9)));
   margin-inline: auto;
+  border-radius: var(--radius-2);
+  overflow: hidden;
+  box-shadow: 0 20px 48px rgb(0 0 0 / 0.42);
 }
 
 .film.has-cuts .film-stage {
@@ -609,7 +613,75 @@ h3[id] { scroll-margin-top: var(--space-6); }
   width: 100%;
   height: auto;
   aspect-ratio: 16 / 9;
-  background: #000;
+  background: #222732;
+}
+
+/* Suppress ugly native square WebVTT cue boxes inline (including Chromium shadow DOM)
+   while keeping textTracks active in mode="hidden" so the custom widescreen bottom-border
+   .film-caption-pill renders cleanly inside the #222732 grayish-black letterbox band. */
+html.js .film-video:not(:fullscreen)::cue,
+.film-video:not(:fullscreen)::cue {
+  opacity: 0 !important;
+  color: transparent !important;
+  background: transparent !important;
+  text-shadow: none !important;
+}
+
+html.js .film-video:not(:fullscreen)::-webkit-media-text-track-container,
+html.js .film-video:not(:fullscreen)::-webkit-media-text-track-display,
+html.js .film-video:not(:fullscreen)::-webkit-media-text-track-display-backdrop {
+  display: none !important;
+  opacity: 0 !important;
+  background: transparent !important;
+}
+
+.film-video:fullscreen::cue {
+  background: rgba(24, 28, 37, 0.86);
+  color: #F5F2EA;
+  font-family: var(--font-body);
+  font-size: 1.05em;
+  border-radius: 12px;
+}
+
+.film-caption-bar {
+  position: absolute;
+  inset-inline: clamp(0.75rem, 3.5%, 3rem);
+  bottom: clamp(0.65rem, 2.1%, 1.4rem);
+  max-height: 11.8%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  z-index: 4;
+  transition: bottom 150ms ease-out;
+}
+
+.film-stage:hover .film-caption-bar,
+.film-stage[data-paused="true"] .film-caption-bar {
+  bottom: clamp(2.15rem, 4.9%, 3.1rem);
+}
+
+.film-caption-bar[hidden] { display: none; }
+
+.film-caption-pill {
+  display: inline-block;
+  max-width: min(94%, 62ch);
+  padding: 0.34rem 0.96rem;
+  border-radius: 14px;
+  background: rgba(24, 28, 37, 0.84);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgba(245, 242, 234, 0.16);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.34);
+  color: #F5F2EA;
+  font-family: var(--font-body);
+  font-size: clamp(0.78rem, 0.54rem + 0.72vw, 1.06rem);
+  font-weight: 500;
+  line-height: 1.32;
+  letter-spacing: 0.005em;
+  text-align: center;
+  text-wrap: balance;
+  white-space: pre-line;
 }
 
 .film-cuts {
@@ -622,7 +694,8 @@ h3[id] { scroll-margin-top: var(--space-6); }
 
 .film-cuts[hidden] { display: none; }
 
-.film-cut {
+.film-cut,
+.film-cc {
   font: inherit;
   font-size: var(--text-small);
   font-weight: 600;
@@ -635,8 +708,14 @@ h3[id] { scroll-margin-top: var(--space-6); }
   cursor: pointer;
 }
 
-.film-cut[aria-pressed="true"] { background: var(--color-film-ink); color: var(--color-film); border-color: var(--color-film-ink); }
-.film-cut:focus-visible { outline: 2px solid var(--color-film-ink); outline-offset: 3px; }
+.film-cc {
+  border-style: dashed;
+}
+
+.film-cut[aria-pressed="true"],
+.film-cc[aria-pressed="true"] { background: var(--color-film-ink); color: var(--color-film); border-color: var(--color-film-ink); border-style: solid; }
+.film-cut:focus-visible,
+.film-cc:focus-visible { outline: 2px solid var(--color-film-ink); outline-offset: 3px; }
 
 .film-label {
   padding: var(--space-3) var(--gutter) 0;
@@ -2008,4 +2087,104 @@ tbody th { font-weight: 600; }
   .exp-card,
   .harness-card,
   .routing-item { padding: var(--space-4); }
+}
+
+/* Deploy and self-hosting guide */
+
+.deploy-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.deploy-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
+  align-content: start;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  border: 1px solid var(--color-rule-strong);
+  border-radius: var(--radius-3);
+  background: var(--color-paper-2);
+}
+
+.deploy-badge {
+  display: inline-flex;
+  justify-self: start;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  background: var(--color-paper-3);
+  border: 1px solid var(--color-rule-strong);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  font-weight: 600;
+  color: var(--color-verb-ink);
+}
+
+.deploy-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  line-height: 1.25;
+  color: var(--color-ink);
+}
+
+.deploy-summary {
+  font-size: var(--text-small);
+  line-height: 1.55;
+  color: var(--color-ink);
+}
+
+.deploy-when {
+  font-size: var(--text-micro);
+  line-height: 1.5;
+  color: var(--color-ink-2);
+}
+
+.deploy-code-wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.deploy-code-bar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.deploy-copy {
+  font-size: var(--text-micro);
+  padding: 0.25rem 0.65rem;
+}
+
+.deploy-pre {
+  margin: 0;
+  padding: var(--space-4);
+  border-radius: var(--radius-2);
+  background: var(--color-band);
+  color: var(--color-band-ink);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.deploy-pre code,
+pre code {
+  background: none;
+  color: inherit;
+  border-radius: 0;
+  padding: 0;
+  overflow-wrap: normal;
+}
+
+@media (max-width: 64rem) {
+  .deploy-grid { grid-template-columns: minmax(0, 1fr); }
 }

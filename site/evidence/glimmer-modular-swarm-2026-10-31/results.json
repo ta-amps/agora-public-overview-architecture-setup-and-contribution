@@ -1,0 +1,5332 @@
+{
+  "plan": {
+    "active_roles": [
+      "decomposer",
+      "retriever",
+      "builder",
+      "verifier"
+    ],
+    "eval": {
+      "batch_size": 12,
+      "max_new_tokens": 1536,
+      "role_batch_size": {
+        "builder": 13,
+        "decomposer": 25,
+        "retriever": 25,
+        "verifier": 17
+      },
+      "role_max_new_tokens": {
+        "builder": 1472,
+        "decomposer": 576,
+        "retriever": 672,
+        "verifier": 1440
+      },
+      "sanity_batch_size": 20,
+      "sanity_max_new_tokens": 64
+    },
+    "full_scale_traces": 1600,
+    "lora": {
+      "alpha": 32,
+      "dropout": 0.05,
+      "r": 16,
+      "target_modules": [
+        "q_proj",
+        "k_proj",
+        "v_proj",
+        "o_proj",
+        "gate_proj",
+        "up_proj",
+        "down_proj"
+      ]
+    },
+    "max_len": 3328,
+    "phase": "kaggle-2xt4-modular-multi-lora-v1",
+    "pip": [
+      "transformers==5.22.0",
+      "peft==0.21.2",
+      "accelerate==1.15.0"
+    ],
+    "train_jobs": [
+      {
+        "adapter_key": "decomposer_1600",
+        "gpu": 0,
+        "grad_accum": 8,
+        "kind": "sft",
+        "lr": 0.00025,
+        "micro_batch": 1,
+        "persist_in_working": true,
+        "public_name": "lora.task-decomposer",
+        "role": "decomposer",
+        "save_reload_probe": true,
+        "scale": 1600,
+        "seed": 101,
+        "sft_steps": 44,
+        "train_file": "sft_decomposer_1600.jsonl"
+      },
+      {
+        "adapter_key": "retriever_1600",
+        "gpu": 0,
+        "grad_accum": 8,
+        "kind": "sft",
+        "lr": 0.00025,
+        "micro_batch": 1,
+        "persist_in_working": true,
+        "public_name": "lora.shim-retriever",
+        "role": "retriever",
+        "scale": 1600,
+        "seed": 102,
+        "sft_steps": 44,
+        "train_file": "sft_retriever_1600.jsonl"
+      },
+      {
+        "adapter_key": "builder_1600",
+        "gpu": 0,
+        "grad_accum": 8,
+        "kind": "sft",
+        "lr": 0.00025,
+        "micro_batch": 1,
+        "persist_in_working": true,
+        "public_name": "lora.builder-toolcalls",
+        "role": "builder",
+        "scale": 1600,
+        "seed": 103,
+        "sft_steps": 48,
+        "train_file": "sft_builder_1600.jsonl"
+      },
+      {
+        "adapter_key": "decomposer_256",
+        "gpu": 0,
+        "grad_accum": 8,
+        "kind": "sft",
+        "lr": 0.00022,
+        "micro_batch": 1,
+        "persist_in_working": false,
+        "public_name": "lora.task-decomposer-256",
+        "role": "decomposer",
+        "scale": 256,
+        "seed": 201,
+        "sft_steps": 20,
+        "train_file": "sft_decomposer_256.jsonl"
+      },
+      {
+        "adapter_key": "retriever_256",
+        "gpu": 0,
+        "grad_accum": 8,
+        "kind": "sft",
+        "lr": 0.00022,
+        "micro_batch": 1,
+        "persist_in_working": false,
+        "public_name": "lora.shim-retriever-256",
+        "role": "retriever",
+        "scale": 256,
+        "seed": 202,
+        "sft_steps": 20,
+        "train_file": "sft_retriever_256.jsonl"
+      },
+      {
+        "adapter_key": "builder_256",
+        "gpu": 0,
+        "grad_accum": 8,
+        "kind": "sft",
+        "lr": 0.00022,
+        "micro_batch": 1,
+        "persist_in_working": false,
+        "public_name": "lora.builder-toolcalls-256",
+        "role": "builder",
+        "scale": 256,
+        "seed": 203,
+        "sft_steps": 22,
+        "train_file": "sft_builder_256.jsonl"
+      },
+      {
+        "adapter_key": "decomposer_64",
+        "gpu": 0,
+        "grad_accum": 4,
+        "kind": "sft",
+        "lr": 0.0002,
+        "micro_batch": 1,
+        "persist_in_working": false,
+        "public_name": "lora.task-decomposer-64",
+        "role": "decomposer",
+        "scale": 64,
+        "seed": 301,
+        "sft_steps": 8,
+        "train_file": "sft_decomposer_64.jsonl"
+      },
+      {
+        "adapter_key": "retriever_64",
+        "gpu": 0,
+        "grad_accum": 4,
+        "kind": "sft",
+        "lr": 0.0002,
+        "micro_batch": 1,
+        "persist_in_working": false,
+        "public_name": "lora.shim-retriever-64",
+        "role": "retriever",
+        "scale": 64,
+        "seed": 302,
+        "sft_steps": 8,
+        "train_file": "sft_retriever_64.jsonl"
+      },
+      {
+        "adapter_key": "builder_64",
+        "gpu": 0,
+        "grad_accum": 4,
+        "kind": "sft",
+        "lr": 0.0002,
+        "micro_batch": 1,
+        "persist_in_working": false,
+        "public_name": "lora.builder-toolcalls-64",
+        "role": "builder",
+        "scale": 64,
+        "seed": 303,
+        "sft_steps": 8,
+        "train_file": "sft_builder_64.jsonl"
+      },
+      {
+        "adapter_key": "verifier_1600",
+        "dpo_beta": 0.12,
+        "dpo_file": "dpo_verifier_1600.jsonl",
+        "dpo_grad_accum": 4,
+        "dpo_lr": 8e-05,
+        "dpo_micro_batch": 1,
+        "dpo_nll_coef": 0.15,
+        "dpo_steps": 28,
+        "gpu": 1,
+        "grad_accum": 8,
+        "kind": "sft_dpo",
+        "lr": 0.00024,
+        "micro_batch": 1,
+        "persist_in_working": true,
+        "public_name": "lora.verifier-dpo",
+        "role": "verifier",
+        "scale": 1600,
+        "seed": 104,
+        "sft_steps": 24,
+        "train_file": "sft_verifier_1600.jsonl"
+      },
+      {
+        "adapter_key": "verifier_256",
+        "dpo_beta": 0.12,
+        "dpo_file": "dpo_verifier_256.jsonl",
+        "dpo_grad_accum": 4,
+        "dpo_lr": 7.5e-05,
+        "dpo_micro_batch": 1,
+        "dpo_nll_coef": 0.15,
+        "dpo_steps": 16,
+        "gpu": 1,
+        "grad_accum": 8,
+        "kind": "sft_dpo",
+        "lr": 0.00022,
+        "micro_batch": 1,
+        "persist_in_working": false,
+        "public_name": "lora.verifier-dpo-256",
+        "role": "verifier",
+        "scale": 256,
+        "seed": 204,
+        "sft_steps": 14,
+        "train_file": "sft_verifier_256.jsonl"
+      },
+      {
+        "adapter_key": "verifier_64",
+        "dpo_beta": 0.12,
+        "dpo_file": "dpo_verifier_64.jsonl",
+        "dpo_grad_accum": 2,
+        "dpo_lr": 7e-05,
+        "dpo_micro_batch": 1,
+        "dpo_nll_coef": 0.15,
+        "dpo_steps": 8,
+        "gpu": 1,
+        "grad_accum": 4,
+        "kind": "sft_dpo",
+        "lr": 0.0002,
+        "micro_batch": 1,
+        "persist_in_working": false,
+        "public_name": "lora.verifier-dpo-64",
+        "role": "verifier",
+        "scale": 64,
+        "seed": 304,
+        "sft_steps": 6,
+        "train_file": "sft_verifier_64.jsonl"
+      },
+      {
+        "adapter_key": "monolithic_1600",
+        "gpu": 1,
+        "grad_accum": 8,
+        "kind": "sft",
+        "lr": 0.00024,
+        "micro_batch": 1,
+        "persist_in_working": true,
+        "public_name": "lora.monolithic-mixed",
+        "role": "monolithic_mixed",
+        "scale": 1600,
+        "seed": 401,
+        "sft_steps": 56,
+        "train_file": "sft_monolithic_1600.jsonl"
+      },
+      {
+        "adapter_key": "monolithic_256",
+        "gpu": 1,
+        "grad_accum": 8,
+        "kind": "sft",
+        "lr": 0.00022,
+        "micro_batch": 1,
+        "persist_in_working": false,
+        "public_name": "lora.monolithic-mixed-256",
+        "role": "monolithic_mixed",
+        "scale": 256,
+        "seed": 402,
+        "sft_steps": 24,
+        "train_file": "sft_monolithic_256.jsonl"
+      },
+      {
+        "adapter_key": "monolithic_64",
+        "gpu": 1,
+        "grad_accum": 4,
+        "kind": "sft",
+        "lr": 0.0002,
+        "micro_batch": 1,
+        "persist_in_working": false,
+        "public_name": "lora.monolithic-mixed-64",
+        "role": "monolithic_mixed",
+        "scale": 64,
+        "seed": 403,
+        "sft_steps": 10,
+        "train_file": "sft_monolithic_64.jsonl"
+      }
+    ]
+  },
+  "cpu_rehearsal": false,
+  "started_unix": 1793421691.408391,
+  "stages": {
+    "environment": {
+      "status": "ok",
+      "pip_tail": "ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.\ngradio 6.26.0 requires pillow<13.0,>=8.0, but you have pillow 13.0.0 which is incompatible.",
+      "pip_seconds": 17.17,
+      "versions": {
+        "torch": "2.11.0+cu128",
+        "transformers": "5.22.0",
+        "peft": "0.21.2",
+        "accelerate": "1.15.0",
+        "safetensors": "0.8.0",
+        "tokenizers": "0.23.1"
+      },
+      "python": "3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]",
+      "nvidia_smi_gpus": "0, Tesla T4, 15360 MiB, 580.178.04\n1, Tesla T4, 15360 MiB, 580.178.04",
+      "docker_image": "gcr.io/kaggle-gpu-images/python@sha256:9a6bcfda6d03b2cd9aa347ee8c1bae62043328ed0f4afe9bda014e4f8bbf9435",
+      "seconds": 17.24
+    },
+    "model_and_data_integrity": {
+      "status": "ok",
+      "model_dir": "/kaggle/input/models/metaresearch/llama-3.2/transformers/3b-instruct/1",
+      "model_small_files": {
+        "config.json": {
+          "sha256": "39fb36dc5416f445ebc4e71cb71fbcf6727e80a35836d8ba1a1474c318467b7a",
+          "matches_official": true
+        },
+        "tokenizer.json": {
+          "sha256": "bbc1904d35169c542dffbe1f7589a5994ec7426d9e5b609d07bab876f32e97ab",
+          "matches_official": true
+        },
+        "tokenizer_config.json": {
+          "sha256": "24e8a6dc2547164b7002e3125f10b415105644fcf02bf9ad8b674c87b1eaaed6",
+          "matches_official": true
+        }
+      },
+      "data_dir": "/kaggle/input/datasets/<kaggle-user>/ta-amps-modular-swarm-v1",
+      "dataset_files_verified": {
+        "dpo_holdout.jsonl": {
+          "rows": 50,
+          "sha256": "da79e1f8a01aa939b7cb7441001bf96d515f06fb737e419321ca0fbbfe700a29",
+          "verified": true
+        },
+        "dpo_verifier_1600.jsonl": {
+          "rows": 100,
+          "sha256": "f0128314d18c5e5bebce58f90347d075543883a0b8411802ff8d066e445f298e",
+          "verified": true
+        },
+        "dpo_verifier_256.jsonl": {
+          "rows": 64,
+          "sha256": "097824c13d1e15f003ce88648a4876212c7fcddbad8d6d56793fd7de47310dfc",
+          "verified": true
+        },
+        "dpo_verifier_64.jsonl": {
+          "rows": 16,
+          "sha256": "f9ccd3c2c3cf0898968ee96a68f01b935d8e7695d36e7f69aca733f30ef20dd4",
+          "verified": true
+        },
+        "holdout_eval.jsonl": {
+          "rows": 200,
+          "sha256": "0b67c1d0b7ddf3deeb2a8e5679da245607f2eef5a79883ff26db2b83d960bec3",
+          "verified": true
+        },
+        "sanity_40.jsonl": {
+          "rows": 40,
+          "sha256": "1271140ebde3ef699234f152e979adde0b3729f605c5ab3d432ff90a34ddd7eb",
+          "verified": true
+        },
+        "sft_builder_1600.jsonl": {
+          "rows": 500,
+          "sha256": "d526872956e8ea78998b8109e515392d21b0957d99dd4f99cedb67a5f8e03af4",
+          "verified": true
+        },
+        "sft_builder_256.jsonl": {
+          "rows": 64,
+          "sha256": "5b6b4ebacb2747664a86ceeed2aed3612e086e2454d8584f0e806e8f13c1ea64",
+          "verified": true
+        },
+        "sft_builder_64.jsonl": {
+          "rows": 16,
+          "sha256": "73bd18d7f7ba57ada1bd42a37634222605c89e19c046c993f4f6d28bc2c8ed61",
+          "verified": true
+        },
+        "sft_decomposer_1600.jsonl": {
+          "rows": 500,
+          "sha256": "c5ab93f919b03d90ec2f76289977da7bb91d19bab557fd757d2b9de6f3f78fd3",
+          "verified": true
+        },
+        "sft_decomposer_256.jsonl": {
+          "rows": 64,
+          "sha256": "6ff9e1d8f5e2f528e13cc120fb6920419e6627a5622b48fb24cf1bcdab0746a6",
+          "verified": true
+        },
+        "sft_decomposer_64.jsonl": {
+          "rows": 16,
+          "sha256": "5978334261c6fe24b0dc2778a7f6c9ee7ad536a513d9933e6444be07ad414f92",
+          "verified": true
+        },
+        "sft_monolithic_1600.jsonl": {
+          "rows": 1600,
+          "sha256": "6f31b4c08a697f8364641c2c0465544b6c70b1c31d983b164c26df7d5a902a25",
+          "verified": true
+        },
+        "sft_monolithic_256.jsonl": {
+          "rows": 256,
+          "sha256": "d8086d999849065b3b3c73ad4d559432ccc4a541bb11d9027b8076949c81c65e",
+          "verified": true
+        },
+        "sft_monolithic_64.jsonl": {
+          "rows": 64,
+          "sha256": "5c9c02172602bbf8eb5d8d631aa711fb9ea50ad0dae39585c8df166477ed2c12",
+          "verified": true
+        },
+        "sft_retriever_1600.jsonl": {
+          "rows": 500,
+          "sha256": "41e98525a1540c69786ccba23b2e97cfede2931cc67e9c038892f0d293c29a88",
+          "verified": true
+        },
+        "sft_retriever_256.jsonl": {
+          "rows": 64,
+          "sha256": "986faff47a4fc7a08f51fdc46bb389a029003b5acd85b2b31d1af035b93a6612",
+          "verified": true
+        },
+        "sft_retriever_64.jsonl": {
+          "rows": 16,
+          "sha256": "d60f84a90c5a1328d7c487423363174a48df0ce7022b0ce3314e437c7263dd5e",
+          "verified": true
+        },
+        "sft_verifier_1600.jsonl": {
+          "rows": 100,
+          "sha256": "afbee6754df5325b04db1cb7e9424e7ca9157516dafd811d4956d35ac80bdad4",
+          "verified": true
+        },
+        "sft_verifier_256.jsonl": {
+          "rows": 64,
+          "sha256": "b68bec7941a57c8832dbb46c3322082a3cf8a50a42c4313631c8cbc014b5b5f8",
+          "verified": true
+        },
+        "sft_verifier_64.jsonl": {
+          "rows": 16,
+          "sha256": "22a3bcfcecef93665375316cd2dd19dd4eb5efe6dceedcef54dcf6f2fc1422e1",
+          "verified": true
+        }
+      },
+      "zero_contamination_verified": {
+        "gold_holdout_self_score": 1.0,
+        "nested_subsets_verified": true,
+        "prompt_fingerprint_overlap": 0,
+        "workflow_id_overlap": 0
+      },
+      "seconds": 1.12
+    },
+    "parallel_train_2xt4": {
+      "status": "ok",
+      "gpu0": {
+        "base_load": {
+          "load_seconds": 8.48,
+          "dtype": "torch.float16",
+          "gpu_index": 0,
+          "mem_alloc_mib": 6128
+        },
+        "fp16_headroom": {
+          "logits_finite": true,
+          "max_layer_maxabs": 422.0,
+          "all_layers_finite": true
+        },
+        "peak_alloc_mib": 11275,
+        "adapters_trained": {
+          "lora.task-decomposer": {
+            "adapter_key": "decomposer_1600",
+            "public_name": "lora.task-decomposer",
+            "saved_dir": "/kaggle/working/adapters/decomposer_1600",
+            "persisted_in_working": true,
+            "files": {
+              "adapter_config.json": {
+                "bytes": 1226,
+                "sha256": "9b8c1be09b50308e61b386695bbc4c53e243ed2f421fa6ae861d113353e57697"
+              },
+              "adapter_model.safetensors": {
+                "bytes": 97307544,
+                "sha256": "290e0c28a328c0afb4d33c47e03705a72cc8cc7c08bd62a41b65ee9805dd5ef4"
+              }
+            },
+            "adapter_config": {
+              "alora_invocation_tokens": null,
+              "alpha_pattern": {},
+              "arrow_config": null,
+              "auto_mapping": null,
+              "base_model_name_or_path": "/kaggle/input/models/metaresearch/llama-3.2/transformers/3b-instruct/1",
+              "bias": "none",
+              "corda_config": null,
+              "ensure_weight_tying": false,
+              "eva_config": null,
+              "exclude_modules": null,
+              "fan_in_fan_out": false,
+              "inference_mode": true,
+              "init_lora_weights": true,
+              "kasa_config": null,
+              "layer_replication": null,
+              "layers_pattern": null,
+              "layers_to_transform": null,
+              "loftq_config": {},
+              "lora_alpha": 32,
+              "lora_bias": false,
+              "lora_dropout": 0.05,
+              "lora_ga_config": null,
+              "megatron_config": null,
+              "megatron_core": "megatron.core",
+              "modules_to_save": null,
+              "monteclora_config": null,
+              "peft_type": "LORA",
+              "peft_version": "0.21.2",
+              "qalora_group_size": 16,
+              "r": 16,
+              "rank_pattern": {},
+              "revision": null,
+              "target_modules": [
+                "q_proj",
+                "o_proj",
+                "up_proj",
+                "gate_proj",
+                "v_proj",
+                "k_proj",
+                "down_proj"
+              ],
+              "target_parameters": null,
+              "task_type": "CAUSAL_LM",
+              "trainable_token_indices": null,
+              "use_bdlora": null,
+              "use_dora": false,
+              "use_qalora": false,
+              "use_rslora": false,
+              "velora_config": null
+            },
+            "scale": 1600,
+            "role": "decomposer",
+            "kind": "sft",
+            "trainable_params": 24313856,
+            "train_rows": 500,
+            "sft_steps": 44,
+            "dpo_steps": 0,
+            "skipped_steps": 0,
+            "train_seconds": 1227.27,
+            "tokens_processed": 177782,
+            "tokens_per_s": 144.9,
+            "initial_loss": 1.25769,
+            "final_loss": 0.36004,
+            "base_probe_loss": 1.30984,
+            "tuned_probe_loss": 0.36813,
+            "max_abs_diff_tuned_vs_base": 34.84375,
+            "max_abs_diff_disabled_vs_base": 0.0
+          },
+          "lora.shim-retriever": {
+            "adapter_key": "retriever_1600",
+            "public_name": "lora.shim-retriever",
+            "saved_dir": "/kaggle/working/adapters/retriever_1600",
+            "persisted_in_working": true,
+            "files": {
+              "adapter_config.json": {
+                "bytes": 1226,
+                "sha256": "9b8c1be09b50308e61b386695bbc4c53e243ed2f421fa6ae861d113353e57697"
+              },
+              "adapter_model.safetensors": {
+                "bytes": 97307544,
+                "sha256": "567596a253fad7ec6cba8ec796a8bc7de33aa28d6513609a83b1714c28c4cc86"
+              }
+            },
+            "adapter_config": {
+              "alora_invocation_tokens": null,
+              "alpha_pattern": {},
+              "arrow_config": null,
+              "auto_mapping": null,
+              "base_model_name_or_path": "/kaggle/input/models/metaresearch/llama-3.2/transformers/3b-instruct/1",
+              "bias": "none",
+              "corda_config": null,
+              "ensure_weight_tying": false,
+              "eva_config": null,
+              "exclude_modules": null,
+              "fan_in_fan_out": false,
+              "inference_mode": true,
+              "init_lora_weights": true,
+              "kasa_config": null,
+              "layer_replication": null,
+              "layers_pattern": null,
+              "layers_to_transform": null,
+              "loftq_config": {},
+              "lora_alpha": 32,
+              "lora_bias": false,
+              "lora_dropout": 0.05,
+              "lora_ga_config": null,
+              "megatron_config": null,
+              "megatron_core": "megatron.core",
+              "modules_to_save": null,
+              "monteclora_config": null,
+              "peft_type": "LORA",
+              "peft_version": "0.21.2",
+              "qalora_group_size": 16,
+              "r": 16,
+              "rank_pattern": {},
+              "revision": null,
+              "target_modules": [
+                "q_proj",
+                "o_proj",
+                "up_proj",
+                "gate_proj",
+                "v_proj",
+                "k_proj",
+                "down_proj"
+              ],
+              "target_parameters": null,
+              "task_type": "CAUSAL_LM",
+              "trainable_token_indices": null,
+              "use_bdlora": null,
+              "use_dora": false,
+              "use_qalora": false,
+              "use_rslora": false,
+              "velora_config": null
+            },
+            "scale": 1600,
+            "role": "retriever",
+            "kind": "sft",
+            "trainable_params": 24313856,
+            "train_rows": 500,
+            "sft_steps": 44,
+            "dpo_steps": 0,
+            "skipped_steps": 0,
+            "train_seconds": 1156.7,
+            "tokens_processed": 201112,
+            "tokens_per_s": 173.9,
+            "initial_loss": 1.40856,
+            "final_loss": 0.35491,
+            "base_probe_loss": 1.30984,
+            "tuned_probe_loss": 1.88547,
+            "max_abs_diff_tuned_vs_base": 21.47266,
+            "max_abs_diff_disabled_vs_base": 0.0
+          },
+          "lora.builder-toolcalls": {
+            "adapter_key": "builder_1600",
+            "public_name": "lora.builder-toolcalls",
+            "saved_dir": "/kaggle/working/adapters/builder_1600",
+            "persisted_in_working": true,
+            "files": {
+              "adapter_config.json": {
+                "bytes": 1226,
+                "sha256": "9b8c1be09b50308e61b386695bbc4c53e243ed2f421fa6ae861d113353e57697"
+              },
+              "adapter_model.safetensors": {
+                "bytes": 97307544,
+                "sha256": "c855137afee481a9a3e7f4aa434b90fb6dc2815151d6d088436a471cddff6434"
+              }
+            },
+            "adapter_config": {
+              "alora_invocation_tokens": null,
+              "alpha_pattern": {},
+              "arrow_config": null,
+              "auto_mapping": null,
+              "base_model_name_or_path": "/kaggle/input/models/metaresearch/llama-3.2/transformers/3b-instruct/1",
+              "bias": "none",
+              "corda_config": null,
+              "ensure_weight_tying": false,
+              "eva_config": null,
+              "exclude_modules": null,
+              "fan_in_fan_out": false,
+              "inference_mode": true,
+              "init_lora_weights": true,
+              "kasa_config": null,
+              "layer_replication": null,
+              "layers_pattern": null,
+              "layers_to_transform": null,
+              "loftq_config": {},
+              "lora_alpha": 32,
+              "lora_bias": false,
+              "lora_dropout": 0.05,
+              "lora_ga_config": null,
+              "megatron_config": null,
+              "megatron_core": "megatron.core",
+              "modules_to_save": null,
+              "monteclora_config": null,
+              "peft_type": "LORA",
+              "peft_version": "0.21.2",
+              "qalora_group_size": 16,
+              "r": 16,
+              "rank_pattern": {},
+              "revision": null,
+              "target_modules": [
+                "q_proj",
+                "o_proj",
+                "up_proj",
+                "gate_proj",
+                "v_proj",
+                "k_proj",
+                "down_proj"
+              ],
+              "target_parameters": null,
+              "task_type": "CAUSAL_LM",
+              "trainable_token_indices": null,
+              "use_bdlora": null,
+              "use_dora": false,
+              "use_qalora": false,
+              "use_rslora": false,
+              "velora_config": null
+            },
+            "scale": 1600,
+            "role": "builder",
+            "kind": "sft",
+            "trainable_params": 24313856,
+            "train_rows": 500,
+            "sft_steps": 48,
+            "dpo_steps": 0,
+            "skipped_steps": 0,
+            "train_seconds": 3118.45,
+            "tokens_processed": 302359,
+            "tokens_per_s": 97.0,
+            "initial_loss": 1.31247,
+            "final_loss": 0.66591,
+            "base_probe_loss": 1.30984,
+            "tuned_probe_loss": 1.63649,
+            "max_abs_diff_tuned_vs_base": 23.25391,
+            "max_abs_diff_disabled_vs_base": 0.0
+          },
+          "lora.task-decomposer-256": {
+            "adapter_key": "decomposer_256",
+            "public_name": "lora.task-decomposer-256",
+            "saved_dir": "/tmp/modular_llama32_run/adapters/decomposer_256",
+            "persisted_in_working": false,
+            "files": {
+              "adapter_config.json": {
+                "bytes": 1226,
+                "sha256": "9b8c1be09b50308e61b386695bbc4c53e243ed2f421fa6ae861d113353e57697"
+              },
+              "adapter_model.safetensors": {
+                "bytes": 97307544,
+                "sha256": "a5cae29f47245f6b7063e5b628be56b720d2176e4440a06ed63e9e63739b4769"
+              }
+            },
+            "adapter_config": {
+              "alora_invocation_tokens": null,
+              "alpha_pattern": {},
+              "arrow_config": null,
+              "auto_mapping": null,
+              "base_model_name_or_path": "/kaggle/input/models/metaresearch/llama-3.2/transformers/3b-instruct/1",
+              "bias": "none",
+              "corda_config": null,
+              "ensure_weight_tying": false,
+              "eva_config": null,
+              "exclude_modules": null,
+              "fan_in_fan_out": false,
+              "inference_mode": true,
+              "init_lora_weights": true,
+              "kasa_config": null,
+              "layer_replication": null,
+              "layers_pattern": null,
+              "layers_to_transform": null,
+              "loftq_config": {},
+              "lora_alpha": 32,
+              "lora_bias": false,
+              "lora_dropout": 0.05,
+              "lora_ga_config": null,
+              "megatron_config": null,
+              "megatron_core": "megatron.core",
+              "modules_to_save": null,
+              "monteclora_config": null,
+              "peft_type": "LORA",
+              "peft_version": "0.21.2",
+              "qalora_group_size": 16,
+              "r": 16,
+              "rank_pattern": {},
+              "revision": null,
+              "target_modules": [
+                "q_proj",
+                "o_proj",
+                "up_proj",
+                "gate_proj",
+                "v_proj",
+                "k_proj",
+                "down_proj"
+              ],
+              "target_parameters": null,
+              "task_type": "CAUSAL_LM",
+              "trainable_token_indices": null,
+              "use_bdlora": null,
+              "use_dora": false,
+              "use_qalora": false,
+              "use_rslora": false,
+              "velora_config": null
+            },
+            "scale": 256,
+            "role": "decomposer",
+            "kind": "sft",
+            "trainable_params": 24313856,
+            "train_rows": 64,
+            "sft_steps": 20,
+            "dpo_steps": 0,
+            "skipped_steps": 0,
+            "train_seconds": 570.97,
+            "tokens_processed": 80853,
+            "tokens_per_s": 141.6,
+            "initial_loss": 1.243,
+            "final_loss": 0.35068,
+            "base_probe_loss": 1.30984,
+            "tuned_probe_loss": 0.37347,
+            "max_abs_diff_tuned_vs_base": 27.03271,
+            "max_abs_diff_disabled_vs_base": 0.0
+          },
+          "lora.shim-retriever-256": {
+            "adapter_key": "retriever_256",
+            "public_name": "lora.shim-retriever-256",
+            "saved_dir": "/tmp/modular_llama32_run/adapters/retriever_256",
+            "persisted_in_working": false,
+            "files": {
+              "adapter_config.json": {
+                "bytes": 1226,
+                "sha256": "9b8c1be09b50308e61b386695bbc4c53e243ed2f421fa6ae861d113353e57697"
+              },
+              "adapter_model.safetensors": {
+                "bytes": 97307544,
+                "sha256": "f78f92a8707e093994e0a034a0e8a608c56522b24cffdcd2c710dc7a7d46b6fd"
+              }
+            },
+            "adapter_config": {
+              "alora_invocation_tokens": null,
+              "alpha_pattern": {},
+              "arrow_config": null,
+              "auto_mapping": null,
+              "base_model_name_or_path": "/kaggle/input/models/metaresearch/llama-3.2/transformers/3b-instruct/1",
+              "bias": "none",
+              "corda_config": null,
+              "ensure_weight_tying": false,
+              "eva_config": null,
+              "exclude_modules": null,
+              "fan_in_fan_out": false,
+              "inference_mode": true,
+              "init_lora_weights": true,
+              "kasa_config": null,
+              "layer_replication": null,
+              "layers_pattern": null,
+              "layers_to_transform": null,
+              "loftq_config": {},
+              "lora_alpha": 32,
+              "lora_bias": false,
+              "lora_dropout": 0.05,
+              "lora_ga_config": null,
+              "megatron_config": null,
+              "megatron_core": "megatron.core",
+              "modules_to_save": null,
+              "monteclora_config": null,
+              "peft_type": "LORA",
+              "peft_version": "0.21.2",
+              "qalora_group_size": 16,
+              "r": 16,
+              "rank_pattern": {},
+              "revision": null,
+              "target_modules": [
+                "q_proj",
+                "o_proj",
+                "up_proj",
+                "gate_proj",
+                "v_proj",
+                "k_proj",
+                "down_proj"
+              ],
+              "target_parameters": null,
+              "task_type": "CAUSAL_LM",
+              "trainable_token_indices": null,
+              "use_bdlora": null,
+              "use_dora": false,
+              "use_qalora": false,
+              "use_rslora": false,
+              "velora_config": null
+            },
+            "scale": 256,
+            "role": "retriever",
+            "kind": "sft",
+            "trainable_params": 24313856,
+            "train_rows": 64,
+            "sft_steps": 20,
+            "dpo_steps": 0,
+            "skipped_steps": 0,
+            "train_seconds": 550.56,
+            "tokens_processed": 91432,
+            "tokens_per_s": 166.1,
+            "initial_loss": 1.40697,
+            "final_loss": 0.43977,
+            "base_probe_loss": 1.30984,
+            "tuned_probe_loss": 1.59712,
+            "max_abs_diff_tuned_vs_base": 16.79688,
+            "max_abs_diff_disabled_vs_base": 0.0
+          },
+          "lora.builder-toolcalls-256": {
+            "adapter_key": "builder_256",
+            "public_name": "lora.builder-toolcalls-256",
+            "saved_dir": "/tmp/modular_llama32_run/adapters/builder_256",
+            "persisted_in_working": false,
+            "files": {
+              "adapter_config.json": {
+                "bytes": 1226,
+                "sha256": "9b8c1be09b50308e61b386695bbc4c53e243ed2f421fa6ae861d113353e57697"
+              },
+              "adapter_model.safetensors": {
+                "bytes": 97307544,
+                "sha256": "f1deb9a94fb522ecc0a0e3ff01c3d2b19193c17fe01e14ed446d4646e3c9af5a"
+              }
+            },
+            "adapter_config": {
+              "alora_invocation_tokens": null,
+              "alpha_pattern": {},
+              "arrow_config": null,
+              "auto_mapping": null,
+              "base_model_name_or_path": "/kaggle/input/models/metaresearch/llama-3.2/transformers/3b-instruct/1",
+              "bias": "none",
+              "corda_config": null,
+              "ensure_weight_tying": false,
+              "eva_config": null,
+              "exclude_modules": null,
+              "fan_in_fan_out": false,
+              "inference_mode": true,
+              "init_lora_weights": true,
+              "kasa_config": null,
+              "layer_replication": null,
+              "layers_pattern": null,
+              "layers_to_transform": null,
+              "loftq_config": {},
+              "lora_alpha": 32,
+              "lora_bias": false,
+              "lora_dropout": 0.05,
+              "lora_ga_config": null,
+              "megatron_config": null,
+              "megatron_core": "megatron.core",
+              "modules_to_save": null,
+              "monteclora_config": null,
+              "peft_type": "LORA",
+              "peft_version": "0.21.2",
+              "qalora_group_size": 16,
+              "r": 16,
+              "rank_pattern": {},
+              "revision": null,
+              "target_modules": [
+                "q_proj",
+                "o_proj",
+                "up_proj",
+                "gate_proj",
+                "v_proj",
+                "k_proj",
+                "down_proj"
+              ],
+              "target_parameters": null,
+              "task_type": "CAUSAL_LM",
+              "trainable_token_indices": null,
+              "use_bdlora": null,
+              "use_dora": false,
+              "use_qalora": false,
+              "use_rslora": false,
+              "velora_config": null
+            },
+            "scale": 256,
+            "role": "builder",
+            "kind": "sft",
+            "trainable_params": 24313856,
+            "train_rows": 64,
+            "sft_steps": 22,
+            "dpo_steps": 0,
+            "skipped_steps": 0,
+            "train_seconds": 1509.94,
+            "tokens_processed": 141265,
+            "tokens_per_s": 93.6,
+            "initial_loss": 1.23977,
+            "final_loss": 0.621,
+            "base_probe_loss": 1.30984,
+            "tuned_probe_loss": 1.49375,
+            "max_abs_diff_tuned_vs_base": 19.81641,
+            "max_abs_diff_disabled_vs_base": 0.0
+          },
+          "lora.task-decomposer-64": {
+            "adapter_key": "decomposer_64",
+            "public_name": "lora.task-decomposer-64",
+            "saved_dir": "/tmp/modular_llama32_run/adapters/decomposer_64",
+            "persisted_in_working": false,
+            "files": {
+              "adapter_config.json": {
+                "bytes": 1226,
+                "sha256": "9b8c1be09b50308e61b386695bbc4c53e243ed2f421fa6ae861d113353e57697"
+              },
+              "adapter_model.safetensors": {
+                "bytes": 97307544,
+                "sha256": "aba06f0d381470754cce52df2d07dc4dad11808892e2992f1d9bd1274ead5f57"
+              }
+            },
+            "adapter_config": {
+              "alora_invocation_tokens": null,
+              "alpha_pattern": {},
+              "arrow_config": null,
+              "auto_mapping": null,
+              "base_model_name_or_path": "/kaggle/input/models/metaresearch/llama-3.2/transformers/3b-instruct/1",
+              "bias": "none",
+              "corda_config": null,
+              "ensure_weight_tying": false,
+              "eva_config": null,
+              "exclude_modules": null,
+              "fan_in_fan_out": false,
+              "inference_mode": true,
+              "init_lora_weights": true,
+              "kasa_config": null,
+              "layer_replication": null,
+              "layers_pattern": null,
+              "layers_to_transform": null,
+              "loftq_config": {},
+              "lora_alpha": 32,
+              "lora_bias": false,
+              "lora_dropout": 0.05,
+              "lora_ga_config": null,
+              "megatron_config": null,
+              "megatron_core": "megatron.core",
+              "modules_to_save": null,
+              "monteclora_config": null,
+              "peft_type": "LORA",
+              "peft_version": "0.21.2",
+              "qalora_group_size": 16,
+              "r": 16,
+              "rank_pattern": {},
+              "revision": null,
+              "target_modules": [
+                "q_proj",
+                "o_proj",
+                "up_proj",
+                "gate_proj",
+                "v_proj",
+                "k_proj",
+                "down_proj"
+              ],
+              "target_parameters": null,
+              "task_type": "CAUSAL_LM",
+              "trainable_token_indices": null,
+              "use_bdlora": null,
+              "use_dora": false,
+              "use_qalora": false,
+              "use_rslora": false,
+              "velora_config": null
+            },
+            "scale": 64,
+            "role": "decomposer",
+            "kind": "sft",
+            "trainable_params": 24313856,
+            "train_rows": 16,
+            "sft_steps": 8,
+            "dpo_steps": 0,
+            "skipped_steps": 0,
+            "train_seconds": 122.48,
+            "tokens_processed": 16134,
+            "tokens_per_s": 131.7,
+            "initial_loss": 1.25579,
+            "final_loss": 0.43129,
+            "base_probe_loss": 1.30984,
+            "tuned_probe_loss": 0.43923,
+            "max_abs_diff_tuned_vs_base": 20.19141,
+            "max_abs_diff_disabled_vs_base": 0.0
+          },
+          "lora.shim-retriever-64": {
+            "adapter_key": "retriever_64",
+            "public_name": "lora.shim-retriever-64",
+            "saved_dir": "/tmp/modular_llama32_run/adapters/retriever_64",
+            "persisted_in_working": false,
+            "files": {
+              "adapter_config.json": {
+                "bytes": 1226,
+                "sha256": "9b8c1be09b50308e61b386695bbc4c53e243ed2f421fa6ae861d113353e57697"
+              },
+              "adapter_model.safetensors": {
+                "bytes": 97307544,
+                "sha256": "6edb086c99ef4f0df195a304a263b05b0d5dd66b3d0c6515071f76e989a36e77"
+              }
+            },
+            "adapter_config": {
+              "alora_invocation_tokens": null,
+              "alpha_pattern": {},
+              "arrow_config": null,
+              "auto_mapping": null,
+              "base_model_name_or_path": "/kaggle/input/models/metaresearch/llama-3.2/transformers/3b-instruct/1",
+              "bias": "none",
+              "corda_config": null,
+              "ensure_weight_tying": false,
+              "eva_config": null,
+              "exclude_modules": null,
+              "fan_in_fan_out": false,
+              "inference_mode": true,
+              "init_lora_weights": true,
+              "kasa_config": null,
+              "layer_replication": null,
+              "layers_pattern": null,
+              "layers_to_transform": null,
+              "loftq_config": {},
+              "lora_alpha": 32,
+              "lora_bias": false,
+              "lora_dropout": 0.05,
+              "lora_ga_config": null,
+              "megatron_config": null,
+              "megatron_core": "megatron.core",
+              "modules_to_save": null,
+              "monteclora_config": null,
+              "peft_type": "LORA",
+              "peft_version": "0.21.2",
+              "qalora_group_size": 16,
+              "r": 16,
+              "rank_pattern": {},
+              "revision": null,
+              "target_modules": [
+                "q_proj",
+                "o_proj",
+                "up_proj",
+                "gate_proj",
+                "v_proj",
+                "k_proj",
+                "down_proj"
+              ],
+              "target_parameters": null,
+              "task_type": "CAUSAL_LM",
+              "trainable_token_indices": null,
+              "use_bdlora": null,
+              "use_dora": false,
+              "use_qalora": false,
+              "use_rslora": false,
+              "velora_config": null
+            },
+            "scale": 64,
+            "role": "retriever",
+            "kind": "sft",
+            "trainable_params": 24313856,
+            "train_rows": 16,
+            "sft_steps": 8,
+            "dpo_steps": 0,
+            "skipped_steps": 0,
+            "train_seconds": 114.27,
+            "tokens_processed": 18356,
+            "tokens_per_s": 160.6,
+            "initial_loss": 1.46724,
+            "final_loss": 0.76865,
+            "base_probe_loss": 1.30984,
+            "tuned_probe_loss": 1.21533,
+            "max_abs_diff_tuned_vs_base": 12.28711,
+            "max_abs_diff_disabled_vs_base": 0.0
+          },
+          "lora.builder-toolcalls-64": {
+            "adapter_key": "builder_64",
+            "public_name": "lora.builder-toolcalls-64",
+            "saved_dir": "/tmp/modular_llama32_run/adapters/builder_64",
+            "persisted_in_working": false,
+            "files": {
+              "adapter_config.json": {
+                "bytes": 1226,
+                "sha256": "9b8c1be09b50308e61b386695bbc4c53e243ed2f421fa6ae861d113353e57697"
+              },
+              "adapter_model.safetensors": {
+                "bytes": 97307544,
+                "sha256": "e13c88bd234b48ba7a3f9521d2538db510db61cff0f8fb5d04be25d8619ed168"
+              }
+            },
+            "adapter_config": {
+              "alora_invocation_tokens": null,
+              "alpha_pattern": {},
+              "arrow_config": null,
+              "auto_mapping": null,
+              "base_model_name_or_path": "/kaggle/input/models/metaresearch/llama-3.2/transformers/3b-instruct/1",
+              "bias": "none",
+              "corda_config": null,
+              "ensure_weight_tying": false,
+              "eva_config": null,
+              "exclude_modules": null,
+              "fan_in_fan_out": false,
+              "inference_mode": true,
+              "init_lora_weights": true,
+              "kasa_config": null,
+              "layer_replication": null,
+              "layers_pattern": null,
+              "layers_to_transform": null,
+              "loftq_config": {},
+              "lora_alpha": 32,
+              "lora_bias": false,
+              "lora_dropout": 0.05,
+              "lora_ga_config": null,
+              "megatron_config": null,
+              "megatron_core": "megatron.core",
+              "modules_to_save": null,
+              "monteclora_config": null,
+              "peft_type": "LORA",
+              "peft_version": "0.21.2",
+              "qalora_group_size": 16,
+              "r": 16,
+              "rank_pattern": {},
+              "revision": null,
+              "target_modules": [
+                "q_proj",
+                "o_proj",
+                "up_proj",
+                "gate_proj",
+                "v_proj",
+                "k_proj",
+                "down_proj"
+              ],
+              "target_parameters": null,
+              "task_type": "CAUSAL_LM",
+              "trainable_token_indices": null,
+              "use_bdlora": null,
+              "use_dora": false,
+              "use_qalora": false,
+              "use_rslora": false,
+              "velora_config": null
+            },
+            "scale": 64,
+            "role": "builder",
+            "kind": "sft",
+            "trainable_params": 24313856,
+            "train_rows": 16,
+            "sft_steps": 8,
+            "dpo_steps": 0,
+            "skipped_steps": 0,
+            "train_seconds": 283.72,
+            "tokens_processed": 26452,
+            "tokens_per_s": 93.2,
+            "initial_loss": 1.05554,
+            "final_loss": 0.74602,
+            "base_probe_loss": 1.30984,
+            "tuned_probe_loss": 1.215,
+            "max_abs_diff_tuned_vs_base": 13.85156,
+            "max_abs_diff_disabled_vs_base": 0.0
+          }
+        }
+      },
+      "gpu1": {
+        "base_load": {
+          "load_seconds": 8.48,
+          "dtype": "torch.float16",
+          "gpu_index": 1,
+          "mem_alloc_mib": 6128
+        },
+        "fp16_headroom": {
+          "logits_finite": true,
+          "max_layer_maxabs": 422.0,
+          "all_layers_finite": true
+        },
+        "peak_alloc_mib": 11025,
+        "adapters_trained": {
+          "lora.verifier-dpo": {
+            "adapter_key": "verifier_1600",
+            "public_name": "lora.verifier-dpo",
+            "saved_dir": "/kaggle/working/adapters/verifier_1600",
+            "persisted_in_working": true,
+            "files": {
+              "adapter_config.json": {
+                "bytes": 1226,
+                "sha256": "0f93046676d1a5d9c1a5efa0bd5ee344e81c870431f1611e570eab4037001f1d"
+              },
+              "adapter_model.safetensors": {
+                "bytes": 97307544,
+                "sha256": "795f41fdbf6e8acb977589809fd626db3c63721e26f482c4fb9fd45ae45e43be"
+              }
+            },
+            "adapter_config": {
+              "alora_invocation_tokens": null,
+              "alpha_pattern": {},
+              "arrow_config": null,
+              "auto_mapping": null,
+              "base_model_name_or_path": "/kaggle/input/models/metaresearch/llama-3.2/transformers/3b-instruct/1",
+              "bias": "none",
+              "corda_config": null,
+              "ensure_weight_tying": false,
+              "eva_config": null,
+              "exclude_modules": null,
+              "fan_in_fan_out": false,
+              "inference_mode": true,
+              "init_lora_weights": true,
+              "kasa_config": null,
+              "layer_replication": null,
+              "layers_pattern": null,
+              "layers_to_transform": null,
+              "loftq_config": {},
+              "lora_alpha": 32,
+              "lora_bias": false,
+              "lora_dropout": 0.05,
+              "lora_ga_config": null,
+              "megatron_config": null,
+              "megatron_core": "megatron.core",
+              "modules_to_save": null,
+              "monteclora_config": null,
+              "peft_type": "LORA",
+              "peft_version": "0.21.2",
+              "qalora_group_size": 16,
+              "r": 16,
+              "rank_pattern": {},
+              "revision": null,
+              "target_modules": [
+                "q_proj",
+                "down_proj",
+                "o_proj",
+                "gate_proj",
+                "v_proj",
+                "k_proj",
+                "up_proj"
+              ],
+              "target_parameters": null,
+              "task_type": "CAUSAL_LM",
+              "trainable_token_indices": null,
+              "use_bdlora": null,
+              "use_dora": false,
+              "use_qalora": false,
+              "use_rslora": false,
+              "velora_config": null
+            },
+            "scale": 1600,
+            "role": "verifier",
+            "kind": "sft_dpo",
+            "trainable_params": 24313856,
+            "train_rows": 100,
+            "sft_steps": 24,
+            "dpo_steps": 28,
+            "skipped_steps": 0,
+            "train_seconds": 1584.79,
+            "tokens_processed": 438301,
+            "tokens_per_s": 276.6,
+            "initial_loss": 1.38837,
+            "final_loss": 0.06535,
+            "base_probe_loss": 1.30984,
+            "tuned_probe_loss": 1.76513,
+            "max_abs_diff_tuned_vs_base": 21.43359,
+            "max_abs_diff_disabled_vs_base": 0.0
+          },
+          "lora.verifier-dpo-256": {
+            "adapter_key": "verifier_256",
+            "public_name": "lora.verifier-dpo-256",
+            "saved_dir": "/tmp/modular_llama32_run/adapters/verifier_256",
+            "persisted_in_working": false,
+            "files": {
+              "adapter_config.json": {
+                "bytes": 1226,
+                "sha256": "0f93046676d1a5d9c1a5efa0bd5ee344e81c870431f1611e570eab4037001f1d"
+              },
+              "adapter_model.safetensors": {
+                "bytes": 97307544,
+                "sha256": "d914c72ad1db27d8ed0026ab4d6bbe3d96831a66d243bb7283727fc28d5b7728"
+              }
+            },
+            "adapter_config": {
+              "alora_invocation_tokens": null,
+              "alpha_pattern": {},
+              "arrow_config": null,
+              "auto_mapping": null,
+              "base_model_name_or_path": "/kaggle/input/models/metaresearch/llama-3.2/transformers/3b-instruct/1",
+              "bias": "none",
+              "corda_config": null,
+              "ensure_weight_tying": false,
+              "eva_config": null,
+              "exclude_modules": null,
+              "fan_in_fan_out": false,
+              "inference_mode": true,
+              "init_lora_weights": true,
+              "kasa_config": null,
+              "layer_replication": null,
+              "layers_pattern": null,
+              "layers_to_transform": null,
+              "loftq_config": {},
+              "lora_alpha": 32,
+              "lora_bias": false,
+              "lora_dropout": 0.05,
+              "lora_ga_config": null,
+              "megatron_config": null,
+              "megatron_core": "megatron.core",
+              "modules_to_save": null,
+              "monteclora_config": null,
+              "peft_type": "LORA",
+              "peft_version": "0.21.2",
+              "qalora_group_size": 16,
+              "r": 16,
+              "rank_pattern": {},
+              "revision": null,
+              "target_modules": [
+                "q_proj",
+                "down_proj",
+                "o_proj",
+                "gate_proj",
+                "v_proj",
+                "k_proj",
+                "up_proj"
+              ],
+              "target_parameters": null,
+              "task_type": "CAUSAL_LM",
+              "trainable_token_indices": null,
+              "use_bdlora": null,
+              "use_dora": false,
+              "use_qalora": false,
+              "use_rslora": false,
+              "velora_config": null
+            },
+            "scale": 256,
+            "role": "verifier",
+            "kind": "sft_dpo",
+            "trainable_params": 24313856,
+            "train_rows": 64,
+            "sft_steps": 14,
+            "dpo_steps": 16,
+            "skipped_steps": 0,
+            "train_seconds": 908.78,
+            "tokens_processed": 248903,
+            "tokens_per_s": 273.9,
+            "initial_loss": 1.31308,
+            "final_loss": 0.07016,
+            "base_probe_loss": 1.30984,
+            "tuned_probe_loss": 1.64733,
+            "max_abs_diff_tuned_vs_base": 19.13672,
+            "max_abs_diff_disabled_vs_base": 0.0
+          },
+          "lora.verifier-dpo-64": {
+            "adapter_key": "verifier_64",
+            "public_name": "lora.verifier-dpo-64",
+            "saved_dir": "/tmp/modular_llama32_run/adapters/verifier_64",
+            "persisted_in_working": false,
+            "files": {
+              "adapter_config.json": {
+                "bytes": 1226,
+                "sha256": "0f93046676d1a5d9c1a5efa0bd5ee344e81c870431f1611e570eab4037001f1d"
+              },
+              "adapter_model.safetensors": {
+                "bytes": 97307544,
+                "sha256": "ec9304c3048a31e5d3612ed9c668d6f6e231ea8a2bdeb4fb9aff5a75ac300d80"
+              }
+            },
+            "adapter_config": {
+              "alora_invocation_tokens": null,
+              "alpha_pattern": {},
+              "arrow_config": null,
+              "auto_mapping": null,
+              "base_model_name_or_path": "/kaggle/input/models/metaresearch/llama-3.2/transformers/3b-instruct/1",
+              "bias": "none",
+              "corda_config": null,
+              "ensure_weight_tying": false,
+              "eva_config": null,
+              "exclude_modules": null,
+              "fan_in_fan_out": false,
+              "inference_mode": true,
+              "init_lora_weights": true,
+              "kasa_config": null,
+              "layer_replication": null,
+              "layers_pattern": null,
+              "layers_to_transform": null,
+              "loftq_config": {},
+              "lora_alpha": 32,
+              "lora_bias": false,
+              "lora_dropout": 0.05,
+              "lora_ga_config": null,
+              "megatron_config": null,
+              "megatron_core": "megatron.core",
+              "modules_to_save": null,
+              "monteclora_config": null,
+              "peft_type": "LORA",
+              "peft_version": "0.21.2",
+              "qalora_group_size": 16,
+              "r": 16,
+              "rank_pattern": {},
+              "revision": null,
+              "target_modules": [
+                "q_proj",
+                "down_proj",
+                "o_proj",
+                "gate_proj",
+                "v_proj",
+                "k_proj",
+                "up_proj"
+              ],
+              "target_parameters": null,
+              "task_type": "CAUSAL_LM",
+              "trainable_token_indices": null,
+              "use_bdlora": null,
+              "use_dora": false,
+              "use_qalora": false,
+              "use_rslora": false,
+              "velora_config": null
+            },
+            "scale": 64,
+            "role": "verifier",
+            "kind": "sft_dpo",
+            "trainable_params": 24313856,
+            "train_rows": 16,
+            "sft_steps": 6,
+            "dpo_steps": 8,
+            "skipped_steps": 0,
+            "train_seconds": 214.64,
+            "tokens_processed": 59151,
+            "tokens_per_s": 275.6,
+            "initial_loss": 1.34558,
+            "final_loss": 0.08316,
+            "base_probe_loss": 1.30984,
+            "tuned_probe_loss": 1.3752,
+            "max_abs_diff_tuned_vs_base": 18.53809,
+            "max_abs_diff_disabled_vs_base": 0.0
+          },
+          "lora.monolithic-mixed": {
+            "adapter_key": "monolithic_1600",
+            "public_name": "lora.monolithic-mixed",
+            "saved_dir": "/kaggle/working/adapters/monolithic_1600",
+            "persisted_in_working": true,
+            "files": {
+              "adapter_config.json": {
+                "bytes": 1226,
+                "sha256": "0f93046676d1a5d9c1a5efa0bd5ee344e81c870431f1611e570eab4037001f1d"
+              },
+              "adapter_model.safetensors": {
+                "bytes": 97307544,
+                "sha256": "4dd4ed96ec0a2f835405ca03d95179b238dbc6a4eaea6e65d7fd13d1c9111ccf"
+              }
+            },
+            "adapter_config": {
+              "alora_invocation_tokens": null,
+              "alpha_pattern": {},
+              "arrow_config": null,
+              "auto_mapping": null,
+              "base_model_name_or_path": "/kaggle/input/models/metaresearch/llama-3.2/transformers/3b-instruct/1",
+              "bias": "none",
+              "corda_config": null,
+              "ensure_weight_tying": false,
+              "eva_config": null,
+              "exclude_modules": null,
+              "fan_in_fan_out": false,
+              "inference_mode": true,
+              "init_lora_weights": true,
+              "kasa_config": null,
+              "layer_replication": null,
+              "layers_pattern": null,
+              "layers_to_transform": null,
+              "loftq_config": {},
+              "lora_alpha": 32,
+              "lora_bias": false,
+              "lora_dropout": 0.05,
+              "lora_ga_config": null,
+              "megatron_config": null,
+              "megatron_core": "megatron.core",
+              "modules_to_save": null,
+              "monteclora_config": null,
+              "peft_type": "LORA",
+              "peft_version": "0.21.2",
+              "qalora_group_size": 16,
+              "r": 16,
+              "rank_pattern": {},
+              "revision": null,
+              "target_modules": [
+                "q_proj",
+                "down_proj",
+                "o_proj",
+                "gate_proj",
+                "v_proj",
+                "k_proj",
+                "up_proj"
+              ],
+              "target_parameters": null,
+              "task_type": "CAUSAL_LM",
+              "trainable_token_indices": null,
+              "use_bdlora": null,
+              "use_dora": false,
+              "use_qalora": false,
+              "use_rslora": false,
+              "velora_config": null
+            },
+            "scale": 1600,
+            "role": "monolithic_mixed",
+            "kind": "sft",
+            "trainable_params": 24313856,
+            "train_rows": 1600,
+            "sft_steps": 56,
+            "dpo_steps": 0,
+            "skipped_steps": 0,
+            "train_seconds": 2098.05,
+            "tokens_processed": 284121,
+            "tokens_per_s": 135.4,
+            "initial_loss": 1.30531,
+            "final_loss": 0.42555,
+            "base_probe_loss": 1.30984,
+            "tuned_probe_loss": 0.36392,
+            "max_abs_diff_tuned_vs_base": 30.14209,
+            "max_abs_diff_disabled_vs_base": 0.0
+          },
+          "lora.monolithic-mixed-256": {
+            "adapter_key": "monolithic_256",
+            "public_name": "lora.monolithic-mixed-256",
+            "saved_dir": "/tmp/modular_llama32_run/adapters/monolithic_256",
+            "persisted_in_working": false,
+            "files": {
+              "adapter_config.json": {
+                "bytes": 1226,
+                "sha256": "0f93046676d1a5d9c1a5efa0bd5ee344e81c870431f1611e570eab4037001f1d"
+              },
+              "adapter_model.safetensors": {
+                "bytes": 97307544,
+                "sha256": "01662598ebb42fc89b6b3d70d76faf43ceb4f6fef1c5e5b9f85466df97573a5f"
+              }
+            },
+            "adapter_config": {
+              "alora_invocation_tokens": null,
+              "alpha_pattern": {},
+              "arrow_config": null,
+              "auto_mapping": null,
+              "base_model_name_or_path": "/kaggle/input/models/metaresearch/llama-3.2/transformers/3b-instruct/1",
+              "bias": "none",
+              "corda_config": null,
+              "ensure_weight_tying": false,
+              "eva_config": null,
+              "exclude_modules": null,
+              "fan_in_fan_out": false,
+              "inference_mode": true,
+              "init_lora_weights": true,
+              "kasa_config": null,
+              "layer_replication": null,
+              "layers_pattern": null,
+              "layers_to_transform": null,
+              "loftq_config": {},
+              "lora_alpha": 32,
+              "lora_bias": false,
+              "lora_dropout": 0.05,
+              "lora_ga_config": null,
+              "megatron_config": null,
+              "megatron_core": "megatron.core",
+              "modules_to_save": null,
+              "monteclora_config": null,
+              "peft_type": "LORA",
+              "peft_version": "0.21.2",
+              "qalora_group_size": 16,
+              "r": 16,
+              "rank_pattern": {},
+              "revision": null,
+              "target_modules": [
+                "q_proj",
+                "down_proj",
+                "o_proj",
+                "gate_proj",
+                "v_proj",
+                "k_proj",
+                "up_proj"
+              ],
+              "target_parameters": null,
+              "task_type": "CAUSAL_LM",
+              "trainable_token_indices": null,
+              "use_bdlora": null,
+              "use_dora": false,
+              "use_qalora": false,
+              "use_rslora": false,
+              "velora_config": null
+            },
+            "scale": 256,
+            "role": "monolithic_mixed",
+            "kind": "sft",
+            "trainable_params": 24313856,
+            "train_rows": 256,
+            "sft_steps": 24,
+            "dpo_steps": 0,
+            "skipped_steps": 0,
+            "train_seconds": 855.26,
+            "tokens_processed": 122219,
+            "tokens_per_s": 142.9,
+            "initial_loss": 1.38583,
+            "final_loss": 0.54069,
+            "base_probe_loss": 1.30984,
+            "tuned_probe_loss": 0.37127,
+            "max_abs_diff_tuned_vs_base": 28.50146,
+            "max_abs_diff_disabled_vs_base": 0.0
+          },
+          "lora.monolithic-mixed-64": {
+            "adapter_key": "monolithic_64",
+            "public_name": "lora.monolithic-mixed-64",
+            "saved_dir": "/tmp/modular_llama32_run/adapters/monolithic_64",
+            "persisted_in_working": false,
+            "files": {
+              "adapter_config.json": {
+                "bytes": 1226,
+                "sha256": "0f93046676d1a5d9c1a5efa0bd5ee344e81c870431f1611e570eab4037001f1d"
+              },
+              "adapter_model.safetensors": {
+                "bytes": 97307544,
+                "sha256": "dcfc2bc735cf2af14740d476b0ef8a1c7391cb51e74285ade99585cd50921632"
+              }
+            },
+            "adapter_config": {
+              "alora_invocation_tokens": null,
+              "alpha_pattern": {},
+              "arrow_config": null,
+              "auto_mapping": null,
+              "base_model_name_or_path": "/kaggle/input/models/metaresearch/llama-3.2/transformers/3b-instruct/1",
+              "bias": "none",
+              "corda_config": null,
+              "ensure_weight_tying": false,
+              "eva_config": null,
+              "exclude_modules": null,
+              "fan_in_fan_out": false,
+              "inference_mode": true,
+              "init_lora_weights": true,
+              "kasa_config": null,
+              "layer_replication": null,
+              "layers_pattern": null,
+              "layers_to_transform": null,
+              "loftq_config": {},
+              "lora_alpha": 32,
+              "lora_bias": false,
+              "lora_dropout": 0.05,
+              "lora_ga_config": null,
+              "megatron_config": null,
+              "megatron_core": "megatron.core",
+              "modules_to_save": null,
+              "monteclora_config": null,
+              "peft_type": "LORA",
+              "peft_version": "0.21.2",
+              "qalora_group_size": 16,
+              "r": 16,
+              "rank_pattern": {},
+              "revision": null,
+              "target_modules": [
+                "q_proj",
+                "down_proj",
+                "o_proj",
+                "gate_proj",
+                "v_proj",
+                "k_proj",
+                "up_proj"
+              ],
+              "target_parameters": null,
+              "task_type": "CAUSAL_LM",
+              "trainable_token_indices": null,
+              "use_bdlora": null,
+              "use_dora": false,
+              "use_qalora": false,
+              "use_rslora": false,
+              "velora_config": null
+            },
+            "scale": 64,
+            "role": "monolithic_mixed",
+            "kind": "sft",
+            "trainable_params": 24313856,
+            "train_rows": 64,
+            "sft_steps": 10,
+            "dpo_steps": 0,
+            "skipped_steps": 0,
+            "train_seconds": 185.38,
+            "tokens_processed": 25886,
+            "tokens_per_s": 139.6,
+            "initial_loss": 1.46099,
+            "final_loss": 1.0088,
+            "base_probe_loss": 1.30984,
+            "tuned_probe_loss": 0.63205,
+            "max_abs_diff_tuned_vs_base": 18.2998,
+            "max_abs_diff_disabled_vs_base": 0.0
+          }
+        }
+      },
+      "training_curves": {
+        "lora.task-decomposer": [
+          {
+            "phase": "sft",
+            "step": 1,
+            "loss": 1.25769,
+            "grad_norm": 0.8011,
+            "tokens": 4032,
+            "sec": 25.68
+          },
+          {
+            "phase": "sft",
+            "step": 2,
+            "loss": 1.19142,
+            "grad_norm": 0.6887,
+            "tokens": 4056,
+            "sec": 26.12
+          },
+          {
+            "phase": "sft",
+            "step": 3,
+            "loss": 1.06602,
+            "grad_norm": 0.6028,
+            "tokens": 4003,
+            "sec": 26.8
+          },
+          {
+            "phase": "sft",
+            "step": 4,
+            "loss": 0.89445,
+            "grad_norm": 0.6061,
+            "tokens": 4001,
+            "sec": 29.57
+          },
+          {
+            "phase": "sft",
+            "step": 5,
+            "loss": 0.73522,
+            "grad_norm": 1.1208,
+            "tokens": 4014,
+            "sec": 26.84
+          },
+          {
+            "phase": "sft",
+            "step": 6,
+            "loss": 0.55501,
+            "grad_norm": 0.9872,
+            "tokens": 4014,
+            "sec": 28.43
+          },
+          {
+            "phase": "sft",
+            "step": 7,
+            "loss": 0.43725,
+            "grad_norm": 0.9915,
+            "tokens": 4074,
+            "sec": 30.3
+          },
+          {
+            "phase": "sft",
+            "step": 8,
+            "loss": 0.38414,
+            "grad_norm": 0.8104,
+            "tokens": 4052,
+            "sec": 28.67
+          },
+          {
+            "phase": "sft",
+            "step": 9,
+            "loss": 0.3662,
+            "grad_norm": 0.2486,
+            "tokens": 4038,
+            "sec": 26.3
+          },
+          {
+            "phase": "sft",
+            "step": 10,
+            "loss": 0.37048,
+            "grad_norm": 0.6489,
+            "tokens": 4060,
+            "sec": 30.32
+          },
+          {
+            "phase": "sft",
+            "step": 11,
+            "loss": 0.36292,
+            "grad_norm": 0.2471,
+            "tokens": 4056,
+            "sec": 29.87
+          },
+          {
+            "phase": "sft",
+            "step": 12,
+            "loss": 0.36413,
+            "grad_norm": 0.2728,
+            "tokens": 4012,
+            "sec": 25.9
+          },
+          {
+            "phase": "sft",
+            "step": 13,
+            "loss": 0.36519,
+            "grad_norm": 0.1481,
+            "tokens": 4006,
+            "sec": 28.97
+          },
+          {
+            "phase": "sft",
+            "step": 14,
+            "loss": 0.35939,
+            "grad_norm": 0.0788,
+            "tokens": 4034,
+            "sec": 28.78
+          },
+          {
+            "phase": "sft",
+            "step": 15,
+            "loss": 0.35777,
+            "grad_norm": 0.0911,
+            "tokens": 4026,
+            "sec": 28.23
+          },
+          {
+            "phase": "sft",
+            "step": 16,
+            "loss": 0.35899,
+            "grad_norm": 0.0759,
+            "tokens": 4053,
+            "sec": 24.09
+          },
+          {
+            "phase": "sft",
+            "step": 17,
+            "loss": 0.35779,
+            "grad_norm": 0.0695,
+            "tokens": 4056,
+            "sec": 28.18
+          },
+          {
+            "phase": "sft",
+            "step": 18,
+            "loss": 0.35699,
+            "grad_norm": 0.0794,
+            "tokens": 4064,
+            "sec": 29.26
+          },
+          {
+            "phase": "sft",
+            "step": 19,
+            "loss": 0.35843,
+            "grad_norm": 0.1368,
+            "tokens": 4034,
+            "sec": 27.69
+          },
+          {
+            "phase": "sft",
+            "step": 20,
+            "loss": 0.35615,
+            "grad_norm": 0.0688,
+            "tokens": 4028,
+            "sec": 29.99
+          },
+          {
+            "phase": "sft",
+            "step": 21,
+            "loss": 0.357,
+            "grad_norm": 0.0555,
+            "tokens": 4063,
+            "sec": 26.23
+          },
+          {
+            "phase": "sft",
+            "step": 22,
+            "loss": 0.35505,
+            "grad_norm": 0.0737,
+            "tokens": 4062,
+            "sec": 26.73
+          },
+          {
+            "phase": "sft",
+            "step": 23,
+            "loss": 0.35729,
+            "grad_norm": 0.0932,
+            "tokens": 4037,
+            "sec": 26.24
+          },
+          {
+            "phase": "sft",
+            "step": 24,
+            "loss": 0.36073,
+            "grad_norm": 0.0734,
+            "tokens": 4012,
+            "sec": 25.8
+          },
+          {
+            "phase": "sft",
+            "step": 25,
+            "loss": 0.35526,
+            "grad_norm": 0.0778,
+            "tokens": 4060,
+            "sec": 27.97
+          },
+          {
+            "phase": "sft",
+            "step": 26,
+            "loss": 0.36068,
+            "grad_norm": 0.0637,
+            "tokens": 4031,
+            "sec": 26.83
+          },
+          {
+            "phase": "sft",
+            "step": 27,
+            "loss": 0.35446,
+            "grad_norm": 0.0612,
+            "tokens": 4063,
+            "sec": 28.53
+          },
+          {
+            "phase": "sft",
+            "step": 28,
+            "loss": 0.35125,
+            "grad_norm": 0.0545,
+            "tokens": 4083,
+            "sec": 28.48
+          },
+          {
+            "phase": "sft",
+            "step": 29,
+            "loss": 0.36349,
+            "grad_norm": 0.0547,
+            "tokens": 3993,
+            "sec": 26.18
+          },
+          {
+            "phase": "sft",
+            "step": 30,
+            "loss": 0.35862,
+            "grad_norm": 0.0632,
+            "tokens": 4054,
+            "sec": 28.14
+          },
+          {
+            "phase": "sft",
+            "step": 31,
+            "loss": 0.3583,
+            "grad_norm": 0.0705,
+            "tokens": 4042,
+            "sec": 30.58
+          },
+          {
+            "phase": "sft",
+            "step": 32,
+            "loss": 0.35625,
+            "grad_norm": 0.1472,
+            "tokens": 4044,
+            "sec": 28.42
+          },
+          {
+            "phase": "sft",
+            "step": 33,
+            "loss": 0.35395,
+            "grad_norm": 0.1007,
+            "tokens": 4054,
+            "sec": 27.79
+          },
+          {
+            "phase": "sft",
+            "step": 34,
+            "loss": 0.35235,
+            "grad_norm": 0.0512,
+            "tokens": 4067,
+            "sec": 31.27
+          },
+          {
+            "phase": "sft",
+            "step": 35,
+            "loss": 0.35712,
+            "grad_norm": 0.0932,
+            "tokens": 4033,
+            "sec": 26.53
+          },
+          {
+            "phase": "sft",
+            "step": 36,
+            "loss": 0.35775,
+            "grad_norm": 0.0551,
+            "tokens": 4041,
+            "sec": 26.71
+          },
+          {
+            "phase": "sft",
+            "step": 37,
+            "loss": 0.35531,
+            "grad_norm": 0.0526,
+            "tokens": 4057,
+            "sec": 24.64
+          },
+          {
+            "phase": "sft",
+            "step": 38,
+            "loss": 0.35558,
+            "grad_norm": 0.0965,
+            "tokens": 4050,
+            "sec": 29.98
+          },
+          {
+            "phase": "sft",
+            "step": 39,
+            "loss": 0.35049,
+            "grad_norm": 0.079,
+            "tokens": 4101,
+            "sec": 26.46
+          },
+          {
+            "phase": "sft",
+            "step": 40,
+            "loss": 0.35798,
+            "grad_norm": 0.0868,
+            "tokens": 4025,
+            "sec": 27.79
+          },
+          {
+            "phase": "sft",
+            "step": 41,
+            "loss": 0.35689,
+            "grad_norm": 0.0506,
+            "tokens": 4004,
+            "sec": 28.84
+          },
+          {
+            "phase": "sft",
+            "step": 42,
+            "loss": 0.35406,
+            "grad_norm": 0.0894,
+            "tokens": 4062,
+            "sec": 28.36
+          },
+          {
+            "phase": "sft",
+            "step": 43,
+            "loss": 0.35687,
+            "grad_norm": 0.0637,
+            "tokens": 4040,
+            "sec": 25.8
+          },
+          {
+            "phase": "sft",
+            "step": 44,
+            "loss": 0.36004,
+            "grad_norm": 0.0474,
+            "tokens": 3991,
+            "sec": 26.48
+          }
+        ],
+        "lora.shim-retriever": [
+          {
+            "phase": "sft",
+            "step": 1,
+            "loss": 1.40856,
+            "grad_norm": 0.6824,
+            "tokens": 4580,
+            "sec": 25.33
+          },
+          {
+            "phase": "sft",
+            "step": 2,
+            "loss": 1.36484,
+            "grad_norm": 0.5784,
+            "tokens": 4615,
+            "sec": 26.21
+          },
+          {
+            "phase": "sft",
+            "step": 3,
+            "loss": 1.18361,
+            "grad_norm": 0.4604,
+            "tokens": 4578,
+            "sec": 26.19
+          },
+          {
+            "phase": "sft",
+            "step": 4,
+            "loss": 1.06565,
+            "grad_norm": 0.4585,
+            "tokens": 4525,
+            "sec": 25.84
+          },
+          {
+            "phase": "sft",
+            "step": 5,
+            "loss": 0.97643,
+            "grad_norm": 0.5312,
+            "tokens": 4601,
+            "sec": 26.29
+          },
+          {
+            "phase": "sft",
+            "step": 6,
+            "loss": 0.81488,
+            "grad_norm": 0.5273,
+            "tokens": 4609,
+            "sec": 26.44
+          },
+          {
+            "phase": "sft",
+            "step": 7,
+            "loss": 0.73402,
+            "grad_norm": 0.5641,
+            "tokens": 4618,
+            "sec": 26.68
+          },
+          {
+            "phase": "sft",
+            "step": 8,
+            "loss": 0.61457,
+            "grad_norm": 0.6566,
+            "tokens": 4507,
+            "sec": 26.24
+          },
+          {
+            "phase": "sft",
+            "step": 9,
+            "loss": 0.53233,
+            "grad_norm": 0.5182,
+            "tokens": 4532,
+            "sec": 25.96
+          },
+          {
+            "phase": "sft",
+            "step": 10,
+            "loss": 0.51583,
+            "grad_norm": 0.5603,
+            "tokens": 4616,
+            "sec": 26.5
+          },
+          {
+            "phase": "sft",
+            "step": 11,
+            "loss": 0.51671,
+            "grad_norm": 0.4049,
+            "tokens": 4563,
+            "sec": 26.32
+          },
+          {
+            "phase": "sft",
+            "step": 12,
+            "loss": 0.51948,
+            "grad_norm": 0.3722,
+            "tokens": 4605,
+            "sec": 26.49
+          },
+          {
+            "phase": "sft",
+            "step": 13,
+            "loss": 0.47532,
+            "grad_norm": 0.5356,
+            "tokens": 4590,
+            "sec": 26.39
+          },
+          {
+            "phase": "sft",
+            "step": 14,
+            "loss": 0.47596,
+            "grad_norm": 0.3395,
+            "tokens": 4515,
+            "sec": 26.06
+          },
+          {
+            "phase": "sft",
+            "step": 15,
+            "loss": 0.43659,
+            "grad_norm": 0.5246,
+            "tokens": 4611,
+            "sec": 26.53
+          },
+          {
+            "phase": "sft",
+            "step": 16,
+            "loss": 0.44398,
+            "grad_norm": 0.2845,
+            "tokens": 4524,
+            "sec": 26.23
+          },
+          {
+            "phase": "sft",
+            "step": 17,
+            "loss": 0.42605,
+            "grad_norm": 0.8949,
+            "tokens": 4605,
+            "sec": 26.45
+          },
+          {
+            "phase": "sft",
+            "step": 18,
+            "loss": 0.42697,
+            "grad_norm": 0.3062,
+            "tokens": 4603,
+            "sec": 26.23
+          },
+          {
+            "phase": "sft",
+            "step": 19,
+            "loss": 0.43675,
+            "grad_norm": 0.3678,
+            "tokens": 4610,
+            "sec": 26.56
+          },
+          {
+            "phase": "sft",
+            "step": 20,
+            "loss": 0.41896,
+            "grad_norm": 0.4871,
+            "tokens": 4519,
+            "sec": 26.27
+          },
+          {
+            "phase": "sft",
+            "step": 21,
+            "loss": 0.41672,
+            "grad_norm": 0.2827,
+            "tokens": 4586,
+            "sec": 26.23
+          },
+          {
+            "phase": "sft",
+            "step": 22,
+            "loss": 0.39999,
+            "grad_norm": 0.2245,
+            "tokens": 4614,
+            "sec": 26.5
+          },
+          {
+            "phase": "sft",
+            "step": 23,
+            "loss": 0.37943,
+            "grad_norm": 0.3075,
+            "tokens": 4598,
+            "sec": 26.61
+          },
+          {
+            "phase": "sft",
+            "step": 24,
+            "loss": 0.38534,
+            "grad_norm": 0.2657,
+            "tokens": 4622,
+            "sec": 26.6
+          },
+          {
+            "phase": "sft",
+            "step": 25,
+            "loss": 0.37833,
+            "grad_norm": 0.2839,
+            "tokens": 4618,
+            "sec": 26.51
+          },
+          {
+            "phase": "sft",
+            "step": 26,
+            "loss": 0.39622,
+            "grad_norm": 0.4169,
+            "tokens": 4451,
+            "sec": 25.78
+          },
+          {
+            "phase": "sft",
+            "step": 27,
+            "loss": 0.38594,
+            "grad_norm": 0.3433,
+            "tokens": 4538,
+            "sec": 25.95
+          },
+          {
+            "phase": "sft",
+            "step": 28,
+            "loss": 0.36354,
+            "grad_norm": 0.3363,
+            "tokens": 4620,
+            "sec": 26.39
+          },
+          {
+            "phase": "sft",
+            "step": 29,
+            "loss": 0.37069,
+            "grad_norm": 0.2521,
+            "tokens": 4615,
+            "sec": 26.31
+          },
+          {
+            "phase": "sft",
+            "step": 30,
+            "loss": 0.37161,
+            "grad_norm": 0.2314,
+            "tokens": 4497,
+            "sec": 25.69
+          },
+          {
+            "phase": "sft",
+            "step": 31,
+            "loss": 0.38064,
+            "grad_norm": 0.2663,
+            "tokens": 4521,
+            "sec": 25.62
+          },
+          {
+            "phase": "sft",
+            "step": 32,
+            "loss": 0.37019,
+            "grad_norm": 0.2223,
+            "tokens": 4564,
+            "sec": 25.79
+          },
+          {
+            "phase": "sft",
+            "step": 33,
+            "loss": 0.374,
+            "grad_norm": 0.2539,
+            "tokens": 4533,
+            "sec": 25.86
+          },
+          {
+            "phase": "sft",
+            "step": 34,
+            "loss": 0.35743,
+            "grad_norm": 0.2141,
+            "tokens": 4558,
+            "sec": 25.83
+          },
+          {
+            "phase": "sft",
+            "step": 35,
+            "loss": 0.36053,
+            "grad_norm": 0.2325,
+            "tokens": 4576,
+            "sec": 25.97
+          },
+          {
+            "phase": "sft",
+            "step": 36,
+            "loss": 0.35593,
+            "grad_norm": 0.2233,
+            "tokens": 4578,
+            "sec": 26.07
+          },
+          {
+            "phase": "sft",
+            "step": 37,
+            "loss": 0.35346,
+            "grad_norm": 0.234,
+            "tokens": 4558,
+            "sec": 25.91
+          },
+          {
+            "phase": "sft",
+            "step": 38,
+            "loss": 0.3486,
+            "grad_norm": 0.187,
+            "tokens": 4514,
+            "sec": 25.78
+          },
+          {
+            "phase": "sft",
+            "step": 39,
+            "loss": 0.34072,
+            "grad_norm": 0.2219,
+            "tokens": 4615,
+            "sec": 26.22
+          },
+          {
+            "phase": "sft",
+            "step": 40,
+            "loss": 0.35537,
+            "grad_norm": 0.2689,
+            "tokens": 4611,
+            "sec": 26.09
+          },
+          {
+            "phase": "sft",
+            "step": 41,
+            "loss": 0.34613,
+            "grad_norm": 0.1957,
+            "tokens": 4556,
+            "sec": 26.21
+          },
+          {
+            "phase": "sft",
+            "step": 42,
+            "loss": 0.37335,
+            "grad_norm": 0.3108,
+            "tokens": 4605,
+            "sec": 26.08
+          },
+          {
+            "phase": "sft",
+            "step": 43,
+            "loss": 0.35866,
+            "grad_norm": 0.2311,
+            "tokens": 4449,
+            "sec": 25.87
+          },
+          {
+            "phase": "sft",
+            "step": 44,
+            "loss": 0.35491,
+            "grad_norm": 0.2301,
+            "tokens": 4589,
+            "sec": 26.16
+          }
+        ],
+        "lora.builder-toolcalls": [
+          {
+            "phase": "sft",
+            "step": 1,
+            "loss": 1.31247,
+            "grad_norm": 0.61,
+            "tokens": 6081,
+            "sec": 56.72
+          },
+          {
+            "phase": "sft",
+            "step": 2,
+            "loss": 1.20799,
+            "grad_norm": 0.5054,
+            "tokens": 6158,
+            "sec": 61.8
+          },
+          {
+            "phase": "sft",
+            "step": 3,
+            "loss": 1.19373,
+            "grad_norm": 0.4124,
+            "tokens": 5844,
+            "sec": 63.78
+          },
+          {
+            "phase": "sft",
+            "step": 4,
+            "loss": 1.06694,
+            "grad_norm": 0.372,
+            "tokens": 6181,
+            "sec": 62.69
+          },
+          {
+            "phase": "sft",
+            "step": 5,
+            "loss": 0.9024,
+            "grad_norm": 0.4087,
+            "tokens": 7230,
+            "sec": 73.66
+          },
+          {
+            "phase": "sft",
+            "step": 6,
+            "loss": 0.80472,
+            "grad_norm": 0.4852,
+            "tokens": 7307,
+            "sec": 72.12
+          },
+          {
+            "phase": "sft",
+            "step": 7,
+            "loss": 0.80992,
+            "grad_norm": 0.814,
+            "tokens": 6125,
+            "sec": 65.59
+          },
+          {
+            "phase": "sft",
+            "step": 8,
+            "loss": 0.72467,
+            "grad_norm": 0.3964,
+            "tokens": 6292,
+            "sec": 62.57
+          },
+          {
+            "phase": "sft",
+            "step": 9,
+            "loss": 0.70818,
+            "grad_norm": 0.4173,
+            "tokens": 6627,
+            "sec": 68.85
+          },
+          {
+            "phase": "sft",
+            "step": 10,
+            "loss": 0.65491,
+            "grad_norm": 0.2663,
+            "tokens": 7632,
+            "sec": 73.1
+          },
+          {
+            "phase": "sft",
+            "step": 11,
+            "loss": 0.73315,
+            "grad_norm": 0.5219,
+            "tokens": 6028,
+            "sec": 63.92
+          },
+          {
+            "phase": "sft",
+            "step": 12,
+            "loss": 0.7195,
+            "grad_norm": 0.3145,
+            "tokens": 5801,
+            "sec": 59.66
+          },
+          {
+            "phase": "sft",
+            "step": 13,
+            "loss": 0.68595,
+            "grad_norm": 0.3172,
+            "tokens": 6428,
+            "sec": 61.88
+          },
+          {
+            "phase": "sft",
+            "step": 14,
+            "loss": 0.67953,
+            "grad_norm": 0.1941,
+            "tokens": 6538,
+            "sec": 71.04
+          },
+          {
+            "phase": "sft",
+            "step": 15,
+            "loss": 0.67057,
+            "grad_norm": 0.2079,
+            "tokens": 6851,
+            "sec": 65.65
+          },
+          {
+            "phase": "sft",
+            "step": 16,
+            "loss": 0.71484,
+            "grad_norm": 0.2421,
+            "tokens": 5579,
+            "sec": 57.52
+          },
+          {
+            "phase": "sft",
+            "step": 17,
+            "loss": 0.73825,
+            "grad_norm": 0.1502,
+            "tokens": 5184,
+            "sec": 56.94
+          },
+          {
+            "phase": "sft",
+            "step": 18,
+            "loss": 0.70499,
+            "grad_norm": 0.1824,
+            "tokens": 5589,
+            "sec": 60.95
+          },
+          {
+            "phase": "sft",
+            "step": 19,
+            "loss": 0.65253,
+            "grad_norm": 0.1618,
+            "tokens": 6562,
+            "sec": 69.07
+          },
+          {
+            "phase": "sft",
+            "step": 20,
+            "loss": 0.67704,
+            "grad_norm": 0.1559,
+            "tokens": 6176,
+            "sec": 63.17
+          },
+          {
+            "phase": "sft",
+            "step": 21,
+            "loss": 0.70599,
+            "grad_norm": 0.1474,
+            "tokens": 5729,
+            "sec": 68.05
+          },
+          {
+            "phase": "sft",
+            "step": 22,
+            "loss": 0.70474,
+            "grad_norm": 0.1468,
+            "tokens": 5730,
+            "sec": 59.75
+          },
+          {
+            "phase": "sft",
+            "step": 23,
+            "loss": 0.67502,
+            "grad_norm": 0.225,
+            "tokens": 6236,
+            "sec": 60.55
+          },
+          {
+            "phase": "sft",
+            "step": 24,
+            "loss": 0.64337,
+            "grad_norm": 0.1319,
+            "tokens": 6299,
+            "sec": 64.29
+          },
+          {
+            "phase": "sft",
+            "step": 25,
+            "loss": 0.62034,
+            "grad_norm": 0.155,
+            "tokens": 6975,
+            "sec": 68.98
+          },
+          {
+            "phase": "sft",
+            "step": 26,
+            "loss": 0.67504,
+            "grad_norm": 0.1376,
+            "tokens": 5848,
+            "sec": 63.56
+          },
+          {
+            "phase": "sft",
+            "step": 27,
+            "loss": 0.65384,
+            "grad_norm": 0.1251,
+            "tokens": 5971,
+            "sec": 63.36
+          },
+          {
+            "phase": "sft",
+            "step": 28,
+            "loss": 0.68474,
+            "grad_norm": 0.1471,
+            "tokens": 5903,
+            "sec": 64.57
+          },
+          {
+            "phase": "sft",
+            "step": 29,
+            "loss": 0.62922,
+            "grad_norm": 0.172,
+            "tokens": 6955,
+            "sec": 67.65
+          },
+          {
+            "phase": "sft",
+            "step": 30,
+            "loss": 0.69005,
+            "grad_norm": 0.1045,
+            "tokens": 6013,
+            "sec": 65.14
+          },
+          {
+            "phase": "sft",
+            "step": 31,
+            "loss": 0.66853,
+            "grad_norm": 0.0992,
+            "tokens": 6184,
+            "sec": 63.36
+          },
+          {
+            "phase": "sft",
+            "step": 32,
+            "loss": 0.68819,
+            "grad_norm": 0.1484,
+            "tokens": 5838,
+            "sec": 62.99
+          },
+          {
+            "phase": "sft",
+            "step": 33,
+            "loss": 0.65845,
+            "grad_norm": 0.1114,
+            "tokens": 6264,
+            "sec": 64.39
+          },
+          {
+            "phase": "sft",
+            "step": 34,
+            "loss": 0.63466,
+            "grad_norm": 0.0959,
+            "tokens": 6427,
+            "sec": 63.05
+          },
+          {
+            "phase": "sft",
+            "step": 35,
+            "loss": 0.64772,
+            "grad_norm": 0.1497,
+            "tokens": 7088,
+            "sec": 69.47
+          },
+          {
+            "phase": "sft",
+            "step": 36,
+            "loss": 0.63838,
+            "grad_norm": 0.1011,
+            "tokens": 6864,
+            "sec": 68.38
+          },
+          {
+            "phase": "sft",
+            "step": 37,
+            "loss": 0.72517,
+            "grad_norm": 0.1245,
+            "tokens": 5656,
+            "sec": 59.19
+          },
+          {
+            "phase": "sft",
+            "step": 38,
+            "loss": 0.65279,
+            "grad_norm": 0.1071,
+            "tokens": 6324,
+            "sec": 62.31
+          },
+          {
+            "phase": "sft",
+            "step": 39,
+            "loss": 0.67317,
+            "grad_norm": 0.1086,
+            "tokens": 6405,
+            "sec": 67.29
+          },
+          {
+            "phase": "sft",
+            "step": 40,
+            "loss": 0.70037,
+            "grad_norm": 0.1128,
+            "tokens": 5733,
+            "sec": 70.07
+          },
+          {
+            "phase": "sft",
+            "step": 41,
+            "loss": 0.62094,
+            "grad_norm": 0.0855,
+            "tokens": 6983,
+            "sec": 67.38
+          },
+          {
+            "phase": "sft",
+            "step": 42,
+            "loss": 0.67874,
+            "grad_norm": 0.0934,
+            "tokens": 5626,
+            "sec": 59.95
+          },
+          {
+            "phase": "sft",
+            "step": 43,
+            "loss": 0.72276,
+            "grad_norm": 0.0968,
+            "tokens": 5395,
+            "sec": 54.04
+          },
+          {
+            "phase": "sft",
+            "step": 44,
+            "loss": 0.62202,
+            "grad_norm": 0.0792,
+            "tokens": 6644,
+            "sec": 64.02
+          },
+          {
+            "phase": "sft",
+            "step": 45,
+            "loss": 0.64198,
+            "grad_norm": 0.0926,
+            "tokens": 7132,
+            "sec": 73.44
+          },
+          {
+            "phase": "sft",
+            "step": 46,
+            "loss": 0.57714,
+            "grad_norm": 0.0813,
+            "tokens": 7224,
+            "sec": 72.41
+          },
+          {
+            "phase": "sft",
+            "step": 47,
+            "loss": 0.62515,
+            "grad_norm": 0.0846,
+            "tokens": 6458,
+            "sec": 66.43
+          },
+          {
+            "phase": "sft",
+            "step": 48,
+            "loss": 0.66591,
+            "grad_norm": 0.1388,
+            "tokens": 6242,
+            "sec": 66.39
+          }
+        ],
+        "lora.task-decomposer-256": [
+          {
+            "phase": "sft",
+            "step": 1,
+            "loss": 1.243,
+            "grad_norm": 0.7817,
+            "tokens": 4081,
+            "sec": 24.87
+          },
+          {
+            "phase": "sft",
+            "step": 2,
+            "loss": 1.13711,
+            "grad_norm": 0.6182,
+            "tokens": 4053,
+            "sec": 26.21
+          },
+          {
+            "phase": "sft",
+            "step": 3,
+            "loss": 0.95018,
+            "grad_norm": 0.5966,
+            "tokens": 4005,
+            "sec": 27.39
+          },
+          {
+            "phase": "sft",
+            "step": 4,
+            "loss": 0.80772,
+            "grad_norm": 0.925,
+            "tokens": 4017,
+            "sec": 32.01
+          },
+          {
+            "phase": "sft",
+            "step": 5,
+            "loss": 0.63308,
+            "grad_norm": 1.0427,
+            "tokens": 4069,
+            "sec": 29.09
+          },
+          {
+            "phase": "sft",
+            "step": 6,
+            "loss": 0.49567,
+            "grad_norm": 0.9094,
+            "tokens": 4014,
+            "sec": 29.65
+          },
+          {
+            "phase": "sft",
+            "step": 7,
+            "loss": 0.40543,
+            "grad_norm": 0.7315,
+            "tokens": 4030,
+            "sec": 26.64
+          },
+          {
+            "phase": "sft",
+            "step": 8,
+            "loss": 0.37602,
+            "grad_norm": 0.6581,
+            "tokens": 4041,
+            "sec": 28.7
+          },
+          {
+            "phase": "sft",
+            "step": 9,
+            "loss": 0.36759,
+            "grad_norm": 0.5758,
+            "tokens": 4066,
+            "sec": 28.64
+          },
+          {
+            "phase": "sft",
+            "step": 10,
+            "loss": 0.3613,
+            "grad_norm": 0.1428,
+            "tokens": 4015,
+            "sec": 27.66
+          },
+          {
+            "phase": "sft",
+            "step": 11,
+            "loss": 0.35714,
+            "grad_norm": 0.0948,
+            "tokens": 4050,
+            "sec": 26.44
+          },
+          {
+            "phase": "sft",
+            "step": 12,
+            "loss": 0.35395,
+            "grad_norm": 0.09,
+            "tokens": 4087,
+            "sec": 29.44
+          },
+          {
+            "phase": "sft",
+            "step": 13,
+            "loss": 0.36385,
+            "grad_norm": 0.1212,
+            "tokens": 3981,
+            "sec": 26.28
+          },
+          {
+            "phase": "sft",
+            "step": 14,
+            "loss": 0.35516,
+            "grad_norm": 0.1982,
+            "tokens": 4074,
+            "sec": 29.17
+          },
+          {
+            "phase": "sft",
+            "step": 15,
+            "loss": 0.35538,
+            "grad_norm": 0.0842,
+            "tokens": 4057,
+            "sec": 30.61
+          },
+          {
+            "phase": "sft",
+            "step": 16,
+            "loss": 0.36373,
+            "grad_norm": 0.0632,
+            "tokens": 3980,
+            "sec": 27.64
+          },
+          {
+            "phase": "sft",
+            "step": 17,
+            "loss": 0.35951,
+            "grad_norm": 0.0697,
+            "tokens": 4031,
+            "sec": 28.64
+          },
+          {
+            "phase": "sft",
+            "step": 18,
+            "loss": 0.35053,
+            "grad_norm": 0.0736,
+            "tokens": 4080,
+            "sec": 32.0
+          },
+          {
+            "phase": "sft",
+            "step": 19,
+            "loss": 0.35593,
+            "grad_norm": 0.1226,
+            "tokens": 4040,
+            "sec": 26.61
+          },
+          {
+            "phase": "sft",
+            "step": 20,
+            "loss": 0.35068,
+            "grad_norm": 0.0628,
+            "tokens": 4082,
+            "sec": 29.13
+          }
+        ],
+        "lora.shim-retriever-256": [
+          {
+            "phase": "sft",
+            "step": 1,
+            "loss": 1.40697,
+            "grad_norm": 0.6933,
+            "tokens": 4565,
+            "sec": 27.29
+          },
+          {
+            "phase": "sft",
+            "step": 2,
+            "loss": 1.33197,
+            "grad_norm": 0.5423,
+            "tokens": 4613,
+            "sec": 27.71
+          },
+          {
+            "phase": "sft",
+            "step": 3,
+            "loss": 1.12989,
+            "grad_norm": 0.4448,
+            "tokens": 4594,
+            "sec": 27.26
+          },
+          {
+            "phase": "sft",
+            "step": 4,
+            "loss": 1.04305,
+            "grad_norm": 0.494,
+            "tokens": 4576,
+            "sec": 27.61
+          },
+          {
+            "phase": "sft",
+            "step": 5,
+            "loss": 0.87149,
+            "grad_norm": 0.514,
+            "tokens": 4435,
+            "sec": 26.89
+          },
+          {
+            "phase": "sft",
+            "step": 6,
+            "loss": 0.81469,
+            "grad_norm": 0.5215,
+            "tokens": 4590,
+            "sec": 27.5
+          },
+          {
+            "phase": "sft",
+            "step": 7,
+            "loss": 0.67351,
+            "grad_norm": 0.5238,
+            "tokens": 4604,
+            "sec": 27.48
+          },
+          {
+            "phase": "sft",
+            "step": 8,
+            "loss": 0.63471,
+            "grad_norm": 0.7025,
+            "tokens": 4617,
+            "sec": 27.51
+          },
+          {
+            "phase": "sft",
+            "step": 9,
+            "loss": 0.58528,
+            "grad_norm": 0.5839,
+            "tokens": 4608,
+            "sec": 27.46
+          },
+          {
+            "phase": "sft",
+            "step": 10,
+            "loss": 0.51855,
+            "grad_norm": 0.4629,
+            "tokens": 4612,
+            "sec": 27.31
+          },
+          {
+            "phase": "sft",
+            "step": 11,
+            "loss": 0.51869,
+            "grad_norm": 0.396,
+            "tokens": 4582,
+            "sec": 27.18
+          },
+          {
+            "phase": "sft",
+            "step": 12,
+            "loss": 0.48399,
+            "grad_norm": 0.3984,
+            "tokens": 4558,
+            "sec": 27.26
+          },
+          {
+            "phase": "sft",
+            "step": 13,
+            "loss": 0.47531,
+            "grad_norm": 0.3381,
+            "tokens": 4578,
+            "sec": 27.26
+          },
+          {
+            "phase": "sft",
+            "step": 14,
+            "loss": 0.47979,
+            "grad_norm": 0.2956,
+            "tokens": 4556,
+            "sec": 27.18
+          },
+          {
+            "phase": "sft",
+            "step": 15,
+            "loss": 0.45845,
+            "grad_norm": 0.3487,
+            "tokens": 4546,
+            "sec": 27.11
+          },
+          {
+            "phase": "sft",
+            "step": 16,
+            "loss": 0.45636,
+            "grad_norm": 0.3528,
+            "tokens": 4554,
+            "sec": 27.15
+          },
+          {
+            "phase": "sft",
+            "step": 17,
+            "loss": 0.4309,
+            "grad_norm": 0.324,
+            "tokens": 4562,
+            "sec": 27.15
+          },
+          {
+            "phase": "sft",
+            "step": 18,
+            "loss": 0.43981,
+            "grad_norm": 0.3682,
+            "tokens": 4586,
+            "sec": 27.4
+          },
+          {
+            "phase": "sft",
+            "step": 19,
+            "loss": 0.43783,
+            "grad_norm": 0.2881,
+            "tokens": 4520,
+            "sec": 27.43
+          },
+          {
+            "phase": "sft",
+            "step": 20,
+            "loss": 0.43977,
+            "grad_norm": 0.2519,
+            "tokens": 4576,
+            "sec": 27.33
+          }
+        ],
+        "lora.builder-toolcalls-256": [
+          {
+            "phase": "sft",
+            "step": 1,
+            "loss": 1.23977,
+            "grad_norm": 0.5488,
+            "tokens": 6607,
+            "sec": 68.16
+          },
+          {
+            "phase": "sft",
+            "step": 2,
+            "loss": 1.17607,
+            "grad_norm": 0.4368,
+            "tokens": 6598,
+            "sec": 70.65
+          },
+          {
+            "phase": "sft",
+            "step": 3,
+            "loss": 1.10631,
+            "grad_norm": 0.3812,
+            "tokens": 6342,
+            "sec": 66.56
+          },
+          {
+            "phase": "sft",
+            "step": 4,
+            "loss": 0.97155,
+            "grad_norm": 0.3753,
+            "tokens": 6610,
+            "sec": 67.52
+          },
+          {
+            "phase": "sft",
+            "step": 5,
+            "loss": 0.83272,
+            "grad_norm": 0.4306,
+            "tokens": 7300,
+            "sec": 74.96
+          },
+          {
+            "phase": "sft",
+            "step": 6,
+            "loss": 0.76634,
+            "grad_norm": 0.4938,
+            "tokens": 6954,
+            "sec": 71.6
+          },
+          {
+            "phase": "sft",
+            "step": 7,
+            "loss": 0.81523,
+            "grad_norm": 0.4741,
+            "tokens": 5217,
+            "sec": 61.97
+          },
+          {
+            "phase": "sft",
+            "step": 8,
+            "loss": 0.7602,
+            "grad_norm": 0.3281,
+            "tokens": 5825,
+            "sec": 66.31
+          },
+          {
+            "phase": "sft",
+            "step": 9,
+            "loss": 0.6477,
+            "grad_norm": 0.2749,
+            "tokens": 7649,
+            "sec": 74.63
+          },
+          {
+            "phase": "sft",
+            "step": 10,
+            "loss": 0.73033,
+            "grad_norm": 0.3007,
+            "tokens": 6077,
+            "sec": 68.58
+          },
+          {
+            "phase": "sft",
+            "step": 11,
+            "loss": 0.68864,
+            "grad_norm": 0.2937,
+            "tokens": 6077,
+            "sec": 62.61
+          },
+          {
+            "phase": "sft",
+            "step": 12,
+            "loss": 0.6611,
+            "grad_norm": 0.1815,
+            "tokens": 6717,
+            "sec": 70.67
+          },
+          {
+            "phase": "sft",
+            "step": 13,
+            "loss": 0.70125,
+            "grad_norm": 0.2392,
+            "tokens": 6112,
+            "sec": 68.68
+          },
+          {
+            "phase": "sft",
+            "step": 14,
+            "loss": 0.74631,
+            "grad_norm": 0.29,
+            "tokens": 5314,
+            "sec": 58.4
+          },
+          {
+            "phase": "sft",
+            "step": 15,
+            "loss": 0.65757,
+            "grad_norm": 0.2093,
+            "tokens": 6878,
+            "sec": 71.89
+          },
+          {
+            "phase": "sft",
+            "step": 16,
+            "loss": 0.65799,
+            "grad_norm": 0.1788,
+            "tokens": 6629,
+            "sec": 73.08
+          },
+          {
+            "phase": "sft",
+            "step": 17,
+            "loss": 0.62136,
+            "grad_norm": 0.155,
+            "tokens": 6960,
+            "sec": 71.58
+          },
+          {
+            "phase": "sft",
+            "step": 18,
+            "loss": 0.56964,
+            "grad_norm": 0.1535,
+            "tokens": 8163,
+            "sec": 79.87
+          },
+          {
+            "phase": "sft",
+            "step": 19,
+            "loss": 0.7374,
+            "grad_norm": 0.1348,
+            "tokens": 5061,
+            "sec": 59.84
+          },
+          {
+            "phase": "sft",
+            "step": 20,
+            "loss": 0.6889,
+            "grad_norm": 0.1809,
+            "tokens": 5848,
+            "sec": 66.41
+          },
+          {
+            "phase": "sft",
+            "step": 21,
+            "loss": 0.72442,
+            "grad_norm": 0.2132,
+            "tokens": 5088,
+            "sec": 57.08
+          },
+          {
+            "phase": "sft",
+            "step": 22,
+            "loss": 0.621,
+            "grad_norm": 0.1876,
+            "tokens": 7239,
+            "sec": 74.5
+          }
+        ],
+        "lora.task-decomposer-64": [
+          {
+            "phase": "sft",
+            "step": 1,
+            "loss": 1.25579,
+            "grad_norm": 0.7814,
+            "tokens": 2012,
+            "sec": 14.36
+          },
+          {
+            "phase": "sft",
+            "step": 2,
+            "loss": 1.0879,
+            "grad_norm": 0.5377,
+            "tokens": 2013,
+            "sec": 13.47
+          },
+          {
+            "phase": "sft",
+            "step": 3,
+            "loss": 0.92377,
+            "grad_norm": 0.5394,
+            "tokens": 2035,
+            "sec": 14.89
+          },
+          {
+            "phase": "sft",
+            "step": 4,
+            "loss": 0.79574,
+            "grad_norm": 0.7674,
+            "tokens": 2007,
+            "sec": 16.6
+          },
+          {
+            "phase": "sft",
+            "step": 5,
+            "loss": 0.65459,
+            "grad_norm": 0.8241,
+            "tokens": 1974,
+            "sec": 13.56
+          },
+          {
+            "phase": "sft",
+            "step": 6,
+            "loss": 0.53752,
+            "grad_norm": 0.6663,
+            "tokens": 2027,
+            "sec": 12.83
+          },
+          {
+            "phase": "sft",
+            "step": 7,
+            "loss": 0.4781,
+            "grad_norm": 0.7194,
+            "tokens": 2009,
+            "sec": 16.39
+          },
+          {
+            "phase": "sft",
+            "step": 8,
+            "loss": 0.43129,
+            "grad_norm": 0.6526,
+            "tokens": 2057,
+            "sec": 16.34
+          }
+        ],
+        "lora.shim-retriever-64": [
+          {
+            "phase": "sft",
+            "step": 1,
+            "loss": 1.46724,
+            "grad_norm": 0.699,
+            "tokens": 2310,
+            "sec": 13.43
+          },
+          {
+            "phase": "sft",
+            "step": 2,
+            "loss": 1.24885,
+            "grad_norm": 0.4887,
+            "tokens": 2254,
+            "sec": 13.76
+          },
+          {
+            "phase": "sft",
+            "step": 3,
+            "loss": 1.17349,
+            "grad_norm": 0.4995,
+            "tokens": 2309,
+            "sec": 13.96
+          },
+          {
+            "phase": "sft",
+            "step": 4,
+            "loss": 1.02686,
+            "grad_norm": 0.5153,
+            "tokens": 2305,
+            "sec": 13.96
+          },
+          {
+            "phase": "sft",
+            "step": 5,
+            "loss": 0.92132,
+            "grad_norm": 0.5558,
+            "tokens": 2297,
+            "sec": 13.83
+          },
+          {
+            "phase": "sft",
+            "step": 6,
+            "loss": 0.85217,
+            "grad_norm": 0.583,
+            "tokens": 2270,
+            "sec": 13.53
+          },
+          {
+            "phase": "sft",
+            "step": 7,
+            "loss": 0.79219,
+            "grad_norm": 0.514,
+            "tokens": 2306,
+            "sec": 13.78
+          },
+          {
+            "phase": "sft",
+            "step": 8,
+            "loss": 0.76865,
+            "grad_norm": 0.505,
+            "tokens": 2305,
+            "sec": 13.94
+          }
+        ],
+        "lora.builder-toolcalls-64": [
+          {
+            "phase": "sft",
+            "step": 1,
+            "loss": 1.05554,
+            "grad_norm": 0.464,
+            "tokens": 4122,
+            "sec": 40.48
+          },
+          {
+            "phase": "sft",
+            "step": 2,
+            "loss": 1.18841,
+            "grad_norm": 0.431,
+            "tokens": 3163,
+            "sec": 31.43
+          },
+          {
+            "phase": "sft",
+            "step": 3,
+            "loss": 1.14027,
+            "grad_norm": 0.3912,
+            "tokens": 2613,
+            "sec": 30.77
+          },
+          {
+            "phase": "sft",
+            "step": 4,
+            "loss": 0.95696,
+            "grad_norm": 0.3714,
+            "tokens": 3328,
+            "sec": 36.84
+          },
+          {
+            "phase": "sft",
+            "step": 5,
+            "loss": 0.93722,
+            "grad_norm": 0.4462,
+            "tokens": 3162,
+            "sec": 34.72
+          },
+          {
+            "phase": "sft",
+            "step": 6,
+            "loss": 0.83228,
+            "grad_norm": 0.4812,
+            "tokens": 2750,
+            "sec": 29.48
+          },
+          {
+            "phase": "sft",
+            "step": 7,
+            "loss": 0.74431,
+            "grad_norm": 0.5003,
+            "tokens": 3674,
+            "sec": 36.44
+          },
+          {
+            "phase": "sft",
+            "step": 8,
+            "loss": 0.74602,
+            "grad_norm": 0.4693,
+            "tokens": 3640,
+            "sec": 39.39
+          }
+        ],
+        "lora.verifier-dpo": [
+          {
+            "phase": "sft",
+            "step": 1,
+            "loss": 1.38837,
+            "grad_norm": 0.6888,
+            "tokens": 4576,
+            "sec": 31.33
+          },
+          {
+            "phase": "sft",
+            "step": 2,
+            "loss": 1.1864,
+            "grad_norm": 0.5324,
+            "tokens": 5842,
+            "sec": 31.71
+          },
+          {
+            "phase": "sft",
+            "step": 3,
+            "loss": 1.11601,
+            "grad_norm": 0.5102,
+            "tokens": 5769,
+            "sec": 30.41
+          },
+          {
+            "phase": "sft",
+            "step": 4,
+            "loss": 1.03376,
+            "grad_norm": 0.4531,
+            "tokens": 5238,
+            "sec": 28.32
+          },
+          {
+            "phase": "sft",
+            "step": 5,
+            "loss": 0.95107,
+            "grad_norm": 0.5096,
+            "tokens": 5101,
+            "sec": 30.87
+          },
+          {
+            "phase": "sft",
+            "step": 6,
+            "loss": 0.79447,
+            "grad_norm": 0.6072,
+            "tokens": 5484,
+            "sec": 32.97
+          },
+          {
+            "phase": "sft",
+            "step": 7,
+            "loss": 0.74258,
+            "grad_norm": 0.715,
+            "tokens": 5250,
+            "sec": 31.7
+          },
+          {
+            "phase": "sft",
+            "step": 8,
+            "loss": 0.57482,
+            "grad_norm": 0.5852,
+            "tokens": 6220,
+            "sec": 35.42
+          },
+          {
+            "phase": "sft",
+            "step": 9,
+            "loss": 0.58235,
+            "grad_norm": 0.6061,
+            "tokens": 4767,
+            "sec": 27.38
+          },
+          {
+            "phase": "sft",
+            "step": 10,
+            "loss": 0.57668,
+            "grad_norm": 0.3791,
+            "tokens": 4469,
+            "sec": 30.42
+          },
+          {
+            "phase": "sft",
+            "step": 11,
+            "loss": 0.53585,
+            "grad_norm": 0.44,
+            "tokens": 4812,
+            "sec": 27.97
+          },
+          {
+            "phase": "sft",
+            "step": 12,
+            "loss": 0.50513,
+            "grad_norm": 0.2292,
+            "tokens": 5445,
+            "sec": 28.96
+          },
+          {
+            "phase": "sft",
+            "step": 13,
+            "loss": 0.50641,
+            "grad_norm": 0.4144,
+            "tokens": 5124,
+            "sec": 31.47
+          },
+          {
+            "phase": "sft",
+            "step": 14,
+            "loss": 0.4656,
+            "grad_norm": 0.1935,
+            "tokens": 5851,
+            "sec": 32.86
+          },
+          {
+            "phase": "sft",
+            "step": 15,
+            "loss": 0.47974,
+            "grad_norm": 0.2203,
+            "tokens": 5193,
+            "sec": 28.1
+          },
+          {
+            "phase": "sft",
+            "step": 16,
+            "loss": 0.4859,
+            "grad_norm": 0.1873,
+            "tokens": 5350,
+            "sec": 31.53
+          },
+          {
+            "phase": "sft",
+            "step": 17,
+            "loss": 0.50176,
+            "grad_norm": 0.2198,
+            "tokens": 4919,
+            "sec": 27.66
+          },
+          {
+            "phase": "sft",
+            "step": 18,
+            "loss": 0.44664,
+            "grad_norm": 0.1716,
+            "tokens": 5849,
+            "sec": 33.22
+          },
+          {
+            "phase": "sft",
+            "step": 19,
+            "loss": 0.50617,
+            "grad_norm": 0.2255,
+            "tokens": 4633,
+            "sec": 26.31
+          },
+          {
+            "phase": "sft",
+            "step": 20,
+            "loss": 0.49241,
+            "grad_norm": 0.1745,
+            "tokens": 4955,
+            "sec": 31.23
+          },
+          {
+            "phase": "sft",
+            "step": 21,
+            "loss": 0.49095,
+            "grad_norm": 0.1189,
+            "tokens": 4718,
+            "sec": 29.75
+          },
+          {
+            "phase": "sft",
+            "step": 22,
+            "loss": 0.48508,
+            "grad_norm": 0.1334,
+            "tokens": 4898,
+            "sec": 29.03
+          },
+          {
+            "phase": "sft",
+            "step": 23,
+            "loss": 0.48429,
+            "grad_norm": 0.1935,
+            "tokens": 4802,
+            "sec": 30.32
+          },
+          {
+            "phase": "sft",
+            "step": 24,
+            "loss": 0.43534,
+            "grad_norm": 0.1628,
+            "tokens": 5662,
+            "sec": 32.68
+          },
+          {
+            "phase": "dpo",
+            "step": 1,
+            "loss": 0.07757,
+            "margin": 21.8278,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0425,
+            "tokens": 11448,
+            "sec": 31.38
+          },
+          {
+            "phase": "dpo",
+            "step": 2,
+            "loss": 0.07207,
+            "margin": 23.9953,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0316,
+            "tokens": 11624,
+            "sec": 31.79
+          },
+          {
+            "phase": "dpo",
+            "step": 3,
+            "loss": 0.06542,
+            "margin": 25.8489,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0317,
+            "tokens": 12854,
+            "sec": 36.67
+          },
+          {
+            "phase": "dpo",
+            "step": 4,
+            "loss": 0.06803,
+            "margin": 25.9619,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0457,
+            "tokens": 11106,
+            "sec": 30.38
+          },
+          {
+            "phase": "dpo",
+            "step": 5,
+            "loss": 0.07594,
+            "margin": 22.1175,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0291,
+            "tokens": 9558,
+            "sec": 24.18
+          },
+          {
+            "phase": "dpo",
+            "step": 6,
+            "loss": 0.06342,
+            "margin": 23.2016,
+            "pref_acc": 1.0,
+            "grad_norm": 0.034,
+            "tokens": 10576,
+            "sec": 28.21
+          },
+          {
+            "phase": "dpo",
+            "step": 7,
+            "loss": 0.06326,
+            "margin": 21.4167,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0298,
+            "tokens": 11986,
+            "sec": 33.57
+          },
+          {
+            "phase": "dpo",
+            "step": 8,
+            "loss": 0.06761,
+            "margin": 22.0851,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0409,
+            "tokens": 11871,
+            "sec": 32.8
+          },
+          {
+            "phase": "dpo",
+            "step": 9,
+            "loss": 0.06494,
+            "margin": 25.5773,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0318,
+            "tokens": 11479,
+            "sec": 31.61
+          },
+          {
+            "phase": "dpo",
+            "step": 10,
+            "loss": 0.07274,
+            "margin": 20.8222,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0207,
+            "tokens": 9557,
+            "sec": 24.57
+          },
+          {
+            "phase": "dpo",
+            "step": 11,
+            "loss": 0.06626,
+            "margin": 23.488,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0219,
+            "tokens": 10703,
+            "sec": 28.55
+          },
+          {
+            "phase": "dpo",
+            "step": 12,
+            "loss": 0.07567,
+            "margin": 20.3354,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0244,
+            "tokens": 10492,
+            "sec": 27.85
+          },
+          {
+            "phase": "dpo",
+            "step": 13,
+            "loss": 0.06816,
+            "margin": 24.516,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0229,
+            "tokens": 10534,
+            "sec": 27.96
+          },
+          {
+            "phase": "dpo",
+            "step": 14,
+            "loss": 0.06898,
+            "margin": 22.4854,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0241,
+            "tokens": 12110,
+            "sec": 33.45
+          },
+          {
+            "phase": "dpo",
+            "step": 15,
+            "loss": 0.06898,
+            "margin": 19.0129,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0209,
+            "tokens": 10745,
+            "sec": 28.13
+          },
+          {
+            "phase": "dpo",
+            "step": 16,
+            "loss": 0.06842,
+            "margin": 23.0025,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0323,
+            "tokens": 11890,
+            "sec": 32.65
+          },
+          {
+            "phase": "dpo",
+            "step": 17,
+            "loss": 0.07462,
+            "margin": 21.6456,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0245,
+            "tokens": 9644,
+            "sec": 24.35
+          },
+          {
+            "phase": "dpo",
+            "step": 18,
+            "loss": 0.06587,
+            "margin": 21.1822,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0194,
+            "tokens": 10566,
+            "sec": 27.36
+          },
+          {
+            "phase": "dpo",
+            "step": 19,
+            "loss": 0.07118,
+            "margin": 22.1801,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0325,
+            "tokens": 13457,
+            "sec": 38.51
+          },
+          {
+            "phase": "dpo",
+            "step": 20,
+            "loss": 0.07579,
+            "margin": 18.1518,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0294,
+            "tokens": 11768,
+            "sec": 32.51
+          },
+          {
+            "phase": "dpo",
+            "step": 21,
+            "loss": 0.06651,
+            "margin": 21.3409,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0208,
+            "tokens": 11850,
+            "sec": 32.84
+          },
+          {
+            "phase": "dpo",
+            "step": 22,
+            "loss": 0.07208,
+            "margin": 20.07,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0239,
+            "tokens": 11884,
+            "sec": 32.6
+          },
+          {
+            "phase": "dpo",
+            "step": 23,
+            "loss": 0.06242,
+            "margin": 24.1042,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0191,
+            "tokens": 11936,
+            "sec": 33.18
+          },
+          {
+            "phase": "dpo",
+            "step": 24,
+            "loss": 0.06832,
+            "margin": 20.9069,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0185,
+            "tokens": 9521,
+            "sec": 24.25
+          },
+          {
+            "phase": "dpo",
+            "step": 25,
+            "loss": 0.07289,
+            "margin": 21.9539,
+            "pref_acc": 1.0,
+            "grad_norm": 0.02,
+            "tokens": 9216,
+            "sec": 23.38
+          },
+          {
+            "phase": "dpo",
+            "step": 26,
+            "loss": 0.07164,
+            "margin": 24.5443,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0192,
+            "tokens": 10253,
+            "sec": 26.87
+          },
+          {
+            "phase": "dpo",
+            "step": 27,
+            "loss": 0.06893,
+            "margin": 23.0543,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0222,
+            "tokens": 12066,
+            "sec": 33.37
+          },
+          {
+            "phase": "dpo",
+            "step": 28,
+            "loss": 0.06535,
+            "margin": 24.5428,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0236,
+            "tokens": 12680,
+            "sec": 36.05
+          }
+        ],
+        "lora.verifier-dpo-256": [
+          {
+            "phase": "sft",
+            "step": 1,
+            "loss": 1.31308,
+            "grad_norm": 0.6146,
+            "tokens": 5284,
+            "sec": 30.87
+          },
+          {
+            "phase": "sft",
+            "step": 2,
+            "loss": 1.24197,
+            "grad_norm": 0.5526,
+            "tokens": 5084,
+            "sec": 30.37
+          },
+          {
+            "phase": "sft",
+            "step": 3,
+            "loss": 1.14595,
+            "grad_norm": 0.4859,
+            "tokens": 5000,
+            "sec": 28.93
+          },
+          {
+            "phase": "sft",
+            "step": 4,
+            "loss": 0.95326,
+            "grad_norm": 0.4539,
+            "tokens": 5231,
+            "sec": 28.35
+          },
+          {
+            "phase": "sft",
+            "step": 5,
+            "loss": 0.8445,
+            "grad_norm": 0.5584,
+            "tokens": 5181,
+            "sec": 30.28
+          },
+          {
+            "phase": "sft",
+            "step": 6,
+            "loss": 0.71505,
+            "grad_norm": 0.6044,
+            "tokens": 5820,
+            "sec": 30.61
+          },
+          {
+            "phase": "sft",
+            "step": 7,
+            "loss": 0.62801,
+            "grad_norm": 0.6182,
+            "tokens": 5483,
+            "sec": 32.97
+          },
+          {
+            "phase": "sft",
+            "step": 8,
+            "loss": 0.64364,
+            "grad_norm": 0.702,
+            "tokens": 4472,
+            "sec": 29.65
+          },
+          {
+            "phase": "sft",
+            "step": 9,
+            "loss": 0.53283,
+            "grad_norm": 0.6819,
+            "tokens": 4839,
+            "sec": 26.86
+          },
+          {
+            "phase": "sft",
+            "step": 10,
+            "loss": 0.54267,
+            "grad_norm": 0.381,
+            "tokens": 5594,
+            "sec": 32.99
+          },
+          {
+            "phase": "sft",
+            "step": 11,
+            "loss": 0.52766,
+            "grad_norm": 0.3352,
+            "tokens": 5411,
+            "sec": 31.02
+          },
+          {
+            "phase": "sft",
+            "step": 12,
+            "loss": 0.53424,
+            "grad_norm": 0.2683,
+            "tokens": 4505,
+            "sec": 29.16
+          },
+          {
+            "phase": "sft",
+            "step": 13,
+            "loss": 0.48789,
+            "grad_norm": 0.2476,
+            "tokens": 5482,
+            "sec": 32.85
+          },
+          {
+            "phase": "sft",
+            "step": 14,
+            "loss": 0.49928,
+            "grad_norm": 0.1902,
+            "tokens": 5103,
+            "sec": 29.59
+          },
+          {
+            "phase": "dpo",
+            "step": 1,
+            "loss": 0.07629,
+            "margin": 15.0385,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0481,
+            "tokens": 11910,
+            "sec": 33.3
+          },
+          {
+            "phase": "dpo",
+            "step": 2,
+            "loss": 0.07129,
+            "margin": 15.5162,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0548,
+            "tokens": 12656,
+            "sec": 36.3
+          },
+          {
+            "phase": "dpo",
+            "step": 3,
+            "loss": 0.07668,
+            "margin": 16.5176,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0293,
+            "tokens": 10456,
+            "sec": 27.98
+          },
+          {
+            "phase": "dpo",
+            "step": 4,
+            "loss": 0.07591,
+            "margin": 16.4218,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0496,
+            "tokens": 10265,
+            "sec": 27.46
+          },
+          {
+            "phase": "dpo",
+            "step": 5,
+            "loss": 0.07826,
+            "margin": 16.1018,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0429,
+            "tokens": 10017,
+            "sec": 26.55
+          },
+          {
+            "phase": "dpo",
+            "step": 6,
+            "loss": 0.07317,
+            "margin": 17.7902,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0322,
+            "tokens": 10748,
+            "sec": 29.11
+          },
+          {
+            "phase": "dpo",
+            "step": 7,
+            "loss": 0.07122,
+            "margin": 14.8159,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0523,
+            "tokens": 9986,
+            "sec": 26.25
+          },
+          {
+            "phase": "dpo",
+            "step": 8,
+            "loss": 0.06973,
+            "margin": 18.4075,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0475,
+            "tokens": 12495,
+            "sec": 35.71
+          },
+          {
+            "phase": "dpo",
+            "step": 9,
+            "loss": 0.06482,
+            "margin": 17.1869,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0351,
+            "tokens": 10417,
+            "sec": 27.42
+          },
+          {
+            "phase": "dpo",
+            "step": 10,
+            "loss": 0.07575,
+            "margin": 17.9484,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0388,
+            "tokens": 12241,
+            "sec": 34.64
+          },
+          {
+            "phase": "dpo",
+            "step": 11,
+            "loss": 0.07195,
+            "margin": 17.441,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0244,
+            "tokens": 9935,
+            "sec": 25.58
+          },
+          {
+            "phase": "dpo",
+            "step": 12,
+            "loss": 0.06539,
+            "margin": 18.2145,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0245,
+            "tokens": 11165,
+            "sec": 30.1
+          },
+          {
+            "phase": "dpo",
+            "step": 13,
+            "loss": 0.07108,
+            "margin": 18.3672,
+            "pref_acc": 1.0,
+            "grad_norm": 0.031,
+            "tokens": 11313,
+            "sec": 30.8
+          },
+          {
+            "phase": "dpo",
+            "step": 14,
+            "loss": 0.07103,
+            "margin": 17.1734,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0252,
+            "tokens": 10010,
+            "sec": 25.88
+          },
+          {
+            "phase": "dpo",
+            "step": 15,
+            "loss": 0.07324,
+            "margin": 17.9662,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0274,
+            "tokens": 10354,
+            "sec": 27.76
+          },
+          {
+            "phase": "dpo",
+            "step": 16,
+            "loss": 0.07016,
+            "margin": 20.1166,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0334,
+            "tokens": 12446,
+            "sec": 35.52
+          }
+        ],
+        "lora.verifier-dpo-64": [
+          {
+            "phase": "sft",
+            "step": 1,
+            "loss": 1.34558,
+            "grad_norm": 0.6258,
+            "tokens": 2612,
+            "sec": 15.7
+          },
+          {
+            "phase": "sft",
+            "step": 2,
+            "loss": 1.1708,
+            "grad_norm": 0.5087,
+            "tokens": 2411,
+            "sec": 12.76
+          },
+          {
+            "phase": "sft",
+            "step": 3,
+            "loss": 1.05333,
+            "grad_norm": 0.4709,
+            "tokens": 2369,
+            "sec": 14.82
+          },
+          {
+            "phase": "sft",
+            "step": 4,
+            "loss": 0.88947,
+            "grad_norm": 0.4667,
+            "tokens": 2747,
+            "sec": 16.57
+          },
+          {
+            "phase": "sft",
+            "step": 5,
+            "loss": 0.78029,
+            "grad_norm": 0.5195,
+            "tokens": 2739,
+            "sec": 14.94
+          },
+          {
+            "phase": "sft",
+            "step": 6,
+            "loss": 0.70168,
+            "grad_norm": 0.5864,
+            "tokens": 2716,
+            "sec": 16.3
+          },
+          {
+            "phase": "dpo",
+            "step": 1,
+            "loss": 0.10887,
+            "margin": 6.1073,
+            "pref_acc": 1.0,
+            "grad_norm": 0.2062,
+            "tokens": 5941,
+            "sec": 16.85
+          },
+          {
+            "phase": "dpo",
+            "step": 2,
+            "loss": 0.08025,
+            "margin": 11.7074,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0907,
+            "tokens": 5940,
+            "sec": 16.78
+          },
+          {
+            "phase": "dpo",
+            "step": 3,
+            "loss": 0.08487,
+            "margin": 12.0201,
+            "pref_acc": 1.0,
+            "grad_norm": 0.1125,
+            "tokens": 5968,
+            "sec": 16.79
+          },
+          {
+            "phase": "dpo",
+            "step": 4,
+            "loss": 0.09553,
+            "margin": 9.9296,
+            "pref_acc": 1.0,
+            "grad_norm": 0.1668,
+            "tokens": 4691,
+            "sec": 12.33
+          },
+          {
+            "phase": "dpo",
+            "step": 5,
+            "loss": 0.09813,
+            "margin": 14.368,
+            "pref_acc": 1.0,
+            "grad_norm": 0.1448,
+            "tokens": 4331,
+            "sec": 10.88
+          },
+          {
+            "phase": "dpo",
+            "step": 6,
+            "loss": 0.09249,
+            "margin": 11.5965,
+            "pref_acc": 1.0,
+            "grad_norm": 0.1271,
+            "tokens": 5024,
+            "sec": 13.19
+          },
+          {
+            "phase": "dpo",
+            "step": 7,
+            "loss": 0.08155,
+            "margin": 15.1085,
+            "pref_acc": 1.0,
+            "grad_norm": 0.098,
+            "tokens": 6807,
+            "sec": 20.08
+          },
+          {
+            "phase": "dpo",
+            "step": 8,
+            "loss": 0.08316,
+            "margin": 13.6435,
+            "pref_acc": 1.0,
+            "grad_norm": 0.0906,
+            "tokens": 4855,
+            "sec": 12.79
+          }
+        ],
+        "lora.monolithic-mixed": [
+          {
+            "phase": "sft",
+            "step": 1,
+            "loss": 1.30531,
+            "grad_norm": 0.4681,
+            "tokens": 4971,
+            "sec": 33.18
+          },
+          {
+            "phase": "sft",
+            "step": 2,
+            "loss": 1.28106,
+            "grad_norm": 0.467,
+            "tokens": 5286,
+            "sec": 39.53
+          },
+          {
+            "phase": "sft",
+            "step": 3,
+            "loss": 1.18914,
+            "grad_norm": 0.4215,
+            "tokens": 4793,
+            "sec": 30.94
+          },
+          {
+            "phase": "sft",
+            "step": 4,
+            "loss": 1.07113,
+            "grad_norm": 0.3328,
+            "tokens": 5707,
+            "sec": 42.96
+          },
+          {
+            "phase": "sft",
+            "step": 5,
+            "loss": 1.10641,
+            "grad_norm": 0.3918,
+            "tokens": 4559,
+            "sec": 30.06
+          },
+          {
+            "phase": "sft",
+            "step": 6,
+            "loss": 0.95491,
+            "grad_norm": 0.4904,
+            "tokens": 4682,
+            "sec": 34.46
+          },
+          {
+            "phase": "sft",
+            "step": 7,
+            "loss": 0.94354,
+            "grad_norm": 0.4947,
+            "tokens": 4813,
+            "sec": 35.99
+          },
+          {
+            "phase": "sft",
+            "step": 8,
+            "loss": 0.80766,
+            "grad_norm": 0.5609,
+            "tokens": 4950,
+            "sec": 37.46
+          },
+          {
+            "phase": "sft",
+            "step": 9,
+            "loss": 0.8708,
+            "grad_norm": 0.5357,
+            "tokens": 5277,
+            "sec": 39.25
+          },
+          {
+            "phase": "sft",
+            "step": 10,
+            "loss": 0.70369,
+            "grad_norm": 0.4629,
+            "tokens": 5997,
+            "sec": 45.34
+          },
+          {
+            "phase": "sft",
+            "step": 11,
+            "loss": 0.74137,
+            "grad_norm": 0.494,
+            "tokens": 4770,
+            "sec": 34.81
+          },
+          {
+            "phase": "sft",
+            "step": 12,
+            "loss": 0.61066,
+            "grad_norm": 0.7382,
+            "tokens": 4570,
+            "sec": 32.63
+          },
+          {
+            "phase": "sft",
+            "step": 13,
+            "loss": 0.57298,
+            "grad_norm": 0.4033,
+            "tokens": 4829,
+            "sec": 36.05
+          },
+          {
+            "phase": "sft",
+            "step": 14,
+            "loss": 0.55547,
+            "grad_norm": 0.5132,
+            "tokens": 4562,
+            "sec": 32.01
+          },
+          {
+            "phase": "sft",
+            "step": 15,
+            "loss": 0.59261,
+            "grad_norm": 0.4761,
+            "tokens": 4566,
+            "sec": 33.44
+          },
+          {
+            "phase": "sft",
+            "step": 16,
+            "loss": 0.63745,
+            "grad_norm": 0.2791,
+            "tokens": 5524,
+            "sec": 44.75
+          },
+          {
+            "phase": "sft",
+            "step": 17,
+            "loss": 0.41126,
+            "grad_norm": 0.4674,
+            "tokens": 4194,
+            "sec": 24.79
+          },
+          {
+            "phase": "sft",
+            "step": 18,
+            "loss": 0.62937,
+            "grad_norm": 0.3744,
+            "tokens": 5505,
+            "sec": 50.7
+          },
+          {
+            "phase": "sft",
+            "step": 19,
+            "loss": 0.57061,
+            "grad_norm": 0.2334,
+            "tokens": 5376,
+            "sec": 43.78
+          },
+          {
+            "phase": "sft",
+            "step": 20,
+            "loss": 0.54964,
+            "grad_norm": 0.4971,
+            "tokens": 5850,
+            "sec": 39.23
+          },
+          {
+            "phase": "sft",
+            "step": 21,
+            "loss": 0.51162,
+            "grad_norm": 0.254,
+            "tokens": 4811,
+            "sec": 40.17
+          },
+          {
+            "phase": "sft",
+            "step": 22,
+            "loss": 0.57424,
+            "grad_norm": 0.2864,
+            "tokens": 4842,
+            "sec": 34.38
+          },
+          {
+            "phase": "sft",
+            "step": 23,
+            "loss": 0.49221,
+            "grad_norm": 0.1801,
+            "tokens": 5261,
+            "sec": 37.12
+          },
+          {
+            "phase": "sft",
+            "step": 24,
+            "loss": 0.5,
+            "grad_norm": 0.1945,
+            "tokens": 4564,
+            "sec": 37.34
+          },
+          {
+            "phase": "sft",
+            "step": 25,
+            "loss": 0.52829,
+            "grad_norm": 0.2382,
+            "tokens": 5004,
+            "sec": 31.49
+          },
+          {
+            "phase": "sft",
+            "step": 26,
+            "loss": 0.57821,
+            "grad_norm": 0.2061,
+            "tokens": 4587,
+            "sec": 32.38
+          },
+          {
+            "phase": "sft",
+            "step": 27,
+            "loss": 0.50549,
+            "grad_norm": 0.2052,
+            "tokens": 5426,
+            "sec": 40.97
+          },
+          {
+            "phase": "sft",
+            "step": 28,
+            "loss": 0.55622,
+            "grad_norm": 0.1717,
+            "tokens": 5131,
+            "sec": 38.48
+          },
+          {
+            "phase": "sft",
+            "step": 29,
+            "loss": 0.55713,
+            "grad_norm": 0.1606,
+            "tokens": 4960,
+            "sec": 40.47
+          },
+          {
+            "phase": "sft",
+            "step": 30,
+            "loss": 0.57229,
+            "grad_norm": 0.1728,
+            "tokens": 5919,
+            "sec": 48.73
+          },
+          {
+            "phase": "sft",
+            "step": 31,
+            "loss": 0.50686,
+            "grad_norm": 0.2244,
+            "tokens": 4675,
+            "sec": 29.98
+          },
+          {
+            "phase": "sft",
+            "step": 32,
+            "loss": 0.43736,
+            "grad_norm": 0.1348,
+            "tokens": 6136,
+            "sec": 46.17
+          },
+          {
+            "phase": "sft",
+            "step": 33,
+            "loss": 0.41255,
+            "grad_norm": 0.1807,
+            "tokens": 6020,
+            "sec": 41.49
+          },
+          {
+            "phase": "sft",
+            "step": 34,
+            "loss": 0.41198,
+            "grad_norm": 0.1257,
+            "tokens": 4337,
+            "sec": 26.5
+          },
+          {
+            "phase": "sft",
+            "step": 35,
+            "loss": 0.47043,
+            "grad_norm": 0.165,
+            "tokens": 6114,
+            "sec": 47.55
+          },
+          {
+            "phase": "sft",
+            "step": 36,
+            "loss": 0.48003,
+            "grad_norm": 0.1689,
+            "tokens": 5004,
+            "sec": 34.71
+          },
+          {
+            "phase": "sft",
+            "step": 37,
+            "loss": 0.4979,
+            "grad_norm": 0.1461,
+            "tokens": 4675,
+            "sec": 33.23
+          },
+          {
+            "phase": "sft",
+            "step": 38,
+            "loss": 0.52897,
+            "grad_norm": 0.1661,
+            "tokens": 5095,
+            "sec": 39.65
+          },
+          {
+            "phase": "sft",
+            "step": 39,
+            "loss": 0.49298,
+            "grad_norm": 0.1403,
+            "tokens": 4910,
+            "sec": 35.52
+          },
+          {
+            "phase": "sft",
+            "step": 40,
+            "loss": 0.43041,
+            "grad_norm": 0.09,
+            "tokens": 4515,
+            "sec": 32.8
+          },
+          {
+            "phase": "sft",
+            "step": 41,
+            "loss": 0.50644,
+            "grad_norm": 0.1405,
+            "tokens": 6552,
+            "sec": 53.43
+          },
+          {
+            "phase": "sft",
+            "step": 42,
+            "loss": 0.46412,
+            "grad_norm": 0.1421,
+            "tokens": 4548,
+            "sec": 34.89
+          },
+          {
+            "phase": "sft",
+            "step": 43,
+            "loss": 0.52919,
+            "grad_norm": 0.1644,
+            "tokens": 5487,
+            "sec": 44.46
+          },
+          {
+            "phase": "sft",
+            "step": 44,
+            "loss": 0.56932,
+            "grad_norm": 0.1949,
+            "tokens": 4939,
+            "sec": 38.76
+          },
+          {
+            "phase": "sft",
+            "step": 45,
+            "loss": 0.52451,
+            "grad_norm": 0.1859,
+            "tokens": 5316,
+            "sec": 39.45
+          },
+          {
+            "phase": "sft",
+            "step": 46,
+            "loss": 0.45294,
+            "grad_norm": 0.1684,
+            "tokens": 4924,
+            "sec": 31.91
+          },
+          {
+            "phase": "sft",
+            "step": 47,
+            "loss": 0.40412,
+            "grad_norm": 0.1515,
+            "tokens": 4467,
+            "sec": 29.67
+          },
+          {
+            "phase": "sft",
+            "step": 48,
+            "loss": 0.52796,
+            "grad_norm": 0.1596,
+            "tokens": 5167,
+            "sec": 34.64
+          },
+          {
+            "phase": "sft",
+            "step": 49,
+            "loss": 0.45857,
+            "grad_norm": 0.1217,
+            "tokens": 4690,
+            "sec": 31.61
+          },
+          {
+            "phase": "sft",
+            "step": 50,
+            "loss": 0.48102,
+            "grad_norm": 0.1425,
+            "tokens": 4884,
+            "sec": 36.98
+          },
+          {
+            "phase": "sft",
+            "step": 51,
+            "loss": 0.45782,
+            "grad_norm": 0.2547,
+            "tokens": 4919,
+            "sec": 32.88
+          },
+          {
+            "phase": "sft",
+            "step": 52,
+            "loss": 0.48343,
+            "grad_norm": 0.1824,
+            "tokens": 4564,
+            "sec": 35.52
+          },
+          {
+            "phase": "sft",
+            "step": 53,
+            "loss": 0.47353,
+            "grad_norm": 0.2176,
+            "tokens": 4653,
+            "sec": 32.89
+          },
+          {
+            "phase": "sft",
+            "step": 54,
+            "loss": 0.48463,
+            "grad_norm": 0.1627,
+            "tokens": 5940,
+            "sec": 45.65
+          },
+          {
+            "phase": "sft",
+            "step": 55,
+            "loss": 0.47211,
+            "grad_norm": 0.1297,
+            "tokens": 5830,
+            "sec": 43.61
+          },
+          {
+            "phase": "sft",
+            "step": 56,
+            "loss": 0.42555,
+            "grad_norm": 0.1237,
+            "tokens": 4474,
+            "sec": 29.96
+          }
+        ],
+        "lora.monolithic-mixed-256": [
+          {
+            "phase": "sft",
+            "step": 1,
+            "loss": 1.38583,
+            "grad_norm": 0.5145,
+            "tokens": 5504,
+            "sec": 46.92
+          },
+          {
+            "phase": "sft",
+            "step": 2,
+            "loss": 1.15964,
+            "grad_norm": 0.434,
+            "tokens": 5687,
+            "sec": 40.13
+          },
+          {
+            "phase": "sft",
+            "step": 3,
+            "loss": 1.14323,
+            "grad_norm": 0.3525,
+            "tokens": 5402,
+            "sec": 37.61
+          },
+          {
+            "phase": "sft",
+            "step": 4,
+            "loss": 1.09732,
+            "grad_norm": 0.3795,
+            "tokens": 5387,
+            "sec": 41.75
+          },
+          {
+            "phase": "sft",
+            "step": 5,
+            "loss": 1.04403,
+            "grad_norm": 0.5127,
+            "tokens": 4465,
+            "sec": 23.53
+          },
+          {
+            "phase": "sft",
+            "step": 6,
+            "loss": 0.85653,
+            "grad_norm": 0.5946,
+            "tokens": 5456,
+            "sec": 44.57
+          },
+          {
+            "phase": "sft",
+            "step": 7,
+            "loss": 0.93701,
+            "grad_norm": 0.4383,
+            "tokens": 4947,
+            "sec": 37.47
+          },
+          {
+            "phase": "sft",
+            "step": 8,
+            "loss": 0.72395,
+            "grad_norm": 0.7616,
+            "tokens": 4467,
+            "sec": 30.77
+          },
+          {
+            "phase": "sft",
+            "step": 9,
+            "loss": 0.72148,
+            "grad_norm": 0.5224,
+            "tokens": 4761,
+            "sec": 25.33
+          },
+          {
+            "phase": "sft",
+            "step": 10,
+            "loss": 0.7985,
+            "grad_norm": 0.5588,
+            "tokens": 4964,
+            "sec": 29.03
+          },
+          {
+            "phase": "sft",
+            "step": 11,
+            "loss": 0.55481,
+            "grad_norm": 0.5231,
+            "tokens": 5017,
+            "sec": 32.25
+          },
+          {
+            "phase": "sft",
+            "step": 12,
+            "loss": 0.72177,
+            "grad_norm": 0.4123,
+            "tokens": 5029,
+            "sec": 36.78
+          },
+          {
+            "phase": "sft",
+            "step": 13,
+            "loss": 0.61806,
+            "grad_norm": 0.3845,
+            "tokens": 5783,
+            "sec": 45.85
+          },
+          {
+            "phase": "sft",
+            "step": 14,
+            "loss": 0.45872,
+            "grad_norm": 0.3163,
+            "tokens": 4714,
+            "sec": 29.23
+          },
+          {
+            "phase": "sft",
+            "step": 15,
+            "loss": 0.47651,
+            "grad_norm": 0.382,
+            "tokens": 5295,
+            "sec": 37.36
+          },
+          {
+            "phase": "sft",
+            "step": 16,
+            "loss": 0.54243,
+            "grad_norm": 0.3303,
+            "tokens": 4541,
+            "sec": 26.51
+          },
+          {
+            "phase": "sft",
+            "step": 17,
+            "loss": 0.47539,
+            "grad_norm": 0.173,
+            "tokens": 4476,
+            "sec": 33.82
+          },
+          {
+            "phase": "sft",
+            "step": 18,
+            "loss": 0.54566,
+            "grad_norm": 0.3338,
+            "tokens": 4939,
+            "sec": 29.63
+          },
+          {
+            "phase": "sft",
+            "step": 19,
+            "loss": 0.47723,
+            "grad_norm": 0.2158,
+            "tokens": 4490,
+            "sec": 31.19
+          },
+          {
+            "phase": "sft",
+            "step": 20,
+            "loss": 0.56727,
+            "grad_norm": 0.2817,
+            "tokens": 5709,
+            "sec": 41.43
+          },
+          {
+            "phase": "sft",
+            "step": 21,
+            "loss": 0.56848,
+            "grad_norm": 0.2466,
+            "tokens": 4994,
+            "sec": 37.83
+          },
+          {
+            "phase": "sft",
+            "step": 22,
+            "loss": 0.53689,
+            "grad_norm": 0.2704,
+            "tokens": 4994,
+            "sec": 32.76
+          },
+          {
+            "phase": "sft",
+            "step": 23,
+            "loss": 0.55321,
+            "grad_norm": 0.2543,
+            "tokens": 5927,
+            "sec": 41.62
+          },
+          {
+            "phase": "sft",
+            "step": 24,
+            "loss": 0.54069,
+            "grad_norm": 0.3031,
+            "tokens": 5271,
+            "sec": 36.78
+          }
+        ],
+        "lora.monolithic-mixed-64": [
+          {
+            "phase": "sft",
+            "step": 1,
+            "loss": 1.46099,
+            "grad_norm": 0.5415,
+            "tokens": 2333,
+            "sec": 14.28
+          },
+          {
+            "phase": "sft",
+            "step": 2,
+            "loss": 1.29558,
+            "grad_norm": 0.45,
+            "tokens": 2188,
+            "sec": 14.37
+          },
+          {
+            "phase": "sft",
+            "step": 3,
+            "loss": 1.17551,
+            "grad_norm": 0.437,
+            "tokens": 2243,
+            "sec": 12.19
+          },
+          {
+            "phase": "sft",
+            "step": 4,
+            "loss": 0.87664,
+            "grad_norm": 0.3422,
+            "tokens": 3864,
+            "sec": 29.35
+          },
+          {
+            "phase": "sft",
+            "step": 5,
+            "loss": 0.95992,
+            "grad_norm": 0.3838,
+            "tokens": 2663,
+            "sec": 18.21
+          },
+          {
+            "phase": "sft",
+            "step": 6,
+            "loss": 0.84688,
+            "grad_norm": 0.7069,
+            "tokens": 2188,
+            "sec": 13.84
+          },
+          {
+            "phase": "sft",
+            "step": 7,
+            "loss": 0.96583,
+            "grad_norm": 0.5245,
+            "tokens": 2514,
+            "sec": 18.88
+          },
+          {
+            "phase": "sft",
+            "step": 8,
+            "loss": 0.67453,
+            "grad_norm": 0.6357,
+            "tokens": 2903,
+            "sec": 20.44
+          },
+          {
+            "phase": "sft",
+            "step": 9,
+            "loss": 0.8223,
+            "grad_norm": 0.5301,
+            "tokens": 2711,
+            "sec": 20.33
+          },
+          {
+            "phase": "sft",
+            "step": 10,
+            "loss": 1.0088,
+            "grad_norm": 0.6442,
+            "tokens": 2279,
+            "sec": 19.25
+          }
+        ]
+      },
+      "seconds": 8703.08
+    },
+    "parallel_eval_and_composition": {
+      "status": "failed",
+      "seconds": 1123.71,
+      "error": "RuntimeError: Parallel 2xT4 workers failed in phase=eval: rc0=1, rc1=1",
+      "traceback": "Traceback (most recent call last):\n  File \"/kaggle/src/script.py\", line 331, in <module>\n    run_dual_workers(\"eval\")\n    ~~~~~~~~~~~~~~~~^^^^^^^^\n  File \"/kaggle/src/script.py\", line 303, in run_dual_workers\n    raise RuntimeError(f\"Parallel 2xT4 workers failed in phase={phase}: rc0={rc0}, rc1={rc1}\")\nRuntimeError: Parallel 2xT4 workers failed in phase=eval: rc0=1, rc1=1\n"
+    }
+  },
+  "errors": [
+    {
+      "stage": "parallel_eval_and_composition",
+      "error": "RuntimeError: Parallel 2xT4 workers failed in phase=eval: rc0=1, rc1=1"
+    }
+  ],
+  "modular_common_sha256": "f1294836ac134bd49554515f5dfe141ddc7026e32e1be569f0090074ff338e3e",
+  "worker_gpu_unit_sha256": "540730b81fcd424745a8c47c6b4791ac7958e87d89943c805f7384574720eb8c",
+  "elapsed_s": 9845.19,
+  "swarm_source_manifest": {
+    "contamination_checks": {
+      "gold_holdout_self_score": 1.0,
+      "nested_subsets_verified": true,
+      "prompt_fingerprint_overlap": 0,
+      "workflow_id_overlap": 0
+    },
+    "files": {
+      "dpo_holdout.jsonl": {
+        "bytes": 907751,
+        "rows": 50,
+        "sha256": "da79e1f8a01aa939b7cb7441001bf96d515f06fb737e419321ca0fbbfe700a29"
+      },
+      "dpo_verifier_1600.jsonl": {
+        "bytes": 1572890,
+        "rows": 100,
+        "sha256": "f0128314d18c5e5bebce58f90347d075543883a0b8411802ff8d066e445f298e"
+      },
+      "dpo_verifier_256.jsonl": {
+        "bytes": 996205,
+        "rows": 64,
+        "sha256": "097824c13d1e15f003ce88648a4876212c7fcddbad8d6d56793fd7de47310dfc"
+      },
+      "dpo_verifier_64.jsonl": {
+        "bytes": 245913,
+        "rows": 16,
+        "sha256": "f9ccd3c2c3cf0898968ee96a68f01b935d8e7695d36e7f69aca733f30ef20dd4"
+      },
+      "holdout_eval.jsonl": {
+        "bytes": 1650486,
+        "rows": 200,
+        "sha256": "0b67c1d0b7ddf3deeb2a8e5679da245607f2eef5a79883ff26db2b83d960bec3"
+      },
+      "sanity_40.jsonl": {
+        "bytes": 16626,
+        "rows": 40,
+        "sha256": "1271140ebde3ef699234f152e979adde0b3729f605c5ab3d432ff90a34ddd7eb"
+      },
+      "sft_builder_1600.jsonl": {
+        "bytes": 4970727,
+        "rows": 500,
+        "sha256": "d526872956e8ea78998b8109e515392d21b0957d99dd4f99cedb67a5f8e03af4"
+      },
+      "sft_builder_256.jsonl": {
+        "bytes": 644031,
+        "rows": 64,
+        "sha256": "5b6b4ebacb2747664a86ceeed2aed3612e086e2454d8584f0e806e8f13c1ea64"
+      },
+      "sft_builder_64.jsonl": {
+        "bytes": 163482,
+        "rows": 16,
+        "sha256": "73bd18d7f7ba57ada1bd42a37634222605c89e19c046c993f4f6d28bc2c8ed61"
+      },
+      "sft_decomposer_1600.jsonl": {
+        "bytes": 2948424,
+        "rows": 500,
+        "sha256": "c5ab93f919b03d90ec2f76289977da7bb91d19bab557fd757d2b9de6f3f78fd3"
+      },
+      "sft_decomposer_256.jsonl": {
+        "bytes": 378231,
+        "rows": 64,
+        "sha256": "6ff9e1d8f5e2f528e13cc120fb6920419e6627a5622b48fb24cf1bcdab0746a6"
+      },
+      "sft_decomposer_64.jsonl": {
+        "bytes": 94966,
+        "rows": 16,
+        "sha256": "5978334261c6fe24b0dc2778a7f6c9ee7ad536a513d9933e6444be07ad414f92"
+      },
+      "sft_monolithic_1600.jsonl": {
+        "bytes": 11417633,
+        "rows": 1600,
+        "sha256": "6f31b4c08a697f8364641c2c0465544b6c70b1c31d983b164c26df7d5a902a25"
+      },
+      "sft_monolithic_256.jsonl": {
+        "bytes": 1813507,
+        "rows": 256,
+        "sha256": "d8086d999849065b3b3c73ad4d559432ccc4a541bb11d9027b8076949c81c65e"
+      },
+      "sft_monolithic_64.jsonl": {
+        "bytes": 454869,
+        "rows": 64,
+        "sha256": "5c9c02172602bbf8eb5d8d631aa711fb9ea50ad0dae39585c8df166477ed2c12"
+      },
+      "sft_retriever_1600.jsonl": {
+        "bytes": 2820986,
+        "rows": 500,
+        "sha256": "41e98525a1540c69786ccba23b2e97cfede2931cc67e9c038892f0d293c29a88"
+      },
+      "sft_retriever_256.jsonl": {
+        "bytes": 361578,
+        "rows": 64,
+        "sha256": "986faff47a4fc7a08f51fdc46bb389a029003b5acd85b2b31d1af035b93a6612"
+      },
+      "sft_retriever_64.jsonl": {
+        "bytes": 90590,
+        "rows": 16,
+        "sha256": "d60f84a90c5a1328d7c487423363174a48df0ce7022b0ce3314e437c7263dd5e"
+      },
+      "sft_verifier_1600.jsonl": {
+        "bytes": 677496,
+        "rows": 100,
+        "sha256": "afbee6754df5325b04db1cb7e9424e7ca9157516dafd811d4956d35ac80bdad4"
+      },
+      "sft_verifier_256.jsonl": {
+        "bytes": 429667,
+        "rows": 64,
+        "sha256": "b68bec7941a57c8832dbb46c3322082a3cf8a50a42c4313631c8cbc014b5b5f8"
+      },
+      "sft_verifier_64.jsonl": {
+        "bytes": 105831,
+        "rows": 16,
+        "sha256": "22a3bcfcecef93665375316cd2dd19dd4eb5efe6dceedcef54dcf6f2fc1422e1"
+      }
+    },
+    "scale_counts": {
+      "dpo_holdout": 50,
+      "holdout_eval": 200,
+      "sanity_40": 40,
+      "scale_1600": 1600,
+      "scale_256": 256,
+      "scale_64": 64
+    },
+    "schema": "ta-amps.modular-swarm-dataset.v1",
+    "source_datasets": {
+      "swarm_dpo_verifier_pairs": {
+        "bytes": 1639220,
+        "filename": "swarm_dpo_verifier_pairs.jsonl",
+        "path": "<workspace>/notes/work-2026-10-30/opencode-swarm/out/datasets/swarm_dpo_verifier_pairs.jsonl",
+        "row_count": 100,
+        "sha256": "508f5c7bd9a56fc4fd5c316fde94e8a12284c0066797f03d8abd5cb2dd4c0dc8"
+      },
+      "swarm_holdout_eval": {
+        "bytes": 2743962,
+        "filename": "swarm_holdout_eval.jsonl",
+        "path": "<workspace>/notes/work-2026-10-30/opencode-swarm/out/datasets/swarm_holdout_eval.jsonl",
+        "row_count": 200,
+        "sha256": "5f7cdcc8b5e935b8e3ec95fd5310bab41e8bf494718bcf1a084bfcd432dc2a1f"
+      },
+      "swarm_sft_builder_toolcalls": {
+        "bytes": 12193474,
+        "filename": "swarm_sft_builder_toolcalls.jsonl",
+        "path": "<workspace>/notes/work-2026-10-30/opencode-swarm/out/datasets/swarm_sft_builder_toolcalls.jsonl",
+        "row_count": 800,
+        "sha256": "f5f3d5dde8c5629bd1d67adaf9e0e0ccdcf0a08dc1cabb1d211d2ebb90496381"
+      },
+      "swarm_sft_decomposer": {
+        "bytes": 6840504,
+        "filename": "swarm_sft_decomposer.jsonl",
+        "path": "<workspace>/notes/work-2026-10-30/opencode-swarm/out/datasets/swarm_sft_decomposer.jsonl",
+        "row_count": 800,
+        "sha256": "39c79f772ae40e9bc41d8fd8bc98b5eae72cfac87db7056f1e958419ae5c8da7"
+      },
+      "swarm_sft_retriever_shim": {
+        "bytes": 6177880,
+        "filename": "swarm_sft_retriever_shim.jsonl",
+        "path": "<workspace>/notes/work-2026-10-30/opencode-swarm/out/datasets/swarm_sft_retriever_shim.jsonl",
+        "row_count": 800,
+        "sha256": "c0f5ea6df320d1388129df615a8cb7fd0e6f22ddf8ada1fb65edba994ef393d1"
+      }
+    },
+    "source_ready_manifest_sha256": "464b0aef993d3a3e3798d292987a3938944d6819a1fd7b0f0d69a879c00f7ba9",
+    "token_stats": {
+      "configured_max_len": 3328,
+      "configured_max_new_tokens": 1536,
+      "max_observed_holdout_target_tokens": 1401,
+      "max_observed_seq_tokens": 2991
+    }
+  }
+}

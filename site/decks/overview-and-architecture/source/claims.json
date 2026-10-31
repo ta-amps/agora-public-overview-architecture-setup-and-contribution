@@ -19,7 +19,7 @@
       "number": "Feeds for new repos and papers, run by server workers",
       "status": "planned",
       "source": "Planned, not running. Tessera already serves the feed tools, and today the only feed that runs is the daily check of our own live services. Feeds for new repos, papers and model releases come next, starting from the tool-discovery and freshness-checks packs; the always-on server workers deck has the dated status.",
-      "link": "https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/decks/server-workers/#status"
+      "link": "https://agora.ta-amps.workers.dev/decks/server-workers/#status"
     },
     {
       "slide": "memory-systems",

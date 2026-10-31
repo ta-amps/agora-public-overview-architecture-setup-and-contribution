@@ -182,6 +182,7 @@ class Nouns:
         self.explorer = load_json(CONTENT / "explorer.json")
         self.ecosystem = load_json(CONTENT / "ecosystem-catalog.json")
         check_explorer(self.explorer, self.ecosystem)
+        self.deploy = load_json(CONTENT / "deploy.json")
         self.drafts = load_json(CONTENT / "earlier-drafts.json")
         self.moved = load_json(CONTENT / "moved.json")
         self.manifest = load_json(MANIFEST)
@@ -346,6 +347,8 @@ def header_block(page: Path, prefix: str, nouns: Nouns) -> str:
     nav_entries = list(site["nav"])
     if (SITE / "studio" / "index.html").is_file() and not any(i["href"] == "studio/" for i in nav_entries):
         nav_entries.append({"href": "studio/", "label": "Live Studio", "section": "studio"})
+    if not any(i["href"] == "deploy/" for i in nav_entries):
+        nav_entries.append({"href": "deploy/", "label": "Deploy", "section": "deploy"})
     items = []
     for item in nav_entries:
         current = ""
@@ -769,7 +772,11 @@ def film_cuts(videos: dict) -> tuple[dict, str]:
         f'data-captions="{attr(cut["captions"])}" data-poster="{attr(cut["poster"])}" '
         f'data-title="{attr(cut["title"])}" data-label="{attr(cut["label"])}">{text(cut["tab"])}</button>'
         for cut in cuts)
-    return default, f'<div class="film-cuts" role="group" aria-label="{attr(videos["choose"])}" data-film-cuts hidden>{buttons}</div>'
+    cc_toggle = (
+        '<button class="film-cc" type="button" aria-pressed="true" data-film-cc '
+        'data-label-on="Captions · On" data-label-off="Captions · Off">Captions · On</button>'
+    )
+    return default, f'<div class="film-cuts" role="group" aria-label="{attr(videos["choose"])}" data-film-cuts hidden>{buttons}{cc_toggle}</div>'
 
 
 def other_cut_links(videos: dict, default: dict) -> str:
@@ -844,6 +851,8 @@ def render_home(nouns: Nouns) -> str:
         f'label="{attr(videos["captions_label"])}" default>',
         f'<p>{text(videos["fallback"])} <a href="{attr(video["src"])}">{text(videos["fallback_link"])}</a></p>',
         "</video>",
+        '<div class="film-caption-bar" data-film-caption-bar hidden aria-hidden="true">'
+        '<span class="film-caption-pill" data-film-caption-pill></span></div>',
         "</div>",
         selector,
         f'<p class="film-label"><span id="film-label">{text(video["label"])}</span>'
@@ -1383,6 +1392,70 @@ def render_library(nouns: Nouns) -> str:
                       extra_body=explorer_payload_script(explorer, ecosystem))
 
 
+def deploy_code_block(code_id: str, commands: str, copy_labels: dict) -> str:
+    return "\n".join([
+        '<div class="deploy-code-wrap">',
+        '<div class="deploy-code-bar">',
+        f'<button class="agent-copy deploy-copy" type="button" data-copy="{attr(code_id)}" '
+        f'data-copied="{attr(copy_labels["copied"])}" data-selected="{attr(copy_labels["selected"])}" '
+        f'data-status-copied="{attr(copy_labels["status_copied"])}" '
+        f'data-status-selected="{attr(copy_labels["status_selected"])}" hidden>'
+        f'{COPY_ICON}<span>{text(copy_labels["copy"])}</span></button>',
+        f'<span class="visually-hidden" id="{attr(code_id)}-status" role="status"></span>',
+        "</div>",
+        f'<pre class="deploy-pre" id="{attr(code_id)}" tabindex="0"><code>{text(commands)}</code></pre>',
+        "</div>",
+    ])
+
+
+def render_deploy(nouns: Nouns) -> str:
+    page = nouns.deploy
+    prefix = prefix_for(SITE / "deploy" / "index.html")
+    copy_labels = page["copy_labels"]
+    quick = "".join(use_link(item, prefix) for item in page["quick_links"])
+    slices = "".join(
+        f'<li class="deploy-card" id="{attr(item["id"])}">'
+        f'<p class="deploy-badge">{text(item["badge"])}</p>'
+        f'<h3>{text(item["title"])}</h3>'
+        f'<p class="deploy-summary">{text(item["summary"])}</p>'
+        f'<p class="deploy-when">{text(item["when"])}</p>'
+        + deploy_code_block(item["code_id"], item["commands"], copy_labels)
+        + "</li>"
+        for item in page["slices"]["items"]
+    )
+    surfaces = "".join(
+        '<li class="deploy-card">'
+        f'<h3>{text(item["title"])}</h3>'
+        f'<p class="deploy-summary">{text(item["detail"])}</p>'
+        + deploy_code_block(item["code_id"], item["commands"], copy_labels)
+        + "</li>"
+        for item in page["surfaces"]["items"]
+    )
+    rules = "".join(
+        f'<li><h3>{text(rule["name"])}</h3><p>{text(rule["text"])}</p></li>'
+        for rule in page["security"]["items"]
+    )
+    verify = page["verify"]
+    main = "\n".join([
+        '<main id="main">',
+        '<div class="wrap page-head">',
+        f'<h1>{text(page["heading"])}</h1>',
+        f'<p class="lead">{text(page["lead"])}</p>',
+        f'<p class="dateline">{text(page["dateline"])}</p>',
+        f'<p class="use-links">{quick}</p>',
+        "</div>",
+        '<div class="wrap learn deploy-page">',
+        learn_part("slices", page["slices"]["heading"], page["slices"]["lead"], f'<ul class="deploy-grid">{slices}</ul>'),
+        learn_part("surfaces", page["surfaces"]["heading"], page["surfaces"]["lead"], f'<ul class="deploy-grid">{surfaces}</ul>'),
+        learn_part("security", page["security"]["heading"], page["security"]["lead"], f'<ul class="safety">{rules}</ul>'),
+        learn_part("verify", verify["heading"], verify["text"],
+                   deploy_code_block(verify["code_id"], verify["commands"], copy_labels)),
+        "</div>",
+        "</main>",
+    ])
+    return page_shell(page["title"], page["description"], main)
+
+
 def render_not_found(nouns: Nouns) -> str:
     moved = nouns.moved
     page = moved["not_found"]
@@ -1494,6 +1567,7 @@ def outputs_for(nouns: Nouns) -> dict[Path, str]:
     generated[SITE / "film" / "index.html"] = render_film(nouns)
     generated[SITE / "learning" / "index.html"] = render_learning(nouns)
     generated[SITE / "library" / "index.html"] = render_library(nouns)
+    generated[SITE / "deploy" / "index.html"] = render_deploy(nouns)
     generated[SITE / "404.html"] = render_not_found(nouns)
     if set(generated) & nouns.frozen:
         fail("a frozen page is never written")
@@ -1502,7 +1576,7 @@ def outputs_for(nouns: Nouns) -> dict[Path, str]:
         if "source" not in p.relative_to(SITE).parts
         and p not in generated
         and p not in nouns.frozen
-        and not ("studio" in p.relative_to(SITE).parts and "<!-- site:head -->" not in p.read_text(encoding="utf-8"))
+        and not (bool({"studio", "hub-3d", "compare"} & set(p.relative_to(SITE).parts)) and "<!-- site:head -->" not in p.read_text(encoding="utf-8"))
     )
     outputs = {path: render_page(path, content, nouns) for path, content in generated.items()}
     for path in written:

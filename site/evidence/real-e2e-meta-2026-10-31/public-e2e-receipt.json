@@ -1,0 +1,823 @@
+{
+  "schema": "ta-amps.public-e2e-receipt.v1",
+  "generated_utc": "2026-10-31T06:58:49Z",
+  "synthetic_data_only": true,
+  "contributor_tier_model": "muse-spark-1.3-contributor",
+  "privacy_and_spend_guardrails": {
+    "e2e_cap_usd": 2.0,
+    "cumulative_actual_spend_usd_all_attempts": 0.104925,
+    "cumulative_conservative_spend_usd_all_attempts": 0.738448,
+    "under_2_usd_cap": true,
+    "private_or_ngo_data_sent": false,
+    "raw_credentials_included": false
+  },
+  "attempt_history_transparent_accounting": {
+    "real-run-v2": {
+      "outcome": "incomplete_local_gate_413",
+      "detail": "Muse Code built shift_scheduler.py + 8 passing unit tests, then hit local realrun_gate.py 262,144-byte request limit on turn 16 before put_record/submit; reviewer skipped.",
+      "usage": {
+        "model": "muse-spark-1.3-contributor",
+        "price_usd_per_million": {
+          "input": 0.1,
+          "cached_input": 0.002,
+          "output": 0.2
+        },
+        "cap_usd": 2.0,
+        "total_calls": 15,
+        "total_input_tokens": 525088,
+        "total_cached_tokens": 476462,
+        "total_output_tokens": 15624,
+        "total_actual_usd": 0.00894,
+        "total_conservative_usd": 0.055634,
+        "by_role": {
+          "builder": {
+            "calls": 15,
+            "input_tokens": 525088,
+            "cached_tokens": 476462,
+            "output_tokens": 15624,
+            "actual_usd": 0.00894,
+            "conservative_usd": 0.055634
+          }
+        }
+      }
+    },
+    "real-run-v3": {
+      "outcome": "honest_negative_submit_requeued",
+      "detail": "Raised local gate request limit to 2 MiB; nested bwrap --unshare-net inside outer unprivileged namespace failed RTM_NEWADDR; Muse Code honestly submitted ok=false (receipt_hash 6a2035ef5cf182da216c184617ba1dfc02281a0a09993800383ada3b87ee3f26), cleanly requeuing build to ready.",
+      "usage": {
+        "model": "muse-spark-1.3-contributor",
+        "price_usd_per_million": {
+          "input": 0.1,
+          "cached_input": 0.002,
+          "output": 0.2
+        },
+        "cap_usd": 1.9,
+        "total_calls": 21,
+        "total_input_tokens": 936287,
+        "total_cached_tokens": 870740,
+        "total_output_tokens": 24686,
+        "total_actual_usd": 0.013233,
+        "total_conservative_usd": 0.098566,
+        "by_role": {
+          "builder": {
+            "calls": 21,
+            "input_tokens": 936287,
+            "cached_tokens": 870740,
+            "output_tokens": 24686,
+            "actual_usd": 0.013233,
+            "conservative_usd": 0.098566
+          }
+        }
+      }
+    },
+    "real-run-v4": {
+      "outcome": "builder_done_reviewer_pty_regex_mismatch",
+      "detail": "Disabled nested bwrap while keeping scrubbed /dev/shm env + local allowlist firewall; Muse Code completed build (state=done); nanoMuse 1.0.8 prompted [y/t/s/d/a/n] instead of [y/t/n].",
+      "usage": {
+        "model": "muse-spark-1.3-contributor",
+        "price_usd_per_million": {
+          "input": 0.1,
+          "cached_input": 0.002,
+          "output": 0.2
+        },
+        "cap_usd": 1.8,
+        "total_calls": 33,
+        "total_input_tokens": 1225757,
+        "total_cached_tokens": 1122494,
+        "total_output_tokens": 24125,
+        "total_actual_usd": 0.017397,
+        "total_conservative_usd": 0.1274,
+        "by_role": {
+          "builder": {
+            "calls": 27,
+            "input_tokens": 1140170,
+            "cached_tokens": 1073274,
+            "output_tokens": 20202,
+            "actual_usd": 0.012877,
+            "conservative_usd": 0.118057
+          },
+          "reviewer": {
+            "calls": 6,
+            "input_tokens": 85587,
+            "cached_tokens": 49220,
+            "output_tokens": 3923,
+            "actual_usd": 0.00452,
+            "conservative_usd": 0.009343
+          }
+        }
+      }
+    },
+    "real-run-v5": {
+      "outcome": "complete_e2e_independent_reviewer_caught_digest_typo",
+      "detail": "Full E2E completed (build=done, review=done, builder != reviewer). Muse Code passed all 11 unit tests and stored all 4 kit nouns with exact SHA-256s, but dropped 1 hex char in blob_sha256 (63 chars vs 64); independent nanoMuse reviewer recomputed all digests, ran all 11 tests, caught the 1-char blob_sha256 mismatch, and recorded verdict=refuse (approved=false).",
+      "usage": {
+        "model": "muse-spark-1.3-contributor",
+        "price_usd_per_million": {
+          "input": 0.1,
+          "cached_input": 0.002,
+          "output": 0.2
+        },
+        "cap_usd": 1.8,
+        "total_calls": 45,
+        "total_input_tokens": 1576851,
+        "total_cached_tokens": 1449098,
+        "total_output_tokens": 37391,
+        "total_actual_usd": 0.023152,
+        "total_conservative_usd": 0.165164,
+        "by_role": {
+          "builder": {
+            "calls": 28,
+            "input_tokens": 1218605,
+            "cached_tokens": 1147755,
+            "output_tokens": 21641,
+            "actual_usd": 0.013709,
+            "conservative_usd": 0.126189
+          },
+          "reviewer": {
+            "calls": 17,
+            "input_tokens": 358246,
+            "cached_tokens": 301343,
+            "output_tokens": 15750,
+            "actual_usd": 0.009443,
+            "conservative_usd": 0.038975
+          }
+        }
+      }
+    },
+    "real-run-v6": {
+      "outcome": "builder_task_id_typo_on_submit",
+      "detail": "Muse Code passed 10 unit tests and stored all 4 nouns, then mistyped task_id hex string on submit; reviewer skipped.",
+      "usage": {
+        "model": "muse-spark-1.3-contributor",
+        "price_usd_per_million": {
+          "input": 0.1,
+          "cached_input": 0.002,
+          "output": 0.2
+        },
+        "cap_usd": 1.8,
+        "total_calls": 33,
+        "total_input_tokens": 1530561,
+        "total_cached_tokens": 1457312,
+        "total_output_tokens": 20782,
+        "total_actual_usd": 0.014396,
+        "total_conservative_usd": 0.157213,
+        "by_role": {
+          "builder": {
+            "calls": 33,
+            "input_tokens": 1530561,
+            "cached_tokens": 1457312,
+            "output_tokens": 20782,
+            "actual_usd": 0.014396,
+            "conservative_usd": 0.157213
+          }
+        }
+      }
+    },
+    "real-run-v7": {
+      "outcome": "complete_e2e_independent_review_approve",
+      "detail": "Full E2E completed with hex-length check reminder (build=done, review=done, builder != reviewer).",
+      "usage": {
+        "model": "muse-spark-1.3-contributor",
+        "price_usd_per_million": {
+          "input": 0.1,
+          "cached_input": 0.002,
+          "output": 0.2
+        },
+        "cap_usd": 1.8,
+        "total_calls": 39,
+        "total_input_tokens": 1288861,
+        "total_cached_tokens": 1088401,
+        "total_output_tokens": 27924,
+        "total_actual_usd": 0.027807,
+        "total_conservative_usd": 0.134471,
+        "by_role": {
+          "builder": {
+            "calls": 25,
+            "input_tokens": 1025031,
+            "cached_tokens": 919975,
+            "output_tokens": 17919,
+            "actual_usd": 0.015929,
+            "conservative_usd": 0.106087
+          },
+          "reviewer": {
+            "calls": 14,
+            "input_tokens": 263830,
+            "cached_tokens": 168426,
+            "output_tokens": 10005,
+            "actual_usd": 0.011878,
+            "conservative_usd": 0.028384
+          }
+        }
+      }
+    }
+  },
+  "completed_e2e_runs": [
+    {
+      "run_folder": "real-run-v5",
+      "run_id": "20261031T064010Z",
+      "started_utc": "2026-10-31T06:40:10Z",
+      "fabric": "local Tessera: actual workerd (Miniflare) with SQLite Durable Objects and D1, outbound network denied",
+      "tessera_source_revision": "4d11e8731068b40d2ad0ff1ac95e32011fb9ce14",
+      "harnesses": {
+        "builder": {
+          "program": "Muse Code",
+          "version": "1.4.14-R7309.1",
+          "route": "/v1/responses"
+        },
+        "reviewer": {
+          "program": "nanoMuse",
+          "version": "1.0.8",
+          "route": "/v1/chat/completions"
+        }
+      },
+      "principals": {
+        "requester_key_id": "k_6c273c16c9f0",
+        "classifier_key_id": "k_96c4c38989ef",
+        "builder_key_id": "k_54ef6ef49bd1",
+        "reviewer_key_id": "k_24dd76ed3739",
+        "builder_neq_reviewer": true
+      },
+      "verbs": {
+        "request": {
+          "task_id": "t_6924e004de2345d09b5df11e72d98afa",
+          "queue": "eq01",
+          "kind": "request",
+          "final_state": "ready"
+        },
+        "build": {
+          "task_id": "t_6f129ea396304b18a942064f3d54b1b6",
+          "queue": "eq02",
+          "kind": "build",
+          "final_state": "done",
+          "completed_by_key": "k_54ef6ef49bd1",
+          "ok": true,
+          "receipt_hash": "0ee7e0680c57abfb4b2633e8edc170504fe45a387164924d9a001ef79449a1a0",
+          "submitted_output": {
+            "blob_sha256": "700be6f854a41683bdb4e5b0beafebba7a2966d0ac1d6801d7afe67b3be44d4",
+            "draft": {
+              "files": {
+                "README.md": {
+                  "key": "docs.README.md",
+                  "sha256": "832bb7905c6712554fbff38ff8a0ff23503119bdeecc29d775b88c7399f938f4",
+                  "version": 1
+                },
+                "data/availability.csv": {
+                  "key": "data.availability.csv",
+                  "sha256": "6709f71fb10238ebe4ce06c987937b1ba5301646be9b5bd474f1a4844089f795",
+                  "version": 1
+                },
+                "shift_scheduler.py": {
+                  "key": "code.shift_scheduler.py",
+                  "sha256": "3f7ef0fd026ab7d00651671406b52661006835a3419e1718aa8289f3cf3b0118",
+                  "version": 1
+                },
+                "tests/test_shift_scheduler.py": {
+                  "key": "tests.test_shift_scheduler.py",
+                  "sha256": "3fa64a75591415ff7e2966c2c2777498d94a5249fb832b59277e92653127dffb",
+                  "version": 1
+                }
+              },
+              "kit_id": "kit-volunteer-shifts-20261031t064010z",
+              "store": "kit.volunteer-shifts"
+            },
+            "kit_id": "kit-volunteer-shifts-20261031t064010z",
+            "node": "draft",
+            "verification": {
+              "commands": [
+                "python3 -m unittest discover -s tests -v -> exit 0",
+                "python3 shift_scheduler.py data/availability.csv -> exit 0"
+              ],
+              "coverage_violations": 0,
+              "passed": true,
+              "tests_run": 11
+            }
+          }
+        },
+        "review": {
+          "task_id": "t_21f702383dbd40dca28c978fc9b2a3f1",
+          "queue": "eq03",
+          "kind": "review",
+          "final_state": "done",
+          "completed_by_key": "k_24dd76ed3739",
+          "ok": true,
+          "receipt_hash": "e2d77ca5d694072a9128584eecc4603d8fff73e8a1d055dd5df10504b2f322f1",
+          "submitted_output": {
+            "approved": false,
+            "checks": {
+              "coverage_exit_code": 0,
+              "coverage_violations": 0,
+              "digests_match": false,
+              "tests_exit_code": 0,
+              "tests_run": 11
+            },
+            "draft_sha256": "700be6f854a41683bdb4e5b0beafebba7a2966d0ac1d6801d7dafe67b3be44d4",
+            "draft_task_id": "t_6f129ea396304b18a942064f3d54b1b6",
+            "drafter_key_id": "k_54ef6ef49bd1",
+            "kit_id": "kit-volunteer-shifts-20261031t064010z",
+            "reasons": [
+              "blob_sha256 mismatch: build output is 63-char 700be6f854a41683bdb4e5b0beafebba7a2966d0ac1d6801d7afe67b3be44d4, recomputed 64-char 700be6f854a41683bdb4e5b0beafebba7a2966d0ac1d6801d7dafe67b3be44d4",
+              "all four file sha256 match build output; tests exit 0 (11 run); coverage exits 0 with 0 violations; code/tests/README cover all 6 rules"
+            ],
+            "review_task_id": "t_21f702383dbd40dca28c978fc9b2a3f1",
+            "reviewer_key_id": "k_24dd76ed3739",
+            "verdict": "refuse"
+          }
+        }
+      },
+      "nouns": {
+        "input_nouns": [],
+        "kit_deliverable_nouns": [
+          {
+            "store": "kit.volunteer-shifts",
+            "key": "code.shift_scheduler.py",
+            "version": 1,
+            "owner_key_id": "k_54ef6ef49bd1",
+            "visibility_scope": "surface_only",
+            "path": "shift_scheduler.py",
+            "content_bytes": 11665,
+            "sha256": "3f7ef0fd026ab7d00651671406b52661006835a3419e1718aa8289f3cf3b0118"
+          },
+          {
+            "store": "kit.volunteer-shifts",
+            "key": "data.availability.csv",
+            "version": 1,
+            "owner_key_id": "k_54ef6ef49bd1",
+            "visibility_scope": "surface_only",
+            "path": "data/availability.csv",
+            "content_bytes": 758,
+            "sha256": "6709f71fb10238ebe4ce06c987937b1ba5301646be9b5bd474f1a4844089f795"
+          },
+          {
+            "store": "kit.volunteer-shifts",
+            "key": "docs.README.md",
+            "version": 1,
+            "owner_key_id": "k_54ef6ef49bd1",
+            "visibility_scope": "surface_only",
+            "path": "README.md",
+            "content_bytes": 2559,
+            "sha256": "832bb7905c6712554fbff38ff8a0ff23503119bdeecc29d775b88c7399f938f4"
+          },
+          {
+            "store": "kit.volunteer-shifts",
+            "key": "tests.test_shift_scheduler.py",
+            "version": 1,
+            "owner_key_id": "k_54ef6ef49bd1",
+            "visibility_scope": "surface_only",
+            "path": "tests/test_shift_scheduler.py",
+            "content_bytes": 7970,
+            "sha256": "3fa64a75591415ff7e2966c2c2777498d94a5249fb832b59277e92653127dffb"
+          }
+        ],
+        "review_nouns": [
+          {
+            "store": "kit.reviews",
+            "key": "kit-volunteer-shifts-20261031t064010z",
+            "version": 1,
+            "owner_key_id": "k_24dd76ed3739",
+            "verdict": "refuse",
+            "approved": false,
+            "draft_sha256": "700be6f854a41683bdb4e5b0beafebba7a2966d0ac1d6801d7dafe67b3be44d4"
+          }
+        ]
+      },
+      "meta_api_usage": {
+        "model": "muse-spark-1.3-contributor",
+        "price_usd_per_million": {
+          "input": 0.1,
+          "cached_input": 0.002,
+          "output": 0.2
+        },
+        "cap_usd": 1.8,
+        "total_calls": 45,
+        "total_input_tokens": 1576851,
+        "total_cached_tokens": 1449098,
+        "total_output_tokens": 37391,
+        "total_actual_usd": 0.023152,
+        "total_conservative_usd": 0.165164,
+        "by_role": {
+          "builder": {
+            "calls": 28,
+            "input_tokens": 1218605,
+            "cached_tokens": 1147755,
+            "output_tokens": 21641,
+            "actual_usd": 0.013709,
+            "conservative_usd": 0.126189
+          },
+          "reviewer": {
+            "calls": 17,
+            "input_tokens": 358246,
+            "cached_tokens": 301343,
+            "output_tokens": 15750,
+            "actual_usd": 0.009443,
+            "conservative_usd": 0.038975
+          }
+        }
+      },
+      "held_for_person": true
+    },
+    {
+      "run_folder": "real-run-v7",
+      "run_id": "20261031T065341Z",
+      "started_utc": "2026-10-31T06:53:41Z",
+      "fabric": "local Tessera: actual workerd (Miniflare) with SQLite Durable Objects and D1, outbound network denied",
+      "tessera_source_revision": "4d11e8731068b40d2ad0ff1ac95e32011fb9ce14",
+      "harnesses": {
+        "builder": {
+          "program": "Muse Code",
+          "version": "1.4.14-R7309.1",
+          "route": "/v1/responses"
+        },
+        "reviewer": {
+          "program": "nanoMuse",
+          "version": "1.0.8",
+          "route": "/v1/chat/completions"
+        }
+      },
+      "principals": {
+        "requester_key_id": "k_f617cd3167ed",
+        "classifier_key_id": "k_054b985efbe7",
+        "builder_key_id": "k_cc60da07d74a",
+        "reviewer_key_id": "k_b514f2a59964",
+        "builder_neq_reviewer": true
+      },
+      "verbs": {
+        "request": {
+          "task_id": "t_f05e739efc644796a94b27c7d9fac0be",
+          "queue": "eq01",
+          "kind": "request",
+          "final_state": "ready"
+        },
+        "build": {
+          "task_id": "t_06e3ef2acaa54c7297b5c0dfca3e2c70",
+          "queue": "eq02",
+          "kind": "build",
+          "final_state": "done",
+          "completed_by_key": "k_cc60da07d74a",
+          "ok": true,
+          "receipt_hash": "aee19212277a83ff5c2e69964b9bf7a19a7e32455cb6ecb9d21d5d6c06fc0491",
+          "submitted_output": {
+            "blob_sha256": "a30b48b17ba2a20c60a3fdabcb67874760e96c4215d58ed4141288d763f5d34e",
+            "draft": {
+              "files": {
+                "README.md": {
+                  "key": "docs.README.md",
+                  "sha256": "faa26f17fdde72804043644e45ad7684b23211a8bae724530834e189649099cb",
+                  "version": 1
+                },
+                "data/availability.csv": {
+                  "key": "data.availability.csv",
+                  "sha256": "6709f71fb10238ebe4ce06c987937b1ba5301646be9b5bd474f1a4844089f795",
+                  "version": 1
+                },
+                "shift_scheduler.py": {
+                  "key": "code.shift_scheduler.py",
+                  "sha256": "b3c4b5867fa3e26b180a5c3185f9de27a13dc096c92a9ea9f4d2f316eef1908b",
+                  "version": 1
+                },
+                "tests/test_shift_scheduler.py": {
+                  "key": "tests.test_shift_scheduler.py",
+                  "sha256": "ec0e90bfaf5f0edb51f289168e689932b628d5c86fa46f98005670eb85f29a76",
+                  "version": 1
+                }
+              },
+              "kit_id": "kit-volunteer-shifts-20261031t065341z",
+              "store": "kit.volunteer-shifts"
+            },
+            "kit_id": "kit-volunteer-shifts-20261031t065341z",
+            "node": "draft",
+            "verification": {
+              "commands": [
+                "python3 -m unittest discover -s tests -v -> exit 0",
+                "python3 shift_scheduler.py data/availability.csv -> exit 0"
+              ],
+              "coverage_violations": 0,
+              "passed": true,
+              "tests_run": 8
+            }
+          }
+        },
+        "review": {
+          "task_id": "t_cc69cdcb8fa3404dbf37eb4d38c684b5",
+          "queue": "eq03",
+          "kind": "review",
+          "final_state": "done",
+          "completed_by_key": "k_b514f2a59964",
+          "ok": true,
+          "receipt_hash": "0ae5dc2ef738409c70dd914a4a0ef9aee8a89d55ac5ad308fee4ab057bff5d78",
+          "submitted_output": {
+            "approved": true,
+            "checks": {
+              "coverage_exit_code": 0,
+              "coverage_violations": 0,
+              "digests_match": true,
+              "tests_exit_code": 0,
+              "tests_run": 8
+            },
+            "draft_sha256": "a30b48b17ba2a20c60a3fdabcb67874760e96c4215d58ed4141288d763f5d34e",
+            "draft_task_id": "t_06e3ef2acaa54c7297b5c0dfca3e2c70",
+            "drafter_key_id": "k_cc60da07d74a",
+            "kit_id": "kit-volunteer-shifts-20261031t065341z",
+            "reasons": [
+              "all 4 file sha256 and blob_sha256 match build output",
+              "8 unit tests pass, exit 0",
+              "scheduler CLI exits 0 with 0 violations on synthetic CSV",
+              "code enforces and tests exercise all 6 coverage rules; README covers input, rules, running, testing and synthetic-data note"
+            ],
+            "review_task_id": "t_cc69cdcb8fa3404dbf37eb4d38c684b5",
+            "reviewer_key_id": "k_b514f2a59964",
+            "verdict": "approve"
+          }
+        }
+      },
+      "nouns": {
+        "input_nouns": [],
+        "kit_deliverable_nouns": [
+          {
+            "store": "kit.volunteer-shifts",
+            "key": "code.shift_scheduler.py",
+            "version": 1,
+            "owner_key_id": "k_cc60da07d74a",
+            "visibility_scope": "surface_only",
+            "path": "shift_scheduler.py",
+            "content_bytes": 7945,
+            "sha256": "b3c4b5867fa3e26b180a5c3185f9de27a13dc096c92a9ea9f4d2f316eef1908b"
+          },
+          {
+            "store": "kit.volunteer-shifts",
+            "key": "data.availability.csv",
+            "version": 1,
+            "owner_key_id": "k_cc60da07d74a",
+            "visibility_scope": "surface_only",
+            "path": "data/availability.csv",
+            "content_bytes": 758,
+            "sha256": "6709f71fb10238ebe4ce06c987937b1ba5301646be9b5bd474f1a4844089f795"
+          },
+          {
+            "store": "kit.volunteer-shifts",
+            "key": "docs.README.md",
+            "version": 1,
+            "owner_key_id": "k_cc60da07d74a",
+            "visibility_scope": "surface_only",
+            "path": "README.md",
+            "content_bytes": 2313,
+            "sha256": "faa26f17fdde72804043644e45ad7684b23211a8bae724530834e189649099cb"
+          },
+          {
+            "store": "kit.volunteer-shifts",
+            "key": "tests.test_shift_scheduler.py",
+            "version": 1,
+            "owner_key_id": "k_cc60da07d74a",
+            "visibility_scope": "surface_only",
+            "path": "tests/test_shift_scheduler.py",
+            "content_bytes": 6537,
+            "sha256": "ec0e90bfaf5f0edb51f289168e689932b628d5c86fa46f98005670eb85f29a76"
+          }
+        ],
+        "review_nouns": [
+          {
+            "store": "kit.reviews",
+            "key": "kit-volunteer-shifts-20261031t065341z",
+            "version": 1,
+            "owner_key_id": "k_b514f2a59964",
+            "verdict": "approve",
+            "approved": true,
+            "draft_sha256": "a30b48b17ba2a20c60a3fdabcb67874760e96c4215d58ed4141288d763f5d34e"
+          }
+        ]
+      },
+      "meta_api_usage": {
+        "model": "muse-spark-1.3-contributor",
+        "price_usd_per_million": {
+          "input": 0.1,
+          "cached_input": 0.002,
+          "output": 0.2
+        },
+        "cap_usd": 1.8,
+        "total_calls": 39,
+        "total_input_tokens": 1288861,
+        "total_cached_tokens": 1088401,
+        "total_output_tokens": 27924,
+        "total_actual_usd": 0.027807,
+        "total_conservative_usd": 0.134471,
+        "by_role": {
+          "builder": {
+            "calls": 25,
+            "input_tokens": 1025031,
+            "cached_tokens": 919975,
+            "output_tokens": 17919,
+            "actual_usd": 0.015929,
+            "conservative_usd": 0.106087
+          },
+          "reviewer": {
+            "calls": 14,
+            "input_tokens": 263830,
+            "cached_tokens": 168426,
+            "output_tokens": 10005,
+            "actual_usd": 0.011878,
+            "conservative_usd": 0.028384
+          }
+        }
+      },
+      "held_for_person": true
+    }
+  ],
+  "live_hosted_cloudflare_probes": {
+    "tessera_health": {
+      "url": "https://tessera.ta-amps.workers.dev/v1/health",
+      "method": "GET",
+      "http_status": 200,
+      "elapsed_ms": 162.3,
+      "response_sha256_redacted": "048409ca578c954d244d2f4fd1e99c32c2841fb8ee58603d28aaea8fe5edd02e",
+      "summary": {
+        "ok": true,
+        "version": "0.2.0",
+        "time": 1793429514.529,
+        "db_ok": true,
+        "reaper_last_run": 1793426442.177,
+        "queues": [
+          {
+            "name": "e2e-opencode-eval",
+            "counts": {
+              "ready": 0,
+              "leased": 0,
+              "waiting": 0,
+              "done": 2,
+              "dead": 0,
+              "cancelled": 0
+            },
+            "oldest_ready_age_seconds": null,
+            "expired_leases": 0
+          },
+          {
+            "name": "recheck_fragility",
+            "counts": {
+              "ready": 1,
+              "leased": 0,
+              "waiting": 0,
+              "done": 0,
+              "dead": 0,
+              "cancelled": 0
+            },
+            "oldest_ready_age_seconds": 342191.59599995613,
+            "expired_leases": 0
+          },
+          {
+            "name": "review",
+            "counts": {
+              "ready": 0,
+              "leased": 0,
+              "waiting": 0,
+              "done": 5,
+              "dead": 0,
+              "cancelled": 0
+            },
+            "oldest_ready_age_seconds": null,
+            "expired_leases": 0
+          },
+          {
+            "name": "seed",
+            "counts": {
+              "ready": 2,
+              "leased": 0,
+              "waiting": 0,
+              "done": 0,
+              "dead": 0,
+              "cancelled": 0
+            },
+            "oldest_ready_age_seconds": 357214.5160000324,
+            "expired_leases": 0
+          },
+          {
+            "name": "situate",
+            "counts": {
+              "ready": 1,
+              "leased": 0,
+              "waiting": 0,
+              "done": 0,
+              "dead": 0,
+              "cancelled": 0
+            },
+            "oldest_ready_age_seconds": 353345.34200000763,
+            "expired_leases": 0
+          },
+          {
+            "name": "solve",
+            "counts": {
+              "ready": 1,
+              "leased": 0,
+              "waiting": 0,
+              "done": 0,
+              "dead": 0,
+              "cancelled": 0
+            },
+            "oldest_ready_age_seconds": 353345.24099993706,
+            "expired_leases": 0
+          }
+        ]
+      }
+    },
+    "tessera_session_anonymous": {
+      "url": "https://tessera.ta-amps.workers.dev/v1/session/anonymous",
+      "method": "POST",
+      "http_status": 201,
+      "elapsed_ms": 167.3,
+      "response_sha256_redacted": "bf35aef19c14dd672ed20a805afa7796a67c0af5abea8251182164b0ff93d4e4",
+      "summary": {
+        "session_token": "[REDACTED_EPHEMERAL_TOKEN]",
+        "key_id": null,
+        "principal_id": "a_16fd406506df434585f94d6e2cc89727",
+        "session_id": "a_16fd406506df434585f94d6e2cc89727",
+        "principal_kind": "anonymous",
+        "account_id": null,
+        "namespace": "demo.a_16fd406506df434585f94d6e2cc89727",
+        "labels": {
+          "origin": "anonymous",
+          "demo": true,
+          "untrusted": true,
+          "agent_label": "agent"
+        },
+        "scopes": [
+          "store",
+          "nouns:read",
+          "verbs:claim",
+          "verbs:submit",
+          "cas:write",
+          "namespace:demo.a_16fd406506df434585f94d6e2cc89727"
+        ],
+        "expires_at": 1793433114.681,
+        "quotas": {
+          "session_seconds": 3600,
+          "retention_seconds": 86400,
+          "claims_per_hour": 20,
+          "concurrent_claims": 1,
+          "storage_bytes": 1048576,
+          "requests_per_hour": 300,
+          "request_bytes": 65536,
+          "sessions_per_ip_hour": 10,
+          "open_claims_per_hour": 5,
+          "open_claims_per_ip_hour": 10
+        },
+        "persisted": true,
+        "retention_expires_at": 1793515914.681
+      }
+    },
+    "eranos_health": {
+      "url": "https://eranos.ta-amps.workers.dev/api/health",
+      "method": "GET",
+      "http_status": 200,
+      "elapsed_ms": 175.8,
+      "response_sha256_redacted": "0aaa45fcc0fd017a9c5f6809e737f26cf34fc6061c9aa94462a2978882ed063d",
+      "summary": {
+        "ok": true,
+        "synthetic": true,
+        "surface": "eranos",
+        "version": "0.1.0",
+        "backend": "tessera-cloud"
+      }
+    },
+    "herma_preview": {
+      "url": "https://herma.ta-amps.workers.dev/api/preview",
+      "method": "POST",
+      "http_status": 200,
+      "elapsed_ms": 682.9,
+      "response_sha256_redacted": "25dca5cdf428fe625c991f5a4ecd9a821156c0b24b084c588eb2a117b37cf9c9",
+      "summary": {
+        "persisted": false,
+        "scope_evaluated": "system_builtin",
+        "wire_format": "chat_completions",
+        "matches": [
+          {
+            "prov_id": "PROV-DIRECT-NOUN-VERB-SCHEMA",
+            "version": 7,
+            "priority": 350,
+            "matched_tiers": [
+              "keyword"
+            ],
+            "reasons": [
+              "keyword:any('tasks and task objects')"
+            ],
+            "score": 1,
+            "semantic_score": null,
+            "micromodel_confidence": null
+          }
+        ],
+        "entities": [],
+        "augmented_payload": {
+          "model": "muse-spark-open",
+          "messages": [
+            {
+              "role": "user",
+              "content": "How do Tasks and Task Objects work?"
+            }
+          ]
+        },
+        "responded_directly": true,
+        "direct_response_text": "Canonical Herma + Tessera Noun/Verb Contract -- Tasks (`verbs` on the wire) and Task Objects (`nouns` on the wire: every reusable tool, feed, dataset, LoRA adapter, shim, or receipt a task uses or creates). Shared Task Objects are compare-and-set NOUNs guarded by expected_version, and independently schedulable Tasks are leased VERB tiles (enqueue -> claim -> heartbeat -> submit/park) guarded by a monotonic fence token.\n\n[NOUN/VERB CONTEXT]\n- [NOUN] noun:tessera.lease_fence (Tessera Monotonic Lease Fence): Compare-and-set task lease token incremented on every claim to fence out stale workers. -- {\"fields\":{\"fence\":\"integer >= 1\",\"lease_expires_at\":\"float\",\"task_id\":\"string\"},\"invariant\":\"submit/heartbeat/park reject fence < current_fence\"} [URI: https://tessera.ta-amps.workers.dev/llms.txt]\n- [VERB] verb:tessera.claim (Tessera Atomic Claim Verb): Atomically leases the next highest-priority ready task in a queue and mints a fresh fence token. -- {\"endpoint\":\"POST /v1/queues/{queue}/claim\",\"inputs\":[\"worker_id\",\"lease_seconds\"],\"returns\":[\"task_id\",\"fence\",\"payload\"]} [URI: mcp://tessera/tools/claim]\n[/NOUN/VERB CONTEXT]",
+        "shimmed_context_refs": [
+          "noun:tessera.lease_fence",
+          "verb:tessera.claim"
+        ]
+      }
+    }
+  }
+}

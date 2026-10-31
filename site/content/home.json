@@ -3,7 +3,7 @@
  "title": "Agora, the ta-amps overview",
  "description": "Agora is the ta-amps overview: the three-minute film, the 1x3 product hub, interactive Task and Task-Object explorer, five decks, use cases and how the system is built to keep learning. The use case is Eranos, spare tokens for good. The architecture underneath is nouns and verbs: verbs are tasks, and nouns are task objects.",
  "videos": {
-  "default": "hub3d",
+  "default": "full",
   "choose": "Choose a cut",
   "captions_label": "English",
   "captions_lang": "en",
@@ -11,44 +11,24 @@
   "fallback_link": "Download the video",
   "cuts": [
    {
-    "id": "hub3d",
-    "tab": "3D Hub · 90s",
-    "src": "video/2026-10-30/hub-v3/threejs-hub-90s.mp4",
-    "type": "video/mp4",
-    "captions": "video/2026-10-30/hub-v3/threejs-hub-90s.vtt",
-    "poster": "video/2026-10-30/hub-v3/threejs-hub-90s-poster.png",
-    "title": "Eranos and the 1x3 Spatial Hub: Public Goods Marketplace, Tasks and Task Objects Engine, and Roll Your Own, with an AI-generated voice.",
-    "label": "The 90-second 3D spatial 1x3 hub film · AI-generated voice"
-   },
-   {
-    "id": "frontier",
-    "tab": "Meta Frontier · 60s",
-    "src": "video/2026-10-30/hub-v3/meta-frontier-60s.mp4",
-    "type": "video/mp4",
-    "captions": "video/2026-10-30/hub-v3/meta-frontier-60s.vtt",
-    "poster": "video/2026-10-30/hub-v3/meta-frontier-60s-poster.png",
-    "title": "Meta AI Frontier stack: Muse Spark, Muse Code, Muse Glimmer 30B QLoRA, SAM 3, and wav2vec2, with an AI-generated voice.",
-    "label": "The 60-second Meta AI Frontier film · AI-generated voice"
-   },
-   {
     "id": "full",
     "tab": "Full · 3 min",
-    "src": "video/2026-10-30/full-v2/eranos-3m.mp4",
+    "src": "video/2026-10-31/full-v3/eranos-3m.mp4",
     "type": "video/mp4",
-    "captions": "video/2026-10-30/full-v2/eranos-3m.vtt",
-    "poster": "video/2026-10-30/full-v2/eranos-3m-poster.png",
-    "title": "Eranos: spare tokens for good. The full three-minute film, with an AI-generated voice.",
-    "label": "The full three-minute film · AI-generated voice"
+    "captions": "video/2026-10-31/full-v3/eranos-3m.vtt",
+    "poster": "video/2026-10-31/full-v3/eranos-3m-poster.png",
+    "title": "Eranos: spare tokens for good. The full three-minute film.",
+    "label": "The full three-minute film"
    },
    {
     "id": "short",
     "tab": "Short · 1 min",
-    "src": "video/2026-10-30/short-v2/eranos-60s.mp4",
+    "src": "video/2026-10-31/short-v3/eranos-60s.mp4",
     "type": "video/mp4",
-    "captions": "video/2026-10-30/short-v2/eranos-60s.vtt",
-    "poster": "video/2026-10-30/short-v2/eranos-60s-poster.png",
-    "title": "Eranos: spare tokens for good. The one-minute film, with an AI-generated voice.",
-    "label": "The one-minute film · AI-generated voice"
+    "captions": "video/2026-10-31/short-v3/eranos-60s.vtt",
+    "poster": "video/2026-10-31/short-v3/eranos-60s-poster.png",
+    "title": "Eranos: spare tokens for good. The one-minute film.",
+    "label": "The one-minute film"
    }
   ],
   "outline": {
@@ -84,6 +64,10 @@
       "label": "Open Eranos"
      },
      {
+      "href": "studio/",
+      "label": "Try Live NGO Demo"
+     },
+     {
       "href": "decks/public-good-marketplace/",
       "label": "Marketplace deck"
      }
@@ -92,15 +76,19 @@
    {
     "step": "Pillar 02 · Shared runtime & horizontal scale",
     "title": "2. Task & Task-Object Engine",
-    "summary": "Tessera shards leased Tasks (verbs) across q01..q16 queues and CAS Task Objects (nouns) so multi-harness worker swarms (up to 256 concurrent workers, verifier != builder) coordinate with SHA-256 receipts, while Herma shims context in < 2 ms.",
+    "summary": "Tessera coordinates leased Tasks (verbs) and versioned CAS Task Objects (nouns) across SQLite Durable Object shards so multi-harness worker swarms enforce independent verification (verifier != builder) with SHA-256 receipts, while Herma shims context in < 2 ms.",
     "links": [
+     {
+      "href": "studio/",
+      "label": "Open Live Wire Studio"
+     },
+     {
+      "href": "film/compare/",
+      "label": "Walkthroughs & Trace Gallery"
+     },
      {
       "href": "library/#explorer",
       "label": "Search Tasks & Task Objects"
-     },
-     {
-      "href": "decks/overview-and-architecture/",
-      "label": "Architecture deck"
      }
     ]
    },
@@ -109,6 +97,10 @@
     "title": "3. Roll Your Own: Seed Packs, Harness Feeds & Meta Fine-Tuning",
     "summary": "Compose seed packs, track HarnessTax across Harness Square, OpenCode, Pi, and Muse Code, and route across a 4-tier compute cascade: Herma rules, local Llama 3.2 modular LoRAs, Kaggle 2xT4 Muse Glimmer 30B QLoRA, and Muse Spark 1.3.",
     "links": [
+     {
+      "href": "deploy/",
+      "label": "Cloudflare & Self-Host Guide"
+     },
      {
       "href": "library/#harness-feeds",
       "label": "Harness Feeds & Ecosystem"

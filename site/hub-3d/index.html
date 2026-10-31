@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ta-amps 3D Spatial Product Hub -- Eranos, Tessera, Herma &amp; Seed Packs</title>
+  <link rel="stylesheet" href="./hub.css" />
+</head>
+<body>
+  <div id="hub-shell">
+    <div id="stage-frame">
+      <canvas id="composite-canvas" width="1920" height="1080" aria-label="ta-amps 1x3 Spatial Product Hub and Live Trace Packet Replay"></canvas>
+
+      <div id="interactive-subtabs" role="tablist" aria-label="Viewport tabs"></div>
+
+      <nav id="interactive-dock" aria-label="3D Spatial Hub Camera Controls">
+        <button class="dock-btn active" data-cam="overview" type="button">
+          <span class="dock-dot dot-overview"></span>Overview (1x3)
+        </button>
+        <button class="dock-btn" data-cam="p1" type="button">
+          <span class="dock-dot dot-p1"></span>Zoom -&gt; Pillar 1: Eranos
+        </button>
+        <button class="dock-btn" data-cam="p2" type="button">
+          <span class="dock-dot dot-p2"></span>Bridge -&gt; Pillar 2: Live Edge Packets
+        </button>
+        <button class="dock-btn" data-cam="p3" type="button">
+          <span class="dock-dot dot-p3"></span>Zoom -&gt; Pillar 3: Feeds &amp; Meta LoRAs
+        </button>
+        <button class="dock-btn" data-action="replay" type="button">
+          <span class="dock-dot dot-replay"></span>Replay Trace
+        </button>
+      </nav>
+    </div>
+  </div>
+
+  <script src="./assets/three.min.js"></script>
+  <script src="./timelines.js"></script>
+  <script src="./hub.js"></script>
+</body>
+</html>

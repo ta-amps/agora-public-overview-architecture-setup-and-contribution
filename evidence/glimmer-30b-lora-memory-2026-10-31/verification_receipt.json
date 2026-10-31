@@ -1,0 +1,86 @@
+{
+  "status": "VERIFIED",
+  "results_sha256": "1d7c0612327586f64e4cf79503f26d41c90e9dae8754bc8deb3374aacbaed463",
+  "preregistered_digests_matched": true,
+  "official_model_shards_matched": true,
+  "local_rescore_exact_agreement": true,
+  "reload_check_passed": true,
+  "disabled_vs_base_max_abs": 0.0,
+  "reloaded_vs_tuned_max_abs": 0.0,
+  "regen_byte_exact": "8/8",
+  "generation_file_sha256": {
+    "generations-base.jsonl": "891ce7ef27bd3ff6bb639ea13c468213cf42f820c17b2779d6168291036a1430",
+    "generations-base_shim.jsonl": "ef6efeb5df5ba807c2fbd2685108c2c624a03f6850ccf0c381f66ba447a08a75",
+    "generations-lora_memory.jsonl": "862f1d60758b524e886c338ddfe98fb45af3f770877bc9c7ee38363f8d01e0e8",
+    "generations-hybrid.jsonl": "a09c72b02381093ad091a2eaa92d8c6da2274e959ed4d12bc25124bdefe9ba97",
+    "generations-sanity-base.jsonl": "a2ad04c0b7948d7fc8c297c6840257b8326ad4f01ed78e3b6242d709cbc705da",
+    "generations-sanity-lora_memory.jsonl": "33dea656f9311d7da3edd3d8121bdc4a670e988bef67e0bddb21611dfea27c04",
+    "generations-dev-lora_memory.jsonl": "2d5420f1692f2cf81939ec0148e2da3914936b2c995505ec728cd746cf443fd3"
+  },
+  "adapter_files_private_local_only": {
+    "README.md": {
+      "bytes": 5184,
+      "sha256": "521301cd45e3f0ab9cf78a65f2d46f94ea94f075e5b5d3f209641641a3ff9e9c"
+    },
+    "adapter_config.json": {
+      "bytes": 1159,
+      "sha256": "4b16e9001ea8a0193731ecdf5b46027bef09a4c034502b04f2de6736da77b854"
+    },
+    "adapter_model.safetensors": {
+      "bytes": 383494648,
+      "sha256": "09f14d81fcf8f61f6902f33ec1e3ad607da5c8137ab122de4c25a2d1e8d7d42f"
+    }
+  },
+  "copied_evidence_files": {
+    "HARVEST_MANIFEST.json": {
+      "bytes": 1668,
+      "sha256": "0af6431633a8ca6d54ce9ffddf0f40536a44f3838a1f2e67e5205767200a031d"
+    },
+    "generations-base.jsonl": {
+      "bytes": 242200,
+      "sha256": "891ce7ef27bd3ff6bb639ea13c468213cf42f820c17b2779d6168291036a1430"
+    },
+    "generations-base_shim.jsonl": {
+      "bytes": 264828,
+      "sha256": "ef6efeb5df5ba807c2fbd2685108c2c624a03f6850ccf0c381f66ba447a08a75"
+    },
+    "generations-dev-lora_memory.jsonl": {
+      "bytes": 77791,
+      "sha256": "2d5420f1692f2cf81939ec0148e2da3914936b2c995505ec728cd746cf443fd3"
+    },
+    "generations-hybrid.jsonl": {
+      "bytes": 197202,
+      "sha256": "a09c72b02381093ad091a2eaa92d8c6da2274e959ed4d12bc25124bdefe9ba97"
+    },
+    "generations-lora_memory.jsonl": {
+      "bytes": 189072,
+      "sha256": "862f1d60758b524e886c338ddfe98fb45af3f770877bc9c7ee38363f8d01e0e8"
+    },
+    "generations-reload.jsonl": {
+      "bytes": 12297,
+      "sha256": "84f1df8d69f371944a66eb205c83405be4118027267083118ab361b3f0e2ccfb"
+    },
+    "generations-sanity-base.jsonl": {
+      "bytes": 23217,
+      "sha256": "a2ad04c0b7948d7fc8c297c6840257b8326ad4f01ed78e3b6242d709cbc705da"
+    },
+    "generations-sanity-lora_memory.jsonl": {
+      "bytes": 14096,
+      "sha256": "33dea656f9311d7da3edd3d8121bdc4a670e988bef67e0bddb21611dfea27c04"
+    },
+    "nvidia_smi.csv": {
+      "bytes": 397165,
+      "sha256": "cd307bec00f2f3d86e5f9ca29e695fdc8614237010be6208bc00892b9a7f382f"
+    },
+    "results.json": {
+      "bytes": 44896,
+      "sha256": "1d7c0612327586f64e4cf79503f26d41c90e9dae8754bc8deb3374aacbaed463"
+    },
+    "adapter_config.json": {
+      "bytes": 1159,
+      "sha256": "4b16e9001ea8a0193731ecdf5b46027bef09a4c034502b04f2de6736da77b854"
+    }
+  },
+  "raw_results_sha256_before_path_redaction": "440cb5cabd77e615744119737b2ae82d0fc0fc97da1a26446b621a5e0e210f28",
+  "raw_prereg_receipt_sha256_before_path_redaction": "7662e72b5d6c204de24113837cdc555bf97c62e9de109b4e7db3236df7494de7"
+}

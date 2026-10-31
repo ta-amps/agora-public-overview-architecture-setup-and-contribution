@@ -1,43 +1,55 @@
 {
  "about": "The full three-minute film's transcript and scene descriptions, from its production plan (cut-plan.json and narration-plan.json). The narration is the captions' text word for word, which tests/test_build_site.py checks. scripts/build_site.py renders it into site/film/index.html.",
  "title": "The full film: transcript and scene descriptions | ta-amps",
- "description": "The three-minute Eranos film's transcript and scene descriptions, in four acts: spare tokens for good, why AI work is frustratingly dumb and the fix, any project and any agent, and how the film itself was made.",
+ "description": "The three-minute Eranos film's transcript and scene descriptions, in six parts: spare tokens for good, the architecture, nouns and verbs in plain words, why it matters and Meta's models, use it for anything, and how the film itself was made.",
  "crumb": "Home",
  "heading": "The full film: transcript and scene descriptions",
- "lead": "Three minutes in four acts. Every line of narration, word for word as the captions give it, with when it plays and a description of what is on screen, and the storyboard from the draft run that came before the final cut. The film plays on the home page.",
-  "audio_description": "A separate audio-described cut is not available yet. Until then, this page is the film's text alternative.",
+ "lead": "Three minutes in six parts. Every line of narration, word for word as the captions give it, with when it plays and a description of what is on screen, and the storyboard from the draft run that came before the final cut. The film plays on the home page.",
+ "audio_description": "A separate audio-described cut is not available yet. Until then, this page is the film's text alternative.",
  "words_label": "Narration",
  "picture_label": "On screen",
  "acts": [
   {
    "id": "1",
-   "name": "Spare tokens for good",
+   "name": "The use case: spare tokens for good",
    "from": "0:00",
-   "to": "1:08"
+   "to": "0:53"
   },
   {
    "id": "2",
-   "name": "Why AI work is frustratingly dumb, and the fix",
-   "from": "1:08",
-   "to": "2:26"
+   "name": "The architecture: radically flexible",
+   "from": "0:53",
+   "to": "0:58"
   },
   {
    "id": "3",
-   "name": "Any project, any agent",
-   "from": "2:26",
-   "to": "2:47"
+   "name": "Nouns and verbs, in plain words",
+   "from": "0:58",
+   "to": "1:52"
   },
   {
    "id": "4",
+   "name": "Why it matters, and Meta's models",
+   "from": "1:52",
+   "to": "2:33"
+  },
+  {
+   "id": "5",
+   "name": "Use it for anything",
+   "from": "2:33",
+   "to": "2:44"
+  },
+  {
+   "id": "6",
    "name": "Made the same way",
-   "from": "2:47",
+   "from": "2:44",
    "to": "3:00"
   }
  ],
  "lines": [
   {
    "act": "1",
-   "at": "0:00",
+   "at": "0:01",
    "words": "If your AI plan has tokens left over at the end of the month…",
    "picture": "A month's AI plan meter; the unused part fills with token tiles that lift off.",
    "on_screen": "This month's AI plan · used · left over"
@@ -45,146 +57,181 @@
   {
    "act": "1",
    "at": "0:05",
-   "words": "…Eranos puts them to work for nonprofits. Spare tokens, for good.",
+   "words": "…Eranos puts them to work for nonprofits. Spare tokens for good.",
    "picture": "The tiles fly into the Eranos mark; the title card.",
    "on_screen": "Eranos · Spare tokens for good. · Your unused AI capacity, doing real work for nonprofits."
   },
   {
    "act": "1",
-   "at": "0:10",
-   "words": "Nonprofits say what they need, in plain words.",
+   "at": "0:11",
+   "words": "Nonprofits say what they need, in plain words. Public research comes back finished and cited. Work on their own files becomes a kit their own agent runs.",
    "picture": "Eight real-world nonprofit needs in plain words (synthetic examples), sorted by the first step into two routes: public information, finished and cited by donated agents; work on their own files, a kit their own agent runs. The 3:00 cut adds one typed need sorted into its parts.",
    "on_screen": "In plain words · first step: sort and split · finished, cited · a kit their own agent runs"
   },
   {
    "act": "1",
-   "at": "0:16",
-   "words": "Public research comes back finished and cited. Work on their own files becomes a kit their own agent runs.",
-   "picture": "",
-   "on_screen": "In plain words · first step: sort and split · finished, cited · a kit their own agent runs"
-  },
-  {
-   "act": "1",
-   "at": "0:25",
-   "words": "Anyone can help. Open Eranos, pick an open task, and hand it to your own AI agent.",
+   "at": "0:23",
+   "words": "Anyone can help: pick an open task, and hand it to your own AI agent.",
    "picture": "The live /help page: connect your agent, copy a starting brief, the open tasks.",
    "on_screen": "eranos.ta-amps.workers.dev/help"
   },
   {
    "act": "1",
-   "at": "0:32",
+   "at": "0:28",
    "words": "Your agent claims the task. Only one agent works on it at a time, and every step gets a receipt.",
    "picture": "Volunteer A's recorded terminal session in the local run: list tasks, claim the scope check, pass it, claim the build, with lease and claim receipts.",
    "on_screen": "claimed · only volunteer-a can submit · claim receipt"
   },
   {
    "act": "1",
-   "at": "0:39",
-   "words": "It doesn't start from scratch. It reuses checked pieces from seed packs, and tests the kit on made-up cases.",
-   "picture": "The build from checked pieces of a reviewed kit, the 8 deterministic checks and 2 made-up cases; the kit's parts land as nouns; the submit receipt.",
-   "on_screen": "8 of 8 checks pass · receipt"
-  },
-  {
-   "act": "1",
-   "at": "0:48",
+   "at": "0:36",
    "words": "A different volunteer's agent reviews it. The builder can never approve its own kit.",
    "picture": "Volunteer A tries to approve its own kit and is refused; volunteer B claims the review, re-runs the checks, approves and publishes.",
    "on_screen": "refused · two-step rule · approved · published"
   },
   {
    "act": "1",
-   "at": "0:54",
-   "words": "Sensitive kits wait for a person at a nonprofit to sign off.",
-   "picture": "The live /nonprofits page's person-only list, ending with steward sign-off on sensitive kits; then the local run's steward (a scripted stand-in for a person) signs off and the review publishes the kit.",
-   "on_screen": "Sign-off on sensitive kits, by a nonprofit steward · signed off · published"
-  },
-  {
-   "act": "1",
-   "at": "0:59",
-   "words": "Now the nonprofit has a free, reviewed kit. It does the busywork, and a person makes every decision about a person.",
+   "at": "0:42",
+   "words": "Now the nonprofit has a free, reviewed kit.",
    "picture": "The published kit's page in the local catalog: what the agent drafts and what stays with a person, then the review receipts.",
    "on_screen": "Agent drafts · Person only · Review receipts"
   },
   {
-   "act": "2",
-   "at": "1:08",
-   "words": "AI is smart. The way we use it is frustratingly dumb.",
-   "picture": "The overview deck's opening line: AI is smart; the way we use it is frustratingly dumb.",
-   "on_screen": "AI is smart. The way we use it is frustratingly dumb."
+   "act": "1",
+   "at": "0:46",
+   "words": "We built the nonprofit marketplace first, because AI has to help everyone, not just the tech world.",
+   "picture": "Eranos's live home page and its two doors, while the voice says why the nonprofit side comes first.",
+   "on_screen": "Built first: the nonprofit marketplace"
   },
   {
    "act": "2",
-   "at": "1:13",
-   "words": "It doesn't know what's new. It rewrites what already exists. It needs babysitting on long jobs. And training alone doesn't fix it.",
-   "picture": "The overview deck's problem slide, built card by card: three problems, then training alone doesn't fix it.",
-   "on_screen": "It doesn't know what's new · It rewrites what already exists · It needs babysitting · Training alone doesn't fix it"
+   "at": "0:53",
+   "words": "Now, the radically flexible architecture that runs it, and can be repurposed.",
+   "picture": "A section card; the bridge into the architecture is spoken over it.",
+   "on_screen": "Part 2 of 6 · The architecture · Radically flexible, and it can be repurposed"
   },
   {
-   "act": "2",
-   "at": "1:22",
-   "words": "Everything is nouns and verbs. Nouns are reusable things: code, knowledge, results, even an agent's whole setup. Verbs are jobs any agent can claim, do and prove.",
-   "picture": "The overview deck's nouns-and-verbs slide, built: nouns, then verbs, then surfaces and infrastructure.",
-   "on_screen": "Everything is nouns and verbs"
+   "act": "3",
+   "at": "0:59",
+   "words": "It isn't a new kind of model. It's a new way to organize the work.",
+   "picture": "Motion graphics: a crossed-out model stack beside organized tiles; the verb card (claim, do, report); the noun card (its kinds, described, searchable, versioned, usable with permission, linked into whole systems).",
+   "on_screen": "Not a model architecture: a way to organize the work · verb = task · noun = thing"
   },
   {
-   "act": "2",
-   "at": "1:36",
-   "words": "Feeds turn what's new into nouns. Search and retrieval bring the right ones to any agent as it works, and Herma, the shim, can answer with no model call. So agents reuse instead of rewriting.",
-   "picture": "The overview deck's fixes slide, built row by row, with a real search_nouns and recall_execution call that this video's own compose verb made in its store.",
-   "on_screen": "Feeds · Search and retrieval · Verbs on one shared queue"
-  },
-  {
-   "act": "2",
-   "at": "1:51",
-   "words": "And Tessera splits big jobs into small verbs that many workers claim, check and finish, each with a receipt.",
+   "act": "3",
+   "at": "1:04",
+   "words": "Verbs are tasks: the smallest piece of work a worker can claim, do and report.",
    "picture": "",
-   "on_screen": "Feeds · Search and retrieval · Verbs on one shared queue"
-  },
-  {
-   "act": "2",
-   "at": "1:59",
-   "words": "Training still helps. On one synthetic task each, small Llama models went from 12 to 51 percent and 52 to 73, and Glimmer 30B from 93 to 99 on a fresh, pre-registered test.",
-   "picture": "The overview deck's learning slide, built card by card, with its caveat.",
-   "on_screen": "12.0% → 50.7% · 52.0% → 72.7% · 93.3% → 99.3% · all synthetic tasks"
-  },
-  {
-   "act": "2",
-   "at": "2:17",
-   "words": "Two surfaces: Eranos and Agora. Two pieces of infrastructure: Tessera and Herma. And seed packs to share them.",
-   "picture": "The overview deck's map slide: two surfaces, two pieces of infrastructure, seed packs.",
-   "on_screen": "Eranos · Agora · Tessera · Herma · seed packs"
+   "on_screen": "Not a model architecture: a way to organize the work · verb = task · noun = thing"
   },
   {
    "act": "3",
-   "at": "2:26",
-   "words": "The same nouns and verbs fit almost any project: grant reports, literature reviews, checked data pipelines.",
-   "picture": "Agora's live use-cases page.",
-   "on_screen": "Use cases"
+   "at": "1:10",
+   "words": "Nouns are everything a task uses or makes: described, searchable, usable with permission, and linkable into whole systems.",
+   "picture": "",
+   "on_screen": "Not a model architecture: a way to organize the work · verb = task · noun = thing"
   },
   {
    "act": "3",
+   "at": "1:20",
+   "words": "Say someone asks for a data-cleaning pipeline. It becomes one verb, and the agent holding it splits it up.",
+   "picture": "Illustration, not a measured run: a data-cleaning pipeline request becomes a verb, and the agent holding it splits it; workers claim the pieces; every input, output and trace drops in as a noun; a worker adds verbs; a final verb combines them into one searchable solution noun.",
+   "on_screen": "Request → one verb → smaller verbs on a queue → workers anywhere → nouns → combine → solution noun"
+  },
+  {
+   "act": "3",
+   "at": "1:27",
+   "words": "Workers anywhere claim the pieces, and every input, output and trace becomes a noun.",
+   "picture": "",
+   "on_screen": "Request → one verb → smaller verbs on a queue → workers anywhere → nouns → combine → solution noun"
+  },
+  {
+   "act": "3",
+   "at": "1:34",
+   "words": "A final verb combines them into one solution: a searchable noun.",
+   "picture": "",
+   "on_screen": "Request → one verb → smaller verbs on a queue → workers anywhere → nouns → combine → solution noun"
+  },
+  {
+   "act": "3",
+   "at": "1:39",
+   "words": "When someone else asks for the same pipeline, search finds it: no new work, and no new tokens.",
+   "picture": "Illustration, not a measured run: a second team asks for the same pipeline; search finds the stored solution noun; no new work and no new tokens.",
+   "on_screen": "The same request · search · found · 0 new model tokens"
+  },
+  {
+   "act": "3",
+   "at": "1:45",
+   "words": "Tessera keeps the queue and the nouns. Herma, the shim, brings the right ones to any agent.",
+   "picture": "Illustration of the two pieces of infrastructure.",
+   "on_screen": "Tessera keeps the queue and the nouns · Herma, the shim, brings the right nouns to any agent"
+  },
+  {
+   "act": "4",
+   "at": "1:52",
+   "words": "AI is smart. The way we use it is frustratingly dumb.",
+   "picture": "A section card; the deck's cover line is spoken over it.",
+   "on_screen": "Part 4 of 6 · Why it matters · AI is smart. The way we use it is frustratingly dumb."
+  },
+  {
+   "act": "4",
+   "at": "1:57",
+   "words": "It doesn't know what's new, it rewrites what exists, and it needs babysitting.",
+   "picture": "Motion graphics: three problems plus one, each mapped to its fix: feeds; search and retrieval; verbs on a shared queue; tuning, measured on synthetic tests.",
+   "on_screen": "It doesn't know what's new · rewrites what exists · needs babysitting · training alone doesn't fix it"
+  },
+  {
+   "act": "4",
+   "at": "2:02",
+   "words": "Say you need a memory system, and hundreds appear on GitHub in two days. Workers gather them and their benchmarks as nouns, and your agent just asks which fits.",
+   "picture": "Illustration (the repo and paper feeds are planned, not running): hundreds of new memory systems; workers gather them and comparable benchmarks as nouns; the agent asks each week. Then the real precedent: the deterministic scan of the hackathon's public repos.",
+   "on_screen": "ILLUSTRATION · a memory system for your agents · comparison noun · weekly question · real: 705 of 739 repos scanned"
+  },
+  {
+   "act": "4",
+   "at": "2:15",
+   "words": "Tuning made Meta's models measurably better on synthetic tests: Llama 3.2 from 12 to 51 percent, and Muse Glimmer from 93 to 99.",
+   "picture": "The deck's measured tuning results on synthetic tests, named aloud and on screen, and Muse Code and nanoMuse as workers.",
+   "on_screen": "Meta's models, measurably better · Llama 3.2 1B 12.0% → 50.7% · 3B 52.0% → 72.7% · Muse Glimmer 30B 93.3% → 99.3%"
+  },
+  {
+   "act": "4",
+   "at": "2:27",
+   "words": "Workers run on Meta's models too, like Meta's Muse Code on Muse Spark.",
+   "picture": "",
+   "on_screen": "Meta's models, measurably better · Llama 3.2 1B 12.0% → 50.7% · 3B 52.0% → 72.7% · Muse Glimmer 30B 93.3% → 99.3%"
+  },
+  {
+   "act": "5",
    "at": "2:34",
-   "words": "To connect any agent, copy the instructions from Agora. It finds the verbs it can do, claims one, and reports back with a receipt.",
+   "words": "The same nouns and verbs fit almost any project.",
+   "picture": "Agora's live use-cases page.",
+   "on_screen": "Grant writing · Literature reviews · Checked data pipelines"
+  },
+  {
+   "act": "5",
+   "at": "2:38",
+   "words": "Connect any agent with Agora's instructions.",
    "picture": "Agora's live Agent compatible banner and its Copy instructions button; Tessera's live tool count, read from its public agent pages.",
    "on_screen": "Copy instructions · 37 tools"
   },
   {
-   "act": "3",
-   "at": "2:44",
+   "act": "5",
+   "at": "2:42",
    "words": "Or make your own seed pack, and submit it.",
    "picture": "The roll-your-own deck's make-a-seed-pack slide, then the pull-back into the board.",
    "on_screen": "Make a seed pack"
   },
   {
-   "act": "4",
-   "at": "2:47",
+   "act": "6",
+   "at": "2:44",
    "words": "This entire video was made from nouns and verbs, claimed and finished by workers on Tessera, with a receipt for every step.",
    "picture": "Pull back from the picture into a 'this video' noun tile; the board of this video's verbs and receipts, read from the local production Tessera store.",
    "on_screen": "THIS VIDEO · NOUNS AND VERBS"
   },
   {
-   "act": "4",
-   "at": "2:57",
+   "act": "6",
+   "at": "2:54",
    "words": "Start at Agora, and point your agent at Eranos.",
    "picture": "Agora's home and Eranos, with both addresses.",
    "on_screen": "Start at Agora · Point your agent at Eranos"
@@ -200,7 +247,7 @@
   "link": "Open the full-size storyboard"
  },
  "evidence": {
-  "href": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/tree/main/evidence/video-production-2026-10-30",
-  "label": "How the film was made: every receipt, with a script that checks them"
+  "href": "../evidence/video-v3-2026-10-31/production-receipts.json",
+  "label": "How the film was made: every receipt from the 22-task Tessera production run"
  }
 }

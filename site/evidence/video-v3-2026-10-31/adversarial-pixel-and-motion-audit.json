@@ -1,0 +1,364 @@
+{
+  "all_passed": true,
+  "audit_date": "2026-10-31",
+  "browser_dom_pixel_multi_viewport": {
+    "audited_states": 128,
+    "color_modes": [
+      "light",
+      "dark"
+    ],
+    "finding_groups": 0,
+    "passed": true,
+    "viewports": [
+      "1920x1080",
+      "1440x900",
+      "768x1024",
+      "390x844"
+    ]
+  },
+  "information_movement_and_supply_chain": {
+    "all_passed": true,
+    "persona_fuzz_checks": [
+      {
+        "expected_flagged": false,
+        "finding_vectors": [],
+        "js_flagged": false,
+        "parity": true,
+        "passed": true,
+        "py_flagged": false,
+        "vector": "clean_scoped_worker"
+      },
+      {
+        "expected_flagged": true,
+        "finding_vectors": [
+          "unicode_tag_ascii_smuggling"
+        ],
+        "js_flagged": true,
+        "parity": true,
+        "passed": true,
+        "py_flagged": true,
+        "vector": "unicode_tag_smuggling"
+      },
+      {
+        "expected_flagged": true,
+        "finding_vectors": [
+          "unicode_bidi_override",
+          "unicode_bidi_override"
+        ],
+        "js_flagged": true,
+        "parity": true,
+        "passed": true,
+        "py_flagged": true,
+        "vector": "bidi_rlo_trojan"
+      },
+      {
+        "expected_flagged": true,
+        "finding_vectors": [
+          "zero_width_backdoor"
+        ],
+        "js_flagged": true,
+        "parity": true,
+        "passed": true,
+        "py_flagged": true,
+        "vector": "zero_width_joiner_injection"
+      },
+      {
+        "expected_flagged": true,
+        "finding_vectors": [
+          "variation_selector_stego",
+          "variation_selector_stego"
+        ],
+        "js_flagged": true,
+        "parity": true,
+        "passed": true,
+        "py_flagged": true,
+        "vector": "variation_selector_stego"
+      },
+      {
+        "expected_flagged": true,
+        "finding_vectors": [
+          "permission_bypass_flag"
+        ],
+        "js_flagged": true,
+        "parity": true,
+        "passed": true,
+        "py_flagged": true,
+        "vector": "skip_permissions_flag"
+      },
+      {
+        "expected_flagged": true,
+        "finding_vectors": [
+          "lifecycle_hook_execution",
+          "lifecycle_hook_execution"
+        ],
+        "js_flagged": true,
+        "parity": true,
+        "passed": true,
+        "py_flagged": true,
+        "vector": "lifecycle_hook_rce"
+      },
+      {
+        "expected_flagged": true,
+        "finding_vectors": [
+          "silent_mcp_injection",
+          "silent_mcp_injection"
+        ],
+        "js_flagged": true,
+        "parity": true,
+        "passed": true,
+        "py_flagged": true,
+        "vector": "silent_mcp_injection"
+      },
+      {
+        "expected_flagged": true,
+        "finding_vectors": [
+          "reserved_name_shadowing"
+        ],
+        "js_flagged": true,
+        "parity": true,
+        "passed": true,
+        "py_flagged": true,
+        "vector": "reserved_name_shadowing"
+      },
+      {
+        "expected_flagged": true,
+        "finding_vectors": [
+          "unverified_authority_spoof",
+          "unverified_authority_spoof"
+        ],
+        "js_flagged": true,
+        "parity": true,
+        "passed": true,
+        "py_flagged": true,
+        "vector": "unverified_authority_spoof"
+      }
+    ],
+    "provenance_checks": [
+      {
+        "check": "pack_count_consistent_across_library_compare_description",
+        "library_packs": 75,
+        "passed": true
+      },
+      {
+        "check": "description_and_appeal_zero_retired_or_prove_vocab",
+        "passed": true
+      },
+      {
+        "check": "learning_json_evidence_files_exist_locally_for_cloudflare_mirror",
+        "missing": [],
+        "passed": true
+      },
+      {
+        "check": "all_non_github_urls_in_appeal_v3_return_http_200",
+        "dead_urls": [],
+        "passed": true,
+        "probed_count": 21
+      }
+    ],
+    "wire_boundary_checks": [
+      {
+        "check": "tessera_mint_anonymous_session",
+        "namespace": "demo.a_44ea695f43004866ac492d63b2f478b9",
+        "passed": true,
+        "status": 201,
+        "token_prefix": "tan_"
+      },
+      {
+        "check": "tessera_anonymous_principal_labels",
+        "labels": {
+          "agent_label": "adversarial-boundary-verifier",
+          "demo": true,
+          "origin": "anonymous",
+          "untrusted": true
+        },
+        "passed": true,
+        "status": 200
+      },
+      {
+        "check": "tessera_mcp_cas_put_v0",
+        "passed": true,
+        "status": 200
+      },
+      {
+        "check": "tessera_cas_stale_version_rejected",
+        "passed": true,
+        "snippet": "{\"jsonrpc\":\"2.0\",\"id\":2,\"result\":{\"content\":[{\"type\":\"text\",\"text\":\"version_conflict: demo.artifacts/adv-probe-1793465351: expected version 0, head is 1\"}],\"str",
+        "status": 200
+      },
+      {
+        "check": "tessera_cas_readback_integrity",
+        "passed": true,
+        "status": 200
+      },
+      {
+        "check": "tessera_cross_namespace_catalog_write_blocked",
+        "passed": true,
+        "snippet": "{\"jsonrpc\":\"2.0\",\"id\":4,\"result\":{\"content\":[{\"type\":\"text\",\"text\":\"scope_denied: outside its own namespace an anonymous session may only claim, heartbeat and s",
+        "status": 200
+      },
+      {
+        "check": "tessera_anonymous_eq03_review_claim_blocked",
+        "passed": true,
+        "snippet": "{\"jsonrpc\":\"2.0\",\"id\":5,\"result\":{\"content\":[{\"type\":\"text\",\"text\":\"scope_denied: review, approval and publication verbs are closed to anonymous\"}],\"structuredc",
+        "status": 200
+      },
+      {
+        "check": "herma_health_and_security_headers",
+        "passed": true,
+        "status": 200
+      }
+    ]
+  },
+  "video_cv_ocr_bt709": {
+    "per_video": [
+      {
+        "mode": "clean",
+        "ocr_detections": 2811,
+        "passed": true,
+        "sampled_frames": 250,
+        "total_defects": 0,
+        "video": "eranos-3m-clean.mp4"
+      },
+      {
+        "mode": "captions",
+        "ocr_detections": 3158,
+        "passed": true,
+        "sampled_frames": 250,
+        "total_defects": 0,
+        "video": "eranos-3m-widescreen-captions.mp4"
+      },
+      {
+        "mode": "clean",
+        "ocr_detections": 1041,
+        "passed": true,
+        "sampled_frames": 87,
+        "total_defects": 0,
+        "video": "eranos-60s-clean.mp4"
+      },
+      {
+        "mode": "captions",
+        "ocr_detections": 1166,
+        "passed": true,
+        "sampled_frames": 87,
+        "total_defects": 0,
+        "video": "eranos-60s-widescreen-captions.mp4"
+      },
+      {
+        "mode": "captions",
+        "ocr_detections": 806,
+        "passed": true,
+        "sampled_frames": 22,
+        "total_defects": 0,
+        "video": "walkthrough-eranos-live.mp4"
+      },
+      {
+        "mode": "captions",
+        "ocr_detections": 1144,
+        "passed": true,
+        "sampled_frames": 23,
+        "total_defects": 0,
+        "video": "walkthrough-agora-live.mp4"
+      }
+    ],
+    "total_defects": 0,
+    "total_ocr_detections": 10126,
+    "total_sampled_frames": 719,
+    "videos_audited": 6
+  },
+  "video_temporal_motion_30fps": {
+    "all_passed": true,
+    "per_video": [
+      {
+        "audio_caption_sync": {
+          "cues": 44,
+          "median_cue_rms": 0.11821,
+          "min_cue_rms": 0.10623,
+          "silent_cues": [],
+          "vtt_timestamp_overlaps": []
+        },
+        "border_bleed_total": 0,
+        "corrupt_or_blank_frames": 0,
+        "frames_scanned_30fps": 5400,
+        "max_border_color_err": 2.38,
+        "mode": "clean",
+        "passed": true,
+        "single_frame_flashes": 0,
+        "video": "eranos-3m-clean.mp4"
+      },
+      {
+        "audio_caption_sync": {
+          "cues": 44,
+          "median_cue_rms": 0.11821,
+          "min_cue_rms": 0.10623,
+          "silent_cues": [],
+          "vtt_timestamp_overlaps": []
+        },
+        "border_bleed_total": 0,
+        "corrupt_or_blank_frames": 0,
+        "frames_scanned_30fps": 5400,
+        "max_border_color_err": 2.245,
+        "mode": "captions",
+        "passed": true,
+        "single_frame_flashes": 0,
+        "video": "eranos-3m-widescreen-captions.mp4"
+      },
+      {
+        "audio_caption_sync": {
+          "cues": 15,
+          "median_cue_rms": 0.11756,
+          "min_cue_rms": 0.10863,
+          "silent_cues": [],
+          "vtt_timestamp_overlaps": []
+        },
+        "border_bleed_total": 0,
+        "corrupt_or_blank_frames": 0,
+        "frames_scanned_30fps": 1800,
+        "max_border_color_err": 2.095,
+        "mode": "clean",
+        "passed": true,
+        "single_frame_flashes": 0,
+        "video": "eranos-60s-clean.mp4"
+      },
+      {
+        "audio_caption_sync": {
+          "cues": 15,
+          "median_cue_rms": 0.11756,
+          "min_cue_rms": 0.10863,
+          "silent_cues": [],
+          "vtt_timestamp_overlaps": []
+        },
+        "border_bleed_total": 0,
+        "corrupt_or_blank_frames": 0,
+        "frames_scanned_30fps": 1800,
+        "max_border_color_err": 2.024,
+        "mode": "captions",
+        "passed": true,
+        "single_frame_flashes": 0,
+        "video": "eranos-60s-widescreen-captions.mp4"
+      },
+      {
+        "audio_caption_sync": null,
+        "border_bleed_total": 0,
+        "corrupt_or_blank_frames": 0,
+        "frames_scanned_30fps": 660,
+        "max_border_color_err": 2.0,
+        "mode": "captions",
+        "passed": true,
+        "single_frame_flashes": 0,
+        "video": "walkthrough-eranos-live.mp4"
+      },
+      {
+        "audio_caption_sync": null,
+        "border_bleed_total": 0,
+        "corrupt_or_blank_frames": 0,
+        "frames_scanned_30fps": 692,
+        "max_border_color_err": 2.0,
+        "mode": "captions",
+        "passed": true,
+        "single_frame_flashes": 0,
+        "video": "walkthrough-agora-live.mp4"
+      }
+    ],
+    "total_frames_scanned_30fps": 15752
+  }
+}

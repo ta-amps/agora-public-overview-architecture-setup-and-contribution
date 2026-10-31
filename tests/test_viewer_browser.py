@@ -299,23 +299,35 @@ class SitePages(LocalSite):
     def cut(self, page):
         return page.evaluate("""() => ({pressed: document.querySelector('[data-cut][aria-pressed=true]').getAttribute('data-cut'),
           src: document.querySelector('.film-video source').getAttribute('src'), search: location.search,
+          ccPressed: document.querySelector('[data-film-cc]').getAttribute('aria-pressed'),
           captions: Array.from(document.querySelector('.film-video').textTracks).filter(t => t.kind === 'captions').map(t => t.mode)})""")
 
     def test_a_cut_can_be_linked_and_keeps_the_caption_choice(self):
         page = self.open("?cut=short", viewport={"width": 1280, "height": 800})
         state = self.cut(page)
-        self.assertEqual(("short", "video/2026-10-30/short-v2/eranos-60s.mp4", "?cut=short", ["showing"]),
-                         (state["pressed"], state["src"], state["search"], state["captions"]))
-        # The viewer turns captions off; switching cuts keeps them off. Before: they came back on.
-        page.evaluate("Array.from(document.querySelector('.film-video').textTracks).forEach(t => { t.mode = 'hidden'; })")
-        page.click("[data-cut=hub3d]")
+        short_src = json.loads((SITE / "content" / "home.json").read_text(encoding="utf-8"))["videos"]["cuts"][1]["src"]
+        # Inline captions run in mode="hidden" so native square browser cue boxes never appear while .film-caption-pill renders cues.
+        self.assertEqual(("short", short_src, "?cut=short", "true", ["hidden"]),
+                         (state["pressed"], state["src"], state["search"], state["ccPressed"], state["captions"]))
+        # The viewer turns captions off; switching cuts keeps them off ("disabled").
+        page.click("[data-film-cc]")
+        page.click("[data-cut=full]")
         state = self.cut(page)
-        self.assertEqual(("hub3d", "", ["hidden"]), (state["pressed"], state["search"], state["captions"]))
+        self.assertEqual(("full", "", "false", ["disabled"]),
+                         (state["pressed"], state["search"], state["ccPressed"], state["captions"]))
         page.click("[data-cut=short]")
         self.assertEqual("?cut=short", self.cut(page)["search"])
-        # An unknown cut opens the default one.
+        # An unknown cut opens the default one, and filleted blurred custom caption styling in the bottom widescreen band is ready.
         page = self.open("?cut=nope", viewport={"width": 1280, "height": 800})
-        self.assertEqual(("hub3d", ["showing"]), (self.cut(page)["pressed"], self.cut(page)["captions"]))
+        self.assertEqual(("full", "true", ["hidden"]),
+                         (self.cut(page)["pressed"], self.cut(page)["ccPressed"], self.cut(page)["captions"]))
+        pill_style = page.evaluate("""() => {
+          const s = getComputedStyle(document.querySelector('[data-film-caption-pill]'));
+          return {radius: s.borderRadius, blur: s.backdropFilter || s.webkitBackdropFilter || '', hasJs: document.documentElement.classList.contains('js')};
+        }""")
+        self.assertEqual("14px", pill_style["radius"])
+        self.assertIn("blur", pill_style["blur"])
+        self.assertTrue(pill_style["hasJs"])
 
     def test_library_explorer_filters_and_switches_to_707_ecosystem_offline(self):
         page = self.open("library/", viewport={"width": 1280, "height": 900})
