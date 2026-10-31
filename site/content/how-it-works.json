@@ -215,7 +215,7 @@
       ]
     },
     "edge": "the right task objects",
-    "note": "Is a shim the same as RAG? No. RAG pastes search results into a prompt. Herma adds task objects that Tessera keeps, within their permissions, and it can answer a request directly when Tessera already holds the answer.",
+    "note": "Is a shim the same as RAG? No. RAG pastes search results into a prompt. Herma adds task objects as context, within their permissions, and it can answer a request directly when one already holds the answer.",
     "run_note": "The run above did not pass through Herma: both agents called Tessera and the model directly."
   },
   "meta": {

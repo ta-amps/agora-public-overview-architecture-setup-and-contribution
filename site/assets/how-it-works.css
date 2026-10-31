@@ -443,6 +443,15 @@
   .ud-tessera span { font-size: 0.8125rem; }
 }
 
+/* In dark mode the band colour is the card colour, so the dark boxes keep an edge. */
+[data-mode="dark"] .how-under,
+[data-mode="dark"] .ud-herma { box-shadow: inset 0 0 0 1px var(--color-rule-strong); }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-mode]) .how-under,
+  :root:not([data-mode]) .ud-herma { box-shadow: inset 0 0 0 1px var(--color-rule-strong); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .rr-stage [data-at],
   .rr-verb,
