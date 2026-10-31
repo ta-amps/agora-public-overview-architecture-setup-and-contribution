@@ -655,6 +655,33 @@ def load_slide(source: Path, name: str, brief: str | None = None, endpoints: dic
             "notes": asides[0].strip(), "title": plain_text(heading.group(2)), "links": links, "copy": copy}
 
 
+SLIDE_MARK_CAPTION = re.compile(
+    r'<svg aria-label="ta-amps mark"[^>]*>.*?</svg>\s*<p style="position:absolute;left:176px;bottom:\d+px;([^"]*)">(.*?)</p>', re.S)
+DARK_INKS = {"#8C96A6", "#9AA3B2", "#C8D0DC", "#A3ABB9"}
+
+
+def slide_footer(inner: str, deck_title: str, number: int) -> str:
+    """The Deck-Content board's one-line footer: a rule, then the mark, ta-amps, the deck and the slide's own caption
+    on the left, and the slide number on the right. It replaces the slide's mark and caption."""
+    match = SLIDE_MARK_CAPTION.search(inner)
+    if not match:
+        fail(f"{deck_title}: slide {number} has no mark and caption for the footer")
+    ink = re.search(r"color:(#[0-9A-Fa-f]{6})", match.group(1))
+    ink = ink.group(1).upper() if ink else "#5E6472"
+    dark = ink in DARK_INKS
+    rule, mark = ("#2C3443", ("#6FA3F0", "#F0884F", "#C8D0DC")) if dark else ("#E2DCCF", ("#2A5DB0", "#B8541F", "#11161F"))
+    svg = (f'<svg aria-hidden="true" width="24" height="24" viewBox="0 0 32 32" style="flex:none">'
+           f'<rect x="0" y="0" width="14" height="14" rx="3" fill="{mark[0]}"/><rect x="18" y="0" width="14" height="14" rx="3" fill="{mark[1]}"/>'
+           f'<rect x="0" y="18" width="14" height="14" rx="3" fill="{mark[2]}"/><rect x="18" y="18" width="14" height="14" rx="3" fill="{mark[0]}"/></svg>')
+    foot = (f'<div class="slide-foot" style="position:absolute;left:128px;right:96px;bottom:48px;display:flex;'
+            f'justify-content:space-between;align-items:center;gap:24px;font-size:22px;line-height:1.3;color:{ink};'
+            f'border-top:1px solid {rule};padding-top:16px">'
+            f'<span style="display:flex;align-items:center;gap:14px;min-width:0">{svg}'
+            f'<span>ta-amps · {text(deck_title)} · {match.group(2)}</span></span>'
+            f"<span style=\"font-family:'JetBrains Mono', 'Courier New', monospace\">{number}</span></div>")
+    return inner[:match.start()] + foot + inner[match.end():]
+
+
 def load_deck(deck_id: str, brief: str, endpoints: dict) -> dict:
     folder = DECKS / deck_id
     source = folder / "source"
@@ -665,6 +692,8 @@ def load_deck(deck_id: str, brief: str, endpoints: dict) -> dict:
     if spec.get("cover") != order[0]:
         fail(f"{deck_id}: the cover must be the first slide")
     slides = [load_slide(source, name, brief, endpoints) for name in order]
+    for number, slide in enumerate(slides, 1):
+        slide["inner"] = slide_footer(slide["inner"], spec["title"], number)
     if sum(1 for s in slides if s["copy"]) > 1:
         fail(f"{deck_id}: the starting brief appears on one slide at most")
     cover = slides[0]
