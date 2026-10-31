@@ -1,0 +1,56 @@
+{
+  "format": "ta-amps.live-check.v1",
+  "checked_at": "2026-10-31T23:14:06Z",
+  "how": "plain curl -sS -m 20 of each public URL, GET, no credentials, one try each",
+  "checks": [
+    {
+      "name": "Tessera",
+      "url": "https://tessera.ta-amps.workers.dev/v1/health",
+      "method": "GET",
+      "started_utc": "2026-10-31T23:14:06Z",
+      "http_status": 200,
+      "seconds": 0.270316,
+      "content_type": "application/json",
+      "body_bytes": 1049,
+      "body_sha256": "e458b45d69329dd3c50a46efd36f568d4bb14de3d05cc1b6753bbffd63f64eb0",
+      "body": "tessera-v1-health.json"
+    },
+    {
+      "name": "Herma",
+      "url": "https://herma.ta-amps.workers.dev/v1/health",
+      "method": "GET",
+      "started_utc": "2026-10-31T23:14:07Z",
+      "http_status": 200,
+      "seconds": 0.642338,
+      "content_type": "application/json",
+      "body_bytes": 176,
+      "body_sha256": "94dea1333c6d222ea4c23e889ab14cafe88d358f7fa225a3b6ad4ae762ed8595",
+      "body": "herma-v1-health.json"
+    },
+    {
+      "name": "Eranos",
+      "url": "https://eranos.ta-amps.workers.dev/v1/health",
+      "method": "GET",
+      "started_utc": "2026-10-31T23:14:07Z",
+      "http_status": 404,
+      "seconds": 0.26472,
+      "content_type": "text/html",
+      "body_bytes": 2392,
+      "body_sha256": "8174c982e755d63155a319f6dcf814d156596c503c325de3240c65f825f3b724",
+      "body": null,
+      "body_not_kept": "not JSON: the site's page shell"
+    },
+    {
+      "name": "Eranos",
+      "url": "https://eranos.ta-amps.workers.dev/api/health",
+      "method": "GET",
+      "started_utc": "2026-10-31T23:14:08Z",
+      "http_status": 200,
+      "seconds": 0.206474,
+      "content_type": "application/json",
+      "body_bytes": 91,
+      "body_sha256": "ee5f20c9b34432b1eafebbd33b8b4e962a9fe8f7257fd010821b2d609b61703b",
+      "body": "eranos-api-health.json"
+    }
+  ]
+}
