@@ -1758,10 +1758,14 @@ def render_not_found(nouns: Nouns) -> str:
     moved = nouns.moved
     page = moved["not_found"]
     prefix = PAGES_PREFIX
-    seen, items = set(), []
+    grouped: dict[str, list[dict]] = {}
     for item in moved["pages"]:
-        items.append(f'<li><a href="{prefix}{attr(item["to"])}"><b>{text(item["what"])}</b>'
-                     f'<span>{text(page["was"])} <code>/{text(item["from"])}</code>. {text(item["note"])}</span></a></li>')
+        grouped.setdefault(item["to"], []).append(item)  # one entry per new home, naming every old address
+    items = []
+    for to, group in grouped.items():
+        olds = f" {text(page['and'])} ".join(f"<code>/{text(item['from'])}</code>" for item in group)
+        items.append(f'<li><a href="{prefix}{attr(to)}"><b>{text(group[0]["what"])}</b>'
+                     f'<span>{text(page["was"])} {olds}. {text(group[0]["note"])}</span></a></li>')
     items.append(f'<li><a href="{prefix}"><b>{text(page["home"])}</b><span>{text(page["home_note"])}</span></a></li>')
     main = "\n".join([
         '<main id="main">',
