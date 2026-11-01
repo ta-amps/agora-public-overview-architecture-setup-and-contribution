@@ -140,6 +140,8 @@ def format_task_item(v: object) -> tuple[str, str]:
         vcat = clean(v.get("verb_category") or "")
         name = clean(v.get("name") or v.get("title") or v.get("task_id") or v.get("id") or "")
         if vcat and name:
+            if "synthetic" in name.lower():
+                return vcat, vcat  # owner, October 31: no file name that says it; the card still links the repo
             return vcat, f"{vcat} ({name})"
         label = clean(v.get("title") or v.get("name") or v.get("task_id") or v.get("id") or "")
         return label.split(" ", 1)[0], label

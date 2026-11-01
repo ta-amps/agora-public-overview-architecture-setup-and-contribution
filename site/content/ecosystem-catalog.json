@@ -11198,7 +11198,7 @@
         "Muse Spark"
       ],
       "tasks": [
-        "verb.solve_draft (scripts/demo_synthetic.py)",
+        "verb.solve_draft",
         "verb.verify_gate (scripts/sam_smoke.py)",
         "verb.solve_draft (scripts/sam_bracket.py)"
       ],
@@ -17170,7 +17170,7 @@
       "tasks": [
         "verb.solve_draft (GET /)",
         "verb.ingest (elasticshelf/scripts/fetch_open_data.py)",
-        "verb.compile_dag (elasticshelf/scripts/generate_synthetic.py)"
+        "verb.compile_dag"
       ],
       "task_objects": [
         "noun.code_node (code)",

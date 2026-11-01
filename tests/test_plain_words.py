@@ -19,9 +19,6 @@ KEPT = {
     # Eranos's verifier requires a visible SYNTHETIC mark on every fixture's sample_input; the Studio sends these
     # presets to the live /api/practice, so the mark stays until Eranos accepts a plain-words mark.
     "studio/studio.js": 6,
-    # File names inside other hackathon projects' repositories, quoted as their scan found them.
-    "content/ecosystem-catalog.json": 2,
-    "library/index.html": 2,
 }
 
 
