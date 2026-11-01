@@ -245,8 +245,7 @@
         "model": "{{model:muse-glimmer-30b}}, as memory",
         "name": "{{model:muse-glimmer-30b:tuned}}, as memory",
         "line": "Exact match when it recalls ta-amps facts with no context given.",
-        "source": "The memory run record",
-        "served": "evidence/glimmer-30b-lora-memory-2026-10-31/README.md"
+        "source": "The memory run record"
       }
     ],
     "links": [

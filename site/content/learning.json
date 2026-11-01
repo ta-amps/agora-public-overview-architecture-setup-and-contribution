@@ -176,8 +176,8 @@
         "label": "Models used"
       },
       {
-        "href": "evidence/glimmer-30b-lora-memory-2026-10-31/glimmer-30b-lora-memory.svg",
-        "label": "The memory result as a chart (SVG)"
+        "href": "evidence/#glimmer-30b-lora-memory-2026-10-31",
+        "label": "The memory result’s record, on the evidence page"
       },
       {
         "href": "deploy/#slice-gpu",

@@ -27,8 +27,8 @@
       "href": "how-it-works/#run"
     },
     {
-      "label": "{{model:muse-glimmer-30b:tuned}}, as memory: the chart",
-      "href": "evidence/glimmer-30b-lora-memory-2026-10-31/glimmer-30b-lora-memory.svg"
+      "label": "{{model:muse-glimmer-30b:tuned}}, as memory: its record",
+      "href": "evidence/#glimmer-30b-lora-memory-2026-10-31"
     }
   ],
   "copy_labels": {
