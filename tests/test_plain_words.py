@@ -23,7 +23,9 @@ KEPT = {
 
 
 def frozen() -> set[Path]:
-    """Dated deck versions and pinned drafts: byte-identical history that the build never writes."""
+    """Dated deck versions and pinned drafts: byte-identical history that the build never writes. The Agora worker
+    serves them in the same plain words and links each original, by its hash, in the source view (deploy tooling,
+    templates/worker.js serveFrozen; checked by verify_local.py)."""
     out = set()
     decks = json.loads((SITE / "decks.json").read_text(encoding="utf-8"))
     for version in decks["versions"]:
