@@ -338,7 +338,7 @@ class SitePages(LocalSite):
         self.assertIn("blur", pill_style["blur"])
         self.assertTrue(pill_style["hasJs"])
 
-    def test_library_explorer_filters_and_switches_to_707_ecosystem_offline(self):
+    def test_library_explorer_filters_and_switches_to_706_ecosystem_offline(self):
         page = self.open("library/", viewport={"width": 1280, "height": 900})
         page.wait_for_function("!document.querySelector('[data-exp-controls]').hidden")
         initial_status = page.locator("[data-exp-status]").text_content()
@@ -354,7 +354,7 @@ class SitePages(LocalSite):
         page.click("[data-exp-reset]")
         page.click("[data-exp-tab=ecosystem]")
         eco_status = page.locator("[data-exp-status]").text_content()
-        self.assertIn("707 matching Meta Hackathon 2026 repositories", eco_status)
+        self.assertIn("706 matching Meta Hackathon 2026 repositories", eco_status)
         page.fill("[data-exp-query]", "sam")
         self.assertGreater(page.locator("[data-exp-results] .exp-card").count(), 0)
         self.assertFalse(page.evaluate("document.documentElement.scrollWidth > innerWidth"))

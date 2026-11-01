@@ -70,7 +70,7 @@
     },
     {
       "name": "Continuous Learning",
-      "line": "Every finished Task leaves a checked result, and every step is recorded. Learners turn those results into memory and routing advice, and Meta’s {{model:muse-glimmer-30b}} is re-tuned on demand on checked examples, replacing the base only after evaluation, when it beats the base on a test it never saw.",
+      "line": "Every finished Task leaves a checked result, and every step is recorded. Learners turn those results into memory and routing advice, and Meta’s Muse models are re-tuned on demand on checked examples, replacing the base only after evaluation, when they beat it on a test they never saw.",
       "nouns": ["Checked results", "Memory", "Routing advice", "Frozen tests", "Tuned models"],
       "verbs": ["Curate", "Train", "Evaluate", "Compare", "Decide"],
       "packs": ["continuous-tuning", "evaluation-design", "retrieval-triggers-and-reuse"],
