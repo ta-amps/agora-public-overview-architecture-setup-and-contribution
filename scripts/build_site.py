@@ -610,6 +610,42 @@ PLAIN_RULES = [
     (re.compile(r"\bsynthetic\b", re.I), "example"),
 ]
 
+# Never the older open model family the owner retired on Nov 1 ("the purpose of this competition is to push the
+# frontier"), anywhere, Meta's Muse models first. Text that other repositories write, such as the seed packs, the explorer
+# and the hackathon catalog shown on /library/, says what a model is for instead of naming it. A name inside an address,
+# a file name or a third-party path (after a letter, digit, slash, dot or dash) is left alone. These names are proper
+# nouns, so a capital letter alone does not capitalize the plain words: each rule's third field says so, and
+# plain_words() looks at the sentence instead. The patterns spell the names with a character class, so that this file
+# never says them either (the served source is checked for them too).
+_OUTSIDE_A_NAME = r"(?<![\w/.-])"
+_END_OF_NAME = r"(?![\w/-]|\.\w)"
+_FAMILY = r"L[l]ama"   # the retired family's name, as a pattern
+_RUNNER = r"O[l]lama"  # its local runner's name
+PLAIN_RULES += [
+    (re.compile(_OUTSIDE_A_NAME + _FAMILY + r"\.cpp\b" + _END_OF_NAME, re.I), "a local runtime", "proper"),
+    (re.compile(_OUTSIDE_A_NAME + r"(?:a|an|the) local " + _RUNNER + r" model\b" + _END_OF_NAME, re.I), "a local model",
+     "proper"),
+    (re.compile(_OUTSIDE_A_NAME + r"(?:local )?" + _RUNNER + r" model(s?)\b" + _END_OF_NAME, re.I), r"local model\1",
+     "proper"),
+    (re.compile(_OUTSIDE_A_NAME + _RUNNER + r"\b" + _END_OF_NAME, re.I), "a local model runner", "proper"),
+    (re.compile(_OUTSIDE_A_NAME + r"(?:Meta[ -])?" + _FAMILY + r"[ -]?3\.2[ -]1B (?:&|and) 3B\b" + _END_OF_NAME, re.I),
+     "small open models", "proper"),
+    (re.compile(_OUTSIDE_A_NAME + r"(?:a |an |the )?(?:Meta[ -])?" + _FAMILY + r"[ -]?3\.2[ -]1B(?:[ -]Instruct)?\b"
+                + _END_OF_NAME, re.I), "a small open model", "proper"),
+    (re.compile(_OUTSIDE_A_NAME + r"(?:Meta[ -])?" + _FAMILY + r" models\b" + _END_OF_NAME, re.I), "open models", "proper"),
+    (re.compile(_OUTSIDE_A_NAME + r"(?:a |an |the )?(?:Meta[ -])?" + _FAMILY + r"(?:[ -]?\d+(?:\.\d+)*)?"
+                r"(?:[ -]\d+(?:\.\d+)?[BM])?(?:[ -](?:Instruct|Vision|Guard|Scout|Maverick))?\b" + _END_OF_NAME, re.I),
+     "an open model", "proper"),
+]
+
+# No hashes on any page (owner, Nov 1): a commit that another project's summary names is left out of the words; any
+# link still pins it.
+PLAIN_RULES += [
+    (re.compile(r"\s*\((?:at )?commit [0-9a-f]{7,40}\)"), ""),
+    (re.compile(r" (?:at )?commit [0-9a-f]{7,40}\b"), ""),
+    (re.compile(r"\b(main|master) [0-9a-f]{7,40}\b"), r"\1"),
+]
+
 
 def _match_case(found: str, replacement: str) -> str:
     if found.isupper() and len(found) > 1:
@@ -641,11 +677,66 @@ def meta_models(content: str, models: dict) -> str:
     return MODEL_TOKEN.sub(name, content)
 
 
+# The owner's words in text the library page shows from other repositories: the seed-pack library's titles and
+# purposes, the explorer's items and the hackathon catalog's summaries. Applied to those fields only, never to a whole
+# page, because "noun", "verb" and "receipt" are also kind names, keys, class names and file names, which keep them
+# (a word joined to a letter, digit, dot, slash, colon, dash or underscore is a name and is left alone).
+_W = r"(?<![\w./:-])"
+_E = r"(?![\w/-]|[.:]\w)"
+CATALOG_RULES = [
+    (re.compile(r"\bTasks \(verbs\)"), "Tasks"),
+    (re.compile(r"\bTask Objects \(nouns\)"), "Task Objects"),
+    (re.compile(_W + r"noun/verb" + _E, re.I), "Task Object and Task"),
+    (re.compile(_W + r"nouns" + _E, re.I), "Task Objects"),
+    (re.compile(_W + r"noun" + _E, re.I), "Task Object"),
+    (re.compile(_W + r"verbs" + _E, re.I), "Tasks"),
+    (re.compile(_W + r"verb" + _E, re.I), "Task"),
+    (re.compile(_W + r"receipts" + _E, re.I), "records"),
+    (re.compile(_W + r"receipt" + _E, re.I), "record"),
+    (re.compile(r"\bSHA-256-pinned\b", re.I), "fingerprinted"),
+    (re.compile(r"\bthe SHA-256 of\b", re.I), "a fingerprint of"),
+    (re.compile(r"\bSHA-256 digests\b", re.I), "fingerprints"),
+    (re.compile(r"\bwith SHA-256\b", re.I), "with fingerprints"),
+    (re.compile(_W + r"sha-?256" + _E, re.I), "fingerprint"),
+    (re.compile(r"\bprove\b", re.I), "show"),
+    (re.compile(r"\bproves\b", re.I), "shows"),
+    (re.compile(r"\bproved\b", re.I), "showed"),
+    (re.compile(r"\bproving\b", re.I), "showing"),
+    (re.compile(r"\bproven\b", re.I), "shown"),
+    (re.compile(r"\bProject description coming soon\.", re.I), "No project description."),
+    (re.compile(r"\bnot yet\b", re.I), "not"),
+]
+
+
+def catalog_words(value: str) -> str:
+    """One field of another repository's text, in the owner's words (see CATALOG_RULES), then in plain words."""
+    for pattern, replacement in CATALOG_RULES:
+        # SHA is an acronym, not the start of a sentence, so its plain words keep their own case.
+        value = pattern.sub(lambda m: replacement if m.group(0)[:3].lower() == "sha"
+                            else _match_case(m.group(0), replacement), value)
+    return plain_words(value)
+
+
+def _sentence_case(match: re.Match, replacement: str) -> str:
+    """Plain words for a proper noun: capitalized where a sentence, a string or an element's text starts, upper case
+    where the name was."""
+    found = match.group(0)
+    if found.isupper() and len(found) > 3:
+        return replacement.upper()
+    before = match.string[:match.start()].rstrip()
+    if not before or before[-1] in '.!?:>"\n·':
+        return replacement[:1].upper() + replacement[1:]
+    return replacement
+
+
 def plain_words(content: str) -> str:
     """Every "synthetic" a page or noun would show, in the owner's plain words with the same honesty: tests become
     our evaluations, data and cases become example data and cases, a synthetic voice an AI voice."""
-    for pattern, replacement in PLAIN_RULES:
-        content = pattern.sub(lambda m: _match_case(m.group(0), m.expand(replacement)), content)
+    for pattern, replacement, *kind in PLAIN_RULES:
+        if kind:  # a proper noun: capitals come from the sentence, not from the name
+            content = pattern.sub(lambda m: _sentence_case(m, m.expand(replacement)), content)
+        else:
+            content = pattern.sub(lambda m: _match_case(m.group(0), m.expand(replacement)), content)
     return content.replace("example-data-only", "example data only").replace("Example-data-only", "Example data only") \
         .replace("EXAMPLE-DATA-ONLY", "EXAMPLE DATA ONLY")
 
@@ -1395,8 +1486,8 @@ def pack_card(pack: dict, words: dict) -> str:
         '<p class="lib-card-meta"><span class="lib-card-kind">'
         + " ".join(f"<span>{text(kind)}</span>" for kind in kinds) + f"</span> {badge}</p>",
         f'<h3 class="lib-card-title"><a class="lib-card-link" href="{attr(pack["url"])}" '
-        f'aria-label="{attr(pack["title"] + " " + words["on_github"])}">{text(pack["title"])}</a></h3>',
-        f'<p class="lib-card-purpose">{text(pack["purpose"])}</p>',
+        f'aria-label="{attr(catalog_words(pack["title"]) + " " + words["on_github"])}">{text(catalog_words(pack["title"]))}</a></h3>',
+        f'<p class="lib-card-purpose">{text(catalog_words(pack["purpose"]))}</p>',
         '<p class="lib-card-foot"><span class="lib-card-counts">'
         + counted(pack["nouns"], words["noun"], words["nouns"], "noun-word") + " "
         + counted(pack["verbs"], words["verb"], words["verbs"], "verb-word")
@@ -1513,13 +1604,22 @@ def ecosystem_banner_section(explorer: dict, ecosystem: dict) -> str:
     ])
 
 
+EXPLORER_TEXT = ("title", "summary", "category_label", "pack_title")  # what the explorer's cards show as words
+PROJECT_TEXT = ("summary", "category")
+
+
+def shown_words(entry: dict, fields: tuple[str, ...]) -> dict:
+    """An explorer entry with the words its card shows in the owner's words (catalog_words); names stay as they are."""
+    return {key: catalog_words(value) if key in fields and isinstance(value, str) else value for key, value in entry.items()}
+
+
 def explorer_payload_script(explorer: dict, ecosystem: dict) -> str:
     payload = {
         "labels": explorer["labels"],
         "harnesses": {h["id"]: h["label"] for h in explorer["harnesses"] if h["id"] != "all"},
         "ceilings": {c["id"]: c["label"] for c in explorer["ceilings"] if c["id"] != "all"},
-        "items": explorer["items"],
-        "projects": ecosystem["projects"],
+        "items": [shown_words(item, EXPLORER_TEXT) for item in explorer["items"]],
+        "projects": [shown_words(project, PROJECT_TEXT) for project in ecosystem["projects"]],
     }
     encoded = json.dumps(payload, ensure_ascii=False, separators=(",", ":")).replace("<", "\\u003c")
     return f'<script type="application/json" id="agora-explorer-data">{encoded}</script>'
@@ -1567,7 +1667,7 @@ def render_library(nouns: Nouns) -> str:
     on_show = ",".join(f'.library:has(#{category["id"]}:target) .lib-filter a[href="#{category["id"]}"]'
                        for category in library["categories"])
     tree = f"{LIBRARY_REPOSITORY}/tree/{commit}"
-    receipt = f"{LIBRARY_REPOSITORY}/blob/{commit}/packs/VALIDATION.json"
+    record = f"{LIBRARY_REPOSITORY}/blob/{commit}/packs/VALIDATION.json"
     jump_links = "".join(use_link(item, "") for item in explorer["jump_links"])
     ext_links = "".join(use_link(item, "../") for item in words["links"])
     main = "\n".join([
@@ -1578,9 +1678,11 @@ def render_library(nouns: Nouns) -> str:
         f'<h2 class="visually-hidden" id="library-numbers">{text(words["numbers_label"])}</h2>',
         f'<ul class="lib-stats">{stats}</ul>',
         '<div class="lib-about">',
-        f'<p class="lib-source">{text(words["counted"])} <a href="{attr(tree)}"><code>{commit[:7]}</code></a> · '
-        f'<time datetime="{attr(source["committed_at"])}">{human_date(source["committed_at"])}</time></p>',
-        f'<p class="lib-source">{text(words["checked"])} <a href="{attr(receipt)}">{text(words["receipt"])}</a></p>',
+        # The commit stays in the links only (owner, Nov 1: no hashes on any page): the date, then a link to the source.
+        f'<p class="lib-source">{text(words["counted"])} '
+        f'<time datetime="{attr(source["committed_at"])}">{human_date(source["committed_at"])}</time> · '
+        f'<a href="{attr(tree)}">{text(words["counted_link"])}</a></p>',
+        f'<p class="lib-source">{text(words["checked"])} <a href="{attr(record)}">{text(words["record"])}</a></p>',
         f'<p class="lib-legend"><span class="lib-badge">{CODE_GLYPH}{text(words["badge"])}</span> '
         f'<span>{text(words["badge_note"])}</span></p>',
         "</div>",
@@ -2420,8 +2522,11 @@ def render_evidence(nouns: Nouns) -> str:
             f'<p class="ev-date"><time datetime="{attr(folder["date"])}">{text(human_date(folder["date"]))}</time>'
             f' · <code>{text(folder["id"])}/</code></p>'
             f'<h3>{text(folder["title"])}</h3><p class="ev-line">{text(folder["line"])}</p>'
-            f'<div class="ev-files-wrap"><p class="ev-files-label">{text(served["files"])}</p>'
-            f'{evidence_files(folder, served, prefix)}</div>{link_html}</li>')
+            # A record whose raw files the bundle leaves out (they name an agent app) shows what it is, not its files.
+            + (f'<p class="ev-line">{text(served["not_served"])}</p>' if folder.get("raw_files") else
+               f'<div class="ev-files-wrap"><p class="ev-files-label">{text(served["files"])}</p>'
+               f'{evidence_files(folder, served, prefix)}</div>')
+            + f'{link_html}</li>')
     items = []
     for item in source["items"]:
         line = (f'{text(source["same"])} <a href="#{attr(item["same_as"])}"><code>{text(item["same_as"])}/</code></a>.'

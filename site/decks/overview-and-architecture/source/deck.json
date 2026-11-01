@@ -6,7 +6,7 @@
   "cover": "cover",
   "order": ["cover", "problem", "nouns-and-verbs", "fixes", "feeds", "memory-systems", "seed-packs", "map", "tessera", "herma", "learning", "evidence", "proof", "repos", "limits"],
   "sections": {
-    "s1": {"description": "The problem, and the idea", "start": "cover"},
+    "s1": {"description": "The problem, and the fix", "start": "cover"},
     "s2": {"description": "How the pieces fit", "start": "seed-packs"},
     "s3": {"description": "What works, and its limits", "start": "learning"}
   },

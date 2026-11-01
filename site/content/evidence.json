@@ -165,7 +165,8 @@
             "path": "trace.jsonl",
             "bytes": 37696
           }
-        ]
+        ],
+        "raw_files": "kept in git, not served"
       },
       {
         "id": "live-check-2026-10-31",
@@ -201,7 +202,12 @@
             "path": "public-e2e-receipt.json",
             "bytes": 29870
           }
-        ]
+        ],
+        "raw_files": "kept in git, not served",
+        "link": {
+          "href": "how-it-works/#run",
+          "label": "See it replayed on How it works"
+        }
       },
       {
         "id": "glimmer-30b-lora-memory-2026-10-31",
@@ -315,7 +321,8 @@
           }
         ]
       }
-    ]
+    ],
+    "not_served": "Its raw files stay in the source, not on this site."
   },
   "source": {
     "heading": "In the source download",

@@ -62,7 +62,7 @@
       "slide": "evidence",
       "number": "6 agent programs each finished a scoped task; 6 of 14 attempts passed",
       "status": "measured",
-      "source": "OpenCode, Pi, Hermes, {{model:muse-code}}, {{model:nanomuse}} and OpenClaw in narrow lifecycle tests, with every failure recorded. A seventh program, Claude Code, passed a separate test later.",
+      "source": "Six agent programs, listed on Models used, in narrow lifecycle tests, with every failure recorded. A seventh program passed a separate test later.",
       "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/readiness-2026-10-29.json"
     },
     {

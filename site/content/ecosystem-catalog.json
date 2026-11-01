@@ -2,12 +2,12 @@
   "schema": "ta-amps.ecosystem-catalog.v1",
   "status": "unexecuted_public_scan_mapping",
   "source_kind": "meta_hackathon_707_catalog_json",
-  "honesty_note": "Static public-directory decomposition only: none of these third-party repositories was executed, endorsed, or admitted into Tessera, and upstream licenses must be checked at each repository's pinned revision before code reuse.",
+  "honesty_note": "Static public-directory decomposition only: none of these third-party repositories was executed, endorsed, or admitted into Tessera, and upstream licenses must be checked at each repository's pinned revision before code reuse. One entry of the source catalog is left out.",
   "scan_precedent": {
     "attempted": 739,
     "scanned_ok": 705
   },
-  "project_count": 707,
+  "project_count": 706,
   "categories": [
     {
       "id": "general-emerging-applications",
@@ -42,7 +42,7 @@
     {
       "id": "autonomous-agents-workflows",
       "label": "Autonomous Agents & Workflows",
-      "count": 38
+      "count": 37
     },
     {
       "id": "education-knowledge-systems",
@@ -1576,7 +1576,7 @@
       "track": "Track 2",
       "category": "Developer Tooling, Infra & Security",
       "category_id": "developer-tooling-infra-security",
-      "summary": "Parity rebuilds old business software as a modern web app, and proves the new app does exactly what the old one did.",
+      "summary": "Parity rebuilds old business software as a modern web app, and shows the new app does exactly what the old one did.",
       "models": [
         "Muse Code",
         "Meta API",
@@ -1791,7 +1791,7 @@
       "track": "Track 2",
       "category": "Developer Tooling, Infra & Security",
       "category_id": "developer-tooling-infra-security",
-      "summary": "Security audits for AI-generated code that explain the risk in plain language and prove it.",
+      "summary": "Security audits for AI-generated code that explain the risk in plain language and show it.",
       "models": [
         "Muse Code",
         "Muse Glimmer",
@@ -1884,7 +1884,7 @@
       "track": "Track 2",
       "category": "Robotics, IoT & Hardware",
       "category_id": "robotics-iot-hardware",
-      "summary": "Segment it. Intervene. Prove it.",
+      "summary": "Segment it. Intervene. Show it.",
       "models": [
         "Meta API",
         "Meta SAM",
@@ -3592,7 +3592,7 @@
       "track": "Track 1",
       "category": "Business, Finance & Operations",
       "category_id": "business-finance-operations",
-      "summary": "An agentic category manager that cuts category-team workload: it decides whether to bet ₹X on a new vendor (which SKUs, at what terms), then keeps the category running, and proves every number it s...",
+      "summary": "An agentic category manager that cuts category-team workload: it decides whether to bet ₹X on a new vendor (which SKUs, at what terms), then keeps the category running, and shows every number it s...",
       "models": [
         "Meta API",
         "Meta SAM",
@@ -3780,7 +3780,7 @@
       "track": "Track 2",
       "category": "Developer Tooling, Infra & Security",
       "category_id": "developer-tooling-infra-security",
-      "summary": "Built for the Meta Global AI Developer Hackathon 2026 Created by Dr. Abhirup Guha · Powered by Meta Muse Spark CYBERGENESIS does not merely detect cyberattacks. It tests defenses -- and proves resi...",
+      "summary": "Built for the Meta Global AI Developer Hackathon 2026 Created by Dr. Abhirup Guha · Powered by Meta Muse Spark CYBERGENESIS does not merely detect cyberattacks. It tests defenses -- and shows resi...",
       "models": [
         "Meta API",
         "Muse Spark"
@@ -4847,7 +4847,7 @@
       "track": "Track 1",
       "category": "Autonomous Agents & Workflows",
       "category_id": "autonomous-agents-workflows",
-      "summary": "A voice-driven personal agent that cannot act without leaving a receipt.",
+      "summary": "A voice-driven personal agent that cannot act without leaving a record.",
       "models": [
         "Meta API",
         "Meta SAM",
@@ -5273,7 +5273,7 @@
       "track": "Track 2",
       "category": "Developer Tooling, Infra & Security",
       "category_id": "developer-tooling-infra-security",
-      "summary": "Meta AI Developer Hackathon 2026 entry. This repository is a hackathon build on top of dmc. Everything up to the pre-hackathon tag (commit d177c4b) existed before the event, and every commit after...",
+      "summary": "Meta AI Developer Hackathon 2026 entry. This repository is a hackathon build on top of dmc. Everything up to the pre-hackathon tag existed before the event, and every commit after...",
       "models": [],
       "tasks": [
         "verb.verify_gate (verify)",
@@ -6200,7 +6200,7 @@
       "track": "Track 1",
       "category": "Business, Finance & Operations",
       "category_id": "business-finance-operations",
-      "summary": "Describe what should happen. Show what happened. Prove whether they match.",
+      "summary": "Describe what should happen. Show what happened. Show whether they match.",
       "models": [
         "Meta SAM",
         "Muse Spark",
@@ -6464,7 +6464,7 @@
       "track": "Track 2",
       "category": "Multimodal Vision & Video (SAM)",
       "category_id": "multimodal-vision-video-sam",
-      "summary": "\"Prove what happened. Detect what is missing. Capture the evidence that changes the decision.\"",
+      "summary": "\"Show what happened. Detect what is missing. Capture the evidence that changes the decision.\"",
       "models": [
         "Open Weights / LoRA"
       ],
@@ -6557,7 +6557,7 @@
       "track": "Track 2",
       "category": "Autonomous Agents & Workflows",
       "category_id": "autonomous-agents-workflows",
-      "summary": "An independent Meta-powered AI agent that turns authorized goals into bounded actions, verifies actual outcomes, and issues evidence-backed proof receipts. It complements SMAJ PI HUB without modify...",
+      "summary": "An independent Meta-powered AI agent that turns authorized goals into bounded actions, verifies actual outcomes, and issues evidence-backed proof records. It complements SMAJ PI HUB without modify...",
       "models": [
         "Muse Spark"
       ],
@@ -6861,7 +6861,7 @@
       "track": "Track 2",
       "category": "Developer Tooling, Infra & Security",
       "category_id": "developer-tooling-infra-security",
-      "summary": "MAYA is an AI security agent for sites and apps you own. You connect a target, prove you own it, and MAYA runs safe, non-destructive checks. It produces an evidence-backed report: which vulnerabili...",
+      "summary": "MAYA is an AI security agent for sites and apps you own. You connect a target, show you own it, and MAYA runs safe, non-destructive checks. It produces an evidence-backed report: which vulnerabili...",
       "models": [
         "Muse Spark"
       ],
@@ -7742,7 +7742,7 @@
       "track": "Track 1",
       "category": "Healthcare, Civic & Sustainability",
       "category_id": "healthcare-civic-sustainability",
-      "summary": "Unus -- your health passport, by Laymen. One passport. Every record. Every fact proved.",
+      "summary": "Unus -- your health passport, by Laymen. One passport. Every record. Every fact showed.",
       "models": [
         "Meta API",
         "Muse Spark"
@@ -8390,7 +8390,7 @@
       "track": "Track 1",
       "category": "Business, Finance & Operations",
       "category_id": "business-finance-operations",
-      "summary": "Owner screenshots on merged main a0f82ec verify fresh-page screenshot extraction, confirmed $2.00 NEGOTIATE → target-only $1.75 ACCEPT, unchanged $290 estimated costs/$130 estimated operating surpl...",
+      "summary": "Owner screenshots on merged main verify fresh-page screenshot extraction, confirmed $2.00 NEGOTIATE → target-only $1.75 ACCEPT, unchanged $290 estimated costs/$130 estimated operating surpl...",
       "models": [
         "Muse Spark"
       ],
@@ -8477,7 +8477,7 @@
       "track": "Track 2",
       "category": "Developer Tooling, Infra & Security",
       "category_id": "developer-tooling-infra-security",
-      "summary": "An agent that does not just show what it knows, but what it did -- and leaves proof for every step. Every answer arrives with an immutable receipt: what it understood, which tool it used, how long...",
+      "summary": "An agent that does not just show what it knows, but what it did -- and leaves proof for every step. Every answer arrives with an immutable record: what it understood, which tool it used, how long...",
       "models": [
         "Meta API",
         "Muse Wonder"
@@ -9536,7 +9536,7 @@
       "track": "Track 2",
       "category": "Developer Tooling, Infra & Security",
       "category_id": "developer-tooling-infra-security",
-      "summary": "Verify that ad promises match the approved offer -- and build a PAUSED, pixel-proven replacement when they don't. Meta Global AI Developer Hackathon (Indie track).",
+      "summary": "Verify that ad promises match the approved offer -- and build a PAUSED, pixel-shown replacement when they don't. Meta Global AI Developer Hackathon (Indie track).",
       "models": [
         "Muse Code",
         "Meta SAM"
@@ -9819,7 +9819,7 @@
       "track": "Track 1",
       "category": "Multimodal Vision & Video (SAM)",
       "category_id": "multimodal-vision-video-sam",
-      "summary": "A multi-agent coding team you run from your phone, which proves its work on video before anything merges.",
+      "summary": "A multi-agent coding team you run from your phone, which shows its work on video before anything merges.",
       "models": [
         "Meta API",
         "Meta SAM",
@@ -10705,7 +10705,7 @@
       "track": "Track 2",
       "category": "Developer Tooling, Infra & Security",
       "category_id": "developer-tooling-infra-security",
-      "summary": "Handoff is a local-first AI router. A local Ollama model acts as the first responder, decides whether it can answer safely, and hands complex tasks to a hosted specialist. Every run records the pai...",
+      "summary": "Handoff is a local-first AI router. A local model acts as the first responder, decides whether it can answer safely, and hands complex tasks to a hosted specialist. Every run records the pai...",
       "models": [
         "Meta API",
         "Muse Spark"
@@ -10736,7 +10736,7 @@
       "track": "Track 1",
       "category": "Multimodal Vision & Video (SAM)",
       "category_id": "multimodal-vision-video-sam",
-      "summary": "Film a walkthrough of your property, up to 5 minutes, in 30-second clips. Get back an automated inventory you can prove: rooms and items recognized, counted, priced for replacement, and kept with t...",
+      "summary": "Film a walkthrough of your property, up to 5 minutes, in 30-second clips. Get back an automated inventory you can show: rooms and items recognized, counted, priced for replacement, and kept with t...",
       "models": [
         "Meta API",
         "Meta SAM",
@@ -12418,7 +12418,7 @@
       "track": "Track 1",
       "category": "Multimodal Vision & Video (SAM)",
       "category_id": "multimodal-vision-video-sam",
-      "summary": "Snap a photo of the mess. Get a cozy quest sized to the energy you actually have. Tidy at your pace -- progress is proven by a re-scan, never by shame.",
+      "summary": "Snap a photo of the mess. Get a cozy quest sized to the energy you actually have. Tidy at your pace -- progress is shown by a re-scan, never by shame.",
       "models": [
         "Meta API",
         "Meta SAM",
@@ -13815,7 +13815,7 @@
       "track": "Track 1",
       "category": "Gaming & Creative Media",
       "category_id": "gaming-creative-media",
-      "summary": "Pre-existing: our open-source Glimmer serving tools, oneiron-dev/afterglow at commit 06e9ecf (llama.cpp + DFlash setup, KV snapshots, a tuned drafter), and the Oneiron memory engine. Both are exter...",
+      "summary": "Pre-existing: our open-source Glimmer serving tools, oneiron-dev/afterglow (a local runtime + DFlash setup, KV snapshots, a tuned drafter), and the Oneiron memory engine. Both are exter...",
       "models": [
         "Muse Glimmer"
       ],
@@ -13926,7 +13926,7 @@
       "track": "Track 2",
       "category": "Developer Tooling, Infra & Security",
       "category_id": "developer-tooling-infra-security",
-      "summary": "AI-written code that ships with a receipt.",
+      "summary": "AI-written code that ships with a record.",
       "models": [],
       "tasks": [
         "verb.verify_gate (docker-sandbox)",
@@ -13954,7 +13954,7 @@
       "track": "Track 2",
       "category": "Autonomous Agents & Workflows",
       "category_id": "autonomous-agents-workflows",
-      "summary": "An AI astronomer built to be proven wrong in public.",
+      "summary": "An AI astronomer built to be shown wrong in public.",
       "models": [],
       "tasks": [
         "verb.compile_dag (bets)",
@@ -15032,7 +15032,7 @@
       "track": "Track 1",
       "category": "Multimodal Vision & Video (SAM)",
       "category_id": "multimodal-vision-video-sam",
-      "summary": "Give it a video of someone using an old app. Get back a working web app that looks and behaves the same, with a score that proves it.",
+      "summary": "Give it a video of someone using an old app. Get back a working web app that looks and behaves the same, with a score that shows it.",
       "models": [
         "Muse Code",
         "Meta SAM",
@@ -15462,7 +15462,7 @@
       "track": "Track 1",
       "category": "Business, Finance & Operations",
       "category_id": "business-finance-operations",
-      "summary": "This page says what problem navfail addresses, what it aims for and how people will use it. It does not say how navfail works inside, and it does not yet say what \"solved\" means (decided later). Th...",
+      "summary": "This page says what problem navfail addresses, what it aims for and how people will use it. It does not say how navfail works inside, and it does not say what \"solved\" means (decided later). Th...",
       "models": [
         "Meta API"
       ],
@@ -18399,7 +18399,7 @@
       "track": "Track 2",
       "category": "Business, Finance & Operations",
       "category_id": "business-finance-operations",
-      "summary": "Answers security questionnaires only with evidence it can prove, and refuses, or flags tampering, when it can't. Built for the Meta Global AI Developer Hackathon (Startup track), 26 October - 4 Nov...",
+      "summary": "Answers security questionnaires only with evidence it can show, and refuses, or flags tampering, when it can't. Built for the Meta Global AI Developer Hackathon (Startup track), 26 October - 4 Nov...",
       "models": [
         "Muse Glimmer",
         "Meta API",
@@ -18972,7 +18972,7 @@
       "track": "Track 1",
       "category": "General & Emerging Applications",
       "category_id": "general-emerging-applications",
-      "summary": "Build period: 27 Oct - 4 Nov 2026. All project code in this repository is written during the hackathon. Project description coming soon.",
+      "summary": "Build period: 27 Oct - 4 Nov 2026. All project code in this repository is written during the hackathon. No project description.",
       "models": [],
       "tasks": [
         "verb.probe_source (inspect public repository metadata)"
@@ -19822,31 +19822,6 @@
       "language": "Python"
     },
     {
-      "rank": 683,
-      "repo": "BO01OK/agentic-observability-llama",
-      "url": "https://github.com/BO01OK/agentic-observability-llama",
-      "track": "Track 1",
-      "category": "Autonomous Agents & Workflows",
-      "category_id": "autonomous-agents-workflows",
-      "summary": "Built for: 【entity-Meta¦canonical_name=Meta】 $1M Hackathon | Live: Day 2 | Support: https://paypal.me/MahmoudMohamed730643",
-      "models": [],
-      "tasks": [
-        "verb.probe_source (inspect public repository metadata)"
-      ],
-      "task_objects": [
-        "noun.shim_provision (config)",
-        "noun.public_source (docs)",
-        "noun.model_spec (model)"
-      ],
-      "ceiling": "write-internal",
-      "harnesses": [
-        "muse-code",
-        "opencode",
-        "pi",
-        "harness-square"
-      ]
-    },
-    {
       "rank": 684,
       "repo": "Rashad-Mohammed02/iris",
       "url": "https://github.com/Rashad-Mohammed02/iris",
@@ -19951,7 +19926,6 @@
       "models": [],
       "tasks": [
         "verb.solve_draft (GET /)",
-        "verb.solve_draft (GET /test-llama)",
         "verb.solve_draft (POST /attendance/check)"
       ],
       "task_objects": [
@@ -20573,6 +20547,7 @@
     "generated_on": "2026-10-30",
     "provenance": "public_repo_metadata_scan_2026_10_30",
     "projects_sha256": "d7714ddb9e5350e78e347acf9f780e9a5a2d9c5456d657739fb46a5456647f91",
-    "git_tree_scanned_ok_projects": 573
+    "git_tree_scanned_ok_projects": 573,
+    "source_project_count": 707
   }
 }
