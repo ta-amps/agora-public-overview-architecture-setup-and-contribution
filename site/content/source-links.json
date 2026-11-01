@@ -2,23 +2,23 @@
   "about": "How links into the ta-amps GitHub organization become links that work. A repository Agora mirrors (listed under mirrored) is linked in Agora's own read-only source mirror, at a pinned commit: a branch name such as main means the commit listed under heads. Any other repository keeps its GitHub address, exactly as the page's Task Objects wrote it. scripts/build_site.py applies this to every page it writes. release_files lists each file a retired GitHub release held, now served by this site, with its hash.",
   "date": "2026-10-31",
   "mirror": "/source/",
-  "mirrored": [],
+  "mirrored": ["herma-infrastructure-shim-for-intelligent-agents", "ta-amps-hackathon"],
   "mirrored_about": "The repositories Agora serves in its own source mirror and git mirrors. The lead's rule (Nov 1): a repository is mirrored only once its head is free of every banned word (deploy/repos.json mirror: true, which the deploy builder checks against this list); until then its links go to its GitHub page.",
   "git_mirror": "https://agora.ta-amps.workers.dev/git/",
   "git_held_back": ["agora-public-overview-architecture-setup-and-contribution"],
   "git_about": "A clone address (one ending in .git) becomes the same repository in Agora's git mirror, which git can clone over plain HTTP. Agora's own repository has no published mirror, so the build stops at any clone address for it.",
   "heads": {
-    "ta-amps-hackathon": "e3168b5562796b7a55dcc881a194a348d3e457b9",
+    "ta-amps-hackathon": "0e2de81fb6256e79cfe91bcbfa7e8ca4cfb42875",
     "eranos-public-marketplace-for-public-good-token-burn": "4f11d90a78c4c5190d5574f6a953237a67166adc",
     "agora-public-overview-architecture-setup-and-contribution": "bad9a5eed63ac5619c7b823651a6754dbaa88e4e",
     "tessera-infrastructure-work-and-storage-engine": "95e434eb820f2dbc3873cd443e4ba144acefc762",
-    "herma-infrastructure-shim-for-intelligent-agents": "f03ec8f3aef046afac0da75b5a53cdca72cf8d05",
+    "herma-infrastructure-shim-for-intelligent-agents": "757cddb75151a9b0916f19bc70b17305c4a03171",
     "seed-packs-library-of-nouns-and-verbs": "cdb6aa2fdee9e79cd183672a03e8f4006d49d89b"
   },
   "pulls": {
     "eranos-public-marketplace-for-public-good-token-burn#11": "8fe602e96a66980ba148d166a17b1e8660022207",
     "tessera-infrastructure-work-and-storage-engine#20": "2e7d6ab4d7e084a413ba0c3c83cebc10d81c9a98",
-    "herma-infrastructure-shim-for-intelligent-agents#12": "65634ab145a00cda63fc9ef7fb1361eee78cbfdc"
+    "herma-infrastructure-shim-for-intelligent-agents#12": "757cddb75151a9b0916f19bc70b17305c4a03171"
   },
   "releases": {
     "agora-public-overview-architecture-setup-and-contribution/pitch-drafts-2026-10-29": "/downloads/pitch-drafts-2026-10-29/"
