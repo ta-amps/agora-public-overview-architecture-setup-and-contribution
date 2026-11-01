@@ -576,11 +576,14 @@ class Builder(unittest.TestCase):
         off = dict(links, mirrored=[])
         for url in (f"{tessera}/blob/main/docs/x.md", f"git clone {tessera}.git\n", f"{tessera}/tree/some-branch/x"):
             self.assertEqual(url, build.repoint(url, off))
-        # Mirrored: a branch link means the pinned head, a full commit stays itself, and an address without a home
-        # fails; a clone address goes to the git mirror, which git can clone; the file view cannot be cloned.
+        # Mirrored: every link means the swept head (a branch name, a full commit or a pull request alike: Agora serves
+        # no older tree), and an address without a home fails; a clone address goes to the git mirror, which git can
+        # clone; the file view cannot be cloned.
         on = dict(links, mirrored=sorted(links["heads"]))
-        self.assertEqual("/source/tessera-infrastructure-work-and-storage-engine/95e434eb820f/docs/x.md",
-                         build.repoint(f"{tessera}/blob/main/docs/x.md", on))
+        head12 = links["heads"]["tessera-infrastructure-work-and-storage-engine"][:12]
+        for ref in ("main", "95e434eb820f2dbc3873cd443e4ba144acefc762"):
+            self.assertEqual(f"/source/tessera-infrastructure-work-and-storage-engine/{head12}/docs/x.md",
+                             build.repoint(f"{tessera}/blob/{ref}/docs/x.md", on))
         with self.assertRaises(build.BuildError):
             build.repoint(f"{tessera}/tree/some-branch/x", on)
         with self.assertRaises(build.BuildError):

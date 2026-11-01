@@ -555,21 +555,20 @@ def source_link(match: re.Match, links: dict) -> str:
     rest = rest.split("#", 1)[0]
     if kind in ("tree", "blob", "commit"):
         ref, _, path = rest.partition("/")
-        if FULL_OR_SHORT_SHA.match(ref) and len(ref) == 40:
-            sha = ref
-        elif ref in ("main", "HEAD") or (kind == "commit" and FULL_OR_SHORT_SHA.match(ref)):
-            sha = links["heads"][repo] if ref in ("main", "HEAD") else ref
-        else:
+        if not (ref in ("main", "HEAD") or (FULL_OR_SHORT_SHA.match(ref) and (len(ref) == 40 or kind == "commit"))):
             fail(f"a link names a branch or short commit the source mirror cannot pin: {match.group(0)}")
+        # Nov 1: Agora serves a mirrored repository only at its swept head (no older tree, which could still name a
+        # banned word), so every commit a link names maps to that head; the deploy builder fails on a path the head
+        # no longer has.
+        sha = links["heads"][repo]
         if kind == "commit" or not path:
             return f"{mirror}{repo}/{sha[:12]}/"
         return f"{mirror}{repo}/{sha[:12]}/{path.rstrip('/')}" + ("/" if kind == "tree" else "")
     if kind == "pull":
         number = rest.split("/", 1)[0]
-        sha = links["pulls"].get(f"{repo}#{number}")
-        if not sha:
+        if not links["pulls"].get(f"{repo}#{number}"):
             fail(f"a link names a pull request without a recorded merge commit: {match.group(0)}")
-        return f"{mirror}{repo}/{sha[:12]}/"
+        return f"{mirror}{repo}/{links['heads'][repo][:12]}/"  # the swept head carries the merged change
     if kind == "issues":
         form = re.search(r"(?:^|&)template=([A-Za-z0-9._-]+)", query)
         if form:
