@@ -443,16 +443,24 @@ def banner_block(prefix: str, nouns: Nouns) -> str:
 
 
 def footer_block(prefix: str, nouns: Nouns) -> str:
+    """The SiteFooter board (Nov 1): the brand and its line, the trust links (Status · Security · Accessibility ·
+    Source · For judges, plus Models used) and Eranos, the note, then a quieter row of the other pages."""
     footer = nouns.site["footer"]
-    links = [f'<li><a href="{link(prefix, item["href"])}">{text(item["label"])}</a></li>' for item in footer["links"]]
-    links += [f'<li><a href="{attr(prefix + item["href"]) if item.get("local") else attr(item["href"])}">'
-              f'{text(item["label"])}</a></li>' for item in footer["outside"]]
+
+    def item(entry: dict) -> str:
+        href = attr(prefix + entry["href"]) if entry.get("local") else (
+            attr(entry["href"]) if entry["href"].startswith("http") else link(prefix, entry["href"]))
+        return f'<li><a href="{href}">{text(entry["label"])}</a></li>'
     return "\n".join([
         '<footer class="site-footer">',
         '<div class="wrap">',
-        f'<p class="footer-note">{text(footer["note"])}</p>',
+        f'<p class="footer-brand"><b>{text(footer["brand"])}</b> <span>{text(footer["line"])}</span></p>',
         f'<nav aria-label="{attr(footer["nav_label"])}">',
-        "<ul>" + "".join(links) + "</ul>",
+        "<ul>" + "".join(item(e) for e in footer["links"] + footer["outside"]) + "</ul>",
+        "</nav>",
+        f'<p class="footer-note">{text(footer["note"])}</p>',
+        f'<nav class="footer-more" aria-label="{attr(footer["more_label"])}">',
+        "<ul>" + "".join(item(e) for e in footer["more"]) + "</ul>",
         "</nav>",
         f'<p class="footer-privacy">{text(footer["privacy"])}</p>',
         "</div>",

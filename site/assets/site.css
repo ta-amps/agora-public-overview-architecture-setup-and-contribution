@@ -2184,3 +2184,9 @@ pre code {
 .models-live { background: var(--object-wash); color: var(--object-text); }
 .models-record { white-space: nowrap; font-weight: 600; }
 .models-footnote { margin: var(--space-4) 0 0; color: var(--color-ink-2); font-size: var(--text-small); }
+
+/* SiteFooter (Nov 1): the brand line, the trust links, the note, then the other pages in a quieter row. */
+.footer-brand { margin: 0 0 var(--space-3); font-size: var(--text-body); color: var(--color-ink-2); }
+.footer-brand b { font-family: var(--font-display); color: var(--color-ink); margin-inline-end: var(--space-2); }
+.site-footer .footer-more ul { margin-top: var(--space-2); font-size: var(--text-small); }
+.site-footer .footer-more a { color: var(--color-muted); }

@@ -381,9 +381,9 @@ class Builder(unittest.TestCase):
         self.assertIn("301", not_found)
 
     def test_learning_is_a_tab_of_agora_built_from_its_noun(self):
-        # A page of Agora, not a new surface. October 31 (SiteHeader board): the header reads The film, How it works,
-        # Use cases, Decks, Evidence, and Learning sits in the footer of every page.
-        self.assertEqual(["The film", "How it works", "Use cases", "Decks", "Evidence"],
+        # A page of Agora, not a new surface. November 1: the header reads How it works, Models used, Use cases, Decks,
+        # Evidence (the film is withdrawn until its re-recorded cut lands), and Learning sits in the footer's second row.
+        self.assertEqual(["How it works", "Models used", "Use cases", "Decks", "Evidence"],
                          [item["label"] for item in self.nouns.site["nav"]])
         page = self.outputs[build.SITE / "learning" / "index.html"]
         self.assertIn('<li><a href="../learning/">Learning</a></li>', page)

@@ -11,14 +11,14 @@
   ],
   "nav": [
     {
-      "section": "film",
-      "href": "film/",
-      "label": "The film"
-    },
-    {
       "section": "how-it-works",
       "href": "how-it-works/",
       "label": "How it works"
+    },
+    {
+      "label": "Models used",
+      "href": "models/",
+      "section": "models"
     },
     {
       "section": "use-cases",
@@ -95,9 +95,44 @@
     "selected": "Selected"
   },
   "footer": {
-    "nav_label": "Footer",
-    "note": "Agora is the overview of ta-amps. Publishing something here does not certify a claim; each claim links to its dated evidence. MIT license.",
+    "nav_label": "Site information",
+    "brand": "Agora",
+    "line": "How ta-amps works, in the open.",
+    "note": "Eranos is where the work happens; Agora shows how it works.",
     "links": [
+      {
+        "href": "status/",
+        "label": "Status"
+      },
+      {
+        "href": "security/",
+        "label": "Security"
+      },
+      {
+        "href": "accessibility/",
+        "label": "Accessibility"
+      },
+      {
+        "href": "source/",
+        "label": "Source"
+      },
+      {
+        "href": "judges/",
+        "label": "For judges"
+      },
+      {
+        "href": "models/",
+        "label": "Models used"
+      }
+    ],
+    "outside": [
+      {
+        "href": "https://eranos.ta-amps.workers.dev/",
+        "label": "Eranos ↗"
+      }
+    ],
+    "more_label": "More pages",
+    "more": [
       {
         "href": "evidence/",
         "label": "Evidence"
@@ -121,16 +156,6 @@
       {
         "href": "deploy/",
         "label": "Run your own"
-      },
-      {
-        "href": "source/",
-        "label": "Source"
-      }
-    ],
-    "outside": [
-      {
-        "href": "https://eranos.ta-amps.workers.dev/",
-        "label": "Eranos"
       },
       {
         "href": "THIRD-PARTY-NOTICES.txt",
