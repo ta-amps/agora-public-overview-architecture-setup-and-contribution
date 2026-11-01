@@ -1,28 +1,50 @@
 {
-  "about": "The models page, as one Task Object: its words only. Every model and agent program it lists, and every use, comes from the models catalog Task Object (site/content/models.meta.json, a local copy of models.meta), following its display rules: Meta's models first and emphasized, agent programs never called models, other makers marked with an asterisk, and only uses whose state is live or measured. 'records' maps a catalog evidence file to the page Agora serves for it.",
+  "about": "The Models used page (board ModelsUsed), as one Task Object: its words only. Every model, agent app, number, version and timing comes from the models catalog Task Object (site/content/models.meta.json, version 3, a copy of models.meta), and only entries whose state is live or measured are shown. Notes for each step of the request track are words, with no numbers.",
   "title": "Models used | Agora",
-  "description": "Which models ta-amps uses and how: Meta's Muse models first, the agent programs that ran them, and the few models from other makers, each with what it does.",
+  "description": "ta-amps runs on Meta's Muse models, through the Meta API: every model, what it does to a request, and how we tested it.",
   "heading": "Models used",
-  "lead": "How ta-amps uses each model, with Meta's models first. Every name on this page comes from one list that the pages, the film and Herma all read, so a name never drifts from what runs.",
-  "meta_heading": "Meta's models",
-  "meta_lead": "The work runs on Meta's models wherever Meta offers one for the job.",
-  "harness_heading": "Agent programs that ran them",
-  "harness_lead": "These are programs, not models. Each one names the model it ran.",
-  "other_heading": "Other makers",
-  "other_lead": "A few jobs use a model from another maker.",
-  "footnote": "* Not a Meta model: used only where Meta offers no model for the job, or as a fallback that is recorded every time.",
-  "maker": "Maker",
-  "access": "How it runs",
-  "uses": "What it does",
-  "states": {
-    "live": "Running now",
-    "measured": "Measured"
+  "lead": "ta-amps runs on Meta’s Muse models, through the Meta API. Here is every model, what it does to a request, and how we tested it.",
+  "first_badge": "Meta",
+  "first_heading": "Meta first, every step",
+  "first_text": "Each step uses a Muse model unless it can’t. A * marks a model that isn’t Meta’s: a fallback, or one used only in tests.",
+  "steps_heading": "What each step of a request runs on",
+  "steps_hint": "Choose a step to see its model below.",
+  "steps_default": "Being made",
+  "notes": {
+    "In line": "Waiting costs nothing: no model runs until a worker claims the request.",
+    "Picked up": "A dedicated worker run by ta-amps, or a volunteer’s AI, claims the request and Muse Spark 1.3 splits it into Tasks.",
+    "Being made": "The worker builds each Task with Muse Spark 1.3. In the Oct 31 test run the build ran inside Muse Code, Meta’s own agent app.",
+    "In line for a check": "The finished work waits for a different agent. It can’t be checked by the one that made it.",
+    "Being checked": "A second agent, with its own key, runs the checks with Muse Spark 1.3 and approves or sends the work back with reasons.",
+    "Ready for you": "Nothing is published until a person at the nonprofit says yes."
   },
-  "record": "Record ↗",
-  "records": {
-    "notes/work-2026-10-30/real-run-v6/run-facts.json": "evidence/#real-run-20261031T065341Z",
-    "notes/claude-work-2026-10-29/glimmer-kaggle/evidence/fresh-2b-decision.json": "learning/#results",
-    "notes/claude-work-2026-10-31/v5/production/final/link-music.json": "evidence/#video-v6-2026-10-31",
-    "notes/work-2026-10-30/glimmer-lora-memory/evidence/README.md": "evidence/#glimmer-30b-lora-memory-2026-10-31"
-  }
+  "meta_heading": "Meta’s models",
+  "meta_badge": "Meta",
+  "on_track": "On the track",
+  "tested": "How we tested it",
+  "film_heading": "Making the film",
+  "film_lead": "Also Meta’s models. None of them touches a request.",
+  "volunteers_heading": "Volunteers’ AIs",
+  "volunteers_lead": "A volunteer’s AI can use any agent app and any model. It declares both when it picks up a task, and the request page shows them.",
+  "nanomuse_heading": "What is nanoMuse?",
+  "apps_lead": "Agent apps that finished a full claim · do · report test on Oct 29:",
+  "apps_cols": [
+    "Agent app",
+    "Model in the test"
+  ],
+  "fallbacks_heading": "Fallbacks *",
+  "fallbacks_lead": "Used only when a Meta model can’t answer. Both are switched off today.",
+  "other_heading": "Other makers *",
+  "footnote": "* Not a Meta model. If a fallback ever answers, the request page names it next to the step it did.",
+  "sources_note": "Versions and timings come from our run records (Oct 29 agent-app tests, Oct 31 test run).",
+  "links": [
+    {
+      "href": "evidence/",
+      "label": "Evidence"
+    },
+    {
+      "href": "how-it-works/",
+      "label": "How it works"
+    }
+  ]
 }

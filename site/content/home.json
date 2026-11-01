@@ -40,12 +40,8 @@
   },
   "uses": {
     "heading": "Use cases",
-    "lead": "Eranos is the first, and it is live. Each one is built from the same Tasks and Task Objects, and names the seed packs that hold them.",
-    "live": "Live",
+    "lead": "Who ta-amps helps, what they ask for and what they get back, one example at a time.",
     "all": "All use cases",
-    "models": {
-      "label": "Which model does what",
-      "href": "models/"
-    }
+    "models": "Models used"
   }
 }

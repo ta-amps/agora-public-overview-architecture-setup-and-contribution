@@ -1,110 +1,121 @@
 {
-  "about": "The use cases page, as one noun: seven flagship ideas for what you can build from the same nouns and verbs, led by Tokens for Good, then a band of fields the same pieces fit. They are ideas, not results, so they carry no status, badges or evidence numbers. Each names the library packs that hold its nouns and verbs, by id; their titles come from site/content/library.json, and each links to its card on the library page. A flagship's rest finishes its name in a lighter type. scripts/build_site.py renders them into site/use-cases/index.html.",
-  "title": "Use cases | ta-amps",
-  "description": "Ideas for what you can build from the same nouns and verbs: tokens for good, videos made from code, feeds, shims, reusable code, continuous learning and long-horizon tasks.",
+  "about": "The use cases page (board UseCases, Nov 1), as one Task Object: its words and its six cases. The featured case, the Oct 31 test run, is read from the models catalog Task Object (featured_use_case), so its numbers are never typed here. The home page's use-case strip shows the same six cards and links here.",
+  "title": "Use cases | Agora",
+  "description": "What ta-amps does, one example at a time: who it helps, what they ask for, what they get back, and which model does each step.",
   "heading": "Use cases",
-  "lead": "Each card is a use case: an idea for what you can build, not a result. The architecture underneath is the same for all of them, nouns and verbs, where verbs are tasks and nouns are everything a task uses or makes.",
-  "nouns_label": "Example nouns",
-  "verbs_label": "Example verbs",
-  "packs_label": "Packs",
-  "flagships": [
+  "lead": "What ta-amps does, one example at a time: who it helps, what they ask for, what they get back, and which model does each step.",
+  "filter_label": "Show:",
+  "filters": [
     {
-      "name": "Tokens for Good",
-      "home": {"title": "Spare tokens for good", "line": "Nonprofits ask in plain words; volunteers’ agents do the work.", "live_href": "https://eranos.ta-amps.workers.dev/"},
-      "line": "Spare tokens for good. It comes first because AI has to help everyone, not just the tech world. People donate AI capacity they won’t use, and nonprofits type what they need in plain words.",
-      "detail": "Donated agents do the parts that public information can answer, with citations. Parts that touch private files become agent kits the nonprofit’s own agent runs.",
-      "nouns": ["Requests", "Cited reports", "Agent kits", "Example test cases", "Reviews"],
-      "verbs": ["Sort and split a request", "Do the public part", "Build a kit", "Review it", "Deliver it"],
-      "packs": ["public-good-kits", "policy-and-law-watch", "public-budget-report", "kit-handwritten-statements", "kit-food-bank-pickups"],
-      "links": [
-        {"href": "https://eranos.ta-amps.workers.dev", "label": "Visit Eranos"},
-        {"href": "decks/public-good-marketplace/", "label": "The marketplace deck"}
-      ]
+      "key": "all",
+      "label": "All"
     },
     {
-      "name": "Motion Graphics and Video Gen",
-      "home": {"title": "Video made with code", "line": "Scenes, captions and checks as tasks, with receipts."},
-      "line": "Videos made from code, where every script, scene, voice line and caption is a noun and every step is a verb. Any agent can remake or extend a video, and every frame can be rebuilt from its source.",
-      "nouns": ["Scripts", "Scenes", "Voice", "Captions"],
-      "verbs": ["Write", "Compose", "Render", "Narrate", "Check"],
-      "packs": ["video-motion", "narrated-explainer-video", "voice-narration", "video-editing", "video-qa"],
-      "links": [
-        {"href": "https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs/tree/main/packs/video-motion", "label": "The video and motion pack"}
-      ]
+      "key": "nonprofits",
+      "label": "For nonprofits"
     },
     {
-      "name": "Feed Systems to Keep Your Agent Informed",
-      "home": {"title": "Feeds that keep your agent informed", "line": "New projects and benchmarks arrive as task objects."},
-      "line": "Feeds watch repos, papers, releases and your own services. New items become nouns with their sources and follow-ups become verbs, so your agent knows what shipped yesterday. For example, server workers could track new memory systems and the benchmark numbers each project reports, so your agent can ask each week whether one fits its setup and is faster or cheaper.",
-      "nouns": ["Sources", "New items", "Digests"],
-      "verbs": ["Scan", "Summarize", "Test", "Compare", "Update a pack"],
-      "packs": ["tool-discovery", "freshness-checks", "benchmark-scores", "policy-and-law-watch"],
-      "links": [{"href": "feeds/memory-systems/", "label": "The memory-systems feed"}, 
-        {"href": "decks/overview-and-architecture/#feeds", "label": "How feeds work"},
-        {"href": "library/#harness-feeds", "label": "Agent harness research feeds"}
-      ]
+      "key": "volunteers",
+      "label": "For volunteers"
     },
     {
-      "name": "Shimming Systems",
-      "home": {"title": "A shim for any agent", "line": "Herma adds the right context, or answers directly."},
-      "line": "A shim sits between any agent’s harness and its model. It adds the right nouns as context, or answers directly with no model call, without changing the agent.",
-      "nouns": ["Rules", "Code", "Past runs", "Verified answers"],
-      "verbs": ["Write a rule", "Test it", "Review it", "Turn it on", "Roll it back"],
-      "packs": ["retrieval-triggers-and-reuse", "atomic-step-contract", "harness-onboarding-e2e"],
-      "links": [
-        {"href": "decks/overview-and-architecture/#herma", "label": "How Herma works"},
-        {"href": "library/#explorer", "label": "Search tasks and task objects"}
-      ]
-    },
-    {
-      "name": "Code Reusability",
-      "home": {"title": "Code you never rewrite", "line": "Reviewed code is found by search instead of regenerated."},
-      "line": "Tested code becomes nouns that agents find and compose instead of rewriting, and compiled recipes run with no model tokens.",
-      "nouns": ["Code nodes", "Recipes", "Compiled programs", "Test results"],
-      "verbs": ["Find", "Compose", "Compile", "Run", "Verify"],
-      "packs": ["code-composition", "retrieval-triggers-and-reuse", "prior-art-and-alternatives"],
-      "links": [
-        {"href": "decks/overview-and-architecture/#fixes", "label": "How reuse works"},
-        {"href": "https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs/tree/main/packs/code-composition", "label": "The code composition pack"}
-      ]
-    },
-    {
-      "name": "Continuous Learning",
-      "line": "Every finished verb leaves a result with a receipt. Learners turn those results into memory and routing advice, and small open models are re-tuned on demand on checked examples, replacing the base only after evaluation, when they beat it on a test they never saw.",
-      "nouns": ["Checked results", "Memory", "Routing advice", "Frozen tests", "Tuned models"],
-      "verbs": ["Curate", "Train", "Evaluate", "Compare", "Decide"],
-      "packs": ["continuous-tuning", "evaluation-design", "retrieval-triggers-and-reuse"],
-      "links": [
-        {"href": "learning/", "label": "The Learning page"},
-        {"href": "library/#explorer", "label": "Search tasks and task objects"}
-      ]
-    },
-    {
-      "name": "Long-Horizon Tasks",
-      "home": {"title": "Long jobs in small steps", "line": "Big work splits into pieces any worker can pick up."},
-      "rest": "via Atomic Steps and Decentralized Solutioning",
-      "line": "Big jobs split into small, checkable verbs that many independent workers claim, attempt, review and finish, each leased and receipted, so nothing needs babysitting. Several workers can explore one brief through separate attempts.",
-      "nouns": ["Briefs", "Plans", "Step results", "Receipts"],
-      "verbs": ["Split", "Claim", "Attempt", "Review", "Finish"],
-      "packs": ["decomposition-patterns", "atomic-step-contract", "unattended-run-record", "status-and-handoff"],
-      "links": [
-        {"href": "decks/overview-and-architecture/#tessera", "label": "How Tessera works"},
-        {"href": "library/#explorer", "label": "Search tasks and task objects"}
-      ]
+      "key": "builders",
+      "label": "For builders"
     }
   ],
-  "fields": {
-    "name": "The same pieces fit almost any field",
-    "line": "Name the things your work reuses and the jobs it repeats, and any agent can pick them up.",
-    "items": [
-      "Grant writing",
-      "Literature reviews",
-      "Compliance checklists",
-      "Course building",
-      "Disaster-relief coordination",
-      "Checked data pipelines",
-      "Customer-support knowledge"
-    ],
-    "link": {"href": "decks/roll-your-own/", "label": "The roll-your-own deck"}
-  }
+  "audiences": {
+    "nonprofits": "For a nonprofit",
+    "volunteers": "For a volunteer",
+    "builders": "For builders"
+  },
+  "states": {
+    "live": "Live",
+    "tested": "Tested Oct 29",
+    "example": "Example request"
+  },
+  "ask_label": "They ask:",
+  "get_label": "They get:",
+  "featured": {
+    "audience": "nonprofits",
+    "asked_label": "They asked",
+    "get_label": "They get",
+    "get_lead": "A small kit their own AI or staff run each week. It keeps every rule they set:",
+    "steps_label": "How it was made",
+    "built_text": "An agent wrote the kit, its tests and a README.",
+    "checked_text": "It has its own key; a worker never checks its own work. It ran the tests and every rule: {tests_passed} tests passed, {rule_violations} rule violations.",
+    "calls": "{model_calls} model calls",
+    "watch": "Watch it on the request track →",
+    "watch_href": "how-it-works/#run"
+  },
+  "cards": [
+    {
+      "audience": "nonprofits",
+      "state": "example",
+      "title": "State shelter budget lines",
+      "ask": "This year’s state budget lines for emergency shelter, with a source for each number.",
+      "get": "An answer with its sources. A second agent checks every source before you see it.",
+      "how": "A worker researches public sources with {{model:muse-spark-1.3}}; a second agent checks them."
+    },
+    {
+      "audience": "nonprofits",
+      "state": "example",
+      "title": "Tenant deposit rules",
+      "ask": "What changed in our state’s tenant deposit rules this year?",
+      "get": "A cited report in plain words, with each change linked to the rule it comes from.",
+      "how": "Public information only, so volunteers’ AIs can do all of it."
+    },
+    {
+      "audience": "nonprofits",
+      "state": "example",
+      "title": "Handwritten intake statements",
+      "ask": "Type up our handwritten intake statements, keeping how people actually talk.",
+      "get": "A process your own AI runs on your computer. The statements never leave you.",
+      "how": "Volunteers build and test it with made-up pages; you run it on the real ones."
+    },
+    {
+      "audience": "volunteers",
+      "state": "tested",
+      "title": "Put spare AI to work",
+      "ask": "I have tokens I won’t use this month. What can my agent do?",
+      "get": "Your agent claims one Task, does it and reports back. A different agent checks it.",
+      "how": "Six agent apps finished this full cycle in our Oct 29 test. Each one declares its model."
+    },
+    {
+      "audience": "builders",
+      "state": "live",
+      "title": "Feeds that keep agents current",
+      "ask": "What new memory, OCR, privacy and evaluation tools came out this week?",
+      "get": "Five categories, scanned every 6 hours and ranked by an open score, as Task Objects your agent can search.",
+      "how": "A dedicated worker run by ta-amps scans them; Herma serves them."
+    },
+    {
+      "audience": "builders",
+      "state": "live",
+      "title": "Long jobs in small steps",
+      "ask": "How do we split a big job so many agents can share it?",
+      "get": "Tasks in a durable queue. A lease keeps one worker on each Task, and a check follows every result.",
+      "how": "Tessera holds the queue and the Task Objects; any agent connects through it."
+    }
+  ],
+  "blocks_heading": "The same two building blocks under every use case",
+  "blocks": [
+    {
+      "term": "Tasks",
+      "text": "wait in a durable queue. A worker claims one, does it and reports, and a different worker checks it."
+    },
+    {
+      "term": "Task Objects",
+      "text": "are what a task can use or reference: knowledge, code, data and finished results."
+    }
+  ],
+  "links": [
+    {
+      "href": "how-it-works/",
+      "label": "How it works"
+    },
+    {
+      "href": "models/",
+      "label": "Models used"
+    }
+  ]
 }

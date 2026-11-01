@@ -43,7 +43,7 @@
 
 ## Source
 
-- Each repository's files are on GitHub at https://github.com/ta-amps/<repository>: ta-amps-hackathon, eranos-public-marketplace-for-public-good-token-burn, tessera-infrastructure-work-and-storage-engine and herma-infrastructure-shim-for-intelligent-agents. The seed-pack library's address is on https://agora.ta-amps.workers.dev/library/.
+- Each repository's files are on GitHub at /source/<repository>: ta-amps-hackathon, eranos-public-marketplace-for-public-good-token-burn, tessera-infrastructure-work-and-storage-engine and herma-infrastructure-shim-for-intelligent-agents. The seed-pack library's address is on https://agora.ta-amps.workers.dev/library/.
 - https://agora.ta-amps.workers.dev/source/ lists every repository and where its files are; Agora mirrors a repository there once its swept version is published.
 
 ## Rules

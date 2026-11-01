@@ -34,7 +34,7 @@
 <a class="wordmark" href="../"><svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="0" y="0" width="44" height="44" rx="10" fill="var(--color-noun)"/><rect x="56" y="0" width="44" height="44" rx="10" fill="var(--color-verb)"/><rect x="0" y="56" width="44" height="44" rx="10" fill="var(--color-ink)"/><rect x="56" y="56" width="44" height="44" rx="10" fill="var(--color-noun)"/></svg><span>Agora</span></a>
 <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="site-nav" data-open="Close" data-closed="Menu" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Menu</span></button>
 <nav class="site-nav" id="site-nav" aria-label="Main" data-menu>
-<ul><li><a href="../how-it-works/">How it works</a></li><li><a href="../models/">Models used</a></li><li><a href="../use-cases/">Use cases</a></li><li><a href="../decks/">Decks</a></li><li><a href="../evidence/">Evidence</a></li></ul>
+<ul><li><a href="../how-it-works/">How it works</a></li><li><a href="../use-cases/">Use cases</a></li><li><a href="../models/">Models used</a></li><li><a href="../decks/">Decks</a></li><li><a href="../evidence/">Evidence</a></li></ul>
 </nav>
 <a class="eranos-link" href="https://eranos.ta-amps.workers.dev/" aria-label="Open Eranos, the marketplace, on its own site"><span class="long">Open Eranos ↗</span><span class="short">Eranos ↗</span></a>
 </div>
@@ -73,14 +73,14 @@ npx wrangler login
 # (npx wrangler d1 create &lt;name&gt;) and put its id in that file before you deploy.
 
 # 2. Tessera: the queue, the Task Object stores and the /mcp endpoint
-git clone https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine.git
+git clone https://agora.ta-amps.workers.dev/git/tessera-infrastructure-work-and-storage-engine.git
 cd tessera-infrastructure-work-and-storage-engine
 npx --yes wrangler@4.154.0 secret put BOOTSTRAP_SECRET --config deploy/cloudflare/wrangler.jsonc
 npx --yes wrangler@4.154.0 deploy --config deploy/cloudflare/wrangler.jsonc
 
 # 3. Herma: the shim, with its own D1 database
 cd ..
-git clone https://github.com/ta-amps/herma-infrastructure-shim-for-intelligent-agents.git
+git clone https://agora.ta-amps.workers.dev/git/herma-infrastructure-shim-for-intelligent-agents.git
 cd herma-infrastructure-shim-for-intelligent-agents
 npx --yes wrangler@4.149.0 d1 execute ta-amps-herma --remote --file deploy/cloudflare/d1-herma.sql --config deploy/cloudflare/wrangler.jsonc -y
 npx --yes wrangler@4.149.0 deploy --config deploy/cloudflare/wrangler.jsonc
@@ -90,7 +90,7 @@ npx --yes wrangler@4.149.0 secret put BOOTSTRAP_SECRET --config deploy/cloudflar
 <button class="agent-copy deploy-copy" type="button" data-copy="cmd-slice-docker" data-copied="Copied" data-selected="Selected" data-status-copied="Commands copied to clipboard." data-status-selected="Commands selected. Press Ctrl+C or Command+C to copy." hidden><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true" focusable="false"><rect x="6.5" y="6.5" width="10" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M13.5 4.5v-.5a1.5 1.5 0 0 0-1.5-1.5H5A1.5 1.5 0 0 0 3.5 4v7A1.5 1.5 0 0 0 5 12.5h.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span>Copy commands</span></button>
 <span class="visually-hidden" id="cmd-slice-docker-status" role="status"></span>
 </div>
-<pre class="deploy-pre" id="cmd-slice-docker" tabindex="0"><code>git clone https://github.com/ta-amps/ta-amps-hackathon.git
+<pre class="deploy-pre" id="cmd-slice-docker" tabindex="0"><code>git clone https://agora.ta-amps.workers.dev/git/ta-amps-hackathon.git
 cd ta-amps-hackathon
 docker compose up --build --abort-on-container-exit --exit-code-from sample-worker-smoke</code></pre>
 </div></li><li class="deploy-card" id="slice-gpu"><p class="deploy-badge">Your own GPUs</p><h3>Slice D: fine-tune Muse Glimmer 30B, Meta’s open-weight model</h3><p class="deploy-summary">Start from the QLoRA adapter settings ta-amps used to fine-tune Muse Glimmer 30B on two free Kaggle T4 GPUs, and the Python packages a GPU worker needs.</p><p class="deploy-when">Best when you want to tune your own adapters from your own recorded, reviewed task results.</p><div class="deploy-code-wrap">
@@ -98,7 +98,7 @@ docker compose up --build --abort-on-container-exit --exit-code-from sample-work
 <button class="agent-copy deploy-copy" type="button" data-copy="cmd-slice-gpu" data-copied="Copied" data-selected="Selected" data-status-copied="Commands copied to clipboard." data-status-selected="Commands selected. Press Ctrl+C or Command+C to copy." hidden><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true" focusable="false"><rect x="6.5" y="6.5" width="10" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M13.5 4.5v-.5a1.5 1.5 0 0 0-1.5-1.5H5A1.5 1.5 0 0 0 3.5 4v7A1.5 1.5 0 0 0 5 12.5h.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span>Copy commands</span></button>
 <span class="visually-hidden" id="cmd-slice-gpu-status" role="status"></span>
 </div>
-<pre class="deploy-pre" id="cmd-slice-gpu" tabindex="0"><code>git clone https://github.com/ta-amps/ta-amps-hackathon.git
+<pre class="deploy-pre" id="cmd-slice-gpu" tabindex="0"><code>git clone https://agora.ta-amps.workers.dev/git/ta-amps-hackathon.git
 cd ta-amps-hackathon
 # The adapter settings ta-amps used for Muse Glimmer 30B:
 cat training/adapters/glimmer-30b-qlora/adapter_config.json
@@ -114,7 +114,7 @@ pip install -r training/requirements-train.txt</code></pre>
 modal run packs/partner-compute-cascade/code/partner_cascade/modal_qlora_and_sandbox.py::sandbox_verify_pack --pack-id meta-are-scenario-matrix
 modal run packs/partner-compute-cascade/code/partner_cascade/modal_qlora_and_sandbox.py::train_qlora --model-name Muse-Glimmer-30B
 modal deploy packs/partner-compute-cascade/code/partner_cascade/modal_qlora_and_sandbox.py</code></pre>
-</div></li><li class="partner-card" id="partner-baseten"><div class="partner-head"><h3>Baseten</h3><span class="partner-kind">model serving</span></div><p class="partner-role">Runs many workers at once, paced to stay under the account’s tokens-per-minute limit.</p><p class="partner-state"><span class="pg-state pg-state-local_verified">Offline check</span> No Baseten account is connected, so nothing has run on Baseten. The code and its rules are checked on our own machine.</p><p class="partner-checked-title">Checked offline</p><ul class="partner-checked"><li>The pacing kept a simulated burst under the tokens-per-minute limit.</li><li>Requests that were retried stay in the ledger.</li></ul></li><li class="partner-card" id="partner-fireworks_ai"><div class="partner-head"><h3>Fireworks</h3><span class="partner-kind">fast inference</span></div><p class="partner-role">Routes a task to a small specialist adapter behind Herma, with a different adapter as the checker.</p><p class="partner-state"><span class="pg-state pg-state-local_verified">Offline check</span> No Fireworks account is connected, so nothing has run on Fireworks. The code and its rules are checked on our own machine.</p><p class="partner-checked-title">Checked offline</p><ul class="partner-checked"><li>The routing rule picked an adapter within Herma’s time budget.</li><li>A worker checking its own output is blocked.</li><li>Personal data in an answer is escalated, not passed on.</li></ul></li></ul><p class="partner-never"><strong>What these cards never show</strong> A cost, speed or training result that no live run measured, a partner’s logo, or a credit amount.</p></div><p class="use-links"><a class="use-link" href="https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs/tree/cdb6aa2fdee9e79cd183672a03e8f4006d49d89b/packs/partner-compute-cascade">The seed pack’s code ↗</a></p></section>
+</div></li><li class="partner-card" id="partner-baseten"><div class="partner-head"><h3>Baseten</h3><span class="partner-kind">model serving</span></div><p class="partner-role">Runs many workers at once, paced to stay under the account’s tokens-per-minute limit.</p><p class="partner-state"><span class="pg-state pg-state-local_verified">Offline check</span> No Baseten account is connected, so nothing has run on Baseten. The code and its rules are checked on our own machine.</p><p class="partner-checked-title">Checked offline</p><ul class="partner-checked"><li>The pacing kept a simulated burst under the tokens-per-minute limit.</li><li>Requests that were retried stay in the ledger.</li></ul></li><li class="partner-card" id="partner-fireworks_ai"><div class="partner-head"><h3>Fireworks</h3><span class="partner-kind">fast inference</span></div><p class="partner-role">Routes a task to a small specialist adapter behind Herma, with a different adapter as the checker.</p><p class="partner-state"><span class="pg-state pg-state-local_verified">Offline check</span> No Fireworks account is connected, so nothing has run on Fireworks. The code and its rules are checked on our own machine.</p><p class="partner-checked-title">Checked offline</p><ul class="partner-checked"><li>The routing rule picked an adapter within Herma’s time budget.</li><li>A worker checking its own output is blocked.</li><li>Personal data in an answer is escalated, not passed on.</li></ul></li></ul><p class="partner-never"><strong>What these cards never show</strong> A cost, speed or training result that no live run measured, a partner’s logo, or a credit amount.</p></div><p class="use-links"><a class="use-link" href="/source/seed-packs-library-of-nouns-and-verbs/7751d1d91d3f/packs/partner-compute-cascade/">The seed pack’s code ↗</a></p></section>
 <section class="learn-part" aria-labelledby="surfaces"><div class="learn-head"><h2 id="surfaces">3. Run the two public sites, Agora and Eranos</h2><p>The sites hold no admin keys. You can host Agora on any static host, and Eranos on its own Cloudflare Worker.</p></div><ul class="deploy-grid"><li class="deploy-card"><h3>Agora, the static overview</h3><p class="deploy-summary">Agora is built from the JSON in site/content/ by standard-library Python, with no npm at run time. Serve the site/ folder from Cloudflare Pages, Workers static assets or any web server.</p><div class="deploy-code-wrap">
 <div class="deploy-code-bar">
 <button class="agent-copy deploy-copy" type="button" data-copy="cmd-surface-agora" data-copied="Copied" data-selected="Selected" data-status-copied="Commands copied to clipboard." data-status-selected="Commands selected. Press Ctrl+C or Command+C to copy." hidden><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true" focusable="false"><rect x="6.5" y="6.5" width="10" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M13.5 4.5v-.5a1.5 1.5 0 0 0-1.5-1.5H5A1.5 1.5 0 0 0 3.5 4v7A1.5 1.5 0 0 0 5 12.5h.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span>Copy commands</span></button>
@@ -167,11 +167,11 @@ curl -fsS https://home.ta-amps.workers.dev/llms.txt | head -n 25</code></pre>
 <div class="wrap">
 <p class="footer-brand"><b>Agora</b> <span>How ta-amps works, in the open.</span></p>
 <nav aria-label="Site information">
-<ul><li><a href="../status/">Status</a></li><li><a href="../security/">Security</a></li><li><a href="../accessibility/">Accessibility</a></li><li><a href="../source/">Source</a></li><li><a href="../judges/">For judges</a></li><li><a href="../models/">Models used</a></li><li><a href="https://eranos.ta-amps.workers.dev/">Eranos ↗</a></li></ul>
+<ul><li><a href="../models/">Models used</a></li><li><a href="../status/">Status</a></li><li><a href="../security/">Security</a></li><li><a href="../accessibility/">Accessibility</a></li><li><a href="../source/">Source</a></li><li><a href="../judges/">For judges</a></li><li><a href="https://eranos.ta-amps.workers.dev/">Eranos ↗</a></li></ul>
 </nav>
 <p class="footer-note">Eranos is where the work happens; Agora shows how it works.</p>
 <nav class="footer-more" aria-label="More pages">
-<ul><li><a href="../evidence/">Evidence</a></li><li><a href="../learning/">Learning</a></li><li><a href="../library/">Library</a></li><li><a href="../studio/">Live Studio</a></li><li><a href="../contribute/">Contribute</a></li><li><a href="../deploy/">Run your own</a></li><li><a href="../THIRD-PARTY-NOTICES.txt">Third-party notices</a></li></ul>
+<ul><li><a href="../how-it-works/">How it works</a></li><li><a href="../use-cases/">Use cases</a></li><li><a href="../decks/">Decks</a></li><li><a href="../evidence/">Evidence</a></li><li><a href="../learning/">Learning</a></li><li><a href="../library/">Library</a></li><li><a href="../studio/">Live Studio</a></li><li><a href="../contribute/">Contribute</a></li><li><a href="../deploy/">Run your own</a></li><li><a href="../THIRD-PARTY-NOTICES.txt">Third-party notices</a></li></ul>
 </nav>
 <p class="footer-privacy">No analytics, ads or cookies. The fonts come from this site, and Cloudflare Workers hosts it. The deck viewer remembers its display choices in this browser, and the judges' tour keeps one flag in this tab while it runs.</p>
 </div>

@@ -58,6 +58,7 @@ import datetime as dt
 import hashlib
 import html
 import json
+from datetime import date as dt_date
 import os
 import re
 import sys
@@ -217,7 +218,13 @@ class Nouns:
         # The models catalog Task Object (models.meta, a byte-for-byte local copy until Tessera serves it): every model
         # and agent program, and what each is used for. Pages name them only through it.
         self.catalog = load_json(CONTENT / "models.meta.json")
-        self.models = {m["id"]: m for group in ("models", "harnesses", "other_makers") for m in self.catalog[group]}
+        # id -> display name: the catalog's runtime table, then every model it describes (version 3, Nov 1).
+        self.models = {k: {"display": v} for k, v in self.catalog["runtime"]["display_by_id"].items()}
+        for group in ("meta_models", "film_models"):
+            for m in self.catalog[group]:
+                self.models.setdefault(m["id"], {"display": m["name"]})
+                if "tuned by us" in m.get("kind", ""):
+                    self.models[m["id"]]["display_tuned"] = f"{m['name']}, fine-tuned by ta-amps"
         self.models_page = load_json(CONTENT / "models-page.json")
         self.manifest = load_json(MANIFEST)
         self.brief = read_brief()
@@ -556,21 +563,20 @@ def source_link(match: re.Match, links: dict) -> str:
     rest = rest.split("#", 1)[0]
     if kind in ("tree", "blob", "commit"):
         ref, _, path = rest.partition("/")
-        if FULL_OR_SHORT_SHA.match(ref) and len(ref) == 40:
-            sha = ref
-        elif ref in ("main", "HEAD") or (kind == "commit" and FULL_OR_SHORT_SHA.match(ref)):
-            sha = links["heads"][repo] if ref in ("main", "HEAD") else ref
-        else:
+        if not (ref in ("main", "HEAD") or (FULL_OR_SHORT_SHA.match(ref) and (len(ref) == 40 or kind == "commit"))):
             fail(f"a link names a branch or short commit the source mirror cannot pin: {match.group(0)}")
+        # Nov 1: Agora serves a mirrored repository only at its swept head (no older tree, which could still name a
+        # banned word), so every commit a link names maps to that head; the deploy builder fails on a path the head
+        # no longer has.
+        sha = links["heads"][repo]
         if kind == "commit" or not path:
             return f"{mirror}{repo}/{sha[:12]}/"
         return f"{mirror}{repo}/{sha[:12]}/{path.rstrip('/')}" + ("/" if kind == "tree" else "")
     if kind == "pull":
         number = rest.split("/", 1)[0]
-        sha = links["pulls"].get(f"{repo}#{number}")
-        if not sha:
+        if not links["pulls"].get(f"{repo}#{number}"):
             fail(f"a link names a pull request without a recorded merge commit: {match.group(0)}")
-        return f"{mirror}{repo}/{sha[:12]}/"
+        return f"{mirror}{repo}/{links['heads'][repo][:12]}/"  # the swept head carries the merged change
     if kind == "issues":
         form = re.search(r"(?:^|&)template=([A-Za-z0-9._-]+)", query)
         if form:
@@ -1054,30 +1060,6 @@ def film_made_ready(start: dict) -> bool:
     return noun.is_file() and json.loads(noun.read_text(encoding="utf-8")).get("status") == "final"
 
 
-def home_use_cards(nouns: Nouns) -> str:
-    """The home page's use-case strip: the use-cases page's own cards once it holds them ("cards", with a title, a line
-    and an optional state named in its "states"), and until then its flagships that have a home card. Only a live one
-    is marked, in present tense; nothing is stamped."""
-    uses, words = nouns.uses, nouns.home["uses"]
-    cards = uses.get("cards")
-    if cards:
-        states = uses.get("states", {})
-        items = []
-        for card in cards:
-            state = states.get(card.get("state"))
-            label = state.get("label") if isinstance(state, dict) else state if isinstance(state, str) else ""
-            line = card.get("line") or card.get("get") or card.get("ask") or ""
-            items.append(f'<li><a class="home-use" href="use-cases/">'
-                         + (f'<span class="home-use-live">{text(label)}</span>' if label else "")
-                         + f'<b>{text(card["title"])}</b><span>{text(line)}</span></a></li>')
-        return "".join(items)
-    return "".join(
-        f'<li><a class="home-use" href="use-cases/#{use_anchor(item["name"])}">'
-        + (f'<span class="home-use-live">{text(words["live"])}</span>' if item["home"].get("live_href") else "")
-        + f'<b>{text(item["home"]["title"])}</b><span>{text(item["home"]["line"])}</span></a></li>'
-        for item in uses["flagships"] if item.get("home"))
-
-
 def render_home(nouns: Nouns) -> str:
     """The home page, as the AgoraHome board lays it out on November 1, light only: Start here with the two public
     sites, Open Eranos and the judges' 45-second tour in the first screen, then the decks, then the use cases with
@@ -1095,6 +1077,8 @@ def render_home(nouns: Nouns) -> str:
         for card in start["cards"])
     made = (f'<p class="start-made"><a href="{attr(start["film_made"]["href"])}">{text(start["film_made"]["label"])}</a></p>'
             if film_made_ready(start) else "")
+    # The same six cases as the use cases page (board AgoraHome, Nov 1), from the same Task Object.
+    use_cards = "".join(use_case_card(card, nouns.uses, "", heading="h3") for card in nouns.uses["cards"])
     main = "\n".join(filter(None, [
         '<main id="main">',
         f'<section class="start home-start" id="start" aria-label="{attr(start["label"])}">',
@@ -1117,9 +1101,9 @@ def render_home(nouns: Nouns) -> str:
         '<div class="wrap">',
         f'<div class="band-head"><h2 class="band-title" id="home-uses">{text(uses["heading"])}</h2>'
         f'<p>{text(uses["lead"])}</p></div>',
-        f'<ul class="home-use-cards">{home_use_cards(nouns)}</ul>',
-        f'<p class="home-uses-all"><a href="use-cases/">{text(uses["all"])}</a>'
-        f'<a href="{page_href(uses["models"]["href"], "")}">{text(uses["models"]["label"])}</a></p>',
+        f'<ul class="uc-cards home-use-cards">{use_cards}</ul>',
+        f'<p class="home-uses-all"><a href="use-cases/">{text(uses["all"])}</a> · '
+        f'<a href="models/">{text(uses["models"])}</a></p>',
         "</div>",
         "</section>",
         "</main>",
@@ -1324,28 +1308,71 @@ def flagship_card(item: dict, uses: dict, library: dict, prefix: str, lead: bool
     ])
 
 
+def minutes_seconds(seconds: float) -> str:
+    """A run's duration in people's words: 207.27 -> '3 min 27 s'."""
+    total = int(round(seconds))
+    return f"{total // 60} min {total % 60} s" if total >= 60 else f"{total} s"
+
+
+def use_case_card(card: dict, uses: dict, prefix: str, heading: str = "h3") -> str:
+    """One use case (board UseCases): who it helps, its state, what they ask, what they get and how it is made."""
+    aud = card["audience"]
+    return (f'<li class="uc-card uc-{attr(aud)}" data-audience="{attr(aud)}">'
+            f'<p class="uc-meta"><span class="uc-aud">{text(uses["audiences"][aud])}</span>'
+            f'<span class="uc-state uc-{attr(card["state"])}">{text(uses["states"][card["state"]])}</span></p>'
+            f'<{heading} class="uc-title">{text(card["title"])}</{heading}>'
+            f'<p><b>{text(uses["ask_label"])}</b> “{text(card["ask"])}”</p>'
+            f'<p><b>{text(uses["get_label"])}</b> {text(card["get"])}</p>'
+            f'<p class="uc-how">{text(card["how"])}</p></li>')
+
+
 def render_use_cases(nouns: Nouns) -> str:
-    uses = nouns.uses
-    prefix = "../"
-    cards = [flagship_card(item, uses, nouns.library, prefix, lead=n == 0) for n, item in enumerate(uses["flagships"])]
-    fields = uses["fields"]
+    """Use cases (board UseCases, Nov 1): a filter, the featured Oct 31 test run read from the models catalog Task
+    Object, then six cards that each say who it helps, what they ask, what they get and how it is made."""
+    uses, prefix = nouns.uses, "../"
+    fu, fw = nouns.catalog["featured_use_case"], uses["featured"]
+    steps = []
+    for st in fu["steps"]:
+        if "text" in st:
+            body = st["text"]
+        elif "tests_passed" in st:
+            body = fw["checked_text"].format(tests_passed=st["tests_passed"], rule_violations=st["rule_violations"])
+        else:
+            body = fw["built_text"]
+        facts = [x for x in (st.get("model"), minutes_seconds(st["seconds"]) if "seconds" in st else "",
+                             fw["calls"].format(model_calls=st["model_calls"]) if "model_calls" in st else "") if x]
+        steps.append(f'<li><b>{text(st["title"])}</b> {text(body)}'
+                     + (f'<span class="uc-facts">{text(" · ".join(facts))}</span>' if facts else "") + "</li>")
+    featured = "\n".join([
+        f'<article class="uc-featured" data-audience="{attr(fw["audience"])}" aria-labelledby="uc-featured-title">',
+        f'<p class="uc-meta"><span class="uc-aud">{text(uses["audiences"][fw["audience"]])} · {text(fu["kind"])}</span>'
+        f'<span class="uc-state uc-tested">{text(fu["label"])}</span></p>',
+        f'<h2 id="uc-featured-title">{text(fu["title"])}</h2>',
+        f'<div class="uc-featured-grid"><div><h3>{text(fw["asked_label"])}</h3><blockquote>“{text(fu["asked"])}”</blockquote>',
+        f'<h3>{text(fw["get_label"])}</h3><p>{text(fw["get_lead"])}</p>',
+        "<ul>" + "".join(f"<li>{text(r)}</li>" for r in fu["rules"]) + "</ul>",
+        f'<p class="uc-note">{text(fu["page_note"])} <a href="{link(prefix, fw["watch_href"])}">{text(fw["watch"])}</a></p></div>',
+        f'<div><h3>{text(fw["steps_label"])}</h3><ol class="uc-steps">{"".join(steps)}</ol></div></div>',
+        "</article>",
+    ])
+    filters = "".join(
+        f'<button type="button" class="uc-filter-button" data-filter="{attr(f["key"])}" '
+        f'aria-pressed="{"true" if f["key"] == "all" else "false"}">{text(f["label"])}</button>' for f in uses["filters"])
+    cards = "".join(use_case_card(c, uses, prefix) for c in uses["cards"])
+    blocks = "".join(f"<p><b>{text(b_['term'])}</b> {text(b_['text'])}</p>" for b_ in uses["blocks"])
+    links = " · ".join(f'<a href="{link(prefix, l_["href"])}">{text(l_["label"])}</a>' for l_ in uses["links"])
     main = "\n".join([
         '<main id="main">',
         page_head(uses["heading"], uses["lead"]),
-        '<div class="wrap use-wrap">',
-        '<ul class="use-grid">',
-        "\n".join(cards),
-        "</ul>",
-        '<section class="use-fields" aria-labelledby="use-fields-title">',
-        '<div class="use-head">',
-        f'<h2 id="use-fields-title">{text(fields["name"])}</h2>',
-        f'<p class="use-line">{text(fields["line"])}</p>',
-        "</div>",
-        chips(fields["items"], "plain"),
-        f'<p class="use-links">{use_link(fields["link"], prefix)}</p>',
-        "</section>",
+        '<div class="wrap uc-page">',
+        f'<div class="uc-filter" role="group" aria-label="{attr(uses["filter_label"])}"><span>{text(uses["filter_label"])}</span>{filters}</div>',
+        featured,
+        f'<ul class="uc-cards">{cards}</ul>',
+        f'<section class="uc-blocks" aria-labelledby="uc-blocks-h"><h2 id="uc-blocks-h">{text(uses["blocks_heading"])}</h2>{blocks}'
+        f'<p class="uc-links">{links}</p></section>',
         "</div>",
         "</main>",
+        f'<script src="{prefix}assets/use-cases.js" defer></script>',
     ])
     return page_shell(uses["title"], uses["description"], main)
 
@@ -1733,55 +1760,108 @@ def live_doors(section: dict) -> list[dict]:
 
 
 def render_models(nouns: Nouns) -> str:
-    """The models page (owner, Nov 1: "a page Models used that explains how we use each model and emphasize on the
-    meta models with a * for fallback to other models"). Everything it names comes from the models catalog Task
-    Object; site/content/models-page.json holds only its words. Display rules: Meta's models first and emphasized,
-    agent programs never called models, an asterisk on other makers, and only uses that are live or measured."""
-    page, catalog, prefix = nouns.models_page, nouns.catalog, "../"
+    """Models used (board ModelsUsed; owner, Nov 1): what each step of a request runs on, as a six-step list that
+    matches the request track (choosing a step updates a live region and lifts its model cards, in
+    assets/models.js); Meta's models first; the film's models; the volunteers' agent apps, with "What is nanoMuse?";
+    then fallbacks and other makers marked with an asterisk. Every name, number, version and timing comes from the
+    models catalog Task Object, and only entries whose state is live or measured are shown."""
+    page, cat, prefix = nouns.models_page, nouns.catalog, "../"
     shown = ("live", "measured")
+    meta = [m for m in cat["meta_models"] if m.get("state") in shown]
+    film = [m for m in cat["film_models"] if m.get("state") in shown]
+    others = [o for o in cat["other_non_meta"] if o.get("state") in shown]
+    steps = cat["steps"]
+    if [s_["station"] for s_ in steps] != list(page["notes"]):
+        fail("models page: the step notes must name the catalog's six stations, in order")
 
-    def uses_of(entry: dict) -> str:
-        items = []
-        for use in entry.get("uses", []):
-            if use.get("state") not in shown:
-                continue
-            record = page["records"].get(use.get("evidence", ""))
-            if use.get("evidence") and use["state"] == "measured" and not record:
-                fail(f"models page: no served record for {use['evidence']}")
-            link_ = f' <a class="models-record" href="{link(prefix, record)}">{text(page["record"])}</a>' if record else ""
-            items.append(f'<li><span class="models-state models-{attr(use["state"])}">{text(page["states"][use["state"]])}</span> '
-                         f"{text(use['text'])}.{link_}</li>")
-        return f'<ul class="models-uses" aria-label="{attr(page["uses"])}">{"".join(items)}</ul>' if items else ""
+    def card_id(m: dict) -> str:
+        return "mu-" + re.sub(r"[^a-z0-9.-]+", "-", m["id"].lower())
 
-    def card(entry: dict, kind: str) -> str:
-        name = entry.get("display_tuned") if kind == "meta" and entry.get("display_tuned") else entry["display"]
-        star = '<span class="models-star" aria-hidden="true">*</span>' if entry.get("asterisk") else ""
-        facts = [(page["maker"], entry.get("maker", ""))]
-        if entry.get("access"):
-            facts.append((page["access"], entry["access"]))
-        dl = "".join(f"<dt>{text(k)}</dt><dd>{text(v)}</dd>" for k, v in facts if v)
-        summary = f'<p class="models-summary">{text(entry["summary"])}</p>' if entry.get("summary") else ""
-        return (f'<li class="models-card models-{kind}"><h3>{text(name)}{star}</h3>{summary}'
-                f'<dl class="models-facts">{dl}</dl>{uses_of(entry)}</li>')
+    def lifts(step: dict, m: dict) -> bool:
+        # Catalog v4 (owner's decision D8): a step names every model its self-tuning policy can pick ("models"); an
+        # agent app lifts on the step that names it. The live share per model comes later, from worker.policy.
+        if m.get("kind", "").startswith("agent app"):
+            return " ".join(m["name"].split(" ")[:2]) in step.get("agent_app", "")
+        return m["id"] in step.get("models", [step["model"]] if step.get("model") else [])
 
-    meta = [m for m in catalog["models"] if m.get("maker") == "Meta"]
-    others = [m for m in catalog["models"] if m.get("maker") != "Meta"] + catalog["other_makers"]
-    for entry in others:
-        if not entry.get("asterisk"):
-            fail(f"models page: {entry['id']} is not Meta's and has no asterisk")
+    def when(t: dict) -> str:
+        if not t.get("date"):
+            return t["text"]
+        d = dt_date.fromisoformat(t["date"])
+        return f"{t['text']} ({d.strftime('%b')} {d.day})"
+
+    items = []
+    for i, st in enumerate(steps, 1):
+        cards = " ".join(card_id(m) for m in meta if lifts(st, m))
+        pressed = "true" if st["station"] == page["steps_default"] else "false"
+        items.append(f'<li><button type="button" class="mu-step" aria-pressed="{pressed}" data-cards="{attr(cards)}" '
+                     f'data-note="{attr(page["notes"][st["station"]])}"><span class="mu-n" aria-hidden="true">{i}</span>'
+                     f'<span class="mu-label">{text(st["station"])}</span><span class="mu-model">{text(st["text"])}</span>'
+                     "</button></li>")
+    default = next(st for st in steps if st["station"] == page["steps_default"])
+    lifted_default = {card_id(m) for m in meta if lifts(default, m)}
+
+    def meta_card(m: dict) -> str:
+        stations = [st["station"] for st in steps if lifts(st, m)]
+        kind_ = m.get("kind", "")
+        kind = " · ".join(x for x in (kind_[:1].upper() + kind_[1:], m.get("access") or "") if x)
+        rows = []
+        if stations:
+            rows.append((page["on_track"], ", ".join(stations)))
+        for t in m.get("tested", []):
+            rows.append((page["tested"], when(t)))
+        dl = "".join(f"<dt>{text(k)}</dt><dd>{text(v)}</dd>" for k, v in rows)
+        extra = "".join(f'<p class="mu-note-small">{text(m[k])}</p>' for k in ("variant_note", "note") if m.get(k))
+        model_id = f'<p class="mu-id"><code>{text(m["model_id"])}</code></p>' if m.get("model_id") else ""
+        cid = card_id(m)
+        return (f'<li class="mu-card{" mu-tuned" if "tuned" in m.get("kind", "") else ""}" id="{attr(cid)}" '
+                f'data-lifted="{"true" if cid in lifted_default else "false"}"><p class="mu-kind">{text(kind)}</p>'
+                f'<h3>{text(m["name"])}</h3><p>{text(m["role"])}</p><dl class="mu-rows">{dl}</dl>{extra}{model_id}</li>')
+
+    def film_card(m: dict) -> str:
+        tested = m["tested"] if isinstance(m.get("tested"), str) else ""
+        return (f'<li class="mu-card mu-film"><p class="mu-kind">{text(page["meta_badge"])}</p><h3>{text(m["name"])}</h3>'
+                f'<p>{text(m["role"])}</p>' + (f'<p class="mu-note-small">{text(tested)}</p>' if tested else "") + "</li>")
+
+    apps = "".join(
+        f'<tr><th scope="row">{text(a["app"])} {text(a["version"].split("-")[0])}'
+        + (f' <span class="mu-by">{text("by " + a["by"] if a["by"] == "Meta" else a["by"])}</span>' if a.get("by") else "")
+        + f'</th><td>{text(a["model"])}</td></tr>' for a in cat["agent_apps_tested_2026_10_29"])
+    fallbacks = "".join(
+        f'<li class="mu-card mu-other"><h3>{text(f["name"])}</h3><p class="mu-kind">{text(f["by"])}</p>'
+        f'<p>{text(f["role"])}</p><p class="mu-state">{text(f["state"])}</p></li>' for f in cat["fallbacks"])
+    other = "".join(
+        f'<li class="mu-card mu-other"><h3>{text(o["name"])}</h3><p>{text(o["use"])}</p></li>' for o in others)
+    links = " · ".join(f'<a href="{link(prefix, l_["href"])}">{text(l_["label"])}</a>' for l_ in page["links"])
     main = "\n".join([
         '<main id="main">',
         page_head(page["heading"], page["lead"]),
         '<div class="wrap models-page">',
-        learn_part("models-meta", page["meta_heading"], page["meta_lead"],
-                   '<ul class="models-list models-list-meta">' + "".join(card(m, "meta") for m in meta) + "</ul>"),
-        learn_part("models-programs", page["harness_heading"], page["harness_lead"],
-                   '<ul class="models-list">' + "".join(card(h, "program") for h in catalog["harnesses"]) + "</ul>"),
-        learn_part("models-other", page["other_heading"], page["other_lead"],
-                   '<ul class="models-list">' + "".join(card(o, "other") for o in others) + "</ul>"
-                   + f'<p class="models-footnote">{text(page["footnote"])}</p>'),
+        f'<aside class="mu-first"><span class="mu-badge">{text(page["first_badge"])}</span><div><h2>{text(page["first_heading"])}</h2>'
+        f'<p>{text(page["first_text"])}</p></div></aside>',
+        '<section class="mu-steps-part" aria-labelledby="mu-steps-h">',
+        f'<h2 id="mu-steps-h">{text(page["steps_heading"])}</h2><p class="mu-hint">{text(page["steps_hint"])}</p>',
+        '<ol class="mu-steps">' + "".join(items) + "</ol>",
+        f'<p class="mu-step-note" id="mu-step-note" aria-live="polite">{text(page["notes"][page["steps_default"]])}</p>',
+        "</section>",
+        f'<section aria-labelledby="mu-meta-h"><h2 id="mu-meta-h">{text(page["meta_heading"])}</h2>',
+        '<ul class="mu-cards">' + "".join(meta_card(m) for m in meta) + "</ul></section>",
+        f'<section aria-labelledby="mu-film-h"><h2 id="mu-film-h">{text(page["film_heading"])}</h2><p>{text(page["film_lead"])}</p>',
+        '<ul class="mu-cards">' + "".join(film_card(m) for m in film) + "</ul></section>",
+        f'<section aria-labelledby="mu-vol-h"><h2 id="mu-vol-h">{text(page["volunteers_heading"])}</h2><p>{text(page["volunteers_lead"])}</p>',
+        f'<div class="mu-nanomuse"><h3>{text(page["nanomuse_heading"])}</h3><p>{text(cat["nanomuse"]["page_copy"])}</p></div>',
+        f'<p>{text(page["apps_lead"])}</p>',
+        f'<table class="mu-apps"><thead><tr><th scope="col">{text(page["apps_cols"][0])}</th>'
+        f'<th scope="col">{text(page["apps_cols"][1])}</th></tr></thead><tbody>{apps}</tbody></table></section>',
+        f'<section aria-labelledby="mu-fb-h"><h2 id="mu-fb-h">{text(page["fallbacks_heading"])}</h2><p>{text(page["fallbacks_lead"])}</p>',
+        '<ul class="mu-cards">' + fallbacks + "</ul></section>",
+        (f'<section aria-labelledby="mu-other-h"><h2 id="mu-other-h">{text(page["other_heading"])}</h2>'
+         f'<ul class="mu-cards">{other}</ul></section>') if other else "",
+        f'<p class="mu-footnote">{text(page["footnote"])}</p>',
+        f'<p class="mu-sources">{text(page["sources_note"])} {links}</p>',
         "</div>",
         "</main>",
+        f'<script src="{prefix}assets/models.js" defer></script>',
     ])
     return page_shell(page["title"], page["description"], main)
 
