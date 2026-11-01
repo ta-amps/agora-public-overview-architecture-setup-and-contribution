@@ -35,7 +35,7 @@
     {
       "name": "Feed Systems to Keep Your Agent Informed",
       "home": {"title": "Feeds that keep your agent informed", "line": "New projects and benchmarks arrive as task objects."},
-      "line": "Feeds watch repos, papers, releases and your own services. New items become nouns with their sources and follow-ups become verbs, so your agent knows what shipped yesterday. For example, server workers could track new memory systems and their benchmarks, so your agent can ask each week whether one fits its setup and is faster or cheaper.",
+      "line": "Feeds watch repos, papers, releases and your own services. New items become nouns with their sources and follow-ups become verbs, so your agent knows what shipped yesterday. For example, server workers could track new memory systems and the benchmark numbers each project reports, so your agent can ask each week whether one fits its setup and is faster or cheaper.",
       "nouns": ["Sources", "New items", "Digests"],
       "verbs": ["Scan", "Summarize", "Test", "Compare", "Update a pack"],
       "packs": ["tool-discovery", "freshness-checks", "benchmark-scores", "policy-and-law-watch"],
@@ -70,7 +70,7 @@
     },
     {
       "name": "Continuous Learning",
-      "line": "Every finished verb leaves a result with a receipt. Learners turn those results into memory and routing advice, and small open models are tuned on checked examples, replacing the base only when they beat it on a test they never saw.",
+      "line": "Every finished verb leaves a result with a receipt. Learners turn those results into memory and routing advice, and small open models are re-tuned on demand on checked examples, replacing the base only after evaluation, when they beat it on a test they never saw.",
       "nouns": ["Checked results", "Memory", "Routing advice", "Frozen tests", "Tuned models"],
       "verbs": ["Curate", "Train", "Evaluate", "Compare", "Decide"],
       "packs": ["continuous-tuning", "evaluation-design", "retrieval-triggers-and-reuse"],

@@ -1801,7 +1801,9 @@ def render_feed(nouns: Nouns) -> str:
                    f'<p class="feed-query">{text(words["count_query"])}: <a href="{attr(count["url"])}"><code>{text(count["query"])}</code></a></p>'
                    f'<p class="feed-small">{text(count["reading"])} {text(words["count_secondary"])} {secondary}. '
                    f'{text(words["count_response"])} {short_hash(count["response_sha256"])}</p>'),
-        learn_part("fits", words["fits_heading"], words["fits_lead"], f'<div class="feed-setups">{setups}</div>'),
+        # Feed rank is dated: the order holds only as of the scan that stored it (claims audit, November 1).
+        learn_part("fits", words["fits_heading"], words["fits_lead"].replace("{as_of}", str(last["at"])[:10]),
+                   f'<div class="feed-setups">{setups}</div>'),
         learn_part("ask", words["answer_heading"], "",
                    f'<p class="feed-question"><q>{text(answer["question"])}</q></p><p class="feed-small">{text(words["answer_label"])}</p>'
                    f'<pre class="feed-answer">{text(answer["text"])}</pre>'),

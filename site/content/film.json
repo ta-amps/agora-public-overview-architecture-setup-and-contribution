@@ -156,7 +156,7 @@
    "act": "3",
    "at": "1:39",
    "words": "When someone else asks for the same pipeline, search finds it: no new work, and no new tokens.",
-   "picture": "A second team asks for the same pipeline; search finds the stored solution noun; no new work and no new tokens.",
+   "picture": "A second team asks for the same pipeline, and its recipe key finds the stored solution: exact repeats are answered from the library with no new model tokens.",
    "on_screen": "The same request · search · found · 0 new model tokens"
   },
   {
@@ -184,14 +184,14 @@
    "act": "4",
    "at": "2:02",
    "words": "Say you need a memory system, and hundreds appear on GitHub in two days. Workers gather them and their benchmarks as nouns, and your agent just asks which fits.",
-   "picture": "Hundreds of new memory systems; workers gather them and comparable benchmarks as nouns; the agent asks each week. Then the real precedent: the deterministic scan of the hackathon's public repos.",
+   "picture": "Hundreds of new memory systems; workers gather them as nouns, with the benchmark numbers each project reports, self-reported by the project; the agent asks each week. Then the real precedent: the deterministic scan of the hackathon's public repos.",
    "on_screen": "a memory system for your agents · comparison noun · weekly question · real: 705 of 739 repos scanned"
   },
   {
    "act": "4",
    "at": "2:15",
    "words": "Tuning made Meta's models measurably better on our evaluations: Llama 3.2 from 12 to 51 percent, and Muse Glimmer from 93 to 99.",
-   "picture": "The deck's measured tuning results on our evaluations, named aloud and on screen, and Muse Code and nanoMuse as workers.",
+   "picture": "The deck's tuning results, named aloud and on screen: on one narrow job, writing correctly typed tool calls, tuning raised exact-match accuracy on our 150-task tool-call evaluation. Muse Code and nanoMuse appear as workers.",
    "on_screen": "Meta's models, measurably better · Llama 3.2 1B 12.0% → 50.7% · 3B 52.0% → 72.7% · Muse Glimmer 30B 93.3% → 99.3%"
   },
   {
