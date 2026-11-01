@@ -69,10 +69,6 @@
 /* The map */
 
 :root, .how, .how-page { --color-verb-fill: var(--color-verb-ink); }
-[data-mode="dark"], [data-mode="dark"] .how, [data-mode="dark"] .how-page { --color-verb-fill: var(--color-verb); }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-mode]), :root:not([data-mode]) .how, :root:not([data-mode]) .how-page { --color-verb-fill: var(--color-verb); }
-}
 
 .how-sides { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-6); }
 .how-side { display: grid; gap: var(--space-3); align-content: start; }
@@ -447,15 +443,6 @@
   .rr-meta dt { margin-top: var(--space-2); max-width: none; }
   .ud-tessera { padding: var(--space-3) var(--space-4); }
   .ud-tessera span { font-size: 0.8125rem; }
-}
-
-/* In dark mode the band colour is the card colour, so the dark boxes keep an edge. */
-[data-mode="dark"] .how-under,
-[data-mode="dark"] .ud-herma { box-shadow: inset 0 0 0 1px var(--color-rule-strong); }
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-mode]) .how-under,
-  :root:not([data-mode]) .ud-herma { box-shadow: inset 0 0 0 1px var(--color-rule-strong); }
 }
 
 @media (prefers-reduced-motion: reduce) {

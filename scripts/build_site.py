@@ -144,8 +144,9 @@ def arrow(cls: str) -> str:
             '<path d="M0 6H17.36V0L28 12L17.36 24V18H0Z" fill="currentColor"/></svg>')
 
 
-MODE_SCRIPT =('<script>try{var m=localStorage.getItem("ta-amps-mode");'
-               'if(m==="dark"||m==="light")document.documentElement.dataset.mode=m}catch(e){}'
+MODE_SCRIPT =('<meta name="color-scheme" content="only light">'
+               '<script>try{localStorage.removeItem("ta-amps-mode")}catch(e){}'
+               'delete document.documentElement.dataset.mode;'
                'document.documentElement.classList.add("js")</script>')
 
 MONO = "font-family:'JetBrains Mono', 'Courier New', monospace"

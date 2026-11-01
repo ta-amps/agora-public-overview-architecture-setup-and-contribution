@@ -1,34 +1,14 @@
 (() => {
-  // 1. Agora-compatible Light / Dark Mode ('ta-amps-mode')
+  // 1. Light-UI-Only (Paper & Ink)
   const root = document.documentElement;
   const modeBtn = document.getElementById('mode-toggle');
-
-  function applyMode(mode) {
-    root.setAttribute('data-mode', mode);
-    if (modeBtn) {
-      modeBtn.textContent = mode === 'dark' ? 'Light paper' : 'Dark stage';
-    }
-    try {
-      localStorage.setItem('ta-amps-mode', mode);
-    } catch (_) {}
-  }
-
-  let initialMode = 'light';
+  root.setAttribute('data-mode', 'light');
+  root.style.colorScheme = 'only light';
   try {
-    const saved = localStorage.getItem('ta-amps-mode');
-    if (saved === 'dark' || saved === 'light') {
-      initialMode = saved;
-    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      initialMode = 'dark';
-    }
+    localStorage.removeItem('ta-amps-mode');
   } catch (_) {}
-  applyMode(initialMode);
-
   if (modeBtn) {
-    modeBtn.addEventListener('click', () => {
-      const next = root.getAttribute('data-mode') === 'dark' ? 'light' : 'dark';
-      applyMode(next);
-    });
+    modeBtn.hidden = true;
   }
 
   // 2. Architecture Animation Viewer Switcher (16s MP4 / 8s MP4 / Interactive DOM + Safe-Zone Overlay)
