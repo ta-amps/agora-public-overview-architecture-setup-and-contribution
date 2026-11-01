@@ -658,6 +658,13 @@ class Builder(unittest.TestCase):
         # The shared agent banner can read its noun from a src address, as Eranos does; on Agora the noun is
         # embedded in the page and no banner has a src, so that one fetch never runs here.
         banner_script = scripts.pop("agent-banner.js")
+        # The judge tour can read its noun from a src address too; on Agora it is embedded and no tour has a src.
+        tour_script = scripts.pop("judge-tour.js")
+        self.assertEqual(1, len(re.findall(r"\bfetch\(", tour_script)))
+        self.assertIsNone(re.search(r"\b(XMLHttpRequest|sendBeacon|WebSocket|localStorage)\b", tour_script))
+        for path, page in self.outputs.items():
+            if path.suffix == ".html":
+                self.assertIsNone(re.search(r"<ta-judge-tour\b[^>]*\ssrc=", page), path)
         self.assertEqual(1, len(re.findall(r"\bfetch\(", banner_script)))
         self.assertIsNone(re.search(r"\b(XMLHttpRequest|sendBeacon|WebSocket)\b", banner_script))
         self.assertNotIn("cookie", banner_script.lower())

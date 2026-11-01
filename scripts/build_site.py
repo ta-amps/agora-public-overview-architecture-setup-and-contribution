@@ -192,6 +192,7 @@ class Nouns:
     def __init__(self) -> None:
         self.site = load_json(CONTENT / "site.json")
         self.banner = load_json(CONTENT / "agent-banner.json")
+        self.tour = load_json(CONTENT / "judge-tour.json")
         self.home = load_json(CONTENT / "home.json")
         self.decks_page = load_json(CONTENT / "decks-page.json")
         self.uses = load_json(CONTENT / "use-cases.json")
@@ -407,6 +408,21 @@ def header_block(page: Path, prefix: str, nouns: Nouns) -> str:
         f'aria-label="{attr(site["mode_toggle"])}" hidden>{THEME_ICON}</button>',
         "</div>",
         "</header>",
+        tour_block(prefix, nouns),
+    ])
+
+
+def tour_block(prefix: str, nouns: Nouns) -> str:
+    """The 45-second tour for judges (the JudgeTour board): a strip under the header that the shared
+    <ta-judge-tour> element shows only with ?tour=judge, every word from the judge-tour noun."""
+    data = {k: v for k, v in nouns.tour.items() if k != "about"}
+    raw = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
+    raw = raw.replace("<", "\\u003c").replace(">", "\\u003e").replace("&", "\\u0026")
+    return "\n".join([
+        '<ta-judge-tour class="judge-tour" data-host="agora.ta-amps.workers.dev" hidden>',
+        f'<script type="application/json">{raw}</script>',
+        "</ta-judge-tour>",
+        f'<script src="{prefix}assets/judge-tour.js" defer></script>',
     ])
 
 
@@ -462,8 +478,9 @@ def replace_block(content: str, name: str, block: str, page: Path) -> str:
 def render_page(page: Path, content: str, nouns: Nouns) -> str:
     prefix = prefix_for(page)
     if "<!-- site:head -->" not in content:
-        # A page that keeps its own head and header, such as the Studio, still gets the agent banner first.
-        return replace_block(content, "banner", banner_block(prefix, nouns), page)
+        # A page that keeps its own head and header, such as the Studio, still gets the agent banner first, and the
+        # judge tour under it (the Studio is the tour's live-queue step).
+        return replace_block(content, "banner", banner_block(prefix, nouns) + "\n" + tour_block(prefix, nouns), page)
     content = replace_block(content, "head", head_block(prefix, nouns), page)
     content = replace_block(content, "header", header_block(page, prefix, nouns), page)
     return replace_block(content, "footer", footer_block(prefix, nouns), page)
