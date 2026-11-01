@@ -1,5 +1,5 @@
 {
-  "about": "The text every Agora page shares, kept as one noun: the header and its navigation, the endpoints, the deck viewer's labels and the footer. The agent banner's words are their own noun, agent-banner.json. scripts/build_site.py renders both into every page that is not frozen. Fields ending in _html hold trusted markup; every other field is plain text.",
+  "about": "The text every Agora page shares, kept as one Task Object: the header and its navigation, the endpoints, the deck viewer's labels and the footer. The agent banner's words are their own noun, agent-banner.json. scripts/build_site.py renders both into every page that is not frozen. Fields ending in _html hold trusted markup; every other field is plain text.",
   "name": "ta-amps",
   "skip_link": "Skip to content",
   "decks": [
@@ -48,7 +48,7 @@
     "rows": [
       {
         "name": "Tessera",
-        "what": "Infrastructure: claim verbs, read and write nouns, get receipts",
+        "what": "Infrastructure: claim Tasks, read and write Task Objects; every step is recorded",
         "mcp": "https://tessera.ta-amps.workers.dev/mcp",
         "llms": "https://tessera.ta-amps.workers.dev/llms.txt"
       },

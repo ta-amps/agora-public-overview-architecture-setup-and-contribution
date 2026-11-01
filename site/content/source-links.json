@@ -1,5 +1,5 @@
 {
-  "about": "How links into the ta-amps GitHub organization, which answers 404 since October 31, 2026, become links to Agora's own read-only source mirror. scripts/build_site.py repoints every such link in every page it writes, so no page links GitHub; the nouns keep the GitHub address only as machine-readable provenance. A branch name such as main means the commit listed under heads: the head of that repository's main or release branch when the links were repointed. The deploy bundle publishes the files of every commit a page links, and fails on a link to a commit or path the mirror does not have. release_files lists each file a retired GitHub release held, now served by this site, with its hash.",
+  "about": "How links into the ta-amps GitHub organization become links that work. A repository Agora mirrors (listed under mirrored) is linked in Agora's own read-only source mirror, at a pinned commit: a branch name such as main means the commit listed under heads. Any other repository keeps its GitHub address, exactly as the page's Task Objects wrote it. scripts/build_site.py applies this to every page it writes. release_files lists each file a retired GitHub release held, now served by this site, with its hash.",
   "date": "2026-10-31",
   "mirror": "/source/",
   "mirrored": [],

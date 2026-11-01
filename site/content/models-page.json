@@ -1,5 +1,5 @@
 {
-  "about": "The models page, as one noun: its words only. Every model and agent program it lists, and every use, comes from the models catalog Task Object (site/content/models.meta.json, a local copy of models.meta), following its display rules: Meta's models first and emphasized, agent programs never called models, other makers marked with an asterisk, and only uses whose state is live or measured. 'records' maps a catalog evidence file to the page Agora serves for it.",
+  "about": "The models page, as one Task Object: its words only. Every model and agent program it lists, and every use, comes from the models catalog Task Object (site/content/models.meta.json, a local copy of models.meta), following its display rules: Meta's models first and emphasized, agent programs never called models, other makers marked with an asterisk, and only uses whose state is live or measured. 'records' maps a catalog evidence file to the page Agora serves for it.",
   "title": "Models used | Agora",
   "description": "Which models ta-amps uses and how: Meta's Muse models first, the agent programs that ran them, and the few models from other makers, each with what it does.",
   "heading": "Models used",

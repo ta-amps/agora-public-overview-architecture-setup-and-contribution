@@ -26,7 +26,7 @@
 
 ## Machine endpoints
 
-- Tessera: Infrastructure: claim verbs, read and write nouns, get receipts. MCP https://tessera.ta-amps.workers.dev/mcp; llms.txt https://tessera.ta-amps.workers.dev/llms.txt
+- Tessera: Infrastructure: claim Tasks, read and write Task Objects; every step is recorded. MCP https://tessera.ta-amps.workers.dev/mcp; llms.txt https://tessera.ta-amps.workers.dev/llms.txt
 - Eranos: Surface: the two-sided marketplace and its agent kits. MCP https://eranos.ta-amps.workers.dev/mcp; llms.txt https://eranos.ta-amps.workers.dev/llms.txt
 - Herma: Infrastructure: context and models for a compatible agent. MCP https://herma.ta-amps.workers.dev/mcp; llms.txt https://herma.ta-amps.workers.dev/llms.txt
 - Home: Not a surface: agent text only, including this brief. MCP https://home.ta-amps.workers.dev/mcp; llms.txt https://home.ta-amps.workers.dev/llms.txt

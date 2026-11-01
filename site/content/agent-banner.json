@@ -2,7 +2,7 @@
   "schema_version": 1,
   "kind": "instructions",
   "key": "agent-banner",
-  "about": "The words of the one thin line above every Agora page that tells people their AI agent can read the site, kept as one noun. scripts/build_site.py embeds it in each page for the <ta-agent-banner> element (site/assets/agent-banner.js, the same file Eranos can include), which renders every word from it. The fields follow the AgentBanner and BannerSpec boards of October 31, 2026. Plain text only.",
+  "about": "The words of the one thin line above every Agora page that tells people their AI agent can read the site, kept as one Task Object. scripts/build_site.py embeds it in each page for the <ta-agent-banner> element (site/assets/agent-banner.js, the same file Eranos can include), which renders every word from it. The fields follow the AgentBanner and BannerSpec boards of October 31, 2026. Plain text only.",
   "label": "Use this site with your AI agent",
   "lead_strong": "Have an AI agent?",
   "lead": "It can read this site too, then send you to the right place.",
