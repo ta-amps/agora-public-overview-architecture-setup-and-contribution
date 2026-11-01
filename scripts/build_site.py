@@ -1046,8 +1046,7 @@ def render_home(nouns: Nouns) -> str:
         "</section>",
         '<section class="deck-band" id="decks" aria-labelledby="home-decks">',
         '<div class="wrap">',
-        f'<div class="band-head"><h2 class="band-title" id="home-decks">{text(home["decks_heading"])}</h2>'
-        f'<a href="{attr(home["drafts"]["href"])}">{text(home["drafts"]["label"])}</a></div>',
+        f'<div class="band-head"><h2 class="band-title" id="home-decks">{text(home["decks_heading"])}</h2></div>',
         f'<ul class="deck-cards">\n{cards}\n</ul>',
         "</div>",
         "</section>",
@@ -1085,8 +1084,7 @@ def render_decks_index(nouns: Nouns) -> str:
         page_head(page["heading"], page["lead"]),
         '<div class="wrap deck-index">',
         f'<ul class="deck-cards">\n{cards}\n</ul>',
-        f'<p class="earlier-link"><a href="earlier-drafts/">{text(page["earlier"])}</a> '
-        f'<span>{text(page["earlier_about"])}</span></p>',
+        # Review, October 31: the October 29 drafts are kept in git but no longer served, so nothing links them.
         "</div>",
         "</main>",
     ])

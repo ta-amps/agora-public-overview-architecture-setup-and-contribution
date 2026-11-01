@@ -64,10 +64,6 @@
       "requires": "site/content/film-made.json"
     }
   },
-  "drafts": {
-    "label": "Earlier drafts",
-    "href": "decks/earlier-drafts/"
-  },
   "uses": {
     "heading": "Use cases",
     "lead": "Eranos is the first, and it is live. Each one is built from the same tasks and task objects, and names the seed packs that hold them.",
