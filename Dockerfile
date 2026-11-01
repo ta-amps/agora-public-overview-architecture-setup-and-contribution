@@ -1,5 +1,5 @@
 # Reproducible static site build + offline verification container for Agora.
-# Renders all pages deterministically from JSON Task Object artifacts and runs make check.
+# Renders all pages deterministically from JSON task object artifacts and runs make check.
 FROM python:3.12-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \

@@ -102,7 +102,7 @@
         </div>
         <p class="panel-desc">Ask a question or click a starter prompt. Each one is a real POST to Herma's public preview, which checks its built-in provisions (<code>keyword</code>, <code>semantic</code> and <code>micromodel</code> triggers) and stores nothing. Herma either answers directly or adds a system message to the payload it would forward. The card shows only what Herma returned.</p>
         <div class="starter-chips" aria-label="Starter prompts">
-          <button type="button" class="chip-btn" data-chat-prompt="Explain Tasks and Task Objects simply">Explain Tasks &amp; Task Objects simply</button>
+          <button type="button" class="chip-btn" data-chat-prompt="Explain Tasks and task objects simply">Explain Tasks &amp; task objects simply</button>
           <button type="button" class="chip-btn" data-chat-prompt="Compare Harness Square, OpenCode, Pi &amp; Muse Code">Compare Harness Square, OpenCode, Pi &amp; Muse Code</button>
           <button type="button" class="chip-btn" data-chat-prompt="When should I train a Meta LoRA as memory vs. use a context shim?">When should I train a Meta LoRA as memory vs. use a context shim?</button>
           <button type="button" class="chip-btn" data-chat-prompt="Draft a privacy-safe clinic volunteer intake checklist">Draft a privacy-safe clinic volunteer intake checklist</button>
@@ -115,7 +115,7 @@
 
       <form class="chat-composer" id="chat-form" autocomplete="off">
         <label class="sr-only" for="chat-input">Prompt to evaluate through live Herma shim</label>
-        <input id="chat-input" class="chat-input" type="text" maxlength="1200" placeholder="Ask about Tasks &amp; Task Objects, HarnessTax, Meta LoRAs vs shims, or NGO intake rules...">
+        <input id="chat-input" class="chat-input" type="text" maxlength="1200" placeholder="Ask about Tasks &amp; task objects, HarnessTax, Meta LoRAs vs shims, or NGO intake rules...">
         <button type="submit" class="btn btn-primary" id="chat-send-btn">
           <span>Shim &amp; Preview</span>
           <span class="btn-sub">Live POST</span>
@@ -272,7 +272,7 @@
             <span class="kicker kicker-cyan">Portable Persona &amp; Supply-Chain Gate · <code>noun.persona</code></span>
             <span class="metric-chip" id="persona-verdict-chip">Ready · 5 Harnesses</span>
           </div>
-          <p class="panel-desc">Every harness shares the same core (<code>name</code>, <code>description</code>, <code>model</code>, <code>tools</code>, Markdown body), while cloning untrusted rule files can smuggle invisible Unicode backdoors or permission bypasses. Lint a <code>persona.portable.md</code> below, strip accuracy-degrading fluff, compile across 5 harnesses, and persist clean specs as CAS Task Objects on live Tessera.</p>
+          <p class="panel-desc">Every harness shares the same core (<code>name</code>, <code>description</code>, <code>model</code>, <code>tools</code>, Markdown body), while cloning untrusted rule files can smuggle invisible Unicode backdoors or permission bypasses. Lint a <code>persona.portable.md</code> below, strip accuracy-degrading fluff, compile across 5 harnesses, and persist clean specs as CAS task objects on live Tessera.</p>
         </div>
 
         <div class="ngo-form-card">
@@ -324,7 +324,7 @@
 
         <div class="cli-chips" aria-label="Quick terminal commands">
           <button type="button" class="cli-chip" data-cli-cmd="help">help</button>
-          <button type="button" class="cli-chip" data-cli-cmd="shim Explain Tasks and Task Objects simply">shim &lt;prompt&gt;</button>
+          <button type="button" class="cli-chip" data-cli-cmd="shim Explain Tasks and task objects simply">shim &lt;prompt&gt;</button>
           <button type="button" class="cli-chip" data-cli-cmd="ngo submit clinic" data-needs-session>ngo submit clinic</button>
           <button type="button" class="cli-chip" data-cli-cmd="worker claim" data-needs-session>worker claim</button>
           <button type="button" class="cli-chip cli-chip-warn" data-cli-cmd="worker conflict" data-needs-session>worker conflict</button>
@@ -455,11 +455,11 @@
           <span class="count-pill" id="count-wire">0</span>
         </button>
         <button type="button" role="tab" class="inspector-tab" id="insp-tab-tasks" aria-selected="false" aria-controls="insp-panel-tasks" data-insp="tasks">
-          <span>Tasks (Verbs) &amp; Leases</span>
+          <span>Tasks (things to do) &amp; Leases</span>
           <span class="count-pill" id="count-tasks">0</span>
         </button>
         <button type="button" role="tab" class="inspector-tab" id="insp-tab-nouns" aria-selected="false" aria-controls="insp-panel-nouns" data-insp="nouns">
-          <span>Task Objects (Nouns)</span>
+          <span>task objects (nouns)</span>
           <span class="count-pill" id="count-nouns">0</span>
         </button>
         <button type="button" role="tab" class="inspector-tab" id="insp-tab-mcp" aria-selected="false" aria-controls="insp-panel-mcp" data-insp="mcp">
@@ -480,7 +480,7 @@
         </div>
       </div>
 
-      <!-- INSPECTOR 2: TASKS (VERBS) & LEASES -->
+      <!-- INSPECTOR 2: TASKS (THINGS TO DO) & LEASES -->
       <div class="inspector-panel" id="insp-panel-tasks" role="tabpanel" aria-labelledby="insp-tab-tasks" hidden>
         <div class="inspector-subbar">
           <span>Verbs in demo namespace <code id="tasks-ns-label">(no demo session)</code> <span class="sync-status" id="tasks-sync-status"></span> <span class="session-gate-note session-gate-note-inline" data-session-note="short" hidden></span></span>
@@ -491,14 +491,14 @@
         </div>
       </div>
 
-      <!-- INSPECTOR 3: TASK OBJECTS (NOUNS) -->
+      <!-- INSPECTOR 3: task objects (NOUNS) -->
       <div class="inspector-panel" id="insp-panel-nouns" role="tabpanel" aria-labelledby="insp-tab-nouns" hidden>
         <div class="inspector-subbar">
           <span>Records stored in Tessera and provisions matched by Herma <span class="sync-status" id="nouns-sync-status"></span> <span class="session-gate-note session-gate-note-inline" data-session-note="short" hidden></span></span>
           <button type="button" class="btn-link" id="nouns-refresh-btn" data-needs-session>Sync via MCP search_nouns</button>
         </div>
         <div class="inspector-scroll" id="nouns-list-wrap">
-          <!-- Live Task Objects list -->
+          <!-- Live task objects list -->
         </div>
       </div>
 

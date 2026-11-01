@@ -32,7 +32,18 @@ PAGES_PREFIX = "/"
 # Paths the deploy bundle adds next to the site: the source mirror, its file views and the git mirrors. The bundle
 # builder writes them from committed refs and fails on any link into them that does not resolve.
 DEPLOY_PATHS = ("source", "git")
-RETIRED_HOSTS = re.compile(r"github\.com/ta-amps|ta-amps\.github\.io")
+CANONICAL_GITHUB_REPOS = (
+    "agora-public-overview-architecture-setup-and-contribution",
+    "eranos-public-marketplace-for-public-good-token-burn",
+    "herma-infrastructure-shim-for-intelligent-agents",
+    "seed-packs-library-of-nouns-and-verbs",
+    "ta-amps-hackathon",
+    "tessera-infrastructure-work-and-storage-engine",
+)
+RETIRED_HOSTS = re.compile(
+    r"ta-amps\.github\.io"
+    r"|github\.com/ta-amps(?!/(" + "|".join(re.escape(r) for r in CANONICAL_GITHUB_REPOS) + r")(?:[/.?#\"'\s<)]|\Z))"
+)
 HTML_REF = re.compile(r'\s(?:href|src)="([^"]*)"')
 HTML_ID = re.compile(r'\sid="([^"]+)"')
 PROVENANCE = re.compile(r'\sdata-provenance="[^"]*"')
@@ -212,10 +223,11 @@ def deck_download(download: dict, site: Path) -> str | None:
     """Validate one deck download; return its site-relative path when it is a file in the site."""
     require(SHA256.fullmatch(download["sha256"]) is not None, "deck downloads need a content hash")
     if "path" not in download:
-        # The release is gone with the GitHub organization; its files are served from site/downloads/<tag>/.
         require(download["url"].startswith(RELEASE_PREFIX),
                 "deck downloads need a public release URL and content hash")
-        file = (site / "downloads" / download["url"][len(RELEASE_PREFIX):]).resolve()
+        require(type(download.get("bytes")) is int and download["bytes"] > 0,
+                "release deck downloads need their recorded byte size")
+        return None
     else:
         file = (site / download["path"]).resolve()
     require(file.is_relative_to(site.resolve()) and file.is_file(), "deck download missing from the static site")

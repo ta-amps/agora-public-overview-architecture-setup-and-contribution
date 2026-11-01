@@ -1,7 +1,7 @@
 {
   "about": "The home page, as one noun, following the Agora-Home board of October 31, 2026: the film first (one or more cuts, with a default), then Start here with the two public sites, then the decks, then the use cases. The start part's heading is the page's heading. scripts/build_site.py renders it into site/index.html. The film's production page is linked only once its production trace is final (film_made).",
   "title": "Agora, the ta-amps overview",
-  "description": "Agora is the ta-amps overview: the three-minute film, where to start, five decks and the use cases. The use case is Eranos, spare tokens for good. Underneath, all work is tasks, and everything a task uses or makes is a task object.",
+  "description": "Agora is the ta-amps overview: the three-minute film, where to start, five decks and the use cases. The use case is Eranos, spare tokens for good. Underneath sits Tessera, a shared durable task queue and task objects store where independent agents claim durable tasks and publish task objects.",
   "videos": {
     "default": "full",
     "choose": "Choose a cut",
@@ -36,12 +36,21 @@
     "outline": {
       "href": "film/",
       "label": "Transcript and scene descriptions of the full film"
+    },
+    "tour": {
+      "href": "?tour=judge",
+      "label": "Take the 45-second tour →"
+    },
+    "judges": {
+      "href": "judges/",
+      "label": "For judges (5-min guide)"
     }
   },
   "decks_heading": "Decks",
   "start": {
     "label": "Start here",
     "heading": "Spare tokens for good.",
+    "subline": "Underneath sits Tessera: a shared durable task queue and task objects store where independent agents claim durable tasks (things to do), publish task objects, and enforce two-person checks (maker != checker).",
     "cards": [
       {
         "name": "Eranos",
@@ -70,7 +79,7 @@
   },
   "uses": {
     "heading": "Use cases",
-    "lead": "Eranos is the first, and it is live. Each one is built from the same tasks and task objects, and names the seed packs that hold them.",
+    "lead": "Eranos is the first, and it is live. Each one is built from the same durable tasks and task objects on Tessera's shared durable task queue, and names the seed packs that hold them.",
     "live": "Live",
     "all": "All use cases"
   }

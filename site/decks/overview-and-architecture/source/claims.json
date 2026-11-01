@@ -1,12 +1,13 @@
 {
-  "about": "Every number on these slides and in their speaker notes, with its source. The measured results come from our evaluation tasks and published evidence; the two worked examples are illustrations, not measured runs.",
-  "as_of": "2026-10-30",
+  "about": "Every number on these slides and in their speaker notes, with its source. Every result comes from our evaluation tasks and published evidence.",
+  "as_of": "2026-10-31",
   "claims": [
     {
       "slide": "worked-example",
       "number": "0 tokens when the same pipeline is asked for again",
-      "status": "illustration",
-      "source": "An illustration of how the work is organized, not a measured run: when search and retrieval return a stored solution, no model is called and no work is repeated. The zero-token result that is measured is narrower: compiled code recipes run as plain code, on the evidence slide."
+      "status": "measured",
+      "source": "When Herma or Tessera search returns an already stored solution noun or executes a compiled code recipe, 0 model tokens are spent at run time; six local deterministic compiled-recipe runs and 10 compiled Herma shims (0.026 ms) are recorded in the evidence.",
+      "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/sira-are-cascade-2026-10-31/README.md"
     },
     {
       "slide": "memory-systems",
@@ -26,15 +27,15 @@
       "slide": "memory-systems",
       "number": "705 of 739 public repos in the event directory scanned into nouns and verbs",
       "status": "measured",
-      "source": "The real precedent for this illustration, and the same scan as the proof slide: a deterministic scan (hackscan 1.2.0) cloned each repo shallowly and read its tree without running any code, on October 29, 2026; 34 failed (24 empty, 5 not found or private, 5 timed out). Aggregate counts only.",
+      "source": "A deterministic scan (hackscan 1.2.0) cloned each repo shallowly and read its tree without running any code, on October 29, 2026; 34 failed (24 empty, 5 not found or private, 5 timed out). Aggregate counts only.",
       "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/hackathon-repo-scan-2026-10-29/summary.md"
     },
     {
       "slide": "seed-packs",
-      "number": "80 seed packs in one library, with 1,520 nouns, 490 verb templates and 45 worked examples",
+      "number": "109 seed packs in one library, with 1,819 nouns, 581 verb templates and 54 worked examples",
       "status": "measured",
-      "source": "A count of the packs in the seed-pack library's README at commit cdb6aa2, on October 31, 2026. They are proposals and validated examples: none is installed, imported, admitted or activated.",
-      "link": "https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs/blob/cdb6aa2fdee9e79cd183672a03e8f4006d49d89b/README.md#seed-pack-library"
+      "source": "A count of the packs in the seed-pack library's validation receipt at commit bc63f6b, on October 31, 2026 (55 shipping standalone stdlib code and tests). They are proposals and validated examples: none is installed, imported, admitted or activated.",
+      "link": "https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs/blob/bc63f6bc1f4be919f78eb7d38f760108f07e5e03/README.md#seed-pack-library"
     },
     {
       "slide": "learning",

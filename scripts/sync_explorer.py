@@ -1,6 +1,6 @@
 """Build site/content/explorer.json from site/content/library.json and a seed-packs checkout.
 
-Extracts searchable Seed Packs, Tasks (verbs), and Task Objects (nouns) from the seed-pack
+Extracts searchable Seed Packs, Tasks (things to do), and task objects (nouns) from the seed-pack
 library, alongside the authored UI labels and the Agent Harness Research Feeds panel.
 Stdlib only; touches no network.
 
@@ -10,6 +10,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import importlib.util
 import json
 import re
 import sys
@@ -20,9 +21,21 @@ LIBRARY_JSON = ROOT / "site" / "content" / "library.json"
 OUT_JSON = ROOT / "site" / "content" / "explorer.json"
 ALL_HARNESSES = ["muse-code", "opencode", "pi", "harness-square"]
 
+_SPEC = importlib.util.spec_from_file_location("build_site", Path(__file__).resolve().parent / "build_site.py")
+build_site = importlib.util.module_from_spec(_SPEC)
+_SPEC.loader.exec_module(build_site)
+
 
 def clean(value: str) -> str:
-    return re.sub(r"\s+", " ", str(value or "").replace("\u2014", "--")).strip()
+    s = re.sub(r"\s+", " ", str(value or "").replace("\u2014", "--")).strip()
+    s = build_site.plain_words(s)
+    return (s.replace("Task Objects", "task objects")
+            .replace("Task Object", "task object")
+            .replace("Task-Objects", "task-objects")
+            .replace("Task-Object", "task-object")
+            .replace("tasks (verbs)", "tasks (things to do)")
+            .replace("Tasks (Verbs)", "Tasks (things to do)")
+            .replace("Tasks (verbs)", "Tasks (things to do)"))
 
 
 def ceiling_for_verb(task: dict) -> str:
@@ -176,18 +189,18 @@ def build_explorer(library: dict, packs_dir: Path | None) -> dict:
                     })
 
     return {
-        "about": "Interactive Task and Task-Object Explorer noun for site/library/index.html, plus the Agent Harness Research Feeds panel. Generated deterministically by scripts/sync_explorer.py; rendered offline by scripts/build_site.py.",
+        "about": "Interactive durable task and task-object Explorer noun for site/library/index.html, plus the Agent Harness Research Feeds panel. Generated deterministically by scripts/sync_explorer.py; rendered offline by scripts/build_site.py.",
         "jump_links": [
-            {"href": "#explorer", "label": "Interactive Task & Task-Object Explorer"},
+            {"href": "#explorer", "label": "Interactive task & task-object Explorer"},
             {"href": "#harness-feeds", "label": "Agent Harness Research Feeds"},
             {"href": "#ecosystem-explorer", "label": "Meta Hackathon 2026 Ecosystem Explorer"}
         ],
-        "heading": "Interactive Task & Task-Object Explorer",
-        "lead": "Tasks and Task Objects -- on the wire, verbs are tasks and nouns are task objects. Search and filter proposed Seed Packs, atomic Tasks, reusable Task Objects, and decomposed Meta Hackathon 2026 repositories right in your browser with zero network calls.",
+        "heading": "Interactive task & task-object Explorer",
+        "lead": "Durable tasks (things to do) and task objects -- on the wire, verbs are durable tasks and nouns are task objects. Search and filter proposed Seed Packs, atomic tasks (things to do), reusable task objects, and decomposed Meta Hackathon 2026 repositories right in your browser with zero network calls.",
         "proposal_note": "Honesty boundary: every seed pack, task template, task object, and hackathon decomposition below is an offline proposal or static public-source mapping -- none is claimed as an installed runtime service or reproduced upstream benchmark.",
         "tabs_label": "Explorer catalog view",
         "tabs": {
-            "library": "Seed Packs, Tasks & Task Objects",
+            "library": "Seed Packs, tasks & task objects",
             "ecosystem": "Meta Hackathon 2026 Ecosystem"
         },
         "controls": {
@@ -200,13 +213,13 @@ def build_explorer(library: dict, packs_dir: Path | None) -> dict:
             "reset": "Reset filters",
             "show_more": "Show more results",
             "all_categories": "All categories",
-            "noscript": "Enable JavaScript to use instant multi-faceted search across Tasks, Task Objects, and the Meta Hackathon 2026 ecosystem, or browse every seed pack by category below."
+            "noscript": "Enable JavaScript to use instant multi-faceted search across tasks (things to do), task objects, and the Meta Hackathon 2026 ecosystem, or browse every seed pack by category below."
         },
         "kinds": [
-            {"id": "all", "label": "All Packs, Tasks & Task Objects"},
+            {"id": "all", "label": "All Packs, tasks & task objects"},
             {"id": "pack", "label": "Seed Packs"},
-            {"id": "verb", "label": "Tasks (verbs)"},
-            {"id": "noun", "label": "Task Objects (nouns)"}
+            {"id": "verb", "label": "tasks (things to do)"},
+            {"id": "noun", "label": "task objects (nouns)"}
         ],
         "eco_kinds": [
             {"id": "all", "label": "All hackathon repositories"},
@@ -230,28 +243,28 @@ def build_explorer(library: dict, packs_dir: Path | None) -> dict:
         ],
         "labels": {
             "pack": "Seed Pack",
-            "verb": "Task (verb)",
-            "noun": "Task Object (noun)",
+            "verb": "task (thing to do)",
+            "noun": "task object (noun)",
             "project": "Hackathon Project",
             "proposal": "Proposal",
             "scan_mapping": "Public-scan decomposition",
             "ceiling_prefix": "Ceiling:",
             "harnesses_prefix": "Harnesses:",
             "human_only": "Human steward",
-            "tasks_label": "Candidate Tasks (verbs):",
-            "objects_label": "Candidate Task Objects (nouns):",
+            "tasks_label": "Candidate tasks (things to do):",
+            "objects_label": "Candidate task objects (nouns):",
             "models_label": "Meta & AI stack:",
             "pack_ref": "In pack:",
             "open_card": "Jump to pack",
             "open_source": "View JSON source",
             "open_repo": "Open repository",
-            "empty": "No matching Tasks, Task Objects, or repositories found. Try broadening a filter or clearing the search box."
+            "empty": "No matching tasks, task objects, or repositories found. Try broadening a filter or clearing the search box."
         },
         "harness_feeds": {
-            "kicker": "Encapsulating Feed Task Objects · HarnessTax & Routing",
+            "kicker": "Encapsulating Feed task objects · HarnessTax & Routing",
             "heading": "Agent Harness Research Feeds",
-            "lead": "An Agent Harness Research Feed is an encapsulating Feed Task Object (noun.feed_source / noun:harness.feed on the wire) that bundles dated capability profiles, reproducible trial receipts, and measured HarnessTax -- the static system-prompt and tool-schema token overhead paid on every turn -- across configurable coding harnesses. Because empirical benchmarks (arXiv 2311.10054, 2512.05858, 2508.19764, 2602.12285, 2402.10962) show expert role-play adds zero factual accuracy while irrelevant or demographic persona fluff degrades agent performance by 26-30% and instructions drift within 8 turns, ta-amps separates routing descriptions from permissions ('hierarchy routes, it never authorizes') and puts precision into Task Objects, output contracts, scoped tool limits, and context shims.",
-            "status_note": "Status: Live daily service checks run for our own endpoints today; Herma ships PROV-HARNESS-FEEDS-GUIDE for zero-weight context shimming, while automated external GitHub/paper feed collectors remain proposed.",
+            "lead": "An Agent Harness Research Feed is an encapsulating Feed task object (noun.feed_source / noun:harness.feed on the wire) that bundles dated capability profiles, reproducible trial receipts, and measured HarnessTax -- the static system-prompt and tool-schema token overhead paid on every turn -- across configurable coding harnesses. Because empirical benchmarks (arXiv 2311.10054, 2512.05858, 2508.19764, 2602.12285, 2402.10962) show expert role-play adds zero factual accuracy while irrelevant or demographic persona fluff degrades agent performance by 26-30% and instructions drift within 8 turns, ta-amps separates routing descriptions from permissions ('hierarchy routes, it never authorizes') and puts precision into task objects, output contracts, scoped tool limits, and context shims.",
+            "status_note": "Status: Five scheduled feeds run on hosted Tessera across memory-systems, agent-harnesses, eval-frameworks, ocr-llm, and pii-redaction (see /feeds/); Herma also ships PROV-HARNESS-FEEDS-GUIDE for zero-weight context shimming.",
             "harnesses": [
                 {
                     "id": "harness-square",
@@ -263,7 +276,7 @@ def build_explorer(library: dict, packs_dir: Path | None) -> dict:
                     "id": "muse-code",
                     "name": "Muse Code",
                     "role": "Native Meta coding harness (X-Herma-Harness: muse-code)",
-                    "detail": "Verified end-to-end claiming leased Tasks on the shared Tessera queue and receiving caller-scoped Herma context shims over /v1/responses and /v1/chat/completions."
+                    "detail": "Verified end-to-end claiming leased durable tasks on the shared Tessera queue and receiving caller-scoped Herma context shims over /v1/responses and /v1/chat/completions."
                 },
                 {
                     "id": "opencode",
@@ -275,22 +288,22 @@ def build_explorer(library: dict, packs_dir: Path | None) -> dict:
                     "id": "pi",
                     "name": "Pi",
                     "role": "Multi-process swarm & lightweight worker harness",
-                    "detail": "Completed native worker lifecycles and multi-process concurrency runs against leased Tessera queues with fenced SHA-256 receipts (verifier != builder)."
+                    "detail": "Completed native worker lifecycles and multi-process concurrency runs against leased Tessera queues with fenced SHA-256 receipts (maker != checker)."
                 }
             ],
             "routing": {
                 "heading": "Horizontal Swarm + 4-Tier Vertical Compute Cascade",
-                "lead": "Up to 256 concurrent OpenCode and multi-harness workers shard leased Tasks across Tessera queues (q01..q16, SQLite/Durable Object shards, CAS blobs) with independent verification (verifier != builder), turning verified traces and rejected-attempt tombstones (DPO pairs) into training data for a four-tier cascade:",
+                "lead": "Up to 256 concurrent OpenCode and multi-harness workers shard leased durable tasks across Tessera queues (q01..q16, SQLite/Durable Object shards, CAS blobs) with independent verification (maker != checker), turning verified traces and rejected-attempt tombstones (DPO pairs) into training data for a four-tier cascade:",
                 "rules": [
                     {
                         "mode": "Tier 0 · Deterministic Herma Rules (< 2 ms)",
                         "when": "Capability firewall, volatile facts, and JSON repair",
-                        "outcome": "Executes inline at zero LLM token spend; deterministic repair alone lifted unchanged Llama 3.2 3B from 52.0% to 64.7% on our synthetic holdout."
+                        "outcome": "Executes inline at zero LLM token spend; deterministic repair alone lifted unchanged Llama 3.2 3B from 52.0% to 64.7% on our held-out evaluation."
                     },
                     {
                         "mode": "Tier 1 · Local Llama 3.2 1B & 3B Modular PEFT LoRAs",
-                        "when": "Hot-swappable specialist Task Objects on a single local GPU",
-                        "outcome": "Routes across composable PEFT adapters (shim-router, lora-as-memory, task-decomposer, verifier-dpo) with zero per-turn HarnessTax (1B: 12.0% -> 50.7%; 3B: 52.0% -> 72.7% on synthetic holdouts)."
+                        "when": "Hot-swappable specialist task objects on a single local GPU",
+                        "outcome": "Routes across composable PEFT adapters (shim-router, lora-as-memory, task-decomposer, verifier-dpo) with zero per-turn HarnessTax (1B: 12.0% -> 50.7%; 3B: 52.0% -> 72.7% on held-out evaluations)."
                     },
                     {
                         "mode": "Tier 2 · Kaggle 2xT4 Muse Glimmer 30B NF4 QLoRA",
@@ -308,7 +321,7 @@ def build_explorer(library: dict, packs_dir: Path | None) -> dict:
         "ecosystem_callout": {
             "kicker": "Public-source decomposition · 707 repositories",
             "heading": "Meta Hackathon 2026 Ecosystem Explorer",
-            "summary": "Every public repository in the Meta Global AI Developer Hackathon 2026 directory decomposed into candidate Tasks (verbs) and Task Objects (nouns) by category, Meta AI stack, effect ceiling, and harness compatibility.",
+            "summary": "Every public repository in the Meta Global AI Developer Hackathon 2026 directory decomposed into candidate tasks (things to do) and task objects (nouns) by category, Meta AI stack, effect ceiling, and harness compatibility.",
             "button": "Open Ecosystem Explorer tab",
             "evidence_href": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/tree/main/evidence/hackathon-repo-scan-2026-10-29",
             "evidence_label": "Read the 739-repo scan receipt"

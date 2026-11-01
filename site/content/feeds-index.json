@@ -1,0 +1,352 @@
+{
+  "about": "The feeds index page (/feeds/), following the AgoraFeeds board of October 31, 2026 and backed by the five live hosted Tessera category feeds under site/feeds/*.json (index.json, memory-systems.json, agent-harnesses.json, eval-frameworks.json, ocr-llm.json, pii-redaction.json).",
+  "title": "Feeds · What’s new, run and ranked | Agora · ta-amps",
+  "description": "Five scheduled discovery and ranking feeds on hosted Tessera run by Eranos's own feed workers (dedicated, run by the ta-amps team), published as task objects over HTTP and MCP with SHA-256 receipts.",
+  "kicker": "Agora · Feeds",
+  "heading": "What’s new, run and ranked",
+  "lead": "New tools appear every week. Across five categories on hosted Tessera, Eranos’s own feed workers (dedicated, run by the ta-amps team) find them, check them against consistent criteria, rank them, and publish the results as task objects your agent can read over HTTP or MCP. Every scan has a SHA-256 receipt.",
+  "pills": [
+    "5 live hosted Tessera feeds",
+    "every 6 hours, categories in turn",
+    "served over HTTP, JSON & MCP",
+    "run by Eranos’s own feed workers"
+  ],
+  "who_runs": "Eranos’s own feed workers (dedicated, run by the ta-amps team)",
+  "each_run": "find · check criteria · rank · publish as task objects",
+  "receipts_note": "raw JSON at /feeds/index.json and /feeds/<category>.json",
+  "columns": [
+    "#",
+    "Repository",
+    "Weighted rank & stars",
+    "Runs where",
+    "License"
+  ],
+  "categories": [
+    {
+      "key": "memory-systems",
+      "group": "Agents",
+      "name": "Memory systems for agents",
+      "what": "Ways to give an agent memory across sessions, scanned on hosted Tessera from GitHub and arXiv with 11 character-verified benchmark quotes.",
+      "schedule": "every 6 h · hosted Tessera (feeds.memory-systems)",
+      "last_run": "2026-11-01 02:23 UTC",
+      "receipt": "b8bbe3621786",
+      "detail_href": "memory-systems/",
+      "detail_label": "Open memory-systems report & raw JSON (/feeds/memory-systems.json) →",
+      "metric": "Weighted score & stars",
+      "rank": "Hosted scan 20261101T0218Z-memory-systems on tessera.ta-amps.workers.dev: 309 new repositories in 48 hours, 592 repositories gathered, 11 verified README/paper quotes, receipt b8bbe3621786.",
+      "rows": [
+        {
+          "name": "MemTensor/MemOS",
+          "url": "https://github.com/MemTensor/MemOS",
+          "signal": "score 0.78 · 12,211 stars",
+          "bar_pct": 100,
+          "runs": "either",
+          "runs_label": "local + hosted",
+          "license": "Apache-2.0"
+        },
+        {
+          "name": "xerj-org/xerj",
+          "url": "https://github.com/xerj-org/xerj",
+          "signal": "score 0.74 · 17,949 stars",
+          "bar_pct": 95,
+          "runs": "local",
+          "runs_label": "local Rust",
+          "license": "Apache-2.0"
+        },
+        {
+          "name": "deeplethe/utopia",
+          "url": "https://github.com/deeplethe/utopia",
+          "signal": "score 0.68 · 8,653 stars",
+          "bar_pct": 87,
+          "runs": "local",
+          "runs_label": "local Rust",
+          "license": "Apache-2.0"
+        },
+        {
+          "name": "tigerless-labs/agent-memory",
+          "url": "https://github.com/tigerless-labs/agent-memory",
+          "signal": "4,303 stars · Python local",
+          "bar_pct": 76,
+          "runs": "local",
+          "runs_label": "local Python",
+          "license": "MIT"
+        },
+        {
+          "name": "semantica-agi/semantica",
+          "url": "https://github.com/semantica-agi/semantica",
+          "signal": "14,361 stars · Python SDK",
+          "bar_pct": 84,
+          "runs": "either",
+          "runs_label": "local + hosted",
+          "license": "MIT"
+        }
+      ]
+    },
+    {
+      "key": "agent-harnesses",
+      "group": "Agents",
+      "name": "Agent harnesses",
+      "what": "Coding and tool-use harnesses scanned on hosted Tessera by license, recency, stars, and setup fit.",
+      "schedule": "every 6 h · hosted Tessera (feeds.agent-harnesses)",
+      "last_run": "2026-11-01 01:02 UTC",
+      "receipt": "86eb402541c8",
+      "detail_href": "agent-harnesses.json",
+      "detail_label": "Open raw hosted scan JSON (/feeds/agent-harnesses.json, 374 repos) →",
+      "metric": "Weighted score & stars",
+      "rank": "Hosted scan 20261101T0056Z-agent-harnesses on tessera.ta-amps.workers.dev: 1,718 new repositories in window, 374 gathered, receipt 86eb402541c8.",
+      "rows": [
+        {
+          "name": "Louis-CFM/coucou",
+          "url": "https://github.com/Louis-CFM/coucou",
+          "signal": "score 0.72 · 6,845 stars",
+          "bar_pct": 100,
+          "runs": "local",
+          "runs_label": "local Swift",
+          "license": "MIT"
+        },
+        {
+          "name": "microsoft/TokenEconomizer",
+          "url": "https://github.com/microsoft/TokenEconomizer",
+          "signal": "score 0.72 · 3,066 stars",
+          "bar_pct": 99,
+          "runs": "local",
+          "runs_label": "local Python",
+          "license": "Apache-2.0"
+        },
+        {
+          "name": "zai-org/ZCode",
+          "url": "https://github.com/zai-org/ZCode",
+          "signal": "score 0.71 · 8,401 stars",
+          "bar_pct": 98,
+          "runs": "either",
+          "runs_label": "CLI + API",
+          "license": "Apache-2.0"
+        },
+        {
+          "name": "dataelement/dsh-desktop",
+          "url": "https://github.com/dataelement/dsh-desktop",
+          "signal": "17,004 stars · desktop harness",
+          "bar_pct": 92,
+          "runs": "local",
+          "runs_label": "local desktop",
+          "license": "MIT"
+        }
+      ]
+    },
+    {
+      "key": "eval-frameworks",
+      "group": "Evaluation",
+      "name": "LLM evaluation frameworks",
+      "what": "Evaluation runners, trace graders, and agent environment harnesses scanned on hosted Tessera.",
+      "schedule": "every 6 h · hosted Tessera (feeds.eval-frameworks)",
+      "last_run": "2026-11-01 01:02 UTC",
+      "receipt": "c454d1bfd8b6",
+      "detail_href": "eval-frameworks.json",
+      "detail_label": "Open raw hosted scan JSON (/feeds/eval-frameworks.json, 397 repos) →",
+      "metric": "Weighted score & stars",
+      "rank": "Hosted scan 20261101T0056Z-eval-frameworks on tessera.ta-amps.workers.dev: 222 new repositories in window, 397 gathered, receipt c454d1bfd8b6.",
+      "rows": [
+        {
+          "name": "ifixai-ai/iFixAi",
+          "url": "https://github.com/ifixai-ai/iFixAi",
+          "signal": "score 0.84 · 41,457 stars",
+          "bar_pct": 100,
+          "runs": "either",
+          "runs_label": "local + hosted",
+          "license": "Apache-2.0"
+        },
+        {
+          "name": "jwuthri-cloud/Tracely-ai",
+          "url": "https://github.com/jwuthri-cloud/Tracely-ai",
+          "signal": "score 0.84 · 1,212 stars",
+          "bar_pct": 99,
+          "runs": "local",
+          "runs_label": "local Python",
+          "license": "MIT"
+        },
+        {
+          "name": "scaleapi/agentenv-framework",
+          "url": "https://github.com/scaleapi/agentenv-framework",
+          "signal": "score 0.81 · 399 stars",
+          "bar_pct": 96,
+          "runs": "local",
+          "runs_label": "local Python",
+          "license": "Apache-2.0"
+        },
+        {
+          "name": "mlflow/mlflow",
+          "url": "https://github.com/mlflow/mlflow",
+          "signal": "28,610 stars · local evals",
+          "bar_pct": 90,
+          "runs": "local",
+          "runs_label": "local Python",
+          "license": "Apache-2.0"
+        }
+      ]
+    },
+    {
+      "key": "ocr-llm",
+      "group": "Documents",
+      "name": "OCR and LLM document tools",
+      "what": "Local and self-hostable PDF, table, and intake extraction tools for nonprofit document kits.",
+      "schedule": "every 6 h · hosted Tessera (feeds.ocr-llm)",
+      "last_run": "2026-11-01 01:03 UTC",
+      "receipt": "f916eda44796",
+      "detail_href": "ocr-llm.json",
+      "detail_label": "Open raw hosted scan JSON (/feeds/ocr-llm.json, 327 repos) →",
+      "metric": "Weighted score & stars",
+      "rank": "Hosted scan 20261101T0056Z-ocr-llm on tessera.ta-amps.workers.dev: 44 new repositories in window, 327 gathered, receipt f916eda44796.",
+      "rows": [
+        {
+          "name": "jev-chat/jev-chat-jarvis",
+          "url": "https://github.com/jev-chat/jev-chat-jarvis",
+          "signal": "score 0.66 · 8,200 stars",
+          "bar_pct": 100,
+          "runs": "local",
+          "runs_label": "local MIT",
+          "license": "MIT"
+        },
+        {
+          "name": "opendataloader-project/opendataloader-pdf",
+          "url": "https://github.com/opendataloader-project/opendataloader-pdf",
+          "signal": "score 0.60 · 30,131 stars",
+          "bar_pct": 91,
+          "runs": "either",
+          "runs_label": "local + hosted",
+          "license": "Apache-2.0"
+        },
+        {
+          "name": "Unstructured-IO/unstructured",
+          "url": "https://github.com/Unstructured-IO/unstructured",
+          "signal": "score 0.58 · 15,654 stars",
+          "bar_pct": 88,
+          "runs": "local",
+          "runs_label": "local library",
+          "license": "Apache-2.0"
+        },
+        {
+          "name": "ciddwd/overlay-translator",
+          "url": "https://github.com/ciddwd/overlay-translator",
+          "signal": "1,173 stars · local OCR",
+          "bar_pct": 74,
+          "runs": "local",
+          "runs_label": "local Kotlin",
+          "license": "Apache-2.0"
+        }
+      ]
+    },
+    {
+      "key": "pii-redaction",
+      "group": "Privacy",
+      "name": "PII detection and redaction",
+      "what": "Local PII scrubbers and LLM gateway guards that keep sensitive nonprofit records off remote APIs.",
+      "schedule": "every 6 h · hosted Tessera (feeds.pii-redaction)",
+      "last_run": "2026-11-01 01:03 UTC",
+      "receipt": "7e14b3106e05",
+      "detail_href": "pii-redaction.json",
+      "detail_label": "Open raw hosted scan JSON (/feeds/pii-redaction.json, 351 repos) →",
+      "metric": "Weighted score & stars",
+      "rank": "Hosted scan 20261101T0056Z-pii-redaction on tessera.ta-amps.workers.dev: 124 new repositories in window, 351 gathered, receipt 7e14b3106e05.",
+      "rows": [
+        {
+          "name": "lemonadesaltbagel/veil",
+          "url": "https://github.com/lemonadesaltbagel/veil",
+          "signal": "score 0.61 · local Python",
+          "bar_pct": 100,
+          "runs": "local",
+          "runs_label": "local Python",
+          "license": "Apache-2.0"
+        },
+        {
+          "name": "ArgirisViv/bulwark-llm-gateway",
+          "url": "https://github.com/ArgirisViv/bulwark-llm-gateway",
+          "signal": "score 0.59 · local gateway",
+          "bar_pct": 96,
+          "runs": "local",
+          "runs_label": "local Python",
+          "license": "MIT"
+        },
+        {
+          "name": "jialuncai/diurnix",
+          "url": "https://github.com/jialuncai/diurnix",
+          "signal": "score 0.59 · local redaction",
+          "bar_pct": 95,
+          "runs": "local",
+          "runs_label": "local Python",
+          "license": "MIT"
+        },
+        {
+          "name": "data-privacy-stack/presidio",
+          "url": "https://github.com/data-privacy-stack/presidio",
+          "signal": "11,615 stars · Python SDK",
+          "bar_pct": 90,
+          "runs": "either",
+          "runs_label": "local + service",
+          "license": "MIT"
+        }
+      ]
+    }
+  ],
+  "which_fits": {
+    "heading": "Which fits?",
+    "lead": "Choose your data scope and where tools may run; this page filters the stored scan results in your browser with zero model calls.",
+    "questions": [
+      {
+        "key": "data",
+        "label": "Your data",
+        "default": "private",
+        "options": [
+          {
+            "id": "public",
+            "label": "Public"
+          },
+          {
+            "id": "private",
+            "label": "Private"
+          },
+          {
+            "id": "mixed",
+            "label": "Mixed"
+          }
+        ]
+      },
+      {
+        "key": "runs",
+        "label": "Where it may run",
+        "default": "local",
+        "options": [
+          {
+            "id": "local",
+            "label": "On our computer"
+          },
+          {
+            "id": "cloud",
+            "label": "In the cloud"
+          },
+          {
+            "id": "either",
+            "label": "Either"
+          }
+        ]
+      }
+    ],
+    "best_fit_label": "Best fit:",
+    "forced_local_why": "Private or mixed data stays on your computer unless split first, so only locally runnable tools are suggested.",
+    "default_why": "Selected from the stored hosted scan rows of this category, with zero new model calls.",
+    "agent_heading": "From your agent"
+  },
+  "foot_cards": [
+    {
+      "heading": "On Eranos",
+      "text": "A nonprofit workflow can reference a ranked tool from a feed as a pinned task object, naming the exact scan and receipt."
+    },
+    {
+      "heading": "Tasks and task objects",
+      "text": "Each feed scan is a scheduled durable task (thing to do) on Tessera; each ranked tool and benchmark quote is a task object with its receipt."
+    },
+    {
+      "heading": "Machine-readable index",
+      "text": "Agents can fetch /feeds/index.json for all five category receipts, or open the full memory-systems report at /feeds/memory-systems/."
+    }
+  ]
+}

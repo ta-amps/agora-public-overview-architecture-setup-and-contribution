@@ -107,7 +107,7 @@
             scenario:
               "Routine Saturday morning shift check with full greeter and interpreter coverage",
             sample_input:
-              "SYNTHETIC: Shift SAT-AM-01 has 2 greeters (EN/ES), 1 supply lead, and 1 licensed nurse lead confirmed via role tokens.",
+              "Practice case: an example, not a real person or case. Shift SAT-AM-01 has 2 greeters (EN/ES), 1 supply lead, and 1 licensed nurse lead confirmed via role tokens.",
             expected_indicators: ["coverage_complete"],
             expected_human_escalation: false
           },
@@ -116,7 +116,7 @@
             scenario:
               "Sunday afternoon shift missing on-site medical lead and walk-in asks urgent health question",
             sample_input:
-              "SYNTHETIC: Shift SUN-PM-02 has 0 medical leads assigned and intake note asks for immediate crisis safety guidance.",
+              "Practice case: an example, not a real person or case. Shift SUN-PM-02 has 0 medical leads assigned and intake note asks for immediate crisis safety guidance.",
             expected_indicators: ["missing_medical_lead", "urgent_safety_escalation"],
             expected_human_escalation: true
           }
@@ -213,7 +213,7 @@
             scenario:
               "Routine Spanish-speaking pickup window lookup with nut-free pantry box tag",
             sample_input:
-              "SYNTHETIC: Request token HH-104 asks for Wednesday evening Spanish interpreter window and nut-free staple box.",
+              "Practice case: an example, not a real person or case. Request token HH-104 asks for Wednesday evening Spanish interpreter window and nut-free staple box.",
             expected_indicators: ["wednesday_es_slot_available"],
             expected_human_escalation: false
           },
@@ -222,7 +222,7 @@
             scenario:
               "Urgent same-day homebound request needing advocate interview and partner referral",
             sample_input:
-              "SYNTHETIC: Request token HH-209 cannot travel today and requests immediate advocate callback and emergency delivery.",
+              "Practice case: an example, not a real person or case. Request token HH-209 cannot travel today and requests immediate advocate callback and emergency delivery.",
             expected_indicators: ["homebound_urgent_delivery", "advocate_interview_needed"],
             expected_human_escalation: true
           }
@@ -320,7 +320,7 @@
             scenario:
               "Routine evening shift handoff with 18 open cots, 3 ADA bays, and 45 blanket kits",
             sample_input:
-              "SYNTHETIC: Night shift BAY-NORTH reports 18 open cots, 3 accessible bays ready, and 45 clean winter blanket kits.",
+              "Practice case: an example, not a real person or case. Night shift BAY-NORTH reports 18 open cots, 3 accessible bays ready, and 45 clean winter blanket kits.",
             expected_indicators: ["buffer_above_threshold"],
             expected_human_escalation: false
           },
@@ -329,7 +329,7 @@
             scenario:
               "Freeze warning night with 0 ADA bays remaining and guest safety accommodation needed",
             sample_input:
-              "SYNTHETIC: Night shift BAY-NORTH reports 0 accessible bays open during freeze alert and walk-in needs urgent safety plan.",
+              "Practice case: an example, not a real person or case. Night shift BAY-NORTH reports 0 accessible bays open during freeze alert and walk-in needs urgent safety plan.",
             expected_indicators: ["ada_capacity_exhausted", "urgent_supervisor_escalation"],
             expected_human_escalation: true
           }
@@ -2822,7 +2822,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
 
     if (lower.startsWith("shim")) {
       const promptArg =
-        cmdLine.slice(4).trim() || "Explain Tasks and Task Objects simply";
+        cmdLine.slice(4).trim() || "Explain Tasks and task objects simply";
       const out = await runHermaChat(promptArg);
       if (!out) return;
       if (!out.ok) {
@@ -3617,7 +3617,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
         escapeHtml(rec.version) +
         " (MCP put_record, HTTP " +
         escapeHtml(res.status) +
-        "). See the Wire Log and Task Objects tabs."
+        "). See the Wire Log and task objects tabs."
     );
     return res;
   }

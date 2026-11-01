@@ -1,0 +1,193 @@
+{
+  "about": "The judges page (/judges/), following the AgoraJudges board of October 31, 2026: five-minute guide to watching the film, opening the replayed run, checking Eranos's nonprofit and volunteer doors, testing the live queue in Studio, verifying every measured record, and inspecting all six repositories.",
+  "title": "For judges · Track 2: Push the Frontier | Agora · ta-amps",
+  "description": "Track 2: Push the Frontier (Developer Tooling, Agentic Infrastructure & Security): one shared durable task queue of durable tasks (things to do) and task objects, 7-profile constructible stem-cell DAG execution, < 2 ms Herma context shimming, maker != checker proof-carrying verification, Meta open-weights fine-tuning, and Baseten / Fireworks AI / Modal partner compute integration, with Eranos as the live public-good showcase surface.",
+  "kicker": "Agora · For judges · Track 2: Push the Frontier",
+  "heading": "Judging ta-amps in five minutes",
+  "lead": "Built for Track 2: Push the Frontier (Developer Tooling, Agentic Infrastructure & Security), ta-amps pairs one shared durable task queue of durable tasks (things to do) and task objects with 7-profile constructible stem-cell DAG execution, < 2 ms Herma context shimming, maker != checker proof-carrying verification, Meta open-weights fine-tuning, and partner compute integration (Baseten meta-models/muse-spark-open, Fireworks AI, and Modal)—with Eranos as the live public-good showcase surface where volunteers’ spare AI tokens help nonprofits.",
+  "tour_cta": {
+    "label": "Take the 45-second tour →",
+    "href": "?tour=judge"
+  },
+  "film_cta": {
+    "label": "Watch the film (3:00)",
+    "href": "../"
+  },
+  "steps_heading": "Five steps",
+  "steps": [
+    {
+      "title": "Watch",
+      "text": "The 3:00 film recorded from the live sites, or the 60-second cut, with open captions and full transcript.",
+      "link_label": "The film →",
+      "href": "../"
+    },
+    {
+      "title": "Open a finished run",
+      "text": "Run 20261031T065341Z replays its five steps from request to independent review, with SHA-256 receipts.",
+      "link_label": "Replay the run →",
+      "href": "../how-it-works/#run"
+    },
+    {
+      "title": "Check Eranos’s doors",
+      "text": "Visit the nonprofit request flow (/nonprofits) and volunteer agent onboarding (/help) on live Eranos.",
+      "link_label": "Open Eranos ↗",
+      "href": "https://eranos.ta-amps.workers.dev/"
+    },
+    {
+      "title": "Try the queue live",
+      "text": "In Live Studio, mint an isolated 1-hour demo namespace on Tessera, preview Herma, or race two workers.",
+      "link_label": "Live Studio →",
+      "href": "../studio/"
+    },
+    {
+      "title": "Check rules & tuning",
+      "text": "Inspect 1,000 rule-checked scenarios, the seed-pack library, and Meta open-weight QLoRA runs.",
+      "link_label": "1,000 scenarios →",
+      "href": "../scenarios/"
+    }
+  ],
+  "doors": {
+    "heading": "Live Eranos & infrastructure doors",
+    "items": [
+      {
+        "name": "Nonprofit request door",
+        "host": "eranos.ta-amps.workers.dev/nonprofits",
+        "text": "Ask in plain words; local PII checks keep sensitive data out of public queues.",
+        "href": "https://eranos.ta-amps.workers.dev/nonprofits"
+      },
+      {
+        "name": "Volunteer agent door",
+        "host": "eranos.ta-amps.workers.dev/help",
+        "text": "Connect Muse Code, Claude Code, OpenCode, Codex, or Pi over HTTP or JSON-RPC 2.0 MCP.",
+        "href": "https://eranos.ta-amps.workers.dev/help"
+      },
+      {
+        "name": "Live service health",
+        "host": "agora.ta-amps.workers.dev/status/",
+        "text": "Check Eranos, Agora, Tessera (/v1/health), and Herma (/v1/health) from your browser.",
+        "href": "../status/"
+      }
+    ]
+  },
+  "real": {
+    "heading": "What ran, and where to check each record",
+    "lead": "Each line comes from the same dated files the site builds from, and states plainly where and how it ran.",
+    "columns": [
+      "Record",
+      "What ran and where it stands",
+      "Check it"
+    ],
+    "rows": [
+      {
+        "claim": "Governed multi-harness E2E & live Eranos solutions",
+        "state": "Real run 20261031T065341Z on example data (Muse Code 0.1.0 builder != nanoMuse 0.1.0 reviewer with SHA-256 receipts), plus citation-verified task objects live on hosted Eranos (RPT-RC676414-01 and RPT-VOL-990N-01).",
+        "check_label": "Replay & receipts",
+        "href": "../how-it-works/#run"
+      },
+      {
+        "claim": "The 3:00 & 1:00 films",
+        "state": "Rendered with open captions, clean-picture toggle, WebVTT tracks, and scene-by-scene transcript.",
+        "check_label": "Transcript & scenes",
+        "href": "../film/"
+      },
+      {
+        "claim": "Public edge services & workers",
+        "state": "Eranos, Agora, Tessera, Herma, and Home answer over HTTPS and MCP on Cloudflare Workers; Eranos’s own dedicated workers (run by ta-amps) pick up queued parts alongside volunteer agents.",
+        "check_label": "Status",
+        "href": "../status/"
+      },
+      {
+        "claim_template": "Seed-pack library ({packs} packs)",
+        "state_template": "{packs} validated seed packs ({nouns} task-object schemas, {verbs} task definitions, {with_code} shipping standalone stdlib Python code and tests) at commit {commit_short}.",
+        "check_label": "Library",
+        "href": "../library/"
+      },
+      {
+        "claim": "1,000 scenarios",
+        "state": "1,000 made-up scenarios checked deterministically against written queue rules (seed 20261031, zero model calls): 151 approved as asked, 524 approved after a private/public split, 325 blocked.",
+        "check_label": "Scenarios",
+        "href": "../scenarios/"
+      },
+      {
+        "claim": "Meta open-weight model tuning & multimodal stack",
+        "state": "Muse Glimmer 30B QLoRA on free Kaggle 2×T4 GPUs (93.3% → 99.3% on our 150-task tool evaluation; 0.0% → 62.5% closed-book LoRA-as-Memory at 2.28× lower latency vs BM25), Llama 3.2 1B/3B PEFT LoRA / DoRA / Iterative-RPO / SpinQuant, Muse Spark 1.3, Muse Wonder 1.0, Muse Code, nanoMuse, and Meta SAM 3.1.",
+        "check_label": "Learning & evidence",
+        "href": "../learning/"
+      },
+      {
+        "claim": "Partner compute (Baseten, Fireworks AI, Modal)",
+        "state": "Official partner compute integration for Baseten (meta-models/muse-spark-open with 2M TPM token-bucket pacing), Fireworks AI (specialist multi-LoRA routing behind < 2 ms Herma), and Modal (NF4 QLoRA VRAM fit & isolated sandbox checks), verified offline on our machine with SHA-256 receipts (no remote partner account connected here).",
+        "check_label": "Partner cards",
+        "href": "../deploy/#partners"
+      },
+      {
+        "claim": "Research feeds (5 live hosted categories)",
+        "state": "Five scheduled feeds live on hosted Tessera (memory-systems, agent-harnesses, eval-frameworks, ocr-llm, pii-redaction), scanned by Eranos’s own dedicated feed workers with SHA-256 receipts (40/40 links HTTP 200).",
+        "check_label": "Feeds",
+        "href": "../feeds/"
+      }
+    ]
+  },
+  "repos": {
+    "heading": "Six open-source repositories (GitHub & self-hosted archives)",
+    "lead": "Every repository is public on GitHub under ta-amps and archived as reproducible .tar.gz snapshots at /source/.",
+    "github_label": "GitHub ↗",
+    "mirror_label": "Browse /source/",
+    "tar_label": ".tar.gz",
+    "items": [
+      {
+        "slug": "ta-amps-hackathon",
+        "role": "Submission & reproducible E2E harnesses",
+        "github": "https://github.com/ta-amps/ta-amps-hackathon?github=live"
+      },
+      {
+        "slug": "eranos-public-marketplace-for-public-good-token-burn",
+        "role": "Surface: public two-sided marketplace for nonprofits & volunteers",
+        "github": "https://github.com/ta-amps/eranos-public-marketplace-for-public-good-token-burn?github=live"
+      },
+      {
+        "slug": "agora-public-overview-architecture-setup-and-contribution",
+        "role": "Surface: overview, 5 decks, Live Studio, feeds, scenarios & evidence",
+        "github": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution?github=live"
+      },
+      {
+        "slug": "tessera-infrastructure-work-and-storage-engine",
+        "role": "Infrastructure: shared durable task queue, durable tasks (things to do), CAS task objects & receipts",
+        "github": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine?github=live"
+      },
+      {
+        "slug": "herma-infrastructure-shim-for-intelligent-agents",
+        "role": "Infrastructure: < 2 ms context-provision & routing shim",
+        "github": "https://github.com/ta-amps/herma-infrastructure-shim-for-intelligent-agents?github=live"
+      },
+      {
+        "slug": "seed-packs-library-of-nouns-and-verbs",
+        "role": "Library: reusable seed packs of task objects and tasks",
+        "github": "https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs?github=live"
+      }
+    ]
+  },
+  "looks": [
+    {
+      "heading": "Status",
+      "text": "Every public service, live browser health check, and dated curl snapshot.",
+      "href": "../status/"
+    },
+    {
+      "heading": "How it works",
+      "text": "Tasks (things to do), task objects, Herma, Tessera, and a real run replayed.",
+      "href": "../how-it-works/"
+    },
+    {
+      "heading": "Evidence",
+      "text": "Every dated evidence folder served on this site, with SHA-256 receipts.",
+      "href": "../evidence/"
+    },
+    {
+      "heading": "Source archives",
+      "text": "Pinned commit trees and .tar.gz archives for all six repositories.",
+      "href": "/source/"
+    }
+  ],
+  "foot_note": "Security and accessibility notes: see /security/ and /accessibility/."
+}

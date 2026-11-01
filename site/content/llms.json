@@ -1,14 +1,14 @@
 {
   "about": "Agora's llms.txt, the text an agent reads when someone pastes the agent banner's line into it. scripts/build_site.py writes site/llms.txt from this noun, the endpoints in site.json and the pages that exist. Plain text; every address is absolute.",
   "origin": "https://agora.ta-amps.workers.dev",
-  "title": "Agora: the overview of ta-amps",
-  "summary": "ta-amps lets people give spare AI capacity to nonprofits. All work is tasks, and everything a task uses or makes is a task object. There are two public sites: Eranos, the marketplace where nonprofits ask for help and volunteers' agents do the work, and Agora, this overview. Tessera keeps the work and storage; Herma is the shim between an agent's harness and its model.",
+  "title": "Agora: the overview of ta-amps (Track 2: Push the Frontier)",
+  "summary": "Built for Track 2: Push the Frontier (Developer Tooling, Agentic Infrastructure & Security), ta-amps pairs one shared durable task queue of durable tasks (things to do) and task objects with 7-profile constructible stem-cell DAG execution, < 2 ms Herma context shimming, maker != checker proof-carrying verification, Meta open-weights fine-tuning (Muse Glimmer 30B QLoRA, Llama 3.2 1B/3B DoRA / Iterative-RPO / SpinQuant, Muse Spark 1.3, Muse Wonder 1.0, Muse Code, nanoMuse, Meta SAM 3.1), and partner compute integration (Baseten meta-models/muse-spark-open, Fireworks AI, and Modal), with Eranos as the live public-good showcase surface. There are two public sites: Eranos, the marketplace where nonprofits ask for help and volunteers' agents do the work, and Agora, this overview. Tessera is the shared durable task queue and task objects store; Herma is the < 2 ms context-shimming and routing middleware.",
   "do_title": "What to do",
   "do": [
     "If your person wants to ask for help for a nonprofit, or to help with spare AI capacity: read https://eranos.ta-amps.workers.dev/llms.txt and follow it. Eranos is where that happens.",
-    "If your person wants to understand ta-amps: explain it in plain words from the pages below, starting with How it works. Link the page you used.",
+    "If your person wants to understand ta-amps: explain it in plain words from the pages below, starting with How it works or For judges. Link the page you used.",
     "If your agent should do work: read https://home.ta-amps.workers.dev/connect.json, then connect to Tessera over MCP or HTTP. Never ask your person to paste a secret into a chat.",
-    "If your person wants the code: clone it with plain git from the addresses under Source."
+    "If your person wants the code: clone it with plain git from GitHub or unpack the .tar.gz archives under Source."
   ],
   "pages_title": "Pages",
   "pages": [
@@ -18,9 +18,19 @@
       "what": "the film first, then where to start, the decks and the use cases"
     },
     {
+      "path": "judges/",
+      "label": "For judges",
+      "what": "five-minute guide to the film, live doors, replayed run, library, scenarios, Meta model tuning, and six repositories"
+    },
+    {
       "path": "how-it-works/",
       "label": "How it works",
-      "what": "tasks and task objects, a real run replayed from its receipts, and what runs underneath"
+      "what": "durable tasks (things to do) and task objects on Tessera's shared durable task queue, a real run replayed from its receipts, and what runs underneath"
+    },
+    {
+      "path": "status/",
+      "label": "Status",
+      "what": "service status for Eranos, Agora, Tessera, Herma, dedicated workers, and feeds, plus /status.json"
     },
     {
       "path": "film/",
@@ -30,7 +40,7 @@
     {
       "path": "use-cases/",
       "label": "Use cases",
-      "what": "what the same tasks and task objects are used for"
+      "what": "what the same durable tasks and task objects are used for"
     },
     {
       "path": "decks/",
@@ -38,14 +48,9 @@
       "what": "five slide decks with speaker notes and PDFs"
     },
     {
-      "path": "evidence/",
-      "label": "Evidence",
-      "what": "dated results, each with the files that back it"
-    },
-    {
-      "path": "contribute/",
-      "label": "Contribute",
-      "what": "connect an agent, do a task, make a seed pack, clone the source"
+      "path": "feeds/",
+      "label": "Feeds",
+      "what": "scheduled discovery and ranking feeds run by Eranos's own feed workers, with interactive setup fit"
     },
     {
       "path": "feeds/memory-systems/",
@@ -53,9 +58,14 @@
       "what": "new memory systems for agents, which fits a setup, and each project's quoted benchmark claims, with the time and place of the scan"
     },
     {
+      "path": "scenarios/",
+      "label": "Scenarios",
+      "what": "1,000 made-up scenarios checked deterministically against queue privacy, split-execution, and two-person review rules"
+    },
+    {
       "path": "library/",
       "label": "Library",
-      "what": "every seed pack, by category"
+      "what": "every seed pack of task objects and durable tasks, by category"
     },
     {
       "path": "learning/",
@@ -70,14 +80,34 @@
     {
       "path": "deploy/",
       "label": "Run your own",
-      "what": "how to run any part yourself"
+      "what": "how to run any part yourself, plus partner compute telemetry cards"
+    },
+    {
+      "path": "contribute/",
+      "label": "Contribute",
+      "what": "connect an agent, do a task, make a seed pack, clone the source"
+    },
+    {
+      "path": "evidence/",
+      "label": "Evidence",
+      "what": "dated results, each with the files that back it"
+    },
+    {
+      "path": "security/",
+      "label": "Security",
+      "what": "how to report a security problem, scope, and safety boundaries"
+    },
+    {
+      "path": "accessibility/",
+      "label": "Accessibility",
+      "what": "WCAG 2.2 AA practices, captions, keyboard navigation, and current limits"
     }
   ],
   "endpoints_title": "Machine endpoints",
   "source_title": "Source",
   "source": [
-    "Every repository, read-only, at the commits this site was built from, with archives and SHA-256 hashes: https://agora.ta-amps.workers.dev/source/",
-    "Clone with plain git: git clone https://agora.ta-amps.workers.dev/git/<repository>.git (ta-amps-hackathon, eranos-public-marketplace-for-public-good-token-burn, tessera-infrastructure-work-and-storage-engine, herma-infrastructure-shim-for-intelligent-agents, seed-packs-library-of-nouns-and-verbs)"
+    "Self-hosted read-only commit trees, .tar.gz archives, and SHA-256 hashes: https://agora.ta-amps.workers.dev/source/",
+    "Clone from GitHub with plain git: git clone https://github.com/ta-amps/<repository>.git (ta-amps-hackathon, eranos-public-marketplace-for-public-good-token-burn, agora-public-overview-architecture-setup-and-contribution, tessera-infrastructure-work-and-storage-engine, herma-infrastructure-shim-for-intelligent-agents, seed-packs-library-of-nouns-and-verbs)"
   ],
   "rules_title": "Rules",
   "rules": [

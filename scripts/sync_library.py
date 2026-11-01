@@ -165,14 +165,21 @@ def measure_pack(library: Path, pack_id: str, commit: str, receipt: dict, workfl
     descriptor = descriptors[0]
     if not descriptor.get("title", "").startswith(PACK_PHRASE) or len(descriptor["title"]) == len(PACK_PHRASE):
         fail(f"{pack_id}: the descriptor noun's title does not start with {PACK_PHRASE!r}")
-    purpose = descriptor["title"][len(PACK_PHRASE):]
+    purpose = build_site.plain_words(descriptor["title"][len(PACK_PHRASE):])
+    purpose = (purpose
+               .replace("Task Objects", "task objects")
+               .replace("Task Object", "task object")
+               .replace("Task-Objects", "task-objects")
+               .replace("Task-Object", "task-object")
+               .replace("tasks (verbs)", "tasks (things to do)")
+               .replace("Tasks (Verbs)", "Tasks (things to do)"))
     code = None
     if "code" in manifest:
         code_folder = folder / "code"
         tests = [path for path in code_folder.rglob("test*.py") if "tests" in path.relative_to(code_folder).parts]
         if not tests:
             fail(f"{pack_id}: the manifest pins a code folder, but it holds no tests")
-        covering = sorted(name for name, text in workflows.items() if f"packs/{pack_id}/**" in text)
+        covering = sorted(name for name, text in workflows.items() if f"packs/{pack_id}/" in text)
         if not covering:
             fail(f"{pack_id}: no workflow in .github/workflows runs on this pack's path")
         code = {"files": manifest["code"]["files"], "tests": len(tests), "workflow": covering[0]}

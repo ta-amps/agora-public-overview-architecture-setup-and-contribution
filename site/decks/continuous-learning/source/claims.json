@@ -76,14 +76,14 @@
       "slide": "small-models",
       "number": "Llama 3.2 3B (Hybrid LoRA + Compact Pointer): exact recall 64.2% to 91.7% on a 120-row test with a 38.5-token pointer, cutting shim tokens by 91.0% vs a 427.6-token BM25 shim (8 of 8 reload check)",
       "status": "measured",
-      "source": "Local RTX 3060 LoRA-as-Memory paired with a 1-line compact pointer for live post-training delta Task Objects; example data only, nothing admitted or deployed.",
+      "source": "Local RTX 3060 LoRA-as-Memory paired with a 1-line compact pointer for live post-training delta task objects; example data only, nothing admitted or deployed.",
       "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/meta-evals-2026-10-31/README.md"
     },
     {
       "slide": "small-models",
       "number": "Llama 3.2 1B (Herma Shim Router): full route exact match 26.7% to 98.3% on a 120-row 5-action test (vs 10.0% zero-shot 1B), with 100.0% contributor-privacy refusal recall and 0.0% false refusals",
       "status": "measured",
-      "source": "Local RTX 3060 1B edge router adapter classifying direct reply, Task-Object injection, task decomposition, frontier synthesis, and contributor-tier privacy refusal.",
+      "source": "Local RTX 3060 1B edge router adapter classifying direct reply, task-object injection, task decomposition, frontier synthesis, and contributor-tier privacy refusal.",
       "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/meta-evals-2026-10-31/README.md"
     },
     {
@@ -118,7 +118,7 @@
       "slide": "glimmer-30b",
       "number": "Muse Glimmer 30B (LoRA-as-Memory): closed-book exact match 0.0% to 62.5% on a pre-registered 120-row test with 0 shim tokens (+33.3 points vs 222.3-token BM25 shim, 2.28 times faster, 8 of 8 reload check)",
       "status": "measured",
-      "source": "QLoRA on two free Kaggle T4 GPUs, October 31, 2026: closed-book Task-Object recall and multi-step workflow synthesis without runtime context injection. Promoted candidate only; nothing has been admitted or deployed.",
+      "source": "QLoRA on two free Kaggle T4 GPUs, October 31, 2026: closed-book task-object recall and multi-step workflow synthesis without runtime context injection. Promoted candidate only; nothing has been admitted or deployed.",
       "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/glimmer-30b-lora-memory-2026-10-31/README.md"
     },
     {
@@ -129,17 +129,10 @@
       "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/execution-learning.md"
     },
     {
-      "slide": "learners",
-      "number": "Tuning on opted-in, verified, rights-cleared real runs",
-      "status": "planned",
-      "source": "The training export is a proposed design in Tessera’s execution-learning record. Nothing exports data from real runs yet.",
-      "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/execution-learning.md"
-    },
-    {
       "slide": "free-gpus",
       "number": "Muse Glimmer 30B QLoRA on Kaggle’s two free T4 GPUs: 64 training steps in 83 minutes, on 511 rows",
       "status": "measured",
-      "source": "The 511-row run record: 64 steps and 4,997.5 seconds of training, with each stage, library version and the peak memory of both GPUs recorded. The whole job took 8,789.5 seconds. The notebooks themselves aren’t public yet.",
+      "source": "The 511-row run record: 64 steps and 4,997.5 seconds of training, with each stage, library version and the peak memory of both GPUs recorded. The whole job took 8,789.5 seconds.",
       "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/glimmer-30b-2026-10-29/phase2b-tuning511-summary.json"
     },
     {
@@ -176,13 +169,6 @@
       "status": "measured",
       "source": "Deterministic Latin-hypercube evaluation over 10^12 addressable 4D tuples (persona, environment, method, stakeholder constraint), separating direct agent work, human-partitioned drafts, and stakeholder-blocked escalations.",
       "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/sira-are-cascade-2026-10-31/README.md"
-    },
-    {
-      "slide": "limits",
-      "number": "Learning from live traffic",
-      "status": "planned",
-      "source": "Rounds start on demand today. A schedule that only enqueues the tick verb, and the export of real runs for training, are designed, not built.",
-      "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md"
     }
   ]
 }

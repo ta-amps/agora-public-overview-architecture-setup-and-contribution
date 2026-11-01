@@ -100,6 +100,22 @@
     "note": "Agora is the overview of ta-amps. Publishing something here does not certify a claim; each claim links to its dated evidence. MIT license.",
     "links": [
       {
+        "href": "judges/",
+        "label": "For judges"
+      },
+      {
+        "href": "status/",
+        "label": "Status"
+      },
+      {
+        "href": "feeds/",
+        "label": "Feeds"
+      },
+      {
+        "href": "scenarios/",
+        "label": "Scenarios"
+      },
+      {
         "href": "evidence/",
         "label": "Evidence"
       },
@@ -122,6 +138,14 @@
       {
         "href": "deploy/",
         "label": "Run your own"
+      },
+      {
+        "href": "security/",
+        "label": "Security"
+      },
+      {
+        "href": "accessibility/",
+        "label": "Accessibility"
       },
       {
         "href": "source/",

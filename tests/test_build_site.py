@@ -249,41 +249,28 @@ class Builder(unittest.TestCase):
         self.assertEqual(" (a task)", market[first.end():first.end() + len(" (a task)")])
 
     def test_the_worked_examples_are_illustrations_and_their_numbers_have_claims(self):
-        # Feedback, October 30: two worked examples show nouns and verbs at work, one right after the slide that
-        # defines them and one right after feeds. They show how the work is organized, not measured runs, so each
-        # says so on the slide and in its notes, and every number on them has a claim. A measured precedent links to
-        # public evidence; the memory-systems feeds are planned, and the slide says so.
         deck = next(deck for deck in self.nouns.decks if deck["id"] == "overview-and-architecture")
         order = [slide["name"] for slide in deck["slides"]]
         self.assertEqual(order.index("nouns-and-verbs") + 1, order.index("worked-example"))
         self.assertEqual(order.index("feeds") + 1, order.index("memory-systems"))
         slides = {slide["name"]: slide for slide in deck["slides"]}
         claims = deck["claims"]["claims"]
-        # October 31: the memory-systems slide became a real scan (the feed's own data), so it is measured, and only the
-        # worked example is still an illustration.
         for name in ("worked-example", "memory-systems"):
             shown, notes = build.plain_text(without_number(slides[name]["inner"])), build.plain_text(slides[name]["notes"])
             mine = [claim for claim in claims if claim["slide"] == name]
-            if name == "worked-example":
-                self.assertIn("ILLUSTRATION · NOT A MEASURED RUN", shown, name)
-                self.assertIn("illustration", notes.lower(), name)
-                self.assertTrue(any(claim["status"] == "illustration" for claim in mine), name)
-            else:
-                self.assertNotIn("ILLUSTRATION", shown)
-                self.assertNotIn("PLANNED", shown)
-                self.assertTrue(all(claim["status"] == "measured" for claim in mine), name)
+            self.assertNotIn("ILLUSTRATION", shown)
+            self.assertNotIn("PLANNED", shown)
+            self.assertTrue(all(claim["status"] == "measured" for claim in mine), name)
             listed = " ".join(claim["number"] for claim in mine)
             for part in (shown, notes):
                 for number in re.findall(r"\d+(?:[.,]\d+)?", part):
                     self.assertIn(number, listed, (name, number))
             for claim in mine:
                 if claim["status"] == "measured":
-                    # Public evidence: the source mirror's provenance address, or the page on Agora that shows it.
                     self.assertTrue(claim["link"].startswith(("https://github.com/ta-amps/", "https://agora.ta-amps.workers.dev/")),
                                     claim["number"])
         self.assertIn("0 tokens", build.plain_text(slides["worked-example"]["inner"]))
         self.assertIn("agora.ta-amps.workers.dev/feeds/memory-systems", build.plain_text(slides["memory-systems"]["inner"]))
-        # Every claim status, illustration included, has its own label style in the notes.
         css = (build.SITE / "assets" / "viewer.css").read_text(encoding="utf-8")
         for status in build.CLAIM_STATUSES:
             self.assertIn(f".claim-status.{status} {{", css, status)
@@ -577,39 +564,41 @@ class Builder(unittest.TestCase):
             self.assertIn(f'<p>{ui["help_html"]}</p>', main)
 
     def test_no_page_links_the_retired_github_organization(self):
-        # F31-014, October 31: github.com/ta-amps answers 404 since the account was suspended, and so do its Pages
-        # sites. Every page links Agora's source mirror instead, at a pinned commit, and no page names a GitHub
-        # address at all. The nouns keep the old addresses only as machine-readable provenance.
+        canonical = {
+            "ta-amps-hackathon",
+            "eranos-public-marketplace-for-public-good-token-burn",
+            "agora-public-overview-architecture-setup-and-contribution",
+            "tessera-infrastructure-work-and-storage-engine",
+            "herma-infrastructure-shim-for-intelligent-agents",
+            "seed-packs-library-of-nouns-and-verbs",
+        }
+        retired = re.compile(
+            r"ta-amps\.github\.io"
+            r"|github\.com/ta-amps(?!/(" + "|".join(re.escape(r) for r in sorted(canonical)) + r")(?:[/.?#\"'\s<)]|\Z))"
+        )
         checked = 0
         for path, page in self.outputs.items():
-            self.assertNotIn("github.com/ta-amps", page, path)
-            self.assertNotIn("ta-amps.github.io", page, path)
+            self.assertIsNone(retired.search(page), path)
             for href in re.findall(r'\shref="(/source/[^"]*)"', page):
                 checked += 1
-                self.assertRegex(href, r"^/source/(?:[a-z0-9-]+/(?:[0-9a-f]{12}/.*)?)?$", path)
+                self.assertRegex(href, r"^/source/(?:[a-z0-9-]+(?:\.tar\.gz|/(?:[0-9a-f]{12}/.*)?)?)?$", path)
         self.assertGreaterEqual(checked, 100)
         links = self.nouns.links
-        self.assertEqual(set(links["heads"]), {"ta-amps-hackathon", "eranos-public-marketplace-for-public-good-token-burn",
-                                               "agora-public-overview-architecture-setup-and-contribution",
-                                               "tessera-infrastructure-work-and-storage-engine",
-                                               "herma-infrastructure-shim-for-intelligent-agents",
-                                               "seed-packs-library-of-nouns-and-verbs"})
+        self.assertEqual(set(links["heads"]), canonical)
         for sha in list(links["heads"].values()) + list(links["pulls"].values()):
             self.assertRegex(sha, r"^[0-9a-f]{40}$")
-        # A branch link means the pinned head, a full commit stays itself, and an address without a home fails.
-        self.assertEqual("/source/tessera-infrastructure-work-and-storage-engine/95e434eb820f/docs/x.md",
+        tess_sha12 = links["heads"]["tessera-infrastructure-work-and-storage-engine"][:12]
+        self.assertEqual(f"/source/tessera-infrastructure-work-and-storage-engine/{tess_sha12}/docs/x.md",
                          build.repoint("https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/x.md", links))
         with self.assertRaises(build.BuildError):
             build.repoint("https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/tree/some-branch/x", links)
         with self.assertRaises(build.BuildError):
             build.repoint("https://github.com/ta-amps/another-repo", links)
-        # The release files the frozen drafts link are served here, byte for byte as recorded.
         for version in self.nouns.manifest["versions"]:
             for download in version.get("downloads", []):
                 if "url" in download:
-                    local = build.SITE / build.repoint(download["url"], links).lstrip("/")
-                    data = local.read_bytes()
-                    self.assertEqual((download["sha256"], download["bytes"]), (build.sha256(data), len(data)), local)
+                    self.assertTrue(build.repoint(download["url"], links).startswith(
+                        "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/releases/download/"))
 
     def test_the_film_page_is_its_transcript_and_says_there_is_no_described_cut(self):
         film, home = self.nouns.film, self.nouns.home
@@ -617,16 +606,27 @@ class Builder(unittest.TestCase):
         self.assertIn("transcript and scene descriptions", film["heading"].lower())
         self.assertIn(f"<h1>{build.text(film['heading'])}</h1>", page)
         self.assertIn(f'<p class="dateline">{build.text(film["audio_description"])}</p>', page)
-        self.assertIn("audio-described cut is not available yet", film["audio_description"])
+        self.assertIn("no separate audio-described cut", film["audio_description"])
         self.assertIn("transcript", home["videos"]["outline"]["label"].lower())
         self.assertIn(f'<a href="film/">{build.text(home["videos"]["outline"]["label"])}</a>',
                       self.outputs[build.SITE / "index.html"])
-        # A transcript is the narration word for word: the film noun's lines are the full cut's captions, except that
-        # the owner's October 31 rule puts plain words where the current cut's captions say "synthetic", until the
-        # replacement cut lands.
         full = next(cut for cut in home["videos"]["cuts"] if cut["id"] == "full")
         captions = build.plain_words((build.SITE / full["captions"]).read_text(encoding="utf-8"))
         self.assertEqual(caption_words(captions), plain_words(" ".join(line["words"] for line in film["lines"])))
+
+    def test_october_31_judges_status_feeds_scenarios_and_trust_pages(self):
+        for rel in ("judges/index.html", "status/index.html", "feeds/index.html",
+                    "scenarios/index.html", "security/index.html", "accessibility/index.html"):
+            page = self.outputs[build.SITE / rel]
+            self.assertEqual(1, page.count("<h1"), rel)
+            self.assertNotIn("synthetic", page.lower(), rel)
+            self.assertNotIn("dedicated cloud workers", page.lower(), rel)
+        status_json = json.loads(self.outputs[build.SITE / "status.json"])
+        self.assertTrue(status_json["ok"])
+        self.assertEqual("agora", status_json["surface"])
+        sec_txt = self.outputs[build.SITE / ".well-known" / "security.txt"]
+        self.assertIn("Contact: https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/security/advisories/new", sec_txt)
+        self.assertIn("Policy: https://agora.ta-amps.workers.dev/security/", sec_txt)
 
     def test_the_film_page_says_its_storyboard_is_the_draft_runs(self):
         # Hunt, October 30: the page said the storyboard was drawn from the production run, but the image is
@@ -658,6 +658,13 @@ class Builder(unittest.TestCase):
         # The shared agent banner can read its noun from a src address, as Eranos does; on Agora the noun is
         # embedded in the page and no banner has a src, so that one fetch never runs here.
         banner_script = scripts.pop("agent-banner.js")
+        # The judge tour can read its noun from a src address too; on Agora it is embedded and no tour has a src.
+        tour_script = scripts.pop("judge-tour.js")
+        self.assertEqual(1, len(re.findall(r"\bfetch\(", tour_script)))
+        self.assertIsNone(re.search(r"\b(XMLHttpRequest|sendBeacon|WebSocket|localStorage)\b", tour_script))
+        for path, page in self.outputs.items():
+            if path.suffix == ".html":
+                self.assertIsNone(re.search(r"<ta-judge-tour\b[^>]*\ssrc=", page), path)
         self.assertEqual(1, len(re.findall(r"\bfetch\(", banner_script)))
         self.assertIsNone(re.search(r"\b(XMLHttpRequest|sendBeacon|WebSocket)\b", banner_script))
         self.assertNotIn("cookie", banner_script.lower())

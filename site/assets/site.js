@@ -357,7 +357,7 @@
   });
 })();
 
-// Interactive Task, Task-Object & Meta Hackathon Ecosystem Explorer on the Library page.
+// Interactive Task, task-object & Meta Hackathon Ecosystem Explorer on the Library page.
 // Reads the static #agora-explorer-data JSON block in the page; zero network traffic and zero browser storage.
 (function () {
   var dataNode = document.getElementById("agora-explorer-data");
@@ -496,14 +496,14 @@
 
     if (proj.tasks && proj.tasks.length) {
       var vGroup = el("div", "exp-card-group");
-      vGroup.appendChild(el("p", "exp-card-label", labels.tasks_label || "Candidate Tasks (verbs):"));
+      vGroup.appendChild(el("p", "exp-card-label", labels.tasks_label || "Candidate Tasks (things to do):"));
       vGroup.appendChild(makeChipList(proj.tasks, "verb"));
       li.appendChild(vGroup);
     }
 
     if (proj.task_objects && proj.task_objects.length) {
       var nGroup = el("div", "exp-card-group");
-      nGroup.appendChild(el("p", "exp-card-label", labels.objects_label || "Candidate Task Objects (nouns):"));
+      nGroup.appendChild(el("p", "exp-card-label", labels.objects_label || "Candidate task objects (nouns):"));
       nGroup.appendChild(makeChipList(proj.task_objects, "noun"));
       li.appendChild(nGroup);
     }
@@ -595,7 +595,7 @@
           else if (x.kind === "noun") nCount++;
         });
         statusEl.textContent = "Showing " + slice.length + " of " + matches.length +
-          " matching library artifacts (" + pCount + " Seed Packs · " + vCount + " Tasks · " + nCount + " Task Objects)";
+          " matching library artifacts (" + pCount + " Seed Packs · " + vCount + " Tasks · " + nCount + " task objects)";
       } else {
         statusEl.textContent = "Showing " + slice.length + " of " + matches.length +
           " matching Meta Hackathon 2026 repositories (static public-scan decomposition)";

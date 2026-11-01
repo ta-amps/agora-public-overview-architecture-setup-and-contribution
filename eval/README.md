@@ -1,8 +1,8 @@
 # Pre-Registered Evaluation & Promotion Gate Benchmarks
 
-Every model-tuning round in `ta-amps` is scored by a deterministic evaluation Task (`verb.benchmark_harness`) and gated by a pre-registered promotion rule Task Object (`tool-call-specialist.promotion` v1, `sha256: bf0fa821717c2400faab77652f067ea85f2616eea329c6e139af33a423e4b3b7`) fixed before training runs.
+Every model-tuning round in `ta-amps` is scored by a deterministic evaluation Task (`verb.benchmark_harness`) and gated by a pre-registered promotion rule task object (`tool-call-specialist.promotion` v1, `sha256: bf0fa821717c2400faab77652f067ea85f2616eea329c6e139af33a423e4b3b7`) fixed before training runs.
 
-> **What these benchmarks show -- and what they do not:** All splits evaluate one narrow, synthetic task (producing schema-valid Tessera MCP JSON tool calls or exact refusal reasons on unseen tool families). They prove that the continuous Task and Task-Object learning loop measures real specialist gains, blocks contaminated rows, and rejects regressions; they are not general LLM capability benchmarks.
+> **What these benchmarks show -- and what they do not:** All splits evaluate one narrow, synthetic task (producing schema-valid Tessera MCP JSON tool calls or exact refusal reasons on unseen tool families). They prove that the continuous Task and task-object learning loop measures real specialist gains, blocks contaminated rows, and rejects regressions; they are not general LLM capability benchmarks.
 
 ## Holdout Exact-Match Accuracy
 

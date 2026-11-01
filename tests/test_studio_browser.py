@@ -321,7 +321,7 @@ class Studio(unittest.TestCase):
         self.assertRegex(pill, r"Trying again in 0:(30|29|28)")  # no Retry-After: the backoff starts at 30 s
         self.assertEqual(1, page.locator('#wire-log-list .w-status[data-code="0"]').count())
 
-        page.fill("#chat-input", "Explain Tasks and Task Objects simply")
+        page.fill("#chat-input", "Explain Tasks and task objects simply")
         page.click("#chat-send-btn")
         page.wait_for_selector('.chat-turn .shim-card[data-ok="false"]')
         card = page.inner_text(".chat-turn")

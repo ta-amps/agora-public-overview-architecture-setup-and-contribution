@@ -134,7 +134,7 @@
         "Run python3 scripts/build_packs.py, then make check. It rebuilds every pack byte for byte and scans for secrets and private names."
       ],
       "code_id": "contribute-pack-commands",
-      "code": "git clone https://agora.ta-amps.workers.dev/git/seed-packs-library-of-nouns-and-verbs.git\ncd seed-packs-library-of-nouns-and-verbs\npython3 scripts/build_packs.py\nmake check",
+      "code": "git clone https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs.git\ncd seed-packs-library-of-nouns-and-verbs\npython3 scripts/build_packs.py\nmake check",
       "doors": []
     },
     {
@@ -146,17 +146,18 @@
     {
       "id": "clone",
       "heading": "Clone the source",
-      "lead": "Five repositories are mirrored here, read-only, at the commits this site was built from. Clone them with plain git; no account needed. Agora’s own source is here as files and an archive.",
+      "lead": "All six repositories are public on GitHub, and this site also hosts clean HEAD .tar.gz archives and file trees under /source/ with SHA-256 verification.",
       "repos": [
         "ta-amps-hackathon",
         "eranos-public-marketplace-for-public-good-token-burn",
+        "agora-public-overview-architecture-setup-and-contribution",
         "tessera-infrastructure-work-and-storage-engine",
         "herma-infrastructure-shim-for-intelligent-agents",
         "seed-packs-library-of-nouns-and-verbs"
       ],
-      "clone_prefix": "git clone https://agora.ta-amps.workers.dev/git/",
+      "clone_prefix": "git clone https://github.com/ta-amps/",
       "code_id": "contribute-clone-commands",
-      "source_label": "Every repository’s commit, archive and SHA-256 hash, and Agora’s files",
+      "source_label": "Self-hosted .tar.gz archives, SHA-256 hashes, and file browser on /source/",
       "source_href": "source/"
     }
   ],

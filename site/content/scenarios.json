@@ -1,0 +1,234 @@
+{
+  "about": "The scenarios page (/scenarios/), following the AgoraScenarios board of October 31, 2026 and backed by site/evidence/sira-are-cascade-2026-10-31/scenario_matrix_1000_digest.json (SHA-256 f99b3becdcffd84ff6228eedb2b0f789d65ea9ce30e4103f51c387a0ee69616d). Plain words throughout.",
+  "title": "Scenarios · 1,000 made-up scenarios checked against queue rules | Agora · ta-amps",
+  "description": "1,000 made-up scenarios across 25 kinds of work checked deterministically against queue privacy, split-execution, latency, and distinct-reviewer rules (seed 20261031, zero model calls).",
+  "kicker": "Agora · Scenarios",
+  "heading": "1,000 made-up scenarios, checked against the same rules",
+  "lead": "We generated situations, methods, people, and stakeholders, and checked each combination against the written rules the queue uses: files that must stay local, a second distinct checker, and time limits. Nothing here is a real nonprofit request, and zero model calls were made. Anyone can re-run it from seed 20261031.",
+  "pills": [
+    "1,000 scenarios evaluated",
+    "sampled from 10¹² combinations",
+    "written rules, zero model calls",
+    "seed 20261031",
+    "checked locally"
+  ],
+  "totals": {
+    "total": 1000,
+    "direct": 151,
+    "split": 524,
+    "blocked": 325,
+    "reason_total": 470
+  },
+  "tiles": [
+    {
+      "key": "direct",
+      "icon": "✓",
+      "label": "Approved as asked",
+      "count": 151,
+      "pct": "15.1%",
+      "sub": "The rules allowed the work exactly as described."
+    },
+    {
+      "key": "split",
+      "icon": "⇄",
+      "label": "Approved after a split",
+      "count": 524,
+      "pct": "52.4%",
+      "sub": "Private files stayed local; only public parts went to volunteers."
+    },
+    {
+      "key": "blocked",
+      "icon": "✕",
+      "label": "Blocked",
+      "count": 325,
+      "pct": "32.5%",
+      "sub": "A rule or a stakeholder stopped it, with the reason recorded."
+    }
+  ],
+  "why_blocked": {
+    "heading": "Why scenarios were blocked",
+    "lead": "A scenario can be blocked for more than one reason: 470 recorded reasons across 325 blocked scenarios.",
+    "reasons": [
+      {
+        "label": "Needed the cloud, but the work had to stay offline",
+        "count": 165,
+        "code": "cloud_tier_cannot_run_in_offline_airgap"
+      },
+      {
+        "label": "Mixed private and public data, not split",
+        "count": 97,
+        "code": "mixed_or_regulated_data_missing_private_public_split"
+      },
+      {
+        "label": "Sensitive data would have left the building",
+        "count": 85,
+        "code": "unsplit_cloud_egress_on_high_pii_data"
+      },
+      {
+        "label": "Too slow for the situation",
+        "count": 50,
+        "code": "method_latency_exceeds_operator_or_situational_budget"
+      },
+      {
+        "label": "No second, different checker",
+        "count": 42,
+        "code": "missing_distinct_reviewer_two_step_gate"
+      },
+      {
+        "label": "A stakeholder vetoed cloud use for sensitive data",
+        "count": 31,
+        "code": "stakeholder_veto_cloud_on_high_pii_airgap"
+      }
+    ]
+  },
+  "stakeholders": {
+    "heading": "Who objected most",
+    "lead": "Share of their 100 scenarios each stakeholder blocked.",
+    "items": [
+      {
+        "label": "Skeptical municipal funder",
+        "blocked": 36
+      },
+      {
+        "label": "Impacted community advocate",
+        "blocked": 36
+      },
+      {
+        "label": "Privacy and HIPAA counsel",
+        "blocked": 35
+      },
+      {
+        "label": "Volunteer agent donor",
+        "blocked": 35
+      },
+      {
+        "label": "Frontline caseworker",
+        "blocked": 34
+      },
+      {
+        "label": "Clinical research coordinator",
+        "blocked": 33
+      },
+      {
+        "label": "Nonprofit treasurer",
+        "blocked": 32
+      },
+      {
+        "label": "Security reviewer",
+        "blocked": 31
+      },
+      {
+        "label": "Public records journalist",
+        "blocked": 29
+      },
+      {
+        "label": "Disability access auditor",
+        "blocked": 24
+      }
+    ]
+  },
+  "domains_section": {
+    "heading": "25 kinds of work, 40 scenarios each",
+    "filters": [
+      {
+        "key": "all",
+        "label": "All 25"
+      },
+      {
+        "key": "p",
+        "label": "Public good (18)"
+      },
+      {
+        "key": "t",
+        "label": "Technical (7)"
+      }
+    ],
+    "legend": [
+      {
+        "kind": "direct",
+        "label": "Approved as asked"
+      },
+      {
+        "kind": "split",
+        "label": "Approved after a private/public split"
+      },
+      {
+        "kind": "blocked",
+        "label": "Blocked"
+      }
+    ],
+    "columns": [
+      "Kind of work",
+      "Outcome of 40",
+      "As asked",
+      "Split",
+      "Blocked"
+    ],
+    "domains": [
+      ["Rural shelter offline handwritten intake transcription", "p", 5, 20, 15],
+      ["Multilingual disaster relief voucher and escrow verification", "p", 7, 22, 11],
+      ["Municipal and state enacted budget appropriation line audit", "p", 4, 22, 14],
+      ["Clinical trial adverse-event and subgroup table extraction", "t", 4, 22, 14],
+      ["Supply-chain timecard and piece-rate wage discrepancy triage", "p", 6, 21, 13],
+      ["Food bank perishable cold-chain inventory and pickup scheduling", "p", 10, 15, 15],
+      ["Housing court public docket and notice-period verification", "p", 7, 22, 11],
+      ["Public benefits portal WCAG 2.2 AA accessibility audit", "p", 7, 20, 13],
+      ["Regional smoke sensors and school clean-air shelter readiness", "p", 9, 19, 12],
+      ["Foreign vocational syllabus and licensing hour mapping", "p", 6, 21, 13],
+      ["Service-line material records and lead pipe inventory", "p", 3, 24, 13],
+      ["Nonprofit grant renewal outcome and receipt reconciliation", "p", 2, 27, 11],
+      ["Made-up elder-fraud message patterns for helpline training", "p", 6, 19, 15],
+      ["Rural accessible dial-a-ride and dialysis van scheduling", "p", 5, 24, 11],
+      ["Civic software SBOM reachability and license scan", "t", 4, 25, 11],
+      ["Public-health video dwell and caption legibility audit", "t", 6, 22, 12],
+      ["Post-cutoff SDK specs compiled into holdout-disjoint LoRA pairs", "t", 5, 22, 13],
+      ["Untrusted retrieval sanitization and context packing", "t", 10, 20, 10],
+      ["Work-queue lease expiry and fencing-token audit", "t", 8, 20, 12],
+      ["Cross-harness cost, latency and patch-pass comparison", "t", 9, 13, 18],
+      ["Purged walk-forward regime validation", "t", 4, 26, 10],
+      ["Smallholder cooperative pest and weather bulletins", "p", 5, 19, 16],
+      ["Hearing transcript witness-statement cross-reference index", "p", 7, 18, 15],
+      ["Low-income community solar interconnection audit", "p", 6, 20, 14],
+      ["Perinatal Medicaid-accepting clinic directory refresh", "p", 6, 21, 13]
+    ]
+  },
+  "samples": {
+    "heading": "Three scenarios, start to finish",
+    "became_label": "Became:",
+    "human_label": "Stays with a person:",
+    "items": [
+      {
+        "kind": "direct",
+        "verdict": "✓ Approved as asked",
+        "tuple": "ENV-0004 · METH-0116 · PERS-0766 · STKH-0237",
+        "text": "Rural shelter intake transcription, checked locally with a paired holdout. The rules allowed it as described.",
+        "became": "a task object for checking transcriptions against held-out samples.",
+        "human": "crisis follow-up, bed allocation, and intake sign-off."
+      },
+      {
+        "kind": "split",
+        "verdict": "⇄ Approved after a split",
+        "tuple": "ENV-0003 · METH-0262 · PERS-0050 · STKH-0130",
+        "text": "Intake work paired with public resource research. Handwritten statements stayed on the shelter’s computer; public budget lines went to volunteers.",
+        "became": "a task object for the two-step check by a distinct reviewer.",
+        "human": "crisis follow-up, bed allocation, and intake sign-off."
+      },
+      {
+        "kind": "blocked",
+        "verdict": "✕ Blocked",
+        "tuple": "ENV-0001 · METH-0831 · PERS-0178 · STKH-0395",
+        "text": "Asked a cloud model to read sensitive statements in an offline setting. Two rules stopped it before any work could queue.",
+        "became": "a guardrail: sensitive files never go to a cloud tier unsplit.",
+        "human": "crisis follow-up, bed allocation, and intake sign-off."
+      }
+    ]
+  },
+  "foot": {
+    "text": "Re-run it deterministically with the meta-are-scenario-matrix seed pack (seed 20261031), inspired by Meta’s Agents Research Environments (Gaia2) and Matrix.",
+    "pack_label": "meta-are-scenario-matrix pack →",
+    "pack_href": "../library/#meta-are-scenario-matrix",
+    "digest_label": "scenario_matrix_1000_digest.json",
+    "digest_href": "../evidence/sira-are-cascade-2026-10-31/scenario_matrix_1000_digest.json",
+    "receipt_sha256": "f99b3becdcffd84ff6228eedb2b0f789d65ea9ce30e4103f51c387a0ee69616d"
+  }
+}

@@ -51,7 +51,7 @@ window.TA_TIMELINES = {
       "cue_end_s": 33.9,
       "lines": [
         "let's zoom into the Tasks and",
-        "Task Objects engine underneath."
+        "task objects engine underneath."
       ]
     },
     {

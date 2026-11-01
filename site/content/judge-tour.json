@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "kind": "instructions",
+  "key": "judge-tour",
+  "about": "The 45-second tour for judges (the JudgeTour board, October 31, 2026): one strip under the header of both sites, opened with ?tour=judge. Each step names the page it belongs to and the next page; every address is a real page. The shared <ta-judge-tour> element (site/assets/judge-tour.js) renders every word from this noun; Agora embeds it, and Eranos can include the same file with this noun.",
+  "param": "tour",
+  "value": "judge",
+  "label": "45-second tour",
+  "close": "Close the tour",
+  "steps": [
+    {"label": "Agora", "host": "agora.ta-amps.workers.dev", "path": "/", "next": "Try the nonprofit journey →", "next_href": "https://eranos.ta-amps.workers.dev/nonprofits?tour=judge"},
+    {"label": "Ask", "host": "eranos.ta-amps.workers.dev", "path": "/nonprofits", "next": "Watch a finished request →", "next_href": "https://eranos.ta-amps.workers.dev/requests/rq-example?tour=judge"},
+    {"label": "Watch a request", "host": "eranos.ta-amps.workers.dev", "path": "/requests/", "next": "Open the result →", "next_href": "https://eranos.ta-amps.workers.dev/requests/rq-example?tour=judge#result"},
+    {"label": "The result", "host": "eranos.ta-amps.workers.dev", "path": "/requests/", "hash": "#result", "next": "Test the queue live →", "next_href": "https://eranos.ta-amps.workers.dev/help?tour=judge"},
+    {"label": "Live queue", "host": "eranos.ta-amps.workers.dev", "path": "/help", "next": "Back to Agora", "next_href": "https://agora.ta-amps.workers.dev/"}
+  ]
+}

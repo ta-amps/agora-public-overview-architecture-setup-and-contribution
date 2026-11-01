@@ -98,6 +98,24 @@ class Chrome(LocalSite):
         page.click("[data-menu-toggle]")
         self.assertFalse(nav.is_visible())
 
+    def test_the_judge_tour_shows_only_when_asked_and_closes(self):
+        # The JudgeTour board: ?tour=judge opens a strip under the header; Agora is step 1, and the next link goes to
+        # Eranos's nonprofit journey with the tour still on. Close hides it and drops the parameter.
+        page = self.open(viewport={"width": 1280, "height": 720})
+        self.assertTrue(page.evaluate("document.querySelector('ta-judge-tour').hidden"))
+        page.goto(self.base + "?tour=judge")
+        page.wait_for_selector("ta-judge-tour[data-active=\"true\"]", state="attached")
+        tour = page.locator("ta-judge-tour")
+        self.assertEqual("1", tour.get_attribute("data-step"))
+        self.assertIn("45-second tour", page.locator("ta-judge-tour nav").inner_text())
+        self.assertEqual("https://eranos.ta-amps.workers.dev/nonprofits?tour=judge", page.locator("ta-judge-tour a").get_attribute("href"))
+        self.assertEqual("step", page.locator("ta-judge-tour li").first.get_attribute("aria-current"))
+        header = page.locator(".site-header").bounding_box()
+        self.assertGreaterEqual(tour.bounding_box()["y"], header["y"] + header["height"] - 1)  # under the header
+        page.click("ta-judge-tour button")
+        self.assertTrue(page.evaluate("document.querySelector('ta-judge-tour').hidden"))
+        self.assertNotIn("tour=judge", page.url)
+
     def test_the_library_is_short_enough_to_paint_at_device_scale_one_and_a_half(self):
         # F31-005: Chrome stopped painting the 15,000 px library partway down at device scale 1.5. Each category
         # now shows one row and a See all link, and the explorer pages twelve results at a time.

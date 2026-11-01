@@ -182,11 +182,14 @@ a { color: var(--link); text-decoration: underline; text-underline-offset: 0.18e
     }
 
     href(value) {
+      const raw = String(value || "/").trim();
       try {
-        return new URL(value || "/", this.getAttribute("base") || window.location.origin).href;
+        const parsed = new URL(raw, this.getAttribute("base") || window.location.origin);
+        if (parsed.protocol === "http:" || parsed.protocol === "https:") return parsed.href;
       } catch (error) {
-        return value;
+        // reject invalid or non-http(s) URLs
       }
+      return "#";
     }
 
     label(button, long, short) {
@@ -305,6 +308,7 @@ a { color: var(--link); text-decoration: underline; text-underline-offset: 0.18e
       } else {
         this.root.replaceChildren(el("style", { text: CSS }), section);
       }
+      this.setOpen(false, false);
       this.dataset.ready = "true";
       this.dispatchEvent(new CustomEvent("ta-agent-banner-ready", { bubbles: true }));
     }

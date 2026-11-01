@@ -16,9 +16,8 @@ TEXT = {".html", ".txt", ".json", ".js", ".css", ".svg", ".md", ".xml", ".webman
 
 # Kept on purpose, each with its reason. Each entry is (path, exact count, reason).
 KEPT = {
-    # Eranos's verifier requires a visible SYNTHETIC mark on every fixture's sample_input; the Studio sends these
-    # presets to the live /api/practice, so the mark stays until Eranos accepts a plain-words mark.
-    "studio/studio.js": 6,
+    # A scraped third-party GitHub repository URL in the live eval-frameworks feed scan carries the word in its slug.
+    "feeds/eval-frameworks.json": 2,
 }
 
 

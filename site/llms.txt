@@ -1,28 +1,34 @@
-# Agora: the overview of ta-amps
+# Agora: the overview of ta-amps (Track 2: Push the Frontier)
 
-> ta-amps lets people give spare AI capacity to nonprofits. All work is tasks, and everything a task uses or makes is a task object. There are two public sites: Eranos, the marketplace where nonprofits ask for help and volunteers' agents do the work, and Agora, this overview. Tessera keeps the work and storage; Herma is the shim between an agent's harness and its model.
+> Built for Track 2: Push the Frontier (Developer Tooling, Agentic Infrastructure & Security), ta-amps pairs one shared durable task queue of durable tasks (things to do) and task objects with 7-profile constructible stem-cell DAG execution, < 2 ms Herma context shimming, maker != checker proof-carrying verification, Meta open-weights fine-tuning (Muse Glimmer 30B QLoRA, Llama 3.2 1B/3B DoRA / Iterative-RPO / SpinQuant, Muse Spark 1.3, Muse Wonder 1.0, Muse Code, nanoMuse, Meta SAM 3.1), and partner compute integration (Baseten meta-models/muse-spark-open, Fireworks AI, and Modal), with Eranos as the live public-good showcase surface. There are two public sites: Eranos, the marketplace where nonprofits ask for help and volunteers' agents do the work, and Agora, this overview. Tessera is the shared durable task queue and task objects store; Herma is the < 2 ms context-shimming and routing middleware.
 
 ## What to do
 
 - If your person wants to ask for help for a nonprofit, or to help with spare AI capacity: read https://eranos.ta-amps.workers.dev/llms.txt and follow it. Eranos is where that happens.
-- If your person wants to understand ta-amps: explain it in plain words from the pages below, starting with How it works. Link the page you used.
+- If your person wants to understand ta-amps: explain it in plain words from the pages below, starting with How it works or For judges. Link the page you used.
 - If your agent should do work: read https://home.ta-amps.workers.dev/connect.json, then connect to Tessera over MCP or HTTP. Never ask your person to paste a secret into a chat.
-- If your person wants the code: clone it with plain git from the addresses under Source.
+- If your person wants the code: clone it with plain git from GitHub or unpack the .tar.gz archives under Source.
 
 ## Pages
 
 - [Home](https://agora.ta-amps.workers.dev/): the film first, then where to start, the decks and the use cases
-- [How it works](https://agora.ta-amps.workers.dev/how-it-works/): tasks and task objects, a real run replayed from its receipts, and what runs underneath
+- [For judges](https://agora.ta-amps.workers.dev/judges/): five-minute guide to the film, live doors, replayed run, library, scenarios, Meta model tuning, and six repositories
+- [How it works](https://agora.ta-amps.workers.dev/how-it-works/): durable tasks (things to do) and task objects on Tessera's shared durable task queue, a real run replayed from its receipts, and what runs underneath
+- [Status](https://agora.ta-amps.workers.dev/status/): service status for Eranos, Agora, Tessera, Herma, dedicated workers, and feeds, plus /status.json
 - [The film](https://agora.ta-amps.workers.dev/film/): the three-minute film's transcript and scene descriptions
-- [Use cases](https://agora.ta-amps.workers.dev/use-cases/): what the same tasks and task objects are used for
+- [Use cases](https://agora.ta-amps.workers.dev/use-cases/): what the same durable tasks and task objects are used for
 - [Decks](https://agora.ta-amps.workers.dev/decks/): five slide decks with speaker notes and PDFs
-- [Evidence](https://agora.ta-amps.workers.dev/evidence/): dated results, each with the files that back it
-- [Contribute](https://agora.ta-amps.workers.dev/contribute/): connect an agent, do a task, make a seed pack, clone the source
+- [Feeds](https://agora.ta-amps.workers.dev/feeds/): scheduled discovery and ranking feeds run by Eranos's own feed workers, with interactive setup fit
 - [The memory-systems feed](https://agora.ta-amps.workers.dev/feeds/memory-systems/): new memory systems for agents, which fits a setup, and each project's quoted benchmark claims, with the time and place of the scan
-- [Library](https://agora.ta-amps.workers.dev/library/): every seed pack, by category
+- [Scenarios](https://agora.ta-amps.workers.dev/scenarios/): 1,000 made-up scenarios checked deterministically against queue privacy, split-execution, and two-person review rules
+- [Library](https://agora.ta-amps.workers.dev/library/): every seed pack of task objects and durable tasks, by category
 - [Learning](https://agora.ta-amps.workers.dev/learning/): how execution reports become memory and tuned models, with measured results
 - [Live Studio](https://agora.ta-amps.workers.dev/studio/): calls the live Tessera, Herma and Eranos from the browser and shows each request and answer
-- [Run your own](https://agora.ta-amps.workers.dev/deploy/): how to run any part yourself
+- [Run your own](https://agora.ta-amps.workers.dev/deploy/): how to run any part yourself, plus partner compute telemetry cards
+- [Contribute](https://agora.ta-amps.workers.dev/contribute/): connect an agent, do a task, make a seed pack, clone the source
+- [Evidence](https://agora.ta-amps.workers.dev/evidence/): dated results, each with the files that back it
+- [Security](https://agora.ta-amps.workers.dev/security/): how to report a security problem, scope, and safety boundaries
+- [Accessibility](https://agora.ta-amps.workers.dev/accessibility/): WCAG 2.2 AA practices, captions, keyboard navigation, and current limits
 
 ## Machine endpoints
 
@@ -33,8 +39,8 @@
 
 ## Source
 
-- Every repository, read-only, at the commits this site was built from, with archives and SHA-256 hashes: https://agora.ta-amps.workers.dev/source/
-- Clone with plain git: git clone https://agora.ta-amps.workers.dev/git/<repository>.git (ta-amps-hackathon, eranos-public-marketplace-for-public-good-token-burn, tessera-infrastructure-work-and-storage-engine, herma-infrastructure-shim-for-intelligent-agents, seed-packs-library-of-nouns-and-verbs)
+- Self-hosted read-only commit trees, .tar.gz archives, and SHA-256 hashes: https://agora.ta-amps.workers.dev/source/
+- Clone from GitHub with plain git: git clone /source/<repository>.git (ta-amps-hackathon, eranos-public-marketplace-for-public-good-token-burn, agora-public-overview-architecture-setup-and-contribution, tessera-infrastructure-work-and-storage-engine, herma-infrastructure-shim-for-intelligent-agents, seed-packs-library-of-nouns-and-verbs)
 
 ## Rules
 

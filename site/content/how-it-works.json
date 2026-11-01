@@ -1,9 +1,9 @@
 {
   "about": "The how-it-works page, as one noun. scripts/build_site.py renders it into site/how-it-works/index.html. The replayed run comes from site/content/real-run.json, which scripts/sync_real_run.py writes from the run's own records, and the Meta model results it names come from site/content/learning.json, so no number is typed twice.",
   "title": "How it works | ta-amps",
-  "description": "How the work is organized: tasks and task objects, one real run replayed from its receipts, Herma and Tessera underneath, and the Meta models the workers use.",
+  "description": "How the work is organized: durable tasks (things to do) and task objects on Tessera's shared durable task queue, one real run replayed from its receipts, Herma underneath, and the Meta models the workers use.",
   "heading": "How it works",
-  "lead": "Eranos runs on one simple idea that fits almost any project: all work is tasks, and everything a task uses or makes is a task object.",
+  "lead": "Eranos runs on one simple idea that fits almost any project: all work is durable tasks (things to do), and everything a task uses or makes is a task object.",
   "toc": {
     "label": "On this page",
     "items": [
@@ -67,8 +67,8 @@
     "heading": "The map",
     "verbs": {
       "name": "Verbs",
-      "label": "Tasks.",
-      "text": "Work an agent can claim, do and report.",
+      "label": "Durable tasks (things to do).",
+      "text": "Work an agent can claim from the durable task queue, do and report.",
       "items": [
         "research",
         "build",
@@ -95,7 +95,7 @@
     "notes": [
       {
         "name": "Seed packs",
-        "text": "bundle nouns and verbs. An agent kit is a seed pack made for one organization’s agent."
+        "text": "bundle task objects and durable tasks. An agent kit is a seed pack made for one organization’s agent."
       },
       {
         "name": "Two surfaces.",
@@ -103,7 +103,7 @@
       },
       {
         "name": "Infrastructure.",
-        "text": "Tessera keeps the work and storage. Herma is the shim."
+        "text": "Tessera is the shared durable task queue and task objects store where independent agents claim durable tasks, publish task objects, and enforce two-person checks (maker != checker). Herma is the shim."
       }
     ]
   },
@@ -207,11 +207,11 @@
     "tessera": {
       "name": "Tessera",
       "items": [
-        "queue",
+        "durable task queue",
         "leases",
         "receipts",
         "versioned task objects",
-        "permissions"
+        "two-person checks"
       ]
     },
     "edge": "the right task objects",

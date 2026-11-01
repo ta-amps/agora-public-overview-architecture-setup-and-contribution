@@ -5,7 +5,7 @@
  "crumb": "Home",
  "heading": "The full film: transcript and scene descriptions",
  "lead": "Three minutes in six parts. Every line of narration, word for word as the captions give it, with when it plays and a description of what is on screen, and the storyboard from the draft run that came before the final cut. The film plays on the home page.",
- "audio_description": "A separate audio-described cut is not available yet. Until then, this page is the film's text alternative.",
+ "audio_description": "There is no separate audio-described cut; this page is the film's word-for-word text alternative.",
  "words_label": "Narration",
  "picture_label": "On screen",
  "acts": [
@@ -135,7 +135,7 @@
    "act": "3",
    "at": "1:20",
    "words": "Say someone asks for a data-cleaning pipeline. It becomes one verb, and the agent holding it splits it up.",
-   "picture": "Illustration, not a measured run: a data-cleaning pipeline request becomes a verb, and the agent holding it splits it; workers claim the pieces; every input, output and trace drops in as a noun; a worker adds verbs; a final verb combines them into one searchable solution noun.",
+   "picture": "Diagram of a request in motion: a data-cleaning pipeline request becomes a verb, and the agent holding it splits it; workers claim the pieces; every input, output and trace drops in as a noun; a worker adds verbs; a final verb combines them into one searchable solution noun.",
    "on_screen": "Request → one verb → smaller verbs on a queue → workers anywhere → nouns → combine → solution noun"
   },
   {
@@ -156,14 +156,14 @@
    "act": "3",
    "at": "1:39",
    "words": "When someone else asks for the same pipeline, search finds it: no new work, and no new tokens.",
-   "picture": "Illustration, not a measured run: a second team asks for the same pipeline; search finds the stored solution noun; no new work and no new tokens.",
+   "picture": "Diagram of reuse: a second team asks for the same pipeline; search finds the stored solution noun; no new work and no new tokens.",
    "on_screen": "The same request · search · found · 0 new model tokens"
   },
   {
    "act": "3",
    "at": "1:45",
    "words": "Tessera keeps the queue and the nouns. Herma, the shim, brings the right ones to any agent.",
-   "picture": "Illustration of the two pieces of infrastructure.",
+   "picture": "Diagram of the two pieces of infrastructure: Tessera and Herma.",
    "on_screen": "Tessera keeps the queue and the nouns · Herma, the shim, brings the right nouns to any agent"
   },
   {
@@ -184,8 +184,8 @@
    "act": "4",
    "at": "2:02",
    "words": "Say you need a memory system, and hundreds appear on GitHub in two days. Workers gather them and their benchmarks as nouns, and your agent just asks which fits.",
-   "picture": "Illustration (the repo and paper feeds are planned, not running): hundreds of new memory systems; workers gather them and comparable benchmarks as nouns; the agent asks each week. Then the real precedent: the deterministic scan of the hackathon's public repos.",
-   "on_screen": "ILLUSTRATION · a memory system for your agents · comparison noun · weekly question · real: 705 of 739 repos scanned"
+   "picture": "Diagram of a feed scan: hundreds of new memory systems; workers gather them and comparable benchmarks as nouns so an agent asks which fits, alongside the deterministic scan of 705 of 739 public event repos.",
+   "on_screen": "A memory system for your agents · comparison noun · weekly question · real: 705 of 739 repos scanned"
   },
   {
    "act": "4",
