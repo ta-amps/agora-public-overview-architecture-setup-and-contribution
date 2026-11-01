@@ -523,8 +523,10 @@ def source_link(match: re.Match, links: dict) -> str:
     """One GitHub address, as the address of the same thing in Agora's source mirror (see source-links.json)."""
     repo, kind, rest = match.group("repo"), match.group("kind"), match.group("rest") or ""
     mirror = links["mirror"]
+    if repo and repo in links["heads"] and repo not in links["mirrored"]:
+        return match.group(0)  # not mirrored on Agora (yet to be swept): its GitHub page, as written
     if not repo:
-        return mirror
+        return mirror if links["mirrored"] else match.group(0)
     if repo not in links["heads"]:
         fail(f"a link names a repository the source mirror does not hold: {match.group(0)}")
     if not kind and match.group("dotgit"):

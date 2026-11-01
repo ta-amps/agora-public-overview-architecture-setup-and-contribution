@@ -589,19 +589,27 @@ class Builder(unittest.TestCase):
                                            f'{build.text(ui["letter_keys"])}</label>'), deck["id"])
             self.assertIn(f'<p>{ui["help_html"]}</p>', main)
 
-    def test_no_page_links_the_retired_github_organization(self):
-        # F31-014, October 31: github.com/ta-amps answers 404 since the account was suspended, and so do its Pages
-        # sites. Every page links Agora's source mirror instead, at a pinned commit, and no page names a GitHub
-        # address at all. The nouns keep the old addresses only as machine-readable provenance.
-        checked = 0
-        for path, page in self.outputs.items():
-            self.assertNotIn("github.com/ta-amps", page, path)
-            self.assertNotIn("ta-amps.github.io", page, path)
-            for href in re.findall(r'\shref="(/source/[^"]*)"', page):
-                checked += 1
-                self.assertRegex(href, r"^/source/(?:[a-z0-9-]+/(?:[0-9a-f]{12}/.*)?)?$", path)
-        self.assertGreaterEqual(checked, 100)
+    def test_repository_links_go_to_agoras_mirror_only_when_it_mirrors_the_repository(self):
+        # F31-014 (Oct 31) pointed every GitHub link at Agora's source mirror. Nov 1 (the lead): a repository is
+        # mirrored only once its head is free of every banned word (source-links.json "mirrored", matched by the
+        # deploy builder's repos.json); until then its links go to its GitHub page. Pages sites stay retired.
         links = self.nouns.links
+        mirrored = set(links["mirrored"])
+        self.assertLessEqual(mirrored, set(links["heads"]))
+        source_links = 0
+        for path, page in self.outputs.items():
+            self.assertNotIn("ta-amps.github.io", page, path)
+            for repo in re.findall(r"github\.com/ta-amps/([A-Za-z0-9._-]+?)(?:\.git)?(?=[/\"'<\s?#]|$)", page):
+                self.assertIn(repo, links["heads"], path)
+                self.assertNotIn(repo, mirrored, path)
+            for href in re.findall(r'\shref="(/source/[^"]*)"', page):
+                self.assertRegex(href, r"^/source/(?:[a-z0-9-]+/(?:[0-9a-f]{12}/.*)?)?$", path)
+                repo = href.split("/")[2]
+                if repo:  # the /source/ index itself always exists: it lists every repository and where its files are
+                    source_links += 1
+                    self.assertIn(repo, mirrored, (path, href))
+        if not mirrored:
+            self.assertEqual(0, source_links)
         self.assertEqual(set(links["heads"]), {"ta-amps-hackathon", "eranos-public-marketplace-for-public-good-token-burn",
                                                "agora-public-overview-architecture-setup-and-contribution",
                                                "tessera-infrastructure-work-and-storage-engine",
@@ -609,19 +617,25 @@ class Builder(unittest.TestCase):
                                                "seed-packs-library-of-nouns-and-verbs"})
         for sha in list(links["heads"].values()) + list(links["pulls"].values()):
             self.assertRegex(sha, r"^[0-9a-f]{40}$")
-        # A branch link means the pinned head, a full commit stays itself, and an address without a home fails.
+        # Both states of the switch. Not mirrored: the GitHub address stays exactly as the noun wrote it.
+        tessera = "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine"
+        off = dict(links, mirrored=[])
+        for url in (f"{tessera}/blob/main/docs/x.md", f"git clone {tessera}.git\n", f"{tessera}/tree/some-branch/x"):
+            self.assertEqual(url, build.repoint(url, off))
+        # Mirrored: a branch link means the pinned head, a full commit stays itself, and an address without a home
+        # fails; a clone address goes to the git mirror, which git can clone; the file view cannot be cloned.
+        on = dict(links, mirrored=sorted(links["heads"]))
         self.assertEqual("/source/tessera-infrastructure-work-and-storage-engine/95e434eb820f/docs/x.md",
-                         build.repoint("https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/x.md", links))
+                         build.repoint(f"{tessera}/blob/main/docs/x.md", on))
         with self.assertRaises(build.BuildError):
-            build.repoint("https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/tree/some-branch/x", links)
+            build.repoint(f"{tessera}/tree/some-branch/x", on)
         with self.assertRaises(build.BuildError):
-            build.repoint("https://github.com/ta-amps/another-repo", links)
-        # A clone address goes to the git mirror, which git can clone; the file view cannot be cloned. Agora's own
-        # repository has no published mirror, so a clone address for it stops the build.
+            build.repoint("https://github.com/ta-amps/another-repo", on)
         self.assertEqual("git clone https://agora.ta-amps.workers.dev/git/tessera-infrastructure-work-and-storage-engine.git\n",
-                         build.repoint("git clone https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine.git\n", links))
+                         build.repoint(f"git clone {tessera}.git\n", on))
+        # Agora's own repository has no published git mirror, so a clone address for it stops the build when mirrored.
         with self.assertRaises(build.BuildError):
-            build.repoint("https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution.git", links)
+            build.repoint("https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution.git", on)
         for page in build.SITE.rglob("*.html"):
             if not page.relative_to(build.SITE).as_posix().startswith(("decks/2026-10-29/", "storyboards/")):
                 self.assertNotRegex(page.read_text(encoding="utf-8"), r"git clone /", page)
@@ -629,7 +643,7 @@ class Builder(unittest.TestCase):
         for version in self.nouns.manifest["versions"]:
             for download in version.get("downloads", []):
                 if "url" in download:
-                    local = build.SITE / build.repoint(download["url"], links).lstrip("/")
+                    local = build.SITE / build.repoint(download["url"], dict(links, mirrored=sorted(links["heads"]))).lstrip("/")
                     data = local.read_bytes()
                     self.assertEqual((download["sha256"], download["bytes"]), (build.sha256(data), len(data)), local)
 

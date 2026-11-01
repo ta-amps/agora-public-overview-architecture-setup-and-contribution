@@ -404,6 +404,8 @@ def check(root: Path = ROOT) -> dict:
         drafts = site / "content/earlier-drafts.json"
         if drafts.exists():
             frozen |= frozen_drafts(load(drafts), site)
+        source_links = load(site / "content/source-links.json")
+        unmirrored = set(source_links["heads"]) - set(source_links.get("mirrored", []))
         moved_list = site / "content/moved.json"
         moved = moved_pages(load(moved_list), site, pages) if moved_list.exists() else frozenset()
         for page in pages:
@@ -413,11 +415,17 @@ def check(root: Path = ROOT) -> dict:
                 # F31-014: the GitHub organization and its Pages sites answer 404; pages link the source mirror.
                 # Deck sources keep the old addresses as provenance; the build repoints them in the pages.
                 body = page.read_text(encoding="utf-8")
-                require(RETIRED_HOSTS.search(body) is None,
-                        "a page links the retired GitHub organization: " + page.relative_to(site).as_posix())
+                for found in RETIRED_HOSTS.finditer(body):
+                    # Nov 1: a repository Agora does not mirror links its GitHub page; a mirrored one never does.
+                    tail = body[found.end():found.end() + 120]
+                    repo = re.match(r"/([A-Za-z0-9._-]+?)(?:\.git)?(?=[/\"'<\s?#]|$)", tail)
+                    require(found.group(0) == "github.com/ta-amps" and repo is not None
+                            and repo.group(1) in unmirrored,
+                            "a page links GitHub for a mirrored repository, or a retired Pages site: "
+                            + page.relative_to(site).as_posix())
         if (site / "llms.txt").exists():
-            require(RETIRED_HOSTS.search((site / "llms.txt").read_text(encoding="utf-8")) is None,
-                    "llms.txt links the retired GitHub organization")
+            for found in RETIRED_HOSTS.finditer((site / "llms.txt").read_text(encoding="utf-8")):
+                require(found.group(0) == "github.com/ta-amps", "llms.txt links a retired Pages site")
     report = (root / "docs/status.md").read_text(encoding="utf-8")
     for repo in data["repositories"]:
         require(repo["main_revision"] in report, "status page missing exact revision")
