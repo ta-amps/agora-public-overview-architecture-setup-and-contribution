@@ -63,7 +63,7 @@
     },
     {
       "id": "server-workers",
-      "title": "Always-on server workers",
+      "title": "Always-on dedicated workers",
       "date": "2026-10-31",
       "path": "decks/server-workers/",
       "source": "decks/server-workers/source/",
@@ -86,7 +86,7 @@
       "date": "2026-10-30",
       "path": "decks/continuous-learning/",
       "source": "decks/continuous-learning/source/",
-      "slides": 10,
+      "slides": 9,
       "unbranded": true,
       "claim_review": "decks/continuous-learning/source/claims.json",
       "downloads": [

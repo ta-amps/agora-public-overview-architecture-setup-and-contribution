@@ -6,11 +6,11 @@
 <div style="background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:28px 32px;display:flex;flex-direction:column;gap:8px">
 <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#2A5DB0;letter-spacing:1px">FROZEN TESTS</p>
 <h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#11161F">Held-out tool families</h3>
-<p style="font-size:24px;line-height:1.4;color:#3B4252;text-wrap:pretty">Training never sees the test’s tools, and every test set is pinned by its hash.</p>
+<p style="font-size:24px;line-height:1.4;color:#3B4252;text-wrap:pretty">Training never sees the test’s tools, and every test set is recorded once and never changed.</p>
 </div>
 <div style="background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:28px 32px;display:flex;flex-direction:column;gap:8px">
 <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#2A5DB0;letter-spacing:1px">PRE-REGISTRATION</p>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#11161F">Hashes before scores</h3>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#11161F">Recorded before scores</h3>
 <p style="font-size:24px;line-height:1.4;color:#3B4252;text-wrap:pretty">The rule and each fresh test are recorded before any model is scored on them.</p>
 </div>
 <div style="background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:28px 32px;display:flex;flex-direction:column;gap:8px">
@@ -34,8 +34,8 @@
 <p style="font-size:24px;line-height:1.4;color:#C8D0DC;text-wrap:pretty">Adapters are never overwritten. Promotion moves one pointer, so rolling back moves it back.</p>
 </div>
 </div>
-<p style="font-size:26px;line-height:1.4;color:#5E6472">Promotion changes no deployment, publication, admission or serving. Privacy is checked too: another key tried to read everything the 1B rounds wrote, and all 303 reads were denied.</p>
+<p style="font-size:26px;line-height:1.4;color:#5E6472">Promotion changes no deployment, publication, admission or serving. Privacy is checked too: another key tried to read everything the earlier tuning rounds wrote, and all 303 reads were denied.</p>
 <svg aria-label="ta-amps mark" width="32" height="32" viewBox="0 0 32 32" style="position:absolute;left:128px;bottom:64px;width:32px;height:32px"><rect x="0" y="0" width="14" height="14" rx="3" fill="#2A5DB0"/><rect x="18" y="0" width="14" height="14" rx="3" fill="#B8541F"/><rect x="0" y="18" width="14" height="14" rx="3" fill="#11161F"/><rect x="18" y="18" width="14" height="14" rx="3" fill="#2A5DB0"/></svg>
 <p style="position:absolute;left:176px;bottom:64px;width:1616px;font-size:24px;color:#5E6472">How it runs · safety and rollback</p>
-<aside>These rules keep the loop honest. Tests are frozen, held out by whole tool families and pinned by hash. The promotion rule and each fresh test are recorded before scoring. Fingerprints keep look-alikes of test rows out of training. A saved adapter must reload onto a fresh copy of the base and reply exactly the same. The rule asks for a real gain, with a lower bound above zero, and no drop in valid output, refusals or general skills. Because adapters are never overwritten and the champion is one pointer that keeps every version, rolling back is moving that pointer back. Promotion here changes no deployment, publication, admission or serving. Privacy is checked as well: after the 1B rounds, a second key tried to read all 303 records, blob chunks and runs they wrote, and every read was denied.</aside>
+<aside>These rules keep the loop honest. Tests are frozen, held out by whole tool families and recorded once. The promotion rule and each fresh test are recorded before scoring. Fingerprints keep look-alikes of test rows out of training. A saved adapter must reload onto a fresh copy of the base and reply exactly the same. The rule asks for a real gain, with a lower bound above zero, and no drop in valid output, refusals or general skills. Because adapters are never overwritten and the champion is one pointer that keeps every version, rolling back is moving that pointer back. Promotion here changes no deployment, publication, admission or serving. Privacy is checked as well: after the earlier tuning rounds, a second key tried to read all 303 records, blob chunks and runs they wrote, and every read was denied.</aside>
 </section>

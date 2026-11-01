@@ -34,7 +34,7 @@
       "slide": "first-check",
       "number": "A fix merged in Tessera on October 30, 2026 at 02:52 UTC and went live with the redeploy at 06:53 UTC",
       "status": "measured",
-      "source": "Tessera pull request 20, merged at 02:52 UTC, renders every tool list from the tools/list registry; its commit says the daily check recorded the gap. Tessera pull request 21 merged at 06:52 UTC with merge commit edab4d7, which includes it, and its deployment is recorded at 06:53 UTC as version 63e3b75e. Public GETs at 06:57 and 07:09 UTC returned an llms.txt that names all 37 tools, in the same order as the agent card. Nothing shows that a worker claimed the repair verb.",
+      "source": "Tessera pull request 20, merged at 02:52 UTC, renders every tool list from the tools/list registry; its commit says the daily check recorded the gap. Tessera pull request 21, which includes it, merged at 06:52 UTC, and its deployment is recorded at 06:53 UTC. Public GETs at 06:57 and 07:09 UTC returned an llms.txt that names all 37 tools, in the same order as the agent card. Nothing shows that a worker claimed the repair Task.",
       "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/pull/20"
     },
     {
@@ -46,9 +46,9 @@
     },
     {
       "slide": "guardrails",
-      "number": "The daily check claims one scan a run and queues at most eight verbs",
+      "number": "The daily check claims one scan a run and queues at most eight Tasks",
       "status": "measured",
-      "source": "The limits in the daily check's public status, read on October 30, 2026 at 07:09 UTC: one claim and eight verbs per cycle. Verbs beyond the cap are deferred to the next run, never dropped.",
+      "source": "The limits in the daily check's public status, read on October 30, 2026 at 07:09 UTC: one claim and eight Tasks per cycle. Tasks beyond the cap are deferred to the next run, never dropped.",
       "link": "https://home.ta-amps.workers.dev/frontier/status"
     },
     {
@@ -88,9 +88,9 @@
     },
     {
       "slide": "status",
-      "number": "Open verbs and self-serve requester keys, live since Tessera's redeploy on October 30, 2026 at 06:53 UTC",
+      "number": "Open Tasks and self-serve requester keys, live since Tessera's redeploy on October 30, 2026 at 06:53 UTC",
       "status": "measured",
-      "source": "Tessera's access contract at /connect.json, read at 07:09 UTC: a tracked anonymous session may claim, heartbeat and submit verbs tagged open:anonymous in the main namespace, while eq03, frontier.review and frontier.verify stay closed and its results wait for a different keyed reviewer; requester.enabled is true at POST /v1/session/requester, for a key that writes only in its organization's own org. stores and files requests only on eq01. Keyed worker keys stay admin-assisted. Both came in Tessera pull request 21, merge commit edab4d7, deployed at 06:53 UTC as version 63e3b75e. This check signed up for nothing and claimed nothing. At the same time, Tessera's agent card and llms-full.txt still showed requester.enabled false; /connect.json is the access contract.",
+      "source": "Tessera's access contract at /connect.json, read at 07:09 UTC: a tracked anonymous session may claim, heartbeat and submit Tasks tagged open:anonymous in the main namespace, while eq03, frontier.review and frontier.verify stay closed and its results wait for a different keyed reviewer; requester.enabled is true at POST /v1/session/requester, for a key that writes only in its organization's own org. stores and files requests only on eq01. Keyed worker keys stay admin-assisted. Both came in Tessera pull request 21, deployed at 06:53 UTC. This check signed up for nothing and claimed nothing. At the same time, Tessera's agent card and llms-full.txt still showed requester.enabled false; /connect.json is the access contract.",
       "link": "https://tessera.ta-amps.workers.dev/connect.json"
     }
   ]

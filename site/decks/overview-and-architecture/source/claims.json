@@ -6,50 +6,43 @@
       "slide": "memory-systems",
       "number": "314 repositories about agent memory created on GitHub in the 48 hours to October 31, 2026 at 23:27 UTC",
       "status": "measured",
-      "source": "GitHub search 'agent memory created:2026-10-29T23:27:00Z..2026-10-31T23:27:00Z', measured at 2026-10-31T23:27:59Z, response SHA-256 1b1ce616a0223b6d48b8c897a861c00d61c407dce9638cb88225698257491c3d; the memory-systems feed's scan 20261031T2327Z on a local copy of Tessera.",
+      "source": "GitHub search 'agent memory created:2026-10-29T23:27:00Z..2026-10-31T23:27:00Z', measured at 2026-10-31T23:27:59Z, with the response kept in the scan’s record; the memory-systems feed’s scan of October 31 at 23:27 UTC on a local copy of Tessera.",
       "link": "https://agora.ta-amps.workers.dev/feeds/memory-systems/"
     },
     {
       "slide": "memory-systems",
       "number": "587 repositories gathered; the first four in feed rank, as of October 31, for Python, MIT licence, runs locally have 14,358, 4,303, 4,085, 3,858 stars",
       "status": "measured",
-      "source": "The feed's stored nouns in scan 20261031T2327Z, receipt f159a7ad04d8f72c5193bf9c67cf9fc970c844623e7d4935a7734e4cec43d69d, rendered on Agora's feed page.",
+      "source": "The feed’s stored Task Objects from the scan of October 31 at 23:27 UTC, rendered on Agora’s feed page, which links the scan’s record.",
       "link": "https://agora.ta-amps.workers.dev/feeds/memory-systems/"
     },
     {
       "slide": "memory-systems",
-      "number": "705 of 739 public repos in the event directory scanned into nouns and verbs",
+      "number": "705 of 739 public repos in the event directory scanned into Tasks and Task Objects",
       "status": "measured",
-      "source": "The same scan as the proof slide: a deterministic scan (hackscan 1.2.0) cloned each repo shallowly and read its tree without running any code, on October 29, 2026; 34 failed (24 empty, 5 not found or private, 5 timed out). Aggregate counts only.",
+      "source": "The same scan as the records slide: a deterministic scan (hackscan 1.2.0) cloned each repo shallowly and read its tree without running any code, on October 29, 2026; 34 failed (24 empty, 5 not found or private, 5 timed out). Aggregate counts only.",
       "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/hackathon-repo-scan-2026-10-29/summary.md"
     },
     {
       "slide": "seed-packs",
-      "number": "80 seed packs in one library, with 1,520 nouns, 490 verb templates and 45 worked examples",
+      "number": "80 seed packs in one library, with 1,520 Task Objects, 490 Task templates and 45 worked examples",
       "status": "measured",
-      "source": "A count of the packs in the seed-pack library's README at commit cdb6aa2, on October 31, 2026. They are proposals and validated examples: none is installed, imported, admitted or activated.",
+      "source": "A count of the packs in the seed-pack library's README as of October 31, 2026. They are proposals and validated examples: none is installed, imported, admitted or activated.",
       "link": "https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs/blob/cdb6aa2fdee9e79cd183672a03e8f4006d49d89b/README.md#seed-pack-library"
     },
     {
       "slide": "learning",
-      "number": "Llama 3.2 1B: exact match 12.0% to 50.7%",
+      "number": "{{model:muse-glimmer-30b}}: exact match 93.3% to 99.3% on our 150-task tool-call evaluation, +6.0 points, 95% CI +2.0 to +10.7; promotion rule 12 of 12",
       "status": "measured",
-      "source": "A continuous tuning loop built from nouns and verbs on one local GPU, October 29, 2026, scored on a fixed 150-task evaluation.",
-      "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md"
-    },
-    {
-      "slide": "learning",
-      "number": "Llama 3.2 3B: exact match 52.0% to 72.7%",
-      "status": "measured",
-      "source": "The same loop and the same frozen, our evaluation, October 29, 2026.",
-      "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md"
-    },
-    {
-      "slide": "learning",
-      "number": "Muse Glimmer 30B: exact match 93.3% to 99.3%, +6.0 points, 95% CI +2.0 to +10.7; promotion rule 12 of 12",
-      "status": "measured",
-      "source": "QLoRA on free cloud GPUs for the same kind of evaluation task, scored on a fresh 150-row test whose hashes were registered before scoring. A fresh reload reproduced its outputs. The rule said promote; nothing has been promoted or admitted. The run record, with every file's hash, is published with this deck's evidence.",
+      "source": "QLoRA on Kaggle’s free notebook GPUs, scored on a fresh 150-row test recorded before scoring. A fresh reload reproduced its outputs. The rule said promote; nothing has been promoted or admitted. The run record is published with this deck’s evidence.",
       "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/glimmer-30b-2026-10-29/README.md"
+    },
+    {
+      "slide": "learning",
+      "number": "{{model:muse-glimmer-30b}}, as memory: closed-book exact match 0.0% to 62.5% on a 120-row test fixed before scoring, with 0 added tokens",
+      "status": "measured",
+      "source": "QLoRA on two free Kaggle T4 GPUs, October 31, 2026: recalling the library’s Task Objects and workflows from the model’s own weights, with nothing added to the prompt. A promoted candidate only; nothing has been admitted or deployed.",
+      "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/glimmer-30b-lora-memory-2026-10-31/README.md"
     },
     {
       "slide": "evidence",
@@ -69,7 +62,7 @@
       "slide": "evidence",
       "number": "6 agent programs each finished a scoped task; 6 of 14 attempts passed",
       "status": "measured",
-      "source": "OpenCode, Pi, Hermes, Muse Code, nanoMuse and OpenClaw in narrow lifecycle tests, with every failure recorded. A seventh program, Claude Code, passed a separate test later.",
+      "source": "OpenCode, Pi, Hermes, {{model:muse-code}}, {{model:nanomuse}} and OpenClaw in narrow lifecycle tests, with every failure recorded. A seventh program, Claude Code, passed a separate test later.",
       "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/readiness-2026-10-29.json"
     },
     {
@@ -81,14 +74,14 @@
     },
     {
       "slide": "proof",
-      "number": "16 of 16 receipts recompute for the film's production run",
+      "number": "16 of 16 recorded steps recheck for the film’s production run",
       "status": "measured",
-      "source": "The film's production ran as 16 claimed tasks of 7 verbs on a local Tessera store, with no model calls. The published bundle's verify.py recomputes every receipt with Tessera's rule, checks that 142 of 161 input pins are outputs of earlier receipted tasks (the rest are setup nouns), and ties all 12 published files to receipts. The store itself is not public.",
+      "source": "The film’s production ran as 16 claimed Tasks of 7 kinds on a local Tessera store, with no model calls. The published bundle’s verify.py rechecks every record with Tessera’s rule, checks that 142 of 161 input pins are outputs of earlier recorded Tasks (the rest are setup Task Objects), and ties all 12 published files to their records. The store itself is not public.",
       "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/video-production-2026-10-30/README.md"
     },
     {
       "slide": "proof",
-      "number": "705 of 739 public repos in the event directory scanned into nouns and verbs",
+      "number": "705 of 739 public repos in the event directory scanned into Tasks and Task Objects",
       "status": "measured",
       "source": "A deterministic scan (hackscan 1.2.0) cloned each repo shallowly and read its tree without running any code, on October 29, 2026; 34 failed (24 empty, 5 not found or private, 5 timed out). Aggregate counts only.",
       "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/hackathon-repo-scan-2026-10-29/summary.md"
@@ -97,7 +90,7 @@
       "slide": "proof",
       "number": "58.9% of scanned repos reference Meta's model API; 4.3% use MCP",
       "status": "measured",
-      "source": "415 of 705 scanned repos contain the text api.meta.ai, and 30 show an MCP signal (an SDK dependency, server code, tool definitions or client config). Mentions are text matches, not proof of use.",
+      "source": "415 of 705 scanned repos contain the text api.meta.ai, and 30 show an MCP signal (an SDK dependency, server code, tool definitions or client config). Mentions are text matches, not evidence of use.",
       "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/hackathon-repo-scan-2026-10-29/summary.md"
     }
   ]
