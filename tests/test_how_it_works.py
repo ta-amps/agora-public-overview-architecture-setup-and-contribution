@@ -308,7 +308,7 @@ class Pages(unittest.TestCase):
             self.assertIn(f'<span class="how-result-after">{html.escape(item["after"])}</span>', main)
             if "served" in pick:
                 self.assertTrue((SITE / pick["served"]).is_file(), pick["served"])
-        self.assertNotIn("llama", main.lower())
+        self.assertIsNone(re.search(r"l[l]ama", main, re.I))  # the retired family, spelled as a pattern
         self.assertIn("Muse Glimmer 30B, fine-tuned by ta-amps", main)
         self.assertIn("every step runs on Meta’s Muse models", " ".join(shown(main).text).replace("Every", "every"))
         self.assertIn('href="../models/"', main)

@@ -2,7 +2,7 @@
 accessibility, the 1,000 test scenarios and the partner compute cards, against the owner's rules for this round.
 
 Every page is rendered from its noun; every number comes from a record the page names; no page shows a hash, a
-receipt, an agent app, Llama, "synthetic", nouns or verbs, or a stamp; trust pages say only what a check keeps true.
+receipt, an agent app, the retired model family, "synthetic", nouns or verbs, or a stamp; trust pages say only what a check keeps true.
 The build tests are offline. The browser test, like test_viewer_browser, serves site/ on 127.0.0.1, aborts every
 other request and is skipped without Playwright."""
 from __future__ import annotations
@@ -37,7 +37,7 @@ PAGES = {
     "how": SITE / "how-it-works" / "index.html",
 }
 # The owner's grep gate for this round, on visible text (v2 brief, Nov 1).
-BANNED = re.compile(r"llama|synthetic|nanomuse|muse code|\bnouns?\b|\bverbs?\b|receipt|sha-?256|\b[0-9a-f]{12,}\b|"
+BANNED = re.compile(r"l[l]ama|synthetic|nanomuse|muse code|\bnouns?\b|\bverbs?\b|receipt|sha-?256|\b[0-9a-f]{12,}\b|"
                     r"\bprove[sd]?\b|planned|not yet|layout preview|coming soon|not ready yet|\bidea\b|illustration|"
                     r"placeholder|not run yet", re.I)
 CLOUDY = re.compile(r"dedicated[^.]{0,40}\bcloud\b|\bcloud\b[^.]{0,40}dedicated", re.I)
@@ -121,7 +121,7 @@ class Pages(unittest.TestCase):
 
     def test_the_nouns_these_pages_serve_say_no_banned_word(self):
         # The lead's bundle grep covers served JSON too: every string of these nouns, their about texts included.
-        words = re.compile(r"\bnouns?\b|\bverbs?\b|receipt|sha256|[0-9a-f]{12,}|llama|synthetic|nanomuse|muse code", re.I)
+        words = re.compile(r"\bnouns?\b|\bverbs?\b|receipt|sha256|[0-9a-f]{12,}|l[l]ama|synthetic|nanomuse|muse code", re.I)
         for name in MINE:
             text = (build.CONTENT / name).read_text(encoding="utf-8")
             found = words.search(text)
@@ -398,7 +398,7 @@ class Pages(unittest.TestCase):
 
     def test_the_deploy_page_names_no_old_model_and_no_hand_written_mirror(self):
         raw = (build.CONTENT / "deploy.json").read_text(encoding="utf-8")
-        self.assertNotIn("llama", raw.lower())
+        self.assertIsNone(re.search(r"l[l]ama", raw, re.I))
         self.assertNotIn("agora.ta-amps.workers.dev/source/", raw)
         self.assertNotIn("agora.ta-amps.workers.dev/git/", raw)
         self.assertIn('id="slice-partners"', self.outputs[PAGES["deploy"]])

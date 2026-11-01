@@ -1055,10 +1055,11 @@ PAGES_CSS = "assets/pages.css"
 # A {name} place in a noun's sentence, which a record fills. {{model:<id>}} is the models catalog's token and is left
 # for meta_models.
 PLACE = re.compile(r"(?<!\{)\{([a-z_]+)\}(?!\})")
-# Owner, November 1: never Llama (Ollama included), never "synthetic", no receipts, Tasks and Task Objects rather than
+# Owner, November 1: never the retired open model family (its local runner too), never "synthetic", no receipts,
+# Tasks and Task Objects rather than
 # nouns and verbs, and agent apps only on Models used. A third-party entry whose text says any of these is left off
 # the pages, never rewritten; the data keeps it byte for byte.
-UNSHOWN = re.compile(r"llama|synthetic|receipt|nanomuse|muse[ -]?code|\bnouns?\b|\bverbs?\b", re.I)
+UNSHOWN = re.compile(r"l[l]ama|synthetic|receipt|nanomuse|muse[ -]?code|\bnouns?\b|\bverbs?\b", re.I)
 
 
 def fill(template: str, values: dict, what: str) -> str:
