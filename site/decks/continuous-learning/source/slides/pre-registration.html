@@ -1,40 +1,40 @@
-<section id="pre-registration" data-transition="fade" style="background:#F5F2EA;color:#11161F;font-family:'IBM Plex Sans', Arial, sans-serif;padding:120px 128px 150px;display:flex;flex-direction:column;gap:40px">
-<div style="position:absolute;left:0;top:0;width:1920px;height:10px;background:linear-gradient(90deg, #2A5DB0, #B8541F)"></div>
-<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;color:#11161F">Pre-registration and frozen tests</h2>
+<section id="pre-registration" data-transition="fade" style="background:#EDE8DC;color:#5E6472;font-family:'IBM Plex Sans', Arial, sans-serif;padding:120px 128px 150px;display:flex;flex-direction:column;gap:40px">
+<div style="position:absolute;left:0;top:0;width:1920px;height:10px;background:linear-gradient(90deg, #2A5DB0, #9E3A26)"></div>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;color:#5E6472">Pre-registration and frozen tests</h2>
 <div style="display:flex;flex-direction:row;align-items:stretch;gap:40px">
 <div style="flex:1.15;display:flex;flex-direction:column;gap:16px">
 <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#5E6472;letter-spacing:2px">FIXED BEFORE ANY SCORE</p>
-<div style="background:#FFFDF8;border:2px solid #E4DED1;border-left:8px solid #2A5DB0;border-radius:16px;padding:16px 28px;display:flex;flex-direction:column;gap:4px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:20px;color:#2A5DB0;letter-spacing:1px">FROZEN TEST</p>
-<p style="font-size:25px;line-height:1.4;color:#3B4252;text-wrap:pretty">150 rows over tool families that training never sees, recorded once and never changed.</p>
+<div style="background:#EDE8DC;border:2px solid #8A8476;border-left:8px solid #24519B;border-radius:16px;padding:16px 28px;display:flex;flex-direction:column;gap:4px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:20px;color:#24519B;letter-spacing:1px">FROZEN TEST</p>
+<p style="font-size:25px;line-height:1.4;color:#5E6472;text-wrap:pretty">150 rows over tool families that training never sees, recorded once and never changed.</p>
 </div>
-<div style="background:#FFFDF8;border:2px solid #E4DED1;border-left:8px solid #2A5DB0;border-radius:16px;padding:16px 28px;display:flex;flex-direction:column;gap:4px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:20px;color:#2A5DB0;letter-spacing:1px">FRESH TEST</p>
-<p style="font-size:25px;line-height:1.4;color:#3B4252;text-wrap:pretty">New rows each round, recorded before any model sees them.</p>
+<div style="background:#EDE8DC;border:2px solid #8A8476;border-left:8px solid #24519B;border-radius:16px;padding:16px 28px;display:flex;flex-direction:column;gap:4px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:20px;color:#24519B;letter-spacing:1px">FRESH TEST</p>
+<p style="font-size:25px;line-height:1.4;color:#5E6472;text-wrap:pretty">New rows each round, recorded before any model sees them.</p>
 </div>
-<div style="background:#FFFDF8;border:2px solid #E4DED1;border-left:8px solid #B8541F;border-radius:16px;padding:16px 28px;display:flex;flex-direction:column;gap:4px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:20px;color:#A84B1B;letter-spacing:1px">THE PROMOTION RULE</p>
-<p style="font-size:25px;line-height:1.4;color:#3B4252">Committed before the first training round, and pinned by a test.</p>
+<div style="background:#EDE8DC;border:2px solid #8A8476;border-left:8px solid #9E3A26;border-radius:16px;padding:16px 28px;display:flex;flex-direction:column;gap:4px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:20px;color:#9E3A26;letter-spacing:1px">THE PROMOTION RULE</p>
+<p style="font-size:25px;line-height:1.4;color:#5E6472">Committed before the first training round, and pinned by a test.</p>
 </div>
-<div style="background:#FFFDF8;border:2px solid #E4DED1;border-left:8px solid #B8541F;border-radius:16px;padding:16px 28px;display:flex;flex-direction:column;gap:4px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:20px;color:#A84B1B;letter-spacing:1px">NO LOOK-ALIKES</p>
-<p style="font-size:25px;line-height:1.4;color:#3B4252;text-wrap:pretty">Fingerprints reject training rows that match a test row, its request or its template.</p>
-</div>
-</div>
-<div style="flex:1;background:#11161F;border-radius:20px;padding:32px 40px;display:flex;flex-direction:column;gap:18px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#F0884F;letter-spacing:2px">THE RULE DECIDES</p>
-<div style="border-top:2px solid #2C3443;padding-top:18px;display:flex;flex-direction:column;gap:6px">
-<div style="display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:16px"><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:31px;font-weight:700;line-height:1.15;color:#F5F2EA">{{model:muse-glimmer-30b}}, 63 examples</h3><p style="border:2px solid #F0884F;color:#F0884F;border-radius:999px;padding:2px 18px;font-size:20px;font-weight:600;white-space:nowrap">Kept out</p></div>
-<p style="font-size:24px;line-height:1.4;color:#C8D0DC;text-wrap:pretty">+5.3 points on the frozen test, but the 95% CI started at 0.0.</p>
-</div>
-<div style="border-top:2px solid #2C3443;padding-top:18px;display:flex;flex-direction:column;gap:6px">
-<div style="display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:16px"><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:31px;font-weight:700;line-height:1.15;color:#F5F2EA">{{model:muse-glimmer-30b}}, 511 examples</h3><p style="border:2px solid #F0884F;color:#F0884F;border-radius:999px;padding:2px 18px;font-size:20px;font-weight:600;white-space:nowrap">Promote</p></div>
-<p style="font-size:24px;line-height:1.4;color:#C8D0DC;text-wrap:pretty">+6.0 points on a fresh test, with a 95% CI of +2.0 to +10.7, and 12 of 12 checks passed.</p>
-</div>
-<p style="margin-top:auto;font-size:24px;line-height:1.4;color:#F5F2EA">A guard written before any result stopped a real-looking gain, and passed a real one.</p>
+<div style="background:#EDE8DC;border:2px solid #8A8476;border-left:8px solid #9E3A26;border-radius:16px;padding:16px 28px;display:flex;flex-direction:column;gap:4px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:20px;color:#9E3A26;letter-spacing:1px">NO LOOK-ALIKES</p>
+<p style="font-size:25px;line-height:1.4;color:#5E6472;text-wrap:pretty">Fingerprints reject training rows that match a test row, its request or its template.</p>
 </div>
 </div>
-<svg aria-label="ta-amps mark" width="32" height="32" viewBox="0 0 32 32" style="position:absolute;left:128px;bottom:64px;width:32px;height:32px"><rect x="0" y="0" width="14" height="14" rx="3" fill="#2A5DB0"/><rect x="18" y="0" width="14" height="14" rx="3" fill="#B8541F"/><rect x="0" y="18" width="14" height="14" rx="3" fill="#11161F"/><rect x="18" y="18" width="14" height="14" rx="3" fill="#2A5DB0"/></svg>
+<div style="flex:1;background:#F5F2EA;border-radius:20px;padding:32px 40px;display:flex;flex-direction:column;gap:18px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#9C4416;letter-spacing:2px">THE RULE DECIDES</p>
+<div style="border-top:2px solid #8A8476;padding-top:18px;display:flex;flex-direction:column;gap:6px">
+<div style="display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:16px"><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:31px;font-weight:700;line-height:1.15;color:#11161F">{{model:muse-glimmer-30b}}, 63 examples</h3><p style="border:2px solid #9C4416;color:#9C4416;border-radius:999px;padding:2px 18px;font-size:20px;font-weight:600;white-space:nowrap">Kept out</p></div>
+<p style="font-size:24px;line-height:1.4;color:#11161F;text-wrap:pretty">+5.3 points on the frozen test, but the 95% CI started at 0.0.</p>
+</div>
+<div style="border-top:2px solid #8A8476;padding-top:18px;display:flex;flex-direction:column;gap:6px">
+<div style="display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:16px"><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:31px;font-weight:700;line-height:1.15;color:#11161F">{{model:muse-glimmer-30b}}, 511 examples</h3><p style="border:2px solid #9C4416;color:#9C4416;border-radius:999px;padding:2px 18px;font-size:20px;font-weight:600;white-space:nowrap">Promote</p></div>
+<p style="font-size:24px;line-height:1.4;color:#11161F;text-wrap:pretty">+6.0 points on a fresh test, with a 95% CI of +2.0 to +10.7, and 12 of 12 checks passed.</p>
+</div>
+<p style="margin-top:auto;font-size:24px;line-height:1.4;color:#11161F">A guard written before any result stopped a real-looking gain, and passed a real one.</p>
+</div>
+</div>
+<svg aria-label="ta-amps mark" width="32" height="32" viewBox="0 0 32 32" style="position:absolute;left:128px;bottom:64px;width:32px;height:32px"><rect x="0" y="0" width="14" height="14" rx="3" fill="#E5ECF7"/><rect x="18" y="0" width="14" height="14" rx="3" fill="#F8E6E1"/><rect x="0" y="18" width="14" height="14" rx="3" fill="#F5F2EA"/><rect x="18" y="18" width="14" height="14" rx="3" fill="#E5ECF7"/></svg>
 <p style="position:absolute;left:176px;bottom:64px;width:1616px;font-size:24px;color:#5E6472">Why and how · tests and rules fixed before scoring</p>
 <aside>Everything that decides was written down before the results it judges. The frozen test is 150 rows over whole tool families that training never sees, recorded once and never changed. Each round also draws fresh rows, recorded before any model sees them. The promotion rule was committed before the first training round, and a test pins it. Fingerprints keep look-alikes of test rows out of training. And the rule decides both ways. {{model:muse-glimmer-30b}} trained on 63 examples gained 5.3 points on the frozen test, but its 95% interval started at 0.0, so it stayed out. Trained on 511 examples, it gained 6.0 points on a fresh test, with an interval of 2.0 to 10.7, and passed all 12 checks.</aside>
 </section>

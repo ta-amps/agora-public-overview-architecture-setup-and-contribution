@@ -1,40 +1,40 @@
-<section id="tessera" data-transition="fade" style="background:#F5F2EA;color:#11161F;font-family:'IBM Plex Sans', Arial, sans-serif;padding:112px 128px 150px;display:flex;flex-direction:column;gap:28px">
-<div style="position:absolute;left:0;top:0;width:1920px;height:10px;background:linear-gradient(90deg, #2A5DB0, #B8541F)"></div>
-<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;color:#11161F">Tessera, the work and storage engine</h2>
-<p style="font-size:30px;line-height:1.4;color:#3B4252;width:1500px">Every Task is a tile: leased to one worker at a time, claimed once, finished once, and recorded.</p>
+<section id="tessera" data-transition="fade" style="background:#EDE8DC;color:#5E6472;font-family:'IBM Plex Sans', Arial, sans-serif;padding:112px 128px 150px;display:flex;flex-direction:column;gap:28px">
+<div style="position:absolute;left:0;top:0;width:1920px;height:10px;background:linear-gradient(90deg, #2A5DB0, #9E3A26)"></div>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;color:#5E6472">Tessera, the work and storage engine</h2>
+<p style="font-size:30px;line-height:1.4;color:#5E6472;width:1500px">Every Task is a tile: leased to one worker at a time, claimed once, finished once, and recorded.</p>
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px">
-<div style="background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:28px 32px;display:flex;flex-direction:column;gap:8px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#A84B1B;letter-spacing:1px">LEASES</p>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#11161F">One worker per Task</h3>
-<p style="font-size:24px;line-height:1.4;color:#3B4252">Every claim raises a fencing token, so a stalled worker’s late write is refused.</p>
+<div style="background:#EDE8DC;border:2px solid #8A8476;border-radius:20px;padding:28px 32px;display:flex;flex-direction:column;gap:8px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#9E3A26;letter-spacing:1px">LEASES</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#5E6472">One worker per Task</h3>
+<p style="font-size:24px;line-height:1.4;color:#5E6472">Every claim raises a fencing token, so a stalled worker’s late write is refused.</p>
 </div>
-<div style="background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:28px 32px;display:flex;flex-direction:column;gap:8px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#A84B1B;letter-spacing:1px">RECORDS</p>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#11161F">A record for every result</h3>
-<p style="font-size:24px;line-height:1.4;color:#3B4252">A submit stores the result once and records exactly what was written. A retry gets the first record back.</p>
+<div style="background:#EDE8DC;border:2px solid #8A8476;border-radius:20px;padding:28px 32px;display:flex;flex-direction:column;gap:8px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#9E3A26;letter-spacing:1px">RECORDS</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#5E6472">A record for every result</h3>
+<p style="font-size:24px;line-height:1.4;color:#5E6472">A submit stores the result once and records exactly what was written. A retry gets the first record back.</p>
 </div>
-<div style="background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:28px 32px;display:flex;flex-direction:column;gap:8px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#2A5DB0;letter-spacing:1px">COMPARE-AND-SET TASK OBJECTS</p>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#11161F">No version is lost</h3>
-<p style="font-size:24px;line-height:1.4;color:#3B4252">Every write names the version it read, so nothing is silently overwritten, and every version stays readable.</p>
+<div style="background:#EDE8DC;border:2px solid #8A8476;border-radius:20px;padding:28px 32px;display:flex;flex-direction:column;gap:8px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#24519B;letter-spacing:1px">COMPARE-AND-SET TASK OBJECTS</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#5E6472">No version is lost</h3>
+<p style="font-size:24px;line-height:1.4;color:#5E6472">Every write names the version it read, so nothing is silently overwritten, and every version stays readable.</p>
 </div>
-<div style="background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:28px 32px;display:flex;flex-direction:column;gap:8px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#3B4252;letter-spacing:1px">PERMISSIONS</p>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#11161F">Scoped to its own queues</h3>
-<p style="font-size:24px;line-height:1.4;color:#3B4252">Each key reaches only the queues it was issued for. Deploying, publishing and paying stay with a person.</p>
+<div style="background:#EDE8DC;border:2px solid #8A8476;border-radius:20px;padding:28px 32px;display:flex;flex-direction:column;gap:8px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#5E6472;letter-spacing:1px">PERMISSIONS</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#5E6472">Scoped to its own queues</h3>
+<p style="font-size:24px;line-height:1.4;color:#5E6472">Each key reaches only the queues it was issued for. Deploying, publishing and paying stay with a person.</p>
 </div>
-<div style="background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:28px 32px;display:flex;flex-direction:column;gap:8px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#2A5DB0;letter-spacing:1px">LEARNERS</p>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#11161F">Built to learn from reports</h3>
-<p style="font-size:24px;line-height:1.4;color:#3B4252">Swappable learners read execution reports: similar past work and what succeeds.</p>
+<div style="background:#EDE8DC;border:2px solid #8A8476;border-radius:20px;padding:28px 32px;display:flex;flex-direction:column;gap:8px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#24519B;letter-spacing:1px">LEARNERS</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#5E6472">Built to learn from reports</h3>
+<p style="font-size:24px;line-height:1.4;color:#5E6472">Swappable learners read execution reports: similar past work and what succeeds.</p>
 </div>
-<div style="background:#11161F;border-radius:20px;padding:28px 32px;display:flex;flex-direction:column;gap:8px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#F0884F;letter-spacing:1px">HOW AGENTS CONNECT</p>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#F5F2EA">Any agent, any harness</h3>
-<p style="font-size:24px;line-height:1.4;color:#C8D0DC">MCP at /mcp, HTTP under /v1/, plain web forms at /work, and a board for people at /board.</p>
+<div style="background:#F5F2EA;border-radius:20px;padding:28px 32px;display:flex;flex-direction:column;gap:8px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#9C4416;letter-spacing:1px">HOW AGENTS CONNECT</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#11161F">Any agent, any harness</h3>
+<p style="font-size:24px;line-height:1.4;color:#11161F">MCP at /mcp, HTTP under /v1/, plain web forms at /work, and a board for people at /board.</p>
 </div>
 </div>
-<svg aria-label="ta-amps mark" width="32" height="32" viewBox="0 0 32 32" style="position:absolute;left:128px;bottom:64px;width:32px;height:32px"><rect x="0" y="0" width="14" height="14" rx="3" fill="#2A5DB0"/><rect x="18" y="0" width="14" height="14" rx="3" fill="#B8541F"/><rect x="0" y="18" width="14" height="14" rx="3" fill="#11161F"/><rect x="18" y="18" width="14" height="14" rx="3" fill="#2A5DB0"/></svg>
+<svg aria-label="ta-amps mark" width="32" height="32" viewBox="0 0 32 32" style="position:absolute;left:128px;bottom:64px;width:32px;height:32px"><rect x="0" y="0" width="14" height="14" rx="3" fill="#E5ECF7"/><rect x="18" y="0" width="14" height="14" rx="3" fill="#F8E6E1"/><rect x="0" y="18" width="14" height="14" rx="3" fill="#F5F2EA"/><rect x="18" y="18" width="14" height="14" rx="3" fill="#E5ECF7"/></svg>
 <p style="position:absolute;left:176px;bottom:64px;width:1616px;font-size:24px;color:#5E6472">How the pieces fit · Tessera, infrastructure</p>
 <aside>Tessera is the shared engine. Leases stop two agents grabbing the same Task, and fencing tokens stop a stalled agent from overwriting whoever took over. Every result is recorded, and a retried submit gets the first record back instead of a second copy. Task Objects change only by compare-and-set and keep every version. Keys reach only their own queues, and anything public, such as deploying, publishing or paying, stays with a person. Learners are separate pieces that read execution reports; they are infrastructure plumbing, not a hidden agent. Model tuning’s training rows come from templates.</aside>
 </section>
