@@ -3,26 +3,22 @@
 <h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;color:#F5F2EA">It learns, and we count only measured results</h2>
 <div style="display:flex;flex-direction:row;gap:28px">
 <div style="flex:1;background:#1B2230;border-radius:20px;padding:34px 36px;display:flex;flex-direction:column;gap:14px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#F0884F;letter-spacing:1px">LLAMA 3.2 1B</p>
-<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:58px;font-weight:700;line-height:1.1;color:#6FA3F0;white-space:nowrap"><span style="color:#8C96A6">12.0%</span> → 50.7%</p>
-<p style="font-size:25px;line-height:1.4;color:#C8D0DC">Exact-match accuracy on a fixed 150-task evaluation</p>
-</div>
-<div style="flex:1;background:#1B2230;border-radius:20px;padding:34px 36px;display:flex;flex-direction:column;gap:14px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#F0884F;letter-spacing:1px">LLAMA 3.2 3B</p>
-<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:58px;font-weight:700;line-height:1.1;color:#6FA3F0;white-space:nowrap"><span style="color:#8C96A6">52.0%</span> → 72.7%</p>
-<p style="font-size:25px;line-height:1.4;color:#C8D0DC">The same frozen test, in the same loop on one local GPU</p>
-</div>
-<div style="flex:1;background:#1B2230;border-radius:20px;padding:34px 36px;display:flex;flex-direction:column;gap:14px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#F0884F;letter-spacing:1px">MUSE GLIMMER 30B</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#F0884F;letter-spacing:1px;text-transform:uppercase">{{model:muse-glimmer-30b}} · tool calls</p>
 <p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:58px;font-weight:700;line-height:1.1;color:#6FA3F0;white-space:nowrap"><span style="color:#8C96A6">93.3%</span> → 99.3%</p>
-<p style="font-size:25px;line-height:1.4;color:#C8D0DC">On a fresh test registered before scoring: +6.0 points, 95% CI +2.0 to +10.7. The promotion rule passed 12 of 12 checks.</p>
+<p style="font-size:25px;line-height:1.4;color:#C8D0DC">Exact-match accuracy on our 150-task tool-call evaluation, a fresh test fixed before scoring: +6.0 points, 95% CI +2.0 to +10.7. The promotion rule passed 12 of 12 checks.</p>
+</div>
+<div style="flex:1;background:#1B2230;border-radius:20px;padding:34px 36px;display:flex;flex-direction:column;gap:14px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#F0884F;letter-spacing:1px;text-transform:uppercase">{{model:muse-glimmer-30b}} · as memory</p>
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:58px;font-weight:700;line-height:1.1;color:#6FA3F0;white-space:nowrap"><span style="color:#8C96A6">0.0%</span> → 62.5%</p>
+<p style="font-size:25px;line-height:1.4;color:#C8D0DC">Answering from its own weights, with nothing added to the prompt, on a 120-task recall evaluation fixed before scoring.</p>
+</div>
 </div>
 </div>
 <div style="border-top:2px solid #2C3443;padding-top:32px;display:flex;flex-direction:column;gap:12px">
-<p style="font-size:32px;line-height:1.4;color:#F5F2EA"><b>All our evaluation tasks.</b> This shows the learning loop works; it isn’t a general benchmark.</p>
+<p style="font-size:32px;line-height:1.4;color:#F5F2EA"><b>All our evaluation tasks, one narrow job at a time.</b> This shows the learning loop works; it isn’t a general benchmark.</p>
 <p style="font-size:28px;line-height:1.4;color:#C8D0DC">A tuned model replaces its base only when it beats it on a test it never saw, under a rule set in advance.</p>
 </div>
 <svg aria-label="ta-amps mark" width="32" height="32" viewBox="0 0 32 32" style="position:absolute;left:128px;bottom:64px;width:32px;height:32px"><rect x="0" y="0" width="14" height="14" rx="3" fill="#6FA3F0"/><rect x="18" y="0" width="14" height="14" rx="3" fill="#F0884F"/><rect x="0" y="18" width="14" height="14" rx="3" fill="#C8D0DC"/><rect x="18" y="18" width="14" height="14" rx="3" fill="#6FA3F0"/></svg>
 <p style="position:absolute;left:176px;bottom:64px;width:1616px;font-size:24px;color:#8C96A6">What works · learning, measured on our evaluation tasks</p>
-<aside>Two small open Llama models were tuned in a loop built from nouns and verbs on one local GPU, scored by exact-match accuracy on a fixed 150-task evaluation. Muse Glimmer 30B was tuned with QLoRA on free cloud GPUs for the same kind of task and scored on a fresh set whose hashes were registered before scoring; its pre-registered promotion rule passed all twelve checks, and nothing has been promoted or admitted. These are our evaluation tasks: they show the loop works, not a general benchmark.</aside>
+<aside>Meta’s {{model:muse-glimmer-30b}} was tuned in a loop built from Tasks and Task Objects, with QLoRA on Kaggle’s free notebook GPUs, and scored by exact-match accuracy on our 150-task tool-call evaluation, a fresh test recorded before scoring: 93.3% to 99.3%. Its promotion rule, fixed in advance, passed all twelve checks, and nothing has been promoted or admitted. A second run tuned it to answer from memory, with nothing added to the prompt: 0.0% to 62.5% on a 120-task recall evaluation. These are our evaluation tasks: they show the loop works on one narrow job at a time, not a general benchmark.</aside>
 </section>

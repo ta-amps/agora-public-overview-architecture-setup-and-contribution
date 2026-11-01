@@ -23,11 +23,6 @@
       "what": "tasks and task objects, a real run replayed from its receipts, and what runs underneath"
     },
     {
-      "path": "film/",
-      "label": "The film",
-      "what": "the three-minute film's transcript and scene descriptions"
-    },
-    {
       "path": "use-cases/",
       "label": "Use cases",
       "what": "what the same tasks and task objects are used for"

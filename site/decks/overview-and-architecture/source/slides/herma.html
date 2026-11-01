@@ -1,11 +1,11 @@
 <section id="herma" data-transition="fade" style="background:#F5F2EA;color:#11161F;font-family:'IBM Plex Sans', Arial, sans-serif;padding:112px 128px 150px;display:flex;flex-direction:column;gap:30px">
 <div style="position:absolute;left:0;top:0;width:1920px;height:10px;background:linear-gradient(90deg, #2A5DB0, #B8541F)"></div>
 <h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;color:#11161F">Herma, the shim</h2>
-<p style="font-size:30px;line-height:1.4;color:#3B4252">It sits between any agent’s harness and its model, and adds nouns as context or answers directly.</p>
+<p style="font-size:30px;line-height:1.4;color:#3B4252">It sits between any agent’s harness and its model, and adds Task Objects as context or answers directly.</p>
 <div style="display:flex;flex-direction:row;align-items:stretch;gap:16px">
 <div style="flex:1;background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:28px 32px;display:flex;flex-direction:column;gap:8px">
 <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#5E6472;letter-spacing:1px">ANY AGENT’S HARNESS</p>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#11161F">Claude Code, Codex, OpenCode, Muse Code</h3>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#11161F">Any agent program you use</h3>
 <p style="font-size:24px;line-height:1.4;color:#3B4252">Sends its model requests through Herma</p>
 </div>
 <div style="display:flex;align-items:center"><x-shape kind="arrow-right" style="width:56px;height:28px;background:#8A8F99"></x-shape></div>
@@ -23,18 +23,18 @@
 </div>
 <div style="display:flex;flex-direction:row;gap:28px">
 <div style="flex:1;background:#FFFDF8;border:2px solid #E4DED1;border-top:8px solid #2A5DB0;border-radius:20px;padding:28px 34px;display:flex;flex-direction:column;gap:8px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#2A5DB0;letter-spacing:1px">ADDS NOUNS AS CONTEXT</p>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#11161F">The right nouns, in front of the model</h3>
-<p style="font-size:24px;line-height:1.4;color:#3B4252">Rules, code, tools and past runs from the caller’s own store, with a receipt for every insertion.</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#2A5DB0;letter-spacing:1px">ADDS TASK OBJECTS AS CONTEXT</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#11161F">The right Task Objects, in front of the model</h3>
+<p style="font-size:24px;line-height:1.4;color:#3B4252">Rules, code, tools and past runs from the caller’s own store, and every insertion is recorded.</p>
 </div>
 <div style="flex:1;background:#FFFDF8;border:2px solid #E4DED1;border-top:8px solid #B8541F;border-radius:20px;padding:28px 34px;display:flex;flex-direction:column;gap:8px">
 <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#A84B1B;letter-spacing:1px">ANSWERS DIRECTLY</p>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#11161F">When a verified noun already answers</h3>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.15;color:#11161F">When a verified Task Object already answers</h3>
 <p style="font-size:24px;line-height:1.4;color:#3B4252">It replies itself, in the harness’s own protocol, without calling the model.</p>
 </div>
 </div>
 <p style="font-size:30px;line-height:1.4;color:#A84B1B"><b>RAG is one thing a shim can do. The agent itself doesn’t change.</b></p>
 <svg aria-label="ta-amps mark" width="32" height="32" viewBox="0 0 32 32" style="position:absolute;left:128px;bottom:64px;width:32px;height:32px"><rect x="0" y="0" width="14" height="14" rx="3" fill="#2A5DB0"/><rect x="18" y="0" width="14" height="14" rx="3" fill="#B8541F"/><rect x="0" y="18" width="14" height="14" rx="3" fill="#11161F"/><rect x="18" y="18" width="14" height="14" rx="3" fill="#2A5DB0"/></svg>
 <p style="position:absolute;left:176px;bottom:64px;width:1616px;font-size:24px;color:#5E6472">How the pieces fit · Herma, infrastructure</p>
-<aside>Herma is middleware between a harness and its model. When a request matches a rule, it adds the right nouns as context, or, when a verified noun already answers, it replies directly with no model call. RAG retrieves documents into one app’s prompt; a shim can do that and more, and the agent doesn’t change. Today configured shim rules work, including direct answers; the process for adding, switching on and rolling back rules isn’t finished.</aside>
+<aside>Herma is middleware between a harness and its model. When a request matches a rule, it adds the right Task Objects as context, or, when a verified Task Object already answers, it replies directly with no model call. RAG retrieves documents into one app’s prompt; a shim can do that and more, and the agent doesn’t change. Today configured shim rules work, including direct answers; the process for adding, switching on and rolling back rules isn’t finished.</aside>
 </section>

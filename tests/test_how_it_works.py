@@ -279,7 +279,12 @@ class Pages(unittest.TestCase):
                            for p in (SITE / "evidence" / folder["id"]).rglob("*") if p.is_file())
             self.assertEqual(files, [f["path"] for f in folder["files"]])
             for path in files:
-                self.assertIn(f'href="../evidence/{folder["id"]}/{html.escape(path)}"', main)
+                if folder.get("raw_files"):
+                    # The bundle leaves these raw files out (their traces name an agent app), so the page links the
+                    # replay on How it works instead of them (Agora builder, Nov 1).
+                    self.assertNotIn(f'href="../evidence/{folder["id"]}/{html.escape(path)}"', main)
+                else:
+                    self.assertIn(f'href="../evidence/{folder["id"]}/{html.escape(path)}"', main)
         # A served folder without a line stops the build.
         nouns = copy.copy(self.nouns)
         nouns.evidence = copy.deepcopy(self.nouns.evidence)

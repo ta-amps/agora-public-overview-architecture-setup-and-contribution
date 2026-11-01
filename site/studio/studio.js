@@ -1319,13 +1319,13 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
 
     if (!rows.length) {
       wrap.innerHTML =
-        '<div class="empty-state">No tasks in this view yet. Run NGO Submits Task or Worker + 409 Guard, or click Sync ready verbs via MCP list_verbs.</div>';
+        '<div class="empty-state">No Tasks in this view. Run NGO Submits Task or Worker + 409 Guard, or click Sync ready Tasks via MCP list_verbs.</div>';
       return;
     }
 
     wrap.innerHTML =
       '<table class="state-table">' +
-      "<thead><tr><th>Task ID</th><th>Verb / Queue</th><th>Last answer from Tessera</th><th>Fence / Worker</th><th>Receipt</th></tr></thead>" +
+      "<thead><tr><th>Task ID</th><th>Task / Queue</th><th>Last answer from Tessera</th><th>Fence / Worker</th><th>Record</th></tr></thead>" +
       "<tbody>" +
       rows
         .map(function (t) {
@@ -1349,9 +1349,10 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
             "</code> · " +
             escapeHtml(t.worker || "-") +
             "</td>" +
-            "<td><code>" +
-            escapeHtml(t.receipt_hash ? String(t.receipt_hash).slice(0, 12) + "..." : "-") +
-            "</code></td>" +
+            "<td>" +
+            // Owner, Nov 1: no hashes on any page; the record exists, and its hash stays in the wire log.
+            escapeHtml(t.receipt_hash ? "Recorded" : "-") +
+            "</td>" +
             "</tr>"
           );
         })
@@ -1368,7 +1369,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
 
     if (!items.length) {
       wrap.innerHTML =
-        '<div class="empty-state">No nouns stored or matched in this view yet. Send a Herma prompt or run the NGO / Worker flows.</div>';
+        '<div class="empty-state">No Task Objects stored or matched in this view. Send a Herma prompt or run the NGO / Worker flows.</div>';
       return;
     }
 
@@ -1380,13 +1381,11 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
           "<span><strong>" +
           escapeHtml(n.key) +
           "</strong> · <code>" +
-          escapeHtml(n.category || n.store || "noun") +
+          escapeHtml(n.category || n.store || "Task Object") +
           "</code></span>" +
           "<span>" +
           escapeHtml(Number.isInteger(n.version) ? "v" + n.version : "version not reported") +
-          (n.sha256
-            ? " · sha256 (computed here):<code>" + escapeHtml(String(n.sha256).slice(0, 14)) + "...</code>"
-            : "") +
+          (n.sha256 ? " · recorded" : "") +
           "</span>" +
           "</summary>" +
           (n.source ? '<p class="noun-source">' + escapeHtml(n.source) + "</p>" : "") +
@@ -1859,7 +1858,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
         }
       }
     });
-    if (!r2.ok) return halt(2, r2, "Tessera did not enqueue the verb: " + failureText(r2) + ".");
+    if (!r2.ok) return halt(2, r2, "Tessera did not enqueue the Task: " + failureText(r2) + ".");
     const taskId = r2.data && typeof r2.data.task_id === "string" && r2.data.task_id ? r2.data.task_id : null;
     if (!taskId) return halt(2, r2, missingField(r2, "Tessera", "task_id"));
     upsertTask({ task_id: taskId, queue: queue, kind: kind, last: "enqueued (HTTP " + r2.status + ")", tone: "queued" });
@@ -1877,7 +1876,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     });
     const stopReason = "Agora Studio run stopped at step ";
     if (!r3.ok) {
-      return halt(3, r3, "Tessera did not lease the verb: " + failureText(r3) + "." + (await cancelTask(sess, taskId, stopReason + 3)));
+      return halt(3, r3, "Tessera did not lease the Task: " + failureText(r3) + "." + (await cancelTask(sess, taskId, stopReason + 3)));
     }
     if (r3.status === 204 || !r3.data || typeof r3.data !== "object") {
       return halt(
@@ -1987,7 +1986,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       5,
       "done",
       statusPill(r5),
-      "Eranos ran " + d5.checks_run.length + " checks (" + d5.checks_run.join(", ") + ") and passed the draft. Receipt " + d5.receipt_sha256.slice(0, 12) + "..."
+      "Eranos ran " + d5.checks_run.length + " checks (" + d5.checks_run.join(", ") + ") and passed the draft; Eranos recorded the check."
     );
 
     /* STEP 6: store noun.agent_kit over MCP put_record, then submit the verb */
@@ -2069,9 +2068,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
         rec.version +
         " with review_gate held_for_person, and accepted the submit (state_after " +
         receipt.state_after +
-        ", receipt " +
-        receipt.receipt_hash.slice(0, 12) +
-        "...)."
+        "), and every step is recorded."
     );
     setBadge("held_for_person", "Kit stored with review_gate held_for_person: a person decides next");
 
@@ -2107,7 +2104,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     if (!res.approved) {
       gateCard.innerHTML =
         '<div class="gate-copy">' +
-        '<span class="gate-kicker">review_gate: held_for_person (stored in the kit noun)</span>' +
+        '<span class="gate-kicker">review_gate: held_for_person (stored in the kit’s Task Object)</span>' +
         "<h3>Agent kit draft " +
         escapeHtml(res.kitDraft.kit_id) +
         " is waiting for a person</h3>" +
@@ -2117,19 +2114,19 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
         escapeHtml(res.kitVersion) +
         ") after Eranos's practice check passed (" +
         escapeHtml(res.checksRun.length) +
-        " checks). Approving writes a review noun to <code>demo.reviews</code> in your demo namespace. It does not publish the kit or add it to the Eranos catalog.</p>" +
+        " checks). Approving writes a review Task Object to <code>demo.reviews</code> in your demo namespace. It does not publish the kit or add it to the Eranos catalog.</p>" +
         (res.approvalError ? '<p class="gate-error">' + escapeHtml(res.approvalError) + "</p>" : "") +
         "</div>" +
         '<button type="button" class="btn btn-emerald" id="ngo-approve-btn" data-needs-session>' +
         '<span class="btn-main-line">Approve &amp; Inspect the Agent Kit</span>' +
-        '<span class="btn-sub">Writes a review noun, then shows the kit</span>' +
+        '<span class="btn-sub">Writes a review Task Object, then shows the kit</span>' +
         "</button>" +
         '<p class="session-gate-note" data-session-note hidden></p>';
       applySessionGate();
     } else {
       gateCard.innerHTML =
         '<div class="gate-copy">' +
-        '<span class="gate-kicker">Review noun stored: demo.reviews/' +
+        '<span class="gate-kicker">Review Task Object stored: demo.reviews/' +
         escapeHtml(res.approval.key) +
         " (version " +
         escapeHtml(res.approval.version) +
@@ -2200,7 +2197,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     const badge = $("ngo-pipeline-badge");
     if (badge) {
       badge.dataset.state = "approved";
-      badge.textContent = "Review noun stored in demo.reviews (version " + r.data.version + ")";
+      badge.textContent = "Review Task Object stored in demo.reviews (version " + r.data.version + ")";
     }
     renderNgoHumanGate();
 
@@ -2218,7 +2215,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
 
       insp.innerHTML =
         '<div class="panel-intro-top">' +
-        '<span class="kicker kicker-emerald">Stored agent kit noun (noun.agent_kit) · ' +
+        '<span class="kicker kicker-emerald">Stored agent kit Task Object (noun.agent_kit) · ' +
         escapeHtml(res.kitDraft.kit_id) +
         "</span>" +
         '<span class="metric-chip">SPDX: ' +
@@ -2226,12 +2223,10 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
         "</span>" +
         "</div>" +
         '<div class="kit-meta-grid">' +
-        '<div class="kit-meta-box"><span>sha256 of the stored value (computed here)</span><code>' +
-        escapeHtml(res.kitSha.slice(0, 24)) +
-        "...</code></div>" +
-        '<div class="kit-meta-box"><span>Eranos practice receipt</span><code>' +
-        escapeHtml(res.practiceReceipt.slice(0, 24)) +
-        "...</code></div>" +
+        '<div class="kit-meta-box"><span>The stored value</span><strong>Recorded in Tessera</strong></div>' +
+        '<div class="kit-meta-box"><span>Eranos practice check</span><strong>' +
+        escapeHtml(res.practiceReceipt ? "Recorded by Eranos" : "Not recorded") +
+        "</strong></div>" +
         '<div class="kit-meta-box"><span>human_only steps in the draft</span><strong>' +
         escapeHtml(humanSteps) +
         "</strong></div>" +
@@ -2468,7 +2463,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       if (!c.ok) return c;
     }
     const lease = state.workerLab.activeLease;
-    const casKey = "lab-noun-" + state.runId + "-" + String(++state.workerLab.casSeq).padStart(2, "0");
+    const casKey = "lab-object-" + state.runId + "-" + String(++state.workerLab.casSeq).padStart(2, "0");
     const recordPath = nsPath("/v1/stores/demo.artifacts/records/" + casKey);
 
     const valV1 = {
@@ -2749,12 +2744,13 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       "cli-line-ok"
     );
     appendCliLine(
-      "Type 'help' or click a command chip above. The GUI and the CLI share the same session, tasks, nouns and wire log.",
+      "Type 'help' or click a command chip above. The GUI and the CLI share the same session, Tasks, Task Objects and wire log.",
       "cli-line-muted"
     );
   }
 
-  const CLI_TESSERA_COMMANDS = ["ngo submit", "worker claim", "worker conflict", "nouns ls", "tasks ls"];
+  // "nouns ls" stays as a hidden alias of "objects ls" (the Studio page sends "objects ls").
+  const CLI_TESSERA_COMMANDS = ["ngo submit", "worker claim", "worker conflict", "objects ls", "nouns ls", "tasks ls"];
 
   function cliNeedsSession(lower) {
     return CLI_TESSERA_COMMANDS.some(function (c) {
@@ -2797,15 +2793,15 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
           "Commands (each one makes real calls):",
           "  shim <prompt>         -> POST https://herma.ta-amps.workers.dev/api/preview",
           "  ngo submit [preset]   -> the NGO run, steps 1-6 (clinic | pantry | shelter)",
-          "  worker claim          -> enqueue a verb, then claim it as this browser",
+          "  worker claim          -> enqueue a Task, then claim it as this browser",
           "  worker conflict       -> write v1 and v2, then send a stale overwrite (Tessera should answer 409)",
           "  eranos tracks         -> GET https://eranos.ta-amps.workers.dev/api/tracks",
           "  eranos catalog        -> GET https://eranos.ta-amps.workers.dev/api/catalog + /api/examples",
-          "  nouns ls              -> MCP search_nouns on https://tessera.ta-amps.workers.dev/mcp",
-          "  tasks ls              -> MCP list_verbs (ready verbs) on https://tessera.ta-amps.workers.dev/mcp",
+          "  objects ls            -> MCP search_nouns on https://tessera.ta-amps.workers.dev/mcp",
+          "  tasks ls              -> MCP list_verbs (ready Tasks) on https://tessera.ta-amps.workers.dev/mcp",
           "  curl last             -> print a curl command for the latest Wire Log call",
           "  clear                 -> clear the terminal",
-          "ngo, worker, nouns and tasks need a live Tessera demo session; shim and eranos do not."
+          "ngo, worker, objects and tasks need a live Tessera demo session; shim and eranos do not."
         ].join("\n"),
         "cli-line-muted"
       );
@@ -2859,7 +2855,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
             r.kitVersion +
             "); Eranos practice passed (" +
             r.checksRun.length +
-            " checks); verb submitted (state_after " +
+            " checks); Task submitted (state_after " +
             r.stateAfter +
             "). review_gate: held_for_person.",
           "cli-line-warn"
@@ -2985,7 +2981,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       return;
     }
 
-    if (lower === "nouns ls") {
+    if (lower === "objects ls" || lower === "nouns ls") {
       const out = await runExclusive("MCP search_nouns", function () {
         return syncNounsFromMcp(liveSession());
       });
@@ -2994,7 +2990,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
         return;
       }
       appendCliLine(
-        "[MCP search_nouns · " + statusPill(out.res) + "] Tessera returned " + out.scents.length + " nouns:",
+        "[MCP search_nouns · " + statusPill(out.res) + "] Tessera returned " + out.scents.length + " Task Objects:",
         "cli-line-ok"
       );
       out.scents.forEach(function (s) {
@@ -3018,7 +3014,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
         return;
       }
       appendCliLine(
-        "[MCP list_verbs · " + statusPill(out.res) + "] Tessera returned " + out.verbs.length + " ready verbs:",
+        "[MCP list_verbs · " + statusPill(out.res) + "] Tessera returned " + out.verbs.length + " ready Tasks:",
         "cli-line-ok"
       );
       out.verbs.forEach(function (v) {
@@ -3104,7 +3100,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       const target = label.indexOf("list_verbs") >= 0 ? $("tasks-sync-status") : $("nouns-sync-status");
       if (target) {
         target.textContent = out.ok
-          ? (out.verbs ? out.verbs.length + " ready verbs" : out.scents.length + " nouns") + " from Tessera (" + statusPill(out.res) + ")"
+          ? (out.verbs ? out.verbs.length + " ready Tasks" : out.scents.length + " Task Objects") + " from Tessera (" + statusPill(out.res) + ")"
           : "Sync failed: " + out.message;
         target.dataset.ok = out.ok ? "true" : "false";
       }
@@ -3210,7 +3206,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       "---\n\n" +
       "Verify that builder_key_id differs from reviewer_key_id on every kit.\n" +
       "Check that clinical, legal, and crisis steps stay human_only.\n" +
-      "Return a deterministic JSON receipt listing any policy or digest mismatch.",
+      "Return a deterministic JSON record listing any policy or digest mismatch.",
     fluff:
       "---\n" +
       "name: pantry-roster-auditor\n" +
@@ -3325,7 +3321,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     if (/\b(?:use when|invoke when|delegate|audits?|scans?|compiles?|verifies?|extracts?|checks?)\b/i.test(desc)) {
       clarity += 0.3;
     }
-    if (/\b(?:json|jsonl|yaml|toml|csv|diff|schema|test|receipt|kit|config|repo|file|noun|verb)s?\b/i.test(desc)) {
+    if (/\b(?:json|jsonl|yaml|toml|csv|diff|schema|test|receipt|record|kit|config|repo|file|noun|verb)s?\b/i.test(desc)) {
       clarity += 0.25;
     }
     if (/\b(?:read[- ]only|without|never|do not|only|isolated|scoped|local)\b/i.test(desc)) {

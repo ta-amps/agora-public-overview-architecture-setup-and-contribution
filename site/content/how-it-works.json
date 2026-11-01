@@ -226,25 +226,11 @@
     "evidence": "Evidence",
     "results": [
       {
-        "model": "Llama 3.2 1B (Herma Shim Router)",
-        "served": "evidence/meta-evals-2026-10-31/README.md"
+        "model": "{{model:muse-glimmer-30b}}"
       },
       {
-        "model": "Llama 3.2 3B (Hybrid LoRA + Compact Pointer)",
-        "served": "evidence/meta-evals-2026-10-31/README.md"
-      },
-      {
-        "model": "Muse Glimmer 30B (LoRA-as-Memory)",
+        "model": "{{model:muse-glimmer-30b}}, as memory",
         "served": "evidence/glimmer-30b-lora-memory-2026-10-31/README.md"
-      },
-      {
-        "model": "Muse Glimmer 30B"
-      },
-      {
-        "model": "Llama 3.2 1B"
-      },
-      {
-        "model": "Llama 3.2 3B"
       }
     ],
     "links": [

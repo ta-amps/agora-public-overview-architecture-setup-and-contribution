@@ -1,6 +1,6 @@
 <section id="run-your-own" data-transition="fade" style="background:#F5F2EA;color:#11161F;font-family:'IBM Plex Sans', Arial, sans-serif;padding:108px 128px 150px;display:flex;flex-direction:column;gap:34px">
 <div style="position:absolute;left:0;top:0;width:1920px;height:10px;background:linear-gradient(90deg, #2A5DB0, #B8541F)"></div>
-<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;color:#11161F">Run your own server worker</h2>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;color:#11161F">Run your own always-on worker</h2>
 <div style="display:flex;flex-direction:row;gap:48px;align-items:stretch">
 <div style="flex:1;display:flex;flex-direction:column;gap:16px">
 <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#5E6472;letter-spacing:1px">WHAT IT NEEDS</p>
@@ -15,7 +15,7 @@
 <p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:38px;font-weight:700;color:#A84B1B;width:36px">2</p>
 <div style="flex:1;display:flex;flex-direction:column;gap:2px">
 <p style="font-size:28px;line-height:1.35;color:#11161F;font-weight:600">The queues it claims from</p>
-<p style="font-size:24px;line-height:1.4;color:#3B4252">and the kinds of verb it takes</p>
+<p style="font-size:24px;line-height:1.4;color:#3B4252">and the kinds of Task it takes</p>
 </div>
 </div>
 <div style="display:flex;flex-direction:row;gap:24px;align-items:baseline">
@@ -44,7 +44,7 @@
 <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#2A5DB0;letter-spacing:1px">IT WORKS LIKE ANY WORKER</p>
 <div style="display:flex;flex-direction:row;gap:20px;align-items:baseline">
 <p style="width:150px;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#A84B1B">claim</p>
-<p style="flex:1;font-size:25px;line-height:1.4;color:#3B4252">One verb at a time, under a lease</p>
+<p style="flex:1;font-size:25px;line-height:1.4;color:#3B4252">One Task at a time, under a lease</p>
 </div>
 <div style="display:flex;flex-direction:row;gap:20px;align-items:baseline">
 <p style="width:150px;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#A84B1B">heartbeat</p>
@@ -52,9 +52,9 @@
 </div>
 <div style="display:flex;flex-direction:row;gap:20px;align-items:baseline">
 <p style="width:150px;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#2A5DB0">submit</p>
-<p style="flex:1;font-size:25px;line-height:1.4;color:#3B4252">Reports the result, or the failure, and gets a receipt</p>
+<p style="flex:1;font-size:25px;line-height:1.4;color:#3B4252">Reports the result, or the failure, and it is recorded</p>
 </div>
-<p style="margin-top:auto;border-top:2px solid #EDE8DC;padding-top:16px;font-size:24px;line-height:1.4;color:#5E6472">It can run on any machine that stays on, from a small server to a scheduled cloud function.</p>
+<p style="margin-top:auto;border-top:2px solid #EDE8DC;padding-top:16px;font-size:24px;line-height:1.4;color:#5E6472">It can run on any machine that stays on, from a small server to a scheduled function.</p>
 </div>
 </div>
 <div style="background:#11161F;border-radius:20px;padding:26px 40px;display:flex;flex-direction:row;gap:48px">
@@ -62,6 +62,6 @@
 <p style="flex:1;font-size:26px;line-height:1.45;color:#F5F2EA"><b style="color:#F0884F">Deploying, publishing and paying</b> stay with a person.</p>
 </div>
 <svg aria-label="ta-amps mark" width="32" height="32" viewBox="0 0 32 32" style="position:absolute;left:128px;bottom:64px;width:32px;height:32px"><rect x="0" y="0" width="14" height="14" rx="3" fill="#2A5DB0"/><rect x="18" y="0" width="14" height="14" rx="3" fill="#B8541F"/><rect x="0" y="18" width="14" height="14" rx="3" fill="#11161F"/><rect x="18" y="18" width="14" height="14" rx="3" fill="#2A5DB0"/></svg>
-<p style="position:absolute;left:176px;bottom:64px;width:1616px;font-size:24px;color:#5E6472">Run your own · a server worker</p>
-<aside>A server worker of your own is an ordinary worker that happens to stay on. It needs a scoped key that reaches only its own queues, which an operator issues today; the queues and kinds of verb it claims; a schedule, which activates nothing until an authorized schedule enqueues the work; an allowance for every run; and its own model keys, or none when the work is plain code. It claims one verb at a time under a lease, heartbeats while it works and submits a result or a failure for a receipt, like any other worker. It can run on any machine that stays on. It adds no new queue or authority: Tessera keeps the work, its permissions still apply, and anything public, such as deploying, publishing or paying, stays with a person.</aside>
+<p style="position:absolute;left:176px;bottom:64px;width:1616px;font-size:24px;color:#5E6472">Run your own · an always-on worker</p>
+<aside>An always-on worker of your own is an ordinary worker that happens to stay on. It needs a scoped key that reaches only its own queues, which an operator issues today; the queues and kinds of Task it claims; a schedule, which activates nothing until an authorized schedule enqueues the work; an allowance for every run; and its own model keys, or none when the work is plain code. It claims one Task at a time under a lease, heartbeats while it works and submits a result or a failure, which is recorded, like any other worker. It can run on any machine that stays on. It adds no new queue or authority: Tessera keeps the work, its permissions still apply, and anything public, such as deploying, publishing or paying, stays with a person.</aside>
 </section>

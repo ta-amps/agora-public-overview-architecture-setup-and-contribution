@@ -10,12 +10,12 @@
 <span style="color:#F0884F">  verbs</span><span style="color:#8C96A6">  inputs, checks, produces, bounds</span>
 packs/&lt;id&gt;/README.md
 packs/&lt;id&gt;/code/   <span style="color:#8C96A6">optional, with its tests</span></pre>
-<p style="font-size:23px;line-height:1.45;color:#C8D0DC">Plain-English names, starting “A collection of nouns and verbs for …”. No product or surface names.</p>
+<p style="font-size:23px;line-height:1.45;color:#C8D0DC">Plain-English names that say what the pack is for. No product or surface names.</p>
 </div>
 <div style="flex:1;display:flex;flex-direction:column;gap:18px">
 <div style="background:#FFFDF8;border:2px solid #E4DED1;border-radius:18px;padding:22px 30px;display:flex;flex-direction:column;gap:6px">
 <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#2A5DB0">BUILDER · python3 scripts/build_packs.py</p>
-<p style="font-size:24px;line-height:1.4;color:#3B4252">Writes nouns.json, verbs.json and manifest.json, and adds the no_change, unknown and blocked outcomes to every verb.</p>
+<p style="font-size:24px;line-height:1.4;color:#3B4252">Writes nouns.json, verbs.json and manifest.json, and adds the no_change, unknown and blocked outcomes to every Task.</p>
 </div>
 <div style="background:#FFFDF8;border:2px solid #E4DED1;border-radius:18px;padding:22px 30px;display:flex;flex-direction:column;gap:6px">
 <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#2A5DB0">VALIDATOR · make check</p>
@@ -23,12 +23,12 @@ packs/&lt;id&gt;/code/   <span style="color:#8C96A6">optional, with its tests</s
 </div>
 <div style="background:#FFFDF8;border:2px solid #E4DED1;border-radius:18px;padding:22px 30px;display:flex;flex-direction:column;gap:6px">
 <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#2A5DB0">AGAINST TESSERA · make check-tessera</p>
-<p style="font-size:24px;line-height:1.4;color:#3B4252">Runs every noun and verb through Tessera’s own models at a pinned commit, and writes the receipt that make check requires.</p>
+<p style="font-size:24px;line-height:1.4;color:#3B4252">Runs every Task and Task Object through Tessera’s own schemas at a pinned version, and writes the record that make check requires.</p>
 </div>
 </div>
 </div>
-<p style="font-size:26px;line-height:1.4;color:#5E6472">Start from the closest existing pack. Every verb needs at least one deterministic acceptance check.</p>
+<p style="font-size:26px;line-height:1.4;color:#5E6472">Start from the closest existing pack. Every Task needs at least one deterministic acceptance check.</p>
 <svg aria-label="ta-amps mark" width="32" height="32" viewBox="0 0 32 32" style="position:absolute;left:128px;bottom:64px;width:32px;height:32px"><rect x="0" y="0" width="14" height="14" rx="3" fill="#2A5DB0"/><rect x="18" y="0" width="14" height="14" rx="3" fill="#B8541F"/><rect x="0" y="18" width="14" height="14" rx="3" fill="#11161F"/><rect x="18" y="18" width="14" height="14" rx="3" fill="#2A5DB0"/></svg>
-<p style="position:absolute;left:176px;bottom:64px;width:1616px;font-size:24px;color:#5E6472">Build nouns and verbs for your area of expertise · in ta-amps/seed-packs-library-of-nouns-and-verbs</p>
-<aside>A pack is one hand-edited file, source.json, plus a short README. Nouns have a slug, a registered category, a role, a title and a value; verbs have inputs, at least one deterministic acceptance check, the nouns they produce, a network mode and bounds. The builder writes the generated files, make check validates everything offline, and make check-tessera runs every noun and verb through Tessera’s own models and writes the receipt. Tested code can ship in the pack’s code folder with its own CI job.</aside>
+<p style="position:absolute;left:176px;bottom:64px;width:1616px;font-size:24px;color:#5E6472">Build Tasks and Task Objects for your area of expertise · in the seed-pack library</p>
+<aside>A pack is one hand-edited file, source.json, plus a short README. Task Objects have a slug, a registered category, a role, a title and a value; Tasks have inputs, at least one deterministic acceptance check, the Task Objects they produce, a network mode and bounds. The builder writes the generated files, make check validates everything offline, and make check-tessera runs every Task and Task Object through Tessera’s own schemas and writes the record. Tested code can ship in the pack’s code folder with its own CI job.</aside>
 </section>

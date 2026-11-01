@@ -1,5 +1,5 @@
 {
-  "about": "Pages that moved, each with its new home. The not-found page lists them, and the Agora worker answers each old address with a permanent redirect (301) to the new one, read from this noun. Frozen pages may still link to an old address, and scripts/check.py allows only that.",
+  "about": "Pages that moved, each with its new home. The not-found page lists them, and the Agora worker answers each old address with a permanent redirect (301) to the new one, read from this Task Object. Frozen pages may still link to an old address, and scripts/check.py allows only that.",
   "date": "2026-10-31",
   "pages": [
     {

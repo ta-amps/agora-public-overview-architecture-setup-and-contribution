@@ -45,7 +45,7 @@ CACHED_TOKEN = "tan_fixture_old"
 TESSERA_BUTTONS = ["#ngo-submit-btn", "#worker-run-all-btn", "#worker-btn-1", "#worker-btn-2", "#worker-btn-3",
                    "#worker-btn-4", "#persona-persist-btn", "#tasks-refresh-btn", "#nouns-refresh-btn",
                    '[data-cli-cmd="ngo submit clinic"]', '[data-cli-cmd="worker claim"]',
-                   '[data-cli-cmd="worker conflict"]', '[data-cli-cmd="nouns ls"]', '[data-cli-cmd="tasks ls"]']
+                   '[data-cli-cmd="worker conflict"]', '[data-cli-cmd="objects ls"]', '[data-cli-cmd="tasks ls"]']
 PAGE_TEXT = "() => document.body.textContent"
 
 
@@ -278,10 +278,10 @@ class Studio(unittest.TestCase):
         self.assertEqual(("put_record", "demo.kits"), (put["name"], put["arguments"]["store_name"]))
         self.assert_no_simulation(page)
 
-        # The approval writes a real review noun and shows its version.
+        # The approval writes a real review Task Object and shows its version.
         page.click("#ngo-approve-btn")
         page.wait_for_function("document.getElementById('ngo-pipeline-badge').dataset.state === 'approved'")
-        self.assertIn("Review noun stored: demo.reviews/", page.eval_on_selector("#ngo-human-gate", "el => el.textContent"))
+        self.assertIn("Review Task Object stored: demo.reviews/", page.eval_on_selector("#ngo-human-gate", "el => el.textContent"))
         self.assertEqual(1, len(fake.calls("POST", TESSERA, r"/v1/stores/demo\.reviews/records/")))
 
     # (c) The run stops at the first failed call -------------------------------------------------------------------

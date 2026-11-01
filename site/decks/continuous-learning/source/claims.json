@@ -4,16 +4,9 @@
   "claims": [
     {
       "slide": "why",
-      "number": "Llama 3.2 1B and 3B, unchanged, on the same frozen 150-row test: exact match 12.0% and 52.0%; typed values written as strings in 8.3% and 17.5% of calls",
+      "number": "{{model:muse-glimmer-30b}}, unchanged, on a fresh 150-row test: exact match 93.3%, valid JSON 96.7%",
       "status": "measured",
-      "source": "Tessera’s continuous-tuning record: the unchanged base models on the frozen, tool-call evaluation. A typed value written as a string, such as a quoted number, makes a strict server reject the call.",
-      "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md"
-    },
-    {
-      "slide": "why",
-      "number": "Muse Glimmer 30B, unchanged, on a fresh 150-row test: exact match 93.3%, valid JSON 96.7%",
-      "status": "measured",
-      "source": "The base model’s scores in the published run record, on a fresh, tool-call evaluation whose hashes were registered before scoring.",
+      "source": "The base model’s scores in the published run record, on a fresh tool-call evaluation recorded before scoring.",
       "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/glimmer-30b-2026-10-29/README.md"
     },
     {
@@ -25,100 +18,51 @@
     },
     {
       "slide": "pre-registration",
-      "number": "Llama 3.2 1B, round 4: schema-augmented training lifted the development score from 61.25% to 76.25%, but the frozen test stayed at 50.7%; kept out",
-      "status": "measured",
-      "source": "The development set and the frozen test disagreed. The augmented adapter tied the champion on the test, while its schema validity fell to 61.7% and its false refusals rose to 17.5%, so the rule kept the champion.",
-      "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md"
-    },
-    {
-      "slide": "pre-registration",
-      "number": "Llama 3.2 3B, round 2: 79.3% exact match, but schema validity fell 0.025 against a 0.02 limit; kept out",
-      "status": "measured",
-      "source": "The adapter scored above the champion, but the promotion rule, committed before any training round, allows schema validity to drop by at most 0.02, so the champion stayed.",
-      "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md"
-    },
-    {
-      "slide": "pre-registration",
-      "number": "Muse Glimmer 30B with 63 training examples: +5.3 points on the frozen test, 95% CI 0.0 to +11.3; kept out",
+      "number": "{{model:muse-glimmer-30b}} with 63 training examples: +5.3 points on the frozen test, 95% CI 0.0 to +11.3; kept out",
       "status": "measured",
       "source": "The 63-row run on the frozen development test: exact match 87.3% to 92.7%, with 14 rows better and 6 worse. The paired bootstrap lower bound was not above zero, so the rule kept the base.",
       "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/glimmer-30b-2026-10-29/phase2a-tuning63-compare.json"
     },
     {
-      "slide": "small-models",
-      "number": "Llama 3.2 1B, rounds 0 to 4 on the frozen, 150-task evaluation: exact match 12.0%, 43.3%, 43.3%, 50.7% and 50.7%; promoted in rounds 1 and 3",
+      "slide": "pre-registration",
+      "number": "{{model:muse-glimmer-30b}} with 511 training examples: +6.0 points on a fresh test (93.3% to 99.3%), 95% CI +2.0 to +10.7; 12 of 12 promotion-rule checks passed",
       "status": "measured",
-      "source": "Tessera’s continuous-tuning record: one local GPU, one seed per configuration. Rounds 2 and 4 did not beat the champion, so the pre-registered rule kept it.",
-      "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md"
-    },
-    {
-      "slide": "small-models",
-      "number": "Llama 3.2 3B, rounds 0 to 2 on the same test: exact match 52.0%, 72.7% and 79.3%; promoted in round 1, round 2 kept out by the schema guard, rounds 3 and 4 not run",
-      "status": "measured",
-      "source": "The same loop, test and rule. Round 2’s schema validity fell 0.025 against a 0.02 limit. Training then stopped until there is more checked data.",
-      "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md"
-    },
-    {
-      "slide": "small-models",
-      "number": "Promoted gains, with paired bootstrap 95% CIs: 1B round 1 +31.3 points (+22.0 to +40.7), round 3 +7.3 (+0.7 to +14.7); 3B round 1 +20.7 (+12.0 to +29.3)",
-      "status": "measured",
-      "source": "The promotion decisions in Tessera’s continuous-tuning record: 55 rows better and 8 worse in the 1B’s round 1, 20 and 9 in its round 3, and 40 and 9 in the 3B’s round 1.",
-      "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md"
-    },
-    {
-      "slide": "small-models",
-      "number": "63 owned examples: typed values written as strings fell from 8.3% to 0% of calls, and type correctness rose from 37.5% to 94.2% (1B, round 1)",
-      "status": "measured",
-      "source": "The frozen-test diagnostics for the unchanged 1B and its round 1 adapter, in Tessera’s continuous-tuning record.",
-      "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md"
-    },
-    {
-      "slide": "small-models",
-      "number": "Llama 3.2 3B (Hybrid LoRA + Compact Pointer): exact recall 64.2% to 91.7% on a 120-row test with a 38.5-token pointer, cutting shim tokens by 91.0% vs a 427.6-token BM25 shim (8 of 8 reload check)",
-      "status": "measured",
-      "source": "Local RTX 3060 LoRA-as-Memory paired with a 1-line compact pointer for live post-training delta Task Objects; example data only, nothing admitted or deployed.",
-      "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/meta-evals-2026-10-31/README.md"
-    },
-    {
-      "slide": "small-models",
-      "number": "Llama 3.2 1B (Herma Shim Router): full route exact match 26.7% to 98.3% on a 120-row 5-action test (vs 10.0% zero-shot 1B), with 100.0% contributor-privacy refusal recall and 0.0% false refusals",
-      "status": "measured",
-      "source": "Local RTX 3060 1B edge router adapter classifying direct reply, Task-Object injection, task decomposition, frontier synthesis, and contributor-tier privacy refusal.",
-      "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/meta-evals-2026-10-31/README.md"
-    },
-    {
-      "slide": "glimmer-30b",
-      "number": "Muse Glimmer 30B: exact match 93.3% to 99.3% on a fresh 150-row test, +6.0 points, 95% CI +2.0 to +10.7; 10 rows improved, 1 regressed",
-      "status": "measured",
-      "source": "QLoRA on free cloud GPUs, October 29, 2026. The fresh test was built after training, and its hashes were registered before scoring.",
+      "source": "The 511-row run, scored on a fresh test built after training and recorded before scoring. The rule returned promote_candidate; nothing has been promoted or admitted.",
       "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/glimmer-30b-2026-10-29/README.md"
     },
     {
       "slide": "glimmer-30b",
-      "number": "Muse Glimmer 30B: promotion rule 12 of 12 checks passed; a fresh reload matched 8 of 8 regenerated rows",
+      "number": "{{model:muse-glimmer-30b}}: exact match 93.3% to 99.3% on our 150-task tool-call evaluation, a fresh test, +6.0 points, 95% CI +2.0 to +10.7; 10 rows improved, 1 regressed",
+      "status": "measured",
+      "source": "QLoRA on Kaggle’s free notebook GPUs, October 29, 2026. The fresh test was built after training and recorded before scoring.",
+      "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/glimmer-30b-2026-10-29/README.md"
+    },
+    {
+      "slide": "glimmer-30b",
+      "number": "{{model:muse-glimmer-30b}}: promotion rule 12 of 12 checks passed; a fresh reload matched 8 of 8 regenerated rows",
       "status": "measured",
       "source": "The rule, tool-call-specialist.promotion version 1, was fixed before scoring and returned promote_candidate. Nothing has been promoted or admitted, and the adapter weights are not published.",
       "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/glimmer-30b-2026-10-29/README.md"
     },
     {
       "slide": "glimmer-30b",
-      "number": "Muse Glimmer 30B: valid JSON 96.7% to 100.0%, correct refusals 97.3% to 99.3%; 0 test rows match the 511 training rows",
+      "number": "{{model:muse-glimmer-30b}}: valid JSON 96.7% to 100.0%, correct refusals 97.3% to 99.3%; 0 test rows match the 511 training rows",
       "status": "measured",
       "source": "No exact, request-level or held-out-family match against the training rows. Against the older test set, 54 rows share only a request shape.",
       "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/glimmer-30b-2026-10-29/README.md"
     },
     {
       "slide": "glimmer-30b",
-      "number": "Muse Glimmer 30B on the frozen development test: 87.3% to 98.7%",
+      "number": "{{model:muse-glimmer-30b}} on the frozen development test: 87.3% to 98.7%",
       "status": "measured",
       "source": "The test used while developing the runs. It served more than one run, so the fresh test is the one that decides.",
       "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/glimmer-30b-2026-10-29/README.md"
     },
     {
       "slide": "glimmer-30b",
-      "number": "Muse Glimmer 30B (LoRA-as-Memory): closed-book exact match 0.0% to 62.5% on a pre-registered 120-row test with 0 shim tokens (+33.3 points vs 222.3-token BM25 shim, 2.28 times faster, 8 of 8 reload check)",
+      "number": "{{model:muse-glimmer-30b}}, as memory: closed-book exact match 0.0% to 62.5% on a 120-row test fixed before scoring, with 0 added tokens (+33.3 points vs a 222.3-token BM25 shim, 2.28 times faster, 8 of 8 reload check)",
       "status": "measured",
-      "source": "QLoRA on two free Kaggle T4 GPUs, October 31, 2026: closed-book Task-Object recall and multi-step workflow synthesis without runtime context injection. Promoted candidate only; nothing has been admitted or deployed.",
+      "source": "QLoRA on two free Kaggle T4 GPUs, October 31, 2026: recalling the library’s Task Objects and multi-step workflows from the model’s own weights, with nothing added to the prompt. A promoted candidate only; nothing has been admitted or deployed.",
       "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/glimmer-30b-lora-memory-2026-10-31/README.md"
     },
     {
@@ -130,23 +74,16 @@
     },
     {
       "slide": "free-gpus",
-      "number": "Muse Glimmer 30B QLoRA on Kaggle’s two free T4 GPUs: 64 training steps in 83 minutes, on 511 rows",
+      "number": "{{model:muse-glimmer-30b}} QLoRA on Kaggle’s two free T4 GPUs: 64 training steps in 83 minutes, on 511 rows",
       "status": "measured",
-      "source": "The 511-row run record: 64 steps and 4,997.5 seconds of training, with each stage, library version and the peak memory of both GPUs recorded. The whole job took 8,789.5 seconds. The notebooks themselves aren’t public yet.",
+      "source": "The 511-row run record: 64 steps and 4,997.5 seconds of training, with each stage, library version and the peak memory of both GPUs recorded. The whole job took 8,789.5 seconds. The notebooks themselves are private.",
       "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/glimmer-30b-2026-10-29/phase2b-tuning511-summary.json"
     },
     {
-      "slide": "free-gpus",
-      "number": "Llama 3.2 1B and 3B on one RTX 3060 12 GB: about 46 and 51 GPU-minutes, with no provider calls and no spending",
-      "status": "measured",
-      "source": "Tessera’s continuous-tuning record: rounds 0 to 4 and a serving check for the 1B, and rounds 0 to 2 for the 3B. The GPU is owned, and its electricity is not metered.",
-      "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md"
-    },
-    {
       "slide": "safety",
-      "number": "Another key tried to read everything the 1B rounds wrote: all 303 reads were denied",
+      "number": "Another key tried to read everything the earlier tuning rounds wrote: all 303 reads were denied",
       "status": "measured",
-      "source": "A final sweep after the 1B rounds: another principal tried to read 115 private records, 133 blob chunks and 55 execution runs. After the 3B rounds, all 193 such reads were denied too.",
+      "source": "A final sweep after one model’s tuning rounds: another principal tried to read 115 private records, 133 blob chunks and 55 execution runs. After a second model’s rounds, all 193 such reads were denied too.",
       "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md"
     },
     {
@@ -158,16 +95,9 @@
     },
     {
       "slide": "learners",
-      "number": "SIRA Self-Learning RAG + Herma Shims: Recall@1 23.3% to 100.0% across 60 queries over 79 seed packs (MRR 0.341 to 1.000 in 1.0 round, 82.8% token reduction, 0.30 ms retrieval, 10 compiled shims at 0.026 ms, 10 of 10 independent reviews)",
+      "number": "Self-learning library search with Herma shims, a local check: Recall@1 23.3% to 100.0% across 60 queries over 79 seed packs (MRR 0.341 to 1.000 in 1.0 round, 82.8% token reduction, 0.30 ms retrieval, 10 compiled shims at 0.026 ms, 10 of 10 independent reviews)",
       "status": "measured",
-      "source": "Offline standard-library evaluation over the 79-pack library: RARTF noun enrichment, analogy-aware cross-domain indexing, MR-Search adaptive reflection, and DGM-H independent verification (409 self-approval rejected).",
-      "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/sira-are-cascade-2026-10-31/README.md"
-    },
-    {
-      "slide": "safety",
-      "number": "Meta ARE 4D Scenario Matrix (1,000 Episodes): 32.5% stakeholder-blocked vs 67.5% safely approved (15.1% direct plus 52.4% human-partitioned) across 1,000 4D scenarios spanning 25 domains",
-      "status": "measured",
-      "source": "Deterministic Latin-hypercube evaluation over 10^12 addressable 4D tuples (persona, environment, method, stakeholder constraint), separating direct agent work, human-partitioned drafts, and stakeholder-blocked escalations.",
+      "source": "An offline evaluation over the 79-pack library, with no model calls: each pack’s Task Objects enriched for search, an index across fields, reflection on misses, and an independent check (a self-approval was refused with a 409).",
       "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/sira-are-cascade-2026-10-31/README.md"
     }
   ]

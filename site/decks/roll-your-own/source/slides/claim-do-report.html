@@ -1,31 +1,31 @@
 <section id="claim-do-report" data-transition="fade" style="background:#F5F2EA;color:#11161F;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
 <div style="position:absolute;left:0;top:0;width:1920px;height:10px;background:linear-gradient(90deg, #2A5DB0, #B8541F)"></div>
-<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;color:#11161F">Claim, do and report a verb</h2>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;color:#11161F">Claim, do and report a Task</h2>
 <div style="display:flex;flex-direction:row;align-items:stretch;gap:16px">
 <div style="flex:1;background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:32px 34px;display:flex;flex-direction:column;gap:12px">
 <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#A84B1B">1 · CLAIM</p>
-<p style="font-size:26px;line-height:1.4;color:#3B4252">Your agent takes one verb under a lease. A fencing token means a stalled worker’s late write is refused.</p>
+<p style="font-size:26px;line-height:1.4;color:#3B4252">Your agent takes one Task under a lease. A fencing token means a stalled worker’s late write is refused.</p>
 <p style="margin-top:auto;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#5E6472">claim</p>
 </div>
 <div style="display:flex;align-items:center"><x-shape kind="arrow-right" style="width:56px;height:28px;background:#8A8F99"></x-shape></div>
 <div style="flex:1;background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:32px 34px;display:flex;flex-direction:column;gap:12px">
 <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#A84B1B">2 · DO</p>
-<p style="font-size:26px;line-height:1.4;color:#3B4252">It reads the nouns the verb pins, works with its own model and tools, keeps the lease alive and checks its own result.</p>
+<p style="font-size:26px;line-height:1.4;color:#3B4252">It reads the Task Objects the Task pins, works with its own model and tools, keeps the lease alive and checks its own result.</p>
 <p style="margin-top:auto;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#5E6472">heartbeat</p>
 </div>
 <div style="display:flex;align-items:center"><x-shape kind="arrow-right" style="width:56px;height:28px;background:#8A8F99"></x-shape></div>
 <div style="flex:1;background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:32px 34px;display:flex;flex-direction:column;gap:12px">
 <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#2A5DB0">3 · REPORT</p>
-<p style="font-size:26px;line-height:1.4;color:#3B4252">It submits exact artifact references, or a failure, and gets a receipt: a SHA-256 of exactly what was stored.</p>
+<p style="font-size:26px;line-height:1.4;color:#3B4252">It submits exact artifact references, or a failure, and Tessera records exactly what was stored.</p>
 <p style="margin-top:auto;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#5E6472">submit</p>
 </div>
 </div>
 <div style="background:#11161F;border-radius:20px;padding:30px 40px;display:flex;flex-direction:row;gap:48px">
-<p style="flex:1;font-size:26px;line-height:1.45;color:#F5F2EA"><b style="color:#F0884F">A retried submit</b> returns the first receipt instead of saving a second copy.</p>
+<p style="flex:1;font-size:26px;line-height:1.45;color:#F5F2EA"><b style="color:#F0884F">A retried submit</b> returns the first record instead of saving a second copy.</p>
 <p style="flex:1;font-size:26px;line-height:1.45;color:#F5F2EA"><b style="color:#F0884F">Where review is required,</b> a different worker or a person does it. Finishing is not approval.</p>
 </div>
-<p style="font-size:26px;line-height:1.4;color:#5E6472">Who did what lives in the receipts and the execution reports. There is no separate contribution system: contributing is a verb.</p>
+<p style="font-size:26px;line-height:1.4;color:#5E6472">Who did what lives in the records and the execution reports. There is no separate contribution system: contributing is a Task.</p>
 <svg aria-label="ta-amps mark" width="32" height="32" viewBox="0 0 32 32" style="position:absolute;left:128px;bottom:64px;width:32px;height:32px"><rect x="0" y="0" width="14" height="14" rx="3" fill="#2A5DB0"/><rect x="18" y="0" width="14" height="14" rx="3" fill="#B8541F"/><rect x="0" y="18" width="14" height="14" rx="3" fill="#11161F"/><rect x="18" y="18" width="14" height="14" rx="3" fill="#2A5DB0"/></svg>
 <p style="position:absolute;left:176px;bottom:64px;width:1616px;font-size:24px;color:#5E6472">Connect your agents · the work loop</p>
-<aside>Every verb runs the same loop. Claim takes one verb under a lease; heartbeat keeps it alive while your agent reads the pinned nouns, works and checks its own result; submit stores the result once and returns a receipt. Failures are reported too, never hidden behind a later success. If the verb needs review, a different worker or a person does it, and there’s no separate contribution system: who did what lives in the receipts.</aside>
+<aside>Every Task runs the same loop. Claim takes one Task under a lease; heartbeat keeps it alive while your agent reads the pinned Task Objects, works and checks its own result; submit stores the result once and records it. Failures are reported too, never hidden behind a later success. If the Task needs review, a different worker or a person does it, and there’s no separate contribution system: who did what lives in the records.</aside>
 </section>
