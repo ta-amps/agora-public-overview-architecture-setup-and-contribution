@@ -65,6 +65,21 @@ def css_tokens(css: str, selector: str) -> dict[str, str]:
     return dict(re.findall(r"(--[a-z0-9-]+):\s*(#[0-9A-Fa-f]{6})", block))
 
 
+def resolved_tokens() -> dict[str, str]:
+    """Agora's colour tokens with every var() reference resolved through tokens v3 (assets/tokens.css)."""
+    found = {}
+    for name in ("tokens.css", "site.css"):
+        css = (build.SITE / "assets" / name).read_text(encoding="utf-8")
+        block = css[css.index(":root {"):]
+        block = block[:block.index("}")]
+        found.update(re.findall(r"(--[a-z0-9-]+):\s*([^;]+);", block))
+    def value(name: str, depth: int = 0) -> str:
+        raw = found[name].strip()
+        ref = re.fullmatch(r"var\((--[a-z0-9-]+)\)", raw)
+        return value(ref.group(1), depth + 1) if ref and depth < 5 else raw
+    return {k: value(k) for k in found if re.fullmatch(r"#[0-9A-Fa-f]{6}", value(k))}
+
+
 def contrast(a: str, b: str) -> float:
     def luminance(colour: str) -> float:
         channels = [int(colour[i:i + 2], 16) / 255 for i in (1, 3, 5)]
@@ -276,8 +291,11 @@ class Builder(unittest.TestCase):
             self.assertIn(f".claim-status.{status} {{", css, status)
 
     def test_meta_models_are_named_from_the_models_noun(self):
-        # Owner, Nov 1: name the specific Meta models, rendered from the models.meta Task Object (a local copy).
+        # Owner, Nov 1: name the specific models, rendered from the models catalog Task Object (models.meta, a local copy).
         self.assertEqual("Muse Spark 1.3 and Muse Code", build.meta_models("{{model:muse-spark-1.3}} and {{model:muse-code}}", self.nouns.models))
+        self.assertEqual("Muse Glimmer 30B, fine-tuned by ta-amps · MusicGen · Muse Spark 1.3",
+                         build.meta_models("{{model:muse-glimmer-30b:tuned}} · {{model:facebook/musicgen-small}} · "
+                                           "{{model:muse-spark-1.3-contributor}}", self.nouns.models))
         with self.assertRaises(build.BuildError):
             build.meta_models("{{model:not-a-model}}", self.nouns.models)
         for page in build.SITE.rglob("*.html"):
@@ -651,11 +669,11 @@ class Builder(unittest.TestCase):
         for path, page in self.outputs.items():
             if path.suffix == ".html" and "<!-- site:footer -->" in page:
                 self.assertEqual(1, page.count(f'<p class="footer-privacy">{build.text(privacy)}</p>'), path)
-        # "Fonts load from Google Fonts": the only outside hosts any current page loads anything from.
+        # "The fonts come from this site": no current page loads anything from another host (self-hosted fonts, Nov 1).
         loads = re.compile(r'<(?:link|script|img|video|source|track|iframe)\b[^>]*?\s(?:href|src)="(https?://[^"/]+)', re.I)
         hosts = {host for path, page in self.outputs.items() if path.suffix == ".html" for host in loads.findall(page)}
-        self.assertEqual({"https://fonts.googleapis.com", "https://fonts.gstatic.com"}, hosts)
-        self.assertIn("Google Fonts", privacy)
+        self.assertEqual(set(), hosts)
+        self.assertNotIn("Google Fonts", privacy)
         # "No analytics, ads or cookies", and "display choices stay in this browser": the scripts set no cookie,
         # send nothing, and keep only these display choices in local storage.
         scripts = {path.name: path.read_text(encoding="utf-8") for path in (build.SITE / "assets").glob("*.js")}
@@ -682,16 +700,27 @@ class Builder(unittest.TestCase):
             self.assertIsNone(re.search(r"\b(fetch|XMLHttpRequest|sendBeacon|WebSocket)\b", script), name)
             stored |= set(re.findall(r'localStorage\.setItem\("([^"]+)"', script))
             stored |= set(re.findall(r'write\("([^"]+)"', script))
-        self.assertEqual({"ta-amps-mode", "ta-amps-deck-notes", "ta-amps-deck-large", "ta-amps-deck-letter-keys"}, stored)
+        # Light only: there is no stored mode any more; the deck viewer keeps its three display choices.
+        self.assertEqual({"ta-amps-deck-notes", "ta-amps-deck-large", "ta-amps-deck-letter-keys"}, stored)
         self.assertIn("No analytics, ads or cookies", privacy)
 
     def test_slide_and_notes_text_colours_pass_contrast(self):
         css = (build.SITE / "assets" / "site.css").read_text(encoding="utf-8")
-        light, dark = css_tokens(css, ":root"), css_tokens(css, '[data-mode="dark"]')
-        self.assertEqual(dark, css_tokens(css[css.index("@media (prefers-color-scheme: dark)"):], "  :root:not([data-mode])"))
+        # Light only (owner, Nov 1): one token set, Paper & Ink tokens v3 (assets/tokens.css) under Agora's names.
+        for stylesheet in ("site.css", "tokens.css", "viewer.css"):
+            text_ = (build.SITE / "assets" / stylesheet).read_text(encoding="utf-8")
+            self.assertNotIn("prefers-color-scheme: dark", text_, stylesheet)
+            self.assertNotIn('data-mode="dark"', text_, stylesheet)
+        light = resolved_tokens()
+        self.assertEqual("light", re.search(r":root \{\s*color-scheme: (\w+);", css).group(1))
+        # Text and its paper pass AA: body, secondary and muted ink, both accents' text, and the notes headings.
+        for fg, bg in (("--color-ink", "--color-paper"), ("--color-ink-2", "--color-paper"), ("--color-muted", "--color-paper"),
+                       ("--color-noun-ink", "--color-paper"), ("--color-verb-ink", "--color-paper"),
+                       ("--color-band-ink", "--color-band"), ("--color-code-ink", "--color-code"),
+                       ("--color-button-ink", "--color-button")):
+            self.assertGreaterEqual(contrast(light[fg], light[bg]), 4.5, (fg, bg))
         # The speaker-notes and slide-links headings sit on the stage: 4.38:1 before, so a darker grey on light.
-        for tokens in (light, dark):
-            self.assertGreaterEqual(contrast(tokens["--color-muted-on-stage"], tokens["--color-stage"]), 4.5)
+        self.assertGreaterEqual(contrast(light["--color-muted-on-stage"], light["--color-stage"]), 4.5)
         viewer = (build.SITE / "assets" / "viewer.css").read_text(encoding="utf-8")
         for selector in (".slide-notes h2", ".slide-links h2"):
             self.assertIn(f"{selector} {{ font-family: var(--font-body); font-size: var(--text-small); font-weight: 600; "

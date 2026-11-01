@@ -94,9 +94,6 @@ USE_PACKS = (2, 5)  # how many library packs a use case names, at least and at m
 # Chrome paints in one go at device scale 1.5; site.css holds the same number.
 LIBRARY_FIRST = 3
 
-FONTS = ("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700"
-         "&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400..700&display=swap")
-
 # Lucide icons (ISC license, see site/THIRD-PARTY-NOTICES.txt), the three the slides name.
 ICONS = {
     "Users": ('<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/>'
@@ -121,10 +118,7 @@ MENU_ICON = ('<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"
              '<path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" '
              'stroke-linecap="round"/></svg>')
 
-# Plain shapes drawn for this site: a half-filled circle for light and dark, two sheets for copying, a chevron for showing more and the decks' block arrow for the learning loop.
-THEME_ICON = ('<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">'
-              '<circle cx="12" cy="12" r="8.25" fill="none" stroke="currentColor" stroke-width="1.75"/>'
-              '<path d="M12 3.75a8.25 8.25 0 0 1 0 16.5z" fill="currentColor"/></svg>')
+# Plain shapes drawn for this site: two sheets for copying, a chevron for showing more and the decks' block arrow for the learning loop.
 COPY_ICON = ('<svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true" focusable="false">'
              '<rect x="6.5" y="6.5" width="10" height="10" rx="2" fill="none" stroke="currentColor" '
              'stroke-width="1.6"/><path d="M13.5 4.5v-.5a1.5 1.5 0 0 0-1.5-1.5H5A1.5 1.5 0 0 0 3.5 4v7A1.5 1.5 '
@@ -144,9 +138,7 @@ def arrow(cls: str) -> str:
             '<path d="M0 6H17.36V0L28 12L17.36 24V18H0Z" fill="currentColor"/></svg>')
 
 
-MODE_SCRIPT =('<script>try{var m=localStorage.getItem("ta-amps-mode");'
-               'if(m==="dark"||m==="light")document.documentElement.dataset.mode=m}catch(e){}'
-               'document.documentElement.classList.add("js")</script>')
+JS_CLASS = '<script>document.documentElement.classList.add("js")</script>'  # light only: no stored mode
 
 MONO = "font-family:'JetBrains Mono', 'Courier New', monospace"
 
@@ -214,7 +206,10 @@ class Nouns:
         self.evidence = load_json(CONTENT / "evidence.json")
         self.drafts = load_json(CONTENT / "earlier-drafts.json")
         self.moved = load_json(CONTENT / "moved.json")
-        self.models = {m["id"]: m for m in load_json(CONTENT / "models-meta.json")["models"]}
+        # The models catalog Task Object (models.meta, a byte-for-byte local copy until Tessera serves it): every model
+        # and agent program, and what each is used for. Pages name them only through it.
+        self.catalog = load_json(CONTENT / "models.meta.json")
+        self.models = {m["id"]: m for group in ("models", "harnesses", "other_makers") for m in self.catalog[group]}
         self.manifest = load_json(MANIFEST)
         self.brief = read_brief()
         self.frozen = frozen_pages(self.manifest, self.drafts)
@@ -370,12 +365,12 @@ def head_block(prefix: str, nouns: Nouns | None = None) -> str:
         '<meta name="twitter:card" content="summary_large_image">',
     ]
     return "\n".join(tags + [
-        '<link rel="preconnect" href="https://fonts.googleapis.com">',
-        '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',
-        f'<link rel="stylesheet" href="{attr(FONTS)}">',
+        '<meta name="color-scheme" content="light">',
+        f'<link rel="stylesheet" href="{prefix}assets/fonts.css">',
+        f'<link rel="stylesheet" href="{prefix}assets/tokens.css">',
         f'<link rel="stylesheet" href="{prefix}assets/site.css">',
         f'<link rel="icon" href="{prefix}assets/mark.svg" type="image/svg+xml">',
-        MODE_SCRIPT,
+        JS_CLASS,
     ])
 
 
@@ -405,8 +400,6 @@ def header_block(page: Path, prefix: str, nouns: Nouns) -> str:
         "</nav>",
         f'<a class="eranos-link" href="{attr(header["eranos_href"])}" aria-label="{attr(header["eranos_aria"])}">'
         f'<span class="long">{text(header["eranos_label"])}</span><span class="short">{text(header["eranos_short"])}</span></a>',
-        f'<button class="mode-toggle" type="button" data-mode-toggle aria-pressed="false" '
-        f'aria-label="{attr(site["mode_toggle"])}" hidden>{THEME_ICON}</button>',
         "</div>",
         "</header>",
         tour_block(prefix, nouns),
@@ -625,17 +618,25 @@ def _match_case(found: str, replacement: str) -> str:
     return replacement
 
 
-MODEL_TOKEN = re.compile(r"\{\{model:([a-z0-9.-]+)\}\}")
+MODEL_TOKEN = re.compile(r"\{\{model:([a-z0-9./_-]+?)(:tuned)?\}\}")
+TIER_SUFFIXES = ("-contributor", "-standard")
 
 
 def meta_models(content: str, models: dict) -> str:
-    """Meta's models by name (owner, Nov 1: name the specific models): every {{model:<id>}} in a page renders as the
-    display name in site/content/models-meta.json, the local copy of the models.meta Task Object."""
+    """Models by name (owner, Nov 1: name the specific models, never hand-typed): every {{model:<id>}} in a page renders
+    as that entry's display name in the models catalog (site/content/models.meta.json), and {{model:<id>:tuned}} as its
+    tuned name. A run's declared id with a tier suffix (muse-spark-1.3-contributor) names its model. An id the
+    catalog does not hold stops the build."""
     def name(match: re.Match) -> str:
-        entry = models.get(match.group(1))
+        key = match.group(1)
+        entry = models.get(key) or next((models.get(key[:-len(t)]) for t in TIER_SUFFIXES if key.endswith(t)), None)
         if not entry:
-            fail(f"a page names a model that models.meta does not hold: {match.group(1)}")
-        return entry["name"]
+            fail(f"a page names a model the models catalog does not hold: {key}")
+        if match.group(2):
+            if "display_tuned" not in entry:
+                fail(f"the models catalog has no tuned name for {key}")
+            return entry["display_tuned"]
+        return entry["display"]
     return MODEL_TOKEN.sub(name, content)
 
 
