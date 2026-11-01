@@ -87,8 +87,7 @@ CODE_FIELDS = {"files", "tests", "workflow"}
 # Ids the shared chrome and the library page's own parts use, which no pack or category may take.
 LIBRARY_IDS = {"main", "agent-panel", "agent-brief", "agent-brief-title", "agent-brief-status", "categories",
                "library-numbers", "explorer", "explorer-heading", "tab-library", "tab-ecosystem", "exp-query",
-               "exp-kind", "exp-category", "exp-ceiling", "exp-harness", "exp-status", "harness-feeds",
-               "harness-feeds-heading", "harness-routing-heading", "ecosystem-explorer", "ecosystem-heading",
+               "exp-kind", "exp-category", "exp-ceiling", "exp-status", "ecosystem-explorer", "ecosystem-heading",
                "agora-explorer-data"}
 USE_PACKS = (2, 5)  # how many library packs a use case names, at least and at most
 # F31-005: how many packs each category shows before its "See all" link. The whole list runs past 10,000 px, more than
@@ -1595,8 +1594,6 @@ def explorer_section(explorer: dict, ecosystem: dict, library: dict) -> str:
         f'<select id="exp-category" data-exp-category>{cat_opts}</select></label>',
         f'<label class="exp-field" for="exp-ceiling"><span>{text(ctrl["ceiling_label"])}</span>'
         f'<select id="exp-ceiling" data-exp-ceiling>{ceil_opts}</select></label>',
-        f'<label class="exp-field" for="exp-harness"><span>{text(ctrl["harness_label"])}</span>'
-        f'<select id="exp-harness" data-exp-harness>{harn_opts}</select></label>',
         f'<button class="button secondary exp-reset" type="button" data-exp-reset>{text(ctrl["reset"])}</button>',
         "</div>",
         '<p class="exp-status" id="exp-status" role="status" aria-live="polite" data-exp-status></p>',
@@ -1725,7 +1722,8 @@ def render_library(nouns: Nouns) -> str:
                        for category in library["categories"])
     tree = f"{LIBRARY_REPOSITORY}/tree/{commit}"
     record = f"{LIBRARY_REPOSITORY}/blob/{commit}/packs/VALIDATION.json"
-    jump_links = "".join(use_link(item, "") for item in explorer["jump_links"])
+    # The harness feeds panel is not shown (agent apps appear only on /models/), so neither is its jump link.
+    jump_links = "".join(use_link(item, "") for item in explorer["jump_links"] if item["href"] != "#harness-feeds")
     ext_links = "".join(use_link(item, "../") for item in words["links"])
     main = "\n".join([
         '<main id="main">',
@@ -1746,7 +1744,7 @@ def render_library(nouns: Nouns) -> str:
         f'<p class="use-links">{jump_links}{ext_links}</p>',
         "</section>",
         explorer_section(explorer, ecosystem, library),
-        harness_feeds_section(explorer),
+        # Owner, Nov 1 (v2 brief): agent apps appear only on /models/, so the harness feeds panel is not shown here.
         ecosystem_banner_section(explorer, ecosystem),
         '<div class="lib-groups">',
         f'<nav class="lib-filter" id="categories" aria-label="{attr(words["filter_label"])}"><ul>{"".join(filters)}'

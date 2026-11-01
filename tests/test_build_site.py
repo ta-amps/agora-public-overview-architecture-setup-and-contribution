@@ -464,12 +464,14 @@ class Builder(unittest.TestCase):
     def test_library_explorer_harness_feeds_and_ecosystem_catalog(self):
         page = self.outputs[build.SITE / "library" / "index.html"]
         main = build.main_of(page)
-        for anchor in ("explorer", "harness-feeds", "ecosystem-explorer"):
+        for anchor in ("explorer", "ecosystem-explorer"):
             self.assertIn(f'id="{anchor}"', main)
+        # Owner, Nov 1 (v2 brief): agent apps appear only on /models/, so the library shows no harness panel, filter
+        # or chips; the explorer's data keeps them.
+        self.assertNotIn('id="harness-feeds"', main)
+        self.assertNotIn("data-exp-harness", main)
         for harness in ("Harness Square", "Muse Code", "OpenCode", "Pi"):
-            self.assertIn(f"<h3>{harness}</h3>", main)
-        for tier in ("Tier 0", "Tier 1", "Tier 2"):
-            self.assertIn(tier, main)
+            self.assertNotIn(f"<h3>{harness}</h3>", main)
         match = re.search(r'<script type="application/json" id="agora-explorer-data">(.*?)</script>', page)
         self.assertIsNotNone(match)
         payload = json.loads(match.group(1))
