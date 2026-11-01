@@ -13,7 +13,6 @@
 
 - [Home](https://agora.ta-amps.workers.dev/): the film first, then where to start, the decks and the use cases
 - [How it works](https://agora.ta-amps.workers.dev/how-it-works/): tasks and task objects, a real run replayed from its receipts, and what runs underneath
-- [The film](https://agora.ta-amps.workers.dev/film/): the three-minute film's transcript and scene descriptions
 - [Use cases](https://agora.ta-amps.workers.dev/use-cases/): what the same tasks and task objects are used for
 - [Decks](https://agora.ta-amps.workers.dev/decks/): five slide decks with speaker notes and PDFs
 - [Evidence](https://agora.ta-amps.workers.dev/evidence/): dated results, each with the files that back it

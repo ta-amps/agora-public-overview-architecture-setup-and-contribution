@@ -1,11 +1,11 @@
 {
-  "about": "The use cases page, as one noun: seven flagship ideas for what you can build from the same nouns and verbs, led by Tokens for Good, then a band of fields the same pieces fit. They are ideas, not results, so they carry no status, badges or evidence numbers. Each names the library packs that hold its nouns and verbs, by id; their titles come from site/content/library.json, and each links to its card on the library page. A flagship's rest finishes its name in a lighter type. scripts/build_site.py renders them into site/use-cases/index.html.",
+  "about": "The use cases page, as one Task Object: seven flagship ideas for what you can build from the same Tasks and Task Objects, led by Tokens for Good, then a band of fields the same pieces fit. They are ideas, not results, so they carry no status, badges or evidence numbers. Each names the library packs that hold its Tasks and Task Objects, by id; their titles come from site/content/library.json, and each links to its card on the library page. A flagship's rest finishes its name in a lighter type. scripts/build_site.py renders them into site/use-cases/index.html.",
   "title": "Use cases | ta-amps",
-  "description": "Ideas for what you can build from the same nouns and verbs: tokens for good, videos made from code, feeds, shims, reusable code, continuous learning and long-horizon tasks.",
+  "description": "Ideas for what you can build from the same Tasks and Task Objects: tokens for good, videos made from code, feeds, shims, reusable code, continuous learning and long-horizon tasks.",
   "heading": "Use cases",
-  "lead": "Each card is a use case: an idea for what you can build, not a result. The architecture underneath is the same for all of them, nouns and verbs, where verbs are tasks and nouns are everything a task uses or makes.",
-  "nouns_label": "Example nouns",
-  "verbs_label": "Example verbs",
+  "lead": "Each card is a use case: an idea for what you can build, not a result. The architecture underneath is the same for all of them, Tasks and Task Objects: Tasks are the work, and Task Objects are everything a Task uses or makes.",
+  "nouns_label": "Example Task Objects",
+  "verbs_label": "Example Tasks",
   "packs_label": "Packs",
   "flagships": [
     {
@@ -23,8 +23,8 @@
     },
     {
       "name": "Motion Graphics and Video Gen",
-      "home": {"title": "Video made with code", "line": "Scenes, captions and checks as tasks, with receipts."},
-      "line": "Videos made from code, where every script, scene, voice line and caption is a noun and every step is a verb. Any agent can remake or extend a video, and every frame can be rebuilt from its source.",
+      "home": {"title": "Video made with code", "line": "Scenes, captions and checks as Tasks, every step recorded."},
+      "line": "Videos made from code, where every script, scene, voice line and caption is a Task Object and every step is a Task. Any agent can remake or extend a video, and every frame can be rebuilt from its source.",
       "nouns": ["Scripts", "Scenes", "Voice", "Captions"],
       "verbs": ["Write", "Compose", "Render", "Narrate", "Check"],
       "packs": ["video-motion", "narrated-explainer-video", "voice-narration", "video-editing", "video-qa"],
@@ -35,7 +35,7 @@
     {
       "name": "Feed Systems to Keep Your Agent Informed",
       "home": {"title": "Feeds that keep your agent informed", "line": "New projects and benchmarks arrive as task objects."},
-      "line": "Feeds watch repos, papers, releases and your own services. New items become nouns with their sources and follow-ups become verbs, so your agent knows what shipped yesterday. For example, server workers could track new memory systems and the benchmark numbers each project reports, so your agent can ask each week whether one fits its setup and is faster or cheaper.",
+      "line": "Feeds watch repos, papers, releases and your own services. New items become Task Objects with their sources and follow-ups become Tasks, so your agent knows what shipped yesterday. For example, dedicated workers run by ta-amps could track new memory systems and the benchmark numbers each project reports, so your agent can ask each week whether one fits its setup and is faster or cheaper.",
       "nouns": ["Sources", "New items", "Digests"],
       "verbs": ["Scan", "Summarize", "Test", "Compare", "Update a pack"],
       "packs": ["tool-discovery", "freshness-checks", "benchmark-scores", "policy-and-law-watch"],
@@ -47,7 +47,7 @@
     {
       "name": "Shimming Systems",
       "home": {"title": "A shim for any agent", "line": "Herma adds the right context, or answers directly."},
-      "line": "A shim sits between any agent’s harness and its model. It adds the right nouns as context, or answers directly with no model call, without changing the agent.",
+      "line": "A shim sits between any agent’s harness and its model. It adds the right Task Objects as context, or answers directly with no model call, without changing the agent.",
       "nouns": ["Rules", "Code", "Past runs", "Verified answers"],
       "verbs": ["Write a rule", "Test it", "Review it", "Turn it on", "Roll it back"],
       "packs": ["retrieval-triggers-and-reuse", "atomic-step-contract", "harness-onboarding-e2e"],
@@ -59,7 +59,7 @@
     {
       "name": "Code Reusability",
       "home": {"title": "Code you never rewrite", "line": "Reviewed code is found by search instead of regenerated."},
-      "line": "Tested code becomes nouns that agents find and compose instead of rewriting, and compiled recipes run with no model tokens.",
+      "line": "Tested code becomes Task Objects that agents find and compose instead of rewriting, and compiled recipes run with no model tokens.",
       "nouns": ["Code nodes", "Recipes", "Compiled programs", "Test results"],
       "verbs": ["Find", "Compose", "Compile", "Run", "Verify"],
       "packs": ["code-composition", "retrieval-triggers-and-reuse", "prior-art-and-alternatives"],
@@ -70,7 +70,7 @@
     },
     {
       "name": "Continuous Learning",
-      "line": "Every finished verb leaves a result with a receipt. Learners turn those results into memory and routing advice, and small open models are re-tuned on demand on checked examples, replacing the base only after evaluation, when they beat it on a test they never saw.",
+      "line": "Every finished Task leaves a checked result, and every step is recorded. Learners turn those results into memory and routing advice, and Meta’s {{model:muse-glimmer-30b}} is re-tuned on demand on checked examples, replacing the base only after evaluation, when it beats the base on a test it never saw.",
       "nouns": ["Checked results", "Memory", "Routing advice", "Frozen tests", "Tuned models"],
       "verbs": ["Curate", "Train", "Evaluate", "Compare", "Decide"],
       "packs": ["continuous-tuning", "evaluation-design", "retrieval-triggers-and-reuse"],
@@ -83,8 +83,8 @@
       "name": "Long-Horizon Tasks",
       "home": {"title": "Long jobs in small steps", "line": "Big work splits into pieces any worker can pick up."},
       "rest": "via Atomic Steps and Decentralized Solutioning",
-      "line": "Big jobs split into small, checkable verbs that many independent workers claim, attempt, review and finish, each leased and receipted, so nothing needs babysitting. Several workers can explore one brief through separate attempts.",
-      "nouns": ["Briefs", "Plans", "Step results", "Receipts"],
+      "line": "Big jobs split into small, checkable Tasks that many independent workers claim, attempt, review and finish, each leased and recorded, so nothing needs babysitting. Several workers can explore one brief through separate attempts.",
+      "nouns": ["Briefs", "Plans", "Step results", "Records"],
       "verbs": ["Split", "Claim", "Attempt", "Review", "Finish"],
       "packs": ["decomposition-patterns", "atomic-step-contract", "unattended-run-record", "status-and-handoff"],
       "links": [

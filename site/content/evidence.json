@@ -1,8 +1,21 @@
 {
-  "about": "The evidence page, as one noun. scripts/build_site.py renders it into site/evidence/index.html. The words are kept as written; the build fills each served folder's files from site/evidence/ and the last live check from its saved record, and stops when a served folder or a folder of the repository's evidence/ has no line here.",
+  "about": "The evidence page, as one Task Object. scripts/build_site.py renders it into site/evidence/index.html. The words are kept as written; the build fills each served folder's files from site/evidence/ and the last live check from its saved record, and stops when a served folder or a folder of the repository's evidence/ has no line here.",
   "title": "Evidence | ta-amps",
   "description": "Every dated evidence folder this site serves, what each one shows and its files, the evidence kept in the source download, and a dated check of what answered.",
   "heading": "Evidence and status",
+  "headline": {
+    "text": "{{model:muse-glimmer-30b:tuned}}: 93 → 99% exact-match on our 150-task tool-call evaluation.",
+    "links": [
+      {
+        "href": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/glimmer-30b-2026-10-29/README.md",
+        "label": "Record ↗"
+      },
+      {
+        "href": "models/",
+        "label": "Models used"
+      }
+    ]
+  },
   "lead": "Dated results and what is live. Every folder in the first list is served with this site, so each of its files opens here.",
   "toc": {
     "label": "On this page",
@@ -98,7 +111,7 @@
         "id": "real-run-20261031T065341Z",
         "date": "2026-10-31",
         "title": "A real run, replayed",
-        "line": "One request built and reviewed from start to finish on a local copy of Tessera: the trace, Tessera’s records read back, one receipt file for each replayed step, and the four files the builder stored.",
+        "line": "One request built and reviewed from start to finish on a local copy of Tessera: the trace, Tessera’s records read back, the record of each replayed step, and the four files the builder stored.",
         "link": {
           "href": "how-it-works/#run",
           "label": "See it replayed on How it works"
@@ -181,8 +194,8 @@
       {
         "id": "real-e2e-meta-2026-10-31",
         "date": "2026-10-31",
-        "title": "The public receipt of the real runs",
-        "line": "Each recorded attempt at a real run on a local copy of Tessera with Meta’s contributor-tier model, with its outcome and recorded spend, the two runs that finished, and the hosted health probes taken that morning.",
+        "title": "The public record of the real runs",
+        "line": "Each recorded attempt at a real run on a local copy of Tessera with Meta’s {{model:muse-spark-1.3}} at contributor tier, with its outcome and recorded spend, the two runs that finished, and the hosted health probes taken that morning.",
         "files": [
           {
             "path": "public-e2e-receipt.json",
@@ -191,50 +204,10 @@
         ]
       },
       {
-        "id": "meta-evals-2026-10-31",
-        "date": "2026-10-31",
-        "title": "Meta model evaluations",
-        "line": "Our evaluations of Llama 3.2 LoRA memory and the Herma router, SAM and wav2vec2 checks, a many-worker scaling run and a fault-injection test, with each file’s SHA-256 in the README.",
-        "files": [
-          {
-            "path": "FAULT_INJECTION_EVIDENCE.json",
-            "bytes": 18606
-          },
-          {
-            "path": "README.md",
-            "bytes": 2298
-          },
-          {
-            "path": "SCALABILITY_BENCHMARK.json",
-            "bytes": 41666
-          },
-          {
-            "path": "horizontal-scaling-256-workers.svg",
-            "bytes": 14800
-          },
-          {
-            "path": "lora_memory_eval_summary.json",
-            "bytes": 11567
-          },
-          {
-            "path": "multimodal-sam-asr-eval.json",
-            "bytes": 20581
-          },
-          {
-            "path": "router_eval_summary.json",
-            "bytes": 3942
-          },
-          {
-            "path": "vertical-modular-architecture.svg",
-            "bytes": 11321
-          }
-        ]
-      },
-      {
         "id": "glimmer-30b-lora-memory-2026-10-31",
         "date": "2026-10-31",
-        "title": "Muse Glimmer 30B as LoRA memory",
-        "line": "Muse Glimmer 30B tuned to recall task objects from its weights, on free Kaggle GPUs and example data: the results, a chart and the verification receipt.",
+        "title": "{{model:muse-glimmer-30b}}, as memory",
+        "line": "{{model:muse-glimmer-30b}} tuned to recall Task Objects from its own weights, on Kaggle’s free GPUs and example data: the results, a chart and the verification record.",
         "files": [
           {
             "path": "README.md",
@@ -255,162 +228,10 @@
         ]
       },
       {
-        "id": "glimmer-modular-swarm-2026-10-31",
-        "date": "2026-10-31",
-        "title": "Llama 3.2 3B as separate LoRA specialists",
-        "line": "Training manifests, adapter configs, GPU telemetry and results for Llama 3.2 3B specialists trained on example swarm traces. Its batched evaluation ran out of GPU memory, so it claims no holdout score.",
-        "files": [
-          {
-            "path": "EVIDENCE_MANIFEST.json",
-            "bytes": 5652
-          },
-          {
-            "path": "README.md",
-            "bytes": 3839
-          },
-          {
-            "path": "adapter_configs/builder_1600.adapter_config.json",
-            "bytes": 1227
-          },
-          {
-            "path": "adapter_configs/decomposer_1600.adapter_config.json",
-            "bytes": 1227
-          },
-          {
-            "path": "adapter_configs/merged_ties_1600.adapter_config.json",
-            "bytes": 1227
-          },
-          {
-            "path": "adapter_configs/monolithic_1600.adapter_config.json",
-            "bytes": 1227
-          },
-          {
-            "path": "adapter_configs/retriever_1600.adapter_config.json",
-            "bytes": 1227
-          },
-          {
-            "path": "adapter_configs/verifier_1600.adapter_config.json",
-            "bytes": 1227
-          },
-          {
-            "path": "adapter_manifests/lora.builder-toolcalls-256.manifest.json",
-            "bytes": 2274
-          },
-          {
-            "path": "adapter_manifests/lora.builder-toolcalls-64.manifest.json",
-            "bytes": 2267
-          },
-          {
-            "path": "adapter_manifests/lora.builder-toolcalls.manifest.json",
-            "bytes": 2266
-          },
-          {
-            "path": "adapter_manifests/lora.merged-linear-1600.manifest.json",
-            "bytes": 2089
-          },
-          {
-            "path": "adapter_manifests/lora.merged-ties-1600.manifest.json",
-            "bytes": 2089
-          },
-          {
-            "path": "adapter_manifests/lora.monolithic-mixed-256.manifest.json",
-            "bytes": 2291
-          },
-          {
-            "path": "adapter_manifests/lora.monolithic-mixed-64.manifest.json",
-            "bytes": 2283
-          },
-          {
-            "path": "adapter_manifests/lora.monolithic-mixed.manifest.json",
-            "bytes": 2282
-          },
-          {
-            "path": "adapter_manifests/lora.shim-retriever-256.manifest.json",
-            "bytes": 2278
-          },
-          {
-            "path": "adapter_manifests/lora.shim-retriever-64.manifest.json",
-            "bytes": 2273
-          },
-          {
-            "path": "adapter_manifests/lora.shim-retriever.manifest.json",
-            "bytes": 2269
-          },
-          {
-            "path": "adapter_manifests/lora.task-decomposer-256.manifest.json",
-            "bytes": 2280
-          },
-          {
-            "path": "adapter_manifests/lora.task-decomposer-64.manifest.json",
-            "bytes": 2277
-          },
-          {
-            "path": "adapter_manifests/lora.task-decomposer.manifest.json",
-            "bytes": 2274
-          },
-          {
-            "path": "adapter_manifests/lora.verifier-dpo-256.manifest.json",
-            "bytes": 2279
-          },
-          {
-            "path": "adapter_manifests/lora.verifier-dpo-64.manifest.json",
-            "bytes": 2271
-          },
-          {
-            "path": "adapter_manifests/lora.verifier-dpo.manifest.json",
-            "bytes": 2270
-          },
-          {
-            "path": "data-scaling-flywheel.svg",
-            "bytes": 4961
-          },
-          {
-            "path": "modular-vs-monolithic-loras.svg",
-            "bytes": 4487
-          },
-          {
-            "path": "modular_training_and_subspace_summary.json",
-            "bytes": 5833
-          },
-          {
-            "path": "nvidia_smi.csv",
-            "bytes": 372321
-          },
-          {
-            "path": "results.json",
-            "bytes": 150719
-          }
-        ]
-      },
-      {
-        "id": "sira-are-cascade-2026-10-31",
-        "date": "2026-10-31",
-        "title": "Retrieval, scenario and cascade benchmarks",
-        "line": "Offline benchmarks over the seed-pack library: self-learning retrieval with compiled shims, a scenario matrix built on Meta’s ARE and a partner compute cascade, all run locally with no remote spend.",
-        "files": [
-          {
-            "path": "README.md",
-            "bytes": 1797
-          },
-          {
-            "path": "partner_compute_cascade.json",
-            "bytes": 7270
-          },
-          {
-            "path": "scenario_matrix_1000_digest.json",
-            "bytes": 46453
-          },
-          {
-            "path": "sira_rag_benchmark.json",
-            "bytes": 53714
-          }
-        ]
-      },
-      {
         "id": "video-v6-2026-10-31",
         "date": "2026-10-31",
         "title": "How the v6 film was made",
-        "line": "Production receipts for the v6 film’s cuts and their automated video checks. The checks record failures, such as frozen frames, and the files keep them.",
+        "line": "Production records for the v6 film’s cuts and their automated video checks. The checks record failures, such as frozen frames, and the files keep them.",
         "files": [
           {
             "path": "eranos-3m-clean.video-qa.json",
@@ -454,7 +275,7 @@
         "id": "video-v3-2026-10-31",
         "date": "2026-10-31",
         "title": "How the v3 film was made",
-        "line": "Production receipts for the v3 film’s cuts, their automated video checks, which record failures, and a pixel and motion audit.",
+        "line": "Production records for the v3 film’s cuts, their automated video checks, which record failures, and a pixel and motion audit.",
         "files": [
           {
             "path": "adversarial-pixel-and-motion-audit.json",
@@ -508,12 +329,12 @@
       {
         "path": "evidence/glimmer-30b-2026-10-29/",
         "date": "2026-10-29",
-        "line": "Muse Glimmer 30B tuned as a tool-call specialist: the run record, with every file’s hash."
+        "line": "{{model:muse-glimmer-30b}} tuned for tool calls: the run record, which lists every file it used."
       },
       {
         "path": "evidence/hackathon-repo-scan-2026-10-29/",
         "date": "2026-10-29",
-        "line": "Descriptive counts of the hackathon’s public repositories as nouns and verbs. Nothing in it ranks or judges a team."
+        "line": "Descriptive counts of the hackathon’s public repositories as Tasks and Task Objects. Nothing in it ranks or judges a team."
       },
       {
         "path": "evidence/integration-2026-10-29.json",
@@ -533,7 +354,7 @@
       {
         "path": "evidence/video-production-2026-10-30/",
         "date": "2026-10-30",
-        "line": "How the v2 film was made: its production receipts and a script that rechecks them."
+        "line": "How the v2 film was made: its production records and a script that rechecks them."
       },
       {
         "path": "evidence/glimmer-30b-lora-memory-2026-10-31/",
@@ -543,17 +364,17 @@
       {
         "path": "evidence/glimmer-modular-swarm-2026-10-31/",
         "date": "2026-10-31",
-        "same_as": "glimmer-modular-swarm-2026-10-31"
+        "line": "Training records for separate small adapters, one per job. Its batched evaluation ran out of GPU memory, so it claims no score."
       },
       {
         "path": "evidence/meta-evals-2026-10-31/",
         "date": "2026-10-31",
-        "same_as": "meta-evals-2026-10-31"
+        "line": "Local evaluations of adapter memory and the Herma router, image and speech checks, a many-worker scaling run and a fault-injection test."
       },
       {
         "path": "evidence/sira-are-cascade-2026-10-31/",
         "date": "2026-10-31",
-        "same_as": "sira-are-cascade-2026-10-31"
+        "line": "Offline benchmarks over the seed-pack library: self-learning retrieval with compiled shims, a scenario matrix built on Meta’s ARE and a partner compute cascade, all run locally with no remote spend."
       },
       {
         "path": "evidence/video-v6-2026-10-31/",

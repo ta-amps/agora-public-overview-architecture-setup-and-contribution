@@ -2432,6 +2432,10 @@ def render_evidence(nouns: Nouns) -> str:
         '<main id="main" class="ev">',
         '<div class="wrap page-head ev-head">',
         f"<h1>{text(page['heading'])}</h1>",
+        # The page leads with Meta's tuned model and its record (owner, Nov 1): a "Record ↗" link, never a hash.
+        (f'<p class="lead">{text(page["headline"]["text"])} '
+         + " · ".join(f'<a href="{use_href(link["href"], prefix)}">{text(link["label"])}</a>'
+                      for link in page["headline"]["links"]) + "</p>") if page.get("headline") else "",
         f'<p class="lead">{text(page["lead"])}</p>',
         how_toc(page["toc"]),
         "</div>",
@@ -2545,7 +2549,10 @@ def outputs_for(nouns: Nouns) -> dict[Path, str]:
     generated[DECKS / "earlier-drafts" / "index.html"] = render_earlier(nouns)
     generated[SITE / "use-cases" / "index.html"] = render_use_cases(nouns)
     generated[SITE / "storyboards" / "index.html"] = render_storyboards(nouns)
-    generated[SITE / "film" / "index.html"] = render_film(nouns)
+    if nouns.film["lines"]:
+        # The film page is the cut's text alternative, so it exists only while film.json holds a cut's lines
+        # (owner, Nov 1: the October 31 cut named a model the owner no longer shows, so its lines are gone).
+        generated[SITE / "film" / "index.html"] = render_film(nouns)
     generated[SITE / "learning" / "index.html"] = render_learning(nouns)
     generated[SITE / "library" / "index.html"] = render_library(nouns)
     generated[SITE / "deploy" / "index.html"] = render_deploy(nouns)

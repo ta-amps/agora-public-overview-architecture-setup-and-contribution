@@ -1,7 +1,7 @@
 {
-  "about": "The decks page, as one noun. Each deck's card text comes from that deck's own deck.json.",
+  "about": "The decks page, as one Task Object. Each deck's card text comes from that deck's own deck.json.",
   "title": "Decks | ta-amps",
-  "description": "Five decks: the overview and architecture, the public-good marketplace, how to roll your own, always-on server workers, and post-training tuning and continuous learning. Each has speaker notes, an outline and a PDF.",
+  "description": "Five decks: the overview and architecture, the public-good marketplace, how to roll your own, always-on dedicated workers, and post-training tuning and continuous learning. Each has speaker notes, an outline and a PDF.",
   "heading": "Decks",
   "lead": "Five decks, each with speaker notes, an outline and a PDF. Use the arrow keys or swipe to move through the slides."
 }
