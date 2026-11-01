@@ -214,6 +214,7 @@ class Nouns:
         self.evidence = load_json(CONTENT / "evidence.json")
         self.drafts = load_json(CONTENT / "earlier-drafts.json")
         self.moved = load_json(CONTENT / "moved.json")
+        self.models = {m["id"]: m for m in load_json(CONTENT / "models-meta.json")["models"]}
         self.manifest = load_json(MANIFEST)
         self.brief = read_brief()
         self.frozen = frozen_pages(self.manifest, self.drafts)
@@ -622,6 +623,20 @@ def _match_case(found: str, replacement: str) -> str:
     if found[:1].isupper():
         return replacement[:1].upper() + replacement[1:]
     return replacement
+
+
+MODEL_TOKEN = re.compile(r"\{\{model:([a-z0-9.-]+)\}\}")
+
+
+def meta_models(content: str, models: dict) -> str:
+    """Meta's models by name (owner, Nov 1: name the specific models): every {{model:<id>}} in a page renders as the
+    display name in site/content/models-meta.json, the local copy of the models.meta Task Object."""
+    def name(match: re.Match) -> str:
+        entry = models.get(match.group(1))
+        if not entry:
+            fail(f"a page names a model that models.meta does not hold: {match.group(1)}")
+        return entry["name"]
+    return MODEL_TOKEN.sub(name, content)
 
 
 def plain_words(content: str) -> str:
@@ -2499,7 +2514,7 @@ def outputs_for(nouns: Nouns) -> dict[Path, str]:
     for path, content in outputs.items():
         unique_ids(path, content)
     outputs[SITE / "llms.txt"] = render_llms(nouns, set(outputs))
-    return {path: plain_words(repoint(content, nouns.links)) for path, content in outputs.items()}
+    return {path: plain_words(repoint(meta_models(content, nouns.models), nouns.links)) for path, content in outputs.items()}
 
 
 def build(check: bool, pdf: bool) -> list[str]:

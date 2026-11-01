@@ -275,6 +275,14 @@ class Builder(unittest.TestCase):
         for status in build.CLAIM_STATUSES:
             self.assertIn(f".claim-status.{status} {{", css, status)
 
+    def test_meta_models_are_named_from_the_models_noun(self):
+        # Owner, Nov 1: name the specific Meta models, rendered from the models.meta Task Object (a local copy).
+        self.assertEqual("Muse Spark 1.3 and Muse Code", build.meta_models("{{model:muse-spark-1.3}} and {{model:muse-code}}", self.nouns.models))
+        with self.assertRaises(build.BuildError):
+            build.meta_models("{{model:not-a-model}}", self.nouns.models)
+        for page in build.SITE.rglob("*.html"):
+            self.assertNotIn("{{model:", page.read_text(encoding="utf-8"), page)
+
     def test_nonprofits_never_choose_a_kind_of_request(self):
         # A nonprofit types what it needs; the request's first step sorts it into a kit, public work or both.
         asking = re.compile(r"request(s|ing)? (a|an) (verb|agent kit|kit)\b|verb requests?\b|an agent kit or a verb", re.I)
