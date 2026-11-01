@@ -406,6 +406,7 @@ def check(root: Path = ROOT) -> dict:
             frozen |= frozen_drafts(load(drafts), site)
         source_links = load(site / "content/source-links.json")
         unmirrored = set(source_links["heads"]) - set(source_links.get("mirrored", []))
+        git_served = set(source_links.get("git_served", []))
         moved_list = site / "content/moved.json"
         moved = moved_pages(load(moved_list), site, pages) if moved_list.exists() else frozenset()
         for page in pages:
@@ -419,8 +420,10 @@ def check(root: Path = ROOT) -> dict:
                     # Nov 1: a repository Agora does not mirror links its GitHub page; a mirrored one never does.
                     tail = body[found.end():found.end() + 120]
                     repo = re.match(r"/([A-Za-z0-9._-]+?)(?:\.git)?(?=[/\"'<\s?#]|$)", tail)
+                    clone = repo is not None and tail[len(repo.group(0)):].startswith("") and \
+                        tail.startswith(f"/{repo.group(1)}.git")
                     require(found.group(0) == "github.com/ta-amps" and repo is not None
-                            and repo.group(1) in unmirrored,
+                            and (repo.group(1) in unmirrored or (clone and repo.group(1) not in git_served)),
                             "a page links GitHub for a mirrored repository, or a retired Pages site: "
                             + page.relative_to(site).as_posix())
         if (site / "llms.txt").exists():

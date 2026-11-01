@@ -554,7 +554,9 @@ def source_link(match: re.Match, links: dict) -> str:
     if repo not in links["heads"]:
         fail(f"a link names a repository the source mirror does not hold: {match.group(0)}")
     if not kind and match.group("dotgit"):
-        # A clone address: git clones the same repository from Agora's git mirror over plain HTTP.
+        # A clone address: Agora's git mirror only when it serves that repository's history; otherwise GitHub.
+        if repo not in links.get("git_served", []):
+            return match.group(0)
         if repo in links["git_held_back"]:
             fail(f"a clone address names a repository whose git mirror is not published: {match.group(0)}")
         return f"{links['git_mirror']}{repo}.git"

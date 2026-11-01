@@ -6,6 +6,8 @@
   "mirrored_about": "The repositories Agora serves in its own source mirror and git mirrors. The lead's rule (Nov 1): a repository is mirrored only once its head is free of every banned word (deploy/repos.json mirror: true, which the deploy builder checks against this list); until then its links go to its GitHub page.",
   "git_mirror": "https://agora.ta-amps.workers.dev/git/",
   "git_held_back": ["agora-public-overview-architecture-setup-and-contribution"],
+  "git_served": [],
+  "git_served_about": "The repositories whose git history Agora serves (deploy/repos.json serve_history). None does today: a history can still name a banned word, so a clone address keeps its GitHub form even for a repository whose files Agora mirrors.",
   "git_about": "A clone address (one ending in .git) becomes the same repository in Agora's git mirror, which git can clone over plain HTTP. Agora's own repository has no published mirror, so the build stops at any clone address for it.",
   "heads": {
     "ta-amps-hackathon": "0e2de81fb6256e79cfe91bcbfa7e8ca4cfb42875",

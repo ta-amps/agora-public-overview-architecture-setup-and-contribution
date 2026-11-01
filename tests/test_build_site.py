@@ -583,9 +583,11 @@ class Builder(unittest.TestCase):
         source_links = 0
         for path, page in self.outputs.items():
             self.assertNotIn("ta-amps.github.io", page, path)
-            for repo in re.findall(r"github\.com/ta-amps/([A-Za-z0-9._-]+?)(?:\.git)?(?=[/\"'<\s?#]|$)", page):
+            for repo, dotgit in re.findall(r"github\.com/ta-amps/([A-Za-z0-9._-]+?)(\.git)?(?=[/\"'<\s?#]|$)", page):
                 self.assertIn(repo, links["heads"], path)
-                self.assertNotIn(repo, mirrored, path)
+                # A mirrored repository's clone address stays on GitHub while Agora serves no history for it.
+                if not (dotgit and repo not in links.get("git_served", [])):
+                    self.assertNotIn(repo, mirrored, path)
             for href in re.findall(r'\shref="(/source/[^"]*)"', page):
                 self.assertRegex(href, r"^/source/(?:[a-z0-9-]+/(?:[0-9a-f]{12}/.*)?)?$", path)
                 repo = href.split("/")[2]
@@ -603,13 +605,13 @@ class Builder(unittest.TestCase):
             self.assertRegex(sha, r"^[0-9a-f]{40}$")
         # Both states of the switch. Not mirrored: the GitHub address stays exactly as the noun wrote it.
         tessera = "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine"
-        off = dict(links, mirrored=[])
+        off = dict(links, mirrored=[], git_served=[])
         for url in (f"{tessera}/blob/main/docs/x.md", f"git clone {tessera}.git\n", f"{tessera}/tree/some-branch/x"):
             self.assertEqual(url, build.repoint(url, off))
         # Mirrored: every link means the swept head (a branch name, a full commit or a pull request alike: Agora serves
         # no older tree), and an address without a home fails; a clone address goes to the git mirror, which git can
         # clone; the file view cannot be cloned.
-        on = dict(links, mirrored=sorted(links["heads"]))
+        on = dict(links, mirrored=sorted(links["heads"]), git_served=sorted(links["heads"]))
         head12 = links["heads"]["tessera-infrastructure-work-and-storage-engine"][:12]
         for ref in ("main", "95e434eb820f2dbc3873cd443e4ba144acefc762"):
             self.assertEqual(f"/source/tessera-infrastructure-work-and-storage-engine/{head12}/docs/x.md",
