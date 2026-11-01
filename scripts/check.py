@@ -429,6 +429,20 @@ def check(root: Path = ROOT) -> dict:
         if (site / "llms.txt").exists():
             require(RETIRED_HOSTS.search((site / "llms.txt").read_text(encoding="utf-8")) is None,
                     "llms.txt links the retired GitHub organization")
+        # LightThemeOnlyGate: active stylesheets and site scripts must never activate dark mode.
+        for asset_rel in ("assets/site.css", "assets/how-it-works.css", "assets/viewer.css", "assets/site.js", "film/compare/compare.js"):
+            asset_path = site / asset_rel
+            if asset_path.is_file():
+                asset_text = asset_path.read_text(encoding="utf-8")
+                require("prefers-color-scheme: dark" not in asset_text and "prefers-color-scheme:dark" not in asset_text,
+                        "LightThemeOnlyGate failed (prefers-color-scheme: dark found): " + asset_rel)
+                require("color-scheme: light dark" not in asset_text,
+                        "LightThemeOnlyGate failed (color-scheme: light dark found): " + asset_rel)
+                require('[data-mode="dark"]' not in asset_text,
+                        "LightThemeOnlyGate failed ([data-mode=\"dark\"] found): " + asset_rel)
+        site_css_text = (site / "assets/site.css").read_text(encoding="utf-8")
+        require("color-scheme: only light;" in site_css_text,
+                "LightThemeOnlyGate failed: assets/site.css must declare color-scheme: only light;")
     report = (root / "docs/status.md").read_text(encoding="utf-8")
     for repo in data["repositories"]:
         require(repo["main_revision"] in report, "status page missing exact revision")

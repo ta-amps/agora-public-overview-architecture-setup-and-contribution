@@ -678,16 +678,17 @@ class Builder(unittest.TestCase):
             self.assertIsNone(re.search(r"\b(fetch|XMLHttpRequest|sendBeacon|WebSocket)\b", script), name)
             stored |= set(re.findall(r'localStorage\.setItem\("([^"]+)"', script))
             stored |= set(re.findall(r'write\("([^"]+)"', script))
-        self.assertEqual({"ta-amps-mode", "ta-amps-deck-notes", "ta-amps-deck-large", "ta-amps-deck-letter-keys"}, stored)
+        self.assertEqual({"ta-amps-deck-notes", "ta-amps-deck-large", "ta-amps-deck-letter-keys"}, stored)
         self.assertIn("No analytics, ads or cookies", privacy)
 
     def test_slide_and_notes_text_colours_pass_contrast(self):
         css = (build.SITE / "assets" / "site.css").read_text(encoding="utf-8")
-        light, dark = css_tokens(css, ":root"), css_tokens(css, '[data-mode="dark"]')
-        self.assertEqual(dark, css_tokens(css[css.index("@media (prefers-color-scheme: dark)"):], "  :root:not([data-mode])"))
+        self.assertIn("color-scheme: only light;", css)
+        self.assertNotIn("prefers-color-scheme: dark", css)
+        self.assertNotIn('[data-mode="dark"]', css)
+        light = css_tokens(css, ":root")
         # The speaker-notes and slide-links headings sit on the stage: 4.38:1 before, so a darker grey on light.
-        for tokens in (light, dark):
-            self.assertGreaterEqual(contrast(tokens["--color-muted-on-stage"], tokens["--color-stage"]), 4.5)
+        self.assertGreaterEqual(contrast(light["--color-muted-on-stage"], light["--color-stage"]), 4.5)
         viewer = (build.SITE / "assets" / "viewer.css").read_text(encoding="utf-8")
         for selector in (".slide-notes h2", ".slide-links h2"):
             self.assertIn(f"{selector} {{ font-family: var(--font-body); font-size: var(--text-small); font-weight: 600; "

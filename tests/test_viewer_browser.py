@@ -263,7 +263,7 @@ class Viewer(LocalSite):
 
 @unittest.skipIf(sync_playwright is None, "needs the Playwright package")
 class SitePages(LocalSite):
-    """The home page's light and dark switch and film cuts (site.js), in the same local browser."""
+    """The home page's Paper & Ink light-UI-only lock and film cuts (site.js), in the same local browser."""
 
     def open(self, path="", **context):
         ctx = self.browser.new_context(**context)
@@ -271,31 +271,27 @@ class SitePages(LocalSite):
         page = ctx.new_page()
         page.route("**/*", lambda route: route.continue_() if route.request.url.startswith(self.base) else route.abort())
         page.goto(self.base + path)
-        page.wait_for_function("!document.querySelector('[data-mode-toggle]').hidden")
+        page.wait_for_function("document.documentElement.classList.contains('js')")
         return page
 
     def mode(self, page):
         return page.evaluate("""() => ({mode: document.documentElement.dataset.mode || null,
-          stored: localStorage.getItem('ta-amps-mode'), pressed: document.querySelector('[data-mode-toggle]').getAttribute('aria-pressed'),
+          stored: localStorage.getItem('ta-amps-mode'),
+          toggleHidden: document.querySelector('[data-mode-toggle]') ? document.querySelector('[data-mode-toggle]').hidden : true,
           background: getComputedStyle(document.body).backgroundColor})""")
 
-    def test_a_choice_that_matches_the_system_follows_the_system_again(self):
+    def test_light_ui_only_even_under_dark_system_preference_or_legacy_storage(self):
         page = self.open(color_scheme="light")
         light = self.mode(page)["background"]
-        page.click("[data-mode-toggle]")
-        chosen = self.mode(page)
-        self.assertEqual(("dark", "dark", "true"), (chosen["mode"], chosen["stored"], chosen["pressed"]))
-        page.click("[data-mode-toggle]")
-        back = self.mode(page)
-        # Before: "light" was stored for good, so the page could never follow the system again.
-        self.assertEqual((None, None, "false", light), (back["mode"], back["stored"], back["pressed"], back["background"]))
+        self.assertEqual("rgb(245, 242, 234)", light)
+        self.assertTrue(self.mode(page)["toggleHidden"])
+        page.evaluate("() => localStorage.setItem('ta-amps-mode', 'dark')")
         page.emulate_media(color_scheme="dark")
-        # The media query's change event arrives a moment later; the button then reads dark.
-        page.wait_for_function("document.querySelector('[data-mode-toggle]').getAttribute('aria-pressed') === 'true'", timeout=3000)
-        self.assertNotEqual(light, self.mode(page)["background"])
         page.reload()
-        page.wait_for_function("!document.querySelector('[data-mode-toggle]').hidden")
-        self.assertEqual(None, self.mode(page)["stored"])
+        page.wait_for_function("document.documentElement.classList.contains('js')")
+        after = self.mode(page)
+        self.assertEqual((None, None, True, "rgb(245, 242, 234)"),
+                         (after["mode"], after["stored"], after["toggleHidden"], after["background"]))
 
     def cut(self, page):
         return page.evaluate("""() => ({pressed: document.querySelector('[data-cut][aria-pressed=true]').getAttribute('data-cut'),

@@ -1,37 +1,15 @@
-// Light and dark mode switch. Without this script the page follows the
-// system setting, and the switch stays hidden.
+// Light-UI-Only (Paper & Ink): clear any legacy dark preference and keep mode toggle hidden.
 (function () {
   var root = document.documentElement;
   root.classList.add("js");
+  delete root.dataset.mode;
+  root.style.colorScheme = "only light";
+  try { localStorage.removeItem("ta-amps-mode"); } catch (error) { /* storage can be unavailable */ }
   var button = document.querySelector("[data-mode-toggle]");
-  if (!button) return;
-  var media = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
-
-  function current() {
-    if (root.dataset.mode === "dark" || root.dataset.mode === "light") return root.dataset.mode;
-    return media && media.matches ? "dark" : "light";
+  if (button) {
+    button.hidden = true;
+    button.setAttribute("aria-pressed", "false");
   }
-
-  function render() {
-    button.setAttribute("aria-pressed", current() === "dark" ? "true" : "false");
-  }
-
-  button.hidden = false;
-  render();
-  // A choice that matches the system setting is not stored, so the page follows the system again
-  // from then on, in this tab and the next.
-  button.addEventListener("click", function () {
-    var next = current() === "dark" ? "light" : "dark";
-    var system = media && media.matches ? "dark" : "light";
-    try {
-      if (next === system) localStorage.removeItem("ta-amps-mode");
-      else localStorage.setItem("ta-amps-mode", next);
-    } catch (error) { /* storage can be unavailable */ }
-    if (next === system) delete root.dataset.mode;
-    else root.dataset.mode = next;
-    render();
-  });
-  if (media && media.addEventListener) media.addEventListener("change", render);
 })();
 
 // Show and hide. A button with data-toggle="ID" shows or hides the element with that id, and swaps its

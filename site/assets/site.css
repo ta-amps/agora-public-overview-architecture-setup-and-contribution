@@ -1,7 +1,7 @@
 /* Design record: theme custom, inherited from the October 29 draft deck. Idea: every piece of AI work is a tile; blue tiles are nouns (reusable things), rust tiles are verbs (work), and the page lays them into a path. Paper #F5F2EA and ink #11161F with the deck's blue and rust; Space Grotesk display, IBM Plex Sans body, JetBrains Mono for commands only. Modes: light and dark from one token set. October 30: a home page that opens on the draft video, three decks and use cases, in a quieter frame: a slim header with four links, an agent banner under it on every current page, wide cards with live cover thumbnails, and generous space. Nav: wordmark, Home, Decks, Use cases, Learning, Library and a mode switch; on a phone the five links share one row at 390px, with fallback fonts too. Footer: one row of links and the date of the snapshot. Later on October 30: the statement under the film reads in two labelled parts, the use case and then the architecture underneath. */
 
 :root {
-  color-scheme: light dark;
+  color-scheme: only light;
 
   --color-paper: #F5F2EA;
   --color-paper-2: #FFFDF8;
@@ -73,86 +73,6 @@
   --header-height: 3.75rem;
 }
 
-[data-mode="dark"] {
-  --color-paper: #11161F;
-  --color-paper-2: #1B2230;
-  --color-paper-3: #171D29;
-  --color-stage: #0C1017;
-  --color-rule: #2C3443;
-  --color-rule-strong: #3E4759;
-  --color-ink: #F5F2EA;
-  --color-ink-2: #C8D0DC;
-  --color-muted: #9AA3B2;
-  --color-muted-on-stage: #9AA3B2;
-  --color-noun: #6FA3F0;
-  --color-noun-ink: #8DB7F4;
-  --color-noun-wash: #1A2741;
-  --color-verb: #F0884F;
-  --color-verb-ink: #F39A68;
-  --color-verb-wash: #35231A;
-  --color-band: #1B2230;
-  --color-band-ink: #F5F2EA;
-  --color-band-ink-2: #C8D0DC;
-  --color-band-noun: #8DB7F4;
-  --color-band-verb: #F39A68;
-  --color-code: #0C1017;
-  --color-code-ink: #E7E2D6;
-  --color-film: #070A0F;
-  --color-film-ink: #9AA3B2;
-  --color-button: #F5F2EA;
-  --color-button-ink: #11161F;
-  --color-button-hover: #DCD6C8;
-  --color-focus: #F0884F;
-  --color-real: #7FD3A0;
-  --color-real-wash: #15281D;
-  --color-building: #F2C66B;
-  --color-building-wash: #2B2210;
-  --color-needed: #B4BCC8;
-  --color-needed-wash: #222A37;
-  --shadow-lift: 0 12px 32px rgb(0 0 0 / 0.35), 0 2px 6px rgb(0 0 0 / 0.25);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-mode]) {
-    --color-paper: #11161F;
-    --color-paper-2: #1B2230;
-    --color-paper-3: #171D29;
-    --color-stage: #0C1017;
-    --color-rule: #2C3443;
-    --color-rule-strong: #3E4759;
-    --color-ink: #F5F2EA;
-    --color-ink-2: #C8D0DC;
-    --color-muted: #9AA3B2;
-    --color-muted-on-stage: #9AA3B2;
-    --color-noun: #6FA3F0;
-    --color-noun-ink: #8DB7F4;
-    --color-noun-wash: #1A2741;
-    --color-verb: #F0884F;
-    --color-verb-ink: #F39A68;
-    --color-verb-wash: #35231A;
-    --color-band: #1B2230;
-    --color-band-ink: #F5F2EA;
-    --color-band-ink-2: #C8D0DC;
-    --color-band-noun: #8DB7F4;
-    --color-band-verb: #F39A68;
-    --color-code: #0C1017;
-    --color-code-ink: #E7E2D6;
-    --color-film: #070A0F;
-    --color-film-ink: #9AA3B2;
-    --color-button: #F5F2EA;
-    --color-button-ink: #11161F;
-    --color-button-hover: #DCD6C8;
-    --color-focus: #F0884F;
-    --color-real: #7FD3A0;
-    --color-real-wash: #15281D;
-    --color-building: #F2C66B;
-    --color-building-wash: #2B2210;
-    --color-needed: #B4BCC8;
-    --color-needed-wash: #222A37;
-    --shadow-lift: 0 12px 32px rgb(0 0 0 / 0.35), 0 2px 6px rgb(0 0 0 / 0.25);
-  }
-}
-
 /* Base */
 
 *,
@@ -176,12 +96,6 @@ body {
   font-size: var(--text-body);
   line-height: 1.6;
   font-synthesis: none;
-}
-
-[data-mode="dark"] body { font-weight: 350; }
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-mode]) body { font-weight: 350; }
 }
 
 img,
@@ -297,11 +211,6 @@ ta-agent-banner {
   --agent-banner-edge: #3B4252;
   --agent-banner-link: #9DBBF0;
   --agent-banner-focus: #F0884F;
-}
-
-[data-mode="dark"] ta-agent-banner { --agent-banner-bg: #0B0F16; --agent-banner-raised: #1B2230; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-mode]) ta-agent-banner { --agent-banner-bg: #0B0F16; --agent-banner-raised: #1B2230; }
 }
 
 .agent-fallback {
@@ -2342,12 +2251,8 @@ pre code {
   .jg-steps, .jg-repos, .jg-looks { grid-template-columns: minmax(0, 1fr); }
 }
 
-/* Scoped blocked/alert tokens for status & scenarios (WCAG AA >= 5.5:1 light & dark) */
+/* Scoped blocked/alert tokens for status & scenarios (WCAG AA >= 5.5:1 Paper & Ink light UI) */
 .status-page, .scenarios-page { --sc-blocked: #9E2A2B; --sc-blocked-wash: #F8E5E5; }
-[data-mode="dark"] .status-page, [data-mode="dark"] .scenarios-page { --sc-blocked: #F49797; --sc-blocked-wash: #34191B; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-mode]) .status-page, :root:not([data-mode]) .scenarios-page { --sc-blocked: #F49797; --sc-blocked-wash: #34191B; }
-}
 
 /* Status page (/status/) */
 .status-page { display: grid; gap: var(--space-6); padding-bottom: var(--space-9); }
