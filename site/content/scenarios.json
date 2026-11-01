@@ -1,0 +1,442 @@
+{
+  "about": "The scenarios page, /scenarios/, as one Task Object (the AgoraScenarios board, November 1, 2026). Its 'facts' are copied, value for value, from the scenario record of October 31, evidence/sira-are-cascade-2026-10-31/scenario_matrix_1000_digest.json in the repository, which the meta-are-scenario-matrix seed pack writes: the mode, the seed, the scenario counts and the results for each rule, stakeholder and kind of work, and three sample scenarios. Titles are in the owner's plain words, and nothing that names a compute tier is copied. Every number on the page comes from these facts; the words for each reason, stakeholder, sector and outcome are here too, and a fact without words stops the build. The mode local_verified is reported as a local check, in present tense.",
+  "pack": "meta-are-scenario-matrix",
+  "title": "1,000 test scenarios | Agora",
+  "description": "1,000 test scenarios, checked by written rules with no model calls: which were approved as asked, which after a private and public split, which were blocked and why. Every number comes from the run's record.",
+  "kicker": "Agora · Scenarios",
+  "heading": "{total} test scenarios, checked against the same rules",
+  "lead": "We generated situations, methods, people and stakeholders, and checked each combination against written rules: files that must stay local, a second, different checker, and time limits. Nothing here is a real request, and no model was called. Anyone can run it again from the seed.",
+  "mode": {
+    "local_verified": "These are local checks: the rules run on one computer, and no service or model is called."
+  },
+  "chips": [
+    "{total} test scenarios",
+    "sampled from {space} combinations",
+    "written rules, no model calls",
+    "seed {seed}"
+  ],
+  "tiles": [
+    {
+      "key": "approved_direct",
+      "verdict": "approved_direct",
+      "icon": "✓",
+      "label": "Approved as asked",
+      "text": "The rules allowed the work exactly as described."
+    },
+    {
+      "key": "approved_partitioned",
+      "verdict": "approved_partitioned",
+      "icon": "⇄",
+      "label": "Approved after a split",
+      "text": "Private files stayed local; only the public parts went to volunteers."
+    },
+    {
+      "key": "blocked",
+      "verdict": "blocked",
+      "icon": "✕",
+      "label": "Blocked",
+      "text": "A rule or a stakeholder stopped it, and the reason is recorded."
+    }
+  ],
+  "reasons_heading": "Why scenarios were blocked",
+  "reasons_lead": "A scenario can be blocked for more than one reason: {reasons} reasons across {blocked} blocked scenarios.",
+  "reasons": {
+    "cloud_tier_cannot_run_in_offline_airgap": "Needed an online model, but the work had to stay offline",
+    "mixed_or_regulated_data_missing_private_public_split": "Private and public data were mixed and not split",
+    "unsplit_cloud_egress_on_high_pii_data": "Sensitive data would have left the building",
+    "method_latency_exceeds_operator_or_situational_budget": "Too slow for the situation",
+    "missing_distinct_reviewer_two_step_gate": "No second, different checker",
+    "stakeholder_veto_cloud_on_high_pii_airgap": "A stakeholder said no to sending sensitive data off site"
+  },
+  "stakeholders_heading": "Who objected most",
+  "stakeholders_lead": "The share of their {each} scenarios each stakeholder blocked.",
+  "stakeholders": {
+    "frontline-caseworker": "Frontline caseworker",
+    "nonprofit-treasurer": "Nonprofit treasurer",
+    "privacy-hipaa-counsel": "Privacy and HIPAA counsel",
+    "disability-access-auditor": "Disability access auditor",
+    "skeptical-municipal-funder": "Skeptical municipal funder",
+    "volunteer-agent-donor": "Volunteer agent donor",
+    "security-reviewer": "Security reviewer",
+    "impacted-community-advocate": "Impacted community advocate",
+    "public-records-journalist": "Public records journalist",
+    "clinical-research-coordinator": "Clinical research coordinator"
+  },
+  "domains_heading": "{kinds} kinds of work, {each} scenarios each",
+  "domains_columns": [
+    "Kind of work",
+    "As asked",
+    "After a split",
+    "Blocked"
+  ],
+  "sectors": {
+    "public_good": "Public good",
+    "technical_engineering": "Technical",
+    "technical_health": "Technical",
+    "technical_media": "Technical",
+    "technical_ml": "Technical",
+    "technical_quant": "Technical",
+    "technical_systems": "Technical"
+  },
+  "samples_heading": "Three scenarios, start to finish",
+  "samples": {
+    "approved_direct": {
+      "icon": "✓",
+      "label": "Approved as asked",
+      "text": "The rules allowed the work exactly as described."
+    },
+    "approved_partitioned": {
+      "icon": "⇄",
+      "label": "Approved after a split",
+      "text": "The statements stayed on the requester’s computer; only the public parts went to volunteers, with a different reviewer."
+    },
+    "blocked": {
+      "icon": "✕",
+      "label": "Blocked",
+      "text": "The rules stopped it:"
+    }
+  },
+  "sample_labels": {
+    "work": "Kind of work",
+    "input": "Its files",
+    "person": "Stays with a person",
+    "became": "Became a Task Object"
+  },
+  "rerun": "Run it again from the seed with the {pack} seed pack, seed {seed}. Inspired by Meta’s Agents Research Environments (Gaia2) and Matrix.",
+  "pack_link": "The seed pack ↗",
+  "facts": {
+    "mode": "local_verified",
+    "seed": 20261031,
+    "addressable_combinations_power_of_ten": 12,
+    "evaluated": 1000,
+    "approved_direct": 151,
+    "approved_partitioned": 524,
+    "blocked": 325,
+    "block_reasons": {
+      "cloud_tier_cannot_run_in_offline_airgap": 165,
+      "method_latency_exceeds_operator_or_situational_budget": 50,
+      "missing_distinct_reviewer_two_step_gate": 42,
+      "mixed_or_regulated_data_missing_private_public_split": 97,
+      "stakeholder_veto_cloud_on_high_pii_airgap": 31,
+      "unsplit_cloud_egress_on_high_pii_data": 85
+    },
+    "stakeholders": [
+      {
+        "position": "frontline-caseworker",
+        "scenarios": 100,
+        "approved_direct": 16,
+        "approved_partitioned": 50,
+        "blocked": 34
+      },
+      {
+        "position": "nonprofit-treasurer",
+        "scenarios": 100,
+        "approved_direct": 19,
+        "approved_partitioned": 49,
+        "blocked": 32
+      },
+      {
+        "position": "privacy-hipaa-counsel",
+        "scenarios": 100,
+        "approved_direct": 18,
+        "approved_partitioned": 47,
+        "blocked": 35
+      },
+      {
+        "position": "disability-access-auditor",
+        "scenarios": 100,
+        "approved_direct": 15,
+        "approved_partitioned": 61,
+        "blocked": 24
+      },
+      {
+        "position": "skeptical-municipal-funder",
+        "scenarios": 100,
+        "approved_direct": 11,
+        "approved_partitioned": 53,
+        "blocked": 36
+      },
+      {
+        "position": "volunteer-agent-donor",
+        "scenarios": 100,
+        "approved_direct": 11,
+        "approved_partitioned": 54,
+        "blocked": 35
+      },
+      {
+        "position": "security-reviewer",
+        "scenarios": 100,
+        "approved_direct": 14,
+        "approved_partitioned": 55,
+        "blocked": 31
+      },
+      {
+        "position": "impacted-community-advocate",
+        "scenarios": 100,
+        "approved_direct": 11,
+        "approved_partitioned": 53,
+        "blocked": 36
+      },
+      {
+        "position": "public-records-journalist",
+        "scenarios": 100,
+        "approved_direct": 14,
+        "approved_partitioned": 57,
+        "blocked": 29
+      },
+      {
+        "position": "clinical-research-coordinator",
+        "scenarios": 100,
+        "approved_direct": 22,
+        "approved_partitioned": 45,
+        "blocked": 33
+      }
+    ],
+    "domains": [
+      {
+        "title": "Rural shelter offline handwritten intake transcription",
+        "sector": "public_good",
+        "scenarios": 40,
+        "approved_direct": 5,
+        "approved_partitioned": 20,
+        "blocked": 15
+      },
+      {
+        "title": "Multilingual disaster relief voucher and escrow verification",
+        "sector": "public_good",
+        "scenarios": 40,
+        "approved_direct": 7,
+        "approved_partitioned": 22,
+        "blocked": 11
+      },
+      {
+        "title": "Municipal and state enacted budget appropriation line audit",
+        "sector": "public_good",
+        "scenarios": 40,
+        "approved_direct": 4,
+        "approved_partitioned": 22,
+        "blocked": 14
+      },
+      {
+        "title": "Clinical trial adverse-event and subgroup table extraction",
+        "sector": "technical_health",
+        "scenarios": 40,
+        "approved_direct": 4,
+        "approved_partitioned": 22,
+        "blocked": 14
+      },
+      {
+        "title": "Supply-chain timecard and piece-rate wage discrepancy triage",
+        "sector": "public_good",
+        "scenarios": 40,
+        "approved_direct": 6,
+        "approved_partitioned": 21,
+        "blocked": 13
+      },
+      {
+        "title": "Food bank perishable cold-chain inventory and pickup scheduling",
+        "sector": "public_good",
+        "scenarios": 40,
+        "approved_direct": 10,
+        "approved_partitioned": 15,
+        "blocked": 15
+      },
+      {
+        "title": "Housing court public docket and statutory notice-period verification",
+        "sector": "public_good",
+        "scenarios": 40,
+        "approved_direct": 7,
+        "approved_partitioned": 22,
+        "blocked": 11
+      },
+      {
+        "title": "Public benefits portal WCAG 2.2 AA accessibility and screen-reader audit",
+        "sector": "public_good",
+        "scenarios": 40,
+        "approved_direct": 7,
+        "approved_partitioned": 20,
+        "blocked": 13
+      },
+      {
+        "title": "Regional PM2.5 sensor fusion and school clean-air shelter readiness check",
+        "sector": "public_good",
+        "scenarios": 40,
+        "approved_direct": 9,
+        "approved_partitioned": 19,
+        "blocked": 12
+      },
+      {
+        "title": "Foreign vocational syllabus and licensing hour-table mapping",
+        "sector": "public_good",
+        "scenarios": 40,
+        "approved_direct": 6,
+        "approved_partitioned": 21,
+        "blocked": 13
+      },
+      {
+        "title": "Municipal service-line material record digitization and EPA LCRR audit",
+        "sector": "public_good",
+        "scenarios": 40,
+        "approved_direct": 3,
+        "approved_partitioned": 24,
+        "blocked": 13
+      },
+      {
+        "title": "Community nonprofit grant renewal outcome and expense-record reconciliation",
+        "sector": "public_good",
+        "scenarios": 40,
+        "approved_direct": 2,
+        "approved_partitioned": 27,
+        "blocked": 11
+      },
+      {
+        "title": "Example elder-fraud message pattern analysis for helpline training",
+        "sector": "public_good",
+        "scenarios": 40,
+        "approved_direct": 6,
+        "approved_partitioned": 19,
+        "blocked": 15
+      },
+      {
+        "title": "Wheelchair-accessible rural dial-a-ride and dialysis van scheduling",
+        "sector": "public_good",
+        "scenarios": 40,
+        "approved_direct": 5,
+        "approved_partitioned": 24,
+        "blocked": 11
+      },
+      {
+        "title": "Civic software lockfile SBOM reachability and license conformance scan",
+        "sector": "technical_engineering",
+        "scenarios": 40,
+        "approved_direct": 4,
+        "approved_partitioned": 25,
+        "blocked": 11
+      },
+      {
+        "title": "Educational public-health video multi-frame dwell and caption legibility audit",
+        "sector": "technical_media",
+        "scenarios": 40,
+        "approved_direct": 6,
+        "approved_partitioned": 22,
+        "blocked": 12
+      },
+      {
+        "title": "Post-cutoff SDK specification compilation into holdout-disjoint LoRA pairs",
+        "sector": "technical_ml",
+        "scenarios": 40,
+        "approved_direct": 5,
+        "approved_partitioned": 22,
+        "blocked": 13
+      },
+      {
+        "title": "Untrusted corpus retrieval sanitization and 0/1 token-knapsack context packing",
+        "sector": "technical_ml",
+        "scenarios": 40,
+        "approved_direct": 10,
+        "approved_partitioned": 20,
+        "blocked": 10
+      },
+      {
+        "title": "Work-queue lease expiry, fencing-token monotonicity and CAS replay verification",
+        "sector": "technical_systems",
+        "scenarios": 40,
+        "approved_direct": 8,
+        "approved_partitioned": 20,
+        "blocked": 12
+      },
+      {
+        "title": "Cross-harness cost, latency and patch-pass Pareto frontier normalization",
+        "sector": "technical_ml",
+        "scenarios": 40,
+        "approved_direct": 9,
+        "approved_partitioned": 13,
+        "blocked": 18
+      },
+      {
+        "title": "Purged walk-forward regime validation and multiple-testing deflation check",
+        "sector": "technical_quant",
+        "scenarios": 40,
+        "approved_direct": 4,
+        "approved_partitioned": 26,
+        "blocked": 10
+      },
+      {
+        "title": "Smallholder cooperative extension bulletin and weather-window synthesis",
+        "sector": "public_good",
+        "scenarios": 40,
+        "approved_direct": 5,
+        "approved_partitioned": 19,
+        "blocked": 16
+      },
+      {
+        "title": "Time-coded hearing transcript witness-statement cross-reference indexing",
+        "sector": "public_good",
+        "scenarios": 40,
+        "approved_direct": 7,
+        "approved_partitioned": 18,
+        "blocked": 15
+      },
+      {
+        "title": "Low-income community solar tariff and utility interconnection queue audit",
+        "sector": "public_good",
+        "scenarios": 40,
+        "approved_direct": 6,
+        "approved_partitioned": 20,
+        "blocked": 14
+      },
+      {
+        "title": "Perinatal community health worker Medicaid-accepting clinic directory refresh",
+        "sector": "public_good",
+        "scenarios": 40,
+        "approved_direct": 6,
+        "approved_partitioned": 21,
+        "blocked": 13
+      }
+    ],
+    "samples": {
+      "approved_direct": {
+        "ids": [
+          "ENV-0004",
+          "METH-0116",
+          "PERS-0766",
+          "STKH-0237"
+        ],
+        "work": "Rural shelter offline handwritten intake transcription",
+        "input": "scanned handwritten intake statements with regional slang and acronyms",
+        "with_a_person": "Crisis safety follow-up, bed allocation and individual intake sign-off stay human-only.",
+        "became": "Rural shelter offline handwritten intake transcription (paired-bootstrap-holdout)",
+        "block_reasons": []
+      },
+      "approved_partitioned": {
+        "ids": [
+          "ENV-0003",
+          "METH-0262",
+          "PERS-0050",
+          "STKH-0130"
+        ],
+        "work": "Rural shelter offline handwritten intake transcription",
+        "input": "scanned handwritten intake statements with regional slang and acronyms",
+        "with_a_person": "Crisis safety follow-up, bed allocation and individual intake sign-off stay human-only.",
+        "became": "Rural shelter offline handwritten intake transcription (distinct-reviewer-two-step)",
+        "block_reasons": []
+      },
+      "blocked": {
+        "ids": [
+          "ENV-0001",
+          "METH-0831",
+          "PERS-0178",
+          "STKH-0395"
+        ],
+        "work": "Rural shelter offline handwritten intake transcription",
+        "input": "scanned handwritten intake statements with regional slang and acronyms",
+        "with_a_person": "Crisis safety follow-up, bed allocation and individual intake sign-off stay human-only.",
+        "became": "Rural shelter offline handwritten intake transcription (citation-statute-line-audit)",
+        "block_reasons": [
+          "cloud_tier_cannot_run_in_offline_airgap",
+          "unsplit_cloud_egress_on_high_pii_data"
+        ]
+      }
+    }
+  }
+}

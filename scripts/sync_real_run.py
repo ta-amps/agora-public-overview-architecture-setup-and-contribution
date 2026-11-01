@@ -16,11 +16,15 @@ them, the input noun's SHA-256, and both of Tessera's receipts, which are SHA-25
 result, as Tessera's receiptHash computes them.
 
 What it writes:
-  * site/content/real-run.json: the run's facts and its five steps. Each step has what happened in plain words, the
-    actor, the task ids, the state changes, one hash with what it is, its receipt file, and the trace seq numbers and
-    Tessera event numbers it comes from. The state changes follow Tessera's own state machine at the run's revision:
-    a task is created ready, or waiting when it depends on another; a claim leases it; a split makes it wait for its
-    children; a finished dependency or the last finished child makes it ready; a submit records its state after;
+  * site/content/real-run.json: the run's facts and its five steps, in people-readable facts only (owner, November 1:
+    no hash, key id, task id, receipt or agent app's name on a page or in a served noun). Each step has which role
+    did it (the script, the builder, the reviewer or Tessera), its time, the state
+    changes of each kind of task, the lease its worker held, and the trace seq numbers and Tessera event numbers it
+    comes from. The state
+    changes follow Tessera's own state machine at the run's revision: a task is created ready, or waiting when it
+    depends on another; a claim leases it; a split makes it wait for its children; a finished dependency or the last
+    finished child makes it ready; a submit records its state after. The step records under steps/ keep each step's
+    hash, its recompute rule and every record it comes from;
   * site/evidence/real-run-<run id>/: run-facts.json and trace.jsonl unchanged; tessera-readback.json, the sections
     of final-readback.json the replay needs, each unchanged; steps/<n>-<id>.json, one receipt file per step that
     copies the trace lines, Tessera events and records the step comes from; and kit/, the four files the builder
@@ -46,7 +50,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
 NOUN = SITE / "content" / "real-run.json"
-FORMAT = "ta-amps.real-run-replay.v1"
+FORMAT = "ta-amps.real-run-replay.v2"
 STEP_FORMAT = "ta-amps.real-run-step-receipt.v1"
 FORBIDDEN = ("/home/", "tan_", "tsk_", "hmk_", "Bearer")
 # Sections of final-readback.json the replay leaves out: the access audit (hashed client addresses and request ids),
@@ -470,6 +474,41 @@ def dumps(value) -> str:
     return json.dumps(value, indent=2, ensure_ascii=False) + "\n"
 
 
+# The replay noun keeps people-readable facts only: no hash, key id, task id or receipt, and no agent app's name, since
+# pages name the model a step ran and agent apps appear only on Models used (owner, November 1). The step records
+# keep the rest, unchanged. Step 3 keeps its record's file name; in the noun its id says what it shows.
+PUBLIC_IDS = {"build-receipt": "build-recorded"}
+STEP_BY = {1: "script", 2: "builder", 3: "builder", 4: "reviewer", 5: "tessera"}
+SPEND_FOLDER = "evidence/real-e2e-meta-2026-10-31"
+
+
+def step_lease(run: Run, events: list[dict]) -> int | None:
+    """The lease a step's worker held, in seconds: the queue its claims, heartbeats and submits were on, and the lease
+    that queue defines in Tessera's own events. A step with no such event held none."""
+    queues = {e["queue"]: e["detail"]["lease_seconds"] for e in run.events if e["type"] == "queue_defined"}
+    held = {queues[e["queue"]] for e in events if e["type"] in ("claimed", "heartbeat", "submitted") and e["queue"] in queues}
+    require(len(held) <= 1, "a step holds leases on two queues")
+    return held.pop() if held else None
+
+
+def public_step(step: dict, lease: int | None) -> dict:
+    """One step as the replay noun gives it: who did it, when, how each kind of task changed, its lease, and the trace
+    lines and Tessera events it comes from, by number."""
+    out = {"n": step["n"], "id": PUBLIC_IDS.get(step["id"], step["id"]), "by": STEP_BY[step["n"]],
+           "at_utc": step["at_utc"],
+           "changes": [{k: v for k, v in change.items() if k != "task"} for change in step["changes"]],
+           "trace": step["trace"], "events": step["events"], "model_calls": step["model_calls"]}
+    if lease is not None:
+        out["lease_seconds"] = lease
+    if "request_label" in step:
+        out["request_label"] = step["request_label"]
+    if "nouns" in step:
+        out["files"] = [{"path": item["path"], "bytes": item["bytes"], "file": item["file"]} for item in step["nouns"]]
+    if "verdict" in step:
+        out["verdict"] = step["verdict"]
+    return out
+
+
 def outputs(folder: Path) -> dict[Path, bytes]:
     run = Run(folder)
     hashes = check_hashes(run)
@@ -497,19 +536,16 @@ def outputs(folder: Path) -> dict[Path, bytes]:
     entry, facts = run.entry, run.facts
     usage = entry["meta_api_usage"]
     noun = {
-        "about": ("One recorded run, replayed on the how-it-works page. scripts/sync_real_run.py writes this noun and "
-                  "the files under site/evidence/real-run-" + run.run_id + "/ from the run's own folder, and checks "
-                  "every hash it shows. Its words describe what the records show."),
+        "about": ("One recorded run, replayed on the how-it-works page, in people-readable facts. "
+                  "scripts/sync_real_run.py writes this file and the run's records under site/evidence/real-run-"
+                  + run.run_id + "/ from the run's own folder, after checking every value against Tessera's own "
+                  "records. Each step's record, under steps/, keeps what the step comes from."),
         "format": FORMAT,
         "run": {
             "id": run.run_id,
             "started_utc": facts["started_utc"],
             "fabric": entry["fabric"],
-            "tessera_revision": entry["tessera_source_revision"],
-            "tessera_repository": facts["tessera_repo"],
             "model": facts["model"],
-            "builder": dict(entry["harnesses"]["builder"], key_id=entry["principals"]["builder_key_id"]),
-            "reviewer": dict(entry["harnesses"]["reviewer"], key_id=entry["principals"]["reviewer_key_id"]),
             "builder_is_not_reviewer": entry["principals"]["builder_neq_reviewer"],
             "made_up_data_only": run.receipt["synthetic_data_only"],
             "private_or_ngo_data_sent": run.receipt["privacy_and_spend_guardrails"]["private_or_ngo_data_sent"],
@@ -521,17 +557,18 @@ def outputs(folder: Path) -> dict[Path, bytes]:
                       "total_conservative_usd": usage["total_conservative_usd"], "cap_usd": usage["cap_usd"]},
             "final_states": {part: run.readback[part]["state"] for part in ("request", "build", "review")},
         },
-        "receipt": "evidence/real-e2e-meta-2026-10-31/public-e2e-receipt.json",
+        "spend_folder": SPEND_FOLDER,
         "files": {
             "facts": f"{folder_rel}/run-facts.json",
             "trace": f"{folder_rel}/trace.jsonl",
             "tessera": f"{folder_rel}/tessera-readback.json",
+            "steps": f"{folder_rel}/steps/",
         },
-        "steps": steps,
+        "steps": [public_step(step, step_lease(run, by_step[step["n"]])) for step in steps],
     }
-    published = SITE / noun["receipt"]
+    published = SITE / SPEND_FOLDER / "public-e2e-receipt.json"
     require(published.is_file() and published.read_bytes() == (folder / "public-e2e-receipt.json").read_bytes(),
-            f"site/{noun['receipt']} must be the run's public receipt, unchanged")
+            f"site/{SPEND_FOLDER}/public-e2e-receipt.json must be the run's public receipt, unchanged")
     files[NOUN] = dumps(noun).encode("utf-8")
     for path, data in files.items():
         text = data.decode("utf-8")

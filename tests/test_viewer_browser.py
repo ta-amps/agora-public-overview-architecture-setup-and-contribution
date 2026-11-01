@@ -297,47 +297,6 @@ class SitePages(LocalSite):
         page.wait_for_function("!document.querySelector('[data-mode-toggle]').hidden")
         self.assertEqual(None, self.mode(page)["stored"])
 
-    def cut(self, page):
-        return page.evaluate("""() => ({pressed: document.querySelector('[data-cut][aria-pressed=true]').getAttribute('data-cut'),
-          src: document.querySelector('.film-video source').getAttribute('src'), search: location.search,
-          ccPressed: document.querySelector('[data-film-cc]').getAttribute('aria-pressed'),
-          barHidden: document.querySelector('[data-film-caption-bar]').hidden,
-          captions: Array.from(document.querySelector('.film-video').textTracks).filter(t => t.kind === 'captions').map(t => t.mode)})""")
-
-    def test_a_cut_can_be_linked_and_keeps_the_caption_choice(self):
-        page = self.open("?cut=short", viewport={"width": 1280, "height": 800})
-        state = self.cut(page)
-        cuts = json.loads((SITE / "content" / "home.json").read_text(encoding="utf-8"))["videos"]["cuts"]
-        full_cut, short_cut = cuts[0], cuts[1]
-        # Captions run in mode="hidden" so native square browser cue boxes never appear even on fullscreenchange.
-        self.assertEqual(("short", short_cut["src"], "?cut=short", "true", ["hidden"]),
-                         (state["pressed"], state["src"], state["search"], state["ccPressed"], state["captions"]))
-        if short_cut.get("clean_src"):
-            self.assertTrue(state["barHidden"])
-        page.evaluate("document.dispatchEvent(new Event('fullscreenchange'))")
-        self.assertEqual(["hidden"], self.cut(page)["captions"])
-        # The viewer turns captions off; switching cuts keeps them off ("disabled") and selects clean_src when present.
-        page.click("[data-film-cc]")
-        if short_cut.get("clean_src"):
-            self.assertEqual(short_cut["clean_src"], self.cut(page)["src"])
-        page.click("[data-cut=full]")
-        state = self.cut(page)
-        self.assertEqual(("full", full_cut.get("clean_src") or full_cut["src"], "", "false", ["disabled"]),
-                         (state["pressed"], state["src"], state["search"], state["ccPressed"], state["captions"]))
-        page.click("[data-cut=short]")
-        self.assertEqual("?cut=short", self.cut(page)["search"])
-        # An unknown cut opens the default one, and filleted blurred custom caption styling in the bottom widescreen band is ready.
-        page = self.open("?cut=nope", viewport={"width": 1280, "height": 800})
-        self.assertEqual(("full", full_cut["src"], "true", ["hidden"]),
-                         (self.cut(page)["pressed"], self.cut(page)["src"], self.cut(page)["ccPressed"], self.cut(page)["captions"]))
-        pill_style = page.evaluate("""() => {
-          const s = getComputedStyle(document.querySelector('[data-film-caption-pill]'));
-          return {radius: s.borderRadius, blur: s.backdropFilter || s.webkitBackdropFilter || '', hasJs: document.documentElement.classList.contains('js')};
-        }""")
-        self.assertEqual("14px", pill_style["radius"])
-        self.assertIn("blur", pill_style["blur"])
-        self.assertTrue(pill_style["hasJs"])
-
     def test_library_explorer_filters_and_switches_to_707_ecosystem_offline(self):
         page = self.open("library/", viewport={"width": 1280, "height": 900})
         page.wait_for_function("!document.querySelector('[data-exp-controls]').hidden")

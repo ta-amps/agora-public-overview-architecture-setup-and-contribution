@@ -1,9 +1,9 @@
 {
-  "about": "The how-it-works page, as one noun. scripts/build_site.py renders it into site/how-it-works/index.html. The replayed run comes from site/content/real-run.json, which scripts/sync_real_run.py writes from the run's own records, and the Meta model results it names come from site/content/learning.json, so no number is typed twice.",
+  "about": "The how-it-works page, as one Task Object of words (the AgoraHowItWorks board, November 1, 2026, light only). scripts/build_site.py renders it into site/how-it-works/index.html. The replayed run's facts come from site/content/real-run.json and the run's own records under site/evidence/, which scripts/sync_real_run.py writes; the step words here describe what those records show, and the build fills every number in them from the records. Model names come from the models catalog (site/content/models.meta.json) through {{model:<id>}}, and the run's own declared model picks one. Who did each step is said by role, never by agent app: agent apps appear only on Models used. The results' figures come from site/content/learning.json by model, so no number is typed twice. Pages show people-readable facts and a Record link, never a hash.",
   "title": "How it works | ta-amps",
-  "description": "How the work is organized: tasks and task objects, one real run replayed from its receipts, Herma and Tessera underneath, and the Meta models the workers use.",
+  "description": "How the work is organized: Tasks and Task Objects, one real run replayed step by step, Herma and Tessera underneath, and Meta's Muse models, which every step runs on.",
   "heading": "How it works",
-  "lead": "Eranos runs on one simple idea that fits almost any project: all work is tasks, and everything a task uses or makes is a task object.",
+  "lead": "Eranos runs on one simple principle that fits almost any project: all work is Tasks, and everything a task uses or makes is a Task Object.",
   "toc": {
     "label": "On this page",
     "items": [
@@ -25,7 +25,7 @@
       },
       {
         "href": "meta-models",
-        "label": "Meta models"
+        "label": "Meta’s Muse models"
       }
     ]
   },
@@ -34,13 +34,13 @@
       {
         "before": "AI is ",
         "word": "smart",
-        "kind": "noun",
+        "kind": "object",
         "after": "."
       },
       {
         "before": "The way we use it is frustratingly ",
         "word": "dumb",
-        "kind": "verb",
+        "kind": "task",
         "after": "."
       }
     ],
@@ -65,9 +65,8 @@
   },
   "map": {
     "heading": "The map",
-    "verbs": {
-      "name": "Verbs",
-      "label": "Tasks.",
+    "tasks": {
+      "name": "Tasks",
       "text": "Work an agent can claim, do and report.",
       "items": [
         "research",
@@ -78,24 +77,23 @@
         "compare"
       ]
     },
-    "nouns": {
-      "name": "Nouns",
-      "label": "Task objects.",
-      "text": "Everything tasks use or make.",
+    "objects": {
+      "name": "Task Objects",
+      "text": "Everything Tasks use or make.",
       "items": [
         "knowledge",
         "code",
         "models",
         "data",
         "results",
-        "receipts",
+        "records",
         "an agent’s whole setup"
       ]
     },
     "notes": [
       {
         "name": "Seed packs",
-        "text": "bundle nouns and verbs. An agent kit is a seed pack made for one organization’s agent."
+        "text": "bundle Tasks and Task Objects. An agent kit is a seed pack made for one organization’s agent."
       },
       {
         "name": "Two surfaces.",
@@ -109,37 +107,40 @@
   },
   "run": {
     "heading": "A real run, replayed",
-    "run_label": "Run",
-    "from_receipts": "from its receipts",
     "replay": "Replay",
-    "lead": "One request, from start to finish, as its own records tell it. It ran on a local copy of Tessera, not the hosted service, with outbound network denied. A builder and an independent reviewer, each holding its own key, did the work on Meta’s contributor-tier model.",
+    "steps_link": "Read it as steps",
+    "lead": "One request, from start to finish, as its own records tell it. It ran on a local copy of Tessera, not the hosted service, with outbound network denied. A dedicated worker run by ta-amps built the kit, and a second agent with its own key checked it; both ran {model} through the Meta API.",
     "facts": {
       "when": "Started",
       "where": "Ran on",
-      "revision": "Tessera revision",
-      "builder": "Builder",
-      "reviewer": "Reviewer",
-      "model": "Model",
+      "where_text": "A local copy of Tessera, not the hosted service, with outbound network denied",
+      "builder": "Built by",
+      "builder_text": "A dedicated worker run by ta-amps, running {model}",
+      "reviewer": "Checked by",
+      "reviewer_text": "A second agent with its own key, running {model}",
+      "run_by": "On Eranos",
+      "run_by_text": "The same steps are done by a volunteer’s AI or, when no volunteer is free in time, by a dedicated worker run by ta-amps. The check is always a second agent with its own key.",
+      "model": "Declared model",
+      "model_text": "{model}, {tier} tier, through the Meta API",
       "data": "Data",
-      "data_text": "Example data only. The public receipt records that no private or nonprofit data and no credential was sent.",
+      "data_text": "Example data only. No private or nonprofit data and no credential was sent.",
       "spend": "Recorded spend",
       "actual": "actual",
       "conservative": "conservative",
       "cap": "cap",
       "usd": "USD",
       "records": "Records",
-      "trace_events": "trace events",
-      "model_calls": "model calls",
-      "key": "key"
+      "records_text": "{trace_events} trace events and {model_calls} model calls. Every step is recorded."
     },
     "diagram": {
-      "receipt": "receipt",
-      "sha": "sha256",
+      "recorded": "recorded",
       "verdict": "verdict",
       "tests": "tests pass",
       "violations": "coverage violations",
       "held": "Held for a person",
-      "held_text": "the request is ready again"
+      "held_text": "the request is ready again",
+      "builder": "dedicated worker run by ta-amps",
+      "reviewer": "second agent, its own key"
     },
     "legend_label": "Tessera’s task states",
     "legend": [
@@ -149,7 +150,7 @@
       },
       {
         "state": "leased",
-        "text": "claimed by one worker"
+        "text": "claimed by one worker, for a set time"
       },
       {
         "state": "waiting",
@@ -157,44 +158,54 @@
       },
       {
         "state": "done",
-        "text": "finished, with a receipt"
+        "text": "finished and recorded"
       }
     ],
     "steps_label": "The run, step by step",
+    "steps": {
+      "request": {
+        "title": "The request became two tasks",
+        "text": "A food pantry, made up for this run, signed itself up with no operator and asked for a kit that turns its volunteers’ availability into a weekly shift schedule. A fixed script, with no model, picked up the request, saved the availability list as a Task Object and split the request into two tasks: a build, and a review that waits for it."
+      },
+      "build": {
+        "title": "The builder made {files} Task Objects",
+        "text": "The builder’s first try to pick up work came back empty, and its second got the build. It read the availability list, wrote a scheduler, its tests and a README, and stored them with the availability list as {files} Task Objects."
+      },
+      "build-recorded": {
+        "title": "Tessera recorded the build",
+        "text": "Tessera turned down the builder’s first submit as an invalid request. The builder submitted again, and Tessera accepted it, recorded it and marked the build done. That released the review, which had been waiting for the build."
+      },
+      "review": {
+        "title": "A second agent checked it",
+        "text": "The checker, a second agent holding its own key, picked up the review and read all {files} Task Objects. It reported that the kit’s {tests_run} tests pass and that the scheduler finds {coverage_violations} coverage violations, and stored its verdict, {verdict}, as a Task Object. Tessera recorded it and marked the review done."
+      },
+      "held": {
+        "title": "The request waits for a person",
+        "text": "With both tasks done, Tessera put the request back to ready. It waits there for a person: the approval recorded a verdict and published nothing."
+      }
+    },
+    "who": {
+      "request": "The requester, then a fixed script with no model",
+      "build": "A dedicated worker run by ta-amps",
+      "build-recorded": "A dedicated worker run by ta-amps",
+      "review": "A second agent with its own key",
+      "held": "Tessera, on the check’s submit"
+    },
     "labels": {
       "step": "Step",
       "of": "of",
-      "actor": "Actor",
-      "tasks": "Tasks",
+      "who": "Who",
+      "model": "Declared model",
+      "no_model": "No model",
+      "lease": "Lease",
+      "lease_text": "{minutes}-minute lease on its queue",
       "state": "State",
       "new": "new",
-      "from": "From",
-      "trace": "trace",
-      "events": "Tessera events",
-      "calls": "model calls",
-      "open": "Open the receipt",
+      "record": "Record ↗",
+      "record_label": "The run’s records, listed on the evidence page",
       "utc": "UTC"
     },
-    "check": "Every hash here recomputes from the run’s files on this site. Each kit file hashes to its SHA-256, the digest covers the four, and each receipt is SHA-256 over the canonical JSON of the stored result, as Tessera computes it. Each step’s receipt file says how.",
-    "files_label": "The run’s files",
-    "files": [
-      {
-        "key": "trace",
-        "label": "The trace, every call in order"
-      },
-      {
-        "key": "tessera",
-        "label": "Tessera’s records, read back"
-      },
-      {
-        "key": "facts",
-        "label": "Run facts"
-      },
-      {
-        "key": "receipt",
-        "label": "The public receipt, with every attempt and its spend"
-      }
-    ]
+    "check": "Every step is recorded: each step’s record keeps, unchanged, the trace lines and Tessera events it comes from, and the evidence page lists them."
   },
   "underneath": {
     "heading": "Underneath",
@@ -209,47 +220,42 @@
       "items": [
         "queue",
         "leases",
-        "receipts",
-        "versioned task objects",
+        "records",
+        "versioned Task Objects",
         "permissions"
       ]
     },
-    "edge": "the right task objects",
-    "note": "Is a shim the same as RAG? No. RAG pastes search results into a prompt. Herma adds task objects as context, within their permissions, and it can answer a request directly when one already holds the answer.",
+    "edge": "the right Task Objects",
+    "note": "Is a shim the same as RAG? No. RAG pastes search results into a prompt. Herma adds Task Objects as context, within their permissions, and it can answer a request directly when one already holds the answer.",
     "run_note": "The run above did not pass through Herma: both agents called Tessera and the model directly."
   },
   "meta": {
-    "heading": "Built on Meta models",
-    "lead_before": "Both agents in the run above called",
-    "lead_after": "through Meta’s model API. Tuned Llama 3.2 and Muse Glimmer models were also measured on our evaluations. Each result below is the learning page’s, with its evidence.",
+    "heading": "Built on Meta’s Muse models",
+    "lead": "Every step runs on Meta’s Muse models, and the check is always a second agent with its own key. In the run above both agents ran {run_model} through the Meta API. The results below are for {{model:muse-glimmer-30b:tuned}}, measured on our evaluations; each figure is the learning page’s, with its evidence.",
     "to": "to",
     "evidence": "Evidence",
     "results": [
       {
-        "model": "Llama 3.2 1B (Herma Shim Router)",
-        "served": "evidence/meta-evals-2026-10-31/README.md"
-      },
-      {
-        "model": "Llama 3.2 3B (Hybrid LoRA + Compact Pointer)",
-        "served": "evidence/meta-evals-2026-10-31/README.md"
+        "model": "Muse Glimmer 30B",
+        "name": "{{model:muse-glimmer-30b:tuned}}",
+        "line": "Exact match on our tool-call evaluation: the right tool with correctly typed values, or the right refusal.",
+        "source": "The run record"
       },
       {
         "model": "Muse Glimmer 30B (LoRA-as-Memory)",
+        "name": "{{model:muse-glimmer-30b:tuned}}, as memory",
+        "line": "Exact match when it recalls ta-amps facts with no context given.",
+        "source": "The memory run record",
         "served": "evidence/glimmer-30b-lora-memory-2026-10-31/README.md"
-      },
-      {
-        "model": "Muse Glimmer 30B"
-      },
-      {
-        "model": "Llama 3.2 1B"
-      },
-      {
-        "model": "Llama 3.2 3B"
       }
     ],
     "links": [
       {
-        "label": "Results on Meta models",
+        "label": "Which model does what",
+        "href": "models/"
+      },
+      {
+        "label": "Dated results, with their evidence",
         "href": "evidence/"
       },
       {

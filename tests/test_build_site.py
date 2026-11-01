@@ -212,17 +212,16 @@ class Builder(unittest.TestCase):
         for leftover in ("claim-status", 'class="badge', "use-tag"):
             self.assertNotIn(leftover, main)
 
-    def test_the_home_page_is_the_film_start_here_the_decks_and_the_use_cases(self):
-        # October 31 (the Agora-Home board): the film first, then Start here with the two public sites, the decks
-        # and the use cases. The start part's heading is the page's one h1.
+    def test_the_home_page_is_start_here_the_decks_and_the_use_cases(self):
+        # November 1 (the AgoraHome board, light only): Start here with the two public sites, Open Eranos and the
+        # judges' tour in the first screen, then the decks and the use cases. The film is withdrawn until its
+        # re-recorded cut lands, so there is no film slot. The start part's heading is the page's one h1.
         home = self.outputs[build.SITE / "index.html"]
         main = home[home.index('<main id="main">'):home.index("</main>")]
-        self.assertEqual(4, main.count("<section"))
-        self.assertEqual(1, main.count("<video"))
-        self.assertIn('kind="captions"', main)
-        self.assertIn(" default>", main)
-        self.assertLess(home.index("<ta-agent-banner "), home.index("<video"))
-        order = [main.index(marker) for marker in ('<section class="film', '<section class="start"', '<section class="deck-band"',
+        self.assertEqual(3, main.count("<section"))
+        self.assertNotIn("<video", main)
+        self.assertNotIn('class="film', main)
+        order = [main.index(marker) for marker in ('<section class="start', '<section class="deck-band"',
                                                     '<section class="home-uses"')]
         self.assertEqual(sorted(order), order)
         start = self.nouns.home["start"]
@@ -231,9 +230,14 @@ class Builder(unittest.TestCase):
         self.assertEqual(["Eranos", "Agora"], [card["name"] for card in start["cards"]])
         self.assertIn('href="https://eranos.ta-amps.workers.dev/"', main)
         self.assertIn('href="how-it-works/"', main)
+        self.assertIn('<a class="button" href="https://eranos.ta-amps.workers.dev/">Open Eranos ↗</a>', main)
+        self.assertIn('<a class="home-tour" href="?tour=judge">Take the 45-second tour →</a>', main)
         self.assertEqual(5, main.count('class="deck-card"'))
         self.assertEqual(6, main.count('class="home-use"'))
         self.assertEqual(1, main.count('class="home-use-live"'))  # only Eranos is live, so only it says so
+        self.assertIn('href="use-cases/"', main)
+        self.assertIn('href="models/"', main)
+        self.assertNotIn('href="film/"', main)
         # The film's production page is linked only once its production trace is final.
         self.assertEqual(build.film_made_ready(start), start["film_made"]["href"] in main)
 
@@ -319,32 +323,6 @@ class Builder(unittest.TestCase):
                 start = main.index(f'data-name="{claim["slide"]}"')
                 notes = main[main.index('class="slide-notes"', start):main.index("</section>", start)]
                 self.assertIn(html.escape(claim["number"], quote=False), notes, claim["number"])
-
-    def test_the_film_offers_a_selector_only_when_it_has_more_than_one_cut(self):
-        nouns = copy.copy(self.nouns)
-        nouns.home = copy.deepcopy(self.nouns.home)
-        videos = nouns.home["videos"]
-        one = dict(videos["cuts"][0], id="one")
-        videos["cuts"], videos["default"] = [one], "one"
-        self.assertNotIn("data-film-cuts", build.render_home(nouns))
-        other = dict(one, id="other", tab="Other cut", label="The other cut")
-        other["src"] = "video/2026-10-29/animatic-60s-v1/eranos-animatic-60s-open-captions.mp4"
-        videos["cuts"].insert(0, other)
-        videos["default"] = "other"
-        page = build.render_home(nouns)
-        self.assertEqual(1, page.count("<video"))
-        self.assertEqual(2, page.count('class="film-cut"'))
-        self.assertIn(f'<source src="{other["src"]}"', page)
-        self.assertIn('aria-pressed="true" data-cut="other"', page)
-        self.assertIn('aria-pressed="false" data-cut="one"', page)
-        self.assertIn('id="film-label">The other cut</span>', page)
-        # Hunt, October 30: without JavaScript the buttons stay hidden, so every other cut is a plain link,
-        # which site.js hides once the buttons work. Before, the short cut was unreachable without JavaScript.
-        self.assertIn(f'<span data-no-script> · <a href="{one["src"]}">{one["tab"]}</a></span>', page)
-        self.assertNotIn(f'<span data-no-script> · <a href="{other["src"]}">', page)
-        videos["default"] = "missing"
-        with self.assertRaises(build.BuildError):
-            build.render_home(nouns)
 
     def test_slide_elements_become_html(self):
         endpoints = self.nouns.site["endpoints"]
@@ -648,21 +626,12 @@ class Builder(unittest.TestCase):
                     self.assertEqual((download["sha256"], download["bytes"]), (build.sha256(data), len(data)), local)
 
     def test_the_film_page_is_its_transcript_and_says_there_is_no_described_cut(self):
-        film, home = self.nouns.film, self.nouns.home
+        film = self.nouns.film
         page = self.outputs[build.SITE / "film" / "index.html"]
         self.assertIn("transcript and scene descriptions", film["heading"].lower())
         self.assertIn(f"<h1>{build.text(film['heading'])}</h1>", page)
         self.assertIn(f'<p class="dateline">{build.text(film["audio_description"])}</p>', page)
         self.assertIn("audio-described cut is not available yet", film["audio_description"])
-        self.assertIn("transcript", home["videos"]["outline"]["label"].lower())
-        self.assertIn(f'<a href="film/">{build.text(home["videos"]["outline"]["label"])}</a>',
-                      self.outputs[build.SITE / "index.html"])
-        # A transcript is the narration word for word: the film noun's lines are the full cut's captions, except that
-        # the owner's October 31 rule puts plain words where the current cut's captions say "synthetic", until the
-        # replacement cut lands.
-        full = next(cut for cut in home["videos"]["cuts"] if cut["id"] == "full")
-        captions = build.plain_words((build.SITE / full["captions"]).read_text(encoding="utf-8"))
-        self.assertEqual(caption_words(captions), plain_words(" ".join(line["words"] for line in film["lines"])))
 
     def test_the_film_page_says_its_storyboard_is_the_draft_runs(self):
         # Hunt, October 30: the page said the storyboard was drawn from the production run, but the image is
@@ -672,10 +641,10 @@ class Builder(unittest.TestCase):
         self.assertIn("draft run", film["lead"])
         self.assertIn("draft run", film["storyboard"]["caption"])
 
-    def test_the_home_description_names_the_film_not_a_draft_video(self):
+    def test_the_home_description_names_no_film_until_its_new_cut(self):
         description = self.nouns.home["description"]
         self.assertNotIn("draft video", description)
-        self.assertIn("three-minute film", description)
+        self.assertNotIn("film", description)  # withdrawn until the re-recorded cut lands
         self.assertIn(f'<meta name="description" content="{build.attr(description)}">', self.outputs[build.SITE / "index.html"])
 
     def test_the_footer_privacy_line_comes_from_its_noun_and_matches_what_the_pages_load(self):

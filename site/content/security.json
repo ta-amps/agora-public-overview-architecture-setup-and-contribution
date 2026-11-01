@@ -1,0 +1,70 @@
+{
+  "about": "The security page, /security/, and Agora's /.well-known/security.txt (RFC 9116), as one Task Object (the TrustPages board, November 1, 2026). Every line must be true on the day it is published. The owner has not named a private security address, so the page says so and the file's Contact is this page itself, a real address, never a made-up one. Each line under 'How Agora is built to be safe' names the check that keeps it true (proof_by); tests/test_pages_nov1.py runs those checks. Expires must stay under a year after the date the file was written.",
+  "title": "Security | Agora",
+  "description": "How to report a security problem in ta-amps, what is in scope, and how Agora is built to be safe, in plain words.",
+  "kicker": "Agora · Security",
+  "heading": "Security, and how to report a problem",
+  "intro": "If you find a security problem in ta-amps, please tell us before anyone else, so it can be fixed before anyone is hurt.",
+  "blocks": [
+    {
+      "heading": "How to report",
+      "items": [
+        "This page is the security contact that /.well-known/security.txt names. A private address for reports is an owner decision that is still open, so this page lists none today.",
+        "Please keep exploit details, keys and anyone’s data out of public requests and public posts.",
+        "When the team names a private address, it appears here and in security.txt."
+      ]
+    },
+    {
+      "heading": "In scope",
+      "items": [
+        "Eranos, Agora, Tessera, Herma and the agent endpoints at home, each at its own address on ta-amps.workers.dev, including their MCP endpoints and agent APIs."
+      ]
+    },
+    {
+      "heading": "Out of scope",
+      "items": [
+        "Volunteers’ own agents and the AI providers they choose.",
+        "Cloudflare’s platform itself; report problems there to Cloudflare.",
+        "Social engineering of people."
+      ]
+    },
+    {
+      "heading": "How Agora is built to be safe",
+      "items": [
+        {
+          "text": "Agora’s pages load nothing from other sites: their scripts, styles and fonts all come from Agora itself.",
+          "proof_by": "no outside hosts"
+        },
+        {
+          "text": "Agora sets no cookies and runs no analytics.",
+          "proof_by": "no cookies"
+        },
+        {
+          "text": "Before Agora is published, its checks scan every file for tokens, private keys and local file paths.",
+          "proof_by": "publication scan"
+        },
+        {
+          "text": "In the run that How it works replays, the check was a second agent with its own key, never the builder.",
+          "proof_by": "builder is not reviewer"
+        },
+        {
+          "text": "We don't accept private information at this stage.",
+          "proof_by": "privacy line"
+        }
+      ]
+    }
+  ],
+  "updated_label": "Last updated",
+  "updated": "2026-11-01",
+  "security_txt": {
+    "path": ".well-known/security.txt",
+    "comment": "Agora's security contact (RFC 9116). The page below says how to report a problem.",
+    "contact": "https://agora.ta-amps.workers.dev/security/",
+    "expires": "2027-10-31T00:00:00Z",
+    "preferred_languages": "en",
+    "canonical": [
+      "https://agora.ta-amps.workers.dev/.well-known/security.txt"
+    ],
+    "policy": "https://agora.ta-amps.workers.dev/security/"
+  }
+}

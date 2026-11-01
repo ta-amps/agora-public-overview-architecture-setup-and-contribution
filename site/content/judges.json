@@ -1,0 +1,146 @@
+{
+  "about": "The judges' page, /judges/, as one Task Object of words (the AgoraJudges board and backlog O11, November 1, 2026). Every row of 'What is real' is either filled at build time from a record this site holds (the 'fill' names which one: the replayed run, the 1,000 test scenarios, the partner compute record or the feeds index) or says plainly, in present tense, what has not happened. The tour button adds ?tour=judge, which opens the 45-second tour strip. The film is withdrawn until its re-recorded cut lands, so nothing here links it.",
+  "title": "For judges | Agora",
+  "description": "Judging ta-amps in five minutes: five steps through Eranos, Agora and the live queue, and a table of what is real and what is an example, each line from a record.",
+  "kicker": "Agora · For judges",
+  "heading": "Judging ta-amps in five minutes",
+  "lead": "Eranos puts spare AI tokens to work for nonprofits. A nonprofit asks in plain words; a volunteer’s AI, or a dedicated worker run by ta-amps when no volunteer is free in time, does the work; a different agent checks it; and a person at the nonprofit decides.",
+  "tour": {
+    "label": "Take the 45-second tour →",
+    "href": "?tour=judge"
+  },
+  "second": {
+    "label": "Open Eranos ↗",
+    "href": "https://eranos.ta-amps.workers.dev/"
+  },
+  "steps_heading": "Five steps",
+  "steps": [
+    {
+      "heading": "See a real run",
+      "text": "How it works replays one recorded run step by step: who picked up each part, the model it declared, its lease and its record.",
+      "link": "The replay →",
+      "href": "how-it-works/#run"
+    },
+    {
+      "heading": "Open the example request",
+      "text": "REQ-INTAKE-07 on Eranos replays a practice case at reading speed, from the request to the person who decides.",
+      "link": "The example ↗",
+      "href": "https://eranos.ta-amps.workers.dev/requests/REQ-INTAKE-07?replay=1"
+    },
+    {
+      "heading": "Look underneath",
+      "text": "The same request in its technical view: the diagram, who held each part, and every step’s record.",
+      "link": "Technical view ↗",
+      "href": "https://eranos.ta-amps.workers.dev/requests/REQ-INTAKE-07?view=technical"
+    },
+    {
+      "heading": "Try the queue live",
+      "text": "In the Studio your browser calls the live Tessera, Herma and Eranos and shows every call and its answer, from a lease to a write that is refused because another came first.",
+      "link": "Studio →",
+      "href": "studio/"
+    },
+    {
+      "heading": "Ask for real",
+      "text": "Send your own public request on Eranos. We don't accept private information at this stage.",
+      "link": "Ask on Eranos ↗",
+      "href": "https://eranos.ta-amps.workers.dev/nonprofits"
+    }
+  ],
+  "real_heading": "What is real, and what is an example",
+  "real_lead": "Each line comes from a record this site holds, read when the page is built, or says plainly what has not happened.",
+  "columns": [
+    "Claim",
+    "Where it stands",
+    "Check it"
+  ],
+  "rows": [
+    {
+      "claim": "The example request, REQ-INTAKE-07",
+      "state": "A practice case on Eranos. Nothing in it was sent, built or run; it shows a request’s steps at reading speed.",
+      "check": {
+        "label": "Open it ↗",
+        "href": "https://eranos.ta-amps.workers.dev/requests/REQ-INTAKE-07?replay=1"
+      }
+    },
+    {
+      "claim": "A recorded run",
+      "fill": "real_run",
+      "state": "On {date}, a dedicated worker run by ta-amps built a kit and a second agent with its own key checked it, both running {model}, on a local copy of Tessera with example data. Every step is recorded.",
+      "check": {
+        "label": "The replay",
+        "href": "how-it-works/#run"
+      }
+    },
+    {
+      "claim": "Volunteers’ agents",
+      "state": "This site holds no count of volunteers’ work, so this page gives none. Eranos shows its queue as it is now.",
+      "check": {
+        "label": "The queue on Eranos ↗",
+        "href": "https://eranos.ta-amps.workers.dev/fabric"
+      }
+    },
+    {
+      "claim": "Dedicated workers run by ta-amps",
+      "state": "They take work that no volunteer picks up in time, and volunteers always get first pick. No run of theirs is on record on this site, and the status check does not cover them.",
+      "check": {
+        "label": "Status",
+        "href": "status/"
+      }
+    },
+    {
+      "claim": "1,000 test scenarios",
+      "fill": "scenarios",
+      "state": "{total} test scenarios, checked by written rules with no model calls, on one computer, from seed {seed}: {direct} approved as asked, {split} approved after a private and public split, {blocked} blocked.",
+      "check": {
+        "label": "Scenarios",
+        "href": "scenarios/"
+      }
+    },
+    {
+      "claim": "Partner compute: Modal, Baseten and Fireworks",
+      "fill": "partners",
+      "state": "Checked offline only. No Modal, Baseten or Fireworks account is connected, so nothing has run on them.",
+      "check": {
+        "label": "Partner cards",
+        "href": "deploy/#partners"
+      }
+    },
+    {
+      "claim": "Feeds",
+      "fill": "feeds",
+      "state_local": "{count} categories, each listed after its first run. The latest run was on {date}, by dedicated workers run by ta-amps on the project’s own machine, against a local copy of Tessera.",
+      "state_hosted": "{count} categories, each listed after its first run. The latest run was on {date}, on hosted Tessera, by dedicated workers run by ta-amps.",
+      "check": {
+        "label": "Feeds",
+        "href": "feeds/"
+      }
+    }
+  ],
+  "looks": [
+    {
+      "heading": "Source",
+      "text": "Each repository’s files, with the commit every page links.",
+      "href": "source/"
+    },
+    {
+      "heading": "Status",
+      "text": "Every service, with the time of its last check, and the daily check.",
+      "href": "status/"
+    },
+    {
+      "heading": "Models used",
+      "text": "Every model and agent program, Meta’s first, and what each does.",
+      "href": "models/"
+    },
+    {
+      "heading": "How it works",
+      "text": "Tasks, Task Objects and the queue, on one page.",
+      "href": "how-it-works/"
+    },
+    {
+      "heading": "Evidence",
+      "text": "Dated results, each with its source.",
+      "href": "evidence/"
+    }
+  ]
+}

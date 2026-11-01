@@ -49,7 +49,7 @@
       if (!state) return;
       badge.textContent = state;
       badge.setAttribute("data-state", state);
-      if (badge.parentNode && badge.parentNode.classList.contains("rr-verb")) {
+      if (badge.parentNode && badge.parentNode.classList.contains("rr-task")) {
         badge.parentNode.setAttribute("data-state", state);
       }
     });
