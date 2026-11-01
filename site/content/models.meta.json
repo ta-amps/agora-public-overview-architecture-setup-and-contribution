@@ -1,229 +1,352 @@
 {
-  "schema": "ta-amps.models-catalog/1",
   "kind": "task_object",
   "id": "models.meta",
-  "version": 2,
-  "updated": "2026-11-01",
-  "title": "Models used",
-  "purpose": "One list of every model and agent program ta-amps uses, and what for. Pages, the film and Herma take names from here, so a name never drifts from what runs.",
-  "display_rules": [
-    "Meta models come first and carry the emphasis.",
-    "An asterisk (*) marks a model from another maker, used only where Meta offers no model for the job, or as a fallback that is recorded every time it is used.",
-    "Show only uses whose state is 'live' or 'measured'. Never show a stamp such as planned or coming soon.",
-    "A harness (agent program) is never called a model; always name the model it ran.",
-    "Name only models listed in this catalog, and always name the model a harness ran."
-  ],
-  "states": {
-    "live": "running in the live system now",
-    "measured": "a recorded run or evaluation with saved results",
-    "pending": "being switched over or trained; keep off pages until it becomes live or measured"
+  "version": 4,
+  "owner": "Claude Design (design lead)",
+  "created_at": "2026-11-01T05:45:00Z",
+  "status": "canonical",
+  "why": "The owner asked (Nov 1): 'why is nanomuse the reviewer, what is this', and for a 'Models used' page that explains how we use each model, emphasizes Meta's models, and marks fallbacks to other models with *. Every fact below comes from a run record or the owner's rules, listed under sources.",
+  "page": {
+    "surface": "agora",
+    "route": "/models/",
+    "title": "Models used",
+    "board": "ModelsUsed (canvas page Agora)",
+    "linked_from": [
+      "Agora header nav: The film · How it works · Use cases · Models used · Decks · Evidence",
+      "Agora footer: Models used",
+      "Eranos footer: Models used ↗",
+      "Eranos request page, calm view, after 'One helper at a time. Every step is recorded.': 'Which model does what ↗'"
+    ],
+    "render_from": "This file. No number on the page may be typed by hand."
   },
-  "models": [
+  "rules": [
+    "Meta first: every step defaults to a Muse model through the Meta API, at the standard tier (owner, Nov 1).",
+    "Name models, not agent apps. An agent app (Muse Code, nanoMuse, OpenClaw...) is not a model. Agent apps appear only in the 'Volunteers' AIs' table on this page.",
+    "A * marks a model that is not Meta's: a fallback, or a model used only in tests.",
+    "If a fallback ever answers, the request page names it next to the step it did.",
+    "No receipts, hashes or run ids on the page. Dates, durations, counts and versions only."
+  ],
+  "steps": [
     {
-      "id": "muse-wonder-1.0",
-      "display": "Muse Wonder 1.0",
-      "maker": "Meta",
-      "family": "Muse",
-      "summary": "Meta's frontier model",
-      "access": "Meta API, standard tier",
-      "rates_usd_per_million_tokens": {
-        "input": 4.0,
-        "output": 20.0,
-        "source": "Herma rate table"
-      },
-      "uses": [
-        {
-          "role": "research-and-review",
-          "text": "Researches and reviews requests when a task waits too long for a volunteer: the dedicated workers run by ta-amps",
-          "state": "pending",
-          "owner": "worker-loop batch (B1)"
-        }
-      ]
+      "station": "In line",
+      "model": null,
+      "text": "No model. The request waits in a durable queue."
     },
     {
+      "station": "Picked up",
+      "model": "Muse Spark 1.3",
+      "text": "Muse Spark 1.3 or Muse Wonder 1.0 splits it into Tasks.",
+      "text_design": "Muse Spark 1.3 splits it into Tasks.",
+      "models": [
+        "muse-spark-1.3",
+        "muse-wonder-1.0"
+      ],
+      "mix_source": "worker.policy summary (live share per model)"
+    },
+    {
+      "station": "Being made",
+      "model": "Muse Spark 1.3",
+      "agent_app": "Muse Code, when the work needs code",
+      "text": "Muse Spark 1.3 or Muse Wonder 1.0 does the work.",
+      "text_design": "Muse Spark 1.3, in Muse Code when it needs code.",
+      "why_changed": "The dedicated workers call Muse Spark 1.3 directly; Muse Code ran the build only in the Oct 31 test run.",
+      "models": [
+        "muse-spark-1.3",
+        "muse-wonder-1.0"
+      ],
+      "mix_source": "worker.policy summary (live share per model)"
+    },
+    {
+      "station": "In line for a check",
+      "model": null,
+      "text": "No model. The check waits for a second agent."
+    },
+    {
+      "station": "Being checked",
+      "model": "Muse Spark 1.3",
+      "text": "A different agent with its own key checks it, on Muse Spark 1.3 or Muse Wonder 1.0 with a different persona.",
+      "text_design": "Muse Spark 1.3, a second agent with its own key.",
+      "models": [
+        "muse-spark-1.3",
+        "muse-wonder-1.0"
+      ],
+      "mix_source": "worker.policy summary (live share per model)"
+    },
+    {
+      "station": "Ready for you",
+      "model": null,
+      "text": "No model. A person at the nonprofit decides."
+    }
+  ],
+  "meta_models": [
+    {
+      "name": "Muse Spark 1.3",
+      "kind": "model",
+      "access": "Meta Model API, standard tier",
+      "model_id": "muse-spark-1.3",
+      "role": "Splits a request into Tasks, does the work and checks another agent's work. Our dedicated workers use it.",
+      "tested": [
+        {
+          "date": "2026-10-31",
+          "text": "Test run: one agent built a kit with it in 3 min 27 s (207.27 s, 25 model calls); a second agent with its own key checked it in 1 min 23 s (82.73 s, 14 model calls).",
+          "source": "real-run-v7"
+        },
+        {
+          "date": "2026-10-29",
+          "text": "It finished the full claim · do · report test in three agent apps: Muse Code, nanoMuse and OpenClaw.",
+          "source": "harness-evidence"
+        }
+      ],
+      "variant_note": "The Oct 31 test run used muse-spark-1.3-contributor, which we use only for public test work. Live requests use the standard tier; Herma refuses Contributor variants for real requests.",
       "id": "muse-spark-1.3",
-      "display": "Muse Spark 1.3",
-      "maker": "Meta",
-      "family": "Muse",
-      "summary": "Meta's fast Muse model",
-      "access": "Meta API, standard tier for Eranos work",
-      "rates_usd_per_million_tokens": {
-        "input": 1.25,
-        "output": 4.25,
-        "source": "Herma rate table"
-      },
-      "uses": [
-        {
-          "role": "build-and-review",
-          "text": "Built and independently reviewed a real agent kit on Oct 31: Muse Code built it and nanoMuse reviewed it, both running Muse Spark 1.3",
-          "state": "measured",
-          "evidence": "notes/work-2026-10-30/real-run-v6/run-facts.json"
-        },
-        {
-          "role": "herma-answers",
-          "text": "Herma's default Meta model when an answer needs a model",
-          "state": "pending",
-          "owner": "Herma change set (verify deployed default)"
-        },
-        {
-          "role": "feed-reading",
-          "text": "Reads each project's README and quotes its benchmark claims for the feeds",
-          "state": "pending",
-          "owner": "memory-feed batch (B5)"
-        },
-        {
-          "role": "volunteer",
-          "text": "Runs the on-camera volunteer's AI on the owner's spare Meta credits",
-          "state": "pending",
-          "owner": "worker-loop batch (B1)"
-        }
-      ]
+      "state": "live"
     },
     {
-      "id": "muse-glimmer-30b",
-      "display": "Muse Glimmer 30B",
-      "display_tuned": "Muse Glimmer 30B, fine-tuned by ta-amps",
-      "maker": "Meta",
-      "family": "Muse",
-      "summary": "Meta's open-weight vision and language model, which ta-amps fine-tunes",
-      "access": "open weights (meta-models/Muse-Glimmer-30B, pinned revision), QLoRA adapters trained on Kaggle",
-      "uses": [
+      "name": "Muse Code 1.4.14",
+      "kind": "agent app by Meta (not a model)",
+      "version": "1.4.14-R7309.1",
+      "role": "Runs Muse Spark 1.3 when a request needs code: it writes the files, runs the tests and reports back to the queue.",
+      "tested": [
         {
-          "role": "tool-calling",
-          "text": "Tool calling: 93.3% to 99.3% exact match on a fixed 150-task evaluation",
-          "state": "measured",
-          "evidence": "notes/claude-work-2026-10-29/glimmer-kaggle/evidence/fresh-2b-decision.json"
-        },
-        {
-          "role": "memory",
-          "text": "Remembering ta-amps facts with no context given: 0% to 62.5% exact match (75 of 120); splitting NGO requests into Task Objects reached 98.1% F1",
-          "state": "measured",
-          "evidence": "notes/work-2026-10-30/glimmer-lora-memory/evidence/README.md"
-        },
-        {
-          "role": "review",
-          "text": "Reviewer under the rule of two (the builder never approves its own work)",
-          "state": "pending",
-          "owner": "Kaggle run in progress (another session)"
-        },
-        {
-          "role": "orchestrator",
-          "text": "One tuned orchestrator for search and retrieval, tool calling, review and routing",
-          "state": "pending",
-          "owner": "Glimmer orchestrator training (owner direction, Nov 1)"
+          "date": "2026-10-31",
+          "text": "Built the weekly shift-schedule kit, with 8 tests and a README, in 25 model calls.",
+          "source": "real-run-v7"
         }
-      ]
-    },
-    {
-      "id": "facebook/musicgen-small",
-      "display": "MusicGen",
-      "maker": "Meta",
-      "family": "AudioCraft",
-      "summary": "Meta's open music-generation model",
-      "access": "open weights, run on the project's own computer",
-      "license": "CC-BY-NC-4.0 (weights)",
-      "uses": [
-        {
-          "role": "film-music",
-          "text": "Made the film's music bed",
-          "state": "measured",
-          "evidence": "notes/claude-work-2026-10-31/v5/production/final/link-music.json"
-        }
-      ]
-    }
-  ],
-  "harnesses": [
-    {
+      ],
       "id": "muse-code",
-      "display": "Muse Code",
-      "version": "1.4.14",
-      "maker": "Meta",
-      "summary": "Meta's coding agent program",
-      "uses": [
-        {
-          "role": "builder",
-          "text": "Claimed the build task, wrote the kit and passed its 9 tests, running Muse Spark 1.3",
-          "state": "measured",
-          "evidence": "notes/work-2026-10-30/real-run-v6/run-facts.json"
-        }
-      ]
+      "state": "live"
     },
     {
-      "id": "nanomuse",
-      "display": "nanoMuse",
+      "name": "Muse Wonder 1.0",
+      "kind": "model",
+      "access": "Meta Model API",
+      "model_id": "muse-wonder-1.0",
+      "role": "Writes test scenarios and typed proposals, one at a time. Each one is checked against its schema and never runs by itself.",
+      "tested": [
+        {
+          "text": "Our scenario generator runs it, with a self-test.",
+          "source": "models-matrix"
+        }
+      ],
+      "id": "muse-wonder-1.0",
+      "state": "measured",
+      "role_dedicated": "Also splits, makes and checks requests for the dedicated workers whenever the tuning picks it.",
+      "state_dedicated": "pending"
+    },
+    {
+      "name": "Muse Glimmer 30B",
+      "kind": "open weights, tuned by us",
+      "model_id": "meta-muse/Muse-Glimmer-30B (QLoRA, 4-bit NF4)",
+      "role": "Fills in Task Object forms and tool calls exactly, so a worker's report fits the queue the first time.",
+      "tested": [
+        {
+          "text": "Exact tool-call match rose from 93.3% to 99.3% on our 150-case test, tuned and measured on Kaggle on two T4 GPUs.",
+          "numbers": {
+            "before_pct": 93.3,
+            "after_pct": 99.3,
+            "n": 150
+          },
+          "source": "models-matrix"
+        }
+      ],
+      "serving_note": "Measured, not serving requests. Do not claim it answers live requests.",
+      "id": "muse-glimmer-30b",
+      "state": "measured",
+      "note": "Tuned and tested by ta-amps; the live workers run Muse Spark 1.3 through the Meta API."
+    }
+  ],
+  "film_models": [
+    {
+      "name": "SAM",
+      "model_id": "facebook/sam-vit-base",
+      "role": "Finds the parts of the page in each frame, so captions stay clear of them.",
+      "tested": "Overlap between captions and page parts fell from 0.281 to 0.037.",
+      "source": "models-matrix",
+      "id": "facebook/sam-vit-base",
+      "state": "pending",
+      "why_state": "Measured on the earlier v6 film; becomes measured again when the same check runs on the new cut."
+    },
+    {
+      "name": "wav2vec 2.0",
+      "model_id": "facebook/wav2vec2-base-960h",
+      "role": "Times each caption to the narration.",
+      "tested": "Checks every caption against what is said.",
+      "source": "models-matrix",
+      "id": "facebook/wav2vec2-base-960h",
+      "state": "pending",
+      "why_state": "Measured on the earlier v6 film; becomes measured again when the same check runs on the new cut."
+    },
+    {
+      "name": "MusicGen",
+      "model_id": "facebook/musicgen-small",
+      "role": "Wrote the film's music, so there is no licensed track.",
+      "tested": "One original underscore, made on our computer.",
+      "source": "models-matrix",
+      "id": "facebook/musicgen-small",
+      "state": "measured"
+    }
+  ],
+  "agent_apps_tested_2026_10_29": [
+    {
+      "app": "Muse Code",
+      "version": "1.4.14-R7309.1",
+      "by": "Meta",
+      "model": "Muse Spark 1.3",
+      "result": "passed"
+    },
+    {
+      "app": "nanoMuse",
       "version": "1.0.8",
-      "maker": "open-source project (github.com/nano-muse/nanoMuse), not Meta",
-      "summary": "An open-source personal agent program that runs whatever model you give it",
-      "uses": [
-        {
-          "role": "independent-reviewer",
-          "text": "Reviewed that kit as a second, separate program with its own key, so the builder could not approve its own work. It ran Muse Spark 1.3",
-          "state": "measured",
-          "evidence": "notes/work-2026-10-30/real-run-v6/run-facts.json"
-        }
-      ]
+      "by": "open source, not Meta",
+      "model": "Muse Spark 1.3",
+      "result": "passed"
+    },
+    {
+      "app": "OpenClaw",
+      "version": "2026.10.8",
+      "model": "Muse Spark 1.3",
+      "result": "passed"
+    },
+    {
+      "app": "Hermes",
+      "version": "0.20.1",
+      "model": "Kimi K2.7 Code *",
+      "result": "passed"
+    },
+    {
+      "app": "OpenCode",
+      "version": "2.1.2",
+      "model": "Kimi K2.7 Code *",
+      "result": "passed"
+    },
+    {
+      "app": "Pi",
+      "version": "0.73.1",
+      "model": "Kimi K2.7 Code *",
+      "result": "passed"
     }
   ],
-  "other_makers": [
+  "nanomuse": {
+    "what": "A small open-source agent app (v1.0.8), not a model and not made by Meta. Public listings describe it as an open-source personal agent from a Zhejiang University team.",
+    "why_it_was_the_checker": "The Oct 31 test run used two different agent apps and two different keys, so the checker could never be the builder: Muse Code built, nanoMuse checked, and both ran Muse Spark 1.3.",
+    "page_copy": "An open-source agent app, not a model and not made by Meta. In our Oct 31 test run it was the second agent: it ran Muse Spark 1.3 with its own key and checked the kit another agent built (8 tests passed, 0 rule violations).",
+    "owner_decision": "Keep nanoMuse as one tested agent app, or run the dedicated checker in Muse Code under a second key so every app named in the film is Meta's. The page is correct either way."
+  },
+  "fallbacks": [
     {
-      "id": "kokoro-82m",
-      "display": "Kokoro 82M",
-      "asterisk": true,
-      "maker": "hexgrad (Apache-2.0)",
-      "uses": [
-        {
-          "role": "film-voice",
-          "text": "The film's narration voice. The Meta API offers transcription but no speech voice",
-          "state": "measured"
-        }
-      ]
+      "name": "Claude Haiku 4.5 *",
+      "by": "Anthropic",
+      "model_id": "claude-haiku-4-5-20251001",
+      "role": "A fallback Herma can call with the project's own key.",
+      "state": "Switched off since 2026-10-29 (owner's decision)",
+      "source": "provider-handoff"
     },
     {
-      "id": "faster-whisper",
-      "display": "faster-whisper",
-      "asterisk": true,
-      "maker": "SYSTRAN, Whisper weights (MIT)",
-      "uses": [
-        {
-          "role": "caption-check",
-          "text": "Checks caption timing against the narration",
-          "state": "measured",
-          "replace_with": "muse-voice-transcribe-1.0 if its timestamps are good enough"
-        }
-      ]
-    },
-    {
-      "id": "volunteer-declared",
-      "display": "A volunteer's own model",
-      "asterisk": true,
-      "maker": "chosen by the volunteer",
-      "uses": [
-        {
-          "role": "volunteer-work",
-          "text": "A volunteer's AI may run any model; the request page shows the model it declared",
-          "state": "live"
-        }
-      ]
-    },
-    {
-      "id": "herma-fallback-adapters",
-      "display": "Other providers in Herma",
-      "asterisk": true,
-      "maker": "Anthropic, OpenRouter",
-      "uses": [
-        {
-          "role": "fallback",
-          "text": "Adapters kept as fallbacks; off for ta-amps-funded work, and any use is recorded",
-          "state": "live"
-        }
-      ]
+      "name": "GPT-4.1 nano *",
+      "by": "OpenAI, through OpenRouter",
+      "model_id": "openai/gpt-4.1-nano",
+      "role": "A second fallback Herma can call with the project's own key.",
+      "state": "Switched off since 2026-10-29 (owner's decision)",
+      "source": "provider-handoff"
     }
   ],
-  "also_on_the_meta_key": [
-    "muse-spark-1.2",
-    "muse-spark-1.1",
-    "sam-3.1",
-    "muse-image-1.0",
-    "muse-voice-transcribe-1.0"
+  "other_non_meta": [
+    {
+      "name": "Kimi K2.7 Code *",
+      "by": "Moonshot AI",
+      "model_id": "kimi-k2.7-code",
+      "use": "Only as the model in three agent-app tests on Oct 29 (Hermes, OpenCode, Pi).",
+      "source": "harness-evidence"
+    },
+    {
+      "name": "Kokoro 82M *",
+      "use": "The film's narration voice. The Meta API offers transcription but no speaking voice.",
+      "source": "film-production",
+      "state": "measured"
+    }
+  ],
+  "featured_use_case": {
+    "title": "A food pantry's weekly shift schedule",
+    "kind": "a process you run",
+    "label": "Recorded test run · Oct 31",
+    "asked": "Each week our volunteers tell us when they can come in. Please build us a small kit that turns our volunteer availability CSV into a weekly shift schedule that meets our coverage rules, with tests and a README, so our own agent or staff can run it.",
+    "rules": [
+      "12 shifts, Monday to Saturday, morning and afternoon",
+      "at least 2 volunteers a shift",
+      "at least 1 lead a shift",
+      "only shifts a volunteer is available for",
+      "nobody past their weekly limit",
+      "nobody on both shifts of one day"
+    ],
+    "steps": [
+      {
+        "title": "Split into two Tasks",
+        "text": "Build the kit; check the kit."
+      },
+      {
+        "title": "Built",
+        "model": "Muse Spark 1.3",
+        "agent_app": "Muse Code",
+        "seconds": 207.27,
+        "model_calls": 25
+      },
+      {
+        "title": "Checked by a second agent",
+        "model": "Muse Spark 1.3",
+        "seconds": 82.73,
+        "model_calls": 14,
+        "tests_passed": 8,
+        "rule_violations": 0
+      },
+      {
+        "title": "Waiting for a person",
+        "text": "Nothing is used or published until someone at the pantry says yes."
+      }
+    ],
+    "page_note": "A test request, with made-up volunteer names.",
+    "source": "real-run-v7"
+  },
+  "sources": {
+    "real-run-v7": "notes/work-2026-10-30/real-run-v7/ (run-facts.json, stdout.log, reviewer/invocation.json, final-readback.json)",
+    "harness-evidence": "notes/harness-matrix-2026-10-29/public-harness-evidence.json",
+    "models-matrix": "notes/coordination-2026-10-31/META_PAPERS_MODELS_AND_FRAMEWORKS_MATRIX.md (Oct 31)",
+    "provider-handoff": "notes/provider-verification-2026-10-29/HANDOFF.md and operator-disable-owner-direction.json",
+    "owner-rules": "notes/COORDINATION-2026-10-31.md, 'Owner rules, Nov 1, about 01:30 ET'",
+    "herma-live": "herma.ta-amps.workers.dev, section 'Which Meta Models Do What' (read Nov 1)",
+    "film-production": "notes/claude-work-2026-10-31/v5/production/production-receipts.json"
+  },
+  "updated": "2026-11-01",
+  "derived_from": "notes/coordination-2026-10-31/claude-design-models.v1.json (Claude Design, Nov 1) plus the corrections listed below",
+  "runtime": {
+    "display_by_id": {
+      "muse-spark-1.3": "Muse Spark 1.3",
+      "muse-wonder-1.0": "Muse Wonder 1.0",
+      "muse-glimmer-30b": "Muse Glimmer 30B",
+      "muse-code": "Muse Code 1.4.14",
+      "facebook/sam-vit-base": "SAM",
+      "facebook/wav2vec2-base-960h": "wav2vec 2.0",
+      "facebook/musicgen-small": "MusicGen"
+    },
+    "rates_usd_per_million_tokens": {
+      "muse-spark-1.3": {
+        "input": 1.25,
+        "output": 4.25
+      },
+      "muse-wonder-1.0": {
+        "input": 4.0,
+        "output": 20.0
+      }
+    },
+    "tier": "standard",
+    "selection": "self-tuning policy (Task Object worker.policy): Thompson sampling per role over model x persona profiles, recorded per claim",
+    "owner_decision": "D8, Nov 1: multiple Muse models with personas, self-tuning, not fixed"
+  },
+  "corrections": [
+    "Being made: the step text names Muse Spark 1.3 only (see why_changed).",
+    "SAM and wav2vec 2.0: pending until the same check runs on the new cut.",
+    "Added Kokoro 82M * (the film voice).",
+    "Muse Glimmer 30B: shown as tuned and tested, not as running live.",
+    "Removed internal to-do and rule lines that named banned words.",
+    "Steps name both Muse Spark 1.3 and Muse Wonder 1.0: the owner chose a self-tuning mix (D8). Pages show the live share."
   ]
 }

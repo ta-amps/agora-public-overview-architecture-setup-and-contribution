@@ -160,57 +160,40 @@ class Builder(unittest.TestCase):
         self.assertIn("A heading from data.", home_page)
         self.assertIn("A lead from data.", home_page)
         nouns.uses = copy.deepcopy(self.nouns.uses)
-        nouns.uses["flagships"][1]["name"] = "A flagship from data"
-        nouns.uses["fields"]["items"].append("A field from data")
+        nouns.uses["cards"][1]["title"] = "A use case from data"
         uses_page = build.render_use_cases(nouns)
-        self.assertIn("A flagship from data", uses_page)
-        self.assertIn("A field from data", uses_page)
+        self.assertIn("A use case from data", uses_page)
         nouns.banner = dict(self.nouns.banner, lead="A banner from data.")
         self.assertIn("A banner from data.", build.header_block(build.SITE / "index.html", "", nouns))
         nouns.site = copy.deepcopy(self.nouns.site)
         nouns.site["header"]["eranos_label"] = "Eranos from data"
         self.assertIn("Eranos from data", build.header_block(build.SITE / "index.html", "", nouns))
-        # Every word the use cases page shows, outside the shared header and footer, is a string of its noun, or the
-        # title of a pack it names, which comes from the library noun.
-        titles = {pack["id"]: pack["title"] for pack in self.nouns.library["packs"]}
-        written = set(strings(self.nouns.uses)) | {titles[pack_id] for item in self.nouns.uses["flagships"]
-                                                    for pack_id in item["packs"]}
-        for shown in shown_text(build.main_of(self.outputs[build.SITE / "use-cases" / "index.html"])):
-            self.assertIn(shown, written)
 
-    def test_use_cases_are_ideas_without_status_or_evidence(self):
-        uses = self.nouns.uses
-        self.assertLessEqual(set(uses), {"about", "title", "description", "heading", "lead", "nouns_label", "verbs_label",
-                                         "packs_label", "flagships", "fields"})
-        # The owner's seven flagships, in the owner's order and words; Tokens for Good leads.
-        self.assertEqual(["Tokens for Good", "Motion Graphics and Video Gen", "Feed Systems to Keep Your Agent Informed",
-                          "Shimming Systems", "Code Reusability", "Continuous Learning",
-                          "Long-Horizon Tasks via Atomic Steps and Decentralized Solutioning"],
-                         [" ".join(filter(None, (item["name"], item.get("rest")))) for item in uses["flagships"]])
-        self.assertTrue(uses["flagships"][0]["line"].startswith("Spare tokens for good."))
-        page = self.outputs[build.SITE / "use-cases" / "index.html"]
-        main = build.main_of(page)
-        self.assertEqual(7, main.count('<li class="use-card'))
-        self.assertEqual(1, main.count('<li class="use-card use-lead"'))
-        self.assertLess(main.index("use-lead"), main.index(uses["flagships"][1]["name"]))
-        for item in uses["flagships"]:
-            # An idea is a name, a line or two, example nouns and verbs, the library packs that hold them and where to
-            # read more: no status, badge or evidence.
-            self.assertLessEqual(set(item), {"name", "rest", "line", "detail", "nouns", "verbs", "packs", "links", "home"},
-                                 item["name"])
-            self.assertTrue(3 <= len(item["nouns"]) <= 5 and 3 <= len(item["verbs"]) <= 5, item["name"])
-            self.assertTrue(1 <= len(item["links"]) <= 3, item["name"])
-            words = ([item["name"], item.get("rest", ""), item["line"], item.get("detail", "")] + item["nouns"] + item["verbs"]
-                     + list((item.get("home") or {}).values()))
-            self.assertIsNone(re.search(r"\d", " ".join(words)), item["name"])
-            for link in item["links"]:
-                href = link["href"] if link["href"].startswith("https://") else "../" + link["href"]
-                self.assertIn(f'href="{html.escape(build.repoint(href, self.nouns.links))}"', main, item["name"])
-        # Other fields are plain names, with no nouns or verbs of their own, and point to the roll-your-own deck.
-        self.assertTrue(all(isinstance(field, str) for field in uses["fields"]["items"]))
-        self.assertIn(f'href="../{uses["fields"]["link"]["href"]}"', main)
-        for leftover in ("claim-status", 'class="badge', "use-tag"):
-            self.assertNotIn(leftover, main)
+
+    def test_use_cases_follow_the_board_with_the_featured_run_from_the_models_catalog(self):
+        # Board UseCases (Nov 1): a filter, the featured Oct 31 test run read from the models catalog Task Object (no
+        # number typed by hand), then six cards, each saying who it helps, what they ask, what they get and how it is
+        # made, with a present-tense state. The home strip shows the same six.
+        uses, featured = self.nouns.uses, self.nouns.catalog["featured_use_case"]
+        main = build.main_of(self.outputs[build.SITE / "use-cases" / "index.html"])
+        self.assertEqual(6, len(uses["cards"]))
+        self.assertEqual(6, main.count('<li class="uc-card'))
+        self.assertEqual(4, main.count('class="uc-filter-button"'))
+        self.assertIn(build.text(featured["title"]), main)
+        for rule in featured["rules"]:
+            self.assertIn(build.text(rule), main)
+        for step in featured["steps"]:
+            if "seconds" in step:
+                self.assertIn(build.minutes_seconds(step["seconds"]), main)
+        self.assertEqual("3 min 27 s", build.minutes_seconds(207.27))
+        self.assertEqual({"live", "tested", "example"}, {c["state"] for c in uses["cards"]})
+        for card in uses["cards"]:
+            self.assertEqual({"audience", "state", "title", "ask", "get", "how"}, set(card), card["title"])
+        home = build.main_of(self.outputs[build.SITE / "index.html"])
+        self.assertEqual(6, home.count('<li class="uc-card'))
+        self.assertIn('href="models/"', home)
+        for word in ("nanoMuse", "Muse Code"):
+            self.assertNotIn(word, main)
 
     def test_the_home_page_is_the_film_start_here_the_decks_and_the_use_cases(self):
         # October 31 (the Agora-Home board): the film first, then Start here with the two public sites, the decks
@@ -232,36 +215,10 @@ class Builder(unittest.TestCase):
         self.assertIn('href="https://eranos.ta-amps.workers.dev/"', main)
         self.assertIn('href="how-it-works/"', main)
         self.assertEqual(5, main.count('class="deck-card"'))
-        self.assertEqual(6, main.count('class="home-use"'))
-        self.assertEqual(1, main.count('class="home-use-live"'))  # only Eranos is live, so only it says so
+        # The same six use cases as /use-cases/ (board AgoraHome, Nov 1), each with its present-tense state.
+        self.assertEqual(6, main.count('<li class="uc-card'))
         # The film's production page is linked only once its production trace is final.
         self.assertEqual(build.film_made_ready(start), start["film_made"]["href"] in main)
-
-    def test_nouns_and_verbs_are_glossed_in_plain_words_the_first_time(self):
-        # Feedback, October 30: a viewer took nouns and verbs for a model architecture. The home page, the use cases
-        # page and the overview and roll-your-own decks say in plain words what they are the first time they name
-        # them: verbs are tasks, and nouns are everything a task uses or makes. The overview says plainly that this
-        # is how the work is organized, not a model architecture. The marketplace deck, written for nonprofits,
-        # glosses its first verb once, as a task.
-        named = re.compile(r"\b(?:nouns?|verbs?)\b", re.I)
-
-        def glossed(shown: str, where: str) -> None:
-            found = named.search(shown)
-            self.assertIsNotNone(found, where)
-            self.assertIn("verbs are tasks", shown[found.start():found.start() + 160].lower(), where)
-
-        for path in (build.SITE / "index.html", build.SITE / "use-cases" / "index.html"):
-            glossed(build.plain_text(build.main_of(self.outputs[path])), path.relative_to(build.ROOT).as_posix())
-        decks = {deck["id"]: deck for deck in self.nouns.decks}
-        for deck_id in ("overview-and-architecture", "roll-your-own"):
-            glossed(" ".join(build.plain_text(slide["inner"]) for slide in decks[deck_id]["slides"]), deck_id)
-        overview = {slide["name"]: build.plain_text(slide["inner"]) for slide in decks["overview-and-architecture"]["slides"]}
-        self.assertIn("NOT A MODEL ARCHITECTURE", overview["nouns-and-verbs"])
-        self.assertIn("how the work is organized", overview["nouns-and-verbs"])
-        market = " ".join(build.plain_text(slide["inner"]) for slide in decks["public-good-marketplace"]["slides"])
-        self.assertEqual(1, market.count("(a task)"))
-        first = re.search(r"\bverbs?\b", market)
-        self.assertEqual(" (a task)", market[first.end():first.end() + len(" (a task)")])
 
     def test_the_memory_systems_slide_is_a_measured_scan_and_no_slide_is_an_illustration(self):
         # Review, October 31: the illustrated worked example is gone (the How it works page replays a real run), and the
@@ -292,10 +249,23 @@ class Builder(unittest.TestCase):
 
     def test_meta_models_are_named_from_the_models_noun(self):
         # Owner, Nov 1: name the specific models, rendered from the models catalog Task Object (models.meta, a local copy).
-        self.assertEqual("Muse Spark 1.3 and Muse Code", build.meta_models("{{model:muse-spark-1.3}} and {{model:muse-code}}", self.nouns.models))
+        self.assertEqual("Muse Spark 1.3 and Muse Wonder 1.0", build.meta_models("{{model:muse-spark-1.3}} and {{model:muse-wonder-1.0}}", self.nouns.models))
         self.assertEqual("Muse Glimmer 30B, fine-tuned by ta-amps · MusicGen · Muse Spark 1.3",
                          build.meta_models("{{model:muse-glimmer-30b:tuned}} · {{model:facebook/musicgen-small}} · "
                                            "{{model:muse-spark-1.3-contributor}}", self.nouns.models))
+        # Models used (board ModelsUsed): rendered from the catalog, only live or measured entries, Meta first; agent
+        # apps are named there and nowhere else (v2 brief: zero nanoMuse outside /models/).
+        page = self.outputs[build.SITE / "models" / "index.html"]
+        catalog = self.nouns.catalog
+        for group in ("meta_models", "film_models"):
+            for m in catalog[group]:
+                (self.assertIn if m["state"] in ("live", "measured") else self.assertNotIn)(f"<h3>{build.text(m['name'])}</h3>", page)
+        self.assertEqual(6, page.count('class="mu-step"'))
+        self.assertEqual(1, page.count('aria-pressed="true"'))
+        self.assertIn('aria-live="polite"', page)
+        for path, out in self.outputs.items():
+            if path != build.SITE / "models" / "index.html" and path.suffix == ".html" and "source/slides" not in path.as_posix():
+                self.assertNotIn("nanoMuse", build.main_of(out) if "<main" in out else out, path)
         with self.assertRaises(build.BuildError):
             build.meta_models("{{model:not-a-model}}", self.nouns.models)
         for page in build.SITE.rglob("*.html"):
@@ -381,9 +351,9 @@ class Builder(unittest.TestCase):
         self.assertIn("301", not_found)
 
     def test_learning_is_a_tab_of_agora_built_from_its_noun(self):
-        # A page of Agora, not a new surface. November 1: the header reads How it works, Models used, Use cases, Decks,
+        # A page of Agora, not a new surface. November 1 (v2 brief): the header reads How it works, Use cases, Models used, Decks,
         # Evidence (the film is withdrawn until its re-recorded cut lands), and Learning sits in the footer's second row.
-        self.assertEqual(["How it works", "Models used", "Use cases", "Decks", "Evidence"],
+        self.assertEqual(["How it works", "Use cases", "Models used", "Decks", "Evidence"],
                          [item["label"] for item in self.nouns.site["nav"]])
         page = self.outputs[build.SITE / "learning" / "index.html"]
         self.assertIn('<li><a href="../learning/">Learning</a></li>', page)
@@ -543,22 +513,6 @@ class Builder(unittest.TestCase):
         refused(lambda n: n["categories"][0].update(id=first))
         refused(lambda n: n["categories"][0].update(id="3d-and-video"))
         refused(lambda n: n["categories"][0].update(id="categories"))
-
-    def test_every_use_case_names_library_packs_that_link_to_their_cards(self):
-        packs = {pack["id"]: pack for pack in self.nouns.library["packs"]}
-        main = build.main_of(self.outputs[build.SITE / "use-cases" / "index.html"])
-        library_page = self.outputs[build.SITE / "library" / "index.html"]
-        for item in self.nouns.uses["flagships"]:
-            self.assertTrue(2 <= len(item["packs"]) <= 5, item["name"])
-            for pack_id in item["packs"]:
-                self.assertIn(f'<a href="../library/#{pack_id}">{build.text(packs[pack_id]["title"])}</a>', main)
-                self.assertIn(f'<li class="lib-card" id="{pack_id}">', library_page)
-        for wrong in (["no-such-pack", "video-qa"], ["video-qa"], ["video-qa", "video-qa"], sorted(packs)[:6]):
-            nouns = copy.copy(self.nouns)
-            nouns.uses = copy.deepcopy(self.nouns.uses)
-            nouns.uses["flagships"][1]["packs"] = wrong
-            with self.assertRaises(build.BuildError):
-                build.render_use_cases(nouns)
 
     def test_every_number_in_the_learning_deck_has_a_claim_with_public_evidence(self):
         deck = next(deck for deck in self.nouns.decks if deck["id"] == "continuous-learning")
