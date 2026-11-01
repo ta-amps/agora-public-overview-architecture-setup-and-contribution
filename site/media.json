@@ -93,36 +93,6 @@
       "bytes": 2000577
     },
     {
-      "path": "video/2026-10-31/full-v6/eranos-3m-clean.mp4",
-      "sha256": "cfb38046eb968c09c5efc5729d9f2c02eeb2b79ece93b69f9c1aad5482eee056",
-      "bytes": 14550919
-    },
-    {
-      "path": "video/2026-10-31/full-v6/eranos-3m-poster.png",
-      "sha256": "ca2019404869c8739ca89d4f9ff13500f60a31b64d7af5753bf3925fcdeb64e9",
-      "bytes": 229204
-    },
-    {
-      "path": "video/2026-10-31/full-v6/eranos-3m.mp4",
-      "sha256": "2c5268babf5707410214b7c62bc3863047044e19d263435833c2b6aa03fdaef2",
-      "bytes": 15210558
-    },
-    {
-      "path": "video/2026-10-31/short-v6/eranos-60s-clean.mp4",
-      "sha256": "947624496ef6169eebeebca34d2fa4ea53b910c9b8ea216d82e9ab4a03ba51a2",
-      "bytes": 9238897
-    },
-    {
-      "path": "video/2026-10-31/short-v6/eranos-60s-poster.png",
-      "sha256": "cb6b20d2fc4dabeb5523222970dc8e29c89f96371e69d41222f34deb89aed974",
-      "bytes": 184900
-    },
-    {
-      "path": "video/2026-10-31/short-v6/eranos-60s.mp4",
-      "sha256": "bb4af98056e631f21e02260aad4c599ec95c3b26740ce5f4c0c8d36e7aa29115",
-      "bytes": 9545292
-    },
-    {
       "path": "video/2026-10-31/walkthroughs/walkthrough-agora-live.mp4",
       "sha256": "d177f2f213e583ca18d0d828f9d4bf624c0e56f86417eb4182ed4bef0a30546a",
       "bytes": 4101965
