@@ -300,6 +300,27 @@ class Builder(unittest.TestCase):
                 continue  # a deck's slide sources write the tokens; the deck page they become renders them
             self.assertNotIn("{{model:", page.read_text(encoding="utf-8"), page)
 
+    def test_the_film_made_page_exists_only_with_real_evidence_and_shows_no_hash(self):
+        # Gated (board AgoraFilmMade): no page until the production agent writes phase-1 or final facts.
+        nouns = copy.copy(self.nouns)
+        nouns.film_made = None
+        self.assertIsNone(build.render_film_made(nouns))
+        nouns.film_made = {"status": "draft", "films": []}
+        self.assertIsNone(build.render_film_made(nouns))
+        nouns.film_made = {
+            "status": "phase-1", "title": "How this film was made | Agora", "description": "d", "heading": "How this film was made",
+            "lead": "Every step of making the film is a Task, and every step is recorded.",
+            "films": [{"id": "3m", "cut": "3:00", "name": "The film", "state_label": "Phase 1 recorded",
+                       "steps": [{"title": "Capture", "what": "Real Chrome records the live pages.", "who": "a dedicated worker run by ta-amps",
+                                  "when": "Nov 1", "seconds": 130}],
+                       "summary": "Every step is recorded.", "record": {"label": "Record ↗", "href": "../../evidence/"}}]}
+        page = build.render_film_made(nouns)
+        self.assertIn("2 min 10 s", page)
+        self.assertIn('href="../../evidence/"', page)
+        self.assertIsNone(re.search(r"\b[0-9a-f]{12,}\b", build.plain_text(build.main_of(page))))
+        self.assertEqual(self.nouns.film_made is not None and self.nouns.film_made.get("status") in build.FILM_MADE_STATES,
+                         build.SITE / "film" / "made" / "index.html" in self.outputs)
+
     def test_nonprofits_never_choose_a_kind_of_request(self):
         # A nonprofit types what it needs; the request's first step sorts it into a kit, public work or both.
         asking = re.compile(r"request(s|ing)? (a|an) (verb|agent kit|kit)\b|verb requests?\b|an agent kit or a verb", re.I)

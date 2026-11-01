@@ -225,6 +225,8 @@ class Nouns:
                 if "tuned by us" in m.get("kind", ""):
                     self.models[m["id"]]["display_tuned"] = f"{m['name']}, fine-tuned by ta-amps"
         self.models_page = load_json(CONTENT / "models-page.json")
+        # How this film was made: written by the production agent once real evidence exists (gated; may be absent).
+        self.film_made = load_json(CONTENT / "film-made.json") if (CONTENT / "film-made.json").is_file() else None
         self.manifest = load_json(MANIFEST)
         self.brief = read_brief()
         self.frozen = frozen_pages(self.manifest, self.drafts)
@@ -1967,6 +1969,50 @@ def render_models(nouns: Nouns) -> str:
     return page_shell(page["title"], page["description"], main)
 
 
+FILM_MADE_STATES = ("phase-1", "final")
+
+
+def render_film_made(nouns: Nouns) -> str | None:
+    """How this film was made (/film/made/; board AgoraFilmMade, gated). The production agent writes the people-readable
+    facts into site/content/film-made.json: each step of making the film, who did it, the model it named, when and how
+    long, and one "Record ↗" link per film to its production record, never a hash. The page exists only once real
+    evidence does (status phase-1 or final); before that, nothing is built and nothing links it."""
+    noun = nouns.film_made
+    if not noun or noun.get("status") not in FILM_MADE_STATES:
+        return None
+    prefix = "../../"
+    sections = []
+    for film in noun["films"]:
+        steps = []
+        for st in film["steps"]:
+            facts = [x for x in (st.get("who"), st.get("model"), st.get("when"),
+                                 minutes_seconds(st["seconds"]) if isinstance(st.get("seconds"), (int, float)) else "")
+                     if x]
+            steps.append(f'<li><b>{text(st["title"])}</b> {text(st.get("what", ""))}'
+                         + (f'<span class="uc-facts">{text(" · ".join(facts))}</span>' if facts else "") + "</li>")
+        record = film.get("record")
+        record_link = (f' <a href="{attr(record["href"])}">{text(record.get("label", "Record ↗"))}</a>'
+                       if record and record.get("href") else "")
+        sections.append("\n".join([
+            f'<section class="uc-featured" aria-labelledby="fm-{attr(film["id"])}">',
+            f'<p class="uc-meta"><span class="uc-aud">{text(film["cut"])}</span>'
+            f'<span class="uc-state uc-tested">{text(film["state_label"])}</span></p>',
+            f'<h2 id="fm-{attr(film["id"])}">{text(film["name"])}</h2>',
+            f'<ol class="uc-steps">{"".join(steps)}</ol>',
+            f'<p class="uc-note">{text(film.get("summary", ""))}{record_link}</p>',
+            "</section>",
+        ]))
+    main = "\n".join([
+        '<main id="main">',
+        page_head(noun["heading"], noun["lead"]),
+        '<div class="wrap uc-page">',
+        *sections,
+        "</div>",
+        "</main>",
+    ])
+    return page_shell(noun["title"], noun["description"], main)
+
+
 def render_contribute(nouns: Nouns) -> str:
     """The contribute page: the ways in that work today, each door with the live check that showed it answering.
     A section with nothing that works yet is left out rather than promised."""
@@ -3385,6 +3431,9 @@ def outputs_for(nouns: Nouns) -> dict[Path, str]:
     generated[SITE / "deploy" / "index.html"] = render_deploy(nouns)
     generated[SITE / "contribute" / "index.html"] = render_contribute(nouns)
     generated[SITE / "models" / "index.html"] = render_models(nouns)
+    film_made = render_film_made(nouns)
+    if film_made:
+        generated[SITE / "film" / "made" / "index.html"] = film_made
     generated[SITE / "feeds" / "index.html"] = render_feeds_index(nouns)
     for row in ran_feeds(nouns):
         generated[SITE / "feeds" / row["id"] / "index.html"] = render_feed_category(nouns, row["id"])
