@@ -1,0 +1,28 @@
+{
+  "about": "The models page, as one noun: its words only. Every model and agent program it lists, and every use, comes from the models catalog Task Object (site/content/models.meta.json, a local copy of models.meta), following its display rules: Meta's models first and emphasized, agent programs never called models, other makers marked with an asterisk, and only uses whose state is live or measured. 'records' maps a catalog evidence file to the page Agora serves for it.",
+  "title": "Models used | Agora",
+  "description": "Which models ta-amps uses and how: Meta's Muse models first, the agent programs that ran them, and the few models from other makers, each with what it does.",
+  "heading": "Models used",
+  "lead": "How ta-amps uses each model, with Meta's models first. Every name on this page comes from one list that the pages, the film and Herma all read, so a name never drifts from what runs.",
+  "meta_heading": "Meta's models",
+  "meta_lead": "The work runs on Meta's models wherever Meta offers one for the job.",
+  "harness_heading": "Agent programs that ran them",
+  "harness_lead": "These are programs, not models. Each one names the model it ran.",
+  "other_heading": "Other makers",
+  "other_lead": "A few jobs use a model from another maker.",
+  "footnote": "* Not a Meta model: used only where Meta offers no model for the job, or as a fallback that is recorded every time.",
+  "maker": "Maker",
+  "access": "How it runs",
+  "uses": "What it does",
+  "states": {
+    "live": "Running now",
+    "measured": "Measured"
+  },
+  "record": "Record ↗",
+  "records": {
+    "notes/work-2026-10-30/real-run-v6/run-facts.json": "evidence/#real-run-20261031T065341Z",
+    "notes/claude-work-2026-10-29/glimmer-kaggle/evidence/fresh-2b-decision.json": "learning/#results",
+    "notes/claude-work-2026-10-31/v5/production/final/link-music.json": "evidence/#video-v6-2026-10-31",
+    "notes/work-2026-10-30/glimmer-lora-memory/evidence/README.md": "evidence/#glimmer-30b-lora-memory-2026-10-31"
+  }
+}

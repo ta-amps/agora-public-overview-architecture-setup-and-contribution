@@ -210,6 +210,7 @@ class Nouns:
         # and agent program, and what each is used for. Pages name them only through it.
         self.catalog = load_json(CONTENT / "models.meta.json")
         self.models = {m["id"]: m for group in ("models", "harnesses", "other_makers") for m in self.catalog[group]}
+        self.models_page = load_json(CONTENT / "models-page.json")
         self.manifest = load_json(MANIFEST)
         self.brief = read_brief()
         self.frozen = frozen_pages(self.manifest, self.drafts)
@@ -1678,6 +1679,60 @@ def live_doors(section: dict) -> list[dict]:
     return doors
 
 
+def render_models(nouns: Nouns) -> str:
+    """The models page (owner, Nov 1: "a page Models used that explains how we use each model and emphasize on the
+    meta models with a * for fallback to other models"). Everything it names comes from the models catalog Task
+    Object; site/content/models-page.json holds only its words. Display rules: Meta's models first and emphasized,
+    agent programs never called models, an asterisk on other makers, and only uses that are live or measured."""
+    page, catalog, prefix = nouns.models_page, nouns.catalog, "../"
+    shown = ("live", "measured")
+
+    def uses_of(entry: dict) -> str:
+        items = []
+        for use in entry.get("uses", []):
+            if use.get("state") not in shown:
+                continue
+            record = page["records"].get(use.get("evidence", ""))
+            if use.get("evidence") and use["state"] == "measured" and not record:
+                fail(f"models page: no served record for {use['evidence']}")
+            link_ = f' <a class="models-record" href="{link(prefix, record)}">{text(page["record"])}</a>' if record else ""
+            items.append(f'<li><span class="models-state models-{attr(use["state"])}">{text(page["states"][use["state"]])}</span> '
+                         f"{text(use['text'])}.{link_}</li>")
+        return f'<ul class="models-uses" aria-label="{attr(page["uses"])}">{"".join(items)}</ul>' if items else ""
+
+    def card(entry: dict, kind: str) -> str:
+        name = entry.get("display_tuned") if kind == "meta" and entry.get("display_tuned") else entry["display"]
+        star = '<span class="models-star" aria-hidden="true">*</span>' if entry.get("asterisk") else ""
+        facts = [(page["maker"], entry.get("maker", ""))]
+        if entry.get("access"):
+            facts.append((page["access"], entry["access"]))
+        dl = "".join(f"<dt>{text(k)}</dt><dd>{text(v)}</dd>" for k, v in facts if v)
+        summary = f'<p class="models-summary">{text(entry["summary"])}</p>' if entry.get("summary") else ""
+        return (f'<li class="models-card models-{kind}"><h3>{text(name)}{star}</h3>{summary}'
+                f'<dl class="models-facts">{dl}</dl>{uses_of(entry)}</li>')
+
+    meta = [m for m in catalog["models"] if m.get("maker") == "Meta"]
+    others = [m for m in catalog["models"] if m.get("maker") != "Meta"] + catalog["other_makers"]
+    for entry in others:
+        if not entry.get("asterisk"):
+            fail(f"models page: {entry['id']} is not Meta's and has no asterisk")
+    main = "\n".join([
+        '<main id="main">',
+        page_head(page["heading"], page["lead"]),
+        '<div class="wrap models-page">',
+        learn_part("models-meta", page["meta_heading"], page["meta_lead"],
+                   '<ul class="models-list models-list-meta">' + "".join(card(m, "meta") for m in meta) + "</ul>"),
+        learn_part("models-programs", page["harness_heading"], page["harness_lead"],
+                   '<ul class="models-list">' + "".join(card(h, "program") for h in catalog["harnesses"]) + "</ul>"),
+        learn_part("models-other", page["other_heading"], page["other_lead"],
+                   '<ul class="models-list">' + "".join(card(o, "other") for o in others) + "</ul>"
+                   + f'<p class="models-footnote">{text(page["footnote"])}</p>'),
+        "</div>",
+        "</main>",
+    ])
+    return page_shell(page["title"], page["description"], main)
+
+
 def render_contribute(nouns: Nouns) -> str:
     """The contribute page: the ways in that work today, each door with the live check that showed it answering.
     A section with nothing that works yet is left out rather than promised."""
@@ -2495,6 +2550,7 @@ def outputs_for(nouns: Nouns) -> dict[Path, str]:
     generated[SITE / "library" / "index.html"] = render_library(nouns)
     generated[SITE / "deploy" / "index.html"] = render_deploy(nouns)
     generated[SITE / "contribute" / "index.html"] = render_contribute(nouns)
+    generated[SITE / "models" / "index.html"] = render_models(nouns)
     generated[SITE / "feeds" / "memory-systems" / "index.html"] = render_feed(nouns)
     generated[HOW_PAGE] = render_how_it_works(nouns)
     generated[EVIDENCE_PAGE] = render_evidence(nouns)
