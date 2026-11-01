@@ -142,6 +142,10 @@
         "label": "Use cases"
       },
       {
+        "href": "feeds/",
+        "label": "Feeds"
+      },
+      {
         "href": "decks/",
         "label": "Decks"
       },

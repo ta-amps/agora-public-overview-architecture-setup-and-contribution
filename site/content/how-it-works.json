@@ -260,6 +260,10 @@
       {
         "label": "Every measured result, on the learning page",
         "href": "learning/"
+      },
+      {
+        "href": "feeds/",
+        "label": "Feeds"
       }
     ]
   }
