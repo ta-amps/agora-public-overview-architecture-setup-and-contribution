@@ -1,5 +1,5 @@
 {
-  "about": "The text every Agora page shares, kept as one Task Object: the header and its navigation, the endpoints, the deck viewer's labels and the footer. The agent banner's words are their own noun, agent-banner.json. scripts/build_site.py renders both into every page that is not frozen. Fields ending in _html hold trusted markup; every other field is plain text.",
+  "about": "The text every Agora page shares, kept as one Task Object: the header and its navigation, the endpoints, the deck viewer's labels and the footer. The agent banner's words are their own Task Object, agent-banner.json. scripts/build_site.py renders both into every page that is not frozen. Fields ending in _html hold trusted markup; every other field is plain text.",
   "name": "ta-amps",
   "skip_link": "Skip to content",
   "decks": [

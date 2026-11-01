@@ -202,7 +202,7 @@
       "state": "State",
       "new": "new",
       "record": "Record ↗",
-      "record_label": "The run’s records, listed on the evidence page",
+      "record_label": "Record: the run’s records, listed on the evidence page",
       "utc": "UTC"
     },
     "check": "Every step is recorded: each step’s record keeps, unchanged, the trace lines and Tessera events it comes from, and the evidence page lists them."

@@ -64,7 +64,7 @@
         "id": "slice-docker",
         "badge": "Docker",
         "title": "Slice C: the whole loop offline, in Docker",
-        "summary": "Run the local Tessera simulator, check the starter seed pack, and run a two-worker smoke test of a lease and an independent review, with no keys and no outside network.",
+        "summary": "Run Tessera locally, check the starter seed pack, and run a two-worker smoke test of a lease and an independent review, with no keys and no outside network.",
         "when": "Best for offline demos, internal CI or strict data residency.",
         "code_id": "cmd-slice-docker",
         "commands": "git clone https://github.com/ta-amps/ta-amps-hackathon.git\ncd ta-amps-hackathon\ndocker compose up --build --abort-on-container-exit --exit-code-from sample-worker-smoke"
@@ -125,7 +125,7 @@
         "role": "Runs many workers at once, paced to stay under the account’s tokens-per-minute limit.",
         "checked": [
           {
-            "text": "The pacing kept a simulated burst under the tokens-per-minute limit.",
+            "text": "The pacing kept a test burst under the tokens-per-minute limit.",
             "check": "respected_2m_tpm_ceiling"
           },
           {
