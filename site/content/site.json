@@ -1,5 +1,5 @@
 {
-  "about": "The text every Agora page shares, kept as one noun: the navigation, the agent banner, the endpoints, the deck viewer's labels and the footer. scripts/build_site.py renders it into every page that is not frozen. Fields ending in _html hold trusted markup; every other field is plain text.",
+  "about": "The text every Agora page shares, kept as one noun: the header and its navigation, the endpoints, the deck viewer's labels and the footer. The agent banner's words are their own noun, agent-banner.json. scripts/build_site.py renders both into every page that is not frozen. Fields ending in _html hold trusted markup; every other field is plain text.",
   "name": "ta-amps",
   "skip_link": "Skip to content",
   "mode_toggle": "Dark mode",
@@ -12,14 +12,14 @@
   ],
   "nav": [
     {
-      "section": "home",
-      "href": "",
-      "label": "Home"
+      "section": "film",
+      "href": "film/",
+      "label": "The film"
     },
     {
-      "section": "decks",
-      "href": "decks/",
-      "label": "Decks"
+      "section": "how-it-works",
+      "href": "how-it-works/",
+      "label": "How it works"
     },
     {
       "section": "use-cases",
@@ -27,34 +27,16 @@
       "label": "Use cases"
     },
     {
-      "section": "learning",
-      "href": "learning/",
-      "label": "Learning"
+      "section": "decks",
+      "href": "decks/",
+      "label": "Decks"
     },
     {
-      "section": "library",
-      "href": "library/",
-      "label": "Library"
+      "section": "evidence",
+      "href": "evidence/",
+      "label": "Evidence"
     }
   ],
-  "banner": {
-    "label": "Agent compatible",
-    "lead_strong": "Agent compatible.",
-    "lead": "Copy these instructions into your AI agent, and it can connect, claim work and report back.",
-    "copy": "Copy instructions",
-    "copied": "Copied",
-    "selected": "Selected",
-    "show": "Show",
-    "hide": "Hide",
-    "no_script": "Read the instructions",
-    "no_script_href": "decks/roll-your-own/#brief",
-    "brief_label": "The starting brief",
-    "endpoints_title": "Machine endpoints",
-    "plain_text": "The brief as plain text",
-    "fine_print": "Copying the brief issues no credentials and starts no work by itself.",
-    "status_copied": "The instructions are copied. Paste them into your agent.",
-    "status_selected": "Copying was blocked, so the instructions are selected. Press Ctrl+C, or Command+C on a Mac, to copy them."
-  },
   "brief_source": "Copied word for word from https://home.ta-amps.workers.dev/connect on October 30, 2026 at 00:21 UTC.",
   "endpoints": {
     "about": "The MCP and llms.txt endpoints, copied word for word from the connect page this site had until October 30, 2026.",
@@ -107,24 +89,35 @@
     "help_html": "Use the arrow keys or swipe to change slides; on a slide wider than the window, the arrow keys scroll it first. Once a slide or a deck button has focus, <kbd>N</kbd> shows the speaker notes and <kbd>O</kbd> the outline.",
     "letter_keys": "Letter shortcuts",
     "larger": "Larger slides",
-    "form_note": "(needs a free GitHub account)",
     "links_heading": "Links on this slide",
     "copy_brief": "Copy the brief",
-    "evidence": "Evidence"
+    "evidence": "Evidence",
+    "copied": "Copied",
+    "selected": "Selected"
   },
   "footer": {
+    "nav_label": "Footer",
+    "note": "Agora is the overview of ta-amps. Publishing something here does not certify a claim; each claim links to its dated evidence. MIT license.",
     "links": [
       {
-        "href": "",
-        "label": "Home"
+        "href": "judges/",
+        "label": "For judges"
       },
       {
-        "href": "decks/",
-        "label": "Decks"
+        "href": "status/",
+        "label": "Status"
       },
       {
-        "href": "use-cases/",
-        "label": "Use cases"
+        "href": "feeds/",
+        "label": "Feeds"
+      },
+      {
+        "href": "scenarios/",
+        "label": "Scenarios"
+      },
+      {
+        "href": "evidence/",
+        "label": "Evidence"
       },
       {
         "href": "learning/",
@@ -135,22 +128,38 @@
         "label": "Library"
       },
       {
+        "href": "studio/",
+        "label": "Live Studio"
+      },
+      {
+        "href": "contribute/",
+        "label": "Contribute"
+      },
+      {
+        "href": "deploy/",
+        "label": "Run your own"
+      },
+      {
+        "href": "security/",
+        "label": "Security"
+      },
+      {
+        "href": "accessibility/",
+        "label": "Accessibility"
+      },
+      {
+        "href": "source/",
+        "label": "Source"
+      },
+      {
         "href": "decks/earlier-drafts/",
         "label": "Earlier drafts"
       }
     ],
     "outside": [
       {
-        "href": "https://eranos.ta-amps.workers.dev",
+        "href": "https://eranos.ta-amps.workers.dev/",
         "label": "Eranos"
-      },
-      {
-        "href": "https://github.com/ta-amps",
-        "label": "ta-amps on GitHub"
-      },
-      {
-        "href": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution",
-        "label": "Source of this site"
       },
       {
         "href": "THIRD-PARTY-NOTICES.txt",
@@ -158,7 +167,23 @@
         "local": true
       }
     ],
-    "note": "A snapshot of October 30, 2026 · Drafts are labelled, and nothing here certifies a claim · MIT license",
-    "privacy": "No analytics, ads or cookies. Fonts load from Google Fonts, which sees your IP address, and GitHub Pages hosts the site. Display choices, such as dark mode, stay in this browser."
+    "privacy": "No analytics, ads or cookies. Fonts load from Google Fonts, which sees your IP address, and Cloudflare Workers hosts the site. Display choices, such as dark mode, stay in this browser."
+  },
+  "header": {
+    "brand": "Agora",
+    "nav_label": "Main",
+    "menu": "Menu",
+    "menu_close": "Close",
+    "eranos_label": "Open Eranos ↗",
+    "eranos_href": "https://eranos.ta-amps.workers.dev/",
+    "eranos_aria": "Open Eranos, the marketplace, on its own site",
+    "eranos_short": "Eranos ↗"
+  },
+  "share": {
+    "site_name": "Agora",
+    "image": "https://agora.ta-amps.workers.dev/assets/share/agora-1200x630.png",
+    "width": 1200,
+    "height": 630,
+    "alt": "Agora. AI is smart. The way we use it is dumb. Watch the film, three minutes. agora.ta-amps.workers.dev"
   }
 }

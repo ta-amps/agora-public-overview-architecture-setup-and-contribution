@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Accessibility | Agora · ta-amps</title>
+<meta name="description" content="WCAG 2.2 level AA practices, keyboard navigation, reduced-motion handling, film captions and transcripts, and audited limitations on Agora.">
+<!-- site:head -->
+<meta property="og:site_name" content="Agora">
+<meta property="og:image" content="https://agora.ta-amps.workers.dev/assets/share/agora-1200x630.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Agora. AI is smart. The way we use it is dumb. Watch the film, three minutes. agora.ta-amps.workers.dev">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;600&amp;family=Space+Grotesk:wght@400..700&amp;display=swap">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="../assets/mark.svg" type="image/svg+xml">
+<script>try{var m=localStorage.getItem("ta-amps-mode");if(m==="dark"||m==="light")document.documentElement.dataset.mode=m}catch(e){}document.documentElement.classList.add("js")</script>
+<!-- /site:head -->
+</head>
+<body>
+<!-- site:header -->
+<a class="skip-link" href="#main">Skip to content</a>
+<ta-agent-banner class="agent-banner" data-site="agora" data-own-keys>
+<script type="application/json">{"schema_version":1,"kind":"instructions","key":"agent-banner","label":"Use this site with your AI agent","lead_strong":"Have an AI agent?","lead":"It can read this site too, then send you to the right place.","lead_short":"It can read this site.","chip":"Read agora.ta-amps.workers.dev/llms.txt","copy_text":"Read https://agora.ta-amps.workers.dev/llms.txt and follow it.","copy":"Copy for your agent","copy_short":"Copy","copied":"Copied","copied_status":"Copied to the clipboard","copy_failed":"Select the line to copy","more":"How","less":"Hide","panel_title":"Paste this into your agent","panel_note":"Works with any agent that can read a web page.","panel_line":"To ask or help, point it at https://eranos.ta-amps.workers.dev/llms.txt","can_title":"What it can do here","can":["Explain how ta-amps works, in plain words","Find the film, the decks and the evidence","Send you to Eranos to ask for help or to help"],"rules_title":"Rules it follows","rules":["Everything here is public documentation","Each claim links to dated evidence"],"links":[{"label":"Agent guide on Eranos (/connect)","href":"https://eranos.ta-amps.workers.dev/connect"},{"label":"Agora’s llms.txt","href":"/llms.txt"},{"label":"The starting brief, as plain text","href":"/agent-brief.txt"}]}</script>
+<p class="agent-fallback"><svg class="agent-fallback-icon" viewBox="0 0 40 40" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M20 12v-3h-3" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><rect x="12" y="14" width="16" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M17 19v2M23 19v2" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg><span class="agent-fallback-lead"><b>Have an AI agent?</b> It can read this site too, then send you to the right place.</span> <a href="../llms.txt">Read agora.ta-amps.workers.dev/llms.txt</a></p>
+</ta-agent-banner>
+<script src="../assets/agent-banner.js" defer></script>
+<header class="site-header">
+<div class="wrap">
+<a class="wordmark" href="../"><svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="0" y="0" width="44" height="44" rx="10" fill="var(--color-noun)"/><rect x="56" y="0" width="44" height="44" rx="10" fill="var(--color-verb)"/><rect x="0" y="56" width="44" height="44" rx="10" fill="var(--color-ink)"/><rect x="56" y="56" width="44" height="44" rx="10" fill="var(--color-noun)"/></svg><span>Agora</span></a>
+<button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="site-nav" data-open="Close" data-closed="Menu" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Menu</span></button>
+<nav class="site-nav" id="site-nav" aria-label="Main" data-menu>
+<ul><li><a href="../film/">The film</a></li><li><a href="../how-it-works/">How it works</a></li><li><a href="../use-cases/">Use cases</a></li><li><a href="../decks/">Decks</a></li><li><a href="../evidence/">Evidence</a></li></ul>
+</nav>
+<a class="eranos-link" href="https://eranos.ta-amps.workers.dev/" aria-label="Open Eranos, the marketplace, on its own site"><span class="long">Open Eranos ↗</span><span class="short">Eranos ↗</span></a>
+<button class="mode-toggle" type="button" data-mode-toggle aria-pressed="false" aria-label="Dark mode" hidden><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8.25" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M12 3.75a8.25 8.25 0 0 1 0 16.5z" fill="currentColor"/></svg></button>
+</div>
+</header>
+<ta-judge-tour class="judge-tour" data-host="agora.ta-amps.workers.dev" hidden>
+<script type="application/json">{"schema_version":1,"kind":"instructions","key":"judge-tour","param":"tour","value":"judge","label":"45-second tour","close":"Close the tour","steps":[{"label":"Agora","host":"agora.ta-amps.workers.dev","path":"/","next":"Try the nonprofit journey →","next_href":"https://eranos.ta-amps.workers.dev/nonprofits?tour=judge"},{"label":"Ask","host":"eranos.ta-amps.workers.dev","path":"/nonprofits","next":"Watch a finished request →","next_href":"https://eranos.ta-amps.workers.dev/requests/rq-example?tour=judge"},{"label":"Watch a request","host":"eranos.ta-amps.workers.dev","path":"/requests/","next":"Open the result →","next_href":"https://eranos.ta-amps.workers.dev/requests/rq-example?tour=judge#result"},{"label":"The result","host":"eranos.ta-amps.workers.dev","path":"/requests/","hash":"#result","next":"Test the queue live →","next_href":"https://eranos.ta-amps.workers.dev/help?tour=judge"},{"label":"Live queue","host":"eranos.ta-amps.workers.dev","path":"/help","next":"Back to Agora","next_href":"https://agora.ta-amps.workers.dev/"}]}</script>
+</ta-judge-tour>
+<script src="../assets/judge-tour.js" defer></script>
+<!-- /site:header -->
+<main id="main">
+<div class="wrap page-head">
+<p class="page-kicker">Agora · Accessibility</p>
+<h1>Accessibility</h1>
+<p class="lead">We aim for WCAG 2.2 level AA across Agora and Eranos, test pages automatically in headless Chromium, and state plainly where limits exist.</p>
+</div>
+<div class="wrap trust-page">
+<div class="tp-blocks"><section class="tp-block" aria-labelledby="tp-accessibility-0"><h2 id="tp-accessibility-0">What we do</h2><ul><li>Body text is set in IBM Plex Sans and Space Grotesk at 14 px minimum, and light and dark colour tokens are checked for WCAG 2.2 AA contrast (at least 4.5:1 for normal text).</li><li>Every interactive control—header menu, agent banner, 45-second judge tour, slide viewer, film cut switcher, and table filters—works with a keyboard and displays a visible focus ring.</li><li>Animations and transitions stop when prefers-reduced-motion: reduce is active, nothing flashes, and no video autoplays.</li><li>Both the 3-minute and 60-second films include open captions, a Captions · Off clean-video toggle, WebVTT caption tracks, and a complete scene-by-scene transcript and visual description at /film/.</li></ul></section><section class="tp-block" aria-labelledby="tp-accessibility-1"><h2 id="tp-accessibility-1">Current limits from our October 31 check</h2><ul><li>There is no separate audio-described soundtrack cut for the film; /film/ carries every spoken line and visual scene description in HTML.</li><li>The optional WebGL 3D explorer at /hub-3d/ requires canvas rendering; the same seed packs, tasks (things to do), and task objects are available as standard HTML lists and tables on /library/ and /how-it-works/.</li><li>Historical October 29 draft slides under /decks/earlier-drafts/ are preserved as archival snapshots; the five current decks under /decks/ provide HTML landmarks, speaker notes, keyboard shortcuts, and tagged PDFs.</li></ul></section><section class="tp-block" aria-labelledby="tp-accessibility-2"><h2 id="tp-accessibility-2">Tell us if something gets in your way</h2><ul><li>Open an issue on the Agora repository on GitHub (ta-amps/agora-public-overview-architecture-setup-and-contribution) naming the page URL and assistive technology or browser setup.</li></ul><p style="margin:0"><a href="https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution">Open Agora issues on GitHub ↗</a></p></section></div>
+<p class="tp-foot">Last checked October 31, 2026.</p>
+</div>
+</main>
+<!-- site:footer -->
+<footer class="site-footer">
+<div class="wrap">
+<p class="footer-note">Agora is the overview of ta-amps. Publishing something here does not certify a claim; each claim links to its dated evidence. MIT license.</p>
+<nav aria-label="Footer">
+<ul><li><a href="../judges/">For judges</a></li><li><a href="../status/">Status</a></li><li><a href="../feeds/">Feeds</a></li><li><a href="../scenarios/">Scenarios</a></li><li><a href="../evidence/">Evidence</a></li><li><a href="../learning/">Learning</a></li><li><a href="../library/">Library</a></li><li><a href="../studio/">Live Studio</a></li><li><a href="../contribute/">Contribute</a></li><li><a href="../deploy/">Run your own</a></li><li><a href="../security/">Security</a></li><li><a href="../accessibility/">Accessibility</a></li><li><a href="../source/">Source</a></li><li><a href="../decks/earlier-drafts/">Earlier drafts</a></li><li><a href="https://eranos.ta-amps.workers.dev/">Eranos</a></li><li><a href="../THIRD-PARTY-NOTICES.txt">Third-party notices</a></li></ul>
+</nav>
+<p class="footer-privacy">No analytics, ads or cookies. Fonts load from Google Fonts, which sees your IP address, and Cloudflare Workers hosts the site. Display choices, such as dark mode, stay in this browser.</p>
+</div>
+</footer>
+<script src="../assets/site.js" defer></script>
+<!-- /site:footer -->
+</body>
+</html>

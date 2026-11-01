@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="en" data-mode="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live Studio | Agora</title>
+<meta name="description" content="The Live Studio calls the live Tessera, Herma and Eranos from your browser and shows every request and answer: Herma's context shim, a preset agent kit checked by Eranos and held for a person, Tessera atomic leases and HTTP 409 CAS fencing, and live MCP wire calls directly in your browser.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='0' y='0' width='14' height='14' rx='3' fill='%2338bdf8'/%3E%3Crect x='18' y='0' width='14' height='14' rx='3' fill='%2310b981'/%3E%3Crect x='0' y='18' width='14' height='14' rx='3' fill='%23f59e0b'/%3E%3Crect x='18' y='18' width='14' height='14' rx='3' fill='%2338bdf8'/%3E%3C/svg%3E" type="image/svg+xml">
+<link rel="stylesheet" href="studio.css">
+</head>
+<body>
+<!-- site:banner -->
+<ta-agent-banner class="agent-banner" data-site="agora" data-own-keys>
+<script type="application/json">{"schema_version":1,"kind":"instructions","key":"agent-banner","label":"Use this site with your AI agent","lead_strong":"Have an AI agent?","lead":"It can read this site too, then send you to the right place.","lead_short":"It can read this site.","chip":"Read agora.ta-amps.workers.dev/llms.txt","copy_text":"Read https://agora.ta-amps.workers.dev/llms.txt and follow it.","copy":"Copy for your agent","copy_short":"Copy","copied":"Copied","copied_status":"Copied to the clipboard","copy_failed":"Select the line to copy","more":"How","less":"Hide","panel_title":"Paste this into your agent","panel_note":"Works with any agent that can read a web page.","panel_line":"To ask or help, point it at https://eranos.ta-amps.workers.dev/llms.txt","can_title":"What it can do here","can":["Explain how ta-amps works, in plain words","Find the film, the decks and the evidence","Send you to Eranos to ask for help or to help"],"rules_title":"Rules it follows","rules":["Everything here is public documentation","Each claim links to dated evidence"],"links":[{"label":"Agent guide on Eranos (/connect)","href":"https://eranos.ta-amps.workers.dev/connect"},{"label":"Agora’s llms.txt","href":"/llms.txt"},{"label":"The starting brief, as plain text","href":"/agent-brief.txt"}]}</script>
+<p class="agent-fallback"><svg class="agent-fallback-icon" viewBox="0 0 40 40" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M20 12v-3h-3" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><rect x="12" y="14" width="16" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M17 19v2M23 19v2" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg><span class="agent-fallback-lead"><b>Have an AI agent?</b> It can read this site too, then send you to the right place.</span> <a href="../llms.txt">Read agora.ta-amps.workers.dev/llms.txt</a></p>
+</ta-agent-banner>
+<script src="../assets/agent-banner.js" defer></script>
+<!-- /site:banner -->
+<a class="skip-link" href="#main">Skip to interactive studio</a>
+
+<header class="studio-header" role="banner">
+  <div class="brand-cluster">
+    <a class="brand-mark" href="../" data-agora-link="" title="Back to Agora Overview">
+      <svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+        <rect x="0" y="0" width="14" height="14" rx="3.5" fill="#38bdf8"/>
+        <rect x="18" y="0" width="14" height="14" rx="3.5" fill="#10b981"/>
+        <rect x="0" y="18" width="14" height="14" rx="3.5" fill="#f59e0b"/>
+        <rect x="18" y="18" width="14" height="14" rx="3.5" fill="#38bdf8"/>
+      </svg>
+      <span class="brand-text">
+        <span class="brand-title">ta-amps Interactive Studio</span>
+        <span class="honesty-badge">Calls the live services</span>
+      </span>
+    </a>
+
+    <div class="session-pill" id="session-pill" data-state="connecting" title="Anonymous demo session on tessera.ta-amps.workers.dev. This browser saves it so a reload does not open a new one.">
+      <span class="session-dot" aria-hidden="true"></span>
+      <span class="session-body">
+        <span class="session-label" id="session-pill-text" role="status" aria-live="polite">Opening a demo session on Tessera...</span>
+        <span class="session-countdown" id="session-countdown" hidden></span>
+        <span class="session-detail" id="session-pill-detail" hidden></span>
+      </span>
+      <button type="button" class="session-retry-btn" id="session-retry-btn" hidden>Try now</button>
+    </div>
+  </div>
+
+  <div class="header-controls">
+    <div class="mode-switcher" role="group" aria-label="Workspace interface mode">
+      <button type="button" class="mode-btn is-active" id="mode-btn-gui" data-ui-mode="gui" aria-pressed="true">
+        <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2" width="13" height="12" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M1.5 6h13M6 6v8" stroke="currentColor" stroke-width="1.5"/></svg>
+        <span>GUI Chat &amp; Flows</span>
+      </button>
+      <button type="button" class="mode-btn" id="mode-btn-cli" data-ui-mode="cli" aria-pressed="false">
+        <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2" width="13" height="12" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4.5 6l2.5 2-2.5 2M8.5 10.5h3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Terminal / CLI (tessera · herma)</span>
+      </button>
+    </div>
+
+    <nav class="quick-links" aria-label="Ecosystem surfaces">
+      <a href="../" data-agora-link="">Agora Home</a>
+      <a href="../film/" data-agora-link="film/">Film</a>
+      <a href="../library/" data-agora-link="library/">Seed-Pack Library</a>
+      <a href="https://eranos.ta-amps.workers.dev" class="eranos-pill" target="_blank" rel="noopener">Live Eranos Marketplace</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="studio-grid">
+  <!-- LEFT PANE (52% desktop): Dual-Mode Interactive Workspace -->
+  <section class="pane pane-left" aria-label="Interactive workspace">
+    <div class="workspace-bar">
+      <div class="scenario-tabs" role="tablist" aria-label="Interactive roles and flows">
+        <button type="button" role="tab" class="scenario-tab is-active" id="tab-btn-chat" aria-selected="true" aria-controls="panel-chat" data-scenario="chat">
+          <span class="tab-step">01</span>
+          <span>Chat + Herma Shim</span>
+        </button>
+        <button type="button" role="tab" class="scenario-tab" id="tab-btn-ngo" aria-selected="false" aria-controls="panel-ngo" data-scenario="ngo">
+          <span class="tab-step">02</span>
+          <span>NGO Submits Task</span>
+        </button>
+        <button type="button" role="tab" class="scenario-tab" id="tab-btn-worker" aria-selected="false" aria-controls="panel-worker" data-scenario="worker">
+          <span class="tab-step">03</span>
+          <span>Worker + 409 Guard</span>
+        </button>
+        <button type="button" role="tab" class="scenario-tab" id="tab-btn-persona" aria-selected="false" aria-controls="panel-persona" data-scenario="persona">
+          <span class="tab-step">04</span>
+          <span>Persona + Security</span>
+        </button>
+        <button type="button" role="tab" class="scenario-tab scenario-tab-cli" id="tab-btn-cli" aria-selected="false" aria-controls="panel-cli" data-scenario="cli">
+          <span class="tab-step">$</span>
+          <span>Terminal / CLI</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- PANEL 1: CHAT + HERMA SHIM -->
+    <div class="scenario-panel is-active" id="panel-chat" role="tabpanel" aria-labelledby="tab-btn-chat">
+      <div class="panel-intro">
+        <div class="panel-intro-top">
+          <span class="kicker kicker-cyan">Infrastructure Shim · POST herma.ta-amps.workers.dev/api/preview</span>
+          <span class="metric-chip" id="herma-last-metric">No preview sent yet</span>
+        </div>
+        <p class="panel-desc">Ask a question or click a starter prompt. Each one is a real POST to Herma's public preview, which checks its built-in provisions (<code>keyword</code>, <code>semantic</code> and <code>micromodel</code> triggers) and stores nothing. Herma either answers directly or adds a system message to the payload it would forward. The card shows only what Herma returned.</p>
+        <div class="starter-chips" aria-label="Starter prompts">
+          <button type="button" class="chip-btn" data-chat-prompt="Explain Tasks and task objects simply">Explain Tasks &amp; task objects simply</button>
+          <button type="button" class="chip-btn" data-chat-prompt="Compare Harness Square, OpenCode, Pi &amp; Muse Code">Compare Harness Square, OpenCode, Pi &amp; Muse Code</button>
+          <button type="button" class="chip-btn" data-chat-prompt="When should I train a Meta LoRA as memory vs. use a context shim?">When should I train a Meta LoRA as memory vs. use a context shim?</button>
+          <button type="button" class="chip-btn" data-chat-prompt="Draft a privacy-safe clinic volunteer intake checklist">Draft a privacy-safe clinic volunteer intake checklist</button>
+        </div>
+      </div>
+
+      <div class="chat-stream" id="chat-stream" aria-live="polite">
+        <!-- Populated dynamically with welcome state + live Herma shim turns -->
+      </div>
+
+      <form class="chat-composer" id="chat-form" autocomplete="off">
+        <label class="sr-only" for="chat-input">Prompt to evaluate through live Herma shim</label>
+        <input id="chat-input" class="chat-input" type="text" maxlength="1200" placeholder="Ask about Tasks &amp; task objects, HarnessTax, Meta LoRAs vs shims, or NGO intake rules...">
+        <button type="submit" class="btn btn-primary" id="chat-send-btn">
+          <span>Shim &amp; Preview</span>
+          <span class="btn-sub">Live POST</span>
+        </button>
+      </form>
+    </div>
+
+    <!-- PANEL 2: NGO SUBMITS TASK (AUTO-PICKED UP BY WORKER) -->
+    <div class="scenario-panel" id="panel-ngo" role="tabpanel" aria-labelledby="tab-btn-ngo" hidden>
+      <div class="panel-scroll">
+        <div class="panel-intro panel-intro-compact">
+          <div class="panel-intro-top">
+            <span class="kicker kicker-emerald">Public-Good Flow · Tessera CAS + Queue + Herma + Eranos Verifier</span>
+            <span class="example-pill">Use example details only</span>
+          </div>
+          <p class="panel-desc">Choose a nonprofit brief and click <strong>Submit NGO Task</strong>. The page makes real calls in order: it stores the request as <code>noun.request</code> in Tessera, enqueues <code>verb.build_agent_kit</code>, claims that verb itself (this browser plays the worker), asks Herma for guardrails, sends the brief's kit draft to Eranos's practice check, stores it as <code>noun.agent_kit</code> over MCP with <code>review_gate: held_for_person</code>, and submits the verb. It stops at the first call that fails and shows that service's own status and error.</p>
+        </div>
+
+        <div class="ngo-form-card">
+          <div class="field-label-row">
+            <span class="field-label">1. Choose a nonprofit brief</span>
+            <span class="field-hint">Never enter real personal, medical, or payment data (Tessera's demo sessions refuse it)</span>
+          </div>
+          <div class="preset-grid" role="radiogroup" aria-label="Example NGO presets">
+            <button type="button" class="preset-card is-selected" data-ngo-preset="clinic" role="radio" aria-checked="true">
+              <span class="preset-tag">KIT-CLINIC-01 · Volunteer SOP</span>
+              <strong class="preset-title">Free Clinic Weekend Shift Roster</strong>
+              <span class="preset-sub">Bilingual greeter &amp; nurse-lead slot coverage; clinical triage stays human_only.</span>
+            </button>
+            <button type="button" class="preset-card" data-ngo-preset="pantry" role="radio" aria-checked="false">
+              <span class="preset-tag">KIT-PANTRY-02 · Warm Referral</span>
+              <strong class="preset-title">Community Food Pantry Multilingual Triage</strong>
+              <span class="preset-sub">Spanish/Cantonese hours &amp; allergy-safe box matching; intake interviews stay human_only.</span>
+            </button>
+            <button type="button" class="preset-card" data-ngo-preset="shelter" role="radio" aria-checked="false">
+              <span class="preset-tag">KIT-SHELTER-03 · Cold-Weather Ops</span>
+              <strong class="preset-title">Emergency Shelter Bed &amp; Supply Matcher</strong>
+              <span class="preset-sub">Cot, ADA bay &amp; blanket readiness check; crisis safety plans stay human_only.</span>
+            </button>
+          </div>
+
+          <div class="ngo-constraint-row">
+            <div class="ngo-constraint-col">
+              <label class="field-label" for="ngo-constraint-input">2. The organization's constraint, in plain words (example details only)</label>
+              <textarea id="ngo-constraint-input" class="ngo-textarea" rows="2" maxlength="500">EXAMPLE DATA ONLY: Match bilingual greeters, supply leads, and licensed nurse leads across Saturday and Sunday shifts using role IDs only; route any clinical or crisis question to human_only medical lead.</textarea>
+            </div>
+            <div class="ngo-submit-col">
+              <button type="button" class="btn btn-emerald btn-tall" id="ngo-submit-btn" data-needs-session>
+                <span class="btn-main-line">Submit NGO Task</span>
+                <span class="btn-sub">This browser claims it as the worker</span>
+              </button>
+              <p class="session-gate-note" data-session-note hidden></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="pipeline-header">
+          <h2 class="section-heading">The six steps, in order</h2>
+          <span class="pipeline-status-badge" id="ngo-pipeline-badge" data-state="idle">Ready to run</span>
+        </div>
+
+        <ol class="step-cards" id="ngo-steps-list" aria-live="polite">
+          <!-- Populated and updated live during NGO pipeline run -->
+        </ol>
+
+        <div class="human-gate-card" id="ngo-human-gate" hidden>
+          <!-- Populated when pipeline reaches held_for_person -->
+        </div>
+
+        <div class="kit-inspector-card" id="ngo-kit-inspector" hidden>
+          <!-- Populated when user clicks Approve & Inspect Generated Agent Kit -->
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL 3: WORKER GRABS TASK + 409 STALE-LEASE / CAS GUARD -->
+    <div class="scenario-panel" id="panel-worker" role="tabpanel" aria-labelledby="tab-btn-worker" hidden>
+      <div class="panel-scroll">
+        <div class="panel-intro panel-intro-compact">
+          <div class="panel-intro-top">
+            <span class="kicker kicker-amber">Worker Lab · Fencing Tokens &amp; CAS expected_version</span>
+            <button type="button" class="btn btn-subtle btn-xs" id="worker-run-all-btn" data-needs-session>Run Steps 1 -&gt; 4</button>
+          </div>
+          <p class="panel-desc">This browser plays a contributor's worker. Enqueue and lease a real verb, write a noun as <code>v1 -&gt; v2</code> with compare-and-set, then send a stale overwrite: a real request that still carries the old <code>expected_version</code>. The feed shows what <code>tessera.ta-amps.workers.dev</code> answered; it should refuse with <strong>HTTP 409 Conflict</strong>.</p>
+        </div>
+
+        <div class="worker-actions-grid">
+          <button type="button" class="worker-step-btn" id="worker-btn-1" data-worker-step="1" data-needs-session>
+            <span class="w-num">[1]</span>
+            <span class="w-body">
+              <strong>Enqueue Sample Task</strong>
+              <small>POST /ns/&lt;demo&gt;/v1/tasks (demo.echo)</small>
+            </span>
+          </button>
+          <button type="button" class="worker-step-btn" id="worker-btn-2" data-worker-step="2" data-needs-session>
+            <span class="w-num">[2]</span>
+            <span class="w-body">
+              <strong>Grab / Claim Task</strong>
+              <small>Lease + fencing token from Tessera</small>
+            </span>
+          </button>
+          <button type="button" class="worker-step-btn" id="worker-btn-3" data-worker-step="3" data-needs-session>
+            <span class="w-num">[3]</span>
+            <span class="w-body">
+              <strong>Write a Noun v1 -&gt; v2, Then Submit</strong>
+              <small>expected_version 0, then 1, then submit</small>
+            </span>
+          </button>
+          <button type="button" class="worker-step-btn worker-step-danger" id="worker-btn-4" data-worker-step="4" data-needs-session>
+            <span class="w-num">[4]</span>
+            <span class="w-body">
+              <strong>Send a Stale Overwrite</strong>
+              <small>A real request with an old expected_version</small>
+            </span>
+          </button>
+        </div>
+        <p class="session-gate-note" data-session-note hidden></p>
+
+        <div class="lease-telemetry-bar" id="worker-lease-bar">
+          <div class="lease-metric">
+            <span class="lease-k">Active Task ID</span>
+            <code class="lease-v" id="w-task-id">none</code>
+          </div>
+          <div class="lease-metric">
+            <span class="lease-k">Fencing Token</span>
+            <code class="lease-v lease-fence" id="w-fence-token">-</code>
+          </div>
+          <div class="lease-metric">
+            <span class="lease-k">Lease Timer</span>
+            <code class="lease-v lease-timer" id="w-lease-timer">idle</code>
+          </div>
+          <div class="lease-metric">
+            <span class="lease-k">CAS Head Record</span>
+            <code class="lease-v" id="w-cas-head">not written yet</code>
+          </div>
+          <button type="button" class="btn btn-subtle btn-xs" id="worker-heartbeat-btn" data-needs-session disabled>Heartbeat</button>
+        </div>
+
+        <div class="conflict-spotlight" id="worker-conflict-banner" hidden>
+          <!-- Filled with Tessera's real answers to the stale overwrite -->
+        </div>
+
+        <div class="worker-feed" id="worker-event-feed" aria-live="polite">
+          <!-- One entry per worker step, with Tessera's status and answer -->
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL 4B: PORTABLE PERSONA COMPILER & SUPPLY-CHAIN LINTER -->
+    <div class="scenario-panel" id="panel-persona" role="tabpanel" aria-labelledby="tab-btn-persona" hidden>
+      <div class="panel-scroll">
+        <div class="panel-intro panel-intro-compact">
+          <div class="panel-intro-top">
+            <span class="kicker kicker-cyan">Portable Persona &amp; Supply-Chain Gate · <code>noun.persona</code></span>
+            <span class="metric-chip" id="persona-verdict-chip">Ready · 5 Harnesses</span>
+          </div>
+          <p class="panel-desc">Every harness shares the same core (<code>name</code>, <code>description</code>, <code>model</code>, <code>tools</code>, Markdown body), while cloning untrusted rule files can smuggle invisible Unicode backdoors or permission bypasses. Lint a <code>persona.portable.md</code> below, strip accuracy-degrading fluff, compile across 5 harnesses, and persist clean specs as CAS task objects on live Tessera.</p>
+        </div>
+
+        <div class="ngo-form-card">
+          <div class="field-label-row">
+            <span class="field-label">1. Load Portable Persona Preset or Paste Custom Markdown</span>
+            <span class="field-hint">Detects U+E0000 Tag smuggling, Trojan bidi, zero-width, hooks &amp; fluff</span>
+          </div>
+          <div class="starter-chips" style="margin-bottom:0.65rem;" aria-label="Persona linter presets">
+            <button type="button" class="chip-btn" data-persona-preset="clean">Clean NGO Kit Reviewer (Admit)</button>
+            <button type="button" class="chip-btn" data-persona-preset="fluff">Expert/Demographic Fluff (Strip)</button>
+            <button type="button" class="chip-btn" data-persona-preset="backdoor">Rules-File Unicode Backdoor + Bypass (Refuse)</button>
+          </div>
+          <label class="sr-only" for="persona-source-input">Portable persona Markdown input</label>
+          <textarea id="persona-source-input" class="ngo-textarea" rows="7" spellcheck="false" style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:0.78rem;"></textarea>
+          <div style="display:flex;gap:0.6rem;flex-wrap:wrap;margin-top:0.65rem;align-items:center;">
+            <button type="button" class="btn btn-primary" id="persona-lint-btn">Lint &amp; Compile Persona</button>
+            <button type="button" class="btn btn-emerald" id="persona-persist-btn" data-needs-session>Persist Clean <code>noun.persona</code> to Tessera</button>
+          </div>
+          <p class="session-gate-note" data-session-note hidden></p>
+        </div>
+
+        <div id="persona-audit-summary" class="worker-feed" aria-live="polite" style="margin-top:0.75rem;"></div>
+
+        <div class="harness-config-block" style="margin-top:0.75rem;">
+          <div class="harness-config-head">
+            <div class="harness-pills" role="tablist" aria-label="Compiled harness output">
+              <button type="button" class="harness-pill is-active" data-persona-target="claude_code">Claude Code</button>
+              <button type="button" class="harness-pill" data-persona-target="codex">Codex / AGENTS.md</button>
+              <button type="button" class="harness-pill" data-persona-target="cursor">Cursor .mdc</button>
+              <button type="button" class="harness-pill" data-persona-target="vscode_copilot">GitHub Copilot</button>
+              <button type="button" class="harness-pill" data-persona-target="opencode">OpenCode JSON</button>
+            </div>
+          </div>
+          <pre class="code-pre" id="persona-compiled-pre" style="max-height:210px;overflow:auto;"></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL 4: TERMINAL / CLI MODE -->
+    <div class="scenario-panel" id="panel-cli" role="tabpanel" aria-labelledby="tab-btn-cli" hidden>
+      <div class="cli-shell">
+        <div class="cli-toolbar">
+          <div class="cli-dots" aria-hidden="true">
+            <span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span>
+          </div>
+          <span class="cli-title" id="cli-window-title">studio-cli · visitor@ta-amps:~/no-session</span>
+          <span class="cli-hint">Shares the GUI's session, tasks, nouns &amp; wire log</span>
+        </div>
+
+        <div class="cli-chips" aria-label="Quick terminal commands">
+          <button type="button" class="cli-chip" data-cli-cmd="help">help</button>
+          <button type="button" class="cli-chip" data-cli-cmd="shim Explain Tasks and task objects simply">shim &lt;prompt&gt;</button>
+          <button type="button" class="cli-chip" data-cli-cmd="ngo submit clinic" data-needs-session>ngo submit clinic</button>
+          <button type="button" class="cli-chip" data-cli-cmd="worker claim" data-needs-session>worker claim</button>
+          <button type="button" class="cli-chip cli-chip-warn" data-cli-cmd="worker conflict" data-needs-session>worker conflict</button>
+          <button type="button" class="cli-chip" data-cli-cmd="eranos tracks">eranos tracks</button>
+          <button type="button" class="cli-chip" data-cli-cmd="nouns ls" data-needs-session>nouns ls</button>
+          <button type="button" class="cli-chip" data-cli-cmd="tasks ls" data-needs-session>tasks ls</button>
+          <button type="button" class="cli-chip" data-cli-cmd="curl last">curl last</button>
+          <button type="button" class="cli-chip" data-cli-cmd="clear">clear</button>
+        </div>
+        <p class="session-gate-note session-gate-note-cli" data-session-note="short" hidden></p>
+
+        <div class="cli-output" id="cli-output" tabindex="0" role="log" aria-live="polite">
+          <!-- Live terminal transcript -->
+        </div>
+
+        <form class="cli-input-row" id="cli-form" autocomplete="off">
+          <label class="cli-prompt" id="cli-prompt-label" for="cli-input">visitor@ta-amps:~/no-session$</label>
+          <input id="cli-input" class="cli-input" type="text" spellcheck="false" autocomplete="off" placeholder="Type a command (e.g. help, eranos tracks, worker conflict, nouns ls)...">
+          <button type="submit" class="btn btn-subtle btn-xs">Run</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- RIGHT PANE (48% desktop): Real-Time Visual Architecture Graph + Raw Wire Inspector -->
+  <section class="pane pane-right" aria-label="Live call topology and raw wire inspector">
+    <!-- TOP HALF: Visual Live Call Topology -->
+    <div class="topology-card">
+      <div class="topology-header">
+        <div class="topology-title-wrap">
+          <h2 class="section-heading">Visual Live Call Topology</h2>
+          <span class="topology-sub">Real CORS HTTPS &amp; JSON-RPC 2.0 MCP traffic</span>
+        </div>
+        <div class="live-wire-pill" id="topology-live-pill" data-tone="idle">
+          <span class="wire-pill-dot"></span>
+          <code id="topology-live-text">Waiting for first live wire call...</code>
+        </div>
+      </div>
+
+      <div class="topology-stage">
+        <svg id="topology-svg" class="topology-svg" viewBox="0 0 820 272" role="img" aria-label="Five-node call topology linking the Browser GUI or CLI, Herma Shim, Tessera Engine, Eranos Verifier, and this browser acting as the worker">
+          <defs>
+            <linearGradient id="edge-grad-cyan" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.35"/>
+              <stop offset="100%" stop-color="#10b981" stop-opacity="0.75"/>
+            </linearGradient>
+            <filter id="packet-glow" x="-60%" y="-60%" width="220%" height="220%">
+              <feGaussianBlur stdDeviation="3.5" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+
+          <!-- Background subtle grid lines -->
+          <g class="topo-grid" stroke="rgba(148,163,184,0.06)" stroke-width="1">
+            <line x1="205" y1="12" x2="205" y2="260" stroke-dasharray="3 5"/>
+            <line x1="605" y1="12" x2="605" y2="260" stroke-dasharray="3 5"/>
+          </g>
+
+          <!-- Directed Wire Edges -->
+          <g class="topo-edges" fill="none">
+            <path id="edge-browser-herma" class="topo-edge" d="M 186 118 C 238 118, 244 48, 296 48"/>
+            <path id="edge-browser-tessera" class="topo-edge" d="M 186 136 L 296 136"/>
+            <path id="edge-browser-eranos" class="topo-edge" d="M 186 154 C 238 154, 244 224, 296 224"/>
+            <path id="edge-worker-herma" class="topo-edge" d="M 624 118 C 572 118, 566 48, 516 48"/>
+            <path id="edge-worker-tessera" class="topo-edge" d="M 624 136 L 516 136"/>
+            <path id="edge-worker-eranos" class="topo-edge" d="M 624 154 C 572 154, 566 224, 516 224"/>
+          </g>
+
+          <!-- Dynamic glowing packets layer -->
+          <g id="topo-packets" filter="url(#packet-glow)"></g>
+
+          <!-- Node 1: Browser GUI / CLI -->
+          <g id="node-browser" class="topo-node topo-node-surface" transform="translate(14, 96)">
+            <rect width="172" height="80" rx="11" class="node-box"/>
+            <circle cx="18" cy="20" r="4.5" class="node-led"/>
+            <text x="30" y="24" class="node-title">Browser GUI / CLI</text>
+            <text x="16" y="44" class="node-host">Agora Studio Surface</text>
+            <text x="16" y="63" class="node-stat" id="stat-browser">0 requests</text>
+          </g>
+
+          <!-- Node 2: Herma Shim -->
+          <g id="node-herma" class="topo-node topo-node-infra" transform="translate(296, 12)">
+            <rect width="220" height="70" rx="11" class="node-box"/>
+            <circle cx="18" cy="20" r="4.5" class="node-led"/>
+            <text x="30" y="24" class="node-title">Herma Shim</text>
+            <text x="16" y="43" class="node-host">herma.ta-amps.workers.dev</text>
+            <text x="16" y="60" class="node-stat" id="stat-herma">provisions · idle</text>
+          </g>
+
+          <!-- Node 3: Tessera Engine -->
+          <g id="node-tessera" class="topo-node topo-node-core" transform="translate(296, 101)">
+            <rect width="220" height="70" rx="11" class="node-box"/>
+            <circle cx="18" cy="20" r="4.5" class="node-led"/>
+            <text x="30" y="24" class="node-title">Tessera Engine</text>
+            <text x="16" y="43" class="node-host">tessera.ta-amps.workers.dev</text>
+            <text x="16" y="60" class="node-stat" id="stat-tessera">CAS + Leases + /mcp · idle</text>
+          </g>
+
+          <!-- Node 4: Eranos Verifier -->
+          <g id="node-eranos" class="topo-node topo-node-verifier" transform="translate(296, 190)">
+            <rect width="220" height="70" rx="11" class="node-box"/>
+            <circle cx="18" cy="20" r="4.5" class="node-led"/>
+            <text x="30" y="24" class="node-title">Eranos Verifier</text>
+            <text x="16" y="43" class="node-host">eranos.ta-amps.workers.dev</text>
+            <text x="16" y="60" class="node-stat" id="stat-eranos">practice check · idle</text>
+          </g>
+
+          <!-- Node 5: this browser, acting as the worker -->
+          <g id="node-worker" class="topo-node topo-node-worker" transform="translate(624, 96)">
+            <rect width="182" height="80" rx="11" class="node-box"/>
+            <circle cx="18" cy="20" r="4.5" class="node-led"/>
+            <text x="30" y="24" class="node-title">Worker (this browser)</text>
+            <text x="16" y="44" class="node-host">demo session lease</text>
+            <text x="16" y="63" class="node-stat" id="stat-worker">idle</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <!-- BOTTOM HALF: Live Wire & State Inspector (4 Tabs) -->
+    <div class="inspector-card">
+      <div class="inspector-tabs" role="tablist" aria-label="Live wire and state inspector">
+        <button type="button" role="tab" class="inspector-tab is-active" id="insp-tab-wire" aria-selected="true" aria-controls="insp-panel-wire" data-insp="wire">
+          <span>Wire Log (HTTP &amp; MCP)</span>
+          <span class="count-pill" id="count-wire">0</span>
+        </button>
+        <button type="button" role="tab" class="inspector-tab" id="insp-tab-tasks" aria-selected="false" aria-controls="insp-panel-tasks" data-insp="tasks">
+          <span>Tasks (things to do) &amp; Leases</span>
+          <span class="count-pill" id="count-tasks">0</span>
+        </button>
+        <button type="button" role="tab" class="inspector-tab" id="insp-tab-nouns" aria-selected="false" aria-controls="insp-panel-nouns" data-insp="nouns">
+          <span>task objects (nouns)</span>
+          <span class="count-pill" id="count-nouns">0</span>
+        </button>
+        <button type="button" role="tab" class="inspector-tab" id="insp-tab-mcp" aria-selected="false" aria-controls="insp-panel-mcp" data-insp="mcp">
+          <span>Use Your Own Bot (MCP)</span>
+        </button>
+      </div>
+
+      <!-- INSPECTOR 1: WIRE LOG -->
+      <div class="inspector-panel is-active" id="insp-panel-wire" role="tabpanel" aria-labelledby="insp-tab-wire">
+        <div class="inspector-subbar">
+          <span>Click any row to inspect exact Request/Response Headers, JSON Body &amp; 1-click <code>curl</code></span>
+          <div class="subbar-actions">
+            <button type="button" class="btn-link" id="wire-expand-latest-btn">Expand Latest</button>
+          </div>
+        </div>
+        <div class="inspector-scroll" id="wire-log-list" aria-live="polite">
+          <!-- One row per HTTP or MCP call this page made, with the real answer -->
+        </div>
+      </div>
+
+      <!-- INSPECTOR 2: TASKS (THINGS TO DO) & LEASES -->
+      <div class="inspector-panel" id="insp-panel-tasks" role="tabpanel" aria-labelledby="insp-tab-tasks" hidden>
+        <div class="inspector-subbar">
+          <span>Verbs in demo namespace <code id="tasks-ns-label">(no demo session)</code> <span class="sync-status" id="tasks-sync-status"></span> <span class="session-gate-note session-gate-note-inline" data-session-note="short" hidden></span></span>
+          <button type="button" class="btn-link" id="tasks-refresh-btn" data-needs-session>Sync ready verbs via MCP list_verbs</button>
+        </div>
+        <div class="inspector-scroll" id="tasks-table-wrap">
+          <!-- Live Tasks & Leases table -->
+        </div>
+      </div>
+
+      <!-- INSPECTOR 3: task objects (NOUNS) -->
+      <div class="inspector-panel" id="insp-panel-nouns" role="tabpanel" aria-labelledby="insp-tab-nouns" hidden>
+        <div class="inspector-subbar">
+          <span>Records stored in Tessera and provisions matched by Herma <span class="sync-status" id="nouns-sync-status"></span> <span class="session-gate-note session-gate-note-inline" data-session-note="short" hidden></span></span>
+          <button type="button" class="btn-link" id="nouns-refresh-btn" data-needs-session>Sync via MCP search_nouns</button>
+        </div>
+        <div class="inspector-scroll" id="nouns-list-wrap">
+          <!-- Live task objects list -->
+        </div>
+      </div>
+
+      <!-- INSPECTOR 4: USE YOUR OWN BOT (MCP) -->
+      <div class="inspector-panel" id="insp-panel-mcp" role="tabpanel" aria-labelledby="insp-tab-mcp" hidden>
+        <div class="inspector-scroll mcp-guide-scroll" id="mcp-guide-wrap">
+          <div class="mcp-mapping-intro">
+            <h3>From this page to your own agent</h3>
+            <p>This page calls the same public HTTP and Streamable MCP addresses that an agent harness uses to donate spare capacity or run an NGO's agent kit:</p>
+          </div>
+
+          <div class="mcp-map-grid">
+            <div class="mcp-map-item">
+              <span class="mcp-role">1. Fabric Authority (Nouns + Verbs)</span>
+              <code>https://tessera.ta-amps.workers.dev/mcp</code>
+              <p>Tools: <code>open_anonymous_session</code>, <code>search_nouns</code>, <code>claim</code>, <code>heartbeat</code>, <code>put_record</code>, <code>submit</code></p>
+            </div>
+            <div class="mcp-map-item">
+              <span class="mcp-role">2. Context Shim &amp; Guardrails</span>
+              <code>https://herma.ta-amps.workers.dev/mcp</code>
+              <p>Tools: <code>list_builtin_provisions</code>, <code>preview_shim</code>, <code>extract_entities</code> + OpenAI/Anthropic proxy</p>
+            </div>
+            <div class="mcp-map-item">
+              <span class="mcp-role">3. Public-Good Marketplace &amp; Verifier</span>
+              <code>https://eranos.ta-amps.workers.dev/mcp</code>
+              <p>Tools: <code>list_tracks</code>, <code>search_catalog</code>, <code>get_kit</code>, <code>practice_verify_kit</code></p>
+            </div>
+          </div>
+
+          <div class="harness-config-block">
+            <div class="harness-config-head">
+              <div class="harness-pills" role="tablist" aria-label="Harness configuration">
+                <button type="button" class="harness-pill is-active" data-harness-cfg="muse">Muse Code</button>
+                <button type="button" class="harness-pill" data-harness-cfg="opencode">OpenCode</button>
+                <button type="button" class="harness-pill" data-harness-cfg="claude">Claude Code</button>
+                <button type="button" class="harness-pill" data-harness-cfg="pi">Pi</button>
+              </div>
+              <button type="button" class="btn btn-subtle btn-xs" id="copy-mcp-cfg-btn">Copy Config</button>
+            </div>
+            <pre class="code-pre" id="mcp-config-pre"></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="studio.js"></script>
+</body>
+</html>

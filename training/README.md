@@ -1,6 +1,6 @@
 # Open-Weights Fine-Tuning: QLoRA & Multi-LoRA Specialist Loop
 
-`ta-amps` treats continuous fine-tuning as ordinary **Tasks** (`verbs`) and **Task Objects** (`nouns`) on [Tessera](https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine), without adding a separate model registry, server-side training daemon, or task authority.
+`ta-amps` treats continuous fine-tuning as ordinary **Tasks** (`verbs`) and **task objects** (`nouns`) on [Tessera](https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine), without adding a separate model registry, server-side training daemon, or task authority.
 
 > **Scope and honesty boundary:** Every training and evaluation example in these runs comes from owned synthetic MIT repository templates. No Muse API outputs, provider completions, nonprofit files, or private execution traces enter training. Base weights and derived LoRA/QLoRA weights remain private under their respective licenses (*Built with Llama* under the Llama 3.2 Community License). Adapters are recorded as unadmitted candidate manifests, not deployed hosted endpoints or general-capability claims.
 
@@ -20,7 +20,7 @@
 - [adapters/llama-3.2-1b-lora/adapter_config.json](adapters/llama-3.2-1b-lora/adapter_config.json): PEFT LoRA configuration manifest for the Llama 3.2 1B Instruct continuous tuning loop.
 - [adapters/llama-3.2-3b-lora/adapter_config.json](adapters/llama-3.2-3b-lora/adapter_config.json): PEFT LoRA configuration manifest for the Llama 3.2 3B Instruct continuous tuning loop.
 
-## How the Continuous Loop Runs on Tasks & Task Objects
+## How the Continuous Loop Runs on Tasks & task objects
 
 Each tuning round is enqueued by a single `tick` task (`verb.decompose_dag`) in [`tessera/examples/continuous_tuning/`](https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/tree/main/examples/continuous_tuning):
 
@@ -28,14 +28,14 @@ Each tuning round is enqueued by a single `tick` task (`verb.decompose_dag`) in 
 2. `tune_hyperparameters` (`verb.benchmark_harness`) & `train_adapter` (`verb.solve_draft`): Trains PEFT LoRA / QLoRA candidates with completion-only loss.
 3. `evaluate` (`verb.benchmark_harness`): Scores greedy decoding on frozen unseen-family test (`n=150`), a freshly generated unseen-family holdout, and a general sanity split (`n=40`).
 4. `decide_promotion` (`verb.verify_gate`): Applies pre-registered rule `tool-call-specialist.promotion` v1 (`sha256: bf0fa821717c2400faab77652f067ea85f2616eea329c6e139af33a423e4b3b7`) with 2,000-resample paired bootstrap confidence intervals.
-5. `serve_check` (`verb.benchmark_harness`): Loads one base model once and attaches multiple named specialist LoRA Task Objects (`load_adapter` / `set_adapter`) as **LoRAs as Parametric Memory**, routed per turn alongside [Herma](https://github.com/ta-amps/herma-infrastructure-shim-for-intelligent-agents) context shims.
+5. `serve_check` (`verb.benchmark_harness`): Loads one base model once and attaches multiple named specialist LoRA task objects (`load_adapter` / `set_adapter`) as **LoRAs as Parametric Memory**, routed per turn alongside [Herma](https://github.com/ta-amps/herma-infrastructure-shim-for-intelligent-agents) context shims.
 
 ## Horizontal Worker Swarms + Vertical Compute Cascade
 
-- **Horizontal Data Engine (`256` OpenCode & Multi-Harness Workers across `q01..q16`):** Sharded Tessera queues (`q01..q16`, Durable Object / SQLite shards, content-addressed CAS blobs) let up to `256` concurrent multi-harness workers decompose DAGs, retrieve context via Herma, build Task Objects, and enforce `verifier != builder` checks -- pairing verified execution receipts with rejected-attempt tombstones (`noun.negative_tombstone`) as structured preference / DPO pairs once real-trace consent and grading gates are enabled (all measured adapter runs below trained strictly on owned synthetic MIT templates).
+- **Horizontal Data Engine (`256` OpenCode & Multi-Harness Workers across `q01..q16`):** Sharded Tessera queues (`q01..q16`, Durable Object / SQLite shards, content-addressed CAS blobs) let up to `256` concurrent multi-harness workers decompose DAGs, retrieve context via Herma, build task objects, and enforce `verifier != builder` checks -- pairing verified execution receipts with rejected-attempt tombstones (`noun.negative_tombstone`) as structured preference / DPO pairs once real-trace consent and grading gates are enabled (all measured adapter runs below trained strictly on owned synthetic MIT templates).
 - **4-Tier Vertical Compute Cascade & Composable Modular LoRAs:**
   - **Tier 0 (`< 2 ms`):** Deterministic Herma rules & capability firewall (`respond_directly` + contributor-tier refusal).
-  - **Tier 1 (Local GPU):** `Llama 3.2 1B & 3B` with hot-swappable PEFT LoRA Task Objects (`shim-router`, `lora-as-memory`, `task-decomposer`, `verifier-dpo`; tool-call specialist measured at `12.0% -> 50.7%` and `52.0% -> 72.7%`, with 3-adapter multi-LoRA serving verified at `80/80` exact parity).
+  - **Tier 1 (Local GPU):** `Llama 3.2 1B & 3B` with hot-swappable PEFT LoRA task objects (`shim-router`, `lora-as-memory`, `task-decomposer`, `verifier-dpo`; tool-call specialist measured at `12.0% -> 50.7%` and `52.0% -> 72.7%`, with 3-adapter multi-LoRA serving verified at `80/80` exact parity).
   - **Tier 2 (Kaggle Free 2xT4):** `Muse Glimmer 30B` NF4 `bitsandbytes` QLoRA (`93.3% -> 99.3%` fresh holdout + LoRA-as-Memory).
   - **Tier 3 (Frontier Standard Mode):** `Meta Muse Spark 1.3` and `Muse Wonder 1.0` reserved for novel synthesis whose verified receipts distill back down into Tier 1 and Tier 2 adapters.
 

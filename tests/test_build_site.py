@@ -27,6 +27,11 @@ def strings(value) -> list[str]:
     return [found for item in items for found in strings(item)]
 
 
+def without_number(inner: str) -> str:
+    """A slide's markup without the footer's slide number, which no claim needs to back."""
+    return re.sub(r'<span class="slide-no"[^>]*>\d+</span>', "", inner)
+
+
 def numbers(value) -> list[int]:
     """Every whole number in a noun, however deeply it sits."""
     if type(value) is int:
@@ -51,43 +56,6 @@ def shown_text(fragment: str) -> list[str]:
     parser.feed(fragment)
     parser.close()
     return parser.shown
-
-
-class FormLinks(HTMLParser):
-    """For every link to a GitHub issue form, the text of its two nearest enclosing p, li or div elements."""
-
-    BLOCKS = {"p", "li", "div"}
-    VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr"}
-
-    def __init__(self) -> None:
-        super().__init__()
-        self.stack: list[list] = []  # [tag, text pieces, the indexes of the links it encloses]
-        self.links: list[dict] = []
-
-    def handle_starttag(self, tag, attrs):
-        if tag in self.VOID:
-            return
-        self.stack.append([tag, [], []])
-        href = dict(attrs).get("href") or ""
-        if tag == "a" and build.GITHUB_FORM.match(href):
-            self.links.append({"href": href, "context": []})
-            for entry in [e for e in reversed(self.stack) if e[0] in self.BLOCKS][:2]:
-                entry[2].append(len(self.links) - 1)
-
-    def handle_startendtag(self, tag, attrs):
-        pass
-
-    def handle_endtag(self, tag):
-        while self.stack:
-            entry = self.stack.pop()
-            for i in entry[2]:
-                self.links[i]["context"].append(" ".join(entry[1]))
-            if entry[0] == tag:
-                break
-
-    def handle_data(self, data):
-        for entry in self.stack:
-            entry[1].append(data)
 
 
 def css_tokens(css: str, selector: str) -> dict[str, str]:
@@ -140,33 +108,53 @@ class Builder(unittest.TestCase):
 
     def test_the_starting_brief_has_one_source(self):
         brief = build.text(build.read_brief())
-        banner = f'aria-labelledby="agent-brief-title">{brief}</pre>'
-        for path, content in self.outputs.items():
-            self.assertEqual(1, content.count(banner), path)
         roll = self.outputs[build.DECKS / "roll-your-own" / "index.html"]
         self.assertEqual(1, roll.count(f'<pre id="slide-brief" '))
-        self.assertEqual(2, roll.count(f">{brief}</pre>"))
+        self.assertEqual(1, roll.count(f">{brief}</pre>"))
+        self.assertEqual(build.read_brief() + "\n", (build.SITE / "agent-brief.txt").read_text(encoding="utf-8"))
+
+    def test_every_page_opens_with_one_agent_banner_from_its_noun(self):
+        # October 31 (AgentBanner, BannerSpec): one thin line above the header on every page, its words embedded
+        # from the agent-banner noun for the shared <ta-agent-banner> element, with a plain line and an llms.txt
+        # link for readers without scripts. The copied line is exactly the noun's.
+        embedded = f'<script type="application/json">{build.banner_json(self.nouns)}</script>'
+        self.assertEqual("Read https://agora.ta-amps.workers.dev/llms.txt and follow it.", self.nouns.banner["copy_text"])
+        for path, content in self.outputs.items():
+            if path.suffix != ".html":
+                continue
+            self.assertEqual(1, content.count("<ta-agent-banner "), path)
+            self.assertEqual(1, content.count(embedded), path)
+            self.assertEqual(1, content.count('assets/agent-banner.js" defer></script>'), path)
+            body = content[content.index("<body"):]
+            if "<!-- site:header -->" in body:
+                # Above the header, and the skip link stays the first thing a keyboard reaches.
+                self.assertLess(body.index("<ta-agent-banner "), body.index('class="site-header"'), path)
+                self.assertLess(body.index('class="skip-link"'), body.index("<ta-agent-banner "), path)
+        data = json.loads(build.banner_json(self.nouns))
+        self.assertNotIn("about", data)
+        for field in ("label", "lead_strong", "lead", "copy_text", "copy", "copied", "copy_failed", "more", "less",
+                      "panel_title", "can", "rules", "links"):
+            self.assertTrue(data[field], field)
 
     def test_page_text_comes_from_content_nouns(self):
         nouns = copy.copy(self.nouns)
-        nouns.home = dict(self.nouns.home, statement={"parts": [{"label": "A label from data",
-                                                                "lead": "Everything is nouns and verbs:",
-                                                                "rest": "A new line."}]})
+        nouns.home = copy.deepcopy(self.nouns.home)
+        nouns.home["start"]["heading"] = "A heading from data."
+        nouns.home["uses"]["lead"] = "A lead from data."
         home_page = build.render_home(nouns)
-        self.assertIn("A new line.", home_page)
-        self.assertIn("A label from data", home_page)
-        nouns.home = dict(self.nouns.home, statement={"parts": [{"label": "", "lead": "No label"}]})
-        with self.assertRaises(build.BuildError):
-            build.render_home(nouns)
+        self.assertIn("A heading from data.", home_page)
+        self.assertIn("A lead from data.", home_page)
         nouns.uses = copy.deepcopy(self.nouns.uses)
         nouns.uses["flagships"][1]["name"] = "A flagship from data"
         nouns.uses["fields"]["items"].append("A field from data")
         uses_page = build.render_use_cases(nouns)
         self.assertIn("A flagship from data", uses_page)
         self.assertIn("A field from data", uses_page)
-        nouns.site = copy.deepcopy(self.nouns.site)
-        nouns.site["banner"]["lead"] = "A banner from data."
+        nouns.banner = dict(self.nouns.banner, lead="A banner from data.")
         self.assertIn("A banner from data.", build.header_block(build.SITE / "index.html", "", nouns))
+        nouns.site = copy.deepcopy(self.nouns.site)
+        nouns.site["header"]["eranos_label"] = "Eranos from data"
+        self.assertIn("Eranos from data", build.header_block(build.SITE / "index.html", "", nouns))
         # Every word the use cases page shows, outside the shared header and footer, is a string of its noun, or the
         # title of a pack it names, which comes from the library noun.
         titles = {pack["id"]: pack["title"] for pack in self.nouns.library["packs"]}
@@ -188,70 +176,51 @@ class Builder(unittest.TestCase):
         page = self.outputs[build.SITE / "use-cases" / "index.html"]
         main = build.main_of(page)
         self.assertEqual(7, main.count('<li class="use-card'))
-        self.assertEqual(1, main.count('<li class="use-card use-lead">'))
+        self.assertEqual(1, main.count('<li class="use-card use-lead"'))
         self.assertLess(main.index("use-lead"), main.index(uses["flagships"][1]["name"]))
         for item in uses["flagships"]:
             # An idea is a name, a line or two, example nouns and verbs, the library packs that hold them and where to
             # read more: no status, badge or evidence.
-            self.assertLessEqual(set(item), {"name", "rest", "line", "detail", "nouns", "verbs", "packs", "links"},
+            self.assertLessEqual(set(item), {"name", "rest", "line", "detail", "nouns", "verbs", "packs", "links", "home"},
                                  item["name"])
             self.assertTrue(3 <= len(item["nouns"]) <= 5 and 3 <= len(item["verbs"]) <= 5, item["name"])
-            self.assertTrue(1 <= len(item["links"]) <= 2, item["name"])
-            words = [item["name"], item.get("rest", ""), item["line"], item.get("detail", "")] + item["nouns"] + item["verbs"]
+            self.assertTrue(1 <= len(item["links"]) <= 3, item["name"])
+            words = ([item["name"], item.get("rest", ""), item["line"], item.get("detail", "")] + item["nouns"] + item["verbs"]
+                     + list((item.get("home") or {}).values()))
             self.assertIsNone(re.search(r"\d", " ".join(words)), item["name"])
             for link in item["links"]:
                 href = link["href"] if link["href"].startswith("https://") else "../" + link["href"]
-                self.assertIn(f'href="{html.escape(href)}"', main, item["name"])
+                self.assertIn(f'href="{html.escape(build.repoint(href, self.nouns.links))}"', main, item["name"])
         # Other fields are plain names, with no nouns or verbs of their own, and point to the roll-your-own deck.
         self.assertTrue(all(isinstance(field, str) for field in uses["fields"]["items"]))
         self.assertIn(f'href="../{uses["fields"]["link"]["href"]}"', main)
         for leftover in ("claim-status", 'class="badge', "use-tag"):
             self.assertNotIn(leftover, main)
 
-    def test_the_home_page_is_the_video_a_two_part_statement_and_the_decks(self):
+    def test_the_home_page_is_the_film_start_here_the_decks_and_the_use_cases(self):
+        # October 31 (the Agora-Home board): the film first, then Start here with the two public sites, the decks
+        # and the use cases. The start part's heading is the page's one h1.
         home = self.outputs[build.SITE / "index.html"]
         main = home[home.index('<main id="main">'):home.index("</main>")]
         self.assertEqual(4, main.count("<section"))
         self.assertEqual(1, main.count("<video"))
         self.assertIn('kind="captions"', main)
         self.assertIn(" default>", main)
-        self.assertEqual(3, main.count('<li class="hub-card '))
-        self.assertEqual(5, main.count('class="deck-card"'))
-        self.assertLess(home.index('class="agent-banner"'), home.index("<video"))
-        self.assertLess(main.index('<section class="statement"'), main.index('<section class="hub"'))
-        self.assertLess(main.index('<section class="hub"'), main.index('<section class="deck-band"'))
-        # Feedback, October 30: the statement reads in two labelled parts, the use case and then the architecture
-        # underneath, and the second says in plain words what verbs and nouns are. The use case's line is the page's
-        # one heading.
-        parts = self.nouns.home["statement"]["parts"]
-        self.assertEqual(["The use case", "The architecture underneath"], [part["label"] for part in parts])
-        self.assertIn("Eranos", parts[0]["lead"])
-        self.assertIn("verbs are tasks", parts[1]["rest"])
-        statement = main[main.index('<section class="statement"'):]
-        statement = statement[:statement.index("</section>")]
-        self.assertEqual(2, statement.count('<div class="statement-part">'))
-        self.assertLess(statement.index(f'<p class="statement-label">{build.text(parts[0]["label"])}</p>'),
-                        statement.index(f'<p class="statement-label">{build.text(parts[1]["label"])}</p>'))
+        self.assertLess(home.index("<ta-agent-banner "), home.index("<video"))
+        order = [main.index(marker) for marker in ('<section class="film', '<section class="start"', '<section class="deck-band"',
+                                                    '<section class="home-uses"')]
+        self.assertEqual(sorted(order), order)
+        start = self.nouns.home["start"]
         self.assertEqual(1, main.count("<h1"))
-        self.assertIn(f'<h1 id="statement" class="statement-line"><span class="statement-lead">'
-                      f'{build.text(parts[0]["lead"])}</span></h1>', statement)
-
-    def test_home_product_hub_renders_from_its_noun(self):
-        home_page = self.outputs[build.SITE / "index.html"]
-        main = build.main_of(home_page)
-        hub_html = main[main.index('<section class="hub"'):]
-        hub_html = hub_html[:hub_html.index("</section>") + len("</section>")]
-        written = set(strings(self.nouns.home["hub"]))
-        for shown in shown_text(hub_html):
-            self.assertIn(shown, written)
-        titles = [pillar["title"] for pillar in self.nouns.home["hub"]["pillars"]]
-        self.assertEqual([
-            "1. Public Goods Marketplace",
-            "2. Task & Task-Object Engine",
-            "3. Roll Your Own: Seed Packs, Harness Feeds & Meta Fine-Tuning",
-        ], titles)
-        with self.assertRaises(build.BuildError):
-            build.product_hub({"kicker": "k", "heading": "h", "lead": "l", "pillars": []})
+        self.assertIn(f"<h1>{build.text(start['heading'])}</h1>", main)
+        self.assertEqual(["Eranos", "Agora"], [card["name"] for card in start["cards"]])
+        self.assertIn('href="https://eranos.ta-amps.workers.dev/"', main)
+        self.assertIn('href="how-it-works/"', main)
+        self.assertEqual(5, main.count('class="deck-card"'))
+        self.assertEqual(6, main.count('class="home-use"'))
+        self.assertEqual(1, main.count('class="home-use-live"'))  # only Eranos is live, so only it says so
+        # The film's production page is linked only once its production trace is final.
+        self.assertEqual(build.film_made_ready(start), start["film_made"]["href"] in main)
 
     def test_nouns_and_verbs_are_glossed_in_plain_words_the_first_time(self):
         # Feedback, October 30: a viewer took nouns and verbs for a model architecture. The home page, the use cases
@@ -280,10 +249,6 @@ class Builder(unittest.TestCase):
         self.assertEqual(" (a task)", market[first.end():first.end() + len(" (a task)")])
 
     def test_the_worked_examples_are_illustrations_and_their_numbers_have_claims(self):
-        # Feedback, October 30: two worked examples show nouns and verbs at work, one right after the slide that
-        # defines them and one right after feeds. They show how the work is organized, not measured runs, so each
-        # says so on the slide and in its notes, and every number on them has a claim. A measured precedent links to
-        # public evidence; the memory-systems feeds are planned, and the slide says so.
         deck = next(deck for deck in self.nouns.decks if deck["id"] == "overview-and-architecture")
         order = [slide["name"] for slide in deck["slides"]]
         self.assertEqual(order.index("nouns-and-verbs") + 1, order.index("worked-example"))
@@ -291,22 +256,21 @@ class Builder(unittest.TestCase):
         slides = {slide["name"]: slide for slide in deck["slides"]}
         claims = deck["claims"]["claims"]
         for name in ("worked-example", "memory-systems"):
-            shown, notes = build.plain_text(slides[name]["inner"]), build.plain_text(slides[name]["notes"])
-            self.assertIn("ILLUSTRATION · NOT A MEASURED RUN", shown, name)
-            self.assertIn("illustration", notes.lower(), name)
+            shown, notes = build.plain_text(without_number(slides[name]["inner"])), build.plain_text(slides[name]["notes"])
             mine = [claim for claim in claims if claim["slide"] == name]
-            self.assertTrue(any(claim["status"] == "illustration" for claim in mine), name)
+            self.assertNotIn("ILLUSTRATION", shown)
+            self.assertNotIn("PLANNED", shown)
+            self.assertTrue(all(claim["status"] == "measured" for claim in mine), name)
             listed = " ".join(claim["number"] for claim in mine)
             for part in (shown, notes):
                 for number in re.findall(r"\d+(?:[.,]\d+)?", part):
                     self.assertIn(number, listed, (name, number))
             for claim in mine:
                 if claim["status"] == "measured":
-                    self.assertTrue(claim["link"].startswith("https://github.com/ta-amps/"), claim["number"])
+                    self.assertTrue(claim["link"].startswith(("https://github.com/ta-amps/", "https://agora.ta-amps.workers.dev/")),
+                                    claim["number"])
         self.assertIn("0 tokens", build.plain_text(slides["worked-example"]["inner"]))
-        self.assertIn("PLANNED, NOT RUNNING", build.plain_text(slides["memory-systems"]["inner"]))
-        self.assertTrue(any(claim["status"] == "planned" for claim in claims if claim["slide"] == "memory-systems"))
-        # Every claim status, illustration included, has its own label style in the notes.
+        self.assertIn("agora.ta-amps.workers.dev/feeds/memory-systems", build.plain_text(slides["memory-systems"]["inner"]))
         css = (build.SITE / "assets" / "viewer.css").read_text(encoding="utf-8")
         for status in build.CLAIM_STATUSES:
             self.assertIn(f".claim-status.{status} {{", css, status)
@@ -376,18 +340,27 @@ class Builder(unittest.TestCase):
                 with self.assertRaises(build.BuildError):
                     build.load_slide(folder, "b", brief="text", endpoints=endpoints)
 
-    def test_slide_links_use_names_that_moved_pages_can_point_to(self):
+    def test_moved_pages_point_to_places_that_exist(self):
         for item in self.nouns.moved["pages"]:
             path, _, anchor = item["to"].partition("#")
+            target = build.SITE / path / "index.html"
+            page = self.outputs.get(target) or target.read_text(encoding="utf-8")
             if anchor:
-                self.assertIn(f'class="slide-frame" id="{anchor}"', self.outputs[build.SITE / path / "index.html"])
+                self.assertIn(f'id="{anchor}"', page, item["to"])
+        # The not-found page lists every moved page, and says the old addresses redirect (the worker reads the
+        # same noun), so it never sends anyone to a page that is not there.
+        not_found = self.outputs[build.SITE / "404.html"]
+        for item in self.nouns.moved["pages"]:
+            self.assertIn(f'href="/{html.escape(item["to"])}"', not_found)
+        self.assertIn("301", not_found)
 
     def test_learning_is_a_tab_of_agora_built_from_its_noun(self):
-        # A page of Agora, not a new surface: the header reads Home, Decks, Use cases, Learning, Library.
-        self.assertEqual(["Home", "Decks", "Use cases", "Learning", "Library"],
+        # A page of Agora, not a new surface. October 31 (SiteHeader board): the header reads The film, How it works,
+        # Use cases, Decks, Evidence, and Learning sits in the footer of every page.
+        self.assertEqual(["The film", "How it works", "Use cases", "Decks", "Evidence"],
                          [item["label"] for item in self.nouns.site["nav"]])
         page = self.outputs[build.SITE / "learning" / "index.html"]
-        self.assertIn('<a href="../learning/" aria-current="page">Learning</a>', page)
+        self.assertIn('<li><a href="../learning/">Learning</a></li>', page)
         main = build.main_of(page)
         # Every word the learning page shows, outside the shared header and footer, is a string of its noun.
         written = set(strings(self.nouns.learning))
@@ -401,7 +374,7 @@ class Builder(unittest.TestCase):
         # Every measured result links to public evidence, and the build refuses one that doesn't.
         for item in self.nouns.learning["results"]["items"]:
             self.assertTrue(item["link"].startswith("https://github.com/ta-amps/"), item["model"])
-            self.assertIn(f'href="{html.escape(item["link"])}"', main)
+            self.assertIn(f'href="{html.escape(build.repoint(item["link"], self.nouns.links))}"', main)
         nouns = copy.copy(self.nouns)
         nouns.learning = copy.deepcopy(self.nouns.learning)
         nouns.learning["results"]["items"][0]["link"] = "notes.md"
@@ -424,7 +397,7 @@ class Builder(unittest.TestCase):
     def test_the_library_is_a_page_of_agora_built_from_its_noun(self):
         library, explorer, ecosystem = self.nouns.library, self.nouns.explorer, self.nouns.ecosystem
         page = self.outputs[build.SITE / "library" / "index.html"]
-        self.assertIn('<a href="../library/" aria-current="page">Library</a>', page)
+        self.assertIn('<li><a href="../library/">Library</a></li>', page)
         main = build.main_of(page)
         # Every word the page shows is a string of its nouns. The rest is the measured part: numbers, the commit and
         # its date.
@@ -444,7 +417,7 @@ class Builder(unittest.TestCase):
             places = [section.index(f'<li class="lib-card" id="{pack_id}">') for pack_id in category["packs"]]
             self.assertEqual(sorted(places), places, category["id"])
             for pack_id in category["packs"]:
-                self.assertIn(f'href="{html.escape(packs[pack_id]["url"])}"', section)
+                self.assertIn(f'href="{html.escape(build.repoint(packs[pack_id]["url"], self.nouns.links))}"', section)
                 self.assertIn(f"/tree/{library['source']['commit']}/packs/{pack_id}", packs[pack_id]["url"])
         # The totals shown are the noun's, and every code + tests badge but the legend's is a pack's that ships code.
         for key, value in library["totals"].items():
@@ -571,7 +544,7 @@ class Builder(unittest.TestCase):
                            re.I)
         for slide in deck["slides"]:
             listed = " ".join(claim["number"] for claim in claims if claim["slide"] == slide["name"])
-            for part in (build.plain_text(slide["inner"]), build.plain_text(slide["notes"])):
+            for part in (build.plain_text(without_number(slide["inner"])), build.plain_text(slide["notes"])):
                 for number in re.findall(r"\d+(?:[.,]\d+)?", names.sub(" ", part)):
                     self.assertIn(number, listed, (slide["name"], number))
 
@@ -590,20 +563,42 @@ class Builder(unittest.TestCase):
                                            f'{build.text(ui["letter_keys"])}</label>'), deck["id"])
             self.assertIn(f'<p>{ui["help_html"]}</p>', main)
 
-    def test_links_to_github_forms_say_they_need_a_free_account(self):
-        # Signed-out visitors meet GitHub's sign-in page, so every link to an issue form says what it needs.
+    def test_no_page_links_the_retired_github_organization(self):
+        canonical = {
+            "ta-amps-hackathon",
+            "eranos-public-marketplace-for-public-good-token-burn",
+            "agora-public-overview-architecture-setup-and-contribution",
+            "tessera-infrastructure-work-and-storage-engine",
+            "herma-infrastructure-shim-for-intelligent-agents",
+            "seed-packs-library-of-nouns-and-verbs",
+        }
+        retired = re.compile(
+            r"ta-amps\.github\.io"
+            r"|github\.com/ta-amps(?!/(" + "|".join(re.escape(r) for r in sorted(canonical)) + r")(?:[/.?#\"'\s<)]|\Z))"
+        )
         checked = 0
         for path, page in self.outputs.items():
-            if path.suffix != ".html":
-                continue
-            parser = FormLinks()
-            parser.feed(page)
-            parser.close()
-            for link in parser.links:
+            self.assertIsNone(retired.search(page), path)
+            for href in re.findall(r'\shref="(/source/[^"]*)"', page):
                 checked += 1
-                self.assertTrue(any(re.search(r"\bfree\b.*\baccount\b", text, re.I | re.S) for text in link["context"]),
-                                (path.relative_to(build.ROOT).as_posix(), link["href"]))
-        self.assertGreaterEqual(checked, 5)
+                self.assertRegex(href, r"^/source/(?:[a-z0-9-]+(?:\.tar\.gz|/(?:[0-9a-f]{12}/.*)?)?)?$", path)
+        self.assertGreaterEqual(checked, 100)
+        links = self.nouns.links
+        self.assertEqual(set(links["heads"]), canonical)
+        for sha in list(links["heads"].values()) + list(links["pulls"].values()):
+            self.assertRegex(sha, r"^[0-9a-f]{40}$")
+        tess_sha12 = links["heads"]["tessera-infrastructure-work-and-storage-engine"][:12]
+        self.assertEqual(f"/source/tessera-infrastructure-work-and-storage-engine/{tess_sha12}/docs/x.md",
+                         build.repoint("https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/x.md", links))
+        with self.assertRaises(build.BuildError):
+            build.repoint("https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/tree/some-branch/x", links)
+        with self.assertRaises(build.BuildError):
+            build.repoint("https://github.com/ta-amps/another-repo", links)
+        for version in self.nouns.manifest["versions"]:
+            for download in version.get("downloads", []):
+                if "url" in download:
+                    self.assertTrue(build.repoint(download["url"], links).startswith(
+                        "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/releases/download/"))
 
     def test_the_film_page_is_its_transcript_and_says_there_is_no_described_cut(self):
         film, home = self.nouns.film, self.nouns.home
@@ -611,14 +606,27 @@ class Builder(unittest.TestCase):
         self.assertIn("transcript and scene descriptions", film["heading"].lower())
         self.assertIn(f"<h1>{build.text(film['heading'])}</h1>", page)
         self.assertIn(f'<p class="dateline">{build.text(film["audio_description"])}</p>', page)
-        self.assertIn("audio-described cut is not available yet", film["audio_description"])
+        self.assertIn("no separate audio-described cut", film["audio_description"])
         self.assertIn("transcript", home["videos"]["outline"]["label"].lower())
         self.assertIn(f'<a href="film/">{build.text(home["videos"]["outline"]["label"])}</a>',
                       self.outputs[build.SITE / "index.html"])
-        # A transcript is the narration word for word: the film noun's lines are the full cut's captions.
         full = next(cut for cut in home["videos"]["cuts"] if cut["id"] == "full")
-        captions = (build.SITE / full["captions"]).read_text(encoding="utf-8")
+        captions = build.plain_words((build.SITE / full["captions"]).read_text(encoding="utf-8"))
         self.assertEqual(caption_words(captions), plain_words(" ".join(line["words"] for line in film["lines"])))
+
+    def test_october_31_judges_status_feeds_scenarios_and_trust_pages(self):
+        for rel in ("judges/index.html", "status/index.html", "feeds/index.html",
+                    "scenarios/index.html", "security/index.html", "accessibility/index.html"):
+            page = self.outputs[build.SITE / rel]
+            self.assertEqual(1, page.count("<h1"), rel)
+            self.assertNotIn("synthetic", page.lower(), rel)
+            self.assertNotIn("dedicated cloud workers", page.lower(), rel)
+        status_json = json.loads(self.outputs[build.SITE / "status.json"])
+        self.assertTrue(status_json["ok"])
+        self.assertEqual("agora", status_json["surface"])
+        sec_txt = self.outputs[build.SITE / ".well-known" / "security.txt"]
+        self.assertIn("Contact: https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/security/advisories/new", sec_txt)
+        self.assertIn("Policy: https://agora.ta-amps.workers.dev/security/", sec_txt)
 
     def test_the_film_page_says_its_storyboard_is_the_draft_runs(self):
         # Hunt, October 30: the page said the storyboard was drawn from the production run, but the image is
@@ -637,7 +645,7 @@ class Builder(unittest.TestCase):
     def test_the_footer_privacy_line_comes_from_its_noun_and_matches_what_the_pages_load(self):
         privacy = self.nouns.site["footer"]["privacy"]
         for path, page in self.outputs.items():
-            if path.suffix == ".html":
+            if path.suffix == ".html" and "<!-- site:footer -->" in page:
                 self.assertEqual(1, page.count(f'<p class="footer-privacy">{build.text(privacy)}</p>'), path)
         # "Fonts load from Google Fonts": the only outside hosts any current page loads anything from.
         loads = re.compile(r'<(?:link|script|img|video|source|track|iframe)\b[^>]*?\s(?:href|src)="(https?://[^"/]+)', re.I)
@@ -647,6 +655,23 @@ class Builder(unittest.TestCase):
         # "No analytics, ads or cookies", and "display choices stay in this browser": the scripts set no cookie,
         # send nothing, and keep only these display choices in local storage.
         scripts = {path.name: path.read_text(encoding="utf-8") for path in (build.SITE / "assets").glob("*.js")}
+        # The shared agent banner can read its noun from a src address, as Eranos does; on Agora the noun is
+        # embedded in the page and no banner has a src, so that one fetch never runs here.
+        banner_script = scripts.pop("agent-banner.js")
+        # The judge tour can read its noun from a src address too; on Agora it is embedded and no tour has a src.
+        tour_script = scripts.pop("judge-tour.js")
+        self.assertEqual(1, len(re.findall(r"\bfetch\(", tour_script)))
+        self.assertIsNone(re.search(r"\b(XMLHttpRequest|sendBeacon|WebSocket|localStorage)\b", tour_script))
+        for path, page in self.outputs.items():
+            if path.suffix == ".html":
+                self.assertIsNone(re.search(r"<ta-judge-tour\b[^>]*\ssrc=", page), path)
+        self.assertEqual(1, len(re.findall(r"\bfetch\(", banner_script)))
+        self.assertIsNone(re.search(r"\b(XMLHttpRequest|sendBeacon|WebSocket)\b", banner_script))
+        self.assertNotIn("cookie", banner_script.lower())
+        self.assertNotIn("localStorage", banner_script)
+        for path, page in self.outputs.items():
+            if path.suffix == ".html":
+                self.assertIsNone(re.search(r"<ta-agent-banner\b[^>]*\ssrc=", page), path)
         stored = set()
         for name, script in scripts.items():
             self.assertNotIn("cookie", script.lower(), name)

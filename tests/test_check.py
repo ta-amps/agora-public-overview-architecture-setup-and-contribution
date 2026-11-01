@@ -241,13 +241,13 @@ class SiteChecks(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             site = root / "site"
-            page(site / "index.html", '<a href="docs/">Docs</a><a href="/agora-public-overview-architecture-setup-and-contribution/docs/#top">Top</a><p id="here"></p>')
+            page(site / "index.html", '<a href="docs/">Docs</a><a href="/docs/#top">Top</a><p id="here"></p>')
             page(site / "docs/index.html", '<h1 id="top">Docs</h1><a href="../#here">Back</a>')
             pages = check.site_pages(site)
             for path in pages:
                 check.site_links(path, site, pages, root)
             for body in ('<a href="missing/">x</a>', '<a href="../outside.html">x</a>', '<a href="#nowhere">x</a>',
-                         '<a href="docs/#nowhere">x</a>', '<a href="/elsewhere/">x</a>'):
+                         '<a href="docs/#nowhere">x</a>', '<a href="/elsewhere/">x</a>', '<a href="/../outside.html">x</a>'):
                 page(site / "bad.html", body)
                 pages = check.site_pages(site)
                 with self.assertRaises(ValueError):

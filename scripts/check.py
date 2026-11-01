@@ -21,10 +21,29 @@ SENSITIVE = {
     "local home path": re.compile(r"/(?:home|Users)/[A-Za-z0-9_.-]+/"),
     "credential URL": re.compile(r"https?://[^/\s]+:[^/\s]+@"),
 }
-BINARY_SUFFIXES = {".pdf", ".pptx", ".mp4", ".png"}
-MEDIA_MAGIC = {".mp4": lambda b: b[4:8] == b"ftyp", ".png": lambda b: b.startswith(b"\x89PNG\r\n\x1a\n")}
+BINARY_SUFFIXES = {".pdf", ".pptx", ".mp4", ".png", ".ttf", ".zip"}
+MEDIA_MAGIC = {
+    ".mp4": lambda b: b[4:8] == b"ftyp",
+    ".png": lambda b: b.startswith(b"\x89PNG\r\n\x1a\n"),
+    ".ttf": lambda b: b[:4] in {b"\x00\x01\x00\x00", b"OTTO", b"true"},
+}
 RELEASE_PREFIX = "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/releases/download/"
-PAGES_PREFIX = "/agora-public-overview-architecture-setup-and-contribution/"
+PAGES_PREFIX = "/"
+# Paths the deploy bundle adds next to the site: the source mirror, its file views and the git mirrors. The bundle
+# builder writes them from committed refs and fails on any link into them that does not resolve.
+DEPLOY_PATHS = ("source", "git")
+CANONICAL_GITHUB_REPOS = (
+    "agora-public-overview-architecture-setup-and-contribution",
+    "eranos-public-marketplace-for-public-good-token-burn",
+    "herma-infrastructure-shim-for-intelligent-agents",
+    "seed-packs-library-of-nouns-and-verbs",
+    "ta-amps-hackathon",
+    "tessera-infrastructure-work-and-storage-engine",
+)
+RETIRED_HOSTS = re.compile(
+    r"ta-amps\.github\.io"
+    r"|github\.com/ta-amps(?!/(" + "|".join(re.escape(r) for r in CANONICAL_GITHUB_REPOS) + r")(?:[/.?#\"'\s<)]|\Z))"
+)
 HTML_REF = re.compile(r'\s(?:href|src)="([^"]*)"')
 HTML_ID = re.compile(r'\sid="([^"]+)"')
 PROVENANCE = re.compile(r'\sdata-provenance="[^"]*"')
@@ -206,8 +225,11 @@ def deck_download(download: dict, site: Path) -> str | None:
     if "path" not in download:
         require(download["url"].startswith(RELEASE_PREFIX),
                 "deck downloads need a public release URL and content hash")
+        require(type(download.get("bytes")) is int and download["bytes"] > 0,
+                "release deck downloads need their recorded byte size")
         return None
-    file = (site / download["path"]).resolve()
+    else:
+        file = (site / download["path"]).resolve()
     require(file.is_relative_to(site.resolve()) and file.is_file(), "deck download missing from the static site")
     data = file.read_bytes()
     require(hashlib.sha256(data).hexdigest() == download["sha256"] and len(data) == download["bytes"],
@@ -265,6 +287,8 @@ def site_links(page: Path, site: Path, pages: dict[Path, set[str]], root: Path,
             require(not path.startswith("/"), "site link outside the Pages path in " + where + ": " + target)
             local = page.parent / path
         local = local.resolve()
+        if local.is_relative_to(site.resolve()) and local.relative_to(site.resolve()).parts[:1] in {(p,) for p in DEPLOY_PATHS}:
+            continue  # checked by the bundle builder, which writes these paths
         if path.endswith("/") or local.is_dir():
             local = local / "index.html"
         if local in moved and not local.is_file():
@@ -361,6 +385,15 @@ def check(root: Path = ROOT) -> dict:
                 "media must retain draft status")
         for item in listing["items"]:
             declared.add(media_item(item, media.parent))
+    links = root / "site/content/source-links.json"
+    if links.exists():
+        for item in load(links).get("release_files", []):
+            file = (root / "site" / item["path"]).resolve()
+            require(file.is_relative_to((root / "site").resolve()) and file.is_file(), "release file missing: " + item["path"])
+            blob = file.read_bytes()
+            require(hashlib.sha256(blob).hexdigest() == item["sha256"] and len(blob) == item["bytes"],
+                    "release file changed without updating its recorded hash: " + item["path"])
+            declared.add(item["path"])
     files = [p for p in root.rglob("*") if p.is_file() and not SKIP.intersection(p.relative_to(root).parts)]
     site = root / "site"
     for path in files:
@@ -386,6 +419,16 @@ def check(root: Path = ROOT) -> dict:
         moved = moved_pages(load(moved_list), site, pages) if moved_list.exists() else frozenset()
         for page in pages:
             site_links(page, site, pages, root, moved if page in frozen else frozenset())
+            rel = page.relative_to(site.resolve() if page.is_absolute() else site).parts
+            if page not in frozen and "source" not in rel and not any(f.parent in page.parents for f in frozen):
+                # F31-014: the GitHub organization and its Pages sites answer 404; pages link the source mirror.
+                # Deck sources keep the old addresses as provenance; the build repoints them in the pages.
+                body = page.read_text(encoding="utf-8")
+                require(RETIRED_HOSTS.search(body) is None,
+                        "a page links the retired GitHub organization: " + page.relative_to(site).as_posix())
+        if (site / "llms.txt").exists():
+            require(RETIRED_HOSTS.search((site / "llms.txt").read_text(encoding="utf-8")) is None,
+                    "llms.txt links the retired GitHub organization")
     report = (root / "docs/status.md").read_text(encoding="utf-8")
     for repo in data["repositories"]:
         require(repo["main_revision"] in report, "status page missing exact revision")

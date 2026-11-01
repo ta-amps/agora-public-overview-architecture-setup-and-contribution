@@ -1,0 +1,211 @@
+{
+  "about": "Modular deployment and self-hosting guide for running any slice of ta-amps on Cloudflare Workers + D1 + Pages, Docker / VPS / Fly.io, local SQLite, GPU inference stacks (Kaggle 2xT4, vLLM, local PEFT, api.meta.ai), and partner compute cards.",
+  "title": "Deploy and Self-Host - ta-amps",
+  "description": "Step-by-step deployment guides for running ta-amps seed packs, Tessera, Herma, Eranos, and Agora on Cloudflare Workers and D1, Docker Compose, Fly.io, VPS hosts, custom GPU endpoints, or partner compute.",
+  "heading": "Deploy any slice on Cloudflare, Docker, or your own servers",
+  "lead": "You do not have to adopt the whole stack at once. Start with zero-server seed packs inside an existing coding agent, deploy a private Tessera and Herma edge pair on Cloudflare's free tier, run air-gapped via Docker Compose, or attach custom Meta open-weight LoRAs.",
+  "dateline": "Modular self-hosting guide · October 31, 2026 · MIT license",
+  "quick_links": [
+    {
+      "label": "Partner compute cards",
+      "href": "deploy/#partners"
+    },
+    {
+      "label": "Open Interactive Live Studio",
+      "href": "studio/"
+    },
+    {
+      "label": "Walkthroughs & Trace Gallery",
+      "href": "film/compare/"
+    },
+    {
+      "label": "Live Meta API E2E Receipt",
+      "href": "evidence/real-e2e-meta-2026-10-31/public-e2e-receipt.json"
+    },
+    {
+      "label": "Open-Source Code Archive (.tar.gz)",
+      "href": "https://agora.ta-amps.workers.dev/source/"
+    },
+    {
+      "label": "Muse Glimmer 30B LoRA-as-Memory Chart",
+      "href": "evidence/glimmer-30b-lora-memory-2026-10-31/glimmer-30b-lora-memory.svg"
+    },
+    {
+      "label": "Partner Compute Cascade Receipt",
+      "href": "evidence/sira-are-cascade-2026-10-31/partner_compute_cascade.json"
+    },
+    {
+      "label": "1,000-Scenario Matrix",
+      "href": "scenarios/"
+    }
+  ],
+  "copy_labels": {
+    "copy": "Copy commands",
+    "copied": "Copied",
+    "selected": "Selected",
+    "status_copied": "Commands copied to clipboard.",
+    "status_selected": "Commands selected. Press Ctrl+C or Command+C to copy."
+  },
+  "slices": {
+    "heading": "1. Choose only the slice you need",
+    "lead": "Every layer speaks plain HTTP JSON and JSON-RPC 2.0 MCP, so each component can run on Cloudflare, a Linux container, or local loopback without changing agent prompts.",
+    "items": [
+      {
+        "id": "slice-packs",
+        "badge": "0 servers · 60 seconds",
+        "title": "Slice A: Seed packs only (local agent harnesses)",
+        "summary": "Pull any seed pack of task objects (nouns.json), task templates (verbs.json), and stdlib Python verifiers straight into Muse Code, Claude Code, OpenCode, Codex, Cursor, or Pi.",
+        "when": "Best when you want reusable schemas, deterministic QA checks, or nonprofit agent kits without hosting any backend.",
+        "code_id": "cmd-slice-packs",
+        "commands": "# Clone from GitHub (or unpack /source/seed-packs-library-of-nouns-and-verbs.tar.gz):\ngit clone https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs.git\ncd seed-packs-library-of-nouns-and-verbs\npython3 scripts/validate_packs.py\n# Run any pack's standalone verifier (stdlib Python, zero cloud keys):\nmake -C packs/frame-by-frame-video-qa/code check"
+      },
+      {
+        "id": "slice-cloudflare",
+        "badge": "Cloudflare Free Tier · ~5 minutes",
+        "title": "Slice B: Tessera + Herma on Cloudflare Workers, Durable Objects & D1",
+        "summary": "Deploy your own leased-task and versioned-object engine (Tessera) plus context-injection shim (Herma) on Cloudflare's global edge with zero idle cost.",
+        "when": "Best for teams, labs, or NGOs wanting an always-on HTTPS and MCP endpoint (*.workers.dev or custom domain) with atomic lease fencing and CAS storage.",
+        "code_id": "cmd-slice-cf",
+        "commands": "# 1. Authenticate Wrangler to your Cloudflare account\nnpx wrangler login\n\n# 2. Deploy Tessera (Durable Object SQLite work + CAS store + /mcp endpoint)\ncurl -fsSLO https://agora.ta-amps.workers.dev/source/tessera-infrastructure-work-and-storage-engine.tar.gz\ntar -xzf tessera-infrastructure-work-and-storage-engine.tar.gz\ncd tessera-infrastructure-work-and-storage-engine\nopenssl rand -hex 32 | npx wrangler secret put TESSERA_ADMIN_TOKEN\nnpx wrangler deploy\n\n# 3. Deploy Herma (Cloudflare Worker + D1 provision search & context shim)\ncd ..\ncurl -fsSLO https://agora.ta-amps.workers.dev/source/herma-infrastructure-shim-for-intelligent-agents.tar.gz\ntar -xzf herma-infrastructure-shim-for-intelligent-agents.tar.gz\ncd herma-infrastructure-shim-for-intelligent-agents\nnpx wrangler d1 create herma-provisions\n# Paste the returned database_id into wrangler.toml, apply schema, and deploy:\nnpx wrangler d1 migrations apply herma-provisions --remote\nnpx wrangler deploy"
+      },
+      {
+        "id": "slice-docker",
+        "badge": "Docker / VPS / Fly.io · Air-gapped ready",
+        "title": "Slice C: Self-hosted Docker Compose, VPS, Fly.io, or Kubernetes",
+        "summary": "Run the Tessera reference server, seed-pack verifier, and Agora static docs locally or on any Linux VM (Fly.io, Railway, Render, Hetzner, AWS ECS) with persistent SQLite volumes.",
+        "when": "Best for strict data residency, internal CI pipelines, offline demos, or sovereign self-hosting outside Cloudflare.",
+        "code_id": "cmd-slice-docker",
+        "commands": "# Clone from GitHub (or unpack /source/ta-amps-hackathon.tar.gz):\ngit clone https://github.com/ta-amps/ta-amps-hackathon.git\ncd ta-amps-hackathon\n\n# Build and boot local services with persistent volume storage:\ndocker compose up --build -d\n\n# Verify local health and static site:\ncurl -fsS http://127.0.0.1:8787/v1/health || curl -fsS http://127.0.0.1:8080/"
+      },
+      {
+        "id": "slice-gpu",
+        "badge": "Kaggle 2xT4 / vLLM / api.meta.ai",
+        "title": "Slice D: Custom Meta open-weight LoRAs & GPU model serving",
+        "summary": "Train QLoRA adapters on verified Tessera traces using free Kaggle 2x Tesla T4 GPUs (Muse Glimmer 30B: 93.3% -> 99.3% tool specialist; 0.0% -> 62.5% closed-book LoRA-as-Memory at 2.28x lower latency vs BM25 shim) or a local 12 GB GPU (Llama 3.2 modular LoRAs), then serve via vLLM or pair with governed api.meta.ai contributor endpoints.",
+        "when": "Best when converting verified task traces into low-latency shim routers, modular role-switched LoRAs (decompose/retrieve/build/review), or closed-book LoRA-as-Memory adapters.",
+        "code_id": "cmd-slice-gpu",
+        "commands": "# 1. Serve base open weights + hot-swappable modular ta-amps LoRA adapters via vLLM:\nvllm serve meta-llama/Llama-3.2-3B-Instruct \\\n  --enable-lora \\\n  --lora-modules shim-router=./training/adapters/llama-3.2-1b-lora \\\n                 builder=./training/adapters/llama-3.2-3b-builder \\\n                 reviewer=./training/adapters/llama-3.2-3b-reviewer \\\n  --port 8000\n\n# 2. Train Muse-Glimmer-30B LoRA-as-Memory across 2x Tesla T4 (32 GB VRAM, $0 spend) on Kaggle:\nkaggle kernels push -p training/kaggle-glimmer-lora/\n\n# 3. Run governed multi-harness E2E (Muse Code builder != nanoMuse reviewer) on api.meta.ai:\n# Enforces muse-spark-1.3-contributor ONLY on example/public data (HTTP 403 on private scopes):\nMETA_API_MODEL=muse-spark-1.3-contributor python3 examples/meta_stack/run_governed_e2e.py"
+      }
+    ]
+  },
+  "partners": {
+    "kicker": "Agora · Deploy · Partner compute",
+    "heading": "2. The same tasks, on partner compute",
+    "lead": "A task does not care where it runs. These cards show what each partner does in the system, the commands to run it with your own account, and what has actually been checked. Each status line comes from a receipt.",
+    "cards": [
+      {
+        "id": "partner-modal",
+        "name": "Modal",
+        "kind": "serverless GPUs",
+        "role": "Re-runs a seed pack's tests in an isolated sandbox, and fine-tunes Meta's open-weight models with QLoRA.",
+        "status_title": "Last check: offline, Oct 31",
+        "status_text": "No Modal account is connected here, so no remote job ran. The code, NF4 memory math (19.7 GiB Muse Glimmer 30B on A100-40GB; 4.1 GiB Llama 3.2 3B on L4), and rules were checked on our machine.",
+        "checked_title": "Checked offline",
+        "checked": [
+          "Training settings for Llama 3.2 3B and Muse Glimmer 30B fit the chosen GPUs' memory.",
+          "The sandbox contract is valid: no network, read-only inputs.",
+          "The training data passed the 4-gram leakage check."
+        ],
+        "try_heading": "Try it (needs your own Modal account)",
+        "code_id": "cmd-partner-modal",
+        "commands": "modal run packs/partner-compute-cascade/code/partner_cascade/modal_qlora_and_sandbox.py::sandbox_verify_pack --pack-id meta-are-scenario-matrix\nmodal run packs/partner-compute-cascade/code/partner_cascade/modal_qlora_and_sandbox.py::train_qlora --model-name Muse-Glimmer-30B",
+        "receipt_label": "cascade receipt 1c37b8137806…",
+        "receipt_href": "evidence/sira-are-cascade-2026-10-31/partner_compute_cascade.json"
+      },
+      {
+        "id": "partner-baseten",
+        "name": "Baseten",
+        "kind": "model serving",
+        "role": "Runs many workers at once on Meta's open-weight models (such as meta-models/muse-spark-open), paced to stay under the account's tokens-a-minute limit.",
+        "status_title": "Last check: offline, Oct 31",
+        "status_text": "No Baseten account is connected here, so no remote job ran. The token-bucket pacing rules and lease-fencing checks ran deterministically on our machine.",
+        "checked_title": "Checked offline",
+        "checked": [
+          "The pacing logic held a 14-claim burst under the 2,000,000 tokens-a-minute ceiling (1,980,000 peak).",
+          "Retried HTTP 429 requests stay in the ledger with their receipts.",
+          "Fenced or expired leases are refused before any call."
+        ],
+        "try_heading": "Check locally (0 keys) or run with your own Baseten key",
+        "code_id": "cmd-partner-baseten",
+        "commands": "PYTHONPATH=packs/partner-compute-cascade/code python3 -m partner_cascade\nBASETEN_API_KEY=... PYTHONPATH=packs/partner-compute-cascade/code python3 -m partner_cascade",
+        "receipt_label": "burst receipt 0f70ff7ab8ec…",
+        "receipt_href": "evidence/sira-are-cascade-2026-10-31/partner_compute_cascade.json"
+      },
+      {
+        "id": "partner-fireworks",
+        "name": "Fireworks AI",
+        "kind": "fast inference",
+        "role": "Routes a task to a small specialist adapter (multi-LoRA) behind Herma, with a different adapter as the checker.",
+        "status_title": "Last check: offline, Oct 31",
+        "status_text": "No Fireworks AI account is connected here, so no remote job ran. Specialist multi-LoRA routing and distinct-checker rules were checked on our machine.",
+        "checked_title": "Checked offline",
+        "checked": [
+          "The routing rule picked the specialist adapter within Herma's 2 ms budget.",
+          "A worker checking its own output was blocked.",
+          "Personal data in an answer was escalated, not passed on."
+        ],
+        "try_heading": "Check locally (0 keys) or run with your own Fireworks key",
+        "code_id": "cmd-partner-fireworks",
+        "commands": "make -C packs/partner-compute-cascade/code check\nFIREWORKS_API_KEY=... PYTHONPATH=packs/partner-compute-cascade/code python3 -m partner_cascade",
+        "receipt_label": "routing receipt 9b8ad34a6f1e…",
+        "receipt_href": "evidence/sira-are-cascade-2026-10-31/partner_compute_cascade.json"
+      }
+    ],
+    "notes": [
+      {
+        "heading": "What the cards never do",
+        "text": "Show a cost, speed or training result that no live run measured, a partner logo, or a credit amount."
+      },
+      {
+        "heading": "Where the status comes from",
+        "text": "partner-compute-telemetry-cards: each card reads its mode (offline check or live run) and receipt from the cascade record. Live GPU fine-tuning runs recorded during the hackathon ran on free Kaggle 2x Tesla T4 notebooks and a local RTX 3060."
+      }
+    ]
+  },
+  "surfaces": {
+    "heading": "3. Deploying public or internal surfaces (Agora & Eranos)",
+    "lead": "Surfaces stay stateless and never hold admin keys. You can host Agora or Eranos on Cloudflare Pages, Cloudflare Workers, or any static/reverse-proxy host.",
+    "items": [
+      {
+        "title": "Agora static hub (Cloudflare Pages, Cloudflare Workers, or Nginx)",
+        "detail": "Agora compiles purely from JSON nouns in site/content/ using stdlib Python (zero npm runtime). Deploy the site/ directory to Cloudflare Pages, Workers Static Assets, or Nginx.",
+        "code_id": "cmd-surface-agora",
+        "commands": "curl -fsSLO https://agora.ta-amps.workers.dev/source/agora-public-overview-architecture-setup-and-contribution.tar.gz\ntar -xzf agora-public-overview-architecture-setup-and-contribution.tar.gz\ncd agora-public-overview-architecture-setup-and-contribution\npython3 scripts/build_site.py --check\n\n# Option 1: Deploy to Cloudflare Pages\nnpx wrangler pages deploy site --project-name=agora-hub\n\n# Option 2: Serve via Docker on port 8080\ndocker build -t ta-amps-agora . && docker run --rm -p 8080:8080 ta-amps-agora"
+      },
+      {
+        "title": "Eranos marketplace surface (Cloudflare Worker + D1 + scoped Tessera token)",
+        "detail": "Eranos talks to Tessera using a scoped surface token (X-Surface-Id: eranos) so untrusted visitors can browse verified kits or open held_for_person requests without touching admin stores.",
+        "code_id": "cmd-surface-eranos",
+        "commands": "curl -fsSLO https://agora.ta-amps.workers.dev/source/eranos-public-marketplace-for-public-good-token-burn.tar.gz\ntar -xzf eranos-public-marketplace-for-public-good-token-burn.tar.gz\ncd eranos-public-marketplace-for-public-good-token-burn\nnpm ci && npm test\n\n# Configure your Tessera URL and scoped surface key (never use TESSERA_ADMIN_TOKEN):\nnpx wrangler secret put TESSERA_SURFACE_TOKEN\nnpx wrangler deploy"
+      }
+    ]
+  },
+  "security": {
+    "heading": "4. Production security & isolation checklist",
+    "lead": "Keep these four boundaries intact whenever you deploy your own instance on Cloudflare or self-hosted containers.",
+    "items": [
+      {
+        "name": "Surface keys vs. worker leases",
+        "text": "Give web surfaces a read/submit surface key with X-Surface-Id, and give coding workers narrow queue-scoped keys. Never place TESSERA_ADMIN_TOKEN in browser or surface code."
+      },
+      {
+        "name": "Compare-and-swap (expected_version) writes",
+        "text": "Create new task objects with expected_version: 0 and update existing records with their exact version so concurrent workers receive HTTP 409 Conflict instead of overwriting state."
+      },
+      {
+        "name": "Ephemeral anonymous sandboxes for public demos",
+        "text": "When letting signed-out visitors test live flows (like Live Studio), mint short-lived demo.a_<id> namespaces via POST /v1/session/anonymous with per-IP rate limits and 1-hour TTL."
+      },
+      {
+        "name": "Post-deploy verification probes",
+        "text": "Verify /v1/health, JSON-RPC tools/list on /mcp, and a non-admin surface readback before routing production traffic or agent workers to a new deployment."
+      }
+    ]
+  },
+  "verify": {
+    "heading": "5. Verify any live deployment in 10 seconds",
+    "text": "Point these three curl probes at our public workers.dev stack or replace the base URLs with your own Cloudflare Worker or Docker endpoints.",
+    "code_id": "cmd-verify-stack",
+    "commands": "# 1. Check Tessera health and mint an isolated 1-hour anonymous sandbox namespace\ncurl -fsS https://tessera.ta-amps.workers.dev/v1/health\n\n# 2. Preview Herma context-shim provisions for tasks and task objects\ncurl -fsS -X POST https://herma.ta-amps.workers.dev/api/preview \\\n  -H 'content-type: application/json' \\\n  -d '{\"prompt\":\"How do tasks and task objects work with agent harness feeds?\"}'\n\n# 3. Inspect machine-readable agent discovery brief\ncurl -fsS https://home.ta-amps.workers.dev/llms.txt | head -n 25"
+  }
+}

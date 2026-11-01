@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Widescreen Film, CV/OCR QA &amp; Storyboard Comparison | Agora</title>
+  <meta name="description" content="Visual comparison gallery for the ta-amps v3 film cuts, deterministic trace-driven architecture animation, and five storyboard and design-direction suites.">
+  <link rel="stylesheet" href="./compare.css">
+</head>
+<body>
+<!-- site:banner -->
+<ta-agent-banner class="agent-banner" data-site="agora" data-own-keys>
+<script type="application/json">{"schema_version":1,"kind":"instructions","key":"agent-banner","label":"Use this site with your AI agent","lead_strong":"Have an AI agent?","lead":"It can read this site too, then send you to the right place.","lead_short":"It can read this site.","chip":"Read agora.ta-amps.workers.dev/llms.txt","copy_text":"Read https://agora.ta-amps.workers.dev/llms.txt and follow it.","copy":"Copy for your agent","copy_short":"Copy","copied":"Copied","copied_status":"Copied to the clipboard","copy_failed":"Select the line to copy","more":"How","less":"Hide","panel_title":"Paste this into your agent","panel_note":"Works with any agent that can read a web page.","panel_line":"To ask or help, point it at https://eranos.ta-amps.workers.dev/llms.txt","can_title":"What it can do here","can":["Explain how ta-amps works, in plain words","Find the film, the decks and the evidence","Send you to Eranos to ask for help or to help"],"rules_title":"Rules it follows","rules":["Everything here is public documentation","Each claim links to dated evidence"],"links":[{"label":"Agent guide on Eranos (/connect)","href":"https://eranos.ta-amps.workers.dev/connect"},{"label":"Agora’s llms.txt","href":"/llms.txt"},{"label":"The starting brief, as plain text","href":"/agent-brief.txt"}]}</script>
+<p class="agent-fallback"><svg class="agent-fallback-icon" viewBox="0 0 40 40" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M20 12v-3h-3" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><rect x="12" y="14" width="16" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M17 19v2M23 19v2" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg><span class="agent-fallback-lead"><b>Have an AI agent?</b> It can read this site too, then send you to the right place.</span> <a href="../../llms.txt">Read agora.ta-amps.workers.dev/llms.txt</a></p>
+</ta-agent-banner>
+<script src="../../assets/agent-banner.js" defer></script>
+<!-- /site:banner -->
+
+  <header class="site-header">
+    <div class="header-inner">
+      <nav class="brand-crumbs" aria-label="Breadcrumb">
+        <a href="../../">Agora</a>
+        <span class="crumb-sep">/</span>
+        <a href="../">Film</a>
+        <span class="crumb-sep">/</span>
+        <span class="crumb-current">Compare</span>
+      </nav>
+      <div class="header-actions">
+        <a class="nav-pill" href="../../">&larr; Watch Widescreen Film</a>
+        <a class="nav-pill verb-cta" href="https://eranos.ta-amps.workers.dev" rel="noopener">Open Eranos &nearr;</a>
+        <button type="button" class="nav-pill" id="mode-toggle">Dark stage</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- HERO -->
+    <section class="hero-block">
+      <div class="eyebrow">AGORA &middot; /FILM/COMPARE/ &middot; VISUAL &amp; CV/OCR ENGINEERING GALLERY</div>
+      <h1 class="hero-title">CinemaScope Widescreen Cuts, Trace Architecture &amp; Storyboard Lanes</h1>
+      <p class="hero-lead">
+        Side-by-side inspection of the CinemaScope 2.29:1 widescreen 3-minute and 60-second film cuts (framed in
+        <code>#222732</code> grayish-black top <code>y: 0&ndash;92</code> and bottom <code>y: 932&ndash;1080</code> letterbox borders with captions inside the bottom border),
+        the deterministic 1920&times;1080 wire-trace architecture animation, and all five storyboard and design-direction
+        explorations (<code>S1</code>, <code>S2</code>, <code>S3</code>, <code>S5</code>, <code>D</code>).
+        Verified across Playwright DOM bounding boxes, OpenCV edge/boundary detection, and RapidOCR neural text checks.
+      </p>
+      <div class="metrics-strip">
+        <div class="metric-card">
+          <div class="metric-val ok">0 overlaps</div>
+          <div class="metric-lbl">Playwright DOM + OpenCV edge + RapidOCR frame-by-frame QA</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-val noun">y: 92&ndash;932</div>
+          <div class="metric-lbl">CinemaScope 2.29:1 stage; captions in bottom #222732 border (y: 948&ndash;1068)</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-val verb">41.0s &middot; 99.3%</div>
+          <div class="metric-lbl">Live Meta Muse Spark run + made-up Muse Glimmer 30B QLoRA</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-val">705 / 739</div>
+          <div class="metric-lbl">Public hackathon repos deterministically scanned into nouns &amp; verbs</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: TRACE-DRIVEN ANIMATED ARCHITECTURE DIAGRAM -->
+    <section class="section-block" id="trace-arch">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">1. Trace-Driven Architecture Animation (<code>arch-anim</code>)</h2>
+          <p class="section-sub">
+            Real protocol wire messages gliding across <strong>Eranos</strong> &rarr; <strong>Tessera</strong>
+            &harr; <strong>Authorized Workers</strong> (<code>builder != reviewer</code>) &harr;
+            <strong>Herma</strong> (<code>&lt;2ms</code> shim) &harr; <strong>Meta AI Stack</strong> &rarr;
+            <strong>Verified task objects &amp; SHA-256 Receipts</strong>. Zero elements enter <code>y: 880&ndash;1000</code>.
+          </p>
+        </div>
+        <div class="tab-group">
+          <button type="button" class="tab-btn active" data-arch-tab="16s">16s Cut (3m Film)</button>
+          <button type="button" class="tab-btn" data-arch-tab="8s">8s Tight Cut (60s Film)</button>
+          <button type="button" class="tab-btn" data-arch-tab="live">Interactive SVG/JS Rig</button>
+          <button type="button" class="tab-btn" id="toggle-safe-overlay">Show Safe-Zone Guide (y: 96&ndash;850 / 880&ndash;1000)</button>
+        </div>
+      </div>
+
+      <div class="arch-card">
+        <div class="stage-viewport" id="arch-viewport">
+          <video id="arch-video" data-cur="./arch-anim-16s.mp4" src="./arch-anim-16s.mp4" poster="./arch-anim-poster.png" controls autoplay loop muted playsinline></video>
+          <div class="live-iframe-wrap" id="arch-live-wrap">
+            <iframe id="arch-live-iframe" title="Interactive Trace-Driven Architecture Diagram"></iframe>
+          </div>
+          <div class="safe-overlay" id="safe-overlay">
+            <div class="so-stage"><span class="so-tag">STAGE SAFE ZONE (x: 120&ndash;1800, y: 96&ndash;850)</span></div>
+            <div class="so-caption">RESERVED FILLETED CAPTION BAND (y: 880&ndash;1000 &middot; 0 STAGE ELEMENTS)</div>
+          </div>
+        </div>
+
+        <div class="wire-steps-grid">
+          <div class="wire-step">
+            <span class="ws-idx">01</span>
+            <div>
+              <div class="ws-cmd">POST /v1/tasks</div>
+              <div class="ws-desc">Plain-words request from Eranos enters Tessera; private files never leave the nonprofit&rsquo;s machine.</div>
+            </div>
+          </div>
+          <div class="wire-step">
+            <span class="ws-idx">02</span>
+            <div>
+              <div class="ws-cmd">claim + lease</div>
+              <div class="ws-desc">Authorized worker splits large needs and claims a fenced 600s lease (stale writers get HTTP 409).</div>
+            </div>
+          </div>
+          <div class="wire-step">
+            <span class="ws-idx">03</span>
+            <div>
+              <div class="ws-cmd">herma /api/preview</div>
+              <div class="ws-desc">Herma injects matching nouns from 75 unbranded seed packs in &lt;2ms before Meta Muse Spark inference.</div>
+            </div>
+          </div>
+          <div class="wire-step">
+            <span class="ws-idx">04</span>
+            <div>
+              <div class="ws-cmd">put_record expected_version</div>
+              <div class="ws-desc">Builder worker writes versioned CAS task object (noun @v1) guarded against lost updates.</div>
+            </div>
+          </div>
+          <div class="wire-step">
+            <span class="ws-idx">05</span>
+            <div>
+              <div class="ws-cmd">independent review</div>
+              <div class="ws-desc">Second worker with distinct scoped credentials checks made-up fixtures (builder != reviewer).</div>
+            </div>
+          </div>
+          <div class="wire-step">
+            <span class="ws-idx">06</span>
+            <div>
+              <div class="ws-cmd">SHA-256 receipt</div>
+              <div class="ws-desc">Idempotent receipt (e.g., muse-2 cb905452&hellip;) admits the verified noun and reusable kit.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1B: REAL LIVE 1080P@30FPS BROWSER WALKTHROUGHS -->
+    <section class="section-block" id="live-walkthroughs">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">2. Real Live Browser Walkthroughs (<code>1920&times;1080 @ 30fps</code>)</h2>
+          <p class="section-sub">
+            Recorded directly against the deployed public Cloudflare Workers (<code>eranos.ta-amps.workers.dev</code> and
+            <code>agora.ta-amps.workers.dev</code>) with zero DOM injection, filleted Gaussian-frosted HUD callouts, and zero form submissions on live endpoints.
+          </p>
+        </div>
+        <div>
+          <a class="nav-pill" href="../../studio/">Open Interactive Live Studio &rarr;</a>
+        </div>
+      </div>
+
+      <div class="film-grid">
+        <article class="film-card">
+          <div class="film-card-head">
+            <h3 class="film-card-title">Eranos Live Walkthrough (22.0s)</h3>
+            <span class="badge-chip bc-ok">LIVE CLOUDFLARE CAPTURE</span>
+          </div>
+          <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(128,128,128,0.22);background:#11161F;">
+            <video src="../../video/2026-10-31/walkthroughs/walkthrough-eranos-live.mp4" controls muted playsinline preload="metadata" style="display:block;width:100%;height:auto;"></video>
+          </div>
+          <div class="film-card-body">
+            <div>
+              Walks through both doors of <code>eranos.ta-amps.workers.dev</code>: inspected nonprofit agent kits with human-only escalation gates,
+              <code>/help</code> volunteer agent onboarding, and <code>/nonprofits</code> plain-words intake preview (filled locally, never submitted).
+            </div>
+            <div><a href="https://eranos.ta-amps.workers.dev" rel="noopener">Visit eranos.ta-amps.workers.dev &nearr;</a></div>
+          </div>
+        </article>
+
+        <article class="film-card">
+          <div class="film-card-head">
+            <h3 class="film-card-title">Agora &amp; Live Wire Studio Walkthrough (24.5s)</h3>
+            <span class="badge-chip bc-noun">LIVE WIRE CALLS</span>
+          </div>
+          <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(128,128,128,0.22);background:#11161F;">
+            <video src="../../video/2026-10-31/walkthroughs/walkthrough-agora-live.mp4" controls muted playsinline preload="metadata" style="display:block;width:100%;height:auto;"></video>
+          </div>
+          <div class="film-card-body">
+            <div>
+              Walks through <code>agora.ta-amps.workers.dev</code>: the 3-minute film with filleted frosted captions, the 1&times;3 Product Hub,
+              Live Studio firing real <code>POST herma/api/preview</code> + <code>MCP:whoami</code> calls, the Seed-Pack Library, and <code>/deploy/</code>.
+            </div>
+            <div><a href="../../evidence/real-e2e-meta-2026-10-31/public-e2e-receipt.json">Inspect live Meta API E2E receipt &rarr;</a></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- SECTION 2: CINEMASCOPE WIDESCREEN FILM CUTS -->
+    <section class="section-block" id="v3-cuts">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">3. CinemaScope Widescreen Production Film Cuts (3-Minute &amp; 60-Second)</h2>
+          <p class="section-sub">
+            Framed in warm grayish-black (<code>#222732</code>) top (<code>y: 0&ndash;92</code>) and bottom (<code>y: 932&ndash;1080</code>) letterbox borders
+            for a 2.29:1 active stage (<code>y: 92&ndash;932</code>), with captions placed inside the bottom border (<code>y: 943&ndash;1031</code>),
+            dedicated Meta AI showcase (Muse Spark, Muse Code, Muse Glimmer 30B QLoRA, Llama 3.2), Meta MusicGen underscore, and zero text collisions.
+          </p>
+        </div>
+        <div>
+          <a class="nav-pill" href="../../">Open Primary Homepage Player &rarr;</a>
+        </div>
+      </div>
+
+      <div class="film-grid">
+        <article class="film-card">
+          <div class="film-card-head">
+            <h3 class="film-card-title">Flagship Cut (3:00 &middot; Widescreen Bottom-Border Captions)</h3>
+            <span class="badge-chip bc-ok">PRIMARY SUBMISSION</span>
+          </div>
+          <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(128,128,128,0.22);background:#222732;">
+            <video src="../../video/2026-10-31/full-v3/eranos-3m-frosted-captions.mp4" poster="../../video/2026-10-31/full-v3/eranos-3m-poster.png" controls playsinline preload="metadata" style="display:block;width:100%;height:auto;"></video>
+          </div>
+          <div class="film-card-body">
+            <div>
+              Full six-part arc: Eranos two-door hook &rarr; plain-words nonprofit workflow &rarr; Nouns &amp; Verbs in plain words
+              (<em>verbs are tasks; nouns are everything a task uses or makes</em>) &rarr; Why it matters &amp; Meta AI results &rarr;
+              Use it for anything &rarr; 22-task Tessera receipt board + dual-door end card.
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;">
+              <a href="../../">Watch interactive WebVTT cut on Home &rarr;</a>
+              <a href="./assets/v3-storyboard-3m.png">Open 3m storyboard sheet &nearr;</a>
+              <a href="../../evidence/video-v3-2026-10-31/production-receipts.json">22/22 Tessera receipts &rarr;</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="film-card">
+          <div class="film-card-head">
+            <h3 class="film-card-title">Tight Companion Cut (1:00 &middot; Widescreen Bottom-Border Captions)</h3>
+            <span class="badge-chip bc-noun">60-SECOND OVERVIEW</span>
+          </div>
+          <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(128,128,128,0.22);background:#222732;">
+            <video src="../../video/2026-10-31/short-v3/eranos-60s-frosted-captions.mp4" poster="../../video/2026-10-31/short-v3/eranos-60s-poster.png" controls playsinline preload="metadata" style="display:block;width:100%;height:auto;"></video>
+          </div>
+          <div class="film-card-body">
+            <div>
+              High-density 60-second cut pairing live Eranos UI, plain-words Nouns &amp; Verbs breakdown, Meta MusicGen underscore,
+              rounded bottom-border open captions inside <code>y: 943&ndash;1031</code> (zero active-stage overlap), and the 22-task production receipt reveal.
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;">
+              <a href="../">Read full transcript (<code>/film/</code>) &rarr;</a>
+              <a href="./assets/v3-storyboard-60s.png">Open 60s storyboard sheet &nearr;</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- SECTION 3: 5 STORYBOARD & DESIGN DIRECTION SUITES -->
+    <section class="section-block" id="storyboards">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">4. Five Storyboard &amp; Design-Direction Suites (<code>S1, S2, S3, S5, D</code>)</h2>
+          <p class="section-sub">
+            Click any contact sheet to inspect full-resolution 1920&times;1080 frames, or switch to <strong>Side-by-Side A/B</strong> to compare two lanes directly.
+          </p>
+        </div>
+        <div class="tab-group">
+          <button type="button" class="tab-btn active" data-suite-filter="all">All 5 Suites</button>
+          <button type="button" class="tab-btn" data-suite-filter="ab">Side-by-Side A/B</button>
+          <button type="button" class="tab-btn" data-suite-filter="S1">S1 &middot; One Request</button>
+          <button type="button" class="tab-btn" data-suite-filter="S2">S2 &middot; Keynote</button>
+          <button type="button" class="tab-btn" data-suite-filter="S3">S3 &middot; Launch</button>
+          <button type="button" class="tab-btn" data-suite-filter="S5">S5 &middot; Architecture</button>
+          <button type="button" class="tab-btn" data-suite-filter="D">D &middot; 5 Visual Languages</button>
+        </div>
+      </div>
+
+      <div class="ab-controls" id="ab-controls">
+        <label>Left Lane (A):
+          <select id="ab-select-a">
+            <option value="S1" selected>S1 &middot; One Request End-to-End</option>
+            <option value="S2">S2 &middot; Keynote Contrast</option>
+            <option value="S3">S3 &middot; Product Launch Walkthrough</option>
+            <option value="S5">S5 &middot; Wire-Trace Architecture</option>
+            <option value="D">D &middot; 5 Visual Languages Matrix</option>
+          </select>
+        </label>
+        <label>Right Lane (B):
+          <select id="ab-select-b">
+            <option value="S1">S1 &middot; One Request End-to-End</option>
+            <option value="S2">S2 &middot; Keynote Contrast</option>
+            <option value="S3">S3 &middot; Product Launch Walkthrough</option>
+            <option value="S5" selected>S5 &middot; Wire-Trace Architecture</option>
+            <option value="D">D &middot; 5 Visual Languages Matrix</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="suites-grid" id="suites-grid">
+
+        <!-- S1 -->
+        <article class="suite-card" data-suite="S1">
+          <div class="suite-header">
+            <div>
+              <div class="suite-code">LANE S1 &middot; CONCRETE-BEFORE-ABSTRACT</div>
+              <h3 class="suite-name">S1 &middot; One Nonprofit Request End-to-End</h3>
+              <p class="suite-desc">
+                Follows one food-pantry CSV cleanup request from plain-words Eranos intake and local file privacy
+                through worker task splitting, Meta Muse Code execution, Herma &lt;2ms context injection, and independent review,
+                before revealing the Nouns &amp; Verbs protocol and 705/739 ecosystem scan.
+              </p>
+            </div>
+            <span class="badge-chip bc-ok">12 FRAMES &middot; 0 OVERLAPS</span>
+          </div>
+          <div class="sheet-preview" data-zoom-src="./assets/s1-contact-sheet.png" data-zoom-title="S1 · One Request End-to-End (12 Frames)">
+            <img src="./assets/s1-contact-sheet.png" alt="S1 One Request contact sheet" loading="lazy">
+          </div>
+          <div class="suite-footer">
+            <span>Safe stage: <code>x: 120&ndash;1800, y: 96&ndash;850</code> &middot; Filleted caption band: <code>y: 880&ndash;1000</code></span>
+            <span>Click sheet to zoom &nearr;</span>
+          </div>
+        </article>
+
+        <!-- S2 -->
+        <article class="suite-card" data-suite="S2">
+          <div class="suite-header">
+            <div>
+              <div class="suite-code">LANE S2 &middot; MONUMENTAL TYPOGRAPHY &amp; TIMED SILENCES</div>
+              <h3 class="suite-name">S2 &middot; Keynote Contrast &amp; Hero Numbers</h3>
+              <p class="suite-desc">
+                Disciplined obsidian-and-paper act staging with 3x retina Eranos crops, 132px hero figures
+                (<code>41.0 s</code>, <code>99.3%</code>, <code>705 of 739</code>), empirical restraint callouts
+                (<code>79.3%</code> schema-guard rejection), and six timed musical breaths.
+              </p>
+            </div>
+            <span class="badge-chip bc-ok">12 FRAMES &middot; 0 OVERLAPS</span>
+          </div>
+          <div class="sheet-preview" data-zoom-src="./assets/s2-contact-sheet.png" data-zoom-title="S2 · Keynote Contrast & Monumental Numbers (12 Frames)">
+            <img src="./assets/s2-contact-sheet.png" alt="S2 Keynote contact sheet" loading="lazy">
+          </div>
+          <div class="suite-footer">
+            <span>Palette switches capped at 2 act boundaries &middot; <code>bbox-qa.json</code>: PASS</span>
+            <span>Click sheet to zoom &nearr;</span>
+          </div>
+        </article>
+
+        <!-- S3 -->
+        <article class="suite-card" data-suite="S3">
+          <div class="suite-header">
+            <div>
+              <div class="suite-code">LANE S3 &middot; HIGH DEMO DENSITY (&gt;55% LIVE UI &amp; CLI)</div>
+              <h3 class="suite-name">S3 &middot; Product Launch Walkthrough</h3>
+              <p class="suite-desc">
+                Fast, hard-cut walkthrough across live above-the-fold Eranos and Agora captures, two audience doors,
+                1-minute MCP worker onboarding across 6 verified harnesses, real <code>muse-2</code> CLI logs, and made-up Meta AI benchmarks.
+              </p>
+            </div>
+            <span class="badge-chip bc-ok">12 FRAMES &middot; 0 OVERLAPS</span>
+          </div>
+          <div class="sheet-preview" data-zoom-src="./assets/s3-contact-sheet.png" data-zoom-title="S3 · Product Launch Walkthrough (12 Frames)">
+            <img src="./assets/s3-contact-sheet.png" alt="S3 Product Launch contact sheet" loading="lazy">
+          </div>
+          <div class="suite-footer">
+            <span>Zero vertical whip-scrolls &middot; Single filleted screenshot containers</span>
+            <span>Click sheet to zoom &nearr;</span>
+          </div>
+        </article>
+
+        <!-- S5 -->
+        <article class="suite-card" data-suite="S5">
+          <div class="suite-header">
+            <div>
+              <div class="suite-code">LANE S5 &middot; PROTOCOL CONFORMANCE &amp; WIRE TRACES</div>
+              <h3 class="suite-name">S5 &middot; Wire-Trace &amp; T05 Lease-Fence Architecture</h3>
+              <p class="suite-desc">
+                Step-by-step protocol storyboard tracing Tessera conformance test <code>T05</code>
+                (<code>clean-donations-1</code>, fence 1 &rarr; expired &rarr; fence 2 &rarr; <code>HTTP 409 stale_lease</code>
+                refusal &rarr; CAS <code>@v1</code> <code>ccb71c82</code> + idempotent receipt <code>12a66e30&hellip;</code>)
+                and live Meta <code>muse-2</code>.
+              </p>
+            </div>
+            <span class="badge-chip bc-ok">12 FRAMES &middot; 0 OVERLAPS</span>
+          </div>
+          <div class="sheet-preview" data-zoom-src="./assets/s5-contact-sheet.png" data-zoom-title="S5 · Wire-Trace & Conformance Architecture (12 Frames)">
+            <img src="./assets/s5-contact-sheet.png" alt="S5 Architecture contact sheet" loading="lazy">
+          </div>
+          <div class="suite-footer">
+            <span>Direct blueprint for <code>arch-anim-16s.mp4</code> &amp; <code>arch-anim-8s.mp4</code></span>
+            <span>Click sheet to zoom &nearr;</span>
+          </div>
+        </article>
+
+        <!-- D -->
+        <article class="suite-card" data-suite="D">
+          <div class="suite-header">
+            <div>
+              <div class="suite-code">MATRIX D &middot; FIVE VISUAL LANGUAGES &times; FIVE CANONICAL BEATS</div>
+              <h3 class="suite-name">D &middot; Design Directions Matrix (25 Frames)</h3>
+              <p class="suite-desc">
+                Tests the exact same five story beats (Title, Typed Need, Nouns &amp; Verbs Definition, Meta AI Results,
+                705/739 End Card) across five typographic systems: <strong>1 Agora Editorial Paper</strong>,
+                <strong>2 Keynote Obsidian</strong>, <strong>3 Civic Linen &amp; Serif</strong>,
+                <strong>4 Blueprint Schematic</strong>, and <strong>5 Swiss Modular Grid</strong>.
+              </p>
+            </div>
+            <span class="badge-chip bc-ok">25 FRAMES &middot; 0 OVERLAPS</span>
+          </div>
+          <div class="sheet-preview" data-zoom-src="./assets/d-contact-sheet.png" data-zoom-title="D · Design Directions Matrix (5 Languages × 5 Frames)">
+            <img src="./assets/d-contact-sheet.png" alt="D Design Directions 5x5 matrix contact sheet" loading="lazy">
+          </div>
+          <div class="suite-footer">
+            <span>&le;22 words/frame &middot; &ge;28px labels / &ge;48px display &middot; Mobile 390px legible</span>
+            <span>Click sheet to zoom &nearr;</span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- SECTION 4: BBOX QA RECEIPTS -->
+    <section class="section-block" id="qa-receipts">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">4. Automated DOM Bounding-Box QA Summary</h2>
+          <p class="section-sub">
+            Every suite is gated by Playwright <code>getBoundingClientRect()</code> and <code>Range.getClientRects()</code>
+            pairwise intersection checks before packaging.
+          </p>
+        </div>
+      </div>
+
+      <div class="qa-table-wrap">
+        <table class="qa-table">
+          <thead>
+            <tr>
+              <th>Suite</th>
+              <th>Resolution</th>
+              <th>Frames / Samples</th>
+              <th>Stage Safe Box</th>
+              <th>Caption Reserve</th>
+              <th>Text Overlaps</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>arch-anim (16s &amp; 8s MP4 + Poster)</strong></td>
+              <td class="mono-cell">1920&times;1080 @ 30fps</td>
+              <td class="mono-cell">50 timestamps (720 video frames)</td>
+              <td class="mono-cell">x: 120&ndash;1800, y: 96&ndash;850</td>
+              <td class="mono-cell">y: 880&ndash;1000 (0 elements)</td>
+              <td class="mono-cell">0</td>
+              <td><span class="badge-chip bc-ok">PASS</span></td>
+            </tr>
+            <tr>
+              <td><strong>S1 &middot; One Request End-to-End</strong></td>
+              <td class="mono-cell">1920&times;1080</td>
+              <td class="mono-cell">12 frames</td>
+              <td class="mono-cell">x: 120&ndash;1800, y: 96&ndash;850</td>
+              <td class="mono-cell">y: 880&ndash;1000 (blurred pill)</td>
+              <td class="mono-cell">0</td>
+              <td><span class="badge-chip bc-ok">PASS</span></td>
+            </tr>
+            <tr>
+              <td><strong>S2 &middot; Keynote Contrast</strong></td>
+              <td class="mono-cell">1920&times;1080</td>
+              <td class="mono-cell">12 frames</td>
+              <td class="mono-cell">x: 120&ndash;1800, y: 96&ndash;850</td>
+              <td class="mono-cell">y: 880&ndash;1000 (blurred pill)</td>
+              <td class="mono-cell">0</td>
+              <td><span class="badge-chip bc-ok">PASS</span></td>
+            </tr>
+            <tr>
+              <td><strong>S3 &middot; Product Launch Walkthrough</strong></td>
+              <td class="mono-cell">1920&times;1080</td>
+              <td class="mono-cell">12 frames</td>
+              <td class="mono-cell">x: 120&ndash;1800, y: 96&ndash;850</td>
+              <td class="mono-cell">y: 880&ndash;1000 (blurred pill)</td>
+              <td class="mono-cell">0</td>
+              <td><span class="badge-chip bc-ok">PASS</span></td>
+            </tr>
+            <tr>
+              <td><strong>S5 &middot; Wire-Trace Architecture</strong></td>
+              <td class="mono-cell">1920&times;1080</td>
+              <td class="mono-cell">12 frames</td>
+              <td class="mono-cell">x: 120&ndash;1800, y: 96&ndash;850</td>
+              <td class="mono-cell">y: 880&ndash;1000 (blurred pill)</td>
+              <td class="mono-cell">0</td>
+              <td><span class="badge-chip bc-ok">PASS</span></td>
+            </tr>
+            <tr>
+              <td><strong>D &middot; 5 Design Directions Matrix</strong></td>
+              <td class="mono-cell">1920&times;1080</td>
+              <td class="mono-cell">25 frames (5&times;5)</td>
+              <td class="mono-cell">x: 120&ndash;1800, y: 96&ndash;826</td>
+              <td class="mono-cell">y: 880&ndash;1000 (clear)</td>
+              <td class="mono-cell">0</td>
+              <td><span class="badge-chip bc-ok">PASS</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <div>
+        <strong>ta-amps</strong> &middot; Only nouns (task objects), verbs (tasks), surfaces (Eranos, Agora), and narrow infrastructure (Tessera, Herma).
+      </div>
+      <div>
+        <a href="../../">Agora Overview</a> &middot;
+        <a href="../">Film v3</a> &middot;
+        <a href="https://eranos.ta-amps.workers.dev" rel="noopener">Eranos Marketplace</a>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- Full-Resolution Lightbox -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Full-resolution contact sheet">
+    <div class="lb-bar">
+      <div class="lb-title" id="lb-title">Contact Sheet</div>
+      <button type="button" class="lb-close" id="lb-close">Close (Esc)</button>
+    </div>
+    <div class="lb-scroll">
+      <img id="lb-img" src="" alt="Expanded storyboard sheet">
+    </div>
+  </div>
+
+  <script src="./compare.js"></script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-25CuL9ahXDLJ1t3yFQFjPpGAcQ46IU53DQfZKYoAn6M=' 'sha256-mmqqIIi0lJysdWz0YZ+QYQhBAP7wKwE5M4c/Nzk/izM=' 'sha256-SjrOa2GDTh1iDpnDpRWl2kmUjTSTky/06gpXs4LECmg='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self' https://tessera.ta-amps.workers.dev https://herma.ta-amps.workers.dev https://eranos.ta-amps.workers.dev; object-src 'none'; base-uri 'self'; frame-ancestors 'none'
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin

@@ -1,0 +1,27 @@
+{
+  "about": "How deep provenance links into the ta-amps GitHub repositories map to Agora's own read-only source mirror, while direct git clone and GitHub repository links point to the live six repositories on GitHub. A branch name such as main means the commit listed under heads: the head of that repository's main or release branch when the links were pinned. The deploy bundle publishes the clean HEAD archive and file views of every commit a page links, and fails on a link to a commit or path the mirror does not have.",
+  "date": "2026-10-31",
+  "mirror": "/source/",
+  "heads": {
+    "ta-amps-hackathon": "d54975ad51ea545335887b2a371536ad64381d47",
+    "eranos-public-marketplace-for-public-good-token-burn": "5aef2d2229bcd87354ec4a11d3c927694975e664",
+    "agora-public-overview-architecture-setup-and-contribution": "ea12588c4bf1560ea4bd6e8c99fab99fb7aaa98d",
+    "tessera-infrastructure-work-and-storage-engine": "88f2eab495238c36cdeb5dea503f2db7f62091e0",
+    "herma-infrastructure-shim-for-intelligent-agents": "f03ec8f3aef046afac0da75b5a53cdca72cf8d05",
+    "seed-packs-library-of-nouns-and-verbs": "bc63f6bc1f4be919f78eb7d38f760108f07e5e03"
+  },
+  "pulls": {
+    "eranos-public-marketplace-for-public-good-token-burn#11": "8fe602e96a66980ba148d166a17b1e8660022207",
+    "tessera-infrastructure-work-and-storage-engine#20": "2e7d6ab4d7e084a413ba0c3c83cebc10d81c9a98",
+    "herma-infrastructure-shim-for-intelligent-agents#12": "65634ab145a00cda63fc9ef7fb1361eee78cbfdc"
+  },
+  "forms": {
+    "eranos-public-marketplace-for-public-good-token-burn/request-a-kit.yml": "https://eranos.ta-amps.workers.dev/nonprofits",
+    "agora-public-overview-architecture-setup-and-contribution/feedback.yml": "/contribute/",
+    "agora-public-overview-architecture-setup-and-contribution/seed-pack-proposal.yml": "/contribute/#seed-pack"
+  },
+  "pages": {
+    "https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/": "/",
+    "https://ta-amps.github.io/agora/": "/"
+  }
+}

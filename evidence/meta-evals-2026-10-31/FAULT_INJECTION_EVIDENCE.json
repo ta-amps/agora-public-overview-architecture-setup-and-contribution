@@ -1,0 +1,486 @@
+{
+  "authority_refusal_events": [
+    {
+      "actor_key_id": "k_452a52c05269",
+      "cell_id": "cell-01",
+      "error_code": "forbidden",
+      "http_status": 403,
+      "probe_type": "role_queue_capability_firewall",
+      "target_task_id": "t_7b36823da2a94e00bcde57d7e6368bc0"
+    },
+    {
+      "attempted_self_reviewer_key_id": "k_fa444639e917",
+      "cell_id": "cell-01",
+      "drafter_key_id": "k_fa444639e917",
+      "error_message": "",
+      "http_status": 403,
+      "independent_receipt_hash": "bc37e09df1db985af31cc4c489295f962290497059702d433392bd78420d3aaf",
+      "probe_type": "eq03_reviewProof_self_approval_forbidden",
+      "subsequent_independent_verifier_key_id": "k_8bfcfe1f4cd7",
+      "target_task_id": "t_7b36823da2a94e00bcde57d7e6368bc0"
+    },
+    {
+      "actor_key_id": "k_452a52c05269",
+      "cell_id": "cell-01",
+      "error_code": "forbidden",
+      "http_status": 403,
+      "probe_type": "role_queue_capability_firewall",
+      "target_task_id": "t_ec4448c640c8405b953e558f7cc9c663"
+    },
+    {
+      "attempted_self_reviewer_key_id": "k_fa444639e917",
+      "cell_id": "cell-01",
+      "drafter_key_id": "k_fa444639e917",
+      "error_message": "",
+      "http_status": 403,
+      "independent_receipt_hash": "8b13a923477b7661d5e155a9443a1f74974104d3d3c80d7563b0744cce080aa1",
+      "probe_type": "eq03_reviewProof_self_approval_forbidden",
+      "subsequent_independent_verifier_key_id": "k_8bfcfe1f4cd7",
+      "target_task_id": "t_ec4448c640c8405b953e558f7cc9c663"
+    },
+    {
+      "actor_key_id": "k_452a52c05269",
+      "cell_id": "cell-01",
+      "error_code": "forbidden",
+      "http_status": 403,
+      "probe_type": "role_queue_capability_firewall",
+      "target_task_id": "t_b098bf6a8c1640e3a37cc1daf7ec3aef"
+    },
+    {
+      "attempted_self_reviewer_key_id": "k_fa444639e917",
+      "cell_id": "cell-01",
+      "drafter_key_id": "k_fa444639e917",
+      "error_message": "",
+      "http_status": 403,
+      "independent_receipt_hash": "6d7a1b86ea2fed2db4a41a1ab280b5b60c181db7282f3ec905565652915c2b25",
+      "probe_type": "eq03_reviewProof_self_approval_forbidden",
+      "subsequent_independent_verifier_key_id": "k_8bfcfe1f4cd7",
+      "target_task_id": "t_b098bf6a8c1640e3a37cc1daf7ec3aef"
+    },
+    {
+      "actor_key_id": "k_452a52c05269",
+      "cell_id": "cell-01",
+      "error_code": "forbidden",
+      "http_status": 403,
+      "probe_type": "role_queue_capability_firewall",
+      "target_task_id": "t_dedb0683c7a744b9ac7b864000379c8a"
+    },
+    {
+      "attempted_self_reviewer_key_id": "k_fa444639e917",
+      "cell_id": "cell-01",
+      "drafter_key_id": "k_fa444639e917",
+      "error_message": "",
+      "http_status": 403,
+      "independent_receipt_hash": "ba2e01cd3dd067ef79560fb9f65836ba0f8e0ed7a1c295759cab29f26f86f4ca",
+      "probe_type": "eq03_reviewProof_self_approval_forbidden",
+      "subsequent_independent_verifier_key_id": "k_8bfcfe1f4cd7",
+      "target_task_id": "t_dedb0683c7a744b9ac7b864000379c8a"
+    },
+    {
+      "actor_key_id": "k_474c062117a8",
+      "cell_id": "cell-02",
+      "error_code": "forbidden",
+      "http_status": 403,
+      "probe_type": "role_queue_capability_firewall",
+      "target_task_id": "t_0c612533202644549b559b38fbfd6940"
+    },
+    {
+      "attempted_self_reviewer_key_id": "k_1b9df78cb848",
+      "cell_id": "cell-02",
+      "drafter_key_id": "k_1b9df78cb848",
+      "error_message": "",
+      "http_status": 403,
+      "independent_receipt_hash": "43018e80b4eff3f31db36941865bedc3a3abf3b1caf5c2f572d9d6ee2b8e322b",
+      "probe_type": "eq03_reviewProof_self_approval_forbidden",
+      "subsequent_independent_verifier_key_id": "k_3c05a3b09a04",
+      "target_task_id": "t_0c612533202644549b559b38fbfd6940"
+    },
+    {
+      "actor_key_id": "k_474c062117a8",
+      "cell_id": "cell-02",
+      "error_code": "forbidden",
+      "http_status": 403,
+      "probe_type": "role_queue_capability_firewall",
+      "target_task_id": "t_bbd7ab7748064c6894bf12d793aede35"
+    },
+    {
+      "attempted_self_reviewer_key_id": "k_1b9df78cb848",
+      "cell_id": "cell-02",
+      "drafter_key_id": "k_1b9df78cb848",
+      "error_message": "",
+      "http_status": 403,
+      "independent_receipt_hash": "6d7955173f5d26a57f3b695621ee16ca5f18c13a0d3a1f904c0e2c63de181474",
+      "probe_type": "eq03_reviewProof_self_approval_forbidden",
+      "subsequent_independent_verifier_key_id": "k_3c05a3b09a04",
+      "target_task_id": "t_bbd7ab7748064c6894bf12d793aede35"
+    },
+    {
+      "actor_key_id": "k_474c062117a8",
+      "cell_id": "cell-02",
+      "error_code": "forbidden",
+      "http_status": 403,
+      "probe_type": "role_queue_capability_firewall",
+      "target_task_id": "t_ffd98477a7b44da9b5451fc15cc3d5c5"
+    },
+    {
+      "attempted_self_reviewer_key_id": "k_1b9df78cb848",
+      "cell_id": "cell-02",
+      "drafter_key_id": "k_1b9df78cb848",
+      "error_message": "",
+      "http_status": 403,
+      "independent_receipt_hash": "49fd68a22eca6a275c0487e8589f26651efaa8d3f74dce7fc032e05eec2e8959",
+      "probe_type": "eq03_reviewProof_self_approval_forbidden",
+      "subsequent_independent_verifier_key_id": "k_3c05a3b09a04",
+      "target_task_id": "t_ffd98477a7b44da9b5451fc15cc3d5c5"
+    },
+    {
+      "actor_key_id": "k_474c062117a8",
+      "cell_id": "cell-02",
+      "error_code": "forbidden",
+      "http_status": 403,
+      "probe_type": "role_queue_capability_firewall",
+      "target_task_id": "t_674fc9be462d42bea33e9a0fa4a31040"
+    },
+    {
+      "attempted_self_reviewer_key_id": "k_1b9df78cb848",
+      "cell_id": "cell-02",
+      "drafter_key_id": "k_1b9df78cb848",
+      "error_message": "",
+      "http_status": 403,
+      "independent_receipt_hash": "9201f58b6f8cc45ef1c4d86f9f017b96f9f17545c10ed2f2f5503eeae0d382c0",
+      "probe_type": "eq03_reviewProof_self_approval_forbidden",
+      "subsequent_independent_verifier_key_id": "k_3c05a3b09a04",
+      "target_task_id": "t_674fc9be462d42bea33e9a0fa4a31040"
+    },
+    {
+      "actor_key_id": "k_e640233faf2e",
+      "cell_id": "cell-03",
+      "error_code": "forbidden",
+      "http_status": 403,
+      "probe_type": "role_queue_capability_firewall",
+      "target_task_id": "t_ee75f36e5f714791b1b6e4424f390d1c"
+    },
+    {
+      "attempted_self_reviewer_key_id": "k_992fa21a8f45",
+      "cell_id": "cell-03",
+      "drafter_key_id": "k_992fa21a8f45",
+      "error_message": "",
+      "http_status": 403,
+      "independent_receipt_hash": "5f2334541edca85ec7a57f9fcca428517304dd8607b558360045954df6d55161",
+      "probe_type": "eq03_reviewProof_self_approval_forbidden",
+      "subsequent_independent_verifier_key_id": "k_9c7afae6f6e8",
+      "target_task_id": "t_ee75f36e5f714791b1b6e4424f390d1c"
+    },
+    {
+      "actor_key_id": "k_e640233faf2e",
+      "cell_id": "cell-03",
+      "error_code": "forbidden",
+      "http_status": 403,
+      "probe_type": "role_queue_capability_firewall",
+      "target_task_id": "t_ec3c8abe3d3a490883f566085a81d114"
+    },
+    {
+      "attempted_self_reviewer_key_id": "k_992fa21a8f45",
+      "cell_id": "cell-03",
+      "drafter_key_id": "k_992fa21a8f45",
+      "error_message": "",
+      "http_status": 403,
+      "independent_receipt_hash": "076ce699b270927bbf9ace94c4c6e2e439e6d75001259b0d7739b0b0b9ef6450",
+      "probe_type": "eq03_reviewProof_self_approval_forbidden",
+      "subsequent_independent_verifier_key_id": "k_9c7afae6f6e8",
+      "target_task_id": "t_ec3c8abe3d3a490883f566085a81d114"
+    },
+    {
+      "actor_key_id": "k_e640233faf2e",
+      "cell_id": "cell-03",
+      "error_code": "forbidden",
+      "http_status": 403,
+      "probe_type": "role_queue_capability_firewall",
+      "target_task_id": "t_9bfd413c4eab453d96019c9080914dd6"
+    },
+    {
+      "attempted_self_reviewer_key_id": "k_992fa21a8f45",
+      "cell_id": "cell-03",
+      "drafter_key_id": "k_992fa21a8f45",
+      "error_message": "",
+      "http_status": 403,
+      "independent_receipt_hash": "ae86122da7ca878cb228fa16de213b48545db7dca1813b1ae3e6dec85525b963",
+      "probe_type": "eq03_reviewProof_self_approval_forbidden",
+      "subsequent_independent_verifier_key_id": "k_9c7afae6f6e8",
+      "target_task_id": "t_9bfd413c4eab453d96019c9080914dd6"
+    },
+    {
+      "actor_key_id": "k_e640233faf2e",
+      "cell_id": "cell-03",
+      "error_code": "forbidden",
+      "http_status": 403,
+      "probe_type": "role_queue_capability_firewall",
+      "target_task_id": "t_b3e45de51c4044498d8241c3605b1a48"
+    },
+    {
+      "attempted_self_reviewer_key_id": "k_992fa21a8f45",
+      "cell_id": "cell-03",
+      "drafter_key_id": "k_992fa21a8f45",
+      "error_message": "",
+      "http_status": 403,
+      "independent_receipt_hash": "cf6503eeacb108843338f35a318f6cbc4d3fa15217c30c07a6b476d78d58f3a7",
+      "probe_type": "eq03_reviewProof_self_approval_forbidden",
+      "subsequent_independent_verifier_key_id": "k_9c7afae6f6e8",
+      "target_task_id": "t_b3e45de51c4044498d8241c3605b1a48"
+    },
+    {
+      "actor_key_id": "k_fe0122f6b0d0",
+      "cell_id": "cell-04",
+      "error_code": "forbidden",
+      "http_status": 403,
+      "probe_type": "role_queue_capability_firewall",
+      "target_task_id": "t_70ee1feb13ae4b6489f535fa5e6b5d08"
+    },
+    {
+      "attempted_self_reviewer_key_id": "k_3ff8fb8738b2",
+      "cell_id": "cell-04",
+      "drafter_key_id": "k_3ff8fb8738b2",
+      "error_message": "",
+      "http_status": 403,
+      "independent_receipt_hash": "c1907103adc49e56fa8ec00b64e2ec921442cb4bc6734f45dc896c24db594ee8",
+      "probe_type": "eq03_reviewProof_self_approval_forbidden",
+      "subsequent_independent_verifier_key_id": "k_7a76c94a2852",
+      "target_task_id": "t_70ee1feb13ae4b6489f535fa5e6b5d08"
+    },
+    {
+      "actor_key_id": "k_fe0122f6b0d0",
+      "cell_id": "cell-04",
+      "error_code": "forbidden",
+      "http_status": 403,
+      "probe_type": "role_queue_capability_firewall",
+      "target_task_id": "t_917aa6e8367246d3931eca1c03daf46b"
+    },
+    {
+      "attempted_self_reviewer_key_id": "k_3ff8fb8738b2",
+      "cell_id": "cell-04",
+      "drafter_key_id": "k_3ff8fb8738b2",
+      "error_message": "",
+      "http_status": 403,
+      "independent_receipt_hash": "fa033fe47b13c10edf6dd29375e5b7eaccc9eb3c22c82530ff3c84e9dbd6779b",
+      "probe_type": "eq03_reviewProof_self_approval_forbidden",
+      "subsequent_independent_verifier_key_id": "k_7a76c94a2852",
+      "target_task_id": "t_917aa6e8367246d3931eca1c03daf46b"
+    },
+    {
+      "actor_key_id": "k_fe0122f6b0d0",
+      "cell_id": "cell-04",
+      "error_code": "forbidden",
+      "http_status": 403,
+      "probe_type": "role_queue_capability_firewall",
+      "target_task_id": "t_94a10496da7440e68b82ebda839223fb"
+    },
+    {
+      "attempted_self_reviewer_key_id": "k_3ff8fb8738b2",
+      "cell_id": "cell-04",
+      "drafter_key_id": "k_3ff8fb8738b2",
+      "error_message": "",
+      "http_status": 403,
+      "independent_receipt_hash": "66842530e3eeb9e83284fc234e2b71b75651b2588c5505c5312f62475c76ff34",
+      "probe_type": "eq03_reviewProof_self_approval_forbidden",
+      "subsequent_independent_verifier_key_id": "k_7a76c94a2852",
+      "target_task_id": "t_94a10496da7440e68b82ebda839223fb"
+    },
+    {
+      "actor_key_id": "k_fe0122f6b0d0",
+      "cell_id": "cell-04",
+      "error_code": "forbidden",
+      "http_status": 403,
+      "probe_type": "role_queue_capability_firewall",
+      "target_task_id": "t_15147ed374d840c197da7443528a7ace"
+    },
+    {
+      "attempted_self_reviewer_key_id": "k_3ff8fb8738b2",
+      "cell_id": "cell-04",
+      "drafter_key_id": "k_3ff8fb8738b2",
+      "error_message": "",
+      "http_status": 403,
+      "independent_receipt_hash": "3c387edf5d5eb7cff2b1abbc300a220290f8074775bc83e464644e09a4f506ec",
+      "probe_type": "eq03_reviewProof_self_approval_forbidden",
+      "subsequent_independent_verifier_key_id": "k_7a76c94a2852",
+      "target_task_id": "t_15147ed374d840c197da7443528a7ace"
+    }
+  ],
+  "stale_lease_http_409_events": [
+    {
+      "active_fencing_token": 2,
+      "cell_id": "cell-01",
+      "late_heartbeat_http_status": 409,
+      "late_submit_error_code": "stale_lease",
+      "late_submit_http_status": 409,
+      "reaped_count_on_cell": 4,
+      "stale_fencing_token": 1,
+      "task_id": "t_8f401bfdddc04ba7b8c4d5bef2e109d2",
+      "winner_receipt_hash": "bb4e988a4236e69a9b454c1f8f1fc8f28bd0b706dbfcd360989c8605d4d8998c"
+    },
+    {
+      "active_fencing_token": 2,
+      "cell_id": "cell-01",
+      "late_heartbeat_http_status": 409,
+      "late_submit_error_code": "stale_lease",
+      "late_submit_http_status": 409,
+      "reaped_count_on_cell": 4,
+      "stale_fencing_token": 1,
+      "task_id": "t_76266038dc404fc7814cbca92a69b331",
+      "winner_receipt_hash": "5387f4f0be268e2ac939d29d08895bf2bd8a4c7e30a4a140f10ffb375390d1f9"
+    },
+    {
+      "active_fencing_token": 2,
+      "cell_id": "cell-01",
+      "late_heartbeat_http_status": 409,
+      "late_submit_error_code": "stale_lease",
+      "late_submit_http_status": 409,
+      "reaped_count_on_cell": 4,
+      "stale_fencing_token": 1,
+      "task_id": "t_0d0254425b154752b0f8e6212736d8ed",
+      "winner_receipt_hash": "fe143698960bf30d33f2951ac07f762f9d27e231baba6376d5e6c2686987fbd9"
+    },
+    {
+      "active_fencing_token": 2,
+      "cell_id": "cell-01",
+      "late_heartbeat_http_status": 409,
+      "late_submit_error_code": "stale_lease",
+      "late_submit_http_status": 409,
+      "reaped_count_on_cell": 4,
+      "stale_fencing_token": 1,
+      "task_id": "t_e63f4e995aa84870a1d5ef381dd28758",
+      "winner_receipt_hash": "e9ecd681864e5e086d8e8383e4f718825a067869cd86933cfbd4a18bc02f52d4"
+    },
+    {
+      "active_fencing_token": 2,
+      "cell_id": "cell-02",
+      "late_heartbeat_http_status": 409,
+      "late_submit_error_code": "stale_lease",
+      "late_submit_http_status": 409,
+      "reaped_count_on_cell": 4,
+      "stale_fencing_token": 1,
+      "task_id": "t_616556bcecc04f5e848ecf073915ac4a",
+      "winner_receipt_hash": "59bbb91706d021fffcfb58fb12fa8374eb0e2343a78069e72d2149d56ab7957d"
+    },
+    {
+      "active_fencing_token": 2,
+      "cell_id": "cell-02",
+      "late_heartbeat_http_status": 409,
+      "late_submit_error_code": "stale_lease",
+      "late_submit_http_status": 409,
+      "reaped_count_on_cell": 4,
+      "stale_fencing_token": 1,
+      "task_id": "t_35dcdf4e39114b24aa6dbb772d2af700",
+      "winner_receipt_hash": "d2a078379e669b0fdcb9ccf998f1469738ea75bfec689101fa3fcda0187adf38"
+    },
+    {
+      "active_fencing_token": 2,
+      "cell_id": "cell-02",
+      "late_heartbeat_http_status": 409,
+      "late_submit_error_code": "stale_lease",
+      "late_submit_http_status": 409,
+      "reaped_count_on_cell": 4,
+      "stale_fencing_token": 1,
+      "task_id": "t_a022682ba24b432f950294ac4ecc1d45",
+      "winner_receipt_hash": "ac93e68878cf6561027213c307e96ddde4b58203f4d001e25ce43ebae0b9faf2"
+    },
+    {
+      "active_fencing_token": 2,
+      "cell_id": "cell-02",
+      "late_heartbeat_http_status": 409,
+      "late_submit_error_code": "stale_lease",
+      "late_submit_http_status": 409,
+      "reaped_count_on_cell": 4,
+      "stale_fencing_token": 1,
+      "task_id": "t_4a480a5bc6004034a5071de2cc2034d2",
+      "winner_receipt_hash": "9679bd6170997c55e8ddb3717edbfb6e32091e23dc0bbe6c6b62580c89835763"
+    },
+    {
+      "active_fencing_token": 2,
+      "cell_id": "cell-03",
+      "late_heartbeat_http_status": 409,
+      "late_submit_error_code": "stale_lease",
+      "late_submit_http_status": 409,
+      "reaped_count_on_cell": 4,
+      "stale_fencing_token": 1,
+      "task_id": "t_92b54638a7a4449c8938f02114e54fe5",
+      "winner_receipt_hash": "bceffe4d1bed55ffb5e53391d783dc7b80e83ff2b88d2d33f8a32ce775c5c844"
+    },
+    {
+      "active_fencing_token": 2,
+      "cell_id": "cell-03",
+      "late_heartbeat_http_status": 409,
+      "late_submit_error_code": "stale_lease",
+      "late_submit_http_status": 409,
+      "reaped_count_on_cell": 4,
+      "stale_fencing_token": 1,
+      "task_id": "t_0f63c78747654043ad45d12c76286f2a",
+      "winner_receipt_hash": "9a7c9b845f7a73e43656d77daa18ee57be36a1e8199aa6ed6a242361c6c43cf8"
+    },
+    {
+      "active_fencing_token": 2,
+      "cell_id": "cell-03",
+      "late_heartbeat_http_status": 409,
+      "late_submit_error_code": "stale_lease",
+      "late_submit_http_status": 409,
+      "reaped_count_on_cell": 4,
+      "stale_fencing_token": 1,
+      "task_id": "t_bded9ebf90b948069ce46f23d8e2845d",
+      "winner_receipt_hash": "b3395d48e9ac12bd7484e2342971997858d28558eabfa5afee213d4a6675378c"
+    },
+    {
+      "active_fencing_token": 2,
+      "cell_id": "cell-03",
+      "late_heartbeat_http_status": 409,
+      "late_submit_error_code": "stale_lease",
+      "late_submit_http_status": 409,
+      "reaped_count_on_cell": 4,
+      "stale_fencing_token": 1,
+      "task_id": "t_863aa811db0540968c67e98e302e21a9",
+      "winner_receipt_hash": "52fecb806e465b04e863b47b0e47e5ea8948b218b1a747b4afb70cc289531edc"
+    },
+    {
+      "active_fencing_token": 2,
+      "cell_id": "cell-04",
+      "late_heartbeat_http_status": 409,
+      "late_submit_error_code": "stale_lease",
+      "late_submit_http_status": 409,
+      "reaped_count_on_cell": 4,
+      "stale_fencing_token": 1,
+      "task_id": "t_3662e836059f4cd68df9f87da6ec3068",
+      "winner_receipt_hash": "e0145beb024adc2be98ab8064b0c35725f33850f9b14555b9f727051e8858327"
+    },
+    {
+      "active_fencing_token": 2,
+      "cell_id": "cell-04",
+      "late_heartbeat_http_status": 409,
+      "late_submit_error_code": "stale_lease",
+      "late_submit_http_status": 409,
+      "reaped_count_on_cell": 4,
+      "stale_fencing_token": 1,
+      "task_id": "t_da6d759ebfdc4053ae272384f9eb4e28",
+      "winner_receipt_hash": "f53f4a7b122387686b7dafb140dc74378183d87db259b310de795ec6433f9646"
+    },
+    {
+      "active_fencing_token": 2,
+      "cell_id": "cell-04",
+      "late_heartbeat_http_status": 409,
+      "late_submit_error_code": "stale_lease",
+      "late_submit_http_status": 409,
+      "reaped_count_on_cell": 4,
+      "stale_fencing_token": 1,
+      "task_id": "t_0d2ce27f623f42fc9fd0fc194a3d789e",
+      "winner_receipt_hash": "838c92832cc94cf55124f9a4e5b5cf2a97dbd8b5e07fb9a970fd1e820bb1a491"
+    },
+    {
+      "active_fencing_token": 2,
+      "cell_id": "cell-04",
+      "late_heartbeat_http_status": 409,
+      "late_submit_error_code": "stale_lease",
+      "late_submit_http_status": 409,
+      "reaped_count_on_cell": 4,
+      "stale_fencing_token": 1,
+      "task_id": "t_06bed379f03447d9b31da6f50ef7bf32",
+      "winner_receipt_hash": "cc987359abfdc878febdd11b4ca18dde9c153a82270c1cc1fdbb4be26ce8a07d"
+    }
+  ]
+}

@@ -2,6 +2,7 @@
 // system setting, and the switch stays hidden.
 (function () {
   var root = document.documentElement;
+  root.classList.add("js");
   var button = document.querySelector("[data-mode-toggle]");
   if (!button) return;
   var media = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
@@ -57,6 +58,33 @@
     });
     button.taAmpsOpen = function () { setOpen(button, panel, true); };
   });
+})();
+
+// The header's Menu button on narrow screens: it opens and closes the five links. Without this script the
+// button stays hidden and the links wrap under the name instead.
+(function () {
+  var button = document.querySelector("[data-menu-toggle]");
+  var nav = button && document.getElementById(button.getAttribute("aria-controls"));
+  if (!nav) return;
+  var label = button.querySelector("span");
+  function setOpen(open) {
+    nav.classList.toggle("is-open", open);
+    var header = button.closest(".site-header");
+    if (header) header.classList.toggle("menu-open", open);
+    button.setAttribute("aria-expanded", open ? "true" : "false");
+    if (label) label.textContent = button.getAttribute(open ? "data-open" : "data-closed");
+  }
+  button.hidden = false;
+  button.addEventListener("click", function () { setOpen(!nav.classList.contains("is-open")); });
+  nav.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && nav.classList.contains("is-open")) { setOpen(false); button.focus(); }
+  });
+})();
+
+// The not-found page names the address that was asked for, as text.
+(function () {
+  var slot = document.querySelector("[data-missing-path]");
+  if (slot) slot.textContent = window.location.pathname;
 })();
 
 // Copy buttons. A button with data-copy="ID" copies the text of the element with that id, then reads
@@ -133,26 +161,24 @@
   }
 })();
 
-// Captions start on for a video marked data-captions-default, as its track's default flag asks.
+// The film's cuts and widescreen bottom-border caption bar: one video element, a button per cut that swaps its
+// source, captions, poster and label, and a custom rounded caption pill inside the bottom grayish-black letterbox
+// band synchronized with textTracks (kept in mode="hidden" inline so native browser cue boxes never appear).
 (function () {
-  Array.prototype.forEach.call(document.querySelectorAll("video[data-captions-default]"), function (video) {
-    var tracks = video.textTracks;
-    for (var i = 0; tracks && i < tracks.length; i++) {
-      if (tracks[i].kind === "captions" || tracks[i].kind === "subtitles") { tracks[i].mode = "showing"; break; }
-    }
-  });
-})();
-
-// The film's cuts: one video element, and a button per cut that swaps its source, captions, poster and label.
-// The address keeps the choice (?cut=short), so a cut can be linked and survives a reload. Captions stay
-// as the viewer left them: on by default, and off after switching cuts only if they were turned off.
-(function () {
-  var group = document.querySelector("[data-film-cuts]");
   var video = document.querySelector(".film-video");
-  if (!group || !video) return;
+  if (!video) return;
+  var stage = video.closest(".film-stage");
+  var group = document.querySelector("[data-film-cuts]");
+  var captionBar = document.querySelector("[data-film-caption-bar]");
+  var captionPill = document.querySelector("[data-film-caption-pill]");
+  var ccButton = document.querySelector("[data-film-cc]");
   var label = document.getElementById("film-label");
-  var buttons = group.querySelectorAll("[data-cut]");
-  var captionsOn = true;
+  var buttons = group ? group.querySelectorAll("[data-cut]") : [];
+  var captionsOn = video.hasAttribute("data-captions-default");
+  var applyingMode = false;
+  var openSrc = video.getAttribute("data-open-src") || "";
+  var cleanSrc = video.getAttribute("data-clean-src") || "";
+
   function captionTrack() {
     var tracks = video.textTracks;
     for (var i = 0; tracks && i < tracks.length; i++) {
@@ -160,10 +186,132 @@
     }
     return null;
   }
-  function showCaptions() {
-    var track = captionTrack();
-    if (track) track.mode = captionsOn ? "showing" : "hidden";
+
+  function stripVttTags(raw) {
+    return String(raw || "").replace(/<[^>]+>/g, "").trim();
   }
+
+  function desiredTrackMode() {
+    return captionsOn ? "hidden" : "disabled";
+  }
+
+  function enforceTrackMode() {
+    var track = captionTrack();
+    if (!track) return;
+    var want = desiredTrackMode();
+    if (track.mode !== want) {
+      applyingMode = true;
+      track.mode = want;
+      applyingMode = false;
+    }
+  }
+
+  function syncVideoSourceForCaptions() {
+    if (!cleanSrc || !openSrc) return;
+    var source = video.querySelector("source");
+    if (!source) return;
+    var wantSrc = captionsOn ? openSrc : cleanSrc;
+    if (source.getAttribute("src") === wantSrc) return;
+    var resumeTime = video.currentTime || 0;
+    var wasPlaying = !video.paused && !video.ended;
+    source.setAttribute("src", wantSrc);
+    var download = video.querySelector("a");
+    if (download) download.setAttribute("href", wantSrc);
+    video.load();
+    if (resumeTime > 0 || wasPlaying) {
+      video.addEventListener("loadedmetadata", function restorePlayback() {
+        video.removeEventListener("loadedmetadata", restorePlayback);
+        if (resumeTime > 0) {
+          try { video.currentTime = resumeTime; } catch (err) {}
+        }
+        if (wasPlaying) {
+          var p = video.play();
+          if (p && p.catch) p.catch(function () {});
+        }
+      });
+    }
+  }
+
+  function syncCaptionPill() {
+    enforceTrackMode();
+    var track = captionTrack();
+    if (ccButton) {
+      ccButton.setAttribute("aria-pressed", captionsOn ? "true" : "false");
+      ccButton.textContent = ccButton.getAttribute(captionsOn ? "data-label-on" : "data-label-off") ||
+        (captionsOn ? "Captions · On" : "Captions · Off");
+    }
+    if (!captionBar || !captionPill) return;
+    if (cleanSrc || video.hasAttribute("data-open-captions")) {
+      captionBar.hidden = true;
+      captionPill.textContent = "";
+      return;
+    }
+    if (!captionsOn || !track || !track.activeCues || !track.activeCues.length) {
+      captionBar.hidden = true;
+      captionPill.textContent = "";
+      return;
+    }
+    var lines = [];
+    for (var i = 0; i < track.activeCues.length; i++) {
+      var clean = stripVttTags(track.activeCues[i].text);
+      if (clean) lines.push(clean);
+    }
+    if (!lines.length) {
+      captionBar.hidden = true;
+      captionPill.textContent = "";
+      return;
+    }
+    captionPill.textContent = lines.join("\n");
+    captionBar.hidden = false;
+  }
+
+  function attachTrackListeners() {
+    var track = captionTrack();
+    if (!track || track._taBound) return;
+    track._taBound = true;
+    track.addEventListener("cuechange", syncCaptionPill);
+  }
+
+  function showCaptions() {
+    enforceTrackMode();
+    attachTrackListeners();
+    syncCaptionPill();
+  }
+
+  if (video.textTracks && video.textTracks.addEventListener) {
+    video.textTracks.addEventListener("change", function () {
+      if (applyingMode) return;
+      var track = captionTrack();
+      if (track && document.fullscreenElement !== video) {
+        if (track.mode === "showing") captionsOn = true;
+        else if (track.mode === "disabled") captionsOn = false;
+      }
+      showCaptions();
+    });
+  }
+  function syncPausedAttr() {
+    if (stage) stage.setAttribute("data-paused", video.paused ? "true" : "false");
+  }
+  video.addEventListener("play", syncPausedAttr);
+  video.addEventListener("pause", syncPausedAttr);
+  video.addEventListener("ended", syncPausedAttr);
+  video.addEventListener("loadedmetadata", showCaptions);
+  video.addEventListener("loadedmetadata", syncPausedAttr);
+  video.addEventListener("timeupdate", syncCaptionPill);
+  document.addEventListener("fullscreenchange", showCaptions);
+  syncPausedAttr();
+  showCaptions();
+
+  if (ccButton) {
+    ccButton.addEventListener("click", function () {
+      captionsOn = !captionsOn;
+      syncVideoSourceForCaptions();
+      showCaptions();
+    });
+  }
+
+  if (!group || !buttons.length) return;
+
   function remember(cut, first) {
     if (!window.history || !history.replaceState || !window.URL) return;
     var url = new URL(location.href);
@@ -171,29 +319,31 @@
     else url.searchParams.set("cut", cut);
     if (url.href !== location.href) history.replaceState(history.state, "", url.href);
   }
+
   Array.prototype.forEach.call(buttons, function (button) {
     button.addEventListener("click", function () {
       if (button.getAttribute("aria-pressed") === "true") return;
-      var shown = captionTrack();
-      captionsOn = !shown || shown.mode === "showing";
       Array.prototype.forEach.call(buttons, function (other) {
         other.setAttribute("aria-pressed", other === button ? "true" : "false");
       });
       remember(button.getAttribute("data-cut"), buttons[0].getAttribute("data-cut"));
       video.pause();
+      openSrc = button.getAttribute("data-src") || "";
+      cleanSrc = button.getAttribute("data-clean-src") || "";
+      var chosenSrc = (cleanSrc && !captionsOn) ? cleanSrc : openSrc;
       var source = video.querySelector("source");
-      source.src = button.getAttribute("data-src");
+      source.setAttribute("src", chosenSrc);
       source.type = button.getAttribute("data-type");
       var old = video.querySelector("track");
       var track = document.createElement("track");
       ["kind", "srclang", "label"].forEach(function (name) { track.setAttribute(name, old.getAttribute(name)); });
       track.src = button.getAttribute("data-captions");
-      track.default = true;
+      if (captionsOn) track.default = true;
       video.replaceChild(track, old);
       video.poster = button.getAttribute("data-poster");
       video.setAttribute("aria-label", button.getAttribute("data-title"));
       var download = video.querySelector("a");
-      if (download) download.href = button.getAttribute("data-src");
+      if (download) download.setAttribute("href", chosenSrc);
       if (label) label.textContent = button.getAttribute("data-label");
       video.load();
       track.addEventListener("load", showCaptions);
@@ -207,7 +357,7 @@
   });
 })();
 
-// Interactive Task, Task-Object & Meta Hackathon Ecosystem Explorer on the Library page.
+// Interactive Task, task-object & Meta Hackathon Ecosystem Explorer on the Library page.
 // Reads the static #agora-explorer-data JSON block in the page; zero network traffic and zero browser storage.
 (function () {
   var dataNode = document.getElementById("agora-explorer-data");
@@ -233,7 +383,8 @@
   var openEcoBtn = document.querySelector("[data-open-ecosystem]");
   if (!controls || !resultsEl) return;
 
-  var PAGE_SIZE = 36;
+  // F31-005: twelve results at a time keep the page short enough for Chrome to paint at device scale 1.5.
+  var PAGE_SIZE = 12;
   var activeTab = "library";
   var shownLimit = PAGE_SIZE;
   var labels = data.labels || {};
@@ -345,14 +496,14 @@
 
     if (proj.tasks && proj.tasks.length) {
       var vGroup = el("div", "exp-card-group");
-      vGroup.appendChild(el("p", "exp-card-label", labels.tasks_label || "Candidate Tasks (verbs):"));
+      vGroup.appendChild(el("p", "exp-card-label", labels.tasks_label || "Candidate Tasks (things to do):"));
       vGroup.appendChild(makeChipList(proj.tasks, "verb"));
       li.appendChild(vGroup);
     }
 
     if (proj.task_objects && proj.task_objects.length) {
       var nGroup = el("div", "exp-card-group");
-      nGroup.appendChild(el("p", "exp-card-label", labels.objects_label || "Candidate Task Objects (nouns):"));
+      nGroup.appendChild(el("p", "exp-card-label", labels.objects_label || "Candidate task objects (nouns):"));
       nGroup.appendChild(makeChipList(proj.task_objects, "noun"));
       li.appendChild(nGroup);
     }
@@ -444,7 +595,7 @@
           else if (x.kind === "noun") nCount++;
         });
         statusEl.textContent = "Showing " + slice.length + " of " + matches.length +
-          " matching library artifacts (" + pCount + " Seed Packs · " + vCount + " Tasks · " + nCount + " Task Objects)";
+          " matching library artifacts (" + pCount + " Seed Packs · " + vCount + " Tasks · " + nCount + " task objects)";
       } else {
         statusEl.textContent = "Showing " + slice.length + " of " + matches.length +
           " matching Meta Hackathon 2026 repositories (static public-scan decomposition)";

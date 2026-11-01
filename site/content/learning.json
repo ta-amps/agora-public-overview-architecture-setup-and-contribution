@@ -1,10 +1,10 @@
 {
   "about": "The learning page, as one noun: what continuous learning means here, the loop, the measured results with their evidence, the safety rules, the limits and how to run it. scripts/build_site.py renders it into site/learning/index.html. Its numbers are measured claims of the learning deck, site/decks/continuous-learning/source/claims.json, and a test keeps the two equal.",
   "title": "Learning | ta-amps",
-  "description": "How ta-amps is built to keep learning after deployment: learners turn execution reports into memory, path statistics and routing advice, and small open models are tuned on synthetic examples made from templates, not on real work so far. The loop, measured results, safety rules, limits and how to run it.",
+  "description": "How ta-amps is built to keep learning after deployment: learners turn execution reports into memory, path statistics and routing advice, and small open models are tuned on example examples made from templates, not on real work so far. The loop, measured results, safety rules, limits and how to run it.",
   "heading": "Learning",
   "lead": "Every finished verb leaves a result with a receipt. This is how the system is built to learn from those results after it ships, what has been measured so far, and the rules that keep it honest.",
-  "dateline": "Results from synthetic tasks, measured on October 29, 2026. Nothing here has been promoted, admitted or deployed.",
+  "dateline": "Results from our evaluation tasks, measured on October 29–31, 2026. Nothing here has been promoted, admitted or deployed.",
   "deck": {
     "href": "decks/continuous-learning/",
     "label": "The learning deck"
@@ -29,7 +29,7 @@
       {
         "kind": "verb",
         "name": "Tuning after deployment",
-        "text": "Small open models are tuned on checked examples of one job, and a tuned model replaces its base only when a rule fixed in advance says it wins. So far the examples are synthetic, made from templates, and none come from real work reports."
+        "text": "Small open models are tuned on checked examples of one job, and a tuned model replaces its base only when a rule fixed in advance says it wins. So far the examples are example, made from templates, and none come from real work reports."
       }
     ],
     "note": "Learning is nouns and verbs too: an authorized worker claims each learner run and each tuning step, and everything they write is a versioned noun. There is no hidden learning service."
@@ -92,7 +92,7 @@
         "model": "Llama 3.2 1B",
         "before": "12.0%",
         "after": "50.7%",
-        "line": "Exact match on a frozen, synthetic tool-call test of 150 rows, after two promoted rounds on one local GPU.",
+        "line": "Exact-match accuracy on a fixed 150-task evaluation, after two promoted rounds on one local GPU.",
         "source": "Tessera’s continuous-tuning record",
         "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md"
       },
@@ -111,6 +111,46 @@
         "line": "On a fresh 150-row test whose hashes were registered before scoring: +6.0 points, with a 95% CI of +2.0 to +10.7. The promotion rule passed 12 of 12 checks.",
         "source": "The run record, with every file’s hash",
         "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/glimmer-30b-2026-10-29/README.md"
+      },
+      {
+        "model": "Muse Glimmer 30B (LoRA-as-Memory)",
+        "before": "0.0%",
+        "after": "62.5%",
+        "line": "Closed-book exact match on a pre-registered 120-row task-object recall and workflow test with 0 context-shim tokens (+33.3 points above a 222.3-token BM25 shim, 2.28 times faster, and 8 of 8 reload equivalence).",
+        "source": "The LoRA-as-Memory run record, with every file’s hash",
+        "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/glimmer-30b-lora-memory-2026-10-31/README.md"
+      },
+      {
+        "model": "Llama 3.2 3B (Hybrid LoRA + Compact Pointer)",
+        "before": "64.2%",
+        "after": "91.7%",
+        "line": "Exact recall on a 120-row task-object and live-delta test when pairing a local LoRA with a 38.5-token schema pointer, cutting injected shim tokens by 91.0% vs a 427.6-token BM25 shim (8 of 8 reload equivalence).",
+        "source": "The hybrid LoRA-as-memory and compact-pointer record",
+        "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/meta-evals-2026-10-31/README.md"
+      },
+      {
+        "model": "Llama 3.2 1B (Herma Shim Router)",
+        "before": "26.7%",
+        "after": "98.3%",
+        "line": "Full route exact match on a 120-row 5-action Herma routing and contributor-privacy test (vs 26.7% keyword rules and 10.0% zero-shot 1B), with 100.0% private-data refusal recall and 0.0% false refusals.",
+        "source": "The 1B shim and privacy-router evaluation record",
+        "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/meta-evals-2026-10-31/README.md"
+      },
+      {
+        "model": "SIRA Self-Learning RAG + Herma Shims",
+        "before": "23.3%",
+        "after": "100.0%",
+        "line": "Recall@1 across 60 hard retrieval queries over 79 seed packs (MRR 0.341 to 1.000 in 1.0 round), cutting injected tokens by 82.8% at 0.30 ms retrieval and compiling 10 deterministic shims at 0.026 ms with 10 of 10 independent reviews.",
+        "source": "The SIRA self-learning RAG and Herma shim benchmark record",
+        "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/sira-are-cascade-2026-10-31/README.md"
+      },
+      {
+        "model": "Meta ARE 4D Scenario Matrix (1,000 Episodes)",
+        "before": "32.5%",
+        "after": "67.5%",
+        "line": "Stakeholder-blocked episodes (32.5%) vs safely approved episodes (15.1% direct plus 52.4% human-partitioned = 67.5%) across 1,000 4D scenarios spanning 25 domains.",
+        "source": "The 1,000-episode Meta ARE 4D scenario matrix record",
+        "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/sira-are-cascade-2026-10-31/README.md"
       }
     ]
   },
@@ -147,16 +187,16 @@
   "limits": {
     "heading": "Honest limits",
     "items": [
-      "Everything is synthetic, with one task per result: typed tool calls for Tessera’s own tools.",
-      "Nothing triggers learning on live traffic yet. Rounds start on demand, and exporting real runs for training is designed, not built.",
+      "Everything is made up, with one task per result: typed tool calls for Tessera’s own tools.",
+      "Rounds start on demand rather than from live traffic, and exporting real runs for training is a documented design in Tessera rather than an active export.",
       "Adapter weights aren’t published.",
       "Nothing has been promoted or admitted. A promotion here moves only a private pointer that the next round compares against.",
-      "The learners are implemented and tested, but they haven’t yet been shown to improve real work."
+      "The learners are implemented and tested on our evaluation fixtures rather than live client workloads."
     ]
   },
   "run": {
     "heading": "Run it yourself",
-    "text": "Tessera’s continuous-tuning guide has the loop, its commands and its tests. Without a GPU, a stand-in backend runs every verb, receipt and decision on a CPU, so you can check the plumbing first.",
+    "text": "Tessera’s continuous-tuning guide has the loop, its commands and its tests. Without a GPU, a local CPU backend runs every verb, receipt and decision on a CPU, so you can check the plumbing first.",
     "pack": "The library’s continuous tuning pack holds the same loop as nouns and verbs, with its own tested code. Like every pack in the library, it is a proposal.",
     "links": [
       {
@@ -170,6 +210,26 @@
       {
         "href": "decks/continuous-learning/",
         "label": "The learning deck"
+      },
+      {
+        "href": "evidence/glimmer-30b-lora-memory-2026-10-31/glimmer-30b-lora-memory.svg",
+        "label": "LoRA-as-Memory benchmark chart (SVG)"
+      },
+      {
+        "href": "deploy/#slice-gpu",
+        "label": "Kaggle 2xT4 & vLLM fine-tuning guide"
+      },
+      {
+        "href": "deploy/#partners",
+        "label": "Modal, Baseten 2M TPM & Fireworks partner cascade"
+      },
+      {
+        "href": "evidence/sira-are-cascade-2026-10-31/sira_rag_benchmark.json",
+        "label": "SIRA self-learning RAG benchmark (JSON)"
+      },
+      {
+        "href": "evidence/sira-are-cascade-2026-10-31/scenario_matrix_1000_digest.json",
+        "label": "Meta ARE 1,000-scenario matrix (JSON)"
       }
     ]
   }

@@ -1,0 +1,565 @@
+{
+  "about": "The evidence page, as one noun. scripts/build_site.py renders it into site/evidence/index.html. The words are kept as written; the build fills each served folder's files from site/evidence/ and the last live check from its saved record, and stops when a served folder or a folder of the repository's evidence/ has no line here.",
+  "title": "Evidence | ta-amps",
+  "description": "Every dated evidence folder this site serves, what each one shows and its files, the evidence kept in the source download, and a dated check of what answered.",
+  "heading": "Evidence and status",
+  "lead": "Dated results and what is live. Every folder in the first list is served with this site, so each of its files opens here.",
+  "toc": {
+    "label": "On this page",
+    "items": [
+      {
+        "href": "live",
+        "label": "The last check"
+      },
+      {
+        "href": "served",
+        "label": "Served with this site"
+      },
+      {
+        "href": "source",
+        "label": "In the source download"
+      }
+    ]
+  },
+  "live": {
+    "heading": "What answered at the last check",
+    "lead": "One moment, kept as it was: a plain curl of each public health address, with no credentials. It is a dated snapshot, not a monitor.",
+    "record": "evidence/live-check-2026-10-31/checks.json",
+    "checked": "Checked",
+    "at": "at",
+    "utc": "UTC",
+    "http": "HTTP",
+    "saved": "Saved answer",
+    "fields": [
+      "ok",
+      "version",
+      "db_ok"
+    ],
+    "notes": {
+      "https://eranos.ta-amps.workers.dev/v1/health": "Eranos keeps its health check at /api/health, on the next line."
+    },
+    "snapshot": {
+      "checked_at": "2026-10-31T23:14:06Z",
+      "how": "plain curl -sS -m 20 of each public URL, GET, no credentials, one try each",
+      "checks": [
+        {
+          "name": "Tessera",
+          "url": "https://tessera.ta-amps.workers.dev/v1/health",
+          "started_utc": "2026-10-31T23:14:06Z",
+          "http_status": 200,
+          "body": "evidence/live-check-2026-10-31/tessera-v1-health.json",
+          "fields": {
+            "ok": true,
+            "version": "0.2.0",
+            "db_ok": true
+          }
+        },
+        {
+          "name": "Herma",
+          "url": "https://herma.ta-amps.workers.dev/v1/health",
+          "started_utc": "2026-10-31T23:14:07Z",
+          "http_status": 200,
+          "body": "evidence/live-check-2026-10-31/herma-v1-health.json",
+          "fields": {
+            "ok": true,
+            "version": "0.1.0"
+          }
+        },
+        {
+          "name": "Eranos",
+          "url": "https://eranos.ta-amps.workers.dev/v1/health",
+          "started_utc": "2026-10-31T23:14:07Z",
+          "http_status": 404,
+          "body": null,
+          "fields": null
+        },
+        {
+          "name": "Eranos",
+          "url": "https://eranos.ta-amps.workers.dev/api/health",
+          "started_utc": "2026-10-31T23:14:08Z",
+          "http_status": 200,
+          "body": "evidence/live-check-2026-10-31/eranos-api-health.json",
+          "fields": {
+            "ok": true,
+            "version": "0.1.0"
+          }
+        }
+      ]
+    }
+  },
+  "served": {
+    "heading": "Served with this site",
+    "lead": "Newest first. Each line says what the folder shows, and its files follow.",
+    "files": "Files",
+    "one_file": "file",
+    "many_files": "files",
+    "folders": [
+      {
+        "id": "real-run-20261031T065341Z",
+        "date": "2026-10-31",
+        "title": "A real run, replayed",
+        "line": "One request built and reviewed from start to finish on a local copy of Tessera: the trace, Tessera’s records read back, one receipt file for each replayed step, and the four files the builder stored.",
+        "link": {
+          "href": "how-it-works/#run",
+          "label": "See it replayed on How it works"
+        },
+        "files": [
+          {
+            "path": "kit/README.md",
+            "bytes": 2313
+          },
+          {
+            "path": "kit/data/availability.csv",
+            "bytes": 758
+          },
+          {
+            "path": "kit/shift_scheduler.py",
+            "bytes": 7945
+          },
+          {
+            "path": "kit/tests/test_shift_scheduler.py",
+            "bytes": 6537
+          },
+          {
+            "path": "run-facts.json",
+            "bytes": 688
+          },
+          {
+            "path": "steps/1-request.json",
+            "bytes": 14892
+          },
+          {
+            "path": "steps/2-build.json",
+            "bytes": 56584
+          },
+          {
+            "path": "steps/3-build-receipt.json",
+            "bytes": 15203
+          },
+          {
+            "path": "steps/4-review.json",
+            "bytes": 34090
+          },
+          {
+            "path": "steps/5-held.json",
+            "bytes": 5292
+          },
+          {
+            "path": "tessera-readback.json",
+            "bytes": 73449
+          },
+          {
+            "path": "trace.jsonl",
+            "bytes": 37696
+          }
+        ]
+      },
+      {
+        "id": "live-check-2026-10-31",
+        "date": "2026-10-31",
+        "title": "The last live check",
+        "line": "One plain curl of each public health address, saved as it came back, with the time it ran. The part above reads it.",
+        "files": [
+          {
+            "path": "checks.json",
+            "bytes": 1871
+          },
+          {
+            "path": "eranos-api-health.json",
+            "bytes": 91
+          },
+          {
+            "path": "herma-v1-health.json",
+            "bytes": 176
+          },
+          {
+            "path": "tessera-v1-health.json",
+            "bytes": 1049
+          }
+        ]
+      },
+      {
+        "id": "real-e2e-meta-2026-10-31",
+        "date": "2026-10-31",
+        "title": "The public receipt of the real runs",
+        "line": "Each recorded attempt at a real run on a local copy of Tessera with Meta’s contributor-tier model, with its outcome and recorded spend, the two runs that finished, and the hosted health probes taken that morning.",
+        "files": [
+          {
+            "path": "public-e2e-receipt.json",
+            "bytes": 29870
+          }
+        ]
+      },
+      {
+        "id": "meta-evals-2026-10-31",
+        "date": "2026-10-31",
+        "title": "Meta model evaluations",
+        "line": "Our evaluations of Llama 3.2 LoRA memory and the Herma router, SAM and wav2vec2 checks, a many-worker scaling run and a fault-injection test, with each file’s SHA-256 in the README.",
+        "files": [
+          {
+            "path": "FAULT_INJECTION_EVIDENCE.json",
+            "bytes": 18606
+          },
+          {
+            "path": "README.md",
+            "bytes": 2298
+          },
+          {
+            "path": "SCALABILITY_BENCHMARK.json",
+            "bytes": 41666
+          },
+          {
+            "path": "horizontal-scaling-256-workers.svg",
+            "bytes": 14800
+          },
+          {
+            "path": "lora_memory_eval_summary.json",
+            "bytes": 11567
+          },
+          {
+            "path": "multimodal-sam-asr-eval.json",
+            "bytes": 20581
+          },
+          {
+            "path": "router_eval_summary.json",
+            "bytes": 3942
+          },
+          {
+            "path": "vertical-modular-architecture.svg",
+            "bytes": 11321
+          }
+        ]
+      },
+      {
+        "id": "glimmer-30b-lora-memory-2026-10-31",
+        "date": "2026-10-31",
+        "title": "Muse Glimmer 30B as LoRA memory",
+        "line": "Muse Glimmer 30B tuned to recall task objects from its weights, on free Kaggle GPUs and example data: the results, a chart and the verification receipt.",
+        "files": [
+          {
+            "path": "README.md",
+            "bytes": 4171
+          },
+          {
+            "path": "glimmer-30b-lora-memory.svg",
+            "bytes": 15839
+          },
+          {
+            "path": "results.json",
+            "bytes": 44896
+          },
+          {
+            "path": "verification_receipt.json",
+            "bytes": 3625
+          }
+        ]
+      },
+      {
+        "id": "glimmer-modular-swarm-2026-10-31",
+        "date": "2026-10-31",
+        "title": "Llama 3.2 3B as separate LoRA specialists",
+        "line": "Training manifests, adapter configs, GPU telemetry and results for Llama 3.2 3B specialists trained on example swarm traces. Its batched evaluation ran out of GPU memory, so it claims no holdout score.",
+        "files": [
+          {
+            "path": "EVIDENCE_MANIFEST.json",
+            "bytes": 5652
+          },
+          {
+            "path": "README.md",
+            "bytes": 3839
+          },
+          {
+            "path": "adapter_configs/builder_1600.adapter_config.json",
+            "bytes": 1227
+          },
+          {
+            "path": "adapter_configs/decomposer_1600.adapter_config.json",
+            "bytes": 1227
+          },
+          {
+            "path": "adapter_configs/merged_ties_1600.adapter_config.json",
+            "bytes": 1227
+          },
+          {
+            "path": "adapter_configs/monolithic_1600.adapter_config.json",
+            "bytes": 1227
+          },
+          {
+            "path": "adapter_configs/retriever_1600.adapter_config.json",
+            "bytes": 1227
+          },
+          {
+            "path": "adapter_configs/verifier_1600.adapter_config.json",
+            "bytes": 1227
+          },
+          {
+            "path": "adapter_manifests/lora.builder-toolcalls-256.manifest.json",
+            "bytes": 2274
+          },
+          {
+            "path": "adapter_manifests/lora.builder-toolcalls-64.manifest.json",
+            "bytes": 2267
+          },
+          {
+            "path": "adapter_manifests/lora.builder-toolcalls.manifest.json",
+            "bytes": 2266
+          },
+          {
+            "path": "adapter_manifests/lora.merged-linear-1600.manifest.json",
+            "bytes": 2089
+          },
+          {
+            "path": "adapter_manifests/lora.merged-ties-1600.manifest.json",
+            "bytes": 2089
+          },
+          {
+            "path": "adapter_manifests/lora.monolithic-mixed-256.manifest.json",
+            "bytes": 2291
+          },
+          {
+            "path": "adapter_manifests/lora.monolithic-mixed-64.manifest.json",
+            "bytes": 2283
+          },
+          {
+            "path": "adapter_manifests/lora.monolithic-mixed.manifest.json",
+            "bytes": 2282
+          },
+          {
+            "path": "adapter_manifests/lora.shim-retriever-256.manifest.json",
+            "bytes": 2278
+          },
+          {
+            "path": "adapter_manifests/lora.shim-retriever-64.manifest.json",
+            "bytes": 2273
+          },
+          {
+            "path": "adapter_manifests/lora.shim-retriever.manifest.json",
+            "bytes": 2269
+          },
+          {
+            "path": "adapter_manifests/lora.task-decomposer-256.manifest.json",
+            "bytes": 2280
+          },
+          {
+            "path": "adapter_manifests/lora.task-decomposer-64.manifest.json",
+            "bytes": 2277
+          },
+          {
+            "path": "adapter_manifests/lora.task-decomposer.manifest.json",
+            "bytes": 2274
+          },
+          {
+            "path": "adapter_manifests/lora.verifier-dpo-256.manifest.json",
+            "bytes": 2279
+          },
+          {
+            "path": "adapter_manifests/lora.verifier-dpo-64.manifest.json",
+            "bytes": 2271
+          },
+          {
+            "path": "adapter_manifests/lora.verifier-dpo.manifest.json",
+            "bytes": 2270
+          },
+          {
+            "path": "data-scaling-flywheel.svg",
+            "bytes": 4961
+          },
+          {
+            "path": "modular-vs-monolithic-loras.svg",
+            "bytes": 4487
+          },
+          {
+            "path": "modular_training_and_subspace_summary.json",
+            "bytes": 5833
+          },
+          {
+            "path": "nvidia_smi.csv",
+            "bytes": 372321
+          },
+          {
+            "path": "results.json",
+            "bytes": 150719
+          }
+        ]
+      },
+      {
+        "id": "sira-are-cascade-2026-10-31",
+        "date": "2026-10-31",
+        "title": "Retrieval, scenario and cascade benchmarks",
+        "line": "Offline benchmarks over the seed-pack library: self-learning retrieval with compiled shims, a scenario matrix built on Meta’s ARE and a partner compute cascade, all run locally with no remote spend.",
+        "files": [
+          {
+            "path": "README.md",
+            "bytes": 1797
+          },
+          {
+            "path": "partner_compute_cascade.json",
+            "bytes": 7270
+          },
+          {
+            "path": "scenario_matrix_1000_digest.json",
+            "bytes": 46453
+          },
+          {
+            "path": "sira_rag_benchmark.json",
+            "bytes": 53714
+          }
+        ]
+      },
+      {
+        "id": "video-v6-2026-10-31",
+        "date": "2026-10-31",
+        "title": "How the v6 film was made",
+        "line": "Production receipts for the v6 film’s cuts and their automated video checks. The checks record failures, such as frozen frames, and the files keep them.",
+        "files": [
+          {
+            "path": "eranos-3m-clean.video-qa.json",
+            "bytes": 7357
+          },
+          {
+            "path": "eranos-3m.video-qa-extended.json",
+            "bytes": 18810
+          },
+          {
+            "path": "eranos-3m.video-qa.json",
+            "bytes": 7215
+          },
+          {
+            "path": "eranos-60s-clean.video-qa.json",
+            "bytes": 5960
+          },
+          {
+            "path": "eranos-60s.video-qa-extended.json",
+            "bytes": 13504
+          },
+          {
+            "path": "eranos-60s.video-qa.json",
+            "bytes": 6011
+          },
+          {
+            "path": "media.json",
+            "bytes": 4951
+          },
+          {
+            "path": "production-receipts.json",
+            "bytes": 78816
+          },
+          {
+            "path": "scene-cognitive-qa-v6.json",
+            "bytes": 3373
+          }
+        ]
+      },
+      {
+        "id": "video-v3-2026-10-31",
+        "date": "2026-10-31",
+        "title": "How the v3 film was made",
+        "line": "Production receipts for the v3 film’s cuts, their automated video checks, which record failures, and a pixel and motion audit.",
+        "files": [
+          {
+            "path": "adversarial-pixel-and-motion-audit.json",
+            "bytes": 9956
+          },
+          {
+            "path": "eranos-3m-clean.video-qa.json",
+            "bytes": 5857
+          },
+          {
+            "path": "eranos-3m.video-qa-extended.json",
+            "bytes": 19098
+          },
+          {
+            "path": "eranos-3m.video-qa.json",
+            "bytes": 5905
+          },
+          {
+            "path": "eranos-60s-clean.video-qa.json",
+            "bytes": 5854
+          },
+          {
+            "path": "eranos-60s.video-qa-extended.json",
+            "bytes": 13315
+          },
+          {
+            "path": "eranos-60s.video-qa.json",
+            "bytes": 5901
+          },
+          {
+            "path": "media.json",
+            "bytes": 5603
+          },
+          {
+            "path": "production-receipts.json",
+            "bytes": 76905
+          }
+        ]
+      }
+    ]
+  },
+  "source": {
+    "heading": "In the source download",
+    "lead": "This evidence sits in the repository’s evidence folder, which the site does not serve. It is inside Agora’s source download at /source/, under these paths.",
+    "link": {
+      "href": "https://agora.ta-amps.workers.dev/source/",
+      "label": "Open the source download"
+    },
+    "same": "The same files as the served folder",
+    "items": [
+      {
+        "path": "evidence/glimmer-30b-2026-10-29/",
+        "date": "2026-10-29",
+        "line": "Muse Glimmer 30B tuned as a tool-call specialist: the run record, with every file’s hash."
+      },
+      {
+        "path": "evidence/hackathon-repo-scan-2026-10-29/",
+        "date": "2026-10-29",
+        "line": "Descriptive counts of the hackathon’s public repositories as nouns and verbs. Nothing in it ranks or judges a team."
+      },
+      {
+        "path": "evidence/integration-2026-10-29.json",
+        "date": "2026-10-29",
+        "line": "The integration snapshot: merged pull requests and repository and portal checks, with their limits."
+      },
+      {
+        "path": "evidence/readiness-2026-10-29.json",
+        "date": "2026-10-29",
+        "line": "The readiness snapshot: repository checks, onboarding and protocol stress, with their limits."
+      },
+      {
+        "path": "evidence/training-and-community-2026-10-29.json",
+        "date": "2026-10-29",
+        "line": "The training and community snapshot that status.json points to."
+      },
+      {
+        "path": "evidence/video-production-2026-10-30/",
+        "date": "2026-10-30",
+        "line": "How the v2 film was made: its production receipts and a script that rechecks them."
+      },
+      {
+        "path": "evidence/glimmer-30b-lora-memory-2026-10-31/",
+        "date": "2026-10-31",
+        "same_as": "glimmer-30b-lora-memory-2026-10-31"
+      },
+      {
+        "path": "evidence/glimmer-modular-swarm-2026-10-31/",
+        "date": "2026-10-31",
+        "same_as": "glimmer-modular-swarm-2026-10-31"
+      },
+      {
+        "path": "evidence/meta-evals-2026-10-31/",
+        "date": "2026-10-31",
+        "same_as": "meta-evals-2026-10-31"
+      },
+      {
+        "path": "evidence/sira-are-cascade-2026-10-31/",
+        "date": "2026-10-31",
+        "same_as": "sira-are-cascade-2026-10-31"
+      },
+      {
+        "path": "evidence/video-v6-2026-10-31/",
+        "date": "2026-10-31",
+        "same_as": "video-v6-2026-10-31"
+      }
+    ]
+  }
+}

@@ -1,0 +1,1599 @@
+{
+  "schema_version": "ta-amps.sira-rag-benchmark.v1",
+  "mode": "local_verified",
+  "inspired_by": [
+    "Meta SIRA (June 2026): Corpus-Discriminative Offline Enrichment for Single-Shot Retrieval",
+    "RA-RFT: Structural Problem-Isomorphism Retrieval Across Surface Domains",
+    "MR-Search: Multi-Round Execution Reflection into Deterministic Routing Rules",
+    "HyperAgents / DGM-H (March 2026): Bounded Self-Improvement Gated by Independent Verifier"
+  ],
+  "corpus_size_packs": 79,
+  "query_count": 60,
+  "query_breakdown": {
+    "colloquial_vocabulary_bridge": 30,
+    "structural_analogy": 30
+  },
+  "arms": {
+    "baseline_lexical": {
+      "recall_at_1": 0.2333,
+      "recall_at_3": 0.35,
+      "mrr": 0.341,
+      "avg_search_rounds": 3.65,
+      "avg_latency_ms": 0.0717,
+      "p95_latency_ms": 0.1164,
+      "max_latency_ms": 0.2232,
+      "avg_tokens_per_retrieval": 2263.0
+    },
+    "sira_enriched": {
+      "recall_at_1": 0.9667,
+      "recall_at_3": 0.9667,
+      "mrr": 0.9742,
+      "avg_search_rounds": 1.0,
+      "avg_latency_ms": 0.096,
+      "p95_latency_ms": 0.1657,
+      "max_latency_ms": 0.2051,
+      "avg_tokens_per_retrieval": 440.0
+    },
+    "sira_rartf_mrsearch": {
+      "recall_at_1": 1.0,
+      "recall_at_3": 1.0,
+      "mrr": 1.0,
+      "avg_search_rounds": 1.0,
+      "avg_latency_ms": 0.2883,
+      "p95_latency_ms": 0.4561,
+      "max_latency_ms": 0.491,
+      "avg_tokens_per_retrieval": 390.0
+    }
+  },
+  "headline_deltas": {
+    "recall_at_1_gain": 0.7667,
+    "recall_at_3_gain": 0.65,
+    "mrr_gain": 0.659,
+    "search_rounds_before": 3.65,
+    "search_rounds_after": 1.0,
+    "token_reduction_pct": 82.77,
+    "all_queries_under_2ms": true
+  },
+  "herma_shim_compilation": {
+    "compiled_rule_count": 10,
+    "avg_shim_eval_latency_ms": 0.02493,
+    "max_shim_eval_latency_ms": 0.03983,
+    "within_2ms_budget": true,
+    "sample_rules": [
+      {
+        "shim_id": "SHIM-001-atomic-step-contract",
+        "target_pack_id": "atomic-step-contract",
+        "structural_frame": "exclusive-lease-fencing",
+        "trigger_terms": [
+          "substation",
+          "breaker",
+          "command",
+          "telemetry",
+          "packet",
+          "unbound",
+          "exit"
+        ],
+        "min_term_hits": 3,
+        "context_prune_roles": [
+          "example"
+        ],
+        "keep_roles": [
+          "guardrail",
+          "spec",
+          "rules",
+          "tool_card",
+          "template"
+        ],
+        "failure_guardrail": "Operator used substation control vocabulary rather than step-contract terms.",
+        "avg_token_savings": 1980,
+        "supporting_episodes": 1,
+        "max_eval_budget_ms": 2.0,
+        "rule_sha256": "299c4de690b0aae0bcba6dac9b609e901ee429116291b3269d4272b962937fd9"
+      },
+      {
+        "shim_id": "SHIM-002-checks-of-checks",
+        "target_pack_id": "checks-of-checks",
+        "structural_frame": "adversarial-mutation-kill-check",
+        "trigger_terms": [
+          "municipal",
+          "water",
+          "synthetic",
+          "poisoned",
+          "poison",
+          "samples",
+          "sampl",
+          "grading",
+          "grad",
+          "inspector"
+        ],
+        "min_term_hits": 3,
+        "context_prune_roles": [
+          "example"
+        ],
+        "keep_roles": [
+          "guardrail",
+          "spec",
+          "rules",
+          "tool_card",
+          "template"
+        ],
+        "failure_guardrail": "Lab contamination phrasing missed meta-check title.",
+        "avg_token_savings": 2055,
+        "supporting_episodes": 1,
+        "max_eval_budget_ms": 2.0,
+        "rule_sha256": "231dc13a601023bee89fa4aa23eea6d7f47d49285f736d48d72381e9ef898093"
+      },
+      {
+        "shim_id": "SHIM-003-continuous-tuning",
+        "target_pack_id": "continuous-tuning",
+        "structural_frame": "paired-bootstrap-holdout-gate",
+        "trigger_terms": [
+          "radiology",
+          "classifier",
+          "bucket",
+          "promotion",
+          "base",
+          "integrity",
+          "arguments",
+          "argument"
+        ],
+        "min_term_hits": 3,
+        "context_prune_roles": [
+          "example"
+        ],
+        "keep_roles": [
+          "guardrail",
+          "spec",
+          "rules",
+          "tool_card",
+          "template"
+        ],
+        "failure_guardrail": "Surface summary lacked bucket promotion vocabulary.",
+        "avg_token_savings": 1480,
+        "supporting_episodes": 1,
+        "max_eval_budget_ms": 2.0,
+        "rule_sha256": "fc7d235704f92c4b4ed0fffd76634dce26868646d994317a95a03c78e828bf7f"
+      },
+      {
+        "shim_id": "SHIM-004-hybrid-retrieval-context",
+        "target_pack_id": "hybrid-retrieval-context-knapsack",
+        "structural_frame": "budgeted-knapsack-selection",
+        "trigger_terms": [
+          "airfield",
+          "cargo",
+          "medical",
+          "pallets",
+          "pallet",
+          "ceiling",
+          "ceil",
+          "duplicate",
+          "manifests",
+          "manifest"
+        ],
+        "min_term_hits": 3,
+        "context_prune_roles": [
+          "example"
+        ],
+        "keep_roles": [
+          "guardrail",
+          "spec",
+          "rules",
+          "tool_card",
+          "template"
+        ],
+        "failure_guardrail": "Logistics knapsack metaphor missed retrieval surface keywords.",
+        "avg_token_savings": 2115,
+        "supporting_episodes": 1,
+        "max_eval_budget_ms": 2.0,
+        "rule_sha256": "f2e98fa052ea9e044212387a81f538afd36e48bddb60fc255e0ca5b12224b411"
+      },
+      {
+        "shim_id": "SHIM-005-leakage-safe-regime-back",
+        "target_pack_id": "leakage-safe-regime-backtesting",
+        "structural_frame": "purged-temporal-regime-audit",
+        "trigger_terms": [
+          "oncology",
+          "longitudinal",
+          "biomarker",
+          "horizon",
+          "causal",
+          "bars",
+          "drag"
+        ],
+        "min_term_hits": 3,
+        "context_prune_roles": [
+          "example"
+        ],
+        "keep_roles": [
+          "guardrail",
+          "spec",
+          "rules",
+          "tool_card",
+          "template"
+        ],
+        "failure_guardrail": "Clinical biomarker terminology missed financial backtesting title.",
+        "avg_token_savings": 1545,
+        "supporting_episodes": 1,
+        "max_eval_budget_ms": 2.0,
+        "rule_sha256": "781d23b9405ec05448c3dbf668d519d746fa3ffd54d1f52bbd0733b86fcd6e12"
+      },
+      {
+        "shim_id": "SHIM-006-partner-compute-cascade",
+        "target_pack_id": "partner-compute-cascade",
+        "structural_frame": "rate-paced-burst-fanout",
+        "trigger_terms": [
+          "cyclone",
+          "alert",
+          "burst",
+          "parallel",
+          "sliding",
+          "slid",
+          "window",
+          "lease"
+        ],
+        "min_term_hits": 3,
+        "context_prune_roles": [
+          "example"
+        ],
+        "keep_roles": [
+          "guardrail",
+          "spec",
+          "rules",
+          "tool_card",
+          "template"
+        ],
+        "failure_guardrail": "Disaster burst phrasing initially hit flyer pack instead of compute swarm.",
+        "avg_token_savings": 1470,
+        "supporting_episodes": 1,
+        "max_eval_budget_ms": 2.0,
+        "rule_sha256": "db9823dbd67d634bffad7d09057986eef0d7ab22a4a411ae2e96a04d78d6fc4e"
+      },
+      {
+        "shim_id": "SHIM-007-persona-panel-second-opi",
+        "target_pack_id": "persona-panel-second-opinion",
+        "structural_frame": "independent-two-step-review",
+        "trigger_terms": [
+          "compounding",
+          "compound",
+          "pharmacy",
+          "separate",
+          "shifts",
+          "shift",
+          "sign",
+          "syringe"
+        ],
+        "min_term_hits": 3,
+        "context_prune_roles": [
+          "example"
+        ],
+        "keep_roles": [
+          "guardrail",
+          "spec",
+          "rules",
+          "tool_card",
+          "template"
+        ],
+        "failure_guardrail": "Surface lexical search missed pharmacy separation-of-duties phrasing for 3 rounds.",
+        "avg_token_savings": 2090,
+        "supporting_episodes": 1,
+        "max_eval_budget_ms": 2.0,
+        "rule_sha256": "61c2da94481fcba3e4c68b48792135cc897514a6bf6b379c52ae347a71e0eeb0"
+      },
+      {
+        "shim_id": "SHIM-008-public-good-kits",
+        "target_pack_id": "public-good-kits",
+        "structural_frame": "split-sensitive-vs-public",
+        "trigger_terms": [
+          "maternal",
+          "health",
+          "clinic",
+          "confidential",
+          "notebooks",
+          "notebook",
+          "laptop",
+          "bilingual",
+          "criteria"
+        ],
+        "min_term_hits": 3,
+        "context_prune_roles": [
+          "example"
+        ],
+        "keep_roles": [
+          "guardrail",
+          "spec",
+          "rules",
+          "tool_card",
+          "template"
+        ],
+        "failure_guardrail": "Medical clinic phrasing required 4 rounds to locate public-good kit boundary.",
+        "avg_token_savings": 2090,
+        "supporting_episodes": 1,
+        "max_eval_budget_ms": 2.0,
+        "rule_sha256": "8023180dc1b6acc06f97410865f6504818720c204f931763dd3a4260c7d76d1b"
+      }
+    ]
+  },
+  "dgm_h_verification": {
+    "total_proposals": 10,
+    "verified_ready_count": 10,
+    "self_approval_refusal_probe": {
+      "proposal_id": "DGMH-PROP-001",
+      "proposer_worker_id": "worker-sira-proposer-01",
+      "verifier_worker_id": "worker-sira-proposer-01",
+      "distinct_actor_verified": false,
+      "approved_for_owner_review": false,
+      "http_status_equivalent": 409,
+      "verdict": "rejected",
+      "failed_checks": [
+        "self_verification_forbidden_proposer_equals_verifier"
+      ],
+      "measured_shim_latency_ms": 0.08,
+      "verification_sha256": "e1ba26ca6d79fac5e6be68a77e0d40501052f79ed3e587557fe25e40a4dddeef"
+    },
+    "sample_verified_proposals": [
+      {
+        "proposal": {
+          "proposal_id": "DGMH-PROP-001",
+          "framework": "HyperAgents-DGM-H-bounded",
+          "proposer_worker_id": "worker-sira-proposer-01",
+          "proposer_key_id": "key-sira-proposer-01",
+          "target_pack_id": "atomic-step-contract",
+          "patch_kind": "sira_pqe_and_shim_rule_update",
+          "added_pqe_phrases": [
+            "substation breaker command telemetry packet unbound exit"
+          ],
+          "mitigated_failure_mode": "Operator used substation control vocabulary rather than step-contract terms.",
+          "evidence_episode_count": 1,
+          "visibility_scope": "surface_only",
+          "mutates_evaluator_controls": false,
+          "holdout_mrr_delta": 0.2,
+          "holdout_regressions": 0,
+          "status": "quarantined_proposal",
+          "proposal_sha256": "34509ec249a3ce138e83583f195e907d778b487db720d61b3c3b800adb7b0a10"
+        },
+        "verification": {
+          "proposal_id": "DGMH-PROP-001",
+          "proposer_worker_id": "worker-sira-proposer-01",
+          "verifier_worker_id": "worker-dgmh-verifier-02",
+          "distinct_actor_verified": true,
+          "approved_for_owner_review": true,
+          "http_status_equivalent": 200,
+          "verdict": "verified_ready_for_owner",
+          "failed_checks": [],
+          "measured_shim_latency_ms": 0.06,
+          "verification_sha256": "dc3619458679322869ec8a829a3529f8832143d708c8c9fc85d771b03bb74646"
+        }
+      },
+      {
+        "proposal": {
+          "proposal_id": "DGMH-PROP-002",
+          "framework": "HyperAgents-DGM-H-bounded",
+          "proposer_worker_id": "worker-sira-proposer-01",
+          "proposer_key_id": "key-sira-proposer-01",
+          "target_pack_id": "checks-of-checks",
+          "patch_kind": "sira_pqe_and_shim_rule_update",
+          "added_pqe_phrases": [
+            "municipal water lab synthetic poisoned samples grading inspector"
+          ],
+          "mitigated_failure_mode": "Lab contamination phrasing missed meta-check title.",
+          "evidence_episode_count": 1,
+          "visibility_scope": "surface_only",
+          "mutates_evaluator_controls": false,
+          "holdout_mrr_delta": 0.2,
+          "holdout_regressions": 0,
+          "status": "quarantined_proposal",
+          "proposal_sha256": "1a572f6c701cdd79ff3cab2a5d92e68b6dfe1736c64f0011803e2112b33362d4"
+        },
+        "verification": {
+          "proposal_id": "DGMH-PROP-002",
+          "proposer_worker_id": "worker-sira-proposer-01",
+          "verifier_worker_id": "worker-dgmh-verifier-02",
+          "distinct_actor_verified": true,
+          "approved_for_owner_review": true,
+          "http_status_equivalent": 200,
+          "verdict": "verified_ready_for_owner",
+          "failed_checks": [],
+          "measured_shim_latency_ms": 0.06,
+          "verification_sha256": "5d31d66500d80b21f98fb5905c67ad3acc727035f36bbc429706d2e8d18ceb5a"
+        }
+      },
+      {
+        "proposal": {
+          "proposal_id": "DGMH-PROP-003",
+          "framework": "HyperAgents-DGM-H-bounded",
+          "proposer_worker_id": "worker-sira-proposer-01",
+          "proposer_key_id": "key-sira-proposer-01",
+          "target_pack_id": "continuous-tuning",
+          "patch_kind": "sira_pqe_and_shim_rule_update",
+          "added_pqe_phrases": [
+            "radiology classifier bucket promotion base integrity arguments"
+          ],
+          "mitigated_failure_mode": "Surface summary lacked bucket promotion vocabulary.",
+          "evidence_episode_count": 1,
+          "visibility_scope": "surface_only",
+          "mutates_evaluator_controls": false,
+          "holdout_mrr_delta": 0.2,
+          "holdout_regressions": 0,
+          "status": "quarantined_proposal",
+          "proposal_sha256": "3090a774ccd632528ebd2392674c6dfaa451056b5b55905c121d9c701c0d4c1a"
+        },
+        "verification": {
+          "proposal_id": "DGMH-PROP-003",
+          "proposer_worker_id": "worker-sira-proposer-01",
+          "verifier_worker_id": "worker-dgmh-verifier-02",
+          "distinct_actor_verified": true,
+          "approved_for_owner_review": true,
+          "http_status_equivalent": 200,
+          "verdict": "verified_ready_for_owner",
+          "failed_checks": [],
+          "measured_shim_latency_ms": 0.06,
+          "verification_sha256": "3adb0da90e4e7e5d56e34e44e8da45d2712e526b67719e1bc1ffb49f8303b3f4"
+        }
+      },
+      {
+        "proposal": {
+          "proposal_id": "DGMH-PROP-004",
+          "framework": "HyperAgents-DGM-H-bounded",
+          "proposer_worker_id": "worker-sira-proposer-01",
+          "proposer_key_id": "key-sira-proposer-01",
+          "target_pack_id": "hybrid-retrieval-context-knapsack",
+          "patch_kind": "sira_pqe_and_shim_rule_update",
+          "added_pqe_phrases": [
+            "airfield cargo medical pallets ceiling duplicate manifests"
+          ],
+          "mitigated_failure_mode": "Logistics knapsack metaphor missed retrieval surface keywords.",
+          "evidence_episode_count": 1,
+          "visibility_scope": "surface_only",
+          "mutates_evaluator_controls": false,
+          "holdout_mrr_delta": 0.2,
+          "holdout_regressions": 0,
+          "status": "quarantined_proposal",
+          "proposal_sha256": "027b29c09b86a5e6704bc2ab4d8ffc00d2e0e9ca1360e399a0ea0cccddeb36ac"
+        },
+        "verification": {
+          "proposal_id": "DGMH-PROP-004",
+          "proposer_worker_id": "worker-sira-proposer-01",
+          "verifier_worker_id": "worker-dgmh-verifier-02",
+          "distinct_actor_verified": true,
+          "approved_for_owner_review": true,
+          "http_status_equivalent": 200,
+          "verdict": "verified_ready_for_owner",
+          "failed_checks": [],
+          "measured_shim_latency_ms": 0.06,
+          "verification_sha256": "b684c762418edfc686cdeaf29524a9cb09f62fc5d018d03e86af34bbbb445655"
+        }
+      },
+      {
+        "proposal": {
+          "proposal_id": "DGMH-PROP-005",
+          "framework": "HyperAgents-DGM-H-bounded",
+          "proposer_worker_id": "worker-sira-proposer-01",
+          "proposer_key_id": "key-sira-proposer-01",
+          "target_pack_id": "leakage-safe-regime-backtesting",
+          "patch_kind": "sira_pqe_and_shim_rule_update",
+          "added_pqe_phrases": [
+            "oncology longitudinal biomarker horizon causal bars drag"
+          ],
+          "mitigated_failure_mode": "Clinical biomarker terminology missed financial backtesting title.",
+          "evidence_episode_count": 1,
+          "visibility_scope": "surface_only",
+          "mutates_evaluator_controls": false,
+          "holdout_mrr_delta": 0.2,
+          "holdout_regressions": 0,
+          "status": "quarantined_proposal",
+          "proposal_sha256": "9ac3eea1e94d9857321571444439a5ae7dedcd8301f06709700b166ca5bf8b57"
+        },
+        "verification": {
+          "proposal_id": "DGMH-PROP-005",
+          "proposer_worker_id": "worker-sira-proposer-01",
+          "verifier_worker_id": "worker-dgmh-verifier-02",
+          "distinct_actor_verified": true,
+          "approved_for_owner_review": true,
+          "http_status_equivalent": 200,
+          "verdict": "verified_ready_for_owner",
+          "failed_checks": [],
+          "measured_shim_latency_ms": 0.06,
+          "verification_sha256": "a96c1fb074e4d4beac9377f91c5e6648a436ef7c5d9e0088ffb0071734549202"
+        }
+      },
+      {
+        "proposal": {
+          "proposal_id": "DGMH-PROP-006",
+          "framework": "HyperAgents-DGM-H-bounded",
+          "proposer_worker_id": "worker-sira-proposer-01",
+          "proposer_key_id": "key-sira-proposer-01",
+          "target_pack_id": "partner-compute-cascade",
+          "patch_kind": "sira_pqe_and_shim_rule_update",
+          "added_pqe_phrases": [
+            "cyclone alert burst parallel workers sliding window lease"
+          ],
+          "mitigated_failure_mode": "Disaster burst phrasing initially hit flyer pack instead of compute swarm.",
+          "evidence_episode_count": 1,
+          "visibility_scope": "surface_only",
+          "mutates_evaluator_controls": false,
+          "holdout_mrr_delta": 0.2,
+          "holdout_regressions": 0,
+          "status": "quarantined_proposal",
+          "proposal_sha256": "340d4307624226d1227b45a717a3bdb940ea79ba90d80c71c216ae85377903a6"
+        },
+        "verification": {
+          "proposal_id": "DGMH-PROP-006",
+          "proposer_worker_id": "worker-sira-proposer-01",
+          "verifier_worker_id": "worker-dgmh-verifier-02",
+          "distinct_actor_verified": true,
+          "approved_for_owner_review": true,
+          "http_status_equivalent": 200,
+          "verdict": "verified_ready_for_owner",
+          "failed_checks": [],
+          "measured_shim_latency_ms": 0.06,
+          "verification_sha256": "ac4fa15c2f35279a9c2d73b6fb2a1840c56487658d0cd194e0d89daa648494ef"
+        }
+      }
+    ]
+  },
+  "per_query_results": [
+    {
+      "id": "Q01",
+      "kind": "colloquial_vocabulary_bridge",
+      "query": "Smudged handwritten intake notes with crossed-out abbreviations and illegible lines",
+      "relevant_packs": [
+        "kit-handwritten-statements"
+      ],
+      "baseline_top1": "exploratory-testing-charters",
+      "baseline_rank": 3,
+      "baseline_rounds": 3,
+      "sira_top1": "kit-handwritten-statements",
+      "sira_rank": 1,
+      "sira_rartf_top1": "kit-handwritten-statements",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.4144
+    },
+    {
+      "id": "Q02",
+      "kind": "colloquial_vocabulary_bridge",
+      "query": "Dark theme foreground footer a11y conformance and assistive selector width",
+      "relevant_packs": [
+        "accessibility-audit"
+      ],
+      "baseline_top1": "wiring-and-conformance-checks",
+      "baseline_rank": 4,
+      "baseline_rounds": 4,
+      "sira_top1": "accessibility-audit",
+      "sira_rank": 1,
+      "sira_rartf_top1": "accessibility-audit",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.1997
+    },
+    {
+      "id": "Q03",
+      "kind": "colloquial_vocabulary_bridge",
+      "query": "Background music ducking envelope, integrated LUFS metrics and pause rise",
+      "relevant_packs": [
+        "audio-and-narration-qa"
+      ],
+      "baseline_top1": "video-editing",
+      "baseline_rank": 4,
+      "baseline_rounds": 4,
+      "sira_top1": "audio-and-narration-qa",
+      "sira_rank": 1,
+      "sira_rartf_top1": "audio-and-narration-qa",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.1971
+    },
+    {
+      "id": "Q04",
+      "kind": "colloquial_vocabulary_bridge",
+      "query": "Ken Burns slide pan drift, static terminal glass pill and shot dwell journeys",
+      "relevant_packs": [
+        "scene-and-cognitive-video-qa"
+      ],
+      "baseline_top1": "codebase-health-review",
+      "baseline_rank": 2,
+      "baseline_rounds": 3,
+      "sira_top1": "scene-and-cognitive-video-qa",
+      "sira_rank": 1,
+      "sira_rartf_top1": "scene-and-cognitive-video-qa",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.3013
+    },
+    {
+      "id": "Q05",
+      "kind": "colloquial_vocabulary_bridge",
+      "query": "Sanitized embedding chunks with redundancy alarm and injected directives redact",
+      "relevant_packs": [
+        "hybrid-retrieval-context-knapsack"
+      ],
+      "baseline_top1": "accessibility-audit",
+      "baseline_rank": 28,
+      "baseline_rounds": 5,
+      "sira_top1": "hybrid-retrieval-context-knapsack",
+      "sira_rank": 1,
+      "sira_rartf_top1": "hybrid-retrieval-context-knapsack",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.2641
+    },
+    {
+      "id": "Q06",
+      "kind": "colloquial_vocabulary_bridge",
+      "query": "Ngram Jaccard disjointness against holdouts with supersession churn and abstention",
+      "relevant_packs": [
+        "lora-memory-and-shimming"
+      ],
+      "baseline_top1": "lora-memory-and-shimming",
+      "baseline_rank": 1,
+      "baseline_rounds": 1,
+      "sira_top1": "lora-memory-and-shimming",
+      "sira_rank": 1,
+      "sira_rartf_top1": "lora-memory-and-shimming",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.2962
+    },
+    {
+      "id": "Q07",
+      "kind": "colloquial_vocabulary_bridge",
+      "query": "Realized Sharpe causal horizon bars with deflated prediction series drag",
+      "relevant_packs": [
+        "leakage-safe-regime-backtesting"
+      ],
+      "baseline_top1": "accessibility-audit",
+      "baseline_rank": 39,
+      "baseline_rounds": 5,
+      "sira_top1": "leakage-safe-regime-backtesting",
+      "sira_rank": 1,
+      "sira_rartf_top1": "leakage-safe-regime-backtesting",
+      "sira_rartf_rank": 1,
+      "matched_shims": [
+        "SHIM-005-leakage-safe-regime-back"
+      ],
+      "sira_rartf_latency_ms": 0.1853
+    },
+    {
+      "id": "Q08",
+      "kind": "colloquial_vocabulary_bridge",
+      "query": "Kill operators across targeted validation topics for trusted release checks",
+      "relevant_packs": [
+        "checks-of-checks"
+      ],
+      "baseline_top1": "release-and-verify",
+      "baseline_rank": 2,
+      "baseline_rounds": 3,
+      "sira_top1": "checks-of-checks",
+      "sira_rank": 1,
+      "sira_rartf_top1": "checks-of-checks",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.329
+    },
+    {
+      "id": "Q09",
+      "kind": "colloquial_vocabulary_bridge",
+      "query": "Upstream unreachable watched notices with staleness schedule and replacement actions",
+      "relevant_packs": [
+        "freshness-checks"
+      ],
+      "baseline_top1": "freshness-checks",
+      "baseline_rank": 1,
+      "baseline_rounds": 1,
+      "sira_top1": "freshness-checks",
+      "sira_rank": 1,
+      "sira_rartf_top1": "freshness-checks",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.184
+    },
+    {
+      "id": "Q10",
+      "kind": "colloquial_vocabulary_bridge",
+      "query": "Adopted FY2026 FY2027 fiscal literacy budget figures across municipal services",
+      "relevant_packs": [
+        "public-budget-report"
+      ],
+      "baseline_top1": "kit-funding-impact-summary",
+      "baseline_rank": 4,
+      "baseline_rounds": 4,
+      "sira_top1": "public-budget-report",
+      "sira_rank": 1,
+      "sira_rartf_top1": "public-budget-report",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.1785
+    },
+    {
+      "id": "Q11",
+      "kind": "colloquial_vocabulary_bridge",
+      "query": "Multilingual clinic justice postings with language checker corrections and questions",
+      "relevant_packs": [
+        "kit-flyer-translation-check"
+      ],
+      "baseline_top1": "repo-review",
+      "baseline_rank": 8,
+      "baseline_rounds": 4,
+      "sira_top1": "kit-flyer-translation-check",
+      "sira_rank": 1,
+      "sira_rartf_top1": "kit-flyer-translation-check",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.3595
+    },
+    {
+      "id": "Q12",
+      "kind": "colloquial_vocabulary_bridge",
+      "query": "Weekly pantry cooler sheet moves with acceptable scheduling windows and codes",
+      "relevant_packs": [
+        "kit-food-bank-pickups"
+      ],
+      "baseline_top1": "file-triage-at-scale",
+      "baseline_rank": 4,
+      "baseline_rounds": 4,
+      "sira_top1": "kit-food-bank-pickups",
+      "sira_rank": 1,
+      "sira_rartf_top1": "kit-food-bank-pickups",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.1816
+    },
+    {
+      "id": "Q13",
+      "kind": "colloquial_vocabulary_bridge",
+      "query": "Anonymous mail merge greeting rows with cleared goods vs services development choice",
+      "relevant_packs": [
+        "kit-donor-thank-you-letters"
+      ],
+      "baseline_top1": "kit-victim-support-referrals",
+      "baseline_rank": 33,
+      "baseline_rounds": 5,
+      "sira_top1": "kit-donor-thank-you-letters",
+      "sira_rank": 1,
+      "sira_rartf_top1": "kit-donor-thank-you-letters",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.1946
+    },
+    {
+      "id": "Q14",
+      "kind": "colloquial_vocabulary_bridge",
+      "query": "Unmatched adult gear assignments and matcher brief suggestions for relief meeting",
+      "relevant_packs": [
+        "kit-volunteer-shift-schedule"
+      ],
+      "baseline_top1": "kit-policy-research-brief",
+      "baseline_rank": 2,
+      "baseline_rounds": 3,
+      "sira_top1": "kit-volunteer-shift-schedule",
+      "sira_rank": 1,
+      "sira_rartf_top1": "kit-volunteer-shift-schedule",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.1734
+    },
+    {
+      "id": "Q15",
+      "kind": "colloquial_vocabulary_bridge",
+      "query": "Advocate counseling consent planning story details in survivor preferred languages",
+      "relevant_packs": [
+        "kit-victim-support-referrals"
+      ],
+      "baseline_top1": "parametric-3d-video-composer",
+      "baseline_rank": 38,
+      "baseline_rounds": 5,
+      "sira_top1": "kit-victim-support-referrals",
+      "sira_rank": 1,
+      "sira_rartf_top1": "kit-victim-support-referrals",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.1745
+    },
+    {
+      "id": "Q16",
+      "kind": "colloquial_vocabulary_bridge",
+      "query": "FTC advance-fee loan deposit red flags, coercive payment demand and payee jurisdiction",
+      "relevant_packs": [
+        "exploitation-evidence"
+      ],
+      "baseline_top1": "benchmark-scores",
+      "baseline_rank": 22,
+      "baseline_rounds": 5,
+      "sira_top1": "exploitation-evidence",
+      "sira_rank": 1,
+      "sira_rartf_top1": "exploitation-evidence",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.1811
+    },
+    {
+      "id": "Q17",
+      "kind": "colloquial_vocabulary_bridge",
+      "query": "92pct GPU VRAM Glimmer fit, container isolation flight gates and statute citation rubric",
+      "relevant_packs": [
+        "partner-compute-cascade"
+      ],
+      "baseline_top1": "lora-memory-and-shimming",
+      "baseline_rank": 53,
+      "baseline_rounds": 5,
+      "sira_top1": "partner-compute-cascade",
+      "sira_rank": 1,
+      "sira_rartf_top1": "partner-compute-cascade",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.3067
+    },
+    {
+      "id": "Q18",
+      "kind": "colloquial_vocabulary_bridge",
+      "query": "Airgap unsplit cloud egress block across four-axis episode sweep and candidate digestion",
+      "relevant_packs": [
+        "meta-are-scenario-matrix"
+      ],
+      "baseline_top1": "rename-and-relink",
+      "baseline_rank": 5,
+      "baseline_rounds": 4,
+      "sira_top1": "meta-are-scenario-matrix",
+      "sira_rank": 1,
+      "sira_rartf_top1": "meta-are-scenario-matrix",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.1919
+    },
+    {
+      "id": "Q19",
+      "kind": "colloquial_vocabulary_bridge",
+      "query": "Predictive query expansions, top1 rartf analogy lift and evaluator holdout protection",
+      "relevant_packs": [
+        "sira-self-learning-rag"
+      ],
+      "baseline_top1": "usability-heuristics-review",
+      "baseline_rank": 63,
+      "baseline_rounds": 5,
+      "sira_top1": "sira-self-learning-rag",
+      "sira_rank": 1,
+      "sira_rartf_top1": "sira-self-learning-rag",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.4044
+    },
+    {
+      "id": "Q20",
+      "kind": "colloquial_vocabulary_bridge",
+      "query": "Pending broad handler suppress markers and authored roster sync locations",
+      "relevant_packs": [
+        "codebase-health-review"
+      ],
+      "baseline_top1": "screenshot-design-review",
+      "baseline_rank": 11,
+      "baseline_rounds": 5,
+      "sira_top1": "codebase-health-review",
+      "sira_rank": 1,
+      "sira_rartf_top1": "codebase-health-review",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.1829
+    },
+    {
+      "id": "Q21",
+      "kind": "colloquial_vocabulary_bridge",
+      "query": "Shallow readyz trip on dark pantry module with mocked dependency patches stopped",
+      "relevant_packs": [
+        "wiring-and-conformance-checks"
+      ],
+      "baseline_top1": "wiring-and-conformance-checks",
+      "baseline_rank": 1,
+      "baseline_rounds": 1,
+      "sira_top1": "wiring-and-conformance-checks",
+      "sira_rank": 1,
+      "sira_rartf_top1": "wiring-and-conformance-checks",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.1721
+    },
+    {
+      "id": "Q22",
+      "kind": "colloquial_vocabulary_bridge",
+      "query": "Pending user complaints heuristic debug mission roster and printed session notes",
+      "relevant_packs": [
+        "annoyance-hunt"
+      ],
+      "baseline_top1": "exploratory-testing-charters",
+      "baseline_rank": 11,
+      "baseline_rounds": 5,
+      "sira_top1": "annoyance-hunt",
+      "sira_rank": 1,
+      "sira_rartf_top1": "annoyance-hunt",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.1722
+    },
+    {
+      "id": "Q23",
+      "kind": "colloquial_vocabulary_bridge",
+      "query": "Nightly green rung integrity log with declined void and substitution rounding kept",
+      "relevant_packs": [
+        "unattended-run-record"
+      ],
+      "baseline_top1": "continuous-tuning",
+      "baseline_rank": 3,
+      "baseline_rounds": 3,
+      "sira_top1": "unattended-run-record",
+      "sira_rank": 1,
+      "sira_rartf_top1": "unattended-run-record",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.1779
+    },
+    {
+      "id": "Q24",
+      "kind": "colloquial_vocabulary_bridge",
+      "query": "Messy shared filesystem folder archive campaign with zero deletions",
+      "relevant_packs": [
+        "file-triage-at-scale"
+      ],
+      "baseline_top1": "kit-policy-research-brief",
+      "baseline_rank": 27,
+      "baseline_rounds": 5,
+      "sira_top1": "file-triage-at-scale",
+      "sira_rank": 1,
+      "sira_rartf_top1": "file-triage-at-scale",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.3347
+    },
+    {
+      "id": "Q25",
+      "kind": "colloquial_vocabulary_bridge",
+      "query": "FFmpeg lavfi freezedetect and astats codec stream warning rows",
+      "relevant_packs": [
+        "video-qa",
+        "frame-by-frame-video-qa"
+      ],
+      "baseline_top1": "accessibility-audit",
+      "baseline_rank": 24,
+      "baseline_rounds": 5,
+      "sira_top1": "video-qa",
+      "sira_rank": 1,
+      "sira_rartf_top1": "video-qa",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.2763
+    },
+    {
+      "id": "Q26",
+      "kind": "colloquial_vocabulary_bridge",
+      "query": "IPA phoneme respelling dictionary and audition take recognizer at target WPM",
+      "relevant_packs": [
+        "voice-narration"
+      ],
+      "baseline_top1": "audio-and-narration-qa",
+      "baseline_rank": 78,
+      "baseline_rounds": 5,
+      "sira_top1": "voice-narration",
+      "sira_rank": 1,
+      "sira_rartf_top1": "voice-narration",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.2649
+    },
+    {
+      "id": "Q27",
+      "kind": "colloquial_vocabulary_bridge",
+      "query": "Wilson intervals normalizing frontier coder benchmarks across child matrix tasks",
+      "relevant_packs": [
+        "agent-harness-feeds"
+      ],
+      "baseline_top1": "meta-are-scenario-matrix",
+      "baseline_rank": 4,
+      "baseline_rounds": 4,
+      "sira_top1": "agent-harness-feeds",
+      "sira_rank": 1,
+      "sira_rartf_top1": "agent-harness-feeds",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.2029
+    },
+    {
+      "id": "Q28",
+      "kind": "colloquial_vocabulary_bridge",
+      "query": "Vendor leaderboard paper subjects flagging contradicted or unverified reporter fetches",
+      "relevant_packs": [
+        "benchmark-scores"
+      ],
+      "baseline_top1": "kit-handwritten-statements",
+      "baseline_rank": 11,
+      "baseline_rounds": 5,
+      "sira_top1": "benchmark-scores",
+      "sira_rank": 1,
+      "sira_rartf_top1": "benchmark-scores",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.1689
+    },
+    {
+      "id": "Q29",
+      "kind": "colloquial_vocabulary_bridge",
+      "query": "Cloud cost invoices currency pricing quantity basis and period trade hypotheses",
+      "relevant_packs": [
+        "cost-optimization"
+      ],
+      "baseline_top1": "cost-optimization",
+      "baseline_rank": 1,
+      "baseline_rounds": 1,
+      "sira_top1": "cost-optimization",
+      "sira_rank": 1,
+      "sira_rartf_top1": "cost-optimization",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.1664
+    },
+    {
+      "id": "Q30",
+      "kind": "colloquial_vocabulary_bridge",
+      "query": "City council food distribution ordinances tracking mandatory shall permit registration",
+      "relevant_packs": [
+        "policy-and-law-watch",
+        "kit-policy-research-brief"
+      ],
+      "baseline_top1": "kit-food-bank-pickups",
+      "baseline_rank": 38,
+      "baseline_rounds": 5,
+      "sira_top1": "policy-and-law-watch",
+      "sira_rank": 1,
+      "sira_rartf_top1": "policy-and-law-watch",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.2002
+    },
+    {
+      "id": "Q31",
+      "kind": "structural_analogy",
+      "query": "Maternal health clinic keeps confidential notebooks on its local laptop while bilingual volunteers translate manifest criteria",
+      "relevant_packs": [
+        "public-good-kits",
+        "kit-handwritten-statements",
+        "kit-victim-support-referrals"
+      ],
+      "baseline_top1": "kit-volunteer-shift-schedule",
+      "baseline_rank": 4,
+      "baseline_rounds": 4,
+      "sira_top1": "public-good-kits",
+      "sira_rank": 1,
+      "sira_rartf_top1": "public-good-kits",
+      "sira_rartf_rank": 1,
+      "matched_shims": [
+        "SHIM-008-public-good-kits"
+      ],
+      "sira_rartf_latency_ms": 0.4168
+    },
+    {
+      "id": "Q32",
+      "kind": "structural_analogy",
+      "query": "Substation breaker command requires an assembled telemetry packet and unbound runner exit",
+      "relevant_packs": [
+        "atomic-step-contract"
+      ],
+      "baseline_top1": "parametric-3d-video-composer",
+      "baseline_rank": 7,
+      "baseline_rounds": 4,
+      "sira_top1": "atomic-step-contract",
+      "sira_rank": 1,
+      "sira_rartf_top1": "atomic-step-contract",
+      "sira_rartf_rank": 1,
+      "matched_shims": [
+        "SHIM-001-atomic-step-contract"
+      ],
+      "sira_rartf_latency_ms": 0.2992
+    },
+    {
+      "id": "Q33",
+      "kind": "structural_analogy",
+      "query": "Compounding pharmacy requires separate shifts to sign off a syringe mix with skeptic factual positions",
+      "relevant_packs": [
+        "persona-panel-second-opinion"
+      ],
+      "baseline_top1": "kit-food-bank-pickups",
+      "baseline_rank": 49,
+      "baseline_rounds": 5,
+      "sira_top1": "persona-panel-second-opinion",
+      "sira_rank": 1,
+      "sira_rartf_top1": "persona-panel-second-opinion",
+      "sira_rartf_rank": 1,
+      "matched_shims": [
+        "SHIM-007-persona-panel-second-opi"
+      ],
+      "sira_rartf_latency_ms": 0.4561
+    },
+    {
+      "id": "Q34",
+      "kind": "structural_analogy",
+      "query": "Avionics firmware cutover switch checks landed commit sha parity conclusion",
+      "relevant_packs": [
+        "release-and-verify",
+        "launch-readiness"
+      ],
+      "baseline_top1": "rename-and-relink",
+      "baseline_rank": 9,
+      "baseline_rounds": 5,
+      "sira_top1": "release-and-verify",
+      "sira_rank": 1,
+      "sira_rartf_top1": "release-and-verify",
+      "sira_rartf_rank": 1,
+      "matched_shims": [
+        "SHIM-009-release-and-verify"
+      ],
+      "sira_rartf_latency_ms": 0.3284
+    },
+    {
+      "id": "Q35",
+      "kind": "structural_analogy",
+      "query": "Agricultural irrigation controller runs a qualification rung lookup to replay solved deliverables",
+      "relevant_packs": [
+        "retrieval-triggers-and-reuse",
+        "prior-art-and-alternatives"
+      ],
+      "baseline_top1": "evaluation-design",
+      "baseline_rank": 53,
+      "baseline_rounds": 5,
+      "sira_top1": "retrieval-triggers-and-reuse",
+      "sira_rank": 1,
+      "sira_rartf_top1": "retrieval-triggers-and-reuse",
+      "sira_rartf_rank": 1,
+      "matched_shims": [
+        "SHIM-010-retrieval-triggers-and-r"
+      ],
+      "sira_rartf_latency_ms": 0.3761
+    },
+    {
+      "id": "Q36",
+      "kind": "structural_analogy",
+      "query": "Radiology classifier bucket promotion verifies base integrity feeds and offered arguments",
+      "relevant_packs": [
+        "continuous-tuning",
+        "lora-memory-and-shimming"
+      ],
+      "baseline_top1": "agent-harness-feeds",
+      "baseline_rank": 2,
+      "baseline_rounds": 3,
+      "sira_top1": "continuous-tuning",
+      "sira_rank": 1,
+      "sira_rartf_top1": "continuous-tuning",
+      "sira_rartf_rank": 1,
+      "matched_shims": [
+        "SHIM-003-continuous-tuning"
+      ],
+      "sira_rartf_latency_ms": 0.3068
+    },
+    {
+      "id": "Q37",
+      "kind": "structural_analogy",
+      "query": "Airfield cargo dispatcher packs medical pallets under a ceiling while dropping duplicate manifests",
+      "relevant_packs": [
+        "hybrid-retrieval-context-knapsack"
+      ],
+      "baseline_top1": "evaluation-design",
+      "baseline_rank": 31,
+      "baseline_rounds": 5,
+      "sira_top1": "evaluation-design",
+      "sira_rank": 5,
+      "sira_rartf_top1": "hybrid-retrieval-context-knapsack",
+      "sira_rartf_rank": 1,
+      "matched_shims": [
+        "SHIM-004-hybrid-retrieval-context"
+      ],
+      "sira_rartf_latency_ms": 0.2556
+    },
+    {
+      "id": "Q38",
+      "kind": "structural_analogy",
+      "query": "Oncology longitudinal biomarker cohort study checks causal horizon bars and Sharpe drag",
+      "relevant_packs": [
+        "leakage-safe-regime-backtesting"
+      ],
+      "baseline_top1": "checks-of-checks",
+      "baseline_rank": 59,
+      "baseline_rounds": 5,
+      "sira_top1": "leakage-safe-regime-backtesting",
+      "sira_rank": 1,
+      "sira_rartf_top1": "leakage-safe-regime-backtesting",
+      "sira_rartf_rank": 1,
+      "matched_shims": [
+        "SHIM-005-leakage-safe-regime-back"
+      ],
+      "sira_rartf_latency_ms": 0.292
+    },
+    {
+      "id": "Q39",
+      "kind": "structural_analogy",
+      "query": "Vertical 9x16 transit announcement reels checking cubic easing phase curves and installation norms",
+      "relevant_packs": [
+        "video-motion",
+        "scene-and-cognitive-video-qa"
+      ],
+      "baseline_top1": "parametric-3d-video-composer",
+      "baseline_rank": 6,
+      "baseline_rounds": 4,
+      "sira_top1": "video-motion",
+      "sira_rank": 1,
+      "sira_rartf_top1": "video-motion",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.2905
+    },
+    {
+      "id": "Q40",
+      "kind": "structural_analogy",
+      "query": "Municipal water lab synthetic poisoned samples graded by inspector kill operators",
+      "relevant_packs": [
+        "checks-of-checks"
+      ],
+      "baseline_top1": "meta-are-scenario-matrix",
+      "baseline_rank": 15,
+      "baseline_rounds": 5,
+      "sira_top1": "checks-of-checks",
+      "sira_rank": 1,
+      "sira_rartf_top1": "checks-of-checks",
+      "sira_rartf_rank": 1,
+      "matched_shims": [
+        "SHIM-002-checks-of-checks"
+      ],
+      "sira_rartf_latency_ms": 0.2717
+    },
+    {
+      "id": "Q41",
+      "kind": "structural_analogy",
+      "query": "Cyclone alert burst dispatching async parallel workers under a sliding window lease",
+      "relevant_packs": [
+        "partner-compute-cascade"
+      ],
+      "baseline_top1": "leakage-safe-regime-backtesting",
+      "baseline_rank": 47,
+      "baseline_rounds": 5,
+      "sira_top1": "partner-compute-cascade",
+      "sira_rank": 1,
+      "sira_rartf_top1": "partner-compute-cascade",
+      "sira_rartf_rank": 1,
+      "matched_shims": [
+        "SHIM-006-partner-compute-cascade"
+      ],
+      "sira_rartf_latency_ms": 0.3096
+    },
+    {
+      "id": "Q42",
+      "kind": "structural_analogy",
+      "query": "Customs border intake checking Unicode NFC charset strings, leap-day classes and oracle outputs",
+      "relevant_packs": [
+        "edge-and-corner-cases"
+      ],
+      "baseline_top1": "visual-rendering",
+      "baseline_rank": 49,
+      "baseline_rounds": 5,
+      "sira_top1": "edge-and-corner-cases",
+      "sira_rank": 1,
+      "sira_rartf_top1": "edge-and-corner-cases",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.2954
+    },
+    {
+      "id": "Q43",
+      "kind": "structural_analogy",
+      "query": "Municipal transit inspection diffing reopened defect fingerprints and overdue churn across runs",
+      "relevant_packs": [
+        "continuous-self-review",
+        "findings-to-fixes"
+      ],
+      "baseline_top1": "continuous-self-review",
+      "baseline_rank": 1,
+      "baseline_rounds": 1,
+      "sira_top1": "continuous-self-review",
+      "sira_rank": 1,
+      "sira_rartf_top1": "continuous-self-review",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.491
+    },
+    {
+      "id": "Q44",
+      "kind": "structural_analogy",
+      "query": "Sensor firmware p75 LCP latency check within comparable bands to separate flake shifts",
+      "relevant_packs": [
+        "regression-watch"
+      ],
+      "baseline_top1": "kit-food-bank-pickups",
+      "baseline_rank": 23,
+      "baseline_rounds": 5,
+      "sira_top1": "regression-watch",
+      "sira_rank": 1,
+      "sira_rartf_top1": "regression-watch",
+      "sira_rartf_rank": 1,
+      "matched_shims": [
+        "SHIM-007-persona-panel-second-opi"
+      ],
+      "sira_rartf_latency_ms": 0.4019
+    },
+    {
+      "id": "Q45",
+      "kind": "structural_analogy",
+      "query": "Regional public health synthesis excluding retracted papers so every sentence cites a verified study",
+      "relevant_packs": [
+        "deep-research-report",
+        "measured-claims"
+      ],
+      "baseline_top1": "deep-research-report",
+      "baseline_rank": 1,
+      "baseline_rounds": 1,
+      "sira_top1": "deep-research-report",
+      "sira_rank": 1,
+      "sira_rartf_top1": "deep-research-report",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.3149
+    },
+    {
+      "id": "Q46",
+      "kind": "structural_analogy",
+      "query": "Epidemiology meal-pound site dataset checking column weeks across northern districts",
+      "relevant_packs": [
+        "checked-data-analysis"
+      ],
+      "baseline_top1": "visual-rendering",
+      "baseline_rank": 16,
+      "baseline_rounds": 5,
+      "sira_top1": "checked-data-analysis",
+      "sira_rank": 1,
+      "sira_rartf_top1": "checked-data-analysis",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.2818
+    },
+    {
+      "id": "Q47",
+      "kind": "structural_analogy",
+      "query": "Hospital board contexts and funder emails turned into versioned direction while keeping superseded guidance",
+      "relevant_packs": [
+        "direction-to-work"
+      ],
+      "baseline_top1": "direction-to-work",
+      "baseline_rank": 1,
+      "baseline_rounds": 1,
+      "sira_top1": "direction-to-work",
+      "sira_rank": 1,
+      "sira_rartf_top1": "direction-to-work",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.3635
+    },
+    {
+      "id": "Q48",
+      "kind": "structural_analogy",
+      "query": "Nightly operations shift-change bulletin recording observed sitemap backup pins",
+      "relevant_packs": [
+        "status-and-handoff"
+      ],
+      "baseline_top1": "user-acceptance-testing",
+      "baseline_rank": 70,
+      "baseline_rounds": 5,
+      "sira_top1": "status-and-handoff",
+      "sira_rank": 1,
+      "sira_rartf_top1": "status-and-handoff",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.3189
+    },
+    {
+      "id": "Q49",
+      "kind": "structural_analogy",
+      "query": "Sunrise-to-Acme repository handbook changelog variants with zero tracker violations",
+      "relevant_packs": [
+        "rename-and-relink"
+      ],
+      "baseline_top1": "repo-review",
+      "baseline_rank": 57,
+      "baseline_rounds": 5,
+      "sira_top1": "rename-and-relink",
+      "sira_rank": 1,
+      "sira_rartf_top1": "rename-and-relink",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.3368
+    },
+    {
+      "id": "Q50",
+      "kind": "structural_analogy",
+      "query": "Connect prewritten dedupe, impute and numeric stats nodes from src to dst ports without new code",
+      "relevant_packs": [
+        "code-composition"
+      ],
+      "baseline_top1": "code-composition",
+      "baseline_rank": 1,
+      "baseline_rounds": 1,
+      "sira_top1": "code-composition",
+      "sira_rank": 1,
+      "sira_rartf_top1": "code-composition",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.3391
+    },
+    {
+      "id": "Q51",
+      "kind": "structural_analogy",
+      "query": "Civic flood-barrier comparison sheet scoring airy vs formal taste preference vectors side by side",
+      "relevant_packs": [
+        "taste-palettes"
+      ],
+      "baseline_top1": "taste-palettes",
+      "baseline_rank": 1,
+      "baseline_rounds": 1,
+      "sira_top1": "taste-palettes",
+      "sira_rank": 1,
+      "sira_rartf_top1": "taste-palettes",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.3705
+    },
+    {
+      "id": "Q52",
+      "kind": "structural_analogy",
+      "query": "Pre-register an immutable evaluation scorer diagnosis with twin opaque controls before candidate runs",
+      "relevant_packs": [
+        "evaluation-design"
+      ],
+      "baseline_top1": "evaluation-design",
+      "baseline_rank": 1,
+      "baseline_rounds": 1,
+      "sira_top1": "evaluation-design",
+      "sira_rank": 1,
+      "sira_rartf_top1": "evaluation-design",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.3311
+    },
+    {
+      "id": "Q53",
+      "kind": "structural_analogy",
+      "query": "Survey existing open-source tools and non-code alternatives before building a custom municipal app",
+      "relevant_packs": [
+        "prior-art-and-alternatives",
+        "tool-discovery"
+      ],
+      "baseline_top1": "prior-art-and-alternatives",
+      "baseline_rank": 1,
+      "baseline_rounds": 1,
+      "sira_top1": "prior-art-and-alternatives",
+      "sira_rank": 1,
+      "sira_rartf_top1": "prior-art-and-alternatives",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.3486
+    },
+    {
+      "id": "Q54",
+      "kind": "structural_analogy",
+      "query": "Time-boxed field exploratory testing session tracking overrun pct on an offline utility app",
+      "relevant_packs": [
+        "exploratory-testing-charters",
+        "user-acceptance-testing"
+      ],
+      "baseline_top1": "exploratory-testing-charters",
+      "baseline_rank": 1,
+      "baseline_rounds": 1,
+      "sira_top1": "exploratory-testing-charters",
+      "sira_rank": 1,
+      "sira_rartf_top1": "exploratory-testing-charters",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.3749
+    },
+    {
+      "id": "Q55",
+      "kind": "structural_analogy",
+      "query": "CIK accession filer profile extracting GAAP fiscal quarter concepts and dividend factors",
+      "relevant_packs": [
+        "public-company-research"
+      ],
+      "baseline_top1": "public-budget-report",
+      "baseline_rank": 5,
+      "baseline_rounds": 4,
+      "sira_top1": "public-company-research",
+      "sira_rank": 1,
+      "sira_rartf_top1": "public-company-research",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.2646
+    },
+    {
+      "id": "Q56",
+      "kind": "structural_analogy",
+      "query": "Local authorized security review auditing caller authorization severity while keeping secret locations masked",
+      "relevant_packs": [
+        "security-review"
+      ],
+      "baseline_top1": "security-review",
+      "baseline_rank": 1,
+      "baseline_rounds": 1,
+      "sira_top1": "security-review",
+      "sira_rank": 1,
+      "sira_rartf_top1": "security-review",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.4613
+    },
+    {
+      "id": "Q57",
+      "kind": "structural_analogy",
+      "query": "Warehouse robotics cell needs single-claimant lease lock and stale command fencing on failover",
+      "relevant_packs": [
+        "atomic-step-contract",
+        "partner-compute-cascade",
+        "harness-onboarding-e2e"
+      ],
+      "baseline_top1": "codebase-health-review",
+      "baseline_rank": 3,
+      "baseline_rounds": 3,
+      "sira_top1": "partner-compute-cascade",
+      "sira_rank": 1,
+      "sira_rartf_top1": "partner-compute-cascade",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.3503
+    },
+    {
+      "id": "Q58",
+      "kind": "structural_analogy",
+      "query": "Clinical ethics board requires separation of duties where proposer worker never verifies own dgmh patch",
+      "relevant_packs": [
+        "sira-self-learning-rag",
+        "persona-panel-second-opinion",
+        "public-good-kits"
+      ],
+      "baseline_top1": "atomic-step-contract",
+      "baseline_rank": 18,
+      "baseline_rounds": 5,
+      "sira_top1": "sira-self-learning-rag",
+      "sira_rank": 1,
+      "sira_rartf_top1": "sira-self-learning-rag",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.3611
+    },
+    {
+      "id": "Q59",
+      "kind": "structural_analogy",
+      "query": "Disaster relief truck packs emergency crates under weight ceiling without redundant cargo",
+      "relevant_packs": [
+        "hybrid-retrieval-context-knapsack"
+      ],
+      "baseline_top1": "kit-volunteer-shift-schedule",
+      "baseline_rank": 30,
+      "baseline_rounds": 5,
+      "sira_top1": "kit-volunteer-shift-schedule",
+      "sira_rank": 4,
+      "sira_rartf_top1": "hybrid-retrieval-context-knapsack",
+      "sira_rartf_rank": 1,
+      "matched_shims": [
+        "SHIM-004-hybrid-retrieval-context"
+      ],
+      "sira_rartf_latency_ms": 0.3939
+    },
+    {
+      "id": "Q60",
+      "kind": "structural_analogy",
+      "query": "River flood sensor forecast evaluated on temporal windows with lookahead leakage prevention",
+      "relevant_packs": [
+        "leakage-safe-regime-backtesting"
+      ],
+      "baseline_top1": "leakage-safe-regime-backtesting",
+      "baseline_rank": 1,
+      "baseline_rounds": 1,
+      "sira_top1": "leakage-safe-regime-backtesting",
+      "sira_rank": 1,
+      "sira_rartf_top1": "leakage-safe-regime-backtesting",
+      "sira_rartf_rank": 1,
+      "matched_shims": [],
+      "sira_rartf_latency_ms": 0.2573
+    }
+  ],
+  "artifact_sha256": "ab678ff6542a44272e3fdbf3a0428603e1d013b95b37fc3d9efdf18d5e1c8630"
+}

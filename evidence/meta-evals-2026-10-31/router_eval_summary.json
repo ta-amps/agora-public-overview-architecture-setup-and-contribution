@@ -1,0 +1,130 @@
+{
+  "arms": {
+    "keyword_baseline": {
+      "action_accuracy": 0.491667,
+      "f144_paraphrase_accuracy": 0.0,
+      "false_refusal_rate": 0.0,
+      "full_route_exact_match": 0.266667,
+      "json_valid_rate": 1.0,
+      "macro_f1": 0.440961,
+      "n": 120,
+      "p50_latency_ms": 0.01,
+      "p95_latency_ms": 0.01,
+      "per_class_f1": {
+        "decompose_tasks": 0.978723,
+        "frontier_muse_spark": 0.5,
+        "inject_task_objects": 0.440367,
+        "refuse_private_on_contributor": 0.285714,
+        "respond_directly": 0.0
+      },
+      "private_refusal_recall": 0.166667
+    },
+    "router_lora_llama32_1b": {
+      "action_accuracy": 0.983333,
+      "f144_paraphrase_accuracy": 0.888889,
+      "false_refusal_rate": 0.0,
+      "full_route_exact_match": 0.983333,
+      "json_valid_rate": 1.0,
+      "macro_f1": 0.983304,
+      "n": 120,
+      "p50_latency_ms": 1002.09,
+      "p95_latency_ms": 1248.59,
+      "per_class_f1": {
+        "decompose_tasks": 1.0,
+        "frontier_muse_spark": 1.0,
+        "inject_task_objects": 0.96,
+        "refuse_private_on_contributor": 1.0,
+        "respond_directly": 0.956522
+      },
+      "private_refusal_recall": 1.0,
+      "sanity_accuracy": 0.95
+    },
+    "zeroshot_llama32_1b": {
+      "action_accuracy": 0.225,
+      "f144_paraphrase_accuracy": 0.444444,
+      "false_refusal_rate": 0.052083,
+      "full_route_exact_match": 0.1,
+      "json_valid_rate": 0.583333,
+      "macro_f1": 0.305026,
+      "n": 120,
+      "p50_latency_ms": 1128.43,
+      "p95_latency_ms": 2001.36,
+      "per_class_f1": {
+        "decompose_tasks": 0.555556,
+        "frontier_muse_spark": 0.0,
+        "inject_task_objects": 0.08,
+        "refuse_private_on_contributor": 0.432432,
+        "respond_directly": 0.457143
+      },
+      "private_refusal_recall": 0.333333,
+      "sanity_accuracy": 0.95
+    }
+  },
+  "base_model": "meta-llama/Llama-3.2-1B-Instruct",
+  "base_weights_sha256": "1ff795ff6a07e6a68085d206fb84417da2f083f68391c2843cd2b8ac6df8538f",
+  "corpus": {
+    "actions": [
+      "respond_directly",
+      "inject_task_objects",
+      "decompose_tasks",
+      "frontier_muse_spark",
+      "refuse_private_on_contributor"
+    ],
+    "corpus_sha256": "a35b7b18020f3845f008597f23d25ffe14ecfe2e66998377a872b0f8771784c1",
+    "muse_api_outputs_used": false,
+    "private_data_used": false,
+    "sanity_rows": 40,
+    "test_rows": 120,
+    "train_rows": 400
+  },
+  "experiment": "herma_shim_router_lora_1b",
+  "hardware": {
+    "cuda": "13.2",
+    "dtype": "bfloat16",
+    "gpu": "NVIDIA GeForce RTX 3060",
+    "torch": "2.15.0+cu132",
+    "total_vram_bytes": 12481003520
+  },
+  "paired_bootstrap_95ci": {
+    "lora_vs_keyword_action_accuracy": {
+      "delta": 0.491667,
+      "improved_rows": 59,
+      "lower": 0.408333,
+      "regressed_rows": 0,
+      "upper": 0.583333
+    },
+    "lora_vs_zeroshot_action_accuracy": {
+      "delta": 0.758333,
+      "improved_rows": 91,
+      "lower": 0.683333,
+      "regressed_rows": 0,
+      "upper": 0.833333
+    }
+  },
+  "receipt_sha256": "bef683521bf43bdd824d85e8db28f6a81109964ddb2fa61961909f89414d0293",
+  "training": {
+    "adapter_files_sha256": {
+      "README.md": "31ebdaaef3eb2d1a1e0a13f5b45ebd26ec50af5d7ef666ba40fc4dc86e20189c",
+      "adapter_config.json": "6615c7239d49e28c4e8cd76f86e25c2926923f90707d98bd03d63ba5e17e821c",
+      "adapter_model.safetensors": "6bd9dd0792025bafa61f5964a7dbc7a1fc8eed59892a091b12f9bffbc939579b"
+    },
+    "epochs": 5,
+    "first_loss": 1.092918,
+    "frozen_base_unchanged": true,
+    "last_loss": 6.2e-05,
+    "learning_rate": 0.0003,
+    "lora_alpha": 32,
+    "lora_dropout": 0.05,
+    "optimizer_steps": 250,
+    "peak_allocated_bytes": 9246205440,
+    "peak_reserved_bytes": 11916017664,
+    "rank": 16,
+    "reload_determinism": {
+      "exact_matches": 8,
+      "max_abs_logit_diff": 0.0,
+      "probes": 8
+    },
+    "trainable_parameters": 11272192,
+    "training_seconds": 315.785
+  }
+}

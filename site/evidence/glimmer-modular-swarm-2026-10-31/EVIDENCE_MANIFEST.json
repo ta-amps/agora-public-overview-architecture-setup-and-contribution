@@ -1,0 +1,131 @@
+{
+  "schema_version": "ta-amps.glimmer-modular-swarm-2026-10-31.v1",
+  "raw_worker_results_sha256": "2cf98aa74557afe3689ee1255f50e2ff8d65093f09550c409ab827ca2e11016b",
+  "private_safetensors_sha256": {
+    "decomposer_1600": "290e0c28a328c0afb4d33c47e03705a72cc8cc7c08bd62a41b65ee9805dd5ef4",
+    "retriever_1600": "567596a253fad7ec6cba8ec796a8bc7de33aa28d6513609a83b1714c28c4cc86",
+    "builder_1600": "c855137afee481a9a3e7f4aa434b90fb6dc2815151d6d088436a471cddff6434",
+    "verifier_1600": "795f41fdbf6e8acb977589809fd626db3c63721e26f482c4fb9fd45ae45e43be",
+    "monolithic_1600": "4dd4ed96ec0a2f835405ca03d95179b238dbc6a4eaea6e65d7fd13d1c9111ccf",
+    "merged_ties_1600": "b818293142c5a93e65e71ec9ea263404140a9684adc1f87cc6d6f021616a3baa"
+  },
+  "file_count": 29,
+  "files": {
+    "README.md": {
+      "bytes": 3839,
+      "sha256": "6a222f9fed334684fb750469d0796be13158c888e78de4d6d8fa3652fc7a5c4a"
+    },
+    "adapter_configs/builder_1600.adapter_config.json": {
+      "bytes": 1227,
+      "sha256": "6cb4cabb1cdd5cc5ae6b6f145dbd4511f77a4304c5c3407ecfbe44db739b2d51"
+    },
+    "adapter_configs/decomposer_1600.adapter_config.json": {
+      "bytes": 1227,
+      "sha256": "6cb4cabb1cdd5cc5ae6b6f145dbd4511f77a4304c5c3407ecfbe44db739b2d51"
+    },
+    "adapter_configs/merged_ties_1600.adapter_config.json": {
+      "bytes": 1227,
+      "sha256": "fece555b60e1ccbbe65d33e08bba2e7d0702c7bdb7b656175e123598306d676e"
+    },
+    "adapter_configs/monolithic_1600.adapter_config.json": {
+      "bytes": 1227,
+      "sha256": "d5f855a0110e4a6fe7df32e3299f0faf70ffb3092a005ef5f174b6e1da3062ec"
+    },
+    "adapter_configs/retriever_1600.adapter_config.json": {
+      "bytes": 1227,
+      "sha256": "6cb4cabb1cdd5cc5ae6b6f145dbd4511f77a4304c5c3407ecfbe44db739b2d51"
+    },
+    "adapter_configs/verifier_1600.adapter_config.json": {
+      "bytes": 1227,
+      "sha256": "d5f855a0110e4a6fe7df32e3299f0faf70ffb3092a005ef5f174b6e1da3062ec"
+    },
+    "adapter_manifests/lora.builder-toolcalls-256.manifest.json": {
+      "bytes": 2274,
+      "sha256": "87220d116a3bcee184c7fc9ed3e02769fa0dbd1fdb2ff37b7f65454a77db4632"
+    },
+    "adapter_manifests/lora.builder-toolcalls-64.manifest.json": {
+      "bytes": 2267,
+      "sha256": "e2a04678562155ce709ae7b78f58f220150700abcb2930f5ccd317e6889c4935"
+    },
+    "adapter_manifests/lora.builder-toolcalls.manifest.json": {
+      "bytes": 2266,
+      "sha256": "df34559aaef91bf745c1f5aa53ba916bea4eb622624547dc9bff0dba10ffde3f"
+    },
+    "adapter_manifests/lora.merged-linear-1600.manifest.json": {
+      "bytes": 2089,
+      "sha256": "d031c779812492faeeaa816002a9a3791a98a922933eb3fe63e29c6bcaa111f0"
+    },
+    "adapter_manifests/lora.merged-ties-1600.manifest.json": {
+      "bytes": 2089,
+      "sha256": "4c862b9d7727d5cf8daef1cdd00ecb421c3e6a96dbee6f3f227051f82a24ca78"
+    },
+    "adapter_manifests/lora.monolithic-mixed-256.manifest.json": {
+      "bytes": 2291,
+      "sha256": "473fe9dff7767db2f144aec2fddb6158ed850d7cd08795db73df5e7766423551"
+    },
+    "adapter_manifests/lora.monolithic-mixed-64.manifest.json": {
+      "bytes": 2283,
+      "sha256": "e8725e1ab942da85bb4cad3f5718fddf33a8957a74c3523b75f11c0f65e31a14"
+    },
+    "adapter_manifests/lora.monolithic-mixed.manifest.json": {
+      "bytes": 2282,
+      "sha256": "6157795b2069491e639b4a67c2eaa264a2c989963268a46b66e641b81ab550be"
+    },
+    "adapter_manifests/lora.shim-retriever-256.manifest.json": {
+      "bytes": 2278,
+      "sha256": "dc58089eae8ab36c4afa19b8338533c7dfff3cd84943aaf2e931172c078609bb"
+    },
+    "adapter_manifests/lora.shim-retriever-64.manifest.json": {
+      "bytes": 2273,
+      "sha256": "19cf5c21ea4b4035f2191a25babce22f1a99478319c96234d4409452c865c35d"
+    },
+    "adapter_manifests/lora.shim-retriever.manifest.json": {
+      "bytes": 2269,
+      "sha256": "cde0c502064cfaa7a999d78d095f23424573f4559898e03953316d80a8f82d9c"
+    },
+    "adapter_manifests/lora.task-decomposer-256.manifest.json": {
+      "bytes": 2280,
+      "sha256": "ac5932512ed7fc0965f261a5473e0f741a3bea1967652accc9ce02899505b5c5"
+    },
+    "adapter_manifests/lora.task-decomposer-64.manifest.json": {
+      "bytes": 2277,
+      "sha256": "ae02e3eef1a612251e0f9d547a6ab8893654967622009683977cf303171ca7ee"
+    },
+    "adapter_manifests/lora.task-decomposer.manifest.json": {
+      "bytes": 2274,
+      "sha256": "435d72bb9be501fc2ce05df0b590b1198ae09df06f027cc78f34d8912535b106"
+    },
+    "adapter_manifests/lora.verifier-dpo-256.manifest.json": {
+      "bytes": 2279,
+      "sha256": "aae4df01a2c7f2f61265e1311e87024a96db666be38e45afe2f75810d0232b2e"
+    },
+    "adapter_manifests/lora.verifier-dpo-64.manifest.json": {
+      "bytes": 2271,
+      "sha256": "41910afef910bb62eff872d5f239727088ecf3f02c62adf596f2a41e39a448f2"
+    },
+    "adapter_manifests/lora.verifier-dpo.manifest.json": {
+      "bytes": 2270,
+      "sha256": "1a9ceab3c29f2f7093d29146b3b606a3ae5f699094a6a9fb9d9299e9c6cf9335"
+    },
+    "data-scaling-flywheel.svg": {
+      "bytes": 4961,
+      "sha256": "060bad2192f7d9572894b7fd1074045c049383a64904afc66c986d19172422c3"
+    },
+    "modular-vs-monolithic-loras.svg": {
+      "bytes": 4487,
+      "sha256": "cb7ca48e18a62cf829a019fd9d5f4e0675bd48df6411b0aee426ed433d9c6bac"
+    },
+    "modular_training_and_subspace_summary.json": {
+      "bytes": 5833,
+      "sha256": "b5c4f5459ea86d4b70d49633bbbce7312746087860434b25f5b3906bb5454085"
+    },
+    "nvidia_smi.csv": {
+      "bytes": 372321,
+      "sha256": "c58d7429fbf0aa4c6f2bda31a34d65d29b302b33caa5a20efe113ab26e65d8e3"
+    },
+    "results.json": {
+      "bytes": 150719,
+      "sha256": "0f6c1395a4c259ac00d1c6b027f19876ab45f27736c099ec932dd9300632fbf6"
+    }
+  }
+}

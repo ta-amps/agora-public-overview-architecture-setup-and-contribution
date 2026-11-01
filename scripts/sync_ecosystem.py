@@ -1,7 +1,7 @@
 """Build site/content/ecosystem-catalog.json from an ecosystem catalog JSON or Watt-Mind HTML snapshot.
 
-Decomposes public Meta Hackathon 2026 projects into searchable candidate Tasks (verbs)
-and Task Objects (nouns) while preserving strict honesty boundaries and scrubbing any
+Decomposes public Meta Hackathon 2026 projects into searchable candidate Tasks (things to do)
+and task objects (nouns) while preserving strict honesty boundaries and scrubbing any
 retired/private names or em-dashes. Stdlib only; touches no network.
 
 Usage:
@@ -140,6 +140,8 @@ def format_task_item(v: object) -> tuple[str, str]:
         vcat = clean(v.get("verb_category") or "")
         name = clean(v.get("name") or v.get("title") or v.get("task_id") or v.get("id") or "")
         if vcat and name:
+            if "synthetic" in name.lower():
+                return vcat, vcat  # owner, October 31: no file name that says it; the card still links the repo
             return vcat, f"{vcat} ({name})"
         label = clean(v.get("title") or v.get("name") or v.get("task_id") or v.get("id") or "")
         return label.split(" ", 1)[0], label
@@ -257,7 +259,7 @@ def normalize_entry(raw: dict, idx: int) -> dict | None:
             bits.append("test suite")
         if raw.get("lv") or raw.get("live_demo") or raw.get("live_demo_declared"):
             bits.append("live endpoint listed")
-        summary = "Public hackathon repository (" + ", ".join(bits) + ") mapped to candidate Tasks and Task Objects."
+        summary = "Public hackathon repository (" + ", ".join(bits) + ") mapped to candidate Tasks and task objects."
     if len(summary) > 200:
         summary = summary[:197].rstrip() + "..."
 

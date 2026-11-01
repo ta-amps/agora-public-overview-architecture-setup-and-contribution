@@ -2,6 +2,7 @@ import copy
 import hashlib
 import importlib.util
 import json
+import os
 import shutil
 import subprocess
 import tempfile
@@ -55,6 +56,12 @@ def pack(root: Path, pack_id: str, title: str, purpose: str, nouns: int, verbs: 
 @unittest.skipUnless(shutil.which("git"), "the sync pins a git commit")
 class SyncLibrary(unittest.TestCase):
     def setUp(self):
+        # A runner may hand git settings to every git command through GIT_CONFIG_* (the local CI points
+        # remote.origin.url at the checkout's GitHub address). This test builds its own repository with its own
+        # origin, so it runs without them and puts them back afterwards.
+        saved = {key: os.environ.pop(key) for key in list(os.environ)
+                 if key.startswith("GIT_CONFIG_") or key == "GIT_CONFIG_PARAMETERS"}
+        self.addCleanup(os.environ.update, saved)
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
         self.root = Path(self.tmp.name) / "library"

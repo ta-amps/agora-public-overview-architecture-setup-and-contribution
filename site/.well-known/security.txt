@@ -1,0 +1,10 @@
+# ta-amps security contact (RFC 9116)
+Contact: https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/security/advisories/new
+Expires: 2027-10-30T23:59:59Z
+Preferred-Languages: en
+Canonical: https://agora.ta-amps.workers.dev/.well-known/security.txt
+Canonical: https://eranos.ta-amps.workers.dev/.well-known/security.txt
+Canonical: https://tessera.ta-amps.workers.dev/.well-known/security.txt
+Canonical: https://herma.ta-amps.workers.dev/.well-known/security.txt
+Canonical: https://home.ta-amps.workers.dev/.well-known/security.txt
+Policy: https://agora.ta-amps.workers.dev/security/

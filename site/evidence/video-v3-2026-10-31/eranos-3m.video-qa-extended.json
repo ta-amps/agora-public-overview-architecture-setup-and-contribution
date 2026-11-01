@@ -1,0 +1,759 @@
+{
+  "checks": [
+    {
+      "check": "blank_frames",
+      "findings": [],
+      "limit": {
+        "black_min_s": 0.5,
+        "uniform_max_range": 16
+      },
+      "measured": {
+        "black_runs": 0,
+        "flat_runs": 0,
+        "frames_measured": 5400,
+        "smallest_luma_range": 187
+      },
+      "result": "pass"
+    },
+    {
+      "check": "frozen_stretches",
+      "findings": [
+        {
+          "end_s": 82.866667,
+          "severity": "warn",
+          "start_s": 81.266667,
+          "what": "frozen 1.6 s"
+        },
+        {
+          "end_s": 136.166667,
+          "severity": "warn",
+          "start_s": 134.6,
+          "what": "frozen 1.567 s"
+        }
+      ],
+      "limit": {
+        "fail_s": 2,
+        "hold_tail_s": 0.75,
+        "warn_s": 1.5
+      },
+      "measured": {
+        "freezes": 8,
+        "longest_s": 1.6
+      },
+      "result": "warn"
+    },
+    {
+      "check": "cut_cadence",
+      "findings": [],
+      "limit": {
+        "cut_score": 0.12,
+        "still_score": 0.002,
+        "still_warn_s": 4
+      },
+      "measured": {
+        "cuts": [
+          0.8,
+          10.567,
+          22.467,
+          28.167,
+          35.4,
+          41.633,
+          43.967,
+          45.467,
+          52.733,
+          59.267,
+          79.3,
+          98.367,
+          105.267,
+          112,
+          116.4,
+          121.567,
+          134.3,
+          154.233,
+          157.967,
+          158.4,
+          161.3,
+          164.167,
+          173.6
+        ],
+        "cuts_per_minute": 7.67,
+        "longest_shot_s": 20.033,
+        "median_shot_s": 6.533,
+        "shots": 24
+      },
+      "result": "pass"
+    },
+    {
+      "check": "loudness",
+      "findings": [],
+      "limit": {
+        "lra_max_lu": 10,
+        "short_term_floor_lufs": -28,
+        "target_lufs": -16,
+        "tolerance_lu": 1,
+        "true_peak_max_dbtp": -1
+      },
+      "measured": {
+        "integrated_lufs": -15.6,
+        "lra_lu": 2.4,
+        "quietest_at_s": 154.499979,
+        "quietest_short_term_lufs": -20.9,
+        "true_peak_dbtp": -1.4
+      },
+      "result": "pass"
+    },
+    {
+      "check": "silence_gaps",
+      "findings": [],
+      "limit": {
+        "fail_s": 2,
+        "warn_s": 0.5
+      },
+      "measured": {
+        "silences": 0
+      },
+      "result": "pass"
+    },
+    {
+      "check": "clipping",
+      "findings": [],
+      "limit": {
+        "clip_peak_count": 3,
+        "clip_peak_dbfs": -0.1
+      },
+      "measured": {
+        "flat_factor": 0,
+        "peak_count": 2,
+        "peak_level_db": -1.423141
+      },
+      "result": "pass"
+    },
+    {
+      "check": "captions",
+      "findings": [],
+      "limit": {
+        "blink_gap_frames": 3,
+        "fps": 30,
+        "line_percent_range": [
+          5,
+          90
+        ],
+        "max_chars_per_line": 42,
+        "max_cps": 17,
+        "max_cue_ms": 7000,
+        "max_lines": 2,
+        "min_cue_ms": 1000,
+        "sync": {
+          "max_early_ms": 500,
+          "max_late_ms": 300,
+          "min_coverage": 0.95,
+          "min_cue_speech_share": 0.1,
+          "split_window_ms": 1000
+        }
+      },
+      "measured": {
+        "srt_differences": 0,
+        "sync": {
+          "coverage": 0.9729,
+          "cues_without_speech": [],
+          "median_offset_ms": 3,
+          "unmeasured": [
+            "c03",
+            "c05",
+            "c06",
+            "c09",
+            "c11",
+            "c14",
+            "c17",
+            "c20",
+            "c22",
+            "c24",
+            "c27",
+            "c29",
+            "c31",
+            "c34",
+            "c35",
+            "c37",
+            "c43"
+          ]
+        },
+        "vtt": {
+          "cues": 44,
+          "longest_gap_before": "c39",
+          "longest_gap_ms": 1700,
+          "longest_line": 42,
+          "max_cps": 16.8,
+          "max_cps_cue": "c41",
+          "on_screen_ms": 159434
+        }
+      },
+      "result": "pass"
+    },
+    {
+      "check": "file_spec",
+      "findings": [],
+      "limit": {
+        "audio": {
+          "audio_object_type": 2,
+          "channels": 2,
+          "codec": "mp4a",
+          "sample_rate": 48000
+        },
+        "container": {
+          "faststart": true,
+          "fragmented": false
+        },
+        "duration_s": 180,
+        "duration_tolerance_s": 0.05,
+        "edit_lists": false,
+        "max_bitrate_kbps": 8000,
+        "max_bytes": 40000000,
+        "video": {
+          "chroma": "4:2:0",
+          "codec": "avc1",
+          "color_primaries": 1,
+          "constant_rate": true,
+          "even_dimensions": true,
+          "frame_rate": 30,
+          "height": 1080,
+          "profiles": [
+            "High",
+            "Main"
+          ],
+          "width": 1920
+        }
+      },
+      "measured": {
+        "items": [
+          {
+            "check": "faststart",
+            "limit": true,
+            "measured": true,
+            "result": "pass"
+          },
+          {
+            "check": "fragmented",
+            "limit": false,
+            "measured": false,
+            "result": "pass"
+          },
+          {
+            "check": "video.codec",
+            "limit": "avc1",
+            "measured": "avc1",
+            "result": "pass"
+          },
+          {
+            "check": "video.profiles",
+            "limit": [
+              "High",
+              "Main"
+            ],
+            "measured": "High",
+            "result": "pass"
+          },
+          {
+            "check": "video.chroma",
+            "limit": "4:2:0",
+            "measured": "4:2:0",
+            "result": "pass"
+          },
+          {
+            "check": "video.width",
+            "limit": 1920,
+            "measured": 1920,
+            "result": "pass"
+          },
+          {
+            "check": "video.height",
+            "limit": 1080,
+            "measured": 1080,
+            "result": "pass"
+          },
+          {
+            "check": "video.frame_rate",
+            "limit": 30,
+            "measured": 30,
+            "result": "pass"
+          },
+          {
+            "check": "video.constant_rate",
+            "limit": true,
+            "measured": true,
+            "result": "pass"
+          },
+          {
+            "check": "video.color_primaries",
+            "limit": 1,
+            "measured": 1,
+            "result": "pass"
+          },
+          {
+            "check": "video.even_dimensions",
+            "limit": true,
+            "measured": true,
+            "result": "pass"
+          },
+          {
+            "check": "audio.codec",
+            "limit": "mp4a",
+            "measured": "mp4a",
+            "result": "pass"
+          },
+          {
+            "check": "audio.audio_object_type",
+            "limit": 2,
+            "measured": 2,
+            "result": "pass"
+          },
+          {
+            "check": "audio.sample_rate",
+            "limit": 48000,
+            "measured": 48000,
+            "result": "pass"
+          },
+          {
+            "check": "audio.channels",
+            "limit": 2,
+            "measured": 2,
+            "result": "pass"
+          },
+          {
+            "check": "duration_s",
+            "limit": [
+              180,
+              0.05
+            ],
+            "measured": 180.022,
+            "result": "pass"
+          },
+          {
+            "check": "size_bytes",
+            "limit": 40000000,
+            "measured": 18872134,
+            "result": "pass"
+          },
+          {
+            "check": "bitrate_kbps",
+            "limit": 8000,
+            "measured": 838.7,
+            "result": "pass"
+          },
+          {
+            "check": "edit_lists",
+            "limit": [],
+            "measured": [],
+            "result": "pass"
+          }
+        ],
+        "probe": {
+          "bitrate_kbps": 838.7,
+          "brands": {
+            "compatible": [
+              "iso4",
+              "isom",
+              "iso2",
+              "avc1",
+              "mp41"
+            ],
+            "major": "iso4",
+            "minor": 512
+          },
+          "duration_s": 180.022,
+          "faststart": true,
+          "file": "eranos-3m.mp4",
+          "fragmented": false,
+          "size_bytes": 18872134,
+          "top_level": [
+            [
+              "ftyp",
+              36
+            ],
+            [
+              "moov",
+              194539
+            ],
+            [
+              "free",
+              8
+            ],
+            [
+              "mdat",
+              18677551
+            ]
+          ],
+          "tracks": [
+            {
+              "bit_depth": 8,
+              "chroma": "4:2:0",
+              "codec": "avc1",
+              "coded_height": 1080,
+              "coded_width": 1920,
+              "color": {
+                "full_range": false,
+                "matrix": 1,
+                "primaries": 1,
+                "transfer": 1
+              },
+              "constant_rate": true,
+              "duration_s": 180,
+              "edit_list": false,
+              "frame_rate": 30,
+              "handler": "vide",
+              "height": 1080,
+              "level": 4,
+              "media_duration": 2764800,
+              "profile": "High",
+              "profile_idc": 100,
+              "sample_delta": 512,
+              "samples": 5400,
+              "timescale": 15360,
+              "width": 1920
+            },
+            {
+              "audio_object_type": 2,
+              "channels": 2,
+              "codec": "mp4a",
+              "constant_rate": false,
+              "duration_s": 180.021333,
+              "edit_list": false,
+              "handler": "soun",
+              "height": 0,
+              "media_duration": 8641024,
+              "profile": "AAC-LC",
+              "sample_delta": null,
+              "sample_rate": 48000,
+              "samples": 8439,
+              "timescale": 48000,
+              "width": 0
+            }
+          ]
+        }
+      },
+      "result": "pass"
+    },
+    {
+      "check": "legibility",
+      "findings": [
+        {
+          "severity": "warn",
+          "what": "hook: on screen 4.0 s, needs 5.167 s to read"
+        },
+        {
+          "severity": "warn",
+          "what": "callout-one-agent: on screen 1.85 s, needs 3.5 s to read"
+        },
+        {
+          "severity": "warn",
+          "what": "callout-refused: on screen 3.0 s, needs 3.167 s to read"
+        }
+      ],
+      "limit": {
+        "min_css_px": 12,
+        "smallest_display": "phone held sideways"
+      },
+      "measured": {
+        "frame": {
+          "height": 1080,
+          "width": 1920
+        },
+        "items": [
+          {
+            "css_px": {
+              "laptop": 77.33,
+              "phone held sideways": 50.99
+            },
+            "font_px": 116,
+            "frame_share": 0.1074,
+            "id": "part1-title",
+            "needs_px_for_smallest_display": 27.3,
+            "problems": [],
+            "role": "title",
+            "role_floor": 0.045
+          },
+          {
+            "css_px": {
+              "laptop": 41.33,
+              "phone held sideways": 27.25
+            },
+            "font_px": 62,
+            "frame_share": 0.0574,
+            "id": "hook",
+            "needs_px_for_smallest_display": 27.3,
+            "problems": [],
+            "role": "title",
+            "role_floor": 0.045
+          },
+          {
+            "css_px": {
+              "laptop": 30.67,
+              "phone held sideways": 20.22
+            },
+            "font_px": 46,
+            "frame_share": 0.0426,
+            "id": "callout-one-agent",
+            "needs_px_for_smallest_display": 27.3,
+            "problems": [],
+            "role": "caption",
+            "role_floor": 0.026
+          },
+          {
+            "css_px": {
+              "laptop": 29.33,
+              "phone held sideways": 19.34
+            },
+            "font_px": 44,
+            "frame_share": 0.0407,
+            "id": "callout-refused",
+            "needs_px_for_smallest_display": 27.3,
+            "problems": [],
+            "role": "caption",
+            "role_floor": 0.026
+          },
+          {
+            "css_px": {
+              "laptop": 33.33,
+              "phone held sideways": 21.98
+            },
+            "font_px": 50,
+            "frame_share": 0.0463,
+            "id": "callout-person",
+            "needs_px_for_smallest_display": 27.3,
+            "problems": [],
+            "role": "caption",
+            "role_floor": 0.026
+          },
+          {
+            "css_px": {
+              "laptop": 33.33,
+              "phone held sideways": 21.98
+            },
+            "font_px": 50,
+            "frame_share": 0.0463,
+            "id": "not-a-model",
+            "needs_px_for_smallest_display": 27.3,
+            "problems": [],
+            "role": "title",
+            "role_floor": 0.045
+          },
+          {
+            "css_px": {
+              "laptop": 33.33,
+              "phone held sideways": 21.98
+            },
+            "font_px": 50,
+            "frame_share": 0.0463,
+            "id": "verb-tag",
+            "needs_px_for_smallest_display": 27.3,
+            "problems": [],
+            "role": "title",
+            "role_floor": 0.045
+          },
+          {
+            "css_px": {
+              "laptop": 33.33,
+              "phone held sideways": 21.98
+            },
+            "font_px": 50,
+            "frame_share": 0.0463,
+            "id": "noun-tag",
+            "needs_px_for_smallest_display": 27.3,
+            "problems": [],
+            "role": "title",
+            "role_floor": 0.045
+          },
+          {
+            "css_px": {
+              "laptop": 93.33,
+              "phone held sideways": 61.54
+            },
+            "font_px": 140,
+            "frame_share": 0.1296,
+            "id": "tokens-zero",
+            "needs_px_for_smallest_display": 27.3,
+            "problems": [],
+            "role": "title",
+            "role_floor": 0.045
+          },
+          {
+            "css_px": {
+              "laptop": 18.67,
+              "phone held sideways": 12.31
+            },
+            "font_px": 28,
+            "frame_share": 0.0259,
+            "id": "illustration-tag",
+            "needs_px_for_smallest_display": 27.3,
+            "problems": [],
+            "role": "label",
+            "role_floor": 0.017
+          },
+          {
+            "css_px": {
+              "laptop": 22.67,
+              "phone held sideways": 14.95
+            },
+            "font_px": 34,
+            "frame_share": 0.0315,
+            "id": "repo-scan",
+            "needs_px_for_smallest_display": 27.3,
+            "problems": [],
+            "role": "caption",
+            "role_floor": 0.026
+          },
+          {
+            "css_px": {
+              "laptop": 42.67,
+              "phone held sideways": 28.13
+            },
+            "font_px": 64,
+            "frame_share": 0.0593,
+            "id": "meta-head",
+            "needs_px_for_smallest_display": 27.3,
+            "problems": [],
+            "role": "title",
+            "role_floor": 0.045
+          },
+          {
+            "css_px": {
+              "laptop": 42.67,
+              "phone held sideways": 28.13
+            },
+            "font_px": 64,
+            "frame_share": 0.0593,
+            "id": "workers-head",
+            "needs_px_for_smallest_display": 27.3,
+            "problems": [],
+            "role": "title",
+            "role_floor": 0.045
+          },
+          {
+            "css_px": {
+              "laptop": 33.33,
+              "phone held sideways": 21.98
+            },
+            "font_px": 50,
+            "frame_share": 0.0463,
+            "id": "workers-run",
+            "needs_px_for_smallest_display": 27.3,
+            "problems": [],
+            "role": "title",
+            "role_floor": 0.045
+          },
+          {
+            "css_px": {
+              "laptop": 22.67,
+              "phone held sideways": 14.95
+            },
+            "font_px": 34,
+            "frame_share": 0.0315,
+            "id": "workers-six",
+            "needs_px_for_smallest_display": 27.3,
+            "problems": [],
+            "role": "caption",
+            "role_floor": 0.026
+          },
+          {
+            "css_px": {
+              "laptop": 22.67,
+              "phone held sideways": 14.95
+            },
+            "font_px": 34,
+            "frame_share": 0.0315,
+            "id": "end-address",
+            "needs_px_for_smallest_display": 27.3,
+            "problems": [],
+            "role": "caption",
+            "role_floor": 0.026
+          },
+          {
+            "css_px": {
+              "laptop": 32.93,
+              "phone held sideways": 21.72
+            },
+            "font_px": 49.4,
+            "frame_share": 0.0457,
+            "id": "board-counter",
+            "needs_px_for_smallest_display": 27.3,
+            "problems": [],
+            "role": "caption",
+            "role_floor": 0.026
+          },
+          {
+            "css_px": {
+              "laptop": 18.67,
+              "phone held sideways": 12.31
+            },
+            "font_px": 28,
+            "frame_share": 0.0259,
+            "id": "board-footer",
+            "needs_px_for_smallest_display": 27.3,
+            "problems": [],
+            "role": "body",
+            "role_floor": 0.022
+          },
+          {
+            "css_px": {
+              "laptop": 18.67,
+              "phone held sideways": 12.31
+            },
+            "font_px": 28,
+            "frame_share": 0.0259,
+            "id": "board-after",
+            "needs_px_for_smallest_display": 27.3,
+            "problems": [],
+            "role": "body",
+            "role_floor": 0.022
+          }
+        ],
+        "min_css_px": 12,
+        "problems": [],
+        "smallest_display": "phone held sideways"
+      },
+      "result": "warn"
+    }
+  ],
+  "counts": {
+    "fail": 0,
+    "not_run": 0,
+    "pass": 7,
+    "warn": 2
+  },
+  "inputs": [
+    {
+      "name": "picture.json",
+      "sha256": "0cb701e0803e94a2aad08de26e3cf4e0270d85ec5031361837d4d0f4db039020"
+    },
+    {
+      "name": "sound.json",
+      "sha256": "e6b625c469aaad13734fa157c919bc6b21f062dc4c6894c985ecc9963037a5d1"
+    },
+    {
+      "name": "captions.json",
+      "sha256": "49e139d9e9db1a78db6c9d8fba82f3a0251160a00424e94110314a923c5d702e"
+    },
+    {
+      "name": "filespec.json",
+      "sha256": "f0fce0cf38d0246829797c574a4326c102d98ef22c56ee16509db6faee9fb55d"
+    },
+    {
+      "name": "legibility.json",
+      "sha256": "ef3eb5881d9b8d0bec8209bd2c2f10c340f9ce2862477eab1f9fcfdff95af9db"
+    }
+  ],
+  "media": {
+    "bytes": 18872134,
+    "file": "eranos-3m.mp4",
+    "sha256": "9e40561aead87308747a8f07337c74c582f7ba3b54803a64a61e94ae93b37203"
+  },
+  "missing_checks": [],
+  "not_approval": "Passing these checks is not approval: a person still watches every frame and listens.",
+  "plan": {
+    "black": 0,
+    "duration_s": 180,
+    "fps": 30,
+    "holds": 1,
+    "pauses": 1
+  },
+  "verdict": "pass_with_warnings"
+}

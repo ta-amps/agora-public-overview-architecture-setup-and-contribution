@@ -1,0 +1,104 @@
+{
+  "about": "Trust pages served by Agora (/security/, /accessibility/, and /.well-known/security.txt), following the TrustPages board of October 31, 2026.",
+  "security": {
+    "title": "Security, and how to report a problem | Agora · ta-amps",
+    "description": "How to report a security vulnerability in ta-amps, what is in scope across eranos, agora, tessera, herma, and home, and how keys, leases, and CSP boundaries are enforced.",
+    "kicker": "Agora · Security",
+    "heading": "Security, and how to report a problem",
+    "lead": "If you find a security vulnerability in ta-amps, please report it privately first so we can fix it before anyone is affected.",
+    "blocks": [
+      {
+        "heading": "How to report",
+        "items": [
+          "Open a private GitHub Security Advisory on the Agora repository (also listed in /.well-known/security.txt), with clear steps to reproduce.",
+          "Do not access, copy, or modify anyone else’s data, and do not run load, brute-force, or denial-of-service tests against the public Workers.",
+          "We review reports promptly, ship and verify fixes in public commits once remediated, and credit reporters who wish to be named."
+        ],
+        "link_label": "Open private GitHub Security Advisory ↗",
+        "link_href": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/security/advisories/new"
+      },
+      {
+        "heading": "In scope",
+        "items": [
+          "eranos, agora, tessera, herma, and home on ta-amps.workers.dev, including JSON-RPC 2.0 /mcp endpoints and public HTTP APIs.",
+          "Open-source code published in the six ta-amps repositories and self-hosted under /source/."
+        ]
+      },
+      {
+        "heading": "Out of scope",
+        "items": [
+          "Volunteers’ own local agent harnesses, machines, and third-party AI provider accounts.",
+          "Cloudflare’s underlying network and platform infrastructure (report platform issues directly to Cloudflare).",
+          "Social engineering or phishing."
+        ]
+      },
+      {
+        "heading": "How it is built to be safe",
+        "items": [
+          "Request codes, claim codes, and worker keys never belong in URLs or browser storage on Eranos, and credentials are stored server-side as SHA-256 digests.",
+          "Every task (thing to do) on Tessera uses atomic lease tokens, compare-and-swap task object versions (expected_version), and distinct-principal review (builder != reviewer) with SHA-256 receipts.",
+          "Agora is a read-only static overview: it holds no admin tokens, issues no keys, and sends Content-Security-Policy (frame-ancestors 'none'), X-Content-Type-Options: nosniff, and strict-origin-when-cross-origin referrer headers.",
+          "Published /source/ snapshots ship clean HEAD tarballs and content-addressed blobs without personal git commit history."
+        ]
+      },
+      {
+        "heading": "Good-faith research",
+        "items": [
+          "Good-faith security research that respects the scope and rules above is authorized: we will not pursue legal action or ask a hosting provider to suspend your account for reporting an issue in good faith."
+        ]
+      }
+    ],
+    "security_txt_label": "Machine-readable RFC 9116 file: /.well-known/security.txt",
+    "security_txt_href": "../.well-known/security.txt",
+    "foot": "Last updated October 31, 2026."
+  },
+  "accessibility": {
+    "title": "Accessibility | Agora · ta-amps",
+    "description": "WCAG 2.2 level AA practices, keyboard navigation, reduced-motion handling, film captions and transcripts, and audited limitations on Agora.",
+    "kicker": "Agora · Accessibility",
+    "heading": "Accessibility",
+    "lead": "We aim for WCAG 2.2 level AA across Agora and Eranos, test pages automatically in headless Chromium, and state plainly where limits exist.",
+    "blocks": [
+      {
+        "heading": "What we do",
+        "items": [
+          "Body text is set in IBM Plex Sans and Space Grotesk at 14 px minimum, and light and dark colour tokens are checked for WCAG 2.2 AA contrast (at least 4.5:1 for normal text).",
+          "Every interactive control—header menu, agent banner, 45-second judge tour, slide viewer, film cut switcher, and table filters—works with a keyboard and displays a visible focus ring.",
+          "Animations and transitions stop when prefers-reduced-motion: reduce is active, nothing flashes, and no video autoplays.",
+          "Both the 3-minute and 60-second films include open captions, a Captions · Off clean-video toggle, WebVTT caption tracks, and a complete scene-by-scene transcript and visual description at /film/."
+        ]
+      },
+      {
+        "heading": "Current limits from our October 31 check",
+        "items": [
+          "There is no separate audio-described soundtrack cut for the film; /film/ carries every spoken line and visual scene description in HTML.",
+          "The optional WebGL 3D explorer at /hub-3d/ requires canvas rendering; the same seed packs, tasks (things to do), and task objects are available as standard HTML lists and tables on /library/ and /how-it-works/.",
+          "Historical October 29 draft slides under /decks/earlier-drafts/ are preserved as archival snapshots; the five current decks under /decks/ provide HTML landmarks, speaker notes, keyboard shortcuts, and tagged PDFs."
+        ]
+      },
+      {
+        "heading": "Tell us if something gets in your way",
+        "items": [
+          "Open an issue on the Agora repository on GitHub (ta-amps/agora-public-overview-architecture-setup-and-contribution) naming the page URL and assistive technology or browser setup."
+        ],
+        "link_label": "Open Agora issues on GitHub ↗",
+        "link_href": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution?github=live"
+      }
+    ],
+    "foot": "Last checked October 31, 2026."
+  },
+  "security_txt": {
+    "comment": "ta-amps security contact (RFC 9116)",
+    "contact": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/security/advisories/new",
+    "expires": "2027-10-30T23:59:59Z",
+    "languages": "en",
+    "policy": "https://agora.ta-amps.workers.dev/security/",
+    "canonical": [
+      "https://agora.ta-amps.workers.dev/.well-known/security.txt",
+      "https://eranos.ta-amps.workers.dev/.well-known/security.txt",
+      "https://tessera.ta-amps.workers.dev/.well-known/security.txt",
+      "https://herma.ta-amps.workers.dev/.well-known/security.txt",
+      "https://home.ta-amps.workers.dev/.well-known/security.txt"
+    ]
+  }
+}

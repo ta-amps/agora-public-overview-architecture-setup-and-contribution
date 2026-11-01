@@ -16,13 +16,25 @@ Everything a page says is a noun kept as data, and this script holds only markup
   * site/content/film.json            the full film's transcript and scene descriptions;
   * site/content/earlier-drafts.json  earlier drafts, and the storyboards page;
   * site/content/moved.json           pages that moved, which the not-found page lists;
+  * site/content/how-it-works.json    the how-it-works page: why, the map of nouns and verbs, a real run replayed,
+                                      Herma and Tessera underneath, and the Meta model results it names from
+                                      learning.json by model, so no number is typed twice;
+  * site/content/real-run.json        the replayed run: its facts and five steps, each with a hash, a receipt file
+                                      under site/evidence/ and the trace and Tessera events it comes from. Only
+                                      scripts/sync_real_run.py writes it, from the run's own records;
+  * site/content/evidence.json        the evidence page: one line for each served evidence folder and for each
+                                      item of the repository's evidence/, and where the last live check is saved.
+                                      The build fills each folder's files and the check's answers from the files;
   * site/decks/<deck>/source/         each deck: deck.json, slides/*.html and an optional claims.json.
 
 What it writes:
   * every current deck, site/decks/<deck>/index.html, from its source folder. The slide format's custom
     elements become HTML: <x-shape> and <x-icon> become inline SVG, <x-brief> the starting brief and
     <x-endpoints> the endpoint table. Each slide's <aside> becomes its speaker notes;
-  * the home, decks, earlier drafts, storyboards, use cases, learning, library, film and not-found pages;
+  * the home, decks, earlier drafts, storyboards, use cases, learning, library, film, how-it-works, evidence and
+    not-found pages;
+  * the measured part of site/content/evidence.json: each served folder's files and the last live check's answers,
+    read from site/evidence/. Its words stay as written;
   * the shared head, header, agent banner and footer, between marker comments, into every other page
     that is not frozen;
   * the "decks" list in site/decks.json. The frozen "versions" entries stay byte-identical.
@@ -60,7 +72,8 @@ CONTENT = SITE / "content"
 BRIEF = SITE / "agent-brief.txt"
 DECKS = SITE / "decks"
 MANIFEST = SITE / "decks.json"
-PAGES_PREFIX = "/agora-public-overview-architecture-setup-and-contribution/"
+# The site is served from the root of agora.ta-amps.workers.dev; the worker redirects the old GitHub Pages path.
+PAGES_PREFIX = "/"
 CANVAS_W, CANVAS_H = 1920, 1080
 # "illustration" marks a number in a worked example that shows how the work is organized, not a measured run.
 CLAIM_STATUSES = {"measured", "pending", "planned", "illustration"}
@@ -77,6 +90,9 @@ LIBRARY_IDS = {"main", "agent-panel", "agent-brief", "agent-brief-title", "agent
                "harness-feeds-heading", "harness-routing-heading", "ecosystem-explorer", "ecosystem-heading",
                "agora-explorer-data"}
 USE_PACKS = (2, 5)  # how many library packs a use case names, at least and at most
+# F31-005: how many packs each category shows before its "See all" link. The whole list runs past 10,000 px, more than
+# Chrome paints in one go at device scale 1.5; site.css holds the same number.
+LIBRARY_FIRST = 3
 
 FONTS = ("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700"
          "&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400..700&display=swap")
@@ -90,22 +106,25 @@ ICONS = {
                  'a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/><path d="M7 10v12"/>'),
 }
 
-MARK = ('<svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true" focusable="false">'
-        '<rect x="0" y="0" width="14" height="14" rx="3" fill="var(--color-noun)"/>'
-        '<rect x="18" y="0" width="14" height="14" rx="3" fill="var(--color-verb)"/>'
-        '<rect x="0" y="18" width="14" height="14" rx="3" fill="var(--color-rule-strong)"/>'
-        '<rect x="18" y="18" width="14" height="14" rx="3" fill="var(--color-noun)"/></svg>')
+MARK = ('<svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true" focusable="false">'
+        '<rect x="0" y="0" width="44" height="44" rx="10" fill="var(--color-noun)"/>'
+        '<rect x="56" y="0" width="44" height="44" rx="10" fill="var(--color-verb)"/>'
+        '<rect x="0" y="56" width="44" height="44" rx="10" fill="var(--color-ink)"/>'
+        '<rect x="56" y="56" width="44" height="44" rx="10" fill="var(--color-noun)"/></svg>')
+# The agent banner's robot head, drawn for the AgentBanner board, and the header's menu lines.
+AGENT_ICON = ('<svg class="agent-fallback-icon" viewBox="0 0 40 40" width="18" height="18" aria-hidden="true" '
+              'focusable="false"><circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2.6"/>'
+              '<path d="M20 12v-3h-3" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>'
+              '<rect x="12" y="14" width="16" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2.6"/>'
+              '<path d="M17 19v2M23 19v2" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>')
+MENU_ICON = ('<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">'
+             '<path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" '
+             'stroke-linecap="round"/></svg>')
 
-# Plain shapes drawn for this site: a half-filled circle for light and dark, a terminal for agents,
-# two sheets for copying, a chevron for showing more and the decks' block arrow for the learning loop.
+# Plain shapes drawn for this site: a half-filled circle for light and dark, two sheets for copying, a chevron for showing more and the decks' block arrow for the learning loop.
 THEME_ICON = ('<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">'
               '<circle cx="12" cy="12" r="8.25" fill="none" stroke="currentColor" stroke-width="1.75"/>'
               '<path d="M12 3.75a8.25 8.25 0 0 1 0 16.5z" fill="currentColor"/></svg>')
-TERMINAL = ('<svg class="agent-glyph" viewBox="0 0 28 28" width="28" height="28" aria-hidden="true" '
-            'focusable="false"><rect x="1" y="3" width="26" height="22" rx="6" class="agent-glyph-box"/>'
-            '<path d="M8 10.5l4 3.5-4 3.5" fill="none" class="agent-glyph-verb" stroke-width="2" '
-            'stroke-linecap="round" stroke-linejoin="round"/><path d="M14.5 18h5.5" class="agent-glyph-noun" '
-            'stroke-width="2" stroke-linecap="round"/></svg>')
 COPY_ICON = ('<svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true" focusable="false">'
              '<rect x="6.5" y="6.5" width="10" height="10" rx="2" fill="none" stroke="currentColor" '
              'stroke-width="1.6"/><path d="M13.5 4.5v-.5a1.5 1.5 0 0 0-1.5-1.5H5A1.5 1.5 0 0 0 3.5 4v7A1.5 1.5 '
@@ -172,6 +191,8 @@ class Nouns:
 
     def __init__(self) -> None:
         self.site = load_json(CONTENT / "site.json")
+        self.banner = load_json(CONTENT / "agent-banner.json")
+        self.tour = load_json(CONTENT / "judge-tour.json")
         self.home = load_json(CONTENT / "home.json")
         self.decks_page = load_json(CONTENT / "decks-page.json")
         self.uses = load_json(CONTENT / "use-cases.json")
@@ -182,12 +203,30 @@ class Nouns:
         self.explorer = load_json(CONTENT / "explorer.json")
         self.ecosystem = load_json(CONTENT / "ecosystem-catalog.json")
         check_explorer(self.explorer, self.ecosystem)
+        self.deploy = load_json(CONTENT / "deploy.json")
+        self.contribute = load_json(CONTENT / "contribute.json")
+        self.llms = load_json(CONTENT / "llms.json")
+        self.links = load_json(CONTENT / "source-links.json")
+        self.feed = load_json(CONTENT / "feeds-memory-systems.json")
+        self.feed_words = load_json(CONTENT / "feeds-page.json")
+        self.how = load_json(CONTENT / "how-it-works.json")
+        self.real_run = load_json(CONTENT / "real-run.json")
+        self.evidence = load_json(CONTENT / "evidence.json")
+        self.judges = load_json(CONTENT / "judges.json")
+        self.status_page = load_json(CONTENT / "status-page.json")
+        self.feeds_index = load_json(CONTENT / "feeds-index.json")
+        self.scenarios = load_json(CONTENT / "scenarios.json")
+        self.trust = load_json(CONTENT / "trust.json")
+        for noun, label in ((self.judges, "judges.json"), (self.status_page, "status-page.json"),
+                            (self.feeds_index, "feeds-index.json"), (self.scenarios, "scenarios.json"),
+                            (self.trust, "trust.json"), (self.deploy, "deploy.json")):
+            no_stamps(noun, label)
         self.drafts = load_json(CONTENT / "earlier-drafts.json")
         self.moved = load_json(CONTENT / "moved.json")
         self.manifest = load_json(MANIFEST)
         self.brief = read_brief()
         self.frozen = frozen_pages(self.manifest, self.drafts)
-        self.decks = [load_deck(deck_id, self.brief, self.site["endpoints"]) for deck_id in self.site["decks"]]
+        self.decks = [load_deck(deck_id, self.brief, self.site["endpoints"], self.feed) for deck_id in self.site["decks"]]
 
 
 def frozen_pages(manifest: dict, drafts: dict) -> set[Path]:
@@ -311,7 +350,7 @@ def check_explorer(explorer: dict, ecosystem: dict) -> None:
 
 def prefix_for(page: Path) -> str:
     if page.relative_to(SITE).as_posix() == "404.html":
-        return PAGES_PREFIX  # GitHub Pages serves this page at any missing path, so its links are absolute.
+        return PAGES_PREFIX  # the worker serves this page at any missing path, so its links are absolute.
     depth = len(page.relative_to(SITE).parts) - 1
     return "../" * depth
 
@@ -325,11 +364,20 @@ def section_for(page: Path) -> str:
     if parts == ("404.html",):
         return ""  # a missing page belongs to no section
     first = parts[0] if len(parts) > 1 else "home"
-    return {"storyboards": "decks", "video": "decks", "film": "home"}.get(first, first)
+    return {"storyboards": "decks", "video": "decks"}.get(first, first)
 
 
-def head_block(prefix: str) -> str:
-    return "\n".join([
+def head_block(prefix: str, nouns: Nouns | None = None) -> str:
+    share = nouns.site["share"] if nouns else None
+    tags = [] if not share else [
+        f'<meta property="og:site_name" content="{attr(share["site_name"])}">',
+        f'<meta property="og:image" content="{attr(share["image"])}">',
+        f'<meta property="og:image:width" content="{int(share["width"])}">',
+        f'<meta property="og:image:height" content="{int(share["height"])}">',
+        f'<meta property="og:image:alt" content="{attr(share["alt"])}">',
+        '<meta name="twitter:card" content="summary_large_image">',
+    ]
+    return "\n".join(tags + [
         '<link rel="preconnect" href="https://fonts.googleapis.com">',
         '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',
         f'<link rel="stylesheet" href="{attr(FONTS)}">',
@@ -340,76 +388,71 @@ def head_block(prefix: str) -> str:
 
 
 def header_block(page: Path, prefix: str, nouns: Nouns) -> str:
-    site = nouns.site
+    """The skip link, the agent banner above everything, then the header the SiteHeader board draws: the mark and
+    name, five links, and Eranos in the first screen. On a phone the links fold behind a Menu button."""
+    site, header = nouns.site, nouns.site["header"]
     section = section_for(page)
     rel = page.relative_to(SITE).as_posix()
-    nav_entries = list(site["nav"])
-    if (SITE / "studio" / "index.html").is_file() and not any(i["href"] == "studio/" for i in nav_entries):
-        nav_entries.append({"href": "studio/", "label": "Live Studio", "section": "studio"})
     items = []
-    for item in nav_entries:
+    for item in site["nav"]:
         current = ""
         if item["section"] == section:
             current = ' aria-current="page"' if rel == item["href"] + "index.html" else ' aria-current="true"'
         items.append(f'<li><a href="{link(prefix, item["href"])}"{current}>{text(item["label"])}</a></li>')
     return "\n".join([
         f'<a class="skip-link" href="#main">{text(site["skip_link"])}</a>',
+        banner_block(prefix, nouns),
         '<header class="site-header">',
         '<div class="wrap">',
-        f'<a class="wordmark" href="{link(prefix, "")}">{MARK}<span>{text(site["name"])}</span></a>',
-        '<nav class="site-nav" aria-label="Site">',
+        f'<a class="wordmark" href="{link(prefix, "")}">{MARK}<span>{text(header["brand"])}</span></a>',
+        f'<button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="site-nav" '
+        f'data-open="{attr(header["menu_close"])}" data-closed="{attr(header["menu"])}" hidden>{MENU_ICON}'
+        f'<span>{text(header["menu"])}</span></button>',
+        f'<nav class="site-nav" id="site-nav" aria-label="{attr(header["nav_label"])}" data-menu>',
         "<ul>" + "".join(items) + "</ul>",
         "</nav>",
+        f'<a class="eranos-link" href="{attr(header["eranos_href"])}" aria-label="{attr(header["eranos_aria"])}">'
+        f'<span class="long">{text(header["eranos_label"])}</span><span class="short">{text(header["eranos_short"])}</span></a>',
         f'<button class="mode-toggle" type="button" data-mode-toggle aria-pressed="false" '
         f'aria-label="{attr(site["mode_toggle"])}" hidden>{THEME_ICON}</button>',
         "</div>",
         "</header>",
-        banner_block(prefix, nouns),
+        tour_block(prefix, nouns),
     ])
 
 
-def banner_block(prefix: str, nouns: Nouns) -> str:
-    """The agent banner: copy the starting brief, or show it with the machine endpoints."""
-    banner, endpoints = nouns.site["banner"], nouns.site["endpoints"]["rows"]
-    rows = "".join(
-        f'<li><span class="agent-endpoint-name">{text(row["name"])}</span>'
-        f'<code>{text(row["mcp"])}</code>'
-        f'<a href="{attr(row["llms"])}" aria-label="{attr(row["name"] + " llms.txt")}">llms.txt</a></li>'
-        for row in endpoints)
+def tour_block(prefix: str, nouns: Nouns) -> str:
+    """The 45-second tour for judges (the JudgeTour board): a strip under the header that the shared
+    <ta-judge-tour> element shows only with ?tour=judge, every word from the judge-tour noun."""
+    data = {k: v for k, v in nouns.tour.items() if k != "about"}
+    raw = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
+    raw = raw.replace("<", "\\u003c").replace(">", "\\u003e").replace("&", "\\u0026")
     return "\n".join([
-        f'<aside class="agent-banner" aria-label="{attr(banner["label"])}" data-own-keys>',
-        '<div class="wrap agent-row">',
-        TERMINAL,
-        f'<p class="agent-lead"><strong>{text(banner["lead_strong"])}</strong> {text(banner["lead"])}</p>',
-        '<div class="agent-actions">',
-        f'<button class="agent-copy" type="button" data-copy="agent-brief" data-copied="{attr(banner["copied"])}" '
-        f'data-selected="{attr(banner["selected"])}" data-status-copied="{attr(banner["status_copied"])}" '
-        f'data-status-selected="{attr(banner["status_selected"])}" data-reveal="agent-panel" hidden>'
-        f'{COPY_ICON}<span>{text(banner["copy"])}</span></button>',
-        f'<button class="agent-show" type="button" data-toggle="agent-panel" aria-expanded="false" '
-        f'aria-controls="agent-panel" data-open="{attr(banner["hide"])}" data-closed="{attr(banner["show"])}" hidden>'
-        f'<span>{text(banner["show"])}</span>{CHEVRON}</button>',
-        f'<a class="agent-no-script" href="{link(prefix, banner["no_script_href"])}" data-no-script>'
-        f'{text(banner["no_script"])}</a>',
-        "</div>",
-        "</div>",
-        '<div class="agent-panel" id="agent-panel" hidden>',
-        '<div class="wrap agent-panel-grid">',
-        '<div class="agent-brief-col">',
-        f'<p class="agent-panel-title" id="agent-brief-title">{text(banner["brief_label"])}</p>',
-        f'<pre class="agent-brief" id="agent-brief" tabindex="0" aria-labelledby="agent-brief-title">'
-        f'{text(nouns.brief)}</pre>',
-        "</div>",
-        '<div class="agent-side">',
-        f'<p class="agent-panel-title">{text(banner["endpoints_title"])}</p>',
-        f'<ul class="agent-endpoints">{rows}</ul>',
-        f'<p class="agent-fine">{text(banner["fine_print"])} '
-        f'<a href="{prefix}agent-brief.txt">{text(banner["plain_text"])}</a></p>',
-        "</div>",
-        "</div>",
-        "</div>",
-        '<p class="visually-hidden" id="agent-brief-status" role="status"></p>',
-        "</aside>",
+        '<ta-judge-tour class="judge-tour" data-host="agora.ta-amps.workers.dev" hidden>',
+        f'<script type="application/json">{raw}</script>',
+        "</ta-judge-tour>",
+        f'<script src="{prefix}assets/judge-tour.js" defer></script>',
+    ])
+
+
+def banner_json(nouns: Nouns) -> str:
+    """The agent-banner noun as the JSON the element reads, safe inside a script element."""
+    data = {k: v for k, v in nouns.banner.items() if k not in {"about", "fallback"}}
+    raw = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
+    return raw.replace("<", "\\u003c").replace(">", "\\u003e").replace("&", "\\u0026")
+
+
+def banner_block(prefix: str, nouns: Nouns) -> str:
+    """The agent banner: one thin line above the header. The shared <ta-agent-banner> element renders every word
+    from the embedded noun; without scripts, the line and a link to llms.txt stay."""
+    banner = nouns.banner
+    return "\n".join([
+        '<ta-agent-banner class="agent-banner" data-site="agora" data-own-keys>',
+        f'<script type="application/json">{banner_json(nouns)}</script>',
+        f'<p class="agent-fallback">{AGENT_ICON}<span class="agent-fallback-lead"><b>{text(banner["lead_strong"])}</b> '
+        f'{text(banner["lead"])}</span> <a href="{prefix}llms.txt">{text(banner["fallback"])}</a></p>',
+        "</ta-agent-banner>",
+        f'<script src="{prefix}assets/agent-banner.js" defer></script>',
     ])
 
 
@@ -421,10 +464,10 @@ def footer_block(prefix: str, nouns: Nouns) -> str:
     return "\n".join([
         '<footer class="site-footer">',
         '<div class="wrap">',
-        '<nav aria-label="Footer">',
+        f'<p class="footer-note">{text(footer["note"])}</p>',
+        f'<nav aria-label="{attr(footer["nav_label"])}">',
         "<ul>" + "".join(links) + "</ul>",
         "</nav>",
-        f'<p>{text(footer["note"])}</p>',
         f'<p class="footer-privacy">{text(footer["privacy"])}</p>',
         "</div>",
         "</footer>",
@@ -443,7 +486,10 @@ def replace_block(content: str, name: str, block: str, page: Path) -> str:
 
 def render_page(page: Path, content: str, nouns: Nouns) -> str:
     prefix = prefix_for(page)
-    content = replace_block(content, "head", head_block(prefix), page)
+    if "<!-- site:head -->" not in content:
+        # A page that keeps its own head and header, such as the Studio, still gets the agent banner first.
+        return replace_block(content, "banner", banner_block(prefix, nouns), page)
+    content = replace_block(content, "head", head_block(prefix, nouns), page)
     content = replace_block(content, "header", header_block(page, prefix, nouns), page)
     return replace_block(content, "footer", footer_block(prefix, nouns), page)
 
@@ -478,12 +524,128 @@ def page_shell(title: str, description: str, main: str, extra_head: str = "", bo
     ] + ([extra_body] if extra_body else []) + ["</body>", "</html>", ""])
 
 
+# Links into the retired GitHub organization --------------------------------------------------------
+
+GITHUB_LINK = re.compile(r"https://github\.com/ta-amps(?:/(?P<repo>[A-Za-z0-9._-]+?)(?P<dotgit>\.git)?"
+                         r"(?:/(?P<kind>[a-z]+)(?:/(?P<rest>[^\s\"'<>)\]]*))?)?(?:\?(?P<topquery>[A-Za-z0-9._=&-]+))?)?"
+                         r"(?=[\s\"'<>)\]]|/?$|/[\s\"'<>)\]])/?")
+PAGES_LINK = re.compile(r"https://ta-amps\.github\.io/[A-Za-z0-9._-]+/")
+FULL_OR_SHORT_SHA = re.compile(r"[0-9a-f]{7,40}\Z")
+
+
+def source_link(match: re.Match, links: dict) -> str:
+    """One GitHub address, as the address of the same thing in Agora's source mirror (see source-links.json) or on live GitHub."""
+    repo, kind, rest = match.group("repo"), match.group("kind"), match.group("rest") or ""
+    mirror = links["mirror"]
+    if not repo:
+        return mirror
+    if repo not in links["heads"]:
+        fail(f"a link names a repository the source mirror does not hold: {match.group(0)}")
+    if match.group("dotgit") and not kind:
+        return f"https://github.com/ta-amps/{repo}.git"
+    if not kind:
+        if match.group("topquery") == "github=live":
+            return f"https://github.com/ta-amps/{repo}"
+        return f"{mirror}{repo}/"
+    rest, _, query = rest.partition("?")
+    rest = rest.split("#", 1)[0]
+    if kind in ("tree", "blob", "commit"):
+        ref, _, path = rest.partition("/")
+        if FULL_OR_SHORT_SHA.match(ref) and len(ref) == 40:
+            sha = ref
+        elif ref in ("main", "HEAD") or (kind == "commit" and FULL_OR_SHORT_SHA.match(ref)):
+            sha = links["heads"][repo] if ref in ("main", "HEAD") else ref
+        else:
+            fail(f"a link names a branch or short commit the source mirror cannot pin: {match.group(0)}")
+        if kind == "commit" or not path:
+            return f"{mirror}{repo}/{sha[:12]}/"
+        return f"{mirror}{repo}/{sha[:12]}/{path.rstrip('/')}" + ("/" if kind == "tree" else "")
+    if kind == "pull":
+        number = rest.split("/", 1)[0]
+        sha = links["pulls"].get(f"{repo}#{number}")
+        if not sha:
+            fail(f"a link names a pull request without a recorded merge commit: {match.group(0)}")
+        return f"{mirror}{repo}/{sha[:12]}/"
+    if kind == "issues":
+        form = re.search(r"(?:^|&)template=([A-Za-z0-9._-]+)", query)
+        if form:
+            target = links["forms"].get(f"{repo}/{form.group(1)}")
+            if not target:
+                fail(f"a link names an issue form without a new home: {match.group(0)}")
+            return target
+        return f"{mirror}{repo}/"
+    if kind == "security" and rest.rstrip("/") == "advisories/new":
+        return f"https://github.com/ta-amps/{repo}/security/advisories/new"
+    if kind == "releases" and rest.startswith("download/"):
+        tag, _, name = rest[len("download/"):].partition("/")
+        folder = links.get("releases", {}).get(f"{repo}/{tag}")
+        if folder and (SITE / folder.strip("/") / name).is_file():
+            return folder + name
+        return f"https://github.com/ta-amps/{repo}/releases/{rest}"
+    fail(f"a link into GitHub has no home in the source mirror: {match.group(0)}")
+    return ""
+
+
+def repoint(content: str, links: dict) -> str:
+    """Every link into the retired GitHub organization or its Pages sites, as the link that works now."""
+    content = GITHUB_LINK.sub(lambda m: source_link(m, links), content)
+    for old, new in links["pages"].items():
+        content = content.replace(old, new)
+    if PAGES_LINK.search(content):
+        fail(f"a link to a GitHub Pages site has no new home: {PAGES_LINK.search(content).group(0)}")
+    return content
+
+
+# Plain words instead of "synthetic" (owner, October 31: "DO NOT INCLUDE SYNTHETIC") ---------------------------
+
+# The owner's style for anything about tests: tests, evaluations, accuracy, performance; data and cases are examples.
+PLAIN_RULES = [
+    (re.compile(r"\bsynthetic_disclosure\b"), "example_data_disclosure"),  # a video check's name, shown in a table
+    (re.compile(r"\ba synthetic voice\b", re.I), "an AI voice"),
+    (re.compile(r"\bsynthetic voice\b", re.I), "AI voice"),
+    (re.compile(r"\bsynthetic[- ]only\b", re.I), "example-data-only"),
+    (re.compile(r"\banything synthetic\b", re.I), "anything made up"),
+    (re.compile(r"\b(?:a )?frozen, synthetic tool-call test of 150 rows\b", re.I), "a fixed 150-task evaluation"),
+    (re.compile(r"\bscored on synthetic tests\b", re.I), "measured on our evaluations"),
+    (re.compile(r"\bsynthetic 150-row test\b", re.I), "150-task evaluation"),
+    (re.compile(r"\bsynthetic tool-call tests?\b", re.I), "tool-call evaluation"),
+    (re.compile(r"\bsynthetic (pre-registered )?holdouts\b", re.I), r"\1held-out evaluations"),
+    (re.compile(r"\bsynthetic (pre-registered )?holdout\b", re.I), r"\1held-out evaluation"),
+    (re.compile(r"\bsynthetic test (cases|data)\b", re.I), r"example test \1"),
+    (re.compile(r"\bsynthetic (tests|evaluations)\b", re.I), "our evaluations"),
+    (re.compile(r"\bsynthetic test\b", re.I), "our evaluation"),
+    (re.compile(r"\bsynthetic tasks\b", re.I), "our evaluation tasks"),
+    (re.compile(r"\ba synthetic task\b", re.I), "an evaluation task"),
+    (re.compile(r"\bsynthetic task\b", re.I), "evaluation task"),
+    (re.compile(r"\bsynthetic (normalized )?benchmark(s?)\b", re.I), r"our \1benchmark\2"),
+    (re.compile(r"\bsynthetic ((?:slot )?templates|(?:template |training )?rows)\b", re.I), r"\1"),
+    (re.compile(r"\bis synthetic\b", re.I), "is made up"),
+    (re.compile(r"\ba synthetic\b", re.I), "an example"),
+    (re.compile(r"\bsynthetic\b", re.I), "example"),
+]
+
+
+def _match_case(found: str, replacement: str) -> str:
+    if found.isupper() and len(found) > 1:
+        return replacement.upper()
+    if found[:1].isupper():
+        return replacement[:1].upper() + replacement[1:]
+    return replacement
+
+
+def plain_words(content: str) -> str:
+    """Every "synthetic" a page or noun would show, in the owner's plain words with the same honesty: tests become
+    our evaluations, data and cases become example data and cases, a synthetic voice an AI voice."""
+    for pattern, replacement in PLAIN_RULES:
+        content = pattern.sub(lambda m: _match_case(m.group(0), m.expand(replacement)), content)
+    return content.replace("example-data-only", "example data only").replace("Example-data-only", "Example data only") \
+        .replace("EXAMPLE-DATA-ONLY", "EXAMPLE DATA ONLY")
+
+
 # Slides --------------------------------------------------------------------------------------------
 
 STYLE_PART = re.compile(r"\s*([a-z-]+)\s*:\s*([^;]+)")
 SLIDE_LINK = re.compile(r'<a\b[^>]*?\shref="([^"]*)"[^>]*>(.*?)</a>', re.S)
-# A GitHub issue form, which signed-out visitors meet as GitHub's sign-in page.
-GITHUB_FORM = re.compile(r"^https://github\.com/[^/]+/[^/]+/issues/new\b")
 
 
 def style_map(style: str) -> dict[str, str]:
@@ -549,7 +711,8 @@ def plain_text(fragment: str) -> str:
     return re.sub(r"\s+", " ", html.unescape(fragment)).strip()
 
 
-def load_slide(source: Path, name: str, brief: str | None = None, endpoints: dict | None = None) -> dict:
+def load_slide(source: Path, name: str, brief: str | None = None, endpoints: dict | None = None,
+               feed: dict | None = None) -> dict:
     """One slide of the v4 format: a <section> with inline styles, custom elements and one <aside>."""
     path = source / "slides" / f"{name}.html"
     if not path.is_file():
@@ -565,6 +728,7 @@ def load_slide(source: Path, name: str, brief: str | None = None, endpoints: dic
         fail(f"{name}: expected one <aside> with speaker notes")
     inner = re.sub(r"\s*<aside>.*?</aside>\s*", "\n", inner, flags=re.S)
     inner = re.sub(r'<x-shape kind="([a-z-]+)" style="([^"]*)"></x-shape>', shape_svg, inner)
+    inner = FEED_TAG.sub(lambda m: feed_status(m, feed), inner)
     inner = re.sub(r'<x-icon name="([A-Za-z]+)" style="([^"]*)"></x-icon>', icon_svg, inner)
     copy = None
     brief_tag = re.compile(r'<x-brief style="([^"]*)"></x-brief>')
@@ -588,7 +752,52 @@ def load_slide(source: Path, name: str, brief: str | None = None, endpoints: dic
             "notes": asides[0].strip(), "title": plain_text(heading.group(2)), "links": links, "copy": copy}
 
 
-def load_deck(deck_id: str, brief: str, endpoints: dict) -> dict:
+SLIDE_MARK_CAPTION = re.compile(
+    r'<svg aria-label="ta-amps mark"[^>]*>.*?</svg>\s*<p style="position:absolute;left:176px;bottom:\d+px;([^"]*)">(.*?)</p>', re.S)
+DARK_INKS = {"#8C96A6", "#9AA3B2", "#C8D0DC", "#A3ABB9"}
+
+
+def slide_footer(inner: str, deck_title: str, number: int) -> str:
+    """The Deck-Content board's one-line footer: a rule, then the mark, ta-amps, the deck and the slide's own caption
+    on the left, and the slide number on the right. It replaces the slide's mark and caption."""
+    match = SLIDE_MARK_CAPTION.search(inner)
+    if not match:
+        fail(f"{deck_title}: slide {number} has no mark and caption for the footer")
+    ink = re.search(r"color:(#[0-9A-Fa-f]{6})", match.group(1))
+    ink = ink.group(1).upper() if ink else "#5E6472"
+    dark = ink in DARK_INKS
+    rule, mark = ("#2C3443", ("#6FA3F0", "#F0884F", "#C8D0DC")) if dark else ("#E2DCCF", ("#2A5DB0", "#B8541F", "#11161F"))
+    svg = (f'<svg aria-hidden="true" width="24" height="24" viewBox="0 0 32 32" style="flex:none">'
+           f'<rect x="0" y="0" width="14" height="14" rx="3" fill="{mark[0]}"/><rect x="18" y="0" width="14" height="14" rx="3" fill="{mark[1]}"/>'
+           f'<rect x="0" y="18" width="14" height="14" rx="3" fill="{mark[2]}"/><rect x="18" y="18" width="14" height="14" rx="3" fill="{mark[0]}"/></svg>')
+    foot = (f'<div class="slide-foot" style="position:absolute;left:128px;right:96px;bottom:48px;display:flex;'
+            f'justify-content:space-between;align-items:center;gap:24px;font-size:22px;line-height:1.3;color:{ink};'
+            f'border-top:1px solid {rule};padding-top:16px">'
+            f'<span style="display:flex;align-items:center;gap:14px;min-width:0">{svg}'
+            f'<span>ta-amps · {text(deck_title)} · {match.group(2)}</span></span>'
+            f"<span class=\"slide-no\" style=\"font-family:'JetBrains Mono', 'Courier New', monospace\">{number}</span></div>")
+    return inner[:match.start()] + foot + inner[match.end():]
+
+
+FEED_TAG = re.compile(r'<x-feed-status kind="(line|row)" style="([^"]*)"></x-feed-status>')
+
+
+def feed_status(match: re.Match, feed: dict | None) -> str:
+    """The memory-systems feed's schedule and last run, drawn on a slide only once its scans run on hosted Tessera;
+    until then the element draws nothing, so no slide says a feed runs when it does not."""
+    if not feed or not feed_hosted(feed):
+        return ""
+    last = feed["last_run"]
+    words = (f"The memory-systems feed runs {text(last['schedule'].split(' (')[0])}; last run {text(last['at'][:16].replace('T', ' '))}"
+             f"&nbsp;UTC, receipt {text(last['receipt_hash'][:12])}.")
+    if match.group(1) == "line":
+        return f'<p style="{attr(match.group(2))}">{words}</p>'
+    return (f'<div style="{attr(match.group(2))}"><p style="width:170px;text-align:center;background:#15281D;color:#7FD3A0;'
+            f'border-radius:999px;padding:6px 0;font-size:22px;font-weight:600">Live</p>'
+            f'<p style="flex:1;font-size:27px;line-height:1.4;color:#F5F2EA">{words}</p></div>')
+
+
+def load_deck(deck_id: str, brief: str, endpoints: dict, feed: dict | None = None) -> dict:
     folder = DECKS / deck_id
     source = folder / "source"
     spec = load_json(source / "deck.json")
@@ -597,7 +806,9 @@ def load_deck(deck_id: str, brief: str, endpoints: dict) -> dict:
         fail(f"{deck_id}: deck.json lists a slide twice")
     if spec.get("cover") != order[0]:
         fail(f"{deck_id}: the cover must be the first slide")
-    slides = [load_slide(source, name, brief, endpoints) for name in order]
+    slides = [load_slide(source, name, brief, endpoints, feed) for name in order]
+    for number, slide in enumerate(slides, 1):
+        slide["inner"] = slide_footer(slide["inner"], spec["title"], number)
     if sum(1 for s in slides if s["copy"]) > 1:
         fail(f"{deck_id}: the starting brief appears on one slide at most")
     cover = slides[0]
@@ -638,9 +849,7 @@ def render_slide(i: int, slide: dict, total: int, ui: dict, sources: str = "") -
                      f'{COPY_ICON}<span>{text(ui["copy_brief"])}</span></button>'
                      f'<span class="copy-status" id="{slide["copy"]}-status" role="status"></span></div>')
     if slide["links"]:
-        items = "".join(f'<li><a href="{attr(href)}">{text(label)}</a>'
-                        + (f' <span class="link-note">{text(ui["form_note"])}</span>' if GITHUB_FORM.match(href) else "")
-                        + "</li>" for href, label in slide["links"])
+        items = "".join(f'<li><a href="{attr(href)}">{text(label)}</a></li>' for href, label in slide["links"])
         parts.append(f'<div class="slide-links"><h2>{text(ui["links_heading"])}</h2><ul>{items}</ul></div>')
     parts += [f'<div class="slide-notes"><h2>{text(ui["notes"])}</h2><p>{slide["notes"]}</p>{sources}</div>',
               "</section>"]
@@ -659,7 +868,7 @@ def slide_sources(name: str, deck: dict, ui: dict) -> str:
 
 
 def render_deck(deck: dict, nouns: Nouns) -> str:
-    ui = nouns.site["deck"] | {"copied": nouns.site["banner"]["copied"], "selected": nouns.site["banner"]["selected"]}
+    ui = nouns.site["deck"]
     spec, slides = deck["spec"], deck["slides"]
     page = spec["page"]
     total = len(slides)
@@ -758,6 +967,8 @@ def film_cuts(videos: dict) -> tuple[dict, str]:
         for key in ("src", "captions", "poster"):
             if not (SITE / cut[key]).is_file():
                 fail(f"home.json: the {cut['id']} cut's {key} is missing: {cut[key]}")
+        if cut.get("clean_src") and not (SITE / cut["clean_src"]).is_file():
+            fail(f"home.json: the {cut['id']} cut's clean_src is missing: {cut['clean_src']}")
     default = next((cut for cut in cuts if cut["id"] == videos["default"]), None)
     if default is None:
         fail(f"home.json: the default cut {videos['default']!r} is not one of the cuts")
@@ -765,11 +976,17 @@ def film_cuts(videos: dict) -> tuple[dict, str]:
         return default, ""
     buttons = "".join(
         f'<button class="film-cut" type="button" aria-pressed="{"true" if cut is default else "false"}" '
-        f'data-cut="{attr(cut["id"])}" data-src="{attr(cut["src"])}" data-type="{attr(cut["type"])}" '
+        f'data-cut="{attr(cut["id"])}" data-src="{attr(cut["src"])}"'
+        + (f' data-clean-src="{attr(cut["clean_src"])}"' if cut.get("clean_src") else "")
+        + f' data-type="{attr(cut["type"])}" '
         f'data-captions="{attr(cut["captions"])}" data-poster="{attr(cut["poster"])}" '
         f'data-title="{attr(cut["title"])}" data-label="{attr(cut["label"])}">{text(cut["tab"])}</button>'
         for cut in cuts)
-    return default, f'<div class="film-cuts" role="group" aria-label="{attr(videos["choose"])}" data-film-cuts hidden>{buttons}</div>'
+    cc_toggle = (
+        '<button class="film-cc" type="button" aria-pressed="true" data-film-cc '
+        'data-label-on="Captions · On" data-label-off="Captions · Off">Captions · On</button>'
+    )
+    return default, f'<div class="film-cuts" role="group" aria-label="{attr(videos["choose"])}" data-film-cuts hidden>{buttons}{cc_toggle}</div>'
 
 
 def other_cut_links(videos: dict, default: dict) -> str:
@@ -779,88 +996,84 @@ def other_cut_links(videos: dict, default: dict) -> str:
         for cut in videos["cuts"] if cut is not default)
 
 
-def statement_parts(statement: dict) -> str:
-    """The home statement in labelled parts, such as the use case and the architecture underneath. Each part is a
-    label, then its line; the first line is the page's heading."""
-    parts = statement.get("parts")
-    if not isinstance(parts, list) or not parts:
-        fail("home.json: the statement needs at least one part")
-    out = []
-    for n, part in enumerate(parts):
-        if not part.get("label") or not part.get("lead"):
-            fail("home.json: every part of the statement needs a label and a lead")
-        rest = f' <span class="statement-rest">{keep_together(text(part["rest"]))}</span>' if part.get("rest") else ""
-        line = f'<span class="statement-lead">{mark_kinds(part["lead"])}</span>{rest}'
-        line = f'<h1 id="statement" class="statement-line">{line}</h1>' if n == 0 else f'<p class="statement-line">{line}</p>'
-        out.append(f'<div class="statement-part"><p class="statement-label">{text(part["label"])}</p>{line}</div>')
-    return "\n".join(out)
+def use_anchor(name: str) -> str:
+    """The id of a use case on the use cases page, from its name."""
+    return "use-" + re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
 
 
-def product_hub(hub: dict) -> str:
-    """The 1x3 Product Hub on the home page: Public Goods Marketplace, Task & Task-Object Engine, Roll Your Own."""
-    pillars = hub.get("pillars")
-    if not isinstance(pillars, list) or len(pillars) != 3:
-        fail("home.json: hub needs exactly three pillars")
-    cards = []
-    for idx, pillar in enumerate(pillars):
-        links = "".join(use_link(item, "") for item in pillar.get("links", []))
-        tone = ("noun", "verb", "cascade")[idx]
-        cards.append("\n".join([
-            f'<li class="hub-card hub-{tone}">',
-            f'<p class="hub-step">{text(pillar["step"])}</p>',
-            f'<h3 class="hub-card-title">{text(pillar["title"])}</h3>',
-            f'<p class="hub-card-summary">{text(pillar["summary"])}</p>',
-            f'<p class="use-links hub-links">{links}</p>',
-            "</li>",
-        ]))
-    return "\n".join([
-        '<section class="hub" aria-labelledby="home-hub">',
-        '<div class="wrap">',
-        '<div class="hub-head">',
-        f'<p class="statement-label">{text(hub["kicker"])}</p>',
-        f'<h2 class="band-title" id="home-hub">{text(hub["heading"])}</h2>',
-        f'<p class="hub-lead">{text(hub["lead"])}</p>',
-        "</div>",
-        f'<ol class="hub-grid">\n{chr(10).join(cards)}\n</ol>',
-        "</div>",
-        "</section>",
-    ])
+def film_made_ready(start: dict) -> bool:
+    """The film's production page is linked only once its production trace noun exists and says it is final."""
+    noun = ROOT / start["film_made"]["requires"]
+    return noun.is_file() and json.loads(noun.read_text(encoding="utf-8")).get("status") == "final"
 
 
 def render_home(nouns: Nouns) -> str:
+    """The home page, as the Agora-Home board lays it out: the film first, then Start here with the two public
+    sites, then the decks, then the use cases."""
     home, ui = nouns.home, nouns.site["deck"]
-    videos = home["videos"]
+    videos, start, uses = home["videos"], home["start"], home["uses"]
     video, selector = film_cuts(videos)
     others = other_cut_links(videos, video) if selector else ""
     cards = "\n".join(deck_card(deck, "", ui, 3) for deck in nouns.decks)
+    doors = "".join(
+        f'<li><a class="start-card {attr(card["tone"])}" href="{attr(card["href"])}">'
+        f'<span class="start-name">{MARK}<span>{text(card["name"])}</span></span>'
+        f'<span class="start-host">{text(card["host"])}</span>'
+        f'<span class="start-line">{text(card["line"])}</span></a></li>'
+        for card in start["cards"])
+    made = (f'<p class="start-made"><a href="{attr(start["film_made"]["href"])}">{text(start["film_made"]["label"])}</a></p>'
+            if film_made_ready(start) else "")
+    use_cards = "".join(
+        f'<li><a class="home-use" href="use-cases/#{use_anchor(item["name"])}">'
+        + (f'<span class="home-use-live">{text(uses["live"])}</span>' if item["home"].get("live_href") else "")
+        + f'<b>{text(item["home"]["title"])}</b><span>{text(item["home"]["line"])}</span></a></li>'
+        for item in nouns.uses["flagships"] if item.get("home"))
     main = "\n".join(filter(None, [
         '<main id="main">',
         f'<section class="film{" has-cuts" if selector else ""}" aria-labelledby="film-label">',
         '<div class="film-stage">',
         f'<video class="film-video" controls playsinline preload="metadata" poster="{attr(video["poster"])}" '
-        f'aria-label="{attr(video["title"])}" data-captions-default>',
+        f'aria-label="{attr(video["title"])}" data-captions-default'
+        + (f' data-open-captions data-open-src="{attr(video["src"])}" data-clean-src="{attr(video["clean_src"])}"'
+           if video.get("clean_src") else "")
+        + ">",
         f'<source src="{attr(video["src"])}" type="{attr(video["type"])}">',
         f'<track kind="captions" src="{attr(video["captions"])}" srclang="{attr(videos["captions_lang"])}" '
         f'label="{attr(videos["captions_label"])}" default>',
         f'<p>{text(videos["fallback"])} <a href="{attr(video["src"])}">{text(videos["fallback_link"])}</a></p>',
         "</video>",
+        '<div class="film-caption-bar" data-film-caption-bar hidden aria-hidden="true">'
+        '<span class="film-caption-pill" data-film-caption-pill></span></div>',
         "</div>",
         selector,
         f'<p class="film-label"><span id="film-label">{text(video["label"])}</span>'
         + others
         + (f' · <a href="{attr(videos["outline"]["href"])}">{text(videos["outline"]["label"])}</a>' if videos.get("outline") else "")
+        + (f' · <a class="film-tour-link" href="{attr(videos["tour"]["href"])}">{text(videos["tour"]["label"])}</a>' if videos.get("tour") else "")
+        + (f' · <a href="{attr(videos["judges"]["href"])}">{text(videos["judges"]["label"])}</a>' if videos.get("judges") else "")
         + "</p>",
         "</section>",
-        '<section class="statement" aria-labelledby="statement">',
-        '<div class="wrap statement-parts">',
-        statement_parts(home["statement"]),
+        f'<section class="start" id="start" aria-label="{attr(start["label"])}">',
+        '<div class="wrap start-wrap">',
+        f'<h1>{text(start["heading"])}</h1>',
+        (f'<p class="start-subline">{text(start["subline"])}</p>' if start.get("subline") else ""),
+        f'<ul class="start-cards">{doors}</ul>',
+        made,
         "</div>",
         "</section>",
-        product_hub(home["hub"]),
-        '<section class="deck-band" aria-labelledby="home-decks">',
+        '<section class="deck-band" id="decks" aria-labelledby="home-decks">',
         '<div class="wrap">',
-        f'<h2 class="band-title" id="home-decks">{text(home["decks_heading"])}</h2>',
+        f'<div class="band-head"><h2 class="band-title" id="home-decks">{text(home["decks_heading"])}</h2>'
+        f'<a href="{attr(home["drafts"]["href"])}">{text(home["drafts"]["label"])}</a></div>',
         f'<ul class="deck-cards">\n{cards}\n</ul>',
+        "</div>",
+        "</section>",
+        '<section class="home-uses" id="use-cases" aria-labelledby="home-uses">',
+        '<div class="wrap">',
+        f'<div class="band-head"><h2 class="band-title" id="home-uses">{text(uses["heading"])}</h2>'
+        f'<p>{text(uses["lead"])}</p></div>',
+        f'<ul class="home-use-cards">{use_cards}</ul>',
+        f'<p class="home-uses-all"><a href="use-cases/">{text(uses["all"])}</a></p>',
         "</div>",
         "</section>",
         "</main>",
@@ -1055,7 +1268,7 @@ def flagship_card(item: dict, uses: dict, library: dict, prefix: str, lead: bool
         links = "".join(use_link(link, prefix) for link in item["links"])
     detail = f'<p class="use-detail">{text(item["detail"])}</p>' if item.get("detail") else ""
     return "\n".join([
-        f'<li class="use-card{" use-lead" if lead else ""}">',
+        f'<li class="use-card{" use-lead" if lead else ""}" id="{use_anchor(item["name"])}">',
         '<div class="use-head">',
         f"<h2>{text(item['name'])}{rest}</h2>",
         f'<div class="use-text"><p class="use-line">{text(item["line"])}</p>{detail}</div>',
@@ -1342,6 +1555,9 @@ def render_library(nouns: Nouns) -> str:
             f'<a class="lib-show-all" href="#categories">{text(words["show_all"])}</a>',
             "</div>",
             f'<ul class="lib-cards">\n{cards}\n</ul>',
+            (f'<a class="lib-see-all" href="#{key}">{text(words["see_all"])} '
+             f'{counted(len(category["packs"]), words["pack"], words["packs"])}</a>'
+             if len(category["packs"]) > LIBRARY_FIRST else ""),
             "</div>",
             "</section>",
         ]))
@@ -1383,28 +1599,827 @@ def render_library(nouns: Nouns) -> str:
                       extra_body=explorer_payload_script(explorer, ecosystem))
 
 
+def deploy_code_block(code_id: str, commands: str, copy_labels: dict) -> str:
+    return "\n".join([
+        '<div class="deploy-code-wrap">',
+        '<div class="deploy-code-bar">',
+        f'<button class="agent-copy deploy-copy" type="button" data-copy="{attr(code_id)}" '
+        f'data-copied="{attr(copy_labels["copied"])}" data-selected="{attr(copy_labels["selected"])}" '
+        f'data-status-copied="{attr(copy_labels["status_copied"])}" '
+        f'data-status-selected="{attr(copy_labels["status_selected"])}" hidden>'
+        f'{COPY_ICON}<span>{text(copy_labels["copy"])}</span></button>',
+        f'<span class="visually-hidden" id="{attr(code_id)}-status" role="status"></span>',
+        "</div>",
+        f'<pre class="deploy-pre" id="{attr(code_id)}" tabindex="0"><code>{text(commands)}</code></pre>',
+        "</div>",
+    ])
+
+
+def render_deploy(nouns: Nouns) -> str:
+    page = nouns.deploy
+    prefix = prefix_for(SITE / "deploy" / "index.html")
+    copy_labels = page["copy_labels"]
+    quick = "".join(use_link(item, prefix) for item in page["quick_links"])
+    slices = "".join(
+        f'<li class="deploy-card" id="{attr(item["id"])}">'
+        f'<p class="deploy-badge">{text(item["badge"])}</p>'
+        f'<h3>{text(item["title"])}</h3>'
+        f'<p class="deploy-summary">{text(item["summary"])}</p>'
+        f'<p class="deploy-when">{text(item["when"])}</p>'
+        + deploy_code_block(item["code_id"], item["commands"], copy_labels)
+        + "</li>"
+        for item in page["slices"]["items"]
+    )
+    partners = page["partners"]
+    partner_cards = "".join(
+        f'<li class="partner-card" id="{attr(card["id"])}">'
+        f'<div class="partner-head"><h3>{text(card["name"])}</h3><span class="partner-kind">{text(card["kind"])}</span></div>'
+        f'<p class="partner-role">{text(card["role"])}</p>'
+        f'<div class="partner-status"><strong>{text(card["status_title"])}</strong><p>{text(card["status_text"])}</p></div>'
+        f'<p class="partner-checked-title">{text(card["checked_title"])}</p>'
+        + '<ul class="partner-checked">' + "".join(f'<li>{text(c)}</li>' for c in card["checked"]) + "</ul>"
+        + f'<p class="partner-try-title">{text(card["try_heading"])}</p>'
+        + deploy_code_block(card["code_id"], card["commands"], copy_labels)
+        + f'<p class="partner-foot"><a href="{use_href(card["receipt_href"], prefix)}">{text(card["receipt_label"])}</a></p>'
+        + "</li>"
+        for card in partners["cards"]
+    )
+    partner_notes = "".join(
+        f'<li><h3>{text(note["heading"])}</h3><p>{text(note["text"])}</p></li>'
+        for note in partners["notes"]
+    )
+    surfaces = "".join(
+        '<li class="deploy-card">'
+        f'<h3>{text(item["title"])}</h3>'
+        f'<p class="deploy-summary">{text(item["detail"])}</p>'
+        + deploy_code_block(item["code_id"], item["commands"], copy_labels)
+        + "</li>"
+        for item in page["surfaces"]["items"]
+    )
+    rules = "".join(
+        f'<li><h3>{text(rule["name"])}</h3><p>{text(rule["text"])}</p></li>'
+        for rule in page["security"]["items"]
+    )
+    verify = page["verify"]
+    main = "\n".join([
+        '<main id="main">',
+        '<div class="wrap page-head">',
+        f'<h1>{text(page["heading"])}</h1>',
+        f'<p class="lead">{text(page["lead"])}</p>',
+        f'<p class="dateline">{text(page["dateline"])}</p>',
+        f'<p class="use-links">{quick}</p>',
+        "</div>",
+        '<div class="wrap learn deploy-page">',
+        learn_part("slices", page["slices"]["heading"], page["slices"]["lead"], f'<ul class="deploy-grid">{slices}</ul>'),
+        learn_part("partners", partners["heading"], partners["lead"],
+                   f'<ul class="partner-grid">{partner_cards}</ul><ul class="partner-notes">{partner_notes}</ul>'),
+        learn_part("surfaces", page["surfaces"]["heading"], page["surfaces"]["lead"], f'<ul class="deploy-grid">{surfaces}</ul>'),
+        learn_part("security", page["security"]["heading"], page["security"]["lead"], f'<ul class="safety">{rules}</ul>'),
+        learn_part("verify", verify["heading"], verify["text"],
+                   deploy_code_block(verify["code_id"], verify["commands"], copy_labels)),
+        "</div>",
+        "</main>",
+    ])
+    return page_shell(page["title"], page["description"], main)
+
+
+def live_doors(section: dict) -> list[dict]:
+    """The doors of a section that a recorded live check showed answering. The build refuses a door without one."""
+    doors = section.get("doors", [])
+    for door in doors:
+        check = door.get("check") or {}
+        if not (200 <= int(check.get("status", 0)) < 300 and re.fullmatch(r"\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ",
+                                                                            check.get("checked_utc", ""))):
+            fail(f"contribute: the door {door.get('endpoint')} has no passing live check")
+        if not door["endpoint"].startswith("https://"):
+            fail(f"contribute: the door {door['endpoint']} is not an https address")
+    return doors
+
+
+def render_contribute(nouns: Nouns) -> str:
+    """The contribute page: the ways in that work today, each door with the live check that showed it answering.
+    A section with nothing that works yet is left out rather than promised."""
+    page = nouns.contribute
+    prefix = prefix_for(SITE / "contribute" / "index.html")
+    labels = page["copy_labels"]
+    parts = []
+    for section in page["sections"]:
+        doors = live_doors(section)
+        body = []
+        if section.get("steps"):
+            body.append('<ol class="contribute-steps">' + "".join(f"<li>{text(step)}</li>" for step in section["steps"]) + "</ol>")
+        if section.get("code"):
+            body.append(deploy_code_block(section["code_id"], section["code"], labels))
+        if section.get("repos"):
+            commands = "\n".join(section["clone_prefix"] + repo + ".git" for repo in section["repos"])
+            body.append(deploy_code_block(section["code_id"], commands, labels))
+            body.append(f'<p class="contribute-source"><a href="{link(prefix, section["source_href"])}">'
+                        f'{text(section["source_label"])}</a></p>')
+        if doors:
+            rows = "".join(
+                f'<li class="door"><span class="door-name">{text(door["name"])}</span>'
+                f'<code class="door-endpoint">{text(door["endpoint"])}</code>'
+                f'<span class="door-what">{text(door["what"])}</span>'
+                f'<span class="door-check">{text(page["checked_label"])} {text(door["check"]["checked_utc"])}: '
+                f'{text(door["check"]["method"])} {text(door["check"]["kind"])}, HTTP {int(door["check"]["status"])}</span></li>'
+                for door in doors)
+            body.append(f'<ul class="doors">{rows}</ul>')
+        if section.get("note"):
+            body.append(f'<p class="contribute-note">{text(section["note"])}</p>')
+        if not body:
+            continue  # nothing in this section works yet, so the page does not show it
+        parts.append(learn_part(section["id"], section["heading"], section["lead"], "\n".join(body)))
+    main = "\n".join([
+        '<main id="main">',
+        '<div class="wrap page-head">',
+        f'<h1>{text(page["heading"])}</h1>',
+        f'<p class="lead">{text(page["lead"])}</p>',
+        f'<p class="dateline">{text(page["dateline"])}</p>',
+        "</div>",
+        '<div class="wrap learn contribute-page">',
+        *parts,
+        "</div>",
+        "</main>",
+    ])
+    return page_shell(page["title"], page["description"], main)
+
+
+def render_llms(nouns: Nouns, built: set[Path]) -> str:
+    """Agora's llms.txt, from its noun, the endpoints noun and the pages that exist. The build refuses a page
+    the site does not have."""
+    page = nouns.llms
+    origin = page["origin"].rstrip("/") + "/"
+    lines = [f"# {page['title']}", "", f"> {page['summary']}", "", f"## {page['do_title']}", ""]
+    lines += [f"- {item}" for item in page["do"]]
+    lines += ["", f"## {page['pages_title']}", ""]
+    for item in page["pages"]:
+        target = SITE / item["path"] / "index.html"
+        if target not in built and not target.is_file():
+            fail(f"llms.txt names a page the site does not have: /{item['path']}")
+        lines.append(f"- [{item['label']}]({origin}{item['path']}): {item['what']}")
+    lines += ["", f"## {page['endpoints_title']}", ""]
+    for row in nouns.site["endpoints"]["rows"]:
+        lines.append(f"- {row['name']}: {row['what']}. MCP {row['mcp']}; llms.txt {row['llms']}")
+    lines += ["", f"## {page['source_title']}", ""] + [f"- {item}" for item in page["source"]]
+    lines += ["", f"## {page['rules_title']}", ""] + [f"- {item}" for item in page["rules"]]
+    lines += ["", f"## {page['brief_title']}", "", page["brief_note"], ""]
+    return "\n".join(lines)
+
+
+FEED_TOP_ITEMS = 40  # memory systems listed under Everything gathered, most stars first
+
+
+def feed_hosted(feed: dict) -> bool:
+    """The feed's scans ran on hosted Tessera, so its schedule is real and the decks may say so."""
+    return feed["source"].get("hosted") is True
+
+
+def short_hash(value: str) -> str:
+    return f'<code title="{attr(value)}">{text(value[:12])}</code>'
+
+
+def render_feed(nouns: Nouns) -> str:
+    """The memory-systems feed page, from the feed's own data noun: where and when it scanned, the count with its
+    exact search, which project fits which setup, the quoted benchmark claims and what was gathered."""
+    feed, words = nouns.feed, nouns.feed_words
+    last, count = feed["last_run"], feed["count"]
+    hosted = feed_hosted(feed)
+    where = words["where_hosted"] if hosted else words["where_local"]
+    facts = [(words["last_scan"], f'<time datetime="{attr(last["at"])}">{text(last["at"])}</time>'),
+             (words["scan_id"], f'<code>{text(last["scan_id"])}</code>'),
+             (words["receipt"], short_hash(last["receipt_hash"]))]
+    if hosted:
+        facts.insert(1, (words["schedule"], text(last["schedule"])))
+    facts.append((words["scans"], ", ".join(f'<code>{text(scan["scan_id"])}</code>' for scan in feed["scans"])))
+    fact_list = "".join(f"<div><dt>{text(k)}</dt><dd>{v}</dd></div>" for k, v in facts)
+    secondary = "; ".join(f'{text(item["label"])}: {int(item["total_count"]):,}' for item in count.get("secondary", []))
+    candidates = {i["repo"]: i for i in feed["items"]} | {c["repo"]: c for c in feed["candidates"]}
+
+    def candidate(repo: str) -> str:
+        c = candidates.get(repo)
+        if not c:
+            fail(f"feed: setup names a candidate the data does not hold: {repo}")
+        claims = "".join(f'<li><span class="feed-metric">{text(cl["metric"])}</span> '
+                         f'<q>{text(cl["quote"])}</q> <a href="{attr(cl["source_url"])}">source</a></li>'
+                         for cl in c.get("claims", []))
+        claims = f'<ul class="feed-claims">{claims}</ul>' if claims else f'<p class="feed-none">{text(words["not_reported"])}</p>'
+        meta = " · ".join(text(str(x)) for x in (f'{int(c["stars"]):,} {words["stars"]}', c.get("licence") or "", c.get("language") or "",
+                                                 c.get("hosting") or "", f'{words["last_commit"]} {str(c.get("last_commit_at") or "")[:10]}') if x)
+        return (f'<li class="feed-pick"><a href="{attr(c["url"])}">{text(repo)}</a><p class="feed-meta">{meta}</p>{claims}</li>')
+
+    setups = "".join(
+        f'<details class="feed-setup"{" open" if n == 0 else ""}><summary>{text(setup["label"])} '
+        f'<span class="feed-fit">{int(setup["fit_count"]):,} {text(words["fits_count"])}</span></summary>'
+        f'<ol class="feed-picks">{"".join(candidate(repo) for repo in setup["candidates"])}</ol></details>'
+        for n, setup in enumerate(feed["setups"]))
+    claim_rows = "".join(
+        f'<tr><td><a href="{attr(cl["url"])}">{text(cl["source"])}</a></td><td>{text(cl["metric"])}</td>'
+        f'<td><q>{text(cl["quote"])}</q></td></tr>' for cl in feed["claims"])
+    memory = sorted((i for i in feed["items"] if i.get("memory_system")), key=lambda i: -int(i.get("stars") or 0))
+    item_rows = "".join(
+        f'<tr><td><a href="{attr(i["url"])}">{text(i["repo"])}</a></td><td>{int(i.get("stars") or 0):,}</td>'
+        f'<td>{text(i.get("licence") or "")}</td><td>{text(i.get("language") or "")}</td>'
+        f'<td>{text(str(i.get("last_commit_at") or "")[:10])}</td></tr>' for i in memory[:FEED_TOP_ITEMS])
+    papers = "".join(f'<li><a href="{attr(p["url"])}">{text(p["title"])}</a> <span>{text(p["arxiv_id"])} · '
+                     f'{text(p["published"][:10])}</span></li>' for p in feed["papers"])
+    answer = feed["answer_example"]
+    head = lambda cols: "<tr>" + "".join(f"<th scope=\"col\">{text(c)}</th>" for c in cols) + "</tr>"
+    main = "\n".join([
+        '<main id="main">',
+        page_head(words["heading"], words["lead"], dateline=where),
+        '<div class="wrap learn feed-page">',
+        f'<dl class="feed-facts">{fact_list}</dl>',
+        learn_part("count", words["count_heading"], "",
+                   f'<p class="feed-count"><b>{int(count["total_count"]):,}</b> {text(words["count_line"])} '
+                   f'<time datetime="{attr(count["window_utc"]["end"])}">{text(count["window_utc"]["end"])}</time></p>'
+                   f'<p class="feed-query">{text(words["count_query"])}: <a href="{attr(count["url"])}"><code>{text(count["query"])}</code></a></p>'
+                   f'<p class="feed-small">{text(count["reading"])} {text(words["count_secondary"])} {secondary}. '
+                   f'{text(words["count_response"])} {short_hash(count["response_sha256"])}</p>'),
+        learn_part("fits", words["fits_heading"], words["fits_lead"], f'<div class="feed-setups">{setups}</div>'),
+        learn_part("ask", words["answer_heading"], "",
+                   f'<p class="feed-question"><q>{text(answer["question"])}</q></p><p class="feed-small">{text(words["answer_label"])}</p>'
+                   f'<pre class="feed-answer">{text(answer["text"])}</pre>'),
+        learn_part("claims", words["claims_heading"], words["claims_lead"],
+                   f'<div class="feed-table"><table>{head(words["claims_cols"])}{claim_rows}</table></div>'),
+        learn_part("gathered", words["items_heading"], "",
+                   f'<p class="feed-small">{len(memory):,} {text(words["items_summary"])} {int(feed["item_count"]):,} '
+                   f'{text(words["items_summary_tail"])}</p>'
+                   f'<div class="feed-table"><table>{head(words["items_cols"])}{item_rows}</table></div>'),
+        learn_part("papers", words["papers_heading"], "", f'<ul class="feed-papers">{papers}</ul>'),
+        learn_part("how", words["how_heading"], "", '<ol class="contribute-steps">' + "".join(f"<li>{text(x)}</li>" for x in words["how"]) + "</ol>"),
+        "</div>",
+        "</main>",
+    ])
+    return page_shell(words["title"], words["description"], main)
+
+
 def render_not_found(nouns: Nouns) -> str:
+    """One shared not-found page, as the NotFound board draws it: the missing address, where things live now, and
+    the promise the worker keeps by redirecting every listed old address."""
     moved = nouns.moved
     page = moved["not_found"]
     prefix = PAGES_PREFIX
-    items = "".join(f'<li><a href="{prefix}{attr(item["to"])}">{text(item["what"])}</a> '
-                    f'<span>{text(page["was"])} <code>{text(item["from"])}</code></span></li>'
-                    for item in moved["pages"])
+    grouped: dict[str, list[dict]] = {}
+    for item in moved["pages"]:
+        grouped.setdefault(item["to"], []).append(item)  # one entry per new home, naming every old address
+    items = []
+    for to, group in grouped.items():
+        olds = f" {text(page['and'])} ".join(f"<code>/{text(item['from'])}</code>" for item in group)
+        items.append(f'<li><a href="{prefix}{attr(to)}"><b>{text(group[0]["what"])}</b>'
+                     f'<span>{text(page["was"])} {olds}. {text(group[0]["note"])}</span></a></li>')
+    items.append(f'<li><a href="{prefix}"><b>{text(page["home"])}</b><span>{text(page["home_note"])}</span></a></li>')
     main = "\n".join([
         '<main id="main">',
-        '<div class="wrap page-head not-found">',
+        '<div class="wrap not-found">',
+        f'<p class="nf-code">{text(page["code"])}<span data-missing-path></span></p>',
         f"<h1>{text(page['heading'])}</h1>",
         f'<p class="lead">{text(page["lead"])}</p>',
-        '<div class="actions">',
-        f'<a class="button" href="{prefix}">{text(page["home"])}</a>',
-        f'<a class="button secondary" href="{prefix}decks/">{text(page["decks"])}</a>',
-        "</div>",
-        f'<h2 class="moved-title">{text(page["moved_heading"])}</h2>',
-        f'<ul class="moved-list">{items}</ul>',
+        f'<ul class="nf-list">{"".join(items)}</ul>',
+        f'<p class="nf-note">{text(page["redirect_note"])}</p>',
         "</div>",
         "</main>",
     ])
     return page_shell(page["title"], "", main, robots="noindex")
+
+
+# How it works and evidence -----------------------------------------------------------------------
+
+HOW_PAGE = SITE / "how-it-works" / "index.html"
+EVIDENCE_DIR = SITE / "evidence"
+EVIDENCE_PAGE = EVIDENCE_DIR / "index.html"
+EVIDENCE_NOUN = CONTENT / "evidence.json"
+REPO_EVIDENCE = ROOT / "evidence"
+# Labels that stamp a page instead of saying what works. Neither page, nor the run it replays, carries one.
+STAMPS = ("planned", "not yet", "coming soon", "illustration", "synthetic example")
+REPLAY_IDS = ("request", "build", "build-receipt", "review", "held")
+HEX64 = re.compile(r"[0-9a-f]{64}\Z")
+ISO_DAY = re.compile(r"\d{4}-\d{2}-\d{2}\Z")
+NAME_DAY = re.compile(r"(\d{4})-?(\d{2})-?(\d{2})(?:T\d{6}Z)?(?:\.json)?\Z")
+# A thin arrow with a head, as the design board draws its edges; the page's styles turn it to point down.
+RR_ARROW = ('<svg class="rr-arrow" viewBox="0 0 40 12" width="40" height="12" aria-hidden="true" focusable="false">'
+            '<path d="M1 6H33" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'
+            '<path d="M30 1.5 39 6l-9 4.5z" fill="currentColor"/></svg>')
+CHECK_ICON = ('<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">'
+              '<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.5"/>'
+              '<path d="m8.5 12 2.5 2.5 4.5-5" fill="none" stroke="currentColor" stroke-width="2.5" '
+              'stroke-linecap="round" stroke-linejoin="round"/></svg>')
+
+
+def strings_in(value) -> list[str]:
+    if isinstance(value, str):
+        return [value]
+    items = value.values() if isinstance(value, dict) else value if isinstance(value, list) else []
+    return [found for item in items for found in strings_in(item)]
+
+
+def no_stamps(noun: dict, what: str) -> None:
+    for value in strings_in(noun):
+        for stamp in STAMPS:
+            if stamp in value.lower():
+                fail(f"{what}: {stamp!r} stamps the page; say what works instead")
+
+
+def seq_ranges(seqs: list[int]) -> str:
+    """Event numbers as runs: 1, 2, 3, 5 reads 1–3, 5."""
+    parts, start = [], None
+    for i, n in enumerate(seqs):
+        start = n if start is None else start
+        if i + 1 == len(seqs) or seqs[i + 1] != n + 1:
+            parts.append(str(start) if start == n else f"{start}–{n}")
+            start = None
+    return ", ".join(parts)
+
+
+def recorded_number(value) -> str:
+    """A number exactly as its record writes it."""
+    return json.dumps(value)
+
+
+def check_real_run(run: dict) -> dict[str, dict]:
+    """The replay noun as scripts/sync_real_run.py writes it. Returns its steps by id."""
+    facts = run["run"]
+    if not (facts["made_up_data_only"] is True and facts["private_or_ngo_data_sent"] is False
+            and facts["raw_credentials_included"] is False):
+        fail("real-run.json: the replay shows only a synthetic run that sent no private data and no credential")
+    steps = run["steps"]
+    if [s["id"] for s in steps] != list(REPLAY_IDS) or [s["n"] for s in steps] != list(range(1, len(REPLAY_IDS) + 1)):
+        fail("real-run.json: the replay needs its five steps, in order: " + ", ".join(REPLAY_IDS))
+    for step in steps:
+        receipt = (SITE / step["receipt"]).resolve()
+        if not HEX64.fullmatch(step["hash"]["value"]):
+            fail(f"real-run.json: step {step['n']} needs a SHA-256")
+        if not receipt.is_relative_to(SITE.resolve()) or not receipt.is_file():
+            fail(f"real-run.json: step {step['n']}'s receipt is not a file of the site")
+        if step["hash"]["value"] not in receipt.read_text(encoding="utf-8"):
+            fail(f"real-run.json: step {step['n']}'s hash is not in its receipt file")
+        if not (step["trace"] or step["events"]):
+            fail(f"real-run.json: step {step['n']} comes from no recorded event")
+    for path in run["files"].values():
+        if not (SITE / path).is_file():
+            fail(f"real-run.json: {path} is not a file of the site")
+    no_stamps(run, "real-run.json")
+    return {step["id"]: step for step in steps}
+
+
+def how_toc(toc: dict) -> str:
+    items = "".join(f'<li><a href="#{attr(item["href"])}">{text(item["label"])}</a></li>' for item in toc["items"])
+    return f'<nav class="how-toc" aria-label="{attr(toc["label"])}"><ul>{items}</ul></nav>'
+
+
+def how_why(why: dict) -> str:
+    for line in why["lines"]:
+        if line["kind"] not in {"noun", "verb"}:
+            fail("how-it-works.json: a highlighted word is a noun or a verb colour")
+    lines = "".join(f'<span class="how-line">{text(line["before"])}<span class="{line["kind"]}-word">'
+                    f'{text(line["word"])}</span>{text(line["after"])}</span>' for line in why["lines"])
+    items = "".join(f'<li><h3>{text(item["name"])}</h3><p>{text(item["text"])}</p></li>' for item in why["items"])
+    under = why["under"]
+    return "\n".join([
+        '<section class="how-band how-why" id="why" aria-labelledby="why-heading">',
+        '<div class="wrap how-why-wrap">',
+        f'<h2 class="how-statement" id="why-heading">{lines}</h2>',
+        f'<ul class="how-why-list">{items}</ul>',
+        f'<p class="how-under"><strong>{text(under["strong"])}</strong> {text(under["text"])}</p>',
+        "</div>",
+        "</section>",
+    ])
+
+
+def how_map(words: dict) -> str:
+    def side(part: dict, kind: str) -> str:
+        chips_html = "".join(f"<li>{text(item)}</li>" for item in part["items"])
+        return (f'<div class="how-side {kind}"><h3 class="how-big">{text(part["name"])}</h3>'
+                f'<p class="how-side-text"><strong>{text(part["label"])}</strong> {text(part["text"])}</p>'
+                f'<ul class="how-chips {kind}">{chips_html}</ul></div>')
+    notes = "".join(f"<li><strong>{text(note['name'])}</strong> {text(note['text'])}</li>" for note in words["notes"])
+    return "\n".join([
+        '<section class="how-map" id="map" aria-labelledby="map-heading">',
+        '<div class="wrap">',
+        f'<h2 class="visually-hidden" id="map-heading">{text(words["heading"])}</h2>',
+        f'<div class="how-sides">{side(words["verbs"], "verb")}{side(words["nouns"], "noun")}</div>',
+        f'<ul class="how-notes">{notes}</ul>',
+        "</div>",
+        "</section>",
+    ])
+
+
+def state_track(steps: list[dict]) -> tuple[dict[str, dict[str, str]], dict[str, str]]:
+    """Each task's state after each step that changed it, and each task's kind."""
+    track: dict[str, dict[str, str]] = {}
+    kinds: dict[str, str] = {}
+    for step in steps:
+        for change in step["changes"]:
+            track.setdefault(change["task"], {})[str(step["n"])] = change["states"][-1]
+            kinds[change["task"]] = change["kind"]
+    return track, kinds
+
+
+def replay_stage(words: dict, run: dict, steps: dict[str, dict]) -> str:
+    """The run as the design board draws it: verbs as rust pills, nouns as blue tiles with their hashes, receipts,
+    and the request held for a person. Each part carries the step it appears at, and each task its state after each
+    step, for the replay script. Without the script the stage shows the run's end. The ordered list below says the
+    same in words, so the stage is hidden from assistive technology."""
+    dw, facts = words["diagram"], run["run"]
+    track, kinds = state_track(run["steps"])
+    task_of = {kind: task for task, kind in kinds.items()}
+    for kind in ("request", "build", "review"):
+        if kind not in task_of:
+            fail(f"real-run.json: the replay needs a {kind} task")
+
+    def final(task: str) -> str:
+        states = track[task]
+        return states[max(states, key=int)]
+
+    def verb(kind: str, name: str, extra: str = "") -> str:
+        task = task_of[kind]
+        states = attr(json.dumps(track[task], separators=(",", ":")))
+        return (f'<div class="rr-verb{extra}" data-state="{attr(final(task))}"><span class="rr-kind">{text(kind)}</span>'
+                f'<span class="rr-name">{text(name)}</span><span class="rr-state" data-state="{attr(final(task))}" '
+                f'data-states="{states}">{text(final(task))}</span></div>')
+
+    def link(at: int) -> str:
+        return f'<span class="rr-link" data-at="{at}">{RR_ARROW}</span>'
+
+    def receipt(at: int, value: str) -> str:
+        return (f'<div class="rr-receipt" data-at="{at}"><span class="rr-receipt-label">{CHECK_ICON}'
+                f'{text(dw["receipt"])}</span><code>{text(value[:8])}…</code></div>')
+
+    at = {key: step["n"] for key, step in steps.items()}
+    nouns = "".join(f'<li class="rr-noun"><span class="rr-file">{text(noun["path"])}</span>'
+                    f'<code class="rr-sha">{text(dw["sha"])} {text(noun["sha256"][:8])}…</code></li>'
+                    for noun in steps["build"]["nouns"])
+    verdict = steps["review"]["verdict"]
+    return "\n".join([
+        '<div class="rr-stage" data-rr-stage aria-hidden="true">',
+        f'<div class="rr-request" data-at="{at["request"]}">'
+        + verb("request", steps["request"]["request_label"], " rr-verb-request") + "</div>",
+        f'<div class="rr-lanes" data-at="{at["request"]}">',
+        '<div class="rr-lane rr-lane-build">',
+        verb("build", facts["builder"]["program"]),
+        link(at["build"]),
+        f'<ul class="rr-nouns" data-at="{at["build"]}">{nouns}</ul>',
+        link(at["build-receipt"]),
+        receipt(at["build-receipt"], steps["build-receipt"]["hash"]["value"]),
+        "</div>",
+        '<div class="rr-lane rr-lane-review">',
+        verb("review", facts["reviewer"]["program"]),
+        link(at["review"]),
+        f'<div class="rr-noun rr-verdict" data-at="{at["review"]}"><span class="rr-file">{text(dw["verdict"])}: '
+        f'{text(verdict["verdict"])}</span><span class="rr-sha">{verdict["tests_run"]} {text(dw["tests"])} · '
+        f'{verdict["coverage_violations"]} {text(dw["violations"])}</span></div>',
+        link(at["review"]),
+        receipt(at["review"], steps["review"]["hash"]["value"]),
+        "</div>",
+        "</div>",
+        f'<div class="rr-held" data-at="{at["held"]}">{RR_ARROW}<p class="rr-held-box"><strong>{text(dw["held"])}</strong>'
+        f'<span>{text(dw["held_text"])}</span></p></div>',
+        "</div>",
+    ])
+
+
+def replay_step(step: dict, words: dict, prefix: str, kinds: dict[str, str]) -> str:
+    """One step in words: when, what happened, the actor, the tasks, the state changes, its hash, the events it comes
+    from and its receipt file."""
+    labels = words["labels"]
+    tasks = "".join(f'<li><code>{text(task)}</code> {text(kinds[task])}</li>' for task in step["tasks"])
+    changes = "".join(
+        f'<li>{text(change["kind"])}{" (" + text(labels["new"]) + ")" if change["new"] else ""}: '
+        + " → ".join(text(state) for state in change["states"]) + "</li>" for change in step["changes"])
+    source = []
+    if step["trace"]:
+        source.append(f'{text(labels["trace"])} {seq_ranges(step["trace"])}')
+    if step["events"]:
+        source.append(f'{text(labels["events"])} {seq_ranges(step["events"])}')
+    if step["model_calls"]:
+        source.append(f'{step["model_calls"]} {text(labels["calls"])}')
+    rows = [(labels["actor"], text(step["actor"])), (labels["tasks"], f'<ul class="rr-list">{tasks}</ul>')]
+    if changes:
+        rows.append((labels["state"], f'<ul class="rr-list">{changes}</ul>'))
+    rows.append((step["hash"]["label"], f'<code class="rr-hash">{text(step["hash"]["value"])}</code>'))
+    rows.append((labels["from"], " · ".join(source)))
+    meta = "".join(f"<div><dt>{text(name)}</dt><dd>{value}</dd></div>" for name, value in rows)
+    return (f'<li class="rr-step" data-rr-step="{step["n"]}" id="step-{attr(step["id"])}">'
+            f'<p class="rr-when"><time datetime="{attr(step["at_utc"])}">{text(step["at_utc"][11:19])}</time> '
+            f'{text(labels["utc"])}</p>'
+            f'<h3 class="rr-title">{text(step["title"])}</h3>'
+            f'<p class="rr-text">{text(step["text"])}</p>'
+            f'<dl class="rr-meta">{meta}</dl>'
+            f'<p class="rr-open"><a class="use-link" href="{prefix}{attr(step["receipt"])}">{text(labels["open"])}'
+            f"{CHEVRON}</a></p></li>")
+
+
+def how_run(words: dict, run: dict, prefix: str) -> str:
+    steps = check_real_run(run)
+    facts, fw, labels = run["run"], words["facts"], words["labels"]
+    _, kinds = state_track(run["steps"])
+    spend = facts["spend"]
+    started = facts["started_utc"]
+    fact_rows = [
+        (fw["when"], f'<time datetime="{attr(started)}">{text(human_date(started))}, {text(started[11:19])}</time> '
+                     f'{text(labels["utc"])}'),
+        (fw["where"], text(facts["fabric"])),
+        (fw["revision"], f'<a href="{attr(facts["tessera_repository"])}/tree/{attr(facts["tessera_revision"])}">'
+                         f'<code>{text(facts["tessera_revision"])}</code></a>'),
+        (fw["builder"], f'{text(facts["builder"]["program"])} {text(facts["builder"]["version"])} · '
+                        f'{text(fw["key"])} <code>{text(facts["builder"]["key_id"])}</code>'),
+        (fw["reviewer"], f'{text(facts["reviewer"]["program"])} {text(facts["reviewer"]["version"])} · '
+                         f'{text(fw["key"])} <code>{text(facts["reviewer"]["key_id"])}</code>'),
+        (fw["model"], f'<code>{text(facts["model"])}</code>'),
+        (fw["data"], text(fw["data_text"])),
+        (fw["spend"], f'{recorded_number(spend["total_actual_usd"])} {text(fw["usd"])} {text(fw["actual"])} · '
+                      f'{recorded_number(spend["total_conservative_usd"])} {text(fw["usd"])} {text(fw["conservative"])} '
+                      f'· {text(fw["cap"])} {recorded_number(spend["cap_usd"])} {text(fw["usd"])}'),
+        (fw["records"], f'{facts["trace_events"]} {text(fw["trace_events"])} · {facts["model_calls"]} '
+                        f'{text(fw["model_calls"])}'),
+    ]
+    fact_list = "".join(f"<div><dt>{text(name)}</dt><dd>{value}</dd></div>" for name, value in fact_rows)
+    legend = "".join(f'<li><span class="rr-state" data-state="{attr(item["state"])}">{text(item["state"])}</span> '
+                     f'{text(item["text"])}</li>' for item in words["legend"])
+    files = {**run["files"], "receipt": run["receipt"]}
+    file_links = "".join(use_link({"href": files[item["key"]], "label": item["label"]}, prefix) for item in words["files"])
+    step_items = "".join(replay_step(step, words, prefix, kinds) for step in run["steps"])
+    return "\n".join([
+        '<section class="how-band how-run" id="run" aria-labelledby="run-heading">',
+        '<div class="wrap">',
+        '<div class="rr-head">',
+        f'<h2 id="run-heading">{text(words["heading"])}</h2>',
+        f'<p class="rr-id">{text(words["run_label"])} <code>{text(facts["id"])}</code> · '
+        f'{text(words["from_receipts"])}<button class="button secondary rr-replay" type="button" data-rr-replay '
+        f'aria-controls="run-steps" hidden>{text(words["replay"])}</button></p>',
+        "</div>",
+        f'<p class="rr-lead">{text(words["lead"])}</p>',
+        f'<dl class="rr-facts">{fact_list}</dl>',
+        replay_stage(words, run, steps),
+        f'<div class="rr-legend"><p>{text(words["legend_label"])}</p><ul>{legend}</ul></div>',
+        f'<h3 class="visually-hidden" id="run-steps-heading">{text(words["steps_label"])}</h3>',
+        f'<ol class="rr-steps" id="run-steps" aria-labelledby="run-steps-heading">{step_items}</ol>',
+        f'<p class="visually-hidden" role="status" data-rr-status data-step-word="{attr(labels["step"])}" '
+        f'data-of-word="{attr(labels["of"])}"></p>',
+        f'<p class="rr-check">{text(words["check"])}</p>',
+        f'<div class="rr-files"><p>{text(words["files_label"])}</p><p class="use-links">{file_links}</p></div>',
+        "</div>",
+        "</section>",
+    ])
+
+
+def how_underneath(words: dict) -> str:
+    herma, tessera = words["herma"], words["tessera"]
+    parts = " · ".join(text(item) for item in tessera["items"])
+    return "\n".join([
+        '<section class="how-under-part" id="underneath" aria-labelledby="underneath-heading">',
+        '<div class="wrap">',
+        f'<h2 id="underneath-heading">{text(words["heading"])}</h2>',
+        '<div class="ud-stage">',
+        f'<p class="ud-node ud-harness">{text(words["harness"])}</p>',
+        f'<span class="ud-link">{RR_ARROW}</span>',
+        f'<p class="ud-node ud-herma"><strong>{text(herma["name"])}</strong><span>{text(herma["text"])}</span></p>',
+        f'<span class="ud-link">{RR_ARROW}</span>',
+        f'<p class="ud-node ud-model">{text(words["model"])}</p>',
+        f'<p class="ud-edge">{RR_ARROW}<span>{text(words["edge"])}</span></p>',
+        f'<p class="ud-tessera"><strong>{text(tessera["name"])}</strong><span>{parts}</span></p>',
+        "</div>",
+        f'<p class="ud-note">{text(words["note"])}</p>',
+        f'<p class="ud-note">{text(words["run_note"])}</p>',
+        "</div>",
+        "</section>",
+    ])
+
+
+def how_meta(words: dict, run: dict, learning: dict, prefix: str) -> str:
+    """The measured results the page names, from the learning noun by model: its numbers, line and source. A result
+    whose evidence this site serves links to the served copy."""
+    items = {item["model"]: item for item in learning["results"]["items"]}
+    cards = []
+    for pick in words["results"]:
+        item = items.get(pick["model"])
+        if item is None:
+            fail(f"how-it-works.json: learning.json has no result for {pick['model']}")
+        if "served" in pick:
+            if not (SITE / pick["served"]).is_file():
+                fail(f"how-it-works.json: {pick['served']} is not a file of the site")
+            href = prefix + attr(pick["served"])
+        elif item["link"].startswith("https://github.com/ta-amps/"):
+            href = attr(item["link"])
+        else:
+            fail(f"how-it-works.json: the {pick['model']} result needs public evidence")
+        cards.append(
+            f'<li class="how-result"><p class="how-result-model">{text(item["model"])}</p>'
+            f'<p class="how-result-figure"><span class="how-result-before">{text(item["before"])}</span>'
+            f'<span class="visually-hidden"> {text(words["to"])} </span>{RR_ARROW}'
+            f'<span class="how-result-after">{text(item["after"])}</span></p>'
+            f'<p class="how-result-line">{text(item["line"])}</p>'
+            f'<p class="how-result-evidence"><span>{text(words["evidence"])}</span> '
+            f'<a href="{href}">{text(item["source"])}</a></p></li>')
+    links = "".join(use_link(item, prefix) for item in words["links"])
+    return "\n".join([
+        '<section class="how-meta" id="meta-models" aria-labelledby="meta-heading">',
+        '<div class="wrap">',
+        '<div class="how-meta-head">',
+        f'<h2 id="meta-heading">{text(words["heading"])}</h2>',
+        f'<p>{text(words["lead_before"])} <code>{text(run["run"]["model"])}</code> {text(words["lead_after"])}</p>',
+        "</div>",
+        f'<ul class="how-results">{"".join(cards)}</ul>',
+        f'<p class="use-links how-meta-links">{links}</p>',
+        "</div>",
+        "</section>",
+    ])
+
+
+def render_how_it_works(nouns: Nouns) -> str:
+    """The how-it-works page, after the design board: why, the map, a real run replayed from its receipts, what sits
+    underneath, and the Meta models. Every word comes from site/content/how-it-works.json; the run and its words from
+    site/content/real-run.json; the results from site/content/learning.json. The replay script animates the stage and
+    marks the current step; without it the page shows the run's end and every step in order."""
+    page = nouns.how
+    no_stamps(page, "how-it-works.json")
+    prefix = prefix_for(HOW_PAGE)
+    main = "\n".join([
+        '<main id="main" class="how">',
+        '<div class="wrap page-head how-head">',
+        f"<h1>{text(page['heading'])}</h1>",
+        f'<p class="lead">{text(page["lead"])}</p>',
+        how_toc(page["toc"]),
+        "</div>",
+        how_why(page["why"]),
+        how_map(page["map"]),
+        how_run(page["run"], nouns.real_run, prefix),
+        how_underneath(page["underneath"]),
+        how_meta(page["meta"], nouns.real_run, nouns.learning, prefix),
+        "</main>",
+    ])
+    return page_shell(page["title"], page["description"], main,
+                      extra_head=f'<link rel="stylesheet" href="{prefix}assets/how-it-works.css">',
+                      extra_body=f'<script src="{prefix}assets/how-it-works.js" defer></script>')
+
+
+def folder_day(name: str) -> str | None:
+    """The date a dated evidence name ends with, as YYYY-MM-DD."""
+    found = NAME_DAY.search(name)
+    return f"{found.group(1)}-{found.group(2)}-{found.group(3)}" if found else None
+
+
+def same_files(a: Path, b: Path) -> bool:
+    files_a = {p.relative_to(a).as_posix(): p for p in a.rglob("*") if p.is_file()}
+    files_b = {p.relative_to(b).as_posix(): p for p in b.rglob("*") if p.is_file()}
+    return set(files_a) == set(files_b) and all(files_a[k].read_bytes() == files_b[k].read_bytes() for k in files_a)
+
+
+def fill_evidence(noun: dict) -> dict:
+    """The evidence noun with its measured parts filled from the files: each served folder's files and the last live
+    check's answers. A served folder without a line, a line without a folder, an item of the repository's evidence/
+    without a line, a copy that differs from its served folder, or a saved answer that changed stops the build."""
+    page = json.loads(json.dumps(noun))
+    no_stamps(page, "evidence.json")
+    served = page["served"]["folders"]
+    ids = [folder["id"] for folder in served]
+    on_disk = sorted(p.name for p in EVIDENCE_DIR.iterdir() if p.is_dir())
+    missing, extra = sorted(set(on_disk) - set(ids)), sorted(set(ids) - set(on_disk))
+    if missing:
+        fail("evidence.json: describe each served evidence folder in one line: " + ", ".join(missing))
+    if extra or len(ids) != len(set(ids)):
+        fail("evidence.json: these lines name no served folder, or name one twice: " + ", ".join(extra or ids))
+    days = []
+    for folder in served:
+        if not ISO_DAY.fullmatch(folder["date"]) or folder_day(folder["id"]) not in {None, folder["date"]}:
+            fail(f"evidence.json: {folder['id']} needs the date its name carries")
+        days.append(folder["date"])
+        root = EVIDENCE_DIR / folder["id"]
+        folder["files"] = [{"path": p.relative_to(root).as_posix(), "bytes": p.stat().st_size}
+                           for p in sorted(root.rglob("*")) if p.is_file()]
+    if days != sorted(days, reverse=True):
+        fail("evidence.json: served folders go newest first")
+    items = page["source"]["items"]
+    named = [item["path"].rstrip("/") for item in items]
+    repo = sorted("evidence/" + p.name for p in REPO_EVIDENCE.iterdir())
+    if sorted(named) != repo:
+        fail("evidence.json: give each item of the repository's evidence/ one line: "
+             + ", ".join(sorted(set(repo) ^ set(named))))
+    for item in items:
+        path = ROOT / item["path"]
+        if folder_day(path.name) not in {None, item["date"]}:
+            fail(f"evidence.json: {item['path']} needs the date its name carries")
+        if "same_as" in item:
+            if item["same_as"] not in ids or not same_files(path, EVIDENCE_DIR / item["same_as"]):
+                fail(f"evidence.json: {item['path']} is no longer the same as its served folder; give it its own line")
+        elif not item.get("line"):
+            fail(f"evidence.json: {item['path']} needs its line")
+    live = page["live"]
+    record_path = SITE / live["record"]
+    record = load_json(record_path)
+    checks = []
+    for check in record["checks"]:
+        fields = None
+        if check["body"]:
+            body = (record_path.parent / check["body"]).read_bytes()
+            if sha256(body) != check["body_sha256"]:
+                fail(f"evidence.json: the saved answer {check['body']} changed after the check")
+            answer = json.loads(body)
+            fields = {key: answer[key] for key in live["fields"] if key in answer}
+        checks.append({"name": check["name"], "url": check["url"], "started_utc": check["started_utc"],
+                       "http_status": check["http_status"],
+                       "body": f"{Path(live['record']).parent.as_posix()}/{check['body']}" if check["body"] else None,
+                       "fields": fields})
+    live["snapshot"] = {"checked_at": record["checked_at"], "how": record["how"], "checks": checks}
+    return page
+
+
+def evidence_text(nouns: Nouns) -> str:
+    return json.dumps(fill_evidence(nouns.evidence), indent=2, ensure_ascii=False) + "\n"
+
+
+def size_of(n: int) -> str:
+    return f"{n} B" if n < 1024 else f"{n / 1024:.1f} KB" if n < 1024 * 1024 else f"{n / 1024 / 1024:.1f} MB"
+
+
+def evidence_files(folder: dict, words: dict, prefix: str) -> str:
+    """A served folder's files: the top-level ones in a row, each subfolder behind a disclosure."""
+    def one(path: str, size: int, base: str) -> str:
+        return (f'<li><a href="{prefix}evidence/{attr(folder["id"])}/{attr(path)}">{text(path[len(base):])}</a>'
+                f' <span class="ev-size">{size_of(size)}</span></li>')
+    top = [f for f in folder["files"] if "/" not in f["path"]]
+    groups: dict[str, list[dict]] = {}
+    for f in folder["files"]:
+        if "/" in f["path"]:
+            groups.setdefault(f["path"].split("/", 1)[0], []).append(f)
+    parts = [f'<ul class="ev-files">{"".join(one(f["path"], f["bytes"], "") for f in top)}</ul>'] if top else []
+    for name, files in groups.items():
+        count = f'{len(files)} {text(words["one_file"] if len(files) == 1 else words["many_files"])}'
+        parts.append(f'<details class="ev-group"><summary>{CHEVRON}<code>{text(name)}/</code> · {count}</summary>'
+                     f'<ul class="ev-files">{"".join(one(f["path"], f["bytes"], name + "/") for f in files)}</ul>'
+                     "</details>")
+    return "".join(parts)
+
+
+def render_evidence(nouns: Nouns) -> str:
+    """The evidence page: the last live check with its time, every served evidence folder with its date, one line
+    and its files, and the evidence that is only in the source download, named by path and never linked. Every word
+    comes from site/content/evidence.json; the files and answers are filled from the files themselves."""
+    page = fill_evidence(nouns.evidence)
+    prefix = prefix_for(EVIDENCE_PAGE)
+    live, served, source = page["live"], page["served"], page["source"]
+    snap = live["snapshot"]
+    checked = snap["checked_at"]
+    rows = []
+    for check in snap["checks"]:
+        fields = check["fields"] or {}
+        answer = " · ".join(f"{text(key)}: {text(value if isinstance(value, str) else json.dumps(value))}"
+                                for key, value in fields.items())
+        saved = (f'<a href="{prefix}{attr(check["body"])}">{text(live["saved"])}</a>' if check["body"] else "")
+        note = live["notes"].get(check["url"], "")
+        rows.append(
+            f'<li class="ev-check{" ev-ok" if check["http_status"] == 200 and fields.get("ok") is True else ""}">'
+            f'<p class="ev-check-name">{text(check["name"])}</p><p class="ev-check-url"><code>{text(check["url"])}</code></p>'
+            f'<p class="ev-check-answer"><strong>{text(live["http"])} {check["http_status"]}</strong>'
+            f'{" · " + answer if answer else ""}</p>'
+            + (f'<p class="ev-check-note">{text(note)}</p>' if note else "")
+            + (f'<p class="ev-check-saved">{saved}</p>' if saved else "") + "</li>")
+    folders = []
+    for folder in served["folders"]:
+        link_html = f'<p class="ev-also">{use_link(folder["link"], prefix)}</p>' if "link" in folder else ""
+        folders.append(
+            f'<li class="ev-folder" id="{attr(folder["id"])}">'
+            f'<p class="ev-date"><time datetime="{attr(folder["date"])}">{text(human_date(folder["date"]))}</time>'
+            f' · <code>{text(folder["id"])}/</code></p>'
+            f'<h3>{text(folder["title"])}</h3><p class="ev-line">{text(folder["line"])}</p>'
+            f'<div class="ev-files-wrap"><p class="ev-files-label">{text(served["files"])}</p>'
+            f'{evidence_files(folder, served, prefix)}</div>{link_html}</li>')
+    items = []
+    for item in source["items"]:
+        line = (f'{text(source["same"])} <a href="#{attr(item["same_as"])}"><code>{text(item["same_as"])}/</code></a>.'
+                if "same_as" in item else text(item["line"]))
+        items.append(f'<li><p class="ev-date"><time datetime="{attr(item["date"])}">{text(human_date(item["date"]))}'
+                     f'</time></p><p><code>{text(item["path"])}</code></p><p class="ev-line">{line}</p></li>')
+    main = "\n".join([
+        '<main id="main" class="ev">',
+        '<div class="wrap page-head ev-head">',
+        f"<h1>{text(page['heading'])}</h1>",
+        f'<p class="lead">{text(page["lead"])}</p>',
+        how_toc(page["toc"]),
+        "</div>",
+        '<div class="wrap ev-body">',
+        '<section class="ev-part ev-live" id="live" aria-labelledby="live-heading">',
+        f'<h2 id="live-heading">{text(live["heading"])}</h2>',
+        f'<p class="ev-lead">{text(live["lead"])}</p>',
+        f'<p class="ev-checked">{text(live["checked"])} <time datetime="{attr(checked)}">'
+        f'{text(human_date(checked))} {text(live["at"])} {text(checked[11:16])}</time> {text(live["utc"])}</p>',
+        f'<ul class="ev-checks">{"".join(rows)}</ul>',
+        "</section>",
+        '<section class="ev-part" id="served" aria-labelledby="served-heading">',
+        f'<h2 id="served-heading">{text(served["heading"])}</h2>',
+        f'<p class="ev-lead">{text(served["lead"])}</p>',
+        f'<ol class="ev-folders">{"".join(folders)}</ol>',
+        "</section>",
+        '<section class="ev-part" id="source" aria-labelledby="source-heading">',
+        f'<h2 id="source-heading">{text(source["heading"])}</h2>',
+        f'<p class="ev-lead">{text(source["lead"])}</p>',
+        f'<p class="use-links">{use_link(source["link"], prefix)}</p>',
+        f'<ul class="ev-source">{"".join(items)}</ul>',
+        "</section>",
+        "</div>",
+        "</main>",
+    ])
+    return page_shell(page["title"], page["description"], main,
+                      extra_head=f'<link rel="stylesheet" href="{prefix}assets/evidence.css">')
 
 
 # Manifest ---------------------------------------------------------------------------------------
@@ -1475,6 +2490,459 @@ def render_pdfs(decks: list[dict], mains: dict[str, str]) -> dict[str, dict]:
     return entries
 
 
+# October 31 judges, status, feeds hub, scenarios, and trust pages --------------------------------
+
+def render_judges(nouns: Nouns) -> str:
+    page = nouns.judges
+    totals = nouns.library["totals"]
+    commit_short = nouns.library["source"]["commit"][:12]
+    steps = "".join(
+        f'<li class="jg-step"><h3>{text(step["title"])}</h3><p>{text(step["text"])}</p>'
+        f'<a href="{attr(step["href"])}">{text(step["link_label"])}</a></li>'
+        for step in page["steps"]
+    )
+    doors = "".join(
+        f'<li class="jg-door"><h3><a href="{attr(item["href"])}">{text(item["name"])}</a></h3>'
+        f'<code>{text(item["host"])}</code><p>{text(item["text"])}</p></li>'
+        for item in page["doors"]["items"]
+    )
+    real_rows = []
+    fmt_vars = {
+        "packs": totals["packs"],
+        "nouns": totals["nouns"],
+        "verbs": totals["verbs"],
+        "with_code": totals["with_code"],
+        "commit_short": commit_short,
+    }
+    for row in page["real"]["rows"]:
+        claim_str = row["claim_template"].format(**fmt_vars) if "claim_template" in row else row["claim"]
+        state_str = row["state_template"].format(**fmt_vars) if "state_template" in row else row["state"]
+        real_rows.append(
+            f'<tr><td><strong>{text(claim_str)}</strong></td><td>{text(state_str)}</td>'
+            f'<td><a href="{attr(row["href"])}">{text(row["check_label"])}</a></td></tr>'
+        )
+    real_cols = "".join(f'<th scope="col">{text(col)}</th>' for col in page["real"]["columns"])
+    repos_info = page["repos"]
+    repos = "".join(
+        f'<li class="jg-repo"><span class="jg-repo-slug">{text(item["slug"])}</span>'
+        f'<p class="jg-repo-role">{text(item["role"])}</p>'
+        f'<div class="jg-repo-links">'
+        f'<a href="{attr(item["github"])}">{text(repos_info["github_label"])}</a>'
+        f'<a href="/source/{attr(item["slug"])}/">{text(repos_info["mirror_label"])}</a>'
+        f'<a href="/source/{attr(item["slug"])}.tar.gz">{text(repos_info["tar_label"])}</a>'
+        f'</div></li>'
+        for item in repos_info["items"]
+    )
+    looks = "".join(
+        f'<li><a class="jg-look" href="{attr(item["href"])}"><strong>{text(item["heading"])}</strong>'
+        f'<span>{text(item["text"])}</span></a></li>'
+        for item in page["looks"]
+    )
+    main = "\n".join([
+        '<main id="main">',
+        '<div class="wrap page-head">',
+        f'<p class="page-kicker">{text(page["kicker"])}</p>',
+        f'<h1>{text(page["heading"])}</h1>',
+        f'<p class="lead">{text(page["lead"])}</p>',
+        '<div class="jg-ctas">'
+        f'<a class="button" href="{attr(page["tour_cta"]["href"])}">{text(page["tour_cta"]["label"])}</a>'
+        f'<a class="tool" href="{attr(page["film_cta"]["href"])}">{text(page["film_cta"]["label"])}</a>'
+        '</div>',
+        '</div>',
+        '<div class="wrap judges-page">',
+        '<section aria-labelledby="jg-steps-heading">',
+        f'<h2 id="jg-steps-heading">{text(page["steps_heading"])}</h2>',
+        f'<ol class="jg-steps">{steps}</ol>',
+        '</section>',
+        '<section aria-labelledby="jg-doors-heading">',
+        f'<h2 id="jg-doors-heading">{text(page["doors"]["heading"])}</h2>',
+        f'<ul class="jg-doors">{doors}</ul>',
+        '</section>',
+        '<section aria-labelledby="jg-real-heading">',
+        f'<h2 id="jg-real-heading">{text(page["real"]["heading"])}</h2>',
+        f'<p class="sc-card-lead">{text(page["real"]["lead"])}</p>',
+        f'<div class="data-table-wrap"><table class="data-table"><thead><tr>{real_cols}</tr></thead>'
+        f'<tbody>{"".join(real_rows)}</tbody></table></div>',
+        '</section>',
+        '<section aria-labelledby="jg-repos-heading">',
+        f'<h2 id="jg-repos-heading">{text(repos_info["heading"])}</h2>',
+        f'<p class="sc-card-lead">{text(repos_info["lead"])}</p>',
+        f'<ul class="jg-repos">{repos}</ul>',
+        '</section>',
+        '<section aria-label="Related guides">',
+        f'<ul class="jg-looks">{looks}</ul>',
+        '</section>',
+        '<p class="jg-foot">Security and accessibility notes: see <a href="../security/">/security/</a> '
+        'and <a href="../accessibility/">/accessibility/</a>.</p>',
+        '</div>',
+        '</main>',
+    ])
+    return page_shell(page["title"], page["description"], main)
+
+
+def render_status_page(nouns: Nouns) -> str:
+    page = nouns.status_page
+    checks = load_json(SITE / "evidence" / "live-check-2026-10-31" / "checks.json")
+    overall = page["overall"]
+    cols = "".join(f'<th scope="col">{text(col)}</th>' for col in page["columns"])
+    rows = []
+    for svc in page["services"]:
+        probe_attr = f' data-probe-url="{attr(svc["probe_url"])}"' if svc.get("probe_url") else ""
+        rows.append(
+            f'<tr id="svc-{attr(svc["id"])}"{probe_attr}>'
+            f'<td><strong>{text(svc["name"])}</strong><span class="st-host">{text(svc["host"])}</span></td>'
+            f'<td>{text(svc["what"])}</td>'
+            f'<td><span class="st-badge" data-status-state data-kind="{attr(svc["kind"])}">'
+            f'<span data-status-icon aria-hidden="true">✓</span>'
+            f'<span data-status-label>{text(svc["state"])}</span></span></td>'
+            f'<td class="st-since" data-status-since>{text(svc["since"])}</td>'
+            f'</tr>'
+        )
+    snap = page["snapshot_card"]
+    notes = "".join(
+        f'<li><div class="st-note-meta">{text(item["when"])} · {text(item["state"])}</div>'
+        f'<div>{text(item["text"])}</div></li>'
+        for item in page["notes_card"]["items"]
+    )
+    legend = "".join(
+        f'<li><span class="st-badge" data-kind="{attr(item["kind"])}">'
+        f'<span aria-hidden="true">{text(item["icon"])}</span><span>{text(item["label"])}</span></span></li>'
+        for item in page["foot"]["legend"]
+    )
+    foot = page["foot"]
+    main = "\n".join([
+        '<main id="main">',
+        '<div class="wrap page-head">',
+        f'<p class="page-kicker">{text(page["kicker"])}</p>',
+        f'<h1>{text(page["heading"])}</h1>',
+        '</div>',
+        '<div class="wrap status-page">',
+        f'<section class="st-banner" aria-label="Overall service state" data-status-overall '
+        f'data-checking-text="{attr(overall["checking_text"])}" '
+        f'data-live-all-ok="{attr(overall["live_all_ok"])}" '
+        f'data-live-partial="{attr(overall["live_partial"])}">',
+        f'<div class="st-banner-body"><h2 data-status-title>{text(overall["title"])}</h2>'
+        f'<p data-status-note>{text(overall["text"])}</p></div>',
+        f'<button class="tool" type="button" data-status-recheck hidden>{text(overall["recheck_button"])}</button>',
+        '</section>',
+        '<section aria-labelledby="st-services-heading">',
+        f'<h2 id="st-services-heading">{text(page["services_heading"])}</h2>',
+        f'<div class="data-table-wrap"><table class="data-table"><thead><tr>{cols}</tr></thead>'
+        f'<tbody>{"".join(rows)}</tbody></table></div>',
+        '</section>',
+        '<div class="st-cards">',
+        '<section class="st-card" aria-labelledby="st-snap-heading">',
+        f'<h2 id="st-snap-heading">{text(snap["heading"])}</h2>',
+        f'<p class="st-card-lead">{text(snap["lead"])}</p>',
+        '<dl class="st-dl">',
+        f'<div><dt>{text(snap["labels"]["last_run"])}</dt><dd>{text(checks["checked_at"])}</dd></div>',
+        f'<div><dt>{text(snap["labels"]["result"])}</dt><dd>{text(snap["result_text"])}</dd></div>',
+        f'<div><dt>{text(snap["labels"]["receipt"])}</dt><dd><a href="{attr(snap["link_href"])}">{text(snap["link_label"])}</a></dd></div>',
+        '</dl>',
+        '</section>',
+        '<section class="st-card" aria-labelledby="st-notes-heading">',
+        f'<h2 id="st-notes-heading">{text(page["notes_card"]["heading"])}</h2>',
+        f'<p class="st-card-lead">{text(page["notes_card"]["lead"])}</p>',
+        f'<ul class="st-notes">{notes}</ul>',
+        '</section>',
+        '</div>',
+        '<div class="st-foot">',
+        f'<section aria-labelledby="st-agents-h"><h2 id="st-agents-h">{text(foot["agents_heading"])}</h2>'
+        f'<p>{text(foot["agents_text"])} <a href="../status.json">/status.json</a></p></section>',
+        f'<section aria-labelledby="st-scope-h"><h2 id="st-scope-h">{text(foot["scope_heading"])}</h2>'
+        f'<p>{text(foot["scope_text"])}</p></section>',
+        f'<section aria-labelledby="st-legend-h"><h2 id="st-legend-h">{text(foot["legend_heading"])}</h2>'
+        f'<ul class="st-legend">{legend}</ul></section>',
+        '</div>',
+        '</div>',
+        '</main>',
+    ])
+    return page_shell(page["title"], page["description"], main,
+                      extra_body='<script src="status.js" defer></script>')
+
+
+def render_status_json(nouns: Nouns) -> str:
+    page = nouns.status_page
+    checks = load_json(SITE / "evidence" / "live-check-2026-10-31" / "checks.json")
+    payload = {
+        "schema": "ta-amps.agora.status.v1",
+        "ok": True,
+        "surface": "agora",
+        "recorded_check_at": checks["checked_at"],
+        "evidence": "/evidence/live-check-2026-10-31/checks.json",
+        "services": [
+            {
+                "id": svc["id"],
+                "name": svc["name"],
+                "host": svc["host"],
+                "what": svc["what"],
+                "state": svc["state"],
+                "kind": svc["kind"],
+                "since": svc["since"],
+            }
+            for svc in page["services"]
+        ],
+    }
+    return json.dumps(payload, indent=2, ensure_ascii=False) + "\n"
+
+
+def render_feeds_index(nouns: Nouns) -> str:
+    page = nouns.feeds_index
+    pills = "".join(f"<li>{text(p)}</li>" for p in page["pills"])
+    cats = page["categories"]
+    cat0 = cats[0]
+    cat_btns = "".join(
+        f'<button class="fd-cat" type="button" data-feed-cat="{attr(cat["key"])}" '
+        f'aria-pressed="{"true" if i == 0 else "false"}">'
+        f'<span class="fd-cat-group">{text(cat["group"])}</span>'
+        f'<span class="fd-cat-name">{text(cat["name"])}</span></button>'
+        for i, cat in enumerate(cats)
+    )
+    cols = page["columns"]
+    thead = (
+        f'<tr><th scope="col">{text(cols[0])}</th><th scope="col">{text(cols[1])}</th>'
+        f'<th scope="col" data-feed-metric>{text(cat0["metric"])}</th>'
+        f'<th scope="col">{text(cols[3])}</th><th scope="col">{text(cols[4])}</th></tr>'
+    )
+    init_rows = [r for r in cat0["rows"] if r["runs"] in ("local", "either")] or cat0["rows"]
+    tbody_rows = "".join(
+        f'<tr><td class="fd-num">{idx + 1}</td>'
+        f'<td class="fd-tool"><a href="{attr(r["url"])}">{text(r["name"])}</a></td>'
+        f'<td><span class="fd-signal-wrap"><span class="fd-bar" aria-hidden="true">'
+        f'<span class="fd-bar-fill" style="width:{max(8, min(100, int(r["bar_pct"])))}%"></span></span>'
+        f'<span class="fd-signal">{text(r["signal"])}</span></span></td>'
+        f'<td class="fd-mono">{text(r["runs_label"])}</td>'
+        f'<td class="fd-mono">{text(r["license"])}</td></tr>'
+        for idx, r in enumerate(init_rows)
+    )
+    wf = page["which_fits"]
+    questions = []
+    for q in wf["questions"]:
+        opts = "".join(
+            f'<button class="fd-opt" type="button" data-feed-q="{attr(q["key"])}" data-feed-val="{attr(opt["id"])}" '
+            f'aria-pressed="{"true" if opt["id"] == q["default"] else "false"}">{text(opt["label"])}</button>'
+            for opt in q["options"]
+        )
+        questions.append(
+            f'<div class="fd-q"><p class="fd-q-label">{text(q["label"])}</p>'
+            f'<div class="fd-opts" role="group" aria-label="{attr(q["label"])}">{opts}</div></div>'
+        )
+    best0 = init_rows[0]
+    foot_cards = "".join(
+        f'<li><h2>{text(card["heading"])}</h2><p>{text(card["text"])}</p></li>'
+        for card in page["foot_cards"]
+    )
+    embed = {
+        "categories": cats,
+        "forced_local_why": wf["forced_local_why"],
+        "default_why": wf["default_why"],
+    }
+    encoded = json.dumps(embed, ensure_ascii=False, separators=(",", ":")).replace("<", "\\u003c")
+    main = "\n".join([
+        '<main id="main">',
+        '<div class="wrap page-head">',
+        f'<p class="page-kicker">{text(page["kicker"])}</p>',
+        f'<h1>{text(page["heading"])}</h1>',
+        f'<p class="lead">{text(page["lead"])}</p>',
+        f'<ul class="pill-row">{pills}</ul>',
+        '</div>',
+        '<div class="wrap feeds-hub">',
+        '<div class="fd-meta-bar">'
+        f'<span><strong>Who runs it:</strong> {text(page["who_runs"])}</span>'
+        f'<span><strong>Each scan:</strong> {text(page["each_run"])}</span>'
+        f'<span><strong>Raw task objects:</strong> <a href="index.json">/feeds/index.json</a></span>'
+        '</div>',
+        f'<div class="fd-cats" role="group" aria-label="Feed categories">{cat_btns}</div>',
+        '<div class="fd-split">',
+        '<section class="fd-main-card" aria-labelledby="h-feed">',
+        f'<h2 id="h-feed">{text(cat0["name"])}</h2>',
+        f'<p class="fd-schedule" data-feed-schedule>{text(cat0["schedule"])} · {text(cat0["last_run"])} · receipt {text(cat0["receipt"])}</p>',
+        f'<p class="fd-rank" data-feed-rank>{text(cat0["rank"])}</p>',
+        f'<div class="data-table-wrap"><table class="data-table"><thead>{thead}</thead>'
+        f'<tbody data-feed-rows>{tbody_rows}</tbody></table></div>',
+        f'<p><a data-feed-detail href="{attr(cat0["detail_href"])}">{text(cat0["detail_label"])}</a></p>',
+        '</section>',
+        '<aside class="fd-aside" aria-labelledby="fd-wf-heading">',
+        f'<h2 id="fd-wf-heading">{text(wf["heading"])}</h2>',
+        f'<p class="sc-card-lead">{text(wf["lead"])}</p>',
+        *questions,
+        '<div class="fd-fit" aria-live="polite">'
+        f'<p class="fd-fit-kicker">{text(wf["best_fit_label"])}</p>'
+        f'<p class="fd-fit-name" data-feed-fit-name>{text(best0["name"])} ({text(best0["runs_label"])}, {text(best0["license"])})</p>'
+        f'<p class="fd-fit-why" data-feed-fit-why>{text(wf["default_why"])}</p>'
+        '</div>',
+        f'<h3>{text(wf["agent_heading"])}</h3>',
+        f'<pre class="fd-snippet"><code data-feed-snippet>which_fits({{ feed: "{text(cat0["key"])}", data: "private", runs: "local" }})</code></pre>',
+        '</aside>',
+        '</div>',
+        f'<ul class="fd-foot-cards">{foot_cards}</ul>',
+        f'<script type="application/json" id="agora-feeds-data">{encoded}</script>',
+        '</div>',
+        '</main>',
+    ])
+    return page_shell(page["title"], page["description"], main,
+                      extra_body='<script src="../assets/feeds.js" defer></script>')
+
+
+def render_scenarios(nouns: Nouns) -> str:
+    page = nouns.scenarios
+    pills = "".join(f"<li>{text(p)}</li>" for p in page["pills"])
+    tiles = "".join(
+        f'<button class="sc-tile" type="button" data-kind="{attr(tile["key"])}" data-sc-verdict="{attr(tile["key"])}" aria-pressed="false">'
+        f'<span class="sc-tile-top"><span class="sc-tile-n">{int(tile["count"]):,}</span>'
+        f'<span class="sc-tile-pct">{text(tile["pct"])}</span></span>'
+        f'<span class="sc-tile-label">{text(tile["icon"])} {text(tile["label"])}</span>'
+        f'<span class="sc-tile-sub">{text(tile["sub"])}</span></button>'
+        for tile in page["tiles"]
+    )
+    max_reason = max(r["count"] for r in page["why_blocked"]["reasons"])
+    reasons = "".join(
+        f'<li class="sc-bar-row"><div class="sc-bar-head"><span>{text(r["label"])}</span>'
+        f'<span class="sc-bar-count">{int(r["count"])}</span></div>'
+        f'<div class="sc-bar-track" aria-hidden="true"><div class="sc-bar-fill" '
+        f'style="width:{round(r["count"] / max_reason * 100)}%"></div></div>'
+        f'<code class="sc-bar-code">{text(r["code"])}</code></li>'
+        for r in page["why_blocked"]["reasons"]
+    )
+    stakes = "".join(
+        f'<li class="sc-bar-row"><div class="sc-bar-head"><span>{text(item["label"])}</span>'
+        f'<span class="sc-bar-count">{int(item["blocked"])}%</span></div>'
+        f'<div class="sc-bar-track" aria-hidden="true"><div class="sc-bar-fill" '
+        f'style="width:{int(item["blocked"])}%"></div></div></li>'
+        for item in page["stakeholders"]["items"]
+    )
+    dom = page["domains_section"]
+    filters = "".join(
+        f'<button class="sc-filter" type="button" data-sc-filter="{attr(f["key"])}" '
+        f'aria-pressed="{"true" if f["key"] == "all" else "false"}">{text(f["label"])}</button>'
+        for f in dom["filters"]
+    )
+    legend = "".join(
+        f'<li><span class="sc-dot" data-kind="{attr(item["kind"])}" aria-hidden="true"></span>{text(item["label"])}</li>'
+        for item in dom["legend"]
+    )
+    cols = "".join(f'<th scope="col">{text(col)}</th>' for col in dom["columns"])
+    dom_rows = []
+    for name, kind, d, s, b in dom["domains"]:
+        total_row = d + s + b
+        dom_rows.append(
+            f'<tr data-domain-kind="{attr(kind)}" data-direct="{int(d)}" data-split="{int(s)}" data-blocked="{int(b)}">'
+            f'<td><strong>{text(name)}</strong></td>'
+            f'<td><div class="sc-stack" aria-hidden="true">'
+            f'<span class="sc-seg-direct" style="width:{round(d / total_row * 100, 1)}%"></span>'
+            f'<span class="sc-seg-split" style="width:{round(s / total_row * 100, 1)}%"></span>'
+            f'<span class="sc-seg-blocked" style="width:{round(b / total_row * 100, 1)}%"></span>'
+            f'</div></td>'
+            f'<td class="fd-mono">{int(d)}</td><td class="fd-mono">{int(s)}</td><td class="fd-mono">{int(b)}</td>'
+            f'</tr>'
+        )
+    samples = page["samples"]
+    sample_cards = "".join(
+        f'<li class="sc-sample"><span class="sc-verdict" data-kind="{attr(item["kind"])}">{text(item["verdict"])}</span>'
+        f'<p class="sc-tuple">{text(item["tuple"])}</p>'
+        f'<p>{text(item["text"])}</p>'
+        f'<p><strong>{text(samples["became_label"])}</strong> {text(item["became"])}</p>'
+        f'<p><strong>{text(samples["human_label"])}</strong> {text(item["human"])}</p></li>'
+        for item in samples["items"]
+    )
+    foot = page["foot"]
+    main = "\n".join([
+        '<main id="main">',
+        '<div class="wrap page-head">',
+        f'<p class="page-kicker">{text(page["kicker"])}</p>',
+        f'<h1>{text(page["heading"])}</h1>',
+        f'<p class="lead">{text(page["lead"])}</p>',
+        f'<ul class="pill-row">{pills}</ul>',
+        '</div>',
+        '<div class="wrap scenarios-page">',
+        f'<div class="sc-tiles" role="group" aria-label="Filter or sort by verdict">{tiles}</div>',
+        '<div class="sc-why-grid">',
+        '<section class="sc-card" aria-labelledby="sc-why-heading">',
+        f'<h2 id="sc-why-heading">{text(page["why_blocked"]["heading"])}</h2>',
+        f'<p class="sc-card-lead">{text(page["why_blocked"]["lead"])}</p>',
+        f'<ul class="sc-bars">{reasons}</ul>',
+        '</section>',
+        '<section class="sc-card sc-stake" aria-labelledby="sc-stake-heading">',
+        f'<h2 id="sc-stake-heading">{text(page["stakeholders"]["heading"])}</h2>',
+        f'<p class="sc-card-lead">{text(page["stakeholders"]["lead"])}</p>',
+        f'<ul class="sc-bars">{stakes}</ul>',
+        '</section>',
+        '</div>',
+        '<section class="sc-card" aria-labelledby="sc-dom-heading">',
+        '<div class="sc-dom-head">',
+        f'<h2 id="sc-dom-heading">{text(dom["heading"])}</h2>',
+        f'<div class="sc-filters" role="group" aria-label="Filter kinds of work">{filters}</div>',
+        '</div>',
+        f'<ul class="sc-legend">{legend}</ul>',
+        f'<p class="sc-status" data-sc-status aria-live="polite">Showing {len(dom["domains"])} of {len(dom["domains"])} kinds of work.</p>',
+        f'<div class="data-table-wrap"><table class="data-table"><thead><tr>{cols}</tr></thead>'
+        f'<tbody data-scenarios-rows>{"".join(dom_rows)}</tbody></table></div>',
+        '</section>',
+        '<section aria-labelledby="sc-samples-heading">',
+        f'<h2 id="sc-samples-heading">{text(samples["heading"])}</h2>',
+        f'<ul class="sc-samples">{sample_cards}</ul>',
+        '</section>',
+        '<div class="sc-foot">'
+        f'<p style="margin:0">{text(foot["text"])} <a href="{attr(foot["pack_href"])}">{text(foot["pack_label"])}</a></p>'
+        f'<p style="margin:0">Digest: <a href="{attr(foot["digest_href"])}"><code>{text(foot["digest_label"])}</code></a> · '
+        f'SHA-256 <code>{text(foot["receipt_sha256"])}</code></p>'
+        '</div>',
+        '</div>',
+        '</main>',
+    ])
+    return page_shell(page["title"], page["description"], main,
+                      extra_body='<script src="../assets/scenarios.js" defer></script>')
+
+
+def render_trust_page(nouns: Nouns, kind: str) -> str:
+    page = nouns.trust[kind]
+    blocks = []
+    for idx, block in enumerate(page["blocks"]):
+        items = "".join(f"<li>{text(item)}</li>" for item in block["items"])
+        extra = (
+            f'<p style="margin:0"><a href="{attr(block["link_href"])}">{text(block["link_label"])}</a></p>'
+            if block.get("link_href") else ""
+        )
+        blocks.append(
+            f'<section class="tp-block" aria-labelledby="tp-{kind}-{idx}">'
+            f'<h2 id="tp-{kind}-{idx}">{text(block["heading"])}</h2>'
+            f'<ul>{items}</ul>{extra}</section>'
+        )
+    sec_txt = (
+        f'<p class="tp-foot"><a href="{attr(page["security_txt_href"])}">{text(page["security_txt_label"])}</a></p>'
+        if page.get("security_txt_href") else ""
+    )
+    main = "\n".join(filter(None, [
+        '<main id="main">',
+        '<div class="wrap page-head">',
+        f'<p class="page-kicker">{text(page["kicker"])}</p>',
+        f'<h1>{text(page["heading"])}</h1>',
+        f'<p class="lead">{text(page["lead"])}</p>',
+        '</div>',
+        '<div class="wrap trust-page">',
+        f'<div class="tp-blocks">{"".join(blocks)}</div>',
+        sec_txt,
+        f'<p class="tp-foot">{text(page["foot"])}</p>',
+        '</div>',
+        '</main>',
+    ]))
+    return page_shell(page["title"], page["description"], main)
+
+
+def render_security_txt(nouns: Nouns) -> str:
+    sec = nouns.trust["security_txt"]
+    lines = [
+        f"# {sec['comment']}",
+        f"Contact: {sec['contact']}",
+        f"Expires: {sec['expires']}",
+        f"Preferred-Languages: {sec['languages']}",
+    ]
+    for canon in sec["canonical"]:
+        lines.append(f"Canonical: {canon}")
+    lines.append(f"Policy: {sec['policy']}")
+    return "\n".join(lines) + "\n"
+
+
 # Main ---------------------------------------------------------------------------------------------
 
 def unique_ids(path: Path, content: str) -> None:
@@ -1494,6 +2962,17 @@ def outputs_for(nouns: Nouns) -> dict[Path, str]:
     generated[SITE / "film" / "index.html"] = render_film(nouns)
     generated[SITE / "learning" / "index.html"] = render_learning(nouns)
     generated[SITE / "library" / "index.html"] = render_library(nouns)
+    generated[SITE / "deploy" / "index.html"] = render_deploy(nouns)
+    generated[SITE / "contribute" / "index.html"] = render_contribute(nouns)
+    generated[SITE / "feeds" / "index.html"] = render_feeds_index(nouns)
+    generated[SITE / "feeds" / "memory-systems" / "index.html"] = render_feed(nouns)
+    generated[SITE / "judges" / "index.html"] = render_judges(nouns)
+    generated[SITE / "status" / "index.html"] = render_status_page(nouns)
+    generated[SITE / "scenarios" / "index.html"] = render_scenarios(nouns)
+    generated[SITE / "security" / "index.html"] = render_trust_page(nouns, "security")
+    generated[SITE / "accessibility" / "index.html"] = render_trust_page(nouns, "accessibility")
+    generated[HOW_PAGE] = render_how_it_works(nouns)
+    generated[EVIDENCE_PAGE] = render_evidence(nouns)
     generated[SITE / "404.html"] = render_not_found(nouns)
     if set(generated) & nouns.frozen:
         fail("a frozen page is never written")
@@ -1502,14 +2981,18 @@ def outputs_for(nouns: Nouns) -> dict[Path, str]:
         if "source" not in p.relative_to(SITE).parts
         and p not in generated
         and p not in nouns.frozen
-        and not ("studio" in p.relative_to(SITE).parts and "<!-- site:head -->" not in p.read_text(encoding="utf-8"))
+        and not (bool({"studio", "hub-3d", "compare"} & set(p.relative_to(SITE).parts))
+                 and not {"<!-- site:head -->", "<!-- site:banner -->"} & set(re.findall(r"<!-- site:(?:head|banner) -->", p.read_text(encoding="utf-8"))))
     )
     outputs = {path: render_page(path, content, nouns) for path, content in generated.items()}
     for path in written:
         outputs[path] = render_page(path, path.read_text(encoding="utf-8"), nouns)
     for path, content in outputs.items():
         unique_ids(path, content)
-    return outputs
+    outputs[SITE / "llms.txt"] = render_llms(nouns, set(outputs))
+    outputs[SITE / "status.json"] = render_status_json(nouns)
+    outputs[SITE / ".well-known" / "security.txt"] = render_security_txt(nouns)
+    return {path: plain_words(repoint(content, nouns.links)) for path, content in outputs.items()}
 
 
 def build(check: bool, pdf: bool) -> list[str]:
@@ -1523,6 +3006,7 @@ def build(check: bool, pdf: bool) -> list[str]:
             path.write_text(content, encoding="utf-8")
         pdfs = render_pdfs(nouns.decks, mains)
     outputs[MANIFEST] = manifest_text(nouns, pdfs)
+    outputs[EVIDENCE_NOUN] = evidence_text(nouns)
 
     stale = []
     for path, content in outputs.items():

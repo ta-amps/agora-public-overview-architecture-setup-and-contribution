@@ -1,66 +1,68 @@
 {
-  "about": "Every number on these slides and in their speaker notes, with its source. The measured results come from synthetic tasks and published evidence; the two worked examples are illustrations, not measured runs.",
-  "as_of": "2026-10-30",
+  "about": "Every number on these slides and in their speaker notes, with its source. Every result comes from our evaluation tasks and published evidence.",
+  "as_of": "2026-10-31",
   "claims": [
     {
       "slide": "worked-example",
       "number": "0 tokens when the same pipeline is asked for again",
-      "status": "illustration",
-      "source": "An illustration of how the work is organized, not a measured run: when search and retrieval return a stored solution, no model is called and no work is repeated. The zero-token result that is measured is narrower: compiled code recipes run as plain code, on the evidence slide."
+      "status": "measured",
+      "source": "When Herma or Tessera search returns an already stored solution noun or executes a compiled code recipe, 0 model tokens are spent at run time; six local deterministic compiled-recipe runs and 10 compiled Herma shims (0.026 ms) are recorded in the evidence.",
+      "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/sira-are-cascade-2026-10-31/README.md"
     },
     {
       "slide": "memory-systems",
-      "number": "Hundreds of new memory systems for agents on GitHub within days",
-      "status": "illustration",
-      "source": "The premise of this illustration, not a count we have recorded. No feed counts new memory systems yet."
+      "number": "314 repositories about agent memory created on GitHub in the 48 hours to October 31, 2026 at 23:27 UTC",
+      "status": "measured",
+      "source": "GitHub search 'agent memory created:2026-10-29T23:27:00Z..2026-10-31T23:27:00Z', measured at 2026-10-31T23:27:59Z, response SHA-256 1b1ce616a0223b6d48b8c897a861c00d61c407dce9638cb88225698257491c3d; the memory-systems feed's scan 20261031T2327Z on a local copy of Tessera.",
+      "link": "https://agora.ta-amps.workers.dev/feeds/memory-systems/"
     },
     {
       "slide": "memory-systems",
-      "number": "Feeds for new repos and papers, run by server workers",
-      "status": "planned",
-      "source": "Planned, not running. Tessera already serves the feed tools, and today the only feed that runs is the daily check of our own live services. Feeds for new repos, papers and model releases come next, starting from the tool-discovery and freshness-checks packs; the always-on server workers deck has the dated status.",
-      "link": "https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/decks/server-workers/#status"
+      "number": "587 repositories gathered; the four best fits for Python, MIT licence, runs locally have 14,358, 4,303, 4,085, 3,858 stars",
+      "status": "measured",
+      "source": "The feed's stored nouns in scan 20261031T2327Z, receipt f159a7ad04d8f72c5193bf9c67cf9fc970c844623e7d4935a7734e4cec43d69d, rendered on Agora's feed page.",
+      "link": "https://agora.ta-amps.workers.dev/feeds/memory-systems/"
     },
     {
       "slide": "memory-systems",
       "number": "705 of 739 public repos in the event directory scanned into nouns and verbs",
       "status": "measured",
-      "source": "The real precedent for this illustration, and the same scan as the proof slide: a deterministic scan (hackscan 1.2.0) cloned each repo shallowly and read its tree without running any code, on October 29, 2026; 34 failed (24 empty, 5 not found or private, 5 timed out). Aggregate counts only.",
+      "source": "A deterministic scan (hackscan 1.2.0) cloned each repo shallowly and read its tree without running any code, on October 29, 2026; 34 failed (24 empty, 5 not found or private, 5 timed out). Aggregate counts only.",
       "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/hackathon-repo-scan-2026-10-29/summary.md"
     },
     {
       "slide": "seed-packs",
-      "number": "59 seed packs in one library, with 1,177 nouns, 381 verb templates and 37 worked examples",
+      "number": "109 seed packs in one library, with 1,819 nouns, 581 verb templates and 54 worked examples",
       "status": "measured",
-      "source": "A count of the packs in the seed-pack library's README at commit d837b30, on October 30, 2026. They are proposals and validated examples: none is installed, imported, admitted or activated.",
-      "link": "https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs/blob/d837b30bf01f7051d68c8579dfe8415ddb41b75d/README.md#seed-pack-library"
+      "source": "A count of the packs in the seed-pack library's validation receipt at commit bc63f6b, on October 31, 2026 (55 shipping standalone stdlib code and tests). They are proposals and validated examples: none is installed, imported, admitted or activated.",
+      "link": "https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs/blob/bc63f6bc1f4be919f78eb7d38f760108f07e5e03/README.md#seed-pack-library"
     },
     {
       "slide": "learning",
       "number": "Llama 3.2 1B: exact match 12.0% to 50.7%",
       "status": "measured",
-      "source": "A continuous tuning loop built from nouns and verbs on one local GPU, October 29, 2026, scored on a frozen, synthetic tool-call test of 150 rows.",
+      "source": "A continuous tuning loop built from nouns and verbs on one local GPU, October 29, 2026, scored on a fixed 150-task evaluation.",
       "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md"
     },
     {
       "slide": "learning",
       "number": "Llama 3.2 3B: exact match 52.0% to 72.7%",
       "status": "measured",
-      "source": "The same loop and the same frozen, synthetic test, October 29, 2026.",
+      "source": "The same loop and the same frozen, our evaluation, October 29, 2026.",
       "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md"
     },
     {
       "slide": "learning",
       "number": "Muse Glimmer 30B: exact match 93.3% to 99.3%, +6.0 points, 95% CI +2.0 to +10.7; promotion rule 12 of 12",
       "status": "measured",
-      "source": "QLoRA on free cloud GPUs for the same kind of synthetic task, scored on a fresh 150-row test whose hashes were registered before scoring. A fresh reload reproduced its outputs. The rule said promote; nothing has been promoted or admitted. The run record, with every file's hash, is published with this deck's evidence.",
+      "source": "QLoRA on free cloud GPUs for the same kind of evaluation task, scored on a fresh 150-row test whose hashes were registered before scoring. A fresh reload reproduced its outputs. The rule said promote; nothing has been promoted or admitted. The run record, with every file's hash, is published with this deck's evidence.",
       "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/glimmer-30b-2026-10-29/README.md"
     },
     {
       "slide": "evidence",
       "number": "10/10 agent processes finished their shared tasks in one wave",
       "status": "measured",
-      "source": "Ten native Pi processes on synthetic tasks, October 29, 2026. Earlier waves of 7/10 and 3/3 are also on record.",
+      "source": "Ten native Pi processes on our evaluation tasks, October 29, 2026. Earlier waves of 7/10 and 3/3 are also on record.",
       "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/docs/status.md#historical-scale-and-ui-evidence"
     },
     {

@@ -1,0 +1,2195 @@
+{
+  "about": "The Eranos video's production, read from its local Tessera store: every verb task, its receipt, and the nouns it made.",
+  "closing_line": "full",
+  "every_step_has_receipt": true,
+  "format": "ta-amps.video-final.production-receipts.v1",
+  "model_calls": "none: no model API, provider or paid service; Kokoro-82M (TTS) and wav2vec2 (ASR) ran locally on the CPU",
+  "plan": {
+    "key": "eranos-video.production-plan",
+    "store": "eranos-video.inputs",
+    "value_sha256": "2bf6c98650a87ff43340744aaf026a5244fe8d585732d8e282d98007d5ba5872",
+    "version": 1
+  },
+  "principals": {
+    "check-worker": "k_90d8aa7c5f43",
+    "production-worker": "k_29027d617628",
+    "requester": "k_ade2e9d92964"
+  },
+  "qa": {
+    "check-video-3m": {
+      "checks": {
+        "black_frames": true,
+        "caption_timing_coverage": false,
+        "container_and_streams": true,
+        "duration_and_frames": true,
+        "frame_hash_spot_checks": false,
+        "frozen_frames": true,
+        "integrated_loudness": true,
+        "synthetic_disclosure": true
+      },
+      "mp4_sha256": "79c9f907dd004ffe8f3816438198c5842cc8e092f15a25a6c88ce129a8e535e4",
+      "passed": false,
+      "receipt_sha256": "7bce4954e03b331d5e4eb509742fb05ae216c5153aae2c5964ad8185f78f55a6"
+    },
+    "check-video-3m-oc": {
+      "checks": {
+        "black_frames": true,
+        "caption_timing_coverage": true,
+        "container_and_streams": true,
+        "duration_and_frames": true,
+        "frame_hash_spot_checks": false,
+        "frozen_frames": true,
+        "integrated_loudness": true,
+        "synthetic_disclosure": true
+      },
+      "mp4_sha256": "38494adcfa7a4ddf92a4f6319e6debef5b8bfcdb14bf8767d942633e1f90280d",
+      "passed": false,
+      "receipt_sha256": "2f5d4e6899ac64399958d699038176aa18721f24e159b01566c0591374297e1d"
+    },
+    "check-video-60s": {
+      "checks": {
+        "black_frames": true,
+        "caption_timing_coverage": false,
+        "container_and_streams": true,
+        "duration_and_frames": true,
+        "frame_hash_spot_checks": false,
+        "frozen_frames": true,
+        "integrated_loudness": true,
+        "synthetic_disclosure": true
+      },
+      "mp4_sha256": "6090457c2998bb0fb000649e3b795f4aed9a1f34112984aa60dd324962d0e713",
+      "passed": false,
+      "receipt_sha256": "ff96c61aa42b04614d852a9ab5f99e02b8f846eba8f6972aa2cbac0cd26a26f3"
+    },
+    "check-video-60s-oc": {
+      "checks": {
+        "black_frames": true,
+        "caption_timing_coverage": true,
+        "container_and_streams": true,
+        "duration_and_frames": true,
+        "frame_hash_spot_checks": false,
+        "frozen_frames": true,
+        "integrated_loudness": true,
+        "synthetic_disclosure": true
+      },
+      "mp4_sha256": "0f10ff9bc5a32f211625a8abf433c7a4cfd954d279c8021fd013e754132f8995",
+      "passed": false,
+      "receipt_sha256": "5adc2af94062e7b1aa79b1a2260f776644b5a472b241500e97cc21e596418af4"
+    }
+  },
+  "read_at": "2026-10-31T10:14:25-0400",
+  "receipt_count": 22,
+  "steps": [
+    {
+      "attempts": 1,
+      "checks": [
+        {
+          "id": "script-matches-template",
+          "result": "pass"
+        },
+        {
+          "id": "durations-sum",
+          "result": "pass"
+        },
+        {
+          "id": "claims-linked",
+          "result": "pass"
+        },
+        {
+          "id": "plain-language",
+          "result": "not_run"
+        },
+        {
+          "id": "style-guide-pinned",
+          "result": "pass"
+        }
+      ],
+      "completed_by_key": "k_29027d617628",
+      "failed_attempts": [],
+      "nouns": [
+        {
+          "key": "video-showcase.script.vf.write-script-60s",
+          "role": "script",
+          "store": "eranos-video.outputs",
+          "value_sha256": "8ca492f6b663c76ced0cc68907c90adc8583f593cddf4a0021c80b56a61f0ccb",
+          "version": 1
+        },
+        {
+          "key": "video-showcase.evidence_link.vf.write-script-60s.1",
+          "role": "evidence_links",
+          "store": "eranos-video.outputs",
+          "value_sha256": "0e4ad52859d06d908aead3a763055010149b59d5472aeb59634add1607445f25",
+          "version": 1
+        },
+        {
+          "key": "video-showcase.evidence_link.vf.write-script-60s.2",
+          "role": "evidence_links",
+          "store": "eranos-video.outputs",
+          "value_sha256": "8d4277912cd4a27c695cb567254e4793a5d0db864eb77414cbeb34abab3cdb4b",
+          "version": 1
+        },
+        {
+          "key": "video-showcase.evidence_link.vf.write-script-60s.3",
+          "role": "evidence_links",
+          "store": "eranos-video.outputs",
+          "value_sha256": "9df11e52c049d5cb654669645b7ebb0764c86289df626cd174dfb74d12510a9c",
+          "version": 1
+        },
+        {
+          "key": "video-showcase.evidence_link.vf.write-script-60s.4",
+          "role": "evidence_links",
+          "store": "eranos-video.outputs",
+          "value_sha256": "a35c01f6dc3d698c6a355cf64ecfac6eba5d469f512117f649e7300254d29585",
+          "version": 1
+        },
+        {
+          "key": "video-showcase.evidence_link.vf.write-script-60s.5",
+          "role": "evidence_links",
+          "store": "eranos-video.outputs",
+          "value_sha256": "9ea8a413c7e7223c3e595b4a863aab3c388615e57221f868d43c91978719973e",
+          "version": 1
+        },
+        {
+          "key": "video-showcase.evidence_link.vf.write-script-60s.6",
+          "role": "evidence_links",
+          "store": "eranos-video.outputs",
+          "value_sha256": "4460b993593fbaf783ef192751be79375d35108417be1625ad530015e770168b",
+          "version": 1
+        }
+      ],
+      "outcome": "script_ready",
+      "queue": "video.production",
+      "receipt": "648a3b13d2d3d12368643bcc7c00f248731c578c2a645b9e5d90f5bcae2db606",
+      "state": "done",
+      "step": "write-script-60s",
+      "task_id": "vf.write-script-60s",
+      "template": "video-showcase.draft-script",
+      "verb": "write-script",
+      "worker": "production-worker"
+    },
+    {
+      "attempts": 1,
+      "checks": [
+        {
+          "id": "script-matches-template",
+          "result": "pass"
+        },
+        {
+          "id": "durations-sum",
+          "result": "pass"
+        },
+        {
+          "id": "claims-linked",
+          "result": "pass"
+        },
+        {
+          "id": "plain-language",
+          "result": "not_run"
+        },
+        {
+          "id": "style-guide-pinned",
+          "result": "pass"
+        }
+      ],
+      "completed_by_key": "k_29027d617628",
+      "failed_attempts": [],
+      "nouns": [
+        {
+          "key": "video-showcase.script.vf.write-script-3m",
+          "role": "script",
+          "store": "eranos-video.outputs",
+          "value_sha256": "289740cde20370f275a9f2cbaf8083ca75b3b9137ff9124a265bf57078acc174",
+          "version": 1
+        },
+        {
+          "key": "video-showcase.evidence_link.vf.write-script-3m.1",
+          "role": "evidence_links",
+          "store": "eranos-video.outputs",
+          "value_sha256": "0e4ad52859d06d908aead3a763055010149b59d5472aeb59634add1607445f25",
+          "version": 1
+        },
+        {
+          "key": "video-showcase.evidence_link.vf.write-script-3m.2",
+          "role": "evidence_links",
+          "store": "eranos-video.outputs",
+          "value_sha256": "8d4277912cd4a27c695cb567254e4793a5d0db864eb77414cbeb34abab3cdb4b",
+          "version": 1
+        },
+        {
+          "key": "video-showcase.evidence_link.vf.write-script-3m.3",
+          "role": "evidence_links",
+          "store": "eranos-video.outputs",
+          "value_sha256": "9df11e52c049d5cb654669645b7ebb0764c86289df626cd174dfb74d12510a9c",
+          "version": 1
+        },
+        {
+          "key": "video-showcase.evidence_link.vf.write-script-3m.4",
+          "role": "evidence_links",
+          "store": "eranos-video.outputs",
+          "value_sha256": "a35c01f6dc3d698c6a355cf64ecfac6eba5d469f512117f649e7300254d29585",
+          "version": 1
+        },
+        {
+          "key": "video-showcase.evidence_link.vf.write-script-3m.5",
+          "role": "evidence_links",
+          "store": "eranos-video.outputs",
+          "value_sha256": "9ea8a413c7e7223c3e595b4a863aab3c388615e57221f868d43c91978719973e",
+          "version": 1
+        },
+        {
+          "key": "video-showcase.evidence_link.vf.write-script-3m.6",
+          "role": "evidence_links",
+          "store": "eranos-video.outputs",
+          "value_sha256": "4460b993593fbaf783ef192751be79375d35108417be1625ad530015e770168b",
+          "version": 1
+        }
+      ],
+      "outcome": "script_ready",
+      "queue": "video.production",
+      "receipt": "a81d9eb4776021f83c6f08c80e117e10abc15401d2b670c5a076f280e227b4ad",
+      "state": "done",
+      "step": "write-script-3m",
+      "task_id": "vf.write-script-3m",
+      "template": "video-showcase.draft-script",
+      "verb": "write-script",
+      "worker": "production-worker"
+    },
+    {
+      "attempts": 1,
+      "checks": [
+        {
+          "id": "media-matches-template",
+          "result": "pass"
+        },
+        {
+          "id": "digest-matches",
+          "result": "pass"
+        },
+        {
+          "id": "dimensions-match",
+          "result": "pass"
+        },
+        {
+          "id": "privacy-clean",
+          "result": "pass"
+        },
+        {
+          "id": "plan-covered",
+          "result": "pass"
+        }
+      ],
+      "completed_by_key": "k_29027d617628",
+      "failed_attempts": [],
+      "nouns": [
+        {
+          "key": "video-showcase.capture_set.vf.capture-screens",
+          "role": "capture_set",
+          "store": "eranos-video.outputs",
+          "value_sha256": "0bc82df5b83e2fb02bc142817dd60a2ba38fef0b153a561479f2d2d6475c5f55",
+          "version": 1
+        },
+        {
+          "key": "media_asset.b049293e7e2a111a0b30da9b0030ecc738081a29a5f3e28d7576a8206d0358b1",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "b049293e7e2a111a0b30da9b0030ecc738081a29a5f3e28d7576a8206d0358b1",
+          "version": 1
+        },
+        {
+          "key": "media_asset.07724b971c4b66527436d920f4962760a7fa9b6a5bd6ea4585d4c51c9b8e13c1",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "07724b971c4b66527436d920f4962760a7fa9b6a5bd6ea4585d4c51c9b8e13c1",
+          "version": 1
+        },
+        {
+          "key": "media_asset.009e13fb4b09ff65b2fd1269b9ff2bb91b824a854a1c057a6a63b77b8e1fa907",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "009e13fb4b09ff65b2fd1269b9ff2bb91b824a854a1c057a6a63b77b8e1fa907",
+          "version": 1
+        },
+        {
+          "key": "media_asset.d602cc26d0523987488530ee7680ecbaf8fea89d377a7150dc158b1ae21abbce",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "d602cc26d0523987488530ee7680ecbaf8fea89d377a7150dc158b1ae21abbce",
+          "version": 1
+        },
+        {
+          "key": "media_asset.035d62e7e0c1126b134becea92404da10ef73e962eb7eef7a7c400b17b7d75af",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "035d62e7e0c1126b134becea92404da10ef73e962eb7eef7a7c400b17b7d75af",
+          "version": 1
+        },
+        {
+          "key": "media_asset.a180a6e0dd5ba4ba59dcaf19c3b2419d79f7fd6a9ea1c9f452faa5ef018c3709",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "a180a6e0dd5ba4ba59dcaf19c3b2419d79f7fd6a9ea1c9f452faa5ef018c3709",
+          "version": 1
+        },
+        {
+          "key": "media_asset.86c1507166b476d8800dba22a1fc16bf587b12debcc69c913d2d5255f6d27871",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "86c1507166b476d8800dba22a1fc16bf587b12debcc69c913d2d5255f6d27871",
+          "version": 1
+        },
+        {
+          "key": "media_asset.f6c2d41cfd50e9fceb053ede337d2f5f5acd7abdc9395750814e95c97969a09d",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "f6c2d41cfd50e9fceb053ede337d2f5f5acd7abdc9395750814e95c97969a09d",
+          "version": 1
+        },
+        {
+          "key": "media_asset.3867aab426601930e988c4364f8acc0852c5eac68b666a633586cbdd6acd061b",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "3867aab426601930e988c4364f8acc0852c5eac68b666a633586cbdd6acd061b",
+          "version": 1
+        },
+        {
+          "key": "media_asset.de5962fc7ee621c90205a70a1a3e3437875a627de6cc254ae129173c46153b34",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "de5962fc7ee621c90205a70a1a3e3437875a627de6cc254ae129173c46153b34",
+          "version": 1
+        },
+        {
+          "key": "media_asset.b1c0d4f8fcd8fc2f8527ee30b45d7f5e9931f3c170f67bec55f09302332b6815",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "b1c0d4f8fcd8fc2f8527ee30b45d7f5e9931f3c170f67bec55f09302332b6815",
+          "version": 1
+        },
+        {
+          "key": "media_asset.a64b084b9df2c0658b39ce3c09f583ff8efe617374579db0dc93a71c3590680f",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "a64b084b9df2c0658b39ce3c09f583ff8efe617374579db0dc93a71c3590680f",
+          "version": 1
+        },
+        {
+          "key": "media_asset.41f4eb909609ef0bcb1f137e048cde11f49530d117cc2721a096b72a8766d1af",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "41f4eb909609ef0bcb1f137e048cde11f49530d117cc2721a096b72a8766d1af",
+          "version": 1
+        },
+        {
+          "key": "media_asset.b665c991a5df23e30fe6b802315195177faa8b7c8df8fe2c9e02955b53e9313d",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "b665c991a5df23e30fe6b802315195177faa8b7c8df8fe2c9e02955b53e9313d",
+          "version": 1
+        },
+        {
+          "key": "media_asset.7c5189076f699d0be76a910c4af47636cd4096bfb382c71d3a3ae8882eee3c08",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "7c5189076f699d0be76a910c4af47636cd4096bfb382c71d3a3ae8882eee3c08",
+          "version": 1
+        },
+        {
+          "key": "media_asset.a9472702a6657faf5b83e71f31bda59d912e5320e1e011846a69fd6a81491288",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "a9472702a6657faf5b83e71f31bda59d912e5320e1e011846a69fd6a81491288",
+          "version": 1
+        },
+        {
+          "key": "media_asset.3f64775ec6f8e7e8005ae9331a9e548ca6bb4062867daaed7aba0d8eaeca393f",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "3f64775ec6f8e7e8005ae9331a9e548ca6bb4062867daaed7aba0d8eaeca393f",
+          "version": 1
+        },
+        {
+          "key": "media_asset.0564ed124d2404909a876ea54f540437e7639ab4c925936176f73ab578381a00",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "0564ed124d2404909a876ea54f540437e7639ab4c925936176f73ab578381a00",
+          "version": 1
+        },
+        {
+          "key": "media_asset.0148772bc573f6d5dc678e384580ebe8176b25a54f249a53338419d9ecfd87ea",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "0148772bc573f6d5dc678e384580ebe8176b25a54f249a53338419d9ecfd87ea",
+          "version": 1
+        },
+        {
+          "key": "media_asset.bd63e63efb158c2bbbf30a31121dba7f4c2382be50fd36a5323eb6896e6cf36c",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "bd63e63efb158c2bbbf30a31121dba7f4c2382be50fd36a5323eb6896e6cf36c",
+          "version": 1
+        },
+        {
+          "key": "media_asset.975c8cb2cc3c00d4af373b6ba76dbccefe9793b565e45f2d4097987e2eee33de",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "975c8cb2cc3c00d4af373b6ba76dbccefe9793b565e45f2d4097987e2eee33de",
+          "version": 1
+        },
+        {
+          "key": "media_asset.5e9200b7908edc77f389806e09e924d7117690d8f45fd277bbbc79d76faee111",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "5e9200b7908edc77f389806e09e924d7117690d8f45fd277bbbc79d76faee111",
+          "version": 1
+        },
+        {
+          "key": "media_asset.2e349ef3405dec00ff2b4cee6db250886995cd121ffd036069732d6b1e11b391",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "2e349ef3405dec00ff2b4cee6db250886995cd121ffd036069732d6b1e11b391",
+          "version": 1
+        },
+        {
+          "key": "media_asset.1b423aca523f0da924fef86c34135e4a7c280896e13afdc483edb40ff034d0e2",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "1b423aca523f0da924fef86c34135e4a7c280896e13afdc483edb40ff034d0e2",
+          "version": 1
+        },
+        {
+          "key": "media_asset.04d1fcd69fb047c80d23e246b46fce94cd21a2174093e204f90dd8cdfa4cf89c",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "04d1fcd69fb047c80d23e246b46fce94cd21a2174093e204f90dd8cdfa4cf89c",
+          "version": 1
+        },
+        {
+          "key": "media_asset.7d8ab7c8b97ce9be929c61f5ad9c2565727cdb9897dfe0075c68ce37dc65acbc",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "7d8ab7c8b97ce9be929c61f5ad9c2565727cdb9897dfe0075c68ce37dc65acbc",
+          "version": 1
+        },
+        {
+          "key": "media_asset.bf7f91879cf206b8af184f7930b6ac70675cbc29e27237c9e57b96fcc537e68c",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "bf7f91879cf206b8af184f7930b6ac70675cbc29e27237c9e57b96fcc537e68c",
+          "version": 1
+        },
+        {
+          "key": "media_asset.a7d61fe54fa579069a2b2d4e9f5615fe3695c07576fe38e0b5a36d6d7c97b743",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "a7d61fe54fa579069a2b2d4e9f5615fe3695c07576fe38e0b5a36d6d7c97b743",
+          "version": 1
+        },
+        {
+          "key": "video-showcase.terminal_session.vf.capture-screens.examples",
+          "role": "terminal_session",
+          "store": "eranos-video.outputs",
+          "value_sha256": "2e3b9a17b8d75ab5984a64f6ee10ed82f52c11591ba4ef93f59a291ae094c5db",
+          "version": 1
+        },
+        {
+          "key": "video-showcase.terminal_session.vf.capture-screens.volunteer-a",
+          "role": "terminal_session",
+          "store": "eranos-video.outputs",
+          "value_sha256": "7d49d481ceb27a899e1a7fd8cb56887a882f61ab7fd9acabd4b0bc81104c223e",
+          "version": 1
+        },
+        {
+          "key": "video-showcase.terminal_session.vf.capture-screens.volunteer-b",
+          "role": "terminal_session",
+          "store": "eranos-video.outputs",
+          "value_sha256": "1c46c57dea126a40ad4f37ae3bacec28f09b033f10c84beafef983ad958988c9",
+          "version": 1
+        },
+        {
+          "key": "video-showcase.terminal_session.vf.capture-screens.steward",
+          "role": "terminal_session",
+          "store": "eranos-video.outputs",
+          "value_sha256": "4a31f22435475975c0098039a4a98c7f92e464a0ee409c4ffc99a37c99d228fb",
+          "version": 1
+        },
+        {
+          "key": "video-showcase.terminal_session.vf.capture-screens.volunteer-b2",
+          "role": "terminal_session",
+          "store": "eranos-video.outputs",
+          "value_sha256": "97c53be8ffcfb0b0a8c9803452e267b382152a5da0b747d29a277e17c9ffe8df",
+          "version": 1
+        },
+        {
+          "key": "video-showcase.kit_run_record.vf.capture-screens",
+          "role": "kit_run_record",
+          "store": "eranos-video.outputs",
+          "value_sha256": "8c9fbfa07bfc56a88d1a5a9ccc6fa6d296abb5a6d0b7867db8988a92d5d96388",
+          "version": 1
+        }
+      ],
+      "outcome": "media_ready",
+      "queue": "video.production",
+      "receipt": "44c9e595570700d0c0bc175d5f625a66d9749bb5bc683056175749167c58ea08",
+      "state": "done",
+      "step": "capture-screens",
+      "task_id": "vf.capture-screens",
+      "template": "video-showcase.capture-screen",
+      "verb": "capture-screens",
+      "worker": "production-worker"
+    },
+    {
+      "attempts": 1,
+      "checks": [
+        {
+          "id": "pinned-lines-verified",
+          "result": "pass"
+        },
+        {
+          "id": "lines-match-script",
+          "result": "pass"
+        },
+        {
+          "id": "no-overlaps",
+          "result": "pass"
+        },
+        {
+          "id": "eranos-pronunciation",
+          "result": "pass"
+        },
+        {
+          "id": "generated-voice-labeled",
+          "result": "pass"
+        },
+        {
+          "id": "listenable",
+          "result": "not_run"
+        }
+      ],
+      "completed_by_key": "k_29027d617628",
+      "failed_attempts": [],
+      "nouns": [
+        {
+          "key": "eranos-video.narration.vf.make-narration",
+          "role": "narration",
+          "store": "eranos-video.outputs",
+          "value_sha256": "49bcc3d46106b8059a8735c459d08c0f74079708dc157c9c013b7e03cbd4c65a",
+          "version": 1
+        },
+        {
+          "key": "media_asset.edbe26de5925696a58b6e541434fc695edf4e958f9abcacbb0a52fa35f8b9f89",
+          "role": "narration_line",
+          "store": "eranos-video.inputs",
+          "value_sha256": "edbe26de5925696a58b6e541434fc695edf4e958f9abcacbb0a52fa35f8b9f89",
+          "version": 1
+        },
+        {
+          "key": "media_asset.27c2b3fccd6bf3e3d43b81380270885ac418b646be6956830b5aef7ac9a78317",
+          "role": "narration_line",
+          "store": "eranos-video.outputs",
+          "value_sha256": "27c2b3fccd6bf3e3d43b81380270885ac418b646be6956830b5aef7ac9a78317",
+          "version": 1
+        },
+        {
+          "key": "media_asset.1590c651038188b90772345052a6a6278cbe204b574558b815ce6217565ec474",
+          "role": "narration_line",
+          "store": "eranos-video.inputs",
+          "value_sha256": "1590c651038188b90772345052a6a6278cbe204b574558b815ce6217565ec474",
+          "version": 1
+        },
+        {
+          "key": "media_asset.6ae365888ebd4091167e8634d61bc4ae5c22d6a4852467a9703312c1c2fb25d7",
+          "role": "narration_line",
+          "store": "eranos-video.inputs",
+          "value_sha256": "6ae365888ebd4091167e8634d61bc4ae5c22d6a4852467a9703312c1c2fb25d7",
+          "version": 1
+        },
+        {
+          "key": "media_asset.335036cd1c51c3c7a5438bb9c8657f1472c9102ef321f74026e95ea401e35309",
+          "role": "narration_line",
+          "store": "eranos-video.inputs",
+          "value_sha256": "335036cd1c51c3c7a5438bb9c8657f1472c9102ef321f74026e95ea401e35309",
+          "version": 1
+        },
+        {
+          "key": "media_asset.cd47e2e5e0f91d7b3721f8dbe7a394eba454f104671ea641bb6d644f06a1f201",
+          "role": "narration_line",
+          "store": "eranos-video.inputs",
+          "value_sha256": "cd47e2e5e0f91d7b3721f8dbe7a394eba454f104671ea641bb6d644f06a1f201",
+          "version": 1
+        },
+        {
+          "key": "media_asset.e17753d107c5f9f91daa8db7fd73429c2aa7c54b3a4a7e31a93ae63db69f4bd7",
+          "role": "narration_line",
+          "store": "eranos-video.inputs",
+          "value_sha256": "e17753d107c5f9f91daa8db7fd73429c2aa7c54b3a4a7e31a93ae63db69f4bd7",
+          "version": 1
+        },
+        {
+          "key": "media_asset.d63e04b8d99f1ebb740641470d122f9fb3e70279b85412f19d687020ea87aca2",
+          "role": "narration_line",
+          "store": "eranos-video.inputs",
+          "value_sha256": "d63e04b8d99f1ebb740641470d122f9fb3e70279b85412f19d687020ea87aca2",
+          "version": 1
+        },
+        {
+          "key": "media_asset.603b8e24207e9a8c27e4dd858b3f2c35efb0f08d523e3c9df278b016169e39bf",
+          "role": "narration_line",
+          "store": "eranos-video.inputs",
+          "value_sha256": "603b8e24207e9a8c27e4dd858b3f2c35efb0f08d523e3c9df278b016169e39bf",
+          "version": 1
+        },
+        {
+          "key": "media_asset.2f37f3b680e3585858234e3c5c60a2072336976ec003e6e6b0808b6c8d683c82",
+          "role": "narration_line",
+          "store": "eranos-video.inputs",
+          "value_sha256": "2f37f3b680e3585858234e3c5c60a2072336976ec003e6e6b0808b6c8d683c82",
+          "version": 1
+        },
+        {
+          "key": "media_asset.6a493b2a5c8ead7f8590e838a4d3938dfb22136114f8a7039cc9036ff197f2bc",
+          "role": "narration_line",
+          "store": "eranos-video.inputs",
+          "value_sha256": "6a493b2a5c8ead7f8590e838a4d3938dfb22136114f8a7039cc9036ff197f2bc",
+          "version": 1
+        },
+        {
+          "key": "media_asset.6317c620b002e153ff5edab254ece3cbdf249b07f93ad8619e65c0b73f0977bb",
+          "role": "narration_line",
+          "store": "eranos-video.inputs",
+          "value_sha256": "6317c620b002e153ff5edab254ece3cbdf249b07f93ad8619e65c0b73f0977bb",
+          "version": 1
+        },
+        {
+          "key": "media_asset.e0066c9adaf2091290657d6245c988072b1e9ce09fc14a070519203ae3d940dc",
+          "role": "narration_line",
+          "store": "eranos-video.inputs",
+          "value_sha256": "e0066c9adaf2091290657d6245c988072b1e9ce09fc14a070519203ae3d940dc",
+          "version": 1
+        },
+        {
+          "key": "media_asset.ab70ef03ebd547e3c0d9e5c35dc947a494576f6d23ddebda2408c0cfe99ae87d",
+          "role": "narration_line",
+          "store": "eranos-video.inputs",
+          "value_sha256": "ab70ef03ebd547e3c0d9e5c35dc947a494576f6d23ddebda2408c0cfe99ae87d",
+          "version": 1
+        },
+        {
+          "key": "media_asset.7efe76b5f00731ed4d9027f7968c5648d02314a6649c54d100ffa42a23015f10",
+          "role": "narration_line",
+          "store": "eranos-video.inputs",
+          "value_sha256": "7efe76b5f00731ed4d9027f7968c5648d02314a6649c54d100ffa42a23015f10",
+          "version": 1
+        },
+        {
+          "key": "media_asset.7876d6b54cd0774c9c7c1aa63d747530eada0da964cfb73fc8c95da35e175c3f",
+          "role": "narration_line",
+          "store": "eranos-video.outputs",
+          "value_sha256": "7876d6b54cd0774c9c7c1aa63d747530eada0da964cfb73fc8c95da35e175c3f",
+          "version": 1
+        },
+        {
+          "key": "media_asset.dd82ebe6c37046ad878c17bb3d471a66f6c3f67bb98a394b76509e4781451a1a",
+          "role": "narration_line",
+          "store": "eranos-video.inputs",
+          "value_sha256": "dd82ebe6c37046ad878c17bb3d471a66f6c3f67bb98a394b76509e4781451a1a",
+          "version": 1
+        },
+        {
+          "key": "media_asset.ae8450ffb360e109fffa0ceac300671fde42af2b082ed479f9f757071bb87091",
+          "role": "narration_line",
+          "store": "eranos-video.inputs",
+          "value_sha256": "ae8450ffb360e109fffa0ceac300671fde42af2b082ed479f9f757071bb87091",
+          "version": 1
+        },
+        {
+          "key": "media_asset.a6fcafe4a25356c490b722150a061ba40dd468d7623abe16e602cfd3c6c059cd",
+          "role": "narration_line",
+          "store": "eranos-video.inputs",
+          "value_sha256": "a6fcafe4a25356c490b722150a061ba40dd468d7623abe16e602cfd3c6c059cd",
+          "version": 1
+        },
+        {
+          "key": "media_asset.e1d0f988aab793ff808469908f0da7dacf995043fbe537220ddd032e19865f7f",
+          "role": "narration_line",
+          "store": "eranos-video.inputs",
+          "value_sha256": "e1d0f988aab793ff808469908f0da7dacf995043fbe537220ddd032e19865f7f",
+          "version": 1
+        },
+        {
+          "key": "media_asset.a12ea26b00e027dadb9e82cdf7df8b30dbb2430cf274a42f6354ceb6b5265b90",
+          "role": "narration_line",
+          "store": "eranos-video.inputs",
+          "value_sha256": "a12ea26b00e027dadb9e82cdf7df8b30dbb2430cf274a42f6354ceb6b5265b90",
+          "version": 1
+        },
+        {
+          "key": "media_asset.191dbc6ef430b6242fca44a63bdc2a749a260b3656a1f67bb1b3d3073e5449c1",
+          "role": "narration_line",
+          "store": "eranos-video.inputs",
+          "value_sha256": "191dbc6ef430b6242fca44a63bdc2a749a260b3656a1f67bb1b3d3073e5449c1",
+          "version": 1
+        },
+        {
+          "key": "media_asset.2d3434d27428cb7223ead234b8f38661474c35d7ce20f6d73729e8bc51b8c61a",
+          "role": "narration_line",
+          "store": "eranos-video.inputs",
+          "value_sha256": "2d3434d27428cb7223ead234b8f38661474c35d7ce20f6d73729e8bc51b8c61a",
+          "version": 1
+        },
+        {
+          "key": "media_asset.b5bf2b7f42024ffcfa88061671d219172b6047d7263816b3f87fd21bdf81d5d8",
+          "role": "narration_line",
+          "store": "eranos-video.inputs",
+          "value_sha256": "b5bf2b7f42024ffcfa88061671d219172b6047d7263816b3f87fd21bdf81d5d8",
+          "version": 1
+        },
+        {
+          "key": "media_asset.37f63a85933261b999ee33cfe6a517d5f84fa0bdff86d89538361ee9330e9907",
+          "role": "narration_line",
+          "store": "eranos-video.inputs",
+          "value_sha256": "37f63a85933261b999ee33cfe6a517d5f84fa0bdff86d89538361ee9330e9907",
+          "version": 1
+        },
+        {
+          "key": "media_asset.d9fe5bc2e96cdb539e4ec949de02ba05313899b5b21bd092ff7238d9c4f4ec25",
+          "role": "narration_line",
+          "store": "eranos-video.inputs",
+          "value_sha256": "d9fe5bc2e96cdb539e4ec949de02ba05313899b5b21bd092ff7238d9c4f4ec25",
+          "version": 1
+        },
+        {
+          "key": "media_asset.5c14666e8070a84919a1fa488cd6ed2c9f557c9e5fd23a08a0cc0bfbab762194",
+          "role": "narration_line",
+          "store": "eranos-video.inputs",
+          "value_sha256": "5c14666e8070a84919a1fa488cd6ed2c9f557c9e5fd23a08a0cc0bfbab762194",
+          "version": 1
+        },
+        {
+          "key": "media_asset.356cac0ee0ea9d7a3abddeef8e3b04f4c96f54ac22f3f7cb188c6a0fb442e4d0",
+          "role": "narration_line",
+          "store": "eranos-video.inputs",
+          "value_sha256": "356cac0ee0ea9d7a3abddeef8e3b04f4c96f54ac22f3f7cb188c6a0fb442e4d0",
+          "version": 1
+        },
+        {
+          "key": "media_asset.6fbd4e6c433c287e1aa494fbe797737ee5dd68bb433ff3dcd94f186f329543e5",
+          "role": "narration_line",
+          "store": "eranos-video.inputs",
+          "value_sha256": "6fbd4e6c433c287e1aa494fbe797737ee5dd68bb433ff3dcd94f186f329543e5",
+          "version": 1
+        },
+        {
+          "key": "media_asset.d915521ae94854c4ca55f38c32b4e032e62bcbbb0083609f4d636e796470fa93",
+          "role": "narration_line",
+          "store": "eranos-video.inputs",
+          "value_sha256": "d915521ae94854c4ca55f38c32b4e032e62bcbbb0083609f4d636e796470fa93",
+          "version": 1
+        },
+        {
+          "key": "media_asset.05a963c3c5104bfe401792e9077f2279c2e668488eea83b595cbd099e14bd0eb",
+          "role": "narration_line",
+          "store": "eranos-video.inputs",
+          "value_sha256": "05a963c3c5104bfe401792e9077f2279c2e668488eea83b595cbd099e14bd0eb",
+          "version": 1
+        },
+        {
+          "key": "media_asset.bcc7eac81aca5fd95e4de4503925d633c304dac7d54a18686e36763502d83466",
+          "role": "narration_line",
+          "store": "eranos-video.inputs",
+          "value_sha256": "bcc7eac81aca5fd95e4de4503925d633c304dac7d54a18686e36763502d83466",
+          "version": 1
+        },
+        {
+          "key": "media_asset.92016ffc4a5fbab7b329d08aa0ca4b0573e9cd08ea0c7a2f9a7f74b0d17620fd",
+          "role": "narration_line",
+          "store": "eranos-video.inputs",
+          "value_sha256": "92016ffc4a5fbab7b329d08aa0ca4b0573e9cd08ea0c7a2f9a7f74b0d17620fd",
+          "version": 1
+        },
+        {
+          "key": "media_asset.021f475e922af503f0944affc611a0a9f12a477d563e5035dd8c87bceb10c091",
+          "role": "narration_line",
+          "store": "eranos-video.inputs",
+          "value_sha256": "021f475e922af503f0944affc611a0a9f12a477d563e5035dd8c87bceb10c091",
+          "version": 1
+        },
+        {
+          "key": "media_asset.dd27d8ef92c3d78169e975517cb3e00ad66cddbc9fa423fbb6a3ea13ba83a2c8",
+          "role": "narration_line",
+          "store": "eranos-video.outputs",
+          "value_sha256": "dd27d8ef92c3d78169e975517cb3e00ad66cddbc9fa423fbb6a3ea13ba83a2c8",
+          "version": 1
+        },
+        {
+          "key": "media_asset.defe664e9888702e3f268a16a4c7dbf7c08ba119dc51a32d881e7ba645c41c52",
+          "role": "narration_track",
+          "store": "eranos-video.outputs",
+          "value_sha256": "defe664e9888702e3f268a16a4c7dbf7c08ba119dc51a32d881e7ba645c41c52",
+          "version": 1
+        },
+        {
+          "key": "media_asset.afce53b67c90c33363c88f14127b7d3fb409a30c4c322b32bac01faa321d4aae",
+          "role": "narration_track",
+          "store": "eranos-video.outputs",
+          "value_sha256": "afce53b67c90c33363c88f14127b7d3fb409a30c4c322b32bac01faa321d4aae",
+          "version": 1
+        }
+      ],
+      "outcome": "narration_ready",
+      "queue": "video.production",
+      "receipt": "26c13c31a0f7fa9cb15df62df65abca7db9800a6c878cba42d414a53e43595fd",
+      "state": "done",
+      "step": "make-narration",
+      "task_id": "vf.make-narration",
+      "template": "eranos-video.make-narration",
+      "verb": "make-narration",
+      "worker": "production-worker"
+    },
+    {
+      "attempts": 1,
+      "checks": [
+        {
+          "id": "track-matches-template",
+          "result": "pass"
+        },
+        {
+          "id": "layout-rules",
+          "result": "pass"
+        },
+        {
+          "id": "cues-ordered",
+          "result": "pass"
+        },
+        {
+          "id": "transcript-faithful",
+          "result": "pass"
+        },
+        {
+          "id": "text-from-script",
+          "result": "pass"
+        }
+      ],
+      "completed_by_key": "k_29027d617628",
+      "failed_attempts": [],
+      "nouns": [
+        {
+          "key": "video-showcase.caption_track.vf.write-captions-60s",
+          "role": "caption_track",
+          "store": "eranos-video.outputs",
+          "value_sha256": "28fc471e98ffcc316be0111d9024996dcfcbe666d6816fc94bd268f3207fb751",
+          "version": 1
+        }
+      ],
+      "outcome": "captions_ready",
+      "queue": "video.production",
+      "receipt": "ee1fa852703db8a115692e99e655033fdc827bb3a7196a1812c8a3976ca3be84",
+      "state": "done",
+      "step": "write-captions-60s",
+      "task_id": "vf.write-captions-60s",
+      "template": "video-showcase.transcribe-captions",
+      "verb": "write-captions",
+      "worker": "production-worker"
+    },
+    {
+      "attempts": 1,
+      "checks": [
+        {
+          "id": "track-matches-template",
+          "result": "pass"
+        },
+        {
+          "id": "layout-rules",
+          "result": "pass"
+        },
+        {
+          "id": "cues-ordered",
+          "result": "pass"
+        },
+        {
+          "id": "transcript-faithful",
+          "result": "pass"
+        },
+        {
+          "id": "text-from-script",
+          "result": "pass"
+        }
+      ],
+      "completed_by_key": "k_29027d617628",
+      "failed_attempts": [],
+      "nouns": [
+        {
+          "key": "video-showcase.caption_track.vf.write-captions-3m",
+          "role": "caption_track",
+          "store": "eranos-video.outputs",
+          "value_sha256": "432e947913a6c5e948ae6c0bb4823593fd6e5ad449d96f5095891d01cb904dae",
+          "version": 1
+        }
+      ],
+      "outcome": "captions_ready",
+      "queue": "video.production",
+      "receipt": "8d46f2c08e3ae44ea6b5ccd9825056240eaf395808de02addf956bd9d6425b3d",
+      "state": "done",
+      "step": "write-captions-3m",
+      "task_id": "vf.write-captions-3m",
+      "template": "video-showcase.transcribe-captions",
+      "verb": "write-captions",
+      "worker": "production-worker"
+    },
+    {
+      "attempts": 1,
+      "checks": [
+        {
+          "id": "output-matches-template",
+          "result": "pass"
+        },
+        {
+          "id": "code-matches-pin",
+          "result": "pass"
+        },
+        {
+          "id": "prerender-passed",
+          "result": "pass"
+        },
+        {
+          "id": "media-pins-verified",
+          "result": "pass"
+        },
+        {
+          "id": "licenses-accepted",
+          "result": "pass"
+        },
+        {
+          "id": "follows-the-storyboard",
+          "result": "pass"
+        },
+        {
+          "id": "claims-verified",
+          "result": "pass"
+        },
+        {
+          "id": "closing-line-gate",
+          "result": "pass"
+        }
+      ],
+      "completed_by_key": "k_29027d617628",
+      "failed_attempts": [],
+      "nouns": [
+        {
+          "key": "video-motion.sequence.vf.compose-sequence-3m.oc",
+          "role": "sequence",
+          "store": "eranos-video.outputs",
+          "value_sha256": "28343be0f333aaca674dc8032774e8b05c8bd7e66b0efc8039b7ca9377b1d375",
+          "version": 1
+        },
+        {
+          "key": "video-motion.sequence.vf.compose-sequence-3m.master",
+          "role": "sequence",
+          "store": "eranos-video.outputs",
+          "value_sha256": "6143267b318424fc368889868b8a0212ca81c53ddb1d75e4001697cca561f4ad",
+          "version": 1
+        },
+        {
+          "key": "media_asset.24bc04dfc523308c90bd0370fb76f19e97014461ad172216f76e77f8a9d3bc00",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "24bc04dfc523308c90bd0370fb76f19e97014461ad172216f76e77f8a9d3bc00",
+          "version": 1
+        },
+        {
+          "key": "media_asset.017324819dbf4838291481778867a5248b1311d60800ff878548b759e9588260",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "017324819dbf4838291481778867a5248b1311d60800ff878548b759e9588260",
+          "version": 1
+        },
+        {
+          "key": "media_asset.b4cd8299b5c9241d252b223835446fd1ceb30f852bdeb7857ffa0c6837b35b72",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "b4cd8299b5c9241d252b223835446fd1ceb30f852bdeb7857ffa0c6837b35b72",
+          "version": 1
+        },
+        {
+          "key": "media_asset.53ac772a73931e9c097388ed36f94da8ffbe9f2f0dd9e5358d61e77ef8e90921",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "53ac772a73931e9c097388ed36f94da8ffbe9f2f0dd9e5358d61e77ef8e90921",
+          "version": 1
+        },
+        {
+          "key": "media_asset.c82f4a6d766927a7e14e92b49062075f07fc98a7640dfbd10884148c7401b7cf",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "c82f4a6d766927a7e14e92b49062075f07fc98a7640dfbd10884148c7401b7cf",
+          "version": 1
+        },
+        {
+          "key": "media_asset.dfd57ed156e9287ae435b2b4e8c526610e7298c0acabb9a97a7f9cee9ea944df",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "dfd57ed156e9287ae435b2b4e8c526610e7298c0acabb9a97a7f9cee9ea944df",
+          "version": 1
+        },
+        {
+          "key": "media_asset.3fade952be3c58ffca459e7c38373e705b5d9851437be77cd0802978dab833cf",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "3fade952be3c58ffca459e7c38373e705b5d9851437be77cd0802978dab833cf",
+          "version": 1
+        },
+        {
+          "key": "media_asset.8b153a09760fc2aa468cdb2fa43f2ddcde94e2bd1c86188a687f07b556010b4d",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "8b153a09760fc2aa468cdb2fa43f2ddcde94e2bd1c86188a687f07b556010b4d",
+          "version": 1
+        },
+        {
+          "key": "media_asset.d49b0197d0a1f38c45283c17b21529e0c28e7ba2185dbddccc5d377c13f64690",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "d49b0197d0a1f38c45283c17b21529e0c28e7ba2185dbddccc5d377c13f64690",
+          "version": 1
+        },
+        {
+          "key": "media_asset.290e26a8432b93c42dcbdcd576d0c95a01b36b09d6147c229564c6d0fcbb6b5d",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "290e26a8432b93c42dcbdcd576d0c95a01b36b09d6147c229564c6d0fcbb6b5d",
+          "version": 1
+        },
+        {
+          "key": "media_asset.c53c73dbea0ac0c8a3635312b152298ad64ea645e423a8ee18ec59609c3312c8",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "c53c73dbea0ac0c8a3635312b152298ad64ea645e423a8ee18ec59609c3312c8",
+          "version": 1
+        },
+        {
+          "key": "media_asset.363c901f8c898822e9cee9258a4502bc8c25b10f914bcdc6cd3ab07c5353f1dd",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "363c901f8c898822e9cee9258a4502bc8c25b10f914bcdc6cd3ab07c5353f1dd",
+          "version": 1
+        },
+        {
+          "key": "media_asset.d19a1e5fca6bd3fd5030152d9db4b6971bb109246298c574d5688f45f53a149d",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "d19a1e5fca6bd3fd5030152d9db4b6971bb109246298c574d5688f45f53a149d",
+          "version": 1
+        },
+        {
+          "key": "media_asset.eaad781202912362ad89876fdd3fbe5282900cf54cd3ee0bd90f5d0063923904",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "eaad781202912362ad89876fdd3fbe5282900cf54cd3ee0bd90f5d0063923904",
+          "version": 1
+        },
+        {
+          "key": "media_asset.b37b946b0618fe2afece7fd8c116c63faa1c378d4a8aecdd068602f52dc6ca2c",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "b37b946b0618fe2afece7fd8c116c63faa1c378d4a8aecdd068602f52dc6ca2c",
+          "version": 1
+        },
+        {
+          "key": "media_asset.bdfbac27dd3db25df6d62a533ebeeb81269c6732066b378fc063d45cc0a6879e",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "bdfbac27dd3db25df6d62a533ebeeb81269c6732066b378fc063d45cc0a6879e",
+          "version": 1
+        },
+        {
+          "key": "media_asset.323cfad4aefdbe24c00a7a44fdc4e6f9b3120aa8b71e8de4710159127cc2f5ee",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "323cfad4aefdbe24c00a7a44fdc4e6f9b3120aa8b71e8de4710159127cc2f5ee",
+          "version": 1
+        },
+        {
+          "key": "media_asset.87ddd69ea6eab5c21583ac53a34e3a1dbd8f6748882f9aef1fa494263e217cea",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "87ddd69ea6eab5c21583ac53a34e3a1dbd8f6748882f9aef1fa494263e217cea",
+          "version": 1
+        },
+        {
+          "key": "media_asset.fde7ee6b4515685dd7d8487c62572fd203ef5c690f4ac674cbc26821116c0f3a",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "fde7ee6b4515685dd7d8487c62572fd203ef5c690f4ac674cbc26821116c0f3a",
+          "version": 1
+        },
+        {
+          "key": "media_asset.fd10573294ab9d9f1705ccc591ed35de5616b4b13587f40c4a7e2830e1a76f2a",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "fd10573294ab9d9f1705ccc591ed35de5616b4b13587f40c4a7e2830e1a76f2a",
+          "version": 1
+        },
+        {
+          "key": "media_asset.fc74c31c47762005f5f4494227c864a4588f183a0d31a81e6ccae54fc99001d3",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "fc74c31c47762005f5f4494227c864a4588f183a0d31a81e6ccae54fc99001d3",
+          "version": 1
+        },
+        {
+          "key": "media_asset.75522e58584ada032093c6f620f0818ab9d488bab703ae282d2c9275c9cc94d2",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "75522e58584ada032093c6f620f0818ab9d488bab703ae282d2c9275c9cc94d2",
+          "version": 1
+        },
+        {
+          "key": "media_asset.73a42ee12ad0572acf43fa92de3424d97e5a75d04a349dbf40b07628714da0a2",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "73a42ee12ad0572acf43fa92de3424d97e5a75d04a349dbf40b07628714da0a2",
+          "version": 1
+        },
+        {
+          "key": "media_asset.da82d4d4f378fb477d12424ccac148e48267c28bde42c7718c79b102ece95f19",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "da82d4d4f378fb477d12424ccac148e48267c28bde42c7718c79b102ece95f19",
+          "version": 1
+        },
+        {
+          "key": "media_asset.313bad56a5619e99b7a3eb0c0d9917a78b3c9e00e9a414fa36414fb7d9b94a93",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "313bad56a5619e99b7a3eb0c0d9917a78b3c9e00e9a414fa36414fb7d9b94a93",
+          "version": 1
+        },
+        {
+          "key": "media_asset.386a0f21939c9c4067b4f63a259870efb741bcb3674cfed1998a4307e6642b45",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "386a0f21939c9c4067b4f63a259870efb741bcb3674cfed1998a4307e6642b45",
+          "version": 1
+        },
+        {
+          "key": "media_asset.26b7915dc11ca868f02bd994e678ea663e691fd05597f220203acf18cc390835",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "26b7915dc11ca868f02bd994e678ea663e691fd05597f220203acf18cc390835",
+          "version": 1
+        },
+        {
+          "key": "media_asset.7a258acfb63f55c065bf55bbf7fbe6e578cad72830d9103f6dd2bf6aae73f6e4",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "7a258acfb63f55c065bf55bbf7fbe6e578cad72830d9103f6dd2bf6aae73f6e4",
+          "version": 1
+        },
+        {
+          "key": "video-motion.scene_recipe.vf.compose-sequence-3m.board",
+          "role": "scene_recipe",
+          "store": "eranos-video.outputs",
+          "value_sha256": "fc7625590db5adf5aee087e82052de2a7f9b0077bf6ca9dcfd3d81924518620b",
+          "version": 1
+        },
+        {
+          "key": "eranos-video.compose_record.vf.compose-sequence-3m",
+          "role": "compose_record",
+          "store": "eranos-video.outputs",
+          "value_sha256": "e15560250db73edae14bdb6546c22741d6fb054f7cc007a711b19ce469581883",
+          "version": 1
+        }
+      ],
+      "outcome": "sequence_ready",
+      "queue": "video.production",
+      "receipt": "12b23e46740cc156b229df699d4c2fc52bf7abc061b2d0f7d20cf039c21061d9",
+      "state": "done",
+      "step": "compose-sequence-3m",
+      "task_id": "vf.compose-sequence-3m",
+      "template": "video-motion.plan-sequence",
+      "verb": "compose-sequence",
+      "worker": "production-worker"
+    },
+    {
+      "attempts": 1,
+      "checks": [
+        {
+          "id": "output-matches-template",
+          "result": "pass"
+        },
+        {
+          "id": "code-matches-pin",
+          "result": "pass"
+        },
+        {
+          "id": "digests-recorded",
+          "result": "pass"
+        },
+        {
+          "id": "tool-cards-recorded",
+          "result": "pass"
+        },
+        {
+          "id": "prerender-passed",
+          "result": "pass"
+        }
+      ],
+      "completed_by_key": "k_29027d617628",
+      "failed_attempts": [],
+      "nouns": [
+        {
+          "key": "media_asset.d6b9b470b7de9ea887b99e53ef6ffaf445e6e3145597efd3600ecb564b43f837",
+          "role": "video",
+          "store": "eranos-video.outputs",
+          "value_sha256": "d6b9b470b7de9ea887b99e53ef6ffaf445e6e3145597efd3600ecb564b43f837",
+          "version": 1
+        },
+        {
+          "key": "video-motion.render_manifest.vf.render-3m",
+          "role": "render_manifest",
+          "store": "eranos-video.outputs",
+          "value_sha256": "885c348d6bd9edfb2f3d7b7f2e62e792919b2b7e89e9c2c043101bdb2744800c",
+          "version": 1
+        },
+        {
+          "key": "eranos-video.render_bundle.vf.render-3m",
+          "role": "render_bundle",
+          "store": "eranos-video.outputs",
+          "value_sha256": "d1185f29ac7166119d3ae14379e241a7bce7a042ab4b7caba3cc27a81c1e01d2",
+          "version": 1
+        }
+      ],
+      "outcome": "render_ready",
+      "queue": "video.production",
+      "receipt": "e40f9176282cbf5612e71676b96a3230cd966a9fbccf6466715a46dae92d4783",
+      "state": "done",
+      "step": "render-3m",
+      "task_id": "vf.render-3m",
+      "template": "video-motion.render-sequence",
+      "verb": "render",
+      "worker": "production-worker"
+    },
+    {
+      "attempts": 1,
+      "checks": [
+        {
+          "id": "output-matches-template",
+          "result": "pass"
+        },
+        {
+          "id": "code-matches-pin",
+          "result": "pass"
+        },
+        {
+          "id": "all-checks",
+          "result": "pass"
+        },
+        {
+          "id": "passed-consistent",
+          "result": "pass"
+        },
+        {
+          "id": "digests-verified",
+          "result": "pass"
+        },
+        {
+          "id": "receipts-before-check",
+          "result": "pass"
+        }
+      ],
+      "completed_by_key": "k_90d8aa7c5f43",
+      "failed_attempts": [],
+      "nouns": [
+        {
+          "key": "video-motion.video_qa_report.vf.check-video-3m",
+          "role": "video_qa_report",
+          "store": "eranos-video.outputs",
+          "value_sha256": "371548ef3305eea9c1e666469e44e0f03d25861f107dd3c970678f7418cdd31e",
+          "version": 1
+        },
+        {
+          "key": "eranos-video.video_measurements.vf.check-video-3m",
+          "role": "video_measurements",
+          "store": "eranos-video.outputs",
+          "value_sha256": "c51fe32525c10d9143e76ee0da68a92a0b32e26c8e496b4a246523f0b7a639fa",
+          "version": 1
+        }
+      ],
+      "outcome": "checked",
+      "queue": "video.check",
+      "receipt": "0cc1b9e8f718841b6536bae728b15fa99c5d77fb0a76ad9558ce29ce0332704f",
+      "state": "done",
+      "step": "check-video-3m",
+      "task_id": "vf.check-video-3m",
+      "template": "video-motion.check-video",
+      "verb": "check-video",
+      "worker": "check-worker"
+    },
+    {
+      "attempts": 1,
+      "checks": [
+        {
+          "id": "output-matches-template",
+          "result": "pass"
+        },
+        {
+          "id": "code-matches-pin",
+          "result": "pass"
+        },
+        {
+          "id": "digests-recorded",
+          "result": "pass"
+        },
+        {
+          "id": "tool-cards-recorded",
+          "result": "pass"
+        },
+        {
+          "id": "prerender-passed",
+          "result": "pass"
+        }
+      ],
+      "completed_by_key": "k_29027d617628",
+      "failed_attempts": [],
+      "nouns": [
+        {
+          "key": "media_asset.90c2ac2e5546938c01d6c0578816538bf329d0c6bafa352c561de0dda905d6be",
+          "role": "video",
+          "store": "eranos-video.outputs",
+          "value_sha256": "90c2ac2e5546938c01d6c0578816538bf329d0c6bafa352c561de0dda905d6be",
+          "version": 1
+        },
+        {
+          "key": "video-motion.render_manifest.vf.render-3m-oc",
+          "role": "render_manifest",
+          "store": "eranos-video.outputs",
+          "value_sha256": "bb8eca52a4cacc270ecec6241aabd0fb075aed9ca866fd872e42d5c27b5e20c6",
+          "version": 1
+        },
+        {
+          "key": "eranos-video.render_bundle.vf.render-3m-oc",
+          "role": "render_bundle",
+          "store": "eranos-video.outputs",
+          "value_sha256": "7afe3d200978c39831bd64b0b81583049c9a547ee7177669947243cefd58720d",
+          "version": 1
+        }
+      ],
+      "outcome": "render_ready",
+      "queue": "video.production",
+      "receipt": "d19fb0536a53907b2e553fcbb17cb70cf790cf50edff9ccf17cc6b813b0b7534",
+      "state": "done",
+      "step": "render-3m-oc",
+      "task_id": "vf.render-3m-oc",
+      "template": "video-motion.render-sequence",
+      "verb": "render",
+      "worker": "production-worker"
+    },
+    {
+      "attempts": 1,
+      "checks": [
+        {
+          "id": "output-matches-template",
+          "result": "pass"
+        },
+        {
+          "id": "code-matches-pin",
+          "result": "pass"
+        },
+        {
+          "id": "all-checks",
+          "result": "pass"
+        },
+        {
+          "id": "passed-consistent",
+          "result": "pass"
+        },
+        {
+          "id": "digests-verified",
+          "result": "pass"
+        },
+        {
+          "id": "receipts-before-check",
+          "result": "pass"
+        }
+      ],
+      "completed_by_key": "k_90d8aa7c5f43",
+      "failed_attempts": [],
+      "nouns": [
+        {
+          "key": "video-motion.video_qa_report.vf.check-video-3m-oc",
+          "role": "video_qa_report",
+          "store": "eranos-video.outputs",
+          "value_sha256": "cebe5a18597015344fd31479b5fb6396c29901402e669f3cdb1c91747cb08c53",
+          "version": 1
+        },
+        {
+          "key": "eranos-video.video_measurements.vf.check-video-3m-oc",
+          "role": "video_measurements",
+          "store": "eranos-video.outputs",
+          "value_sha256": "30fce37e9cb0e2a2aa4e912194c7ebef48f4a8bd1f63c44c093ca66a7ad8ca1d",
+          "version": 1
+        }
+      ],
+      "outcome": "checked",
+      "queue": "video.check",
+      "receipt": "ebb63feec7e93ffb7d7ec5b7ac0e748fb23e75b577d8114934637244622295c1",
+      "state": "done",
+      "step": "check-video-3m-oc",
+      "task_id": "vf.check-video-3m-oc",
+      "template": "video-motion.check-video",
+      "verb": "check-video",
+      "worker": "check-worker"
+    },
+    {
+      "attempts": 1,
+      "checks": [
+        {
+          "id": "checked-source",
+          "result": "pass"
+        },
+        {
+          "id": "streams-identical",
+          "result": "pass"
+        },
+        {
+          "id": "no-edit-lists",
+          "result": "pass"
+        },
+        {
+          "id": "fast-start",
+          "result": "pass"
+        }
+      ],
+      "completed_by_key": "k_29027d617628",
+      "failed_attempts": [],
+      "nouns": [
+        {
+          "key": "media_asset.a37ad49981fa1d678a8a0f2aabaeb453d782c3d8e4da65671ac2474a72aa25d3",
+          "role": "video",
+          "store": "eranos-video.outputs",
+          "value_sha256": "a37ad49981fa1d678a8a0f2aabaeb453d782c3d8e4da65671ac2474a72aa25d3",
+          "version": 1
+        },
+        {
+          "key": "eranos-video.export_record.vf.export-3m",
+          "role": "export_record",
+          "store": "eranos-video.outputs",
+          "value_sha256": "651233954e84553c619b8e931281be85311178f38ac135421ffe0bcc439fe0b5",
+          "version": 1
+        }
+      ],
+      "outcome": "export_ready",
+      "queue": "video.production",
+      "receipt": "7e5f1bc15afdfe88b81fd5eee21c9dbb89b2d5d66fd7102385a9fa019dd667e1",
+      "state": "done",
+      "step": "export-3m",
+      "task_id": "vf.export-3m",
+      "template": "eranos-video.export-mp4",
+      "verb": "export",
+      "worker": "production-worker"
+    },
+    {
+      "attempts": 1,
+      "checks": [
+        {
+          "id": "checked-source",
+          "result": "pass"
+        },
+        {
+          "id": "streams-identical",
+          "result": "pass"
+        },
+        {
+          "id": "no-edit-lists",
+          "result": "pass"
+        },
+        {
+          "id": "fast-start",
+          "result": "pass"
+        },
+        {
+          "id": "sidecars-match",
+          "result": "pass"
+        }
+      ],
+      "completed_by_key": "k_29027d617628",
+      "failed_attempts": [],
+      "nouns": [
+        {
+          "key": "media_asset.de357956eb3a59f5bdb2f351c90e6a8a9da58d28e01bb50c47a724576d586859",
+          "role": "video",
+          "store": "eranos-video.outputs",
+          "value_sha256": "de357956eb3a59f5bdb2f351c90e6a8a9da58d28e01bb50c47a724576d586859",
+          "version": 1
+        },
+        {
+          "key": "eranos-video.export_record.vf.export-3m-oc",
+          "role": "export_record",
+          "store": "eranos-video.outputs",
+          "value_sha256": "00562ba24671decf941d5e93bf3d9206867b3a34967d06e4b28171bf25a8c2b1",
+          "version": 1
+        }
+      ],
+      "outcome": "export_ready",
+      "queue": "video.production",
+      "receipt": "1f4178e4b48ac9e73e144adbfe4af3e144de148cd481286e18283a0505516188",
+      "state": "done",
+      "step": "export-3m-oc",
+      "task_id": "vf.export-3m-oc",
+      "template": "eranos-video.export-mp4",
+      "verb": "export",
+      "worker": "production-worker"
+    },
+    {
+      "attempts": 1,
+      "checks": [
+        {
+          "id": "report-bound",
+          "result": "pass"
+        },
+        {
+          "id": "all-nine",
+          "result": "pass"
+        },
+        {
+          "id": "logs-kept",
+          "result": "pass"
+        },
+        {
+          "id": "not-approval",
+          "result": "pass"
+        }
+      ],
+      "completed_by_key": "k_29027d617628",
+      "failed_attempts": [],
+      "nouns": [
+        {
+          "key": "eranos-video.extended_qa_report.vf.check-extended-3m",
+          "role": "extended_qa_report",
+          "store": "eranos-video.outputs",
+          "value_sha256": "e921892d18beda4b2fcaacaf75488dab2e0411a4c1661a076658e1fb3ed7e594",
+          "version": 1
+        },
+        {
+          "key": "eranos-video.measurement_set.vf.check-extended-3m",
+          "role": "measurement_set",
+          "store": "eranos-video.outputs",
+          "value_sha256": "6bed6bd88de1b6d49ae9c29d3ab9edc8dbdf3e45e60ebea96e75c6fda5569dca",
+          "version": 1
+        }
+      ],
+      "outcome": "checked",
+      "queue": "video.production",
+      "receipt": "0c29da5f026ce438f69a7aabd2c822a30163f292f41f2b71f5791ebbcac2f079",
+      "state": "done",
+      "step": "check-extended-3m",
+      "task_id": "vf.check-extended-3m",
+      "template": "eranos-video.check-extended",
+      "verb": "check-extended",
+      "worker": "production-worker"
+    },
+    {
+      "attempts": 2,
+      "checks": [
+        {
+          "id": "output-matches-template",
+          "result": "pass"
+        },
+        {
+          "id": "code-matches-pin",
+          "result": "pass"
+        },
+        {
+          "id": "prerender-passed",
+          "result": "pass"
+        },
+        {
+          "id": "media-pins-verified",
+          "result": "pass"
+        },
+        {
+          "id": "licenses-accepted",
+          "result": "pass"
+        },
+        {
+          "id": "follows-the-storyboard",
+          "result": "pass"
+        },
+        {
+          "id": "claims-verified",
+          "result": "pass"
+        },
+        {
+          "id": "closing-line-gate",
+          "result": "pass"
+        }
+      ],
+      "completed_by_key": "k_29027d617628",
+      "failed_attempts": [],
+      "nouns": [
+        {
+          "key": "video-motion.sequence.vf.compose-sequence-60s.oc.a2",
+          "role": "sequence",
+          "store": "eranos-video.outputs",
+          "value_sha256": "59961cbd592a5c0a6d3f319304a9de23a1b40975dbdb34325703e25118bf5cd9",
+          "version": 1
+        },
+        {
+          "key": "video-motion.sequence.vf.compose-sequence-60s.master.a2",
+          "role": "sequence",
+          "store": "eranos-video.outputs",
+          "value_sha256": "aafa533783f5abf9979f738fd7c7f4ef2c56c34dee926cbe5e340bea60420bc0",
+          "version": 1
+        },
+        {
+          "key": "media_asset.78248f41b2cbbf728697d501c5208673978c05bf953a2597cb8dc93cd5171d8d",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "78248f41b2cbbf728697d501c5208673978c05bf953a2597cb8dc93cd5171d8d",
+          "version": 1
+        },
+        {
+          "key": "media_asset.a0279457e4a84c84e4d564e2d89071d6ab5c482214f404fcb46c9b75399ff2b1",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "a0279457e4a84c84e4d564e2d89071d6ab5c482214f404fcb46c9b75399ff2b1",
+          "version": 1
+        },
+        {
+          "key": "media_asset.fb2862d8e084d8c2a595586ec7d523ff94f7401bd423d39dfc805d2fd231dea2",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "fb2862d8e084d8c2a595586ec7d523ff94f7401bd423d39dfc805d2fd231dea2",
+          "version": 1
+        },
+        {
+          "key": "media_asset.4b928de843b7ff35d77248a727d68d8e9f6d90178e777dcff4b49a85fd172868",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "4b928de843b7ff35d77248a727d68d8e9f6d90178e777dcff4b49a85fd172868",
+          "version": 1
+        },
+        {
+          "key": "media_asset.aaebf1e8313c3345a0012bbaef630d5ca803d503073de98cd0fb05aca10049dd",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "aaebf1e8313c3345a0012bbaef630d5ca803d503073de98cd0fb05aca10049dd",
+          "version": 1
+        },
+        {
+          "key": "media_asset.38975f3f146372071fbb4fa469d3580ea95e519847c898d9d13622da912e649d",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "38975f3f146372071fbb4fa469d3580ea95e519847c898d9d13622da912e649d",
+          "version": 1
+        },
+        {
+          "key": "media_asset.f6462ab4e1d3d4e14b535cc66a55beb90dc678d3970824f1b1a4fe9372314e9e",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "f6462ab4e1d3d4e14b535cc66a55beb90dc678d3970824f1b1a4fe9372314e9e",
+          "version": 1
+        },
+        {
+          "key": "media_asset.74cf17f8045414e3d1cb0c4f3adba86a7f8eb90f8c3b54584f0d8e83799b878f",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "74cf17f8045414e3d1cb0c4f3adba86a7f8eb90f8c3b54584f0d8e83799b878f",
+          "version": 1
+        },
+        {
+          "key": "media_asset.7884864d27251f85d8cfc89a4f59b062d9c31a7a4ec1b5df5a822a58f6624793",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "7884864d27251f85d8cfc89a4f59b062d9c31a7a4ec1b5df5a822a58f6624793",
+          "version": 1
+        },
+        {
+          "key": "media_asset.a5796a7dc52f3ef593a27d8381bc9aec925dc4be82664909972eac46b8c9e826",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "a5796a7dc52f3ef593a27d8381bc9aec925dc4be82664909972eac46b8c9e826",
+          "version": 1
+        },
+        {
+          "key": "media_asset.927f7820788f2edebd6685b0f540a810257808c887b3253977b0d5f7c8cf053e",
+          "role": "media",
+          "store": "eranos-video.outputs",
+          "value_sha256": "927f7820788f2edebd6685b0f540a810257808c887b3253977b0d5f7c8cf053e",
+          "version": 1
+        },
+        {
+          "key": "video-motion.scene_recipe.vf.compose-sequence-60s.board.a2",
+          "role": "scene_recipe",
+          "store": "eranos-video.outputs",
+          "value_sha256": "bf35bf1a61dc6eef7b686c12bb6ccd95b7188cc8812592a82f92073d94263b11",
+          "version": 1
+        },
+        {
+          "key": "eranos-video.compose_record.vf.compose-sequence-60s.a2",
+          "role": "compose_record",
+          "store": "eranos-video.outputs",
+          "value_sha256": "446049ad1d053bc7f761b50715dfab840dcd6143cd397420edad4f95e1a486e4",
+          "version": 1
+        }
+      ],
+      "outcome": "sequence_ready",
+      "queue": "video.production",
+      "receipt": "13180af403ec093249bca73e05f21e263214edba7c409d7b564e9622ca9b6816",
+      "state": "done",
+      "step": "compose-sequence-60s",
+      "task_id": "vf.compose-sequence-60s",
+      "template": "video-motion.plan-sequence",
+      "verb": "compose-sequence",
+      "worker": "production-worker"
+    },
+    {
+      "attempts": 1,
+      "checks": [
+        {
+          "id": "output-matches-template",
+          "result": "pass"
+        },
+        {
+          "id": "code-matches-pin",
+          "result": "pass"
+        },
+        {
+          "id": "digests-recorded",
+          "result": "pass"
+        },
+        {
+          "id": "tool-cards-recorded",
+          "result": "pass"
+        },
+        {
+          "id": "prerender-passed",
+          "result": "pass"
+        }
+      ],
+      "completed_by_key": "k_29027d617628",
+      "failed_attempts": [],
+      "nouns": [
+        {
+          "key": "media_asset.306d47f3ba4cb8d74f3143aedeae6cd6eac933b3d15d54597a723b8c2a78f28a",
+          "role": "video",
+          "store": "eranos-video.outputs",
+          "value_sha256": "306d47f3ba4cb8d74f3143aedeae6cd6eac933b3d15d54597a723b8c2a78f28a",
+          "version": 1
+        },
+        {
+          "key": "video-motion.render_manifest.vf.render-60s",
+          "role": "render_manifest",
+          "store": "eranos-video.outputs",
+          "value_sha256": "5d6660e645a42773db88797eda111449cf9d2a0769fe29332307bf6f744b6d55",
+          "version": 1
+        },
+        {
+          "key": "eranos-video.render_bundle.vf.render-60s",
+          "role": "render_bundle",
+          "store": "eranos-video.outputs",
+          "value_sha256": "542d970eb7ad5914f7d5c0faf1cb0d860e7a339c3121db5ca2e8679e8d439fcf",
+          "version": 1
+        }
+      ],
+      "outcome": "render_ready",
+      "queue": "video.production",
+      "receipt": "d80c6759e259dc5bbd966c09c0fca1bf856bf55c7088c546e207aae4bad8bf2c",
+      "state": "done",
+      "step": "render-60s",
+      "task_id": "vf.render-60s",
+      "template": "video-motion.render-sequence",
+      "verb": "render",
+      "worker": "production-worker"
+    },
+    {
+      "attempts": 1,
+      "checks": [
+        {
+          "id": "output-matches-template",
+          "result": "pass"
+        },
+        {
+          "id": "code-matches-pin",
+          "result": "pass"
+        },
+        {
+          "id": "all-checks",
+          "result": "pass"
+        },
+        {
+          "id": "passed-consistent",
+          "result": "pass"
+        },
+        {
+          "id": "digests-verified",
+          "result": "pass"
+        },
+        {
+          "id": "receipts-before-check",
+          "result": "pass"
+        }
+      ],
+      "completed_by_key": "k_90d8aa7c5f43",
+      "failed_attempts": [],
+      "nouns": [
+        {
+          "key": "video-motion.video_qa_report.vf.check-video-60s",
+          "role": "video_qa_report",
+          "store": "eranos-video.outputs",
+          "value_sha256": "91e3f62acd53ba901c523889159e826314fc04cd8167a5ac11a63a59c069476b",
+          "version": 1
+        },
+        {
+          "key": "eranos-video.video_measurements.vf.check-video-60s",
+          "role": "video_measurements",
+          "store": "eranos-video.outputs",
+          "value_sha256": "8b1f5ea503585d8272804a1038f502249e58498916225e3ee912f51047dd9ad0",
+          "version": 1
+        }
+      ],
+      "outcome": "checked",
+      "queue": "video.check",
+      "receipt": "bf4ad0c2bee76e2d9eac74b72161c417916c89a1e1724d972f3b6f5044dce304",
+      "state": "done",
+      "step": "check-video-60s",
+      "task_id": "vf.check-video-60s",
+      "template": "video-motion.check-video",
+      "verb": "check-video",
+      "worker": "check-worker"
+    },
+    {
+      "attempts": 1,
+      "checks": [
+        {
+          "id": "output-matches-template",
+          "result": "pass"
+        },
+        {
+          "id": "code-matches-pin",
+          "result": "pass"
+        },
+        {
+          "id": "digests-recorded",
+          "result": "pass"
+        },
+        {
+          "id": "tool-cards-recorded",
+          "result": "pass"
+        },
+        {
+          "id": "prerender-passed",
+          "result": "pass"
+        }
+      ],
+      "completed_by_key": "k_29027d617628",
+      "failed_attempts": [],
+      "nouns": [
+        {
+          "key": "media_asset.f33c6038c5d3bd04385d7824c989b7e3e9b7c1acb6e4d12ccbf3292996b766c5",
+          "role": "video",
+          "store": "eranos-video.outputs",
+          "value_sha256": "f33c6038c5d3bd04385d7824c989b7e3e9b7c1acb6e4d12ccbf3292996b766c5",
+          "version": 1
+        },
+        {
+          "key": "video-motion.render_manifest.vf.render-60s-oc",
+          "role": "render_manifest",
+          "store": "eranos-video.outputs",
+          "value_sha256": "496590e133954b5b8b7809b57aaf6228b5f7ec66074a10303c12e3f29b459cfe",
+          "version": 1
+        },
+        {
+          "key": "eranos-video.render_bundle.vf.render-60s-oc",
+          "role": "render_bundle",
+          "store": "eranos-video.outputs",
+          "value_sha256": "52e031ada918fbca876bac9c867513a0e19dd53b5d5dc394053ef0ae1591d9f3",
+          "version": 1
+        }
+      ],
+      "outcome": "render_ready",
+      "queue": "video.production",
+      "receipt": "97d421159f87c70d2c9b6bc11009dde4eebf5761592db15e01237a83d8d88f00",
+      "state": "done",
+      "step": "render-60s-oc",
+      "task_id": "vf.render-60s-oc",
+      "template": "video-motion.render-sequence",
+      "verb": "render",
+      "worker": "production-worker"
+    },
+    {
+      "attempts": 1,
+      "checks": [
+        {
+          "id": "output-matches-template",
+          "result": "pass"
+        },
+        {
+          "id": "code-matches-pin",
+          "result": "pass"
+        },
+        {
+          "id": "all-checks",
+          "result": "pass"
+        },
+        {
+          "id": "passed-consistent",
+          "result": "pass"
+        },
+        {
+          "id": "digests-verified",
+          "result": "pass"
+        },
+        {
+          "id": "receipts-before-check",
+          "result": "pass"
+        }
+      ],
+      "completed_by_key": "k_90d8aa7c5f43",
+      "failed_attempts": [],
+      "nouns": [
+        {
+          "key": "video-motion.video_qa_report.vf.check-video-60s-oc",
+          "role": "video_qa_report",
+          "store": "eranos-video.outputs",
+          "value_sha256": "1b05cab251a1a6856d56fa9bdb1023b687c92119cb57ce6762072952b8295c3d",
+          "version": 1
+        },
+        {
+          "key": "eranos-video.video_measurements.vf.check-video-60s-oc",
+          "role": "video_measurements",
+          "store": "eranos-video.outputs",
+          "value_sha256": "c44ab4ca5484af602618e9bc357f090338377046e1f4af0a4fc15c04fe29475c",
+          "version": 1
+        }
+      ],
+      "outcome": "checked",
+      "queue": "video.check",
+      "receipt": "61672029e55e651405bcec38e5a3e77095973a8a15796e233ab9f8099f1115bb",
+      "state": "done",
+      "step": "check-video-60s-oc",
+      "task_id": "vf.check-video-60s-oc",
+      "template": "video-motion.check-video",
+      "verb": "check-video",
+      "worker": "check-worker"
+    },
+    {
+      "attempts": 1,
+      "checks": [
+        {
+          "id": "checked-source",
+          "result": "pass"
+        },
+        {
+          "id": "streams-identical",
+          "result": "pass"
+        },
+        {
+          "id": "no-edit-lists",
+          "result": "pass"
+        },
+        {
+          "id": "fast-start",
+          "result": "pass"
+        }
+      ],
+      "completed_by_key": "k_29027d617628",
+      "failed_attempts": [],
+      "nouns": [
+        {
+          "key": "media_asset.87c9c98523210ac417987d7cfa2f594871231318613f1935b1ff58428a88a83a",
+          "role": "video",
+          "store": "eranos-video.outputs",
+          "value_sha256": "87c9c98523210ac417987d7cfa2f594871231318613f1935b1ff58428a88a83a",
+          "version": 1
+        },
+        {
+          "key": "eranos-video.export_record.vf.export-60s",
+          "role": "export_record",
+          "store": "eranos-video.outputs",
+          "value_sha256": "dff6b5a757613b30c6b38e7e56afaf06416bc9da52b6ea64e6f17c4d0c723642",
+          "version": 1
+        }
+      ],
+      "outcome": "export_ready",
+      "queue": "video.production",
+      "receipt": "b712bc46925ded7945f2af357a5aec5c6df037f2b6a025d1c24e67b52d335795",
+      "state": "done",
+      "step": "export-60s",
+      "task_id": "vf.export-60s",
+      "template": "eranos-video.export-mp4",
+      "verb": "export",
+      "worker": "production-worker"
+    },
+    {
+      "attempts": 1,
+      "checks": [
+        {
+          "id": "checked-source",
+          "result": "pass"
+        },
+        {
+          "id": "streams-identical",
+          "result": "pass"
+        },
+        {
+          "id": "no-edit-lists",
+          "result": "pass"
+        },
+        {
+          "id": "fast-start",
+          "result": "pass"
+        },
+        {
+          "id": "sidecars-match",
+          "result": "pass"
+        }
+      ],
+      "completed_by_key": "k_29027d617628",
+      "failed_attempts": [],
+      "nouns": [
+        {
+          "key": "media_asset.f036628fa6f83441e50bf6d7c961681b9417a2247d38cdf22a313f2783c02834",
+          "role": "video",
+          "store": "eranos-video.outputs",
+          "value_sha256": "f036628fa6f83441e50bf6d7c961681b9417a2247d38cdf22a313f2783c02834",
+          "version": 1
+        },
+        {
+          "key": "eranos-video.export_record.vf.export-60s-oc",
+          "role": "export_record",
+          "store": "eranos-video.outputs",
+          "value_sha256": "96aaee2d9bdfa30d69ec5379db8d95fa52b382da74a2d631ba5460ae3c7eee90",
+          "version": 1
+        }
+      ],
+      "outcome": "export_ready",
+      "queue": "video.production",
+      "receipt": "63b88492f66433687365dfe36c5a1a04e540a137d8fc184f3cb76a33b2a68519",
+      "state": "done",
+      "step": "export-60s-oc",
+      "task_id": "vf.export-60s-oc",
+      "template": "eranos-video.export-mp4",
+      "verb": "export",
+      "worker": "production-worker"
+    },
+    {
+      "attempts": 1,
+      "checks": [
+        {
+          "id": "report-bound",
+          "result": "pass"
+        },
+        {
+          "id": "all-nine",
+          "result": "pass"
+        },
+        {
+          "id": "logs-kept",
+          "result": "pass"
+        },
+        {
+          "id": "not-approval",
+          "result": "pass"
+        }
+      ],
+      "completed_by_key": "k_29027d617628",
+      "failed_attempts": [],
+      "nouns": [
+        {
+          "key": "eranos-video.extended_qa_report.vf.check-extended-60s",
+          "role": "extended_qa_report",
+          "store": "eranos-video.outputs",
+          "value_sha256": "4169831ac62903cef73f236e5d7db20150e2919f9cfaa3cfdb416ffeebc25e9e",
+          "version": 1
+        },
+        {
+          "key": "eranos-video.measurement_set.vf.check-extended-60s",
+          "role": "measurement_set",
+          "store": "eranos-video.outputs",
+          "value_sha256": "220d52fe870cbac78723a04c7b598ca08351b9a92019cdbcf3d5e6cbcbbe7192",
+          "version": 1
+        }
+      ],
+      "outcome": "checked",
+      "queue": "video.production",
+      "receipt": "5946fa155c958eeca35b4ff1aee11d4838c1094d434072376e9c739b2626f5f5",
+      "state": "done",
+      "step": "check-extended-60s",
+      "task_id": "vf.check-extended-60s",
+      "template": "eranos-video.check-extended",
+      "verb": "check-extended",
+      "worker": "production-worker"
+    }
+  ],
+  "store": {
+    "kind": "local Tessera store (SQLite + content-addressed blobs)",
+    "path": "/tmp/eranos-video-v4-prod-safe/tessera.db",
+    "tessera_commit": "2e7d6ab4d7e084a413ba0c3c83cebc10d81c9a98"
+  },
+  "task_count": 22,
+  "verb_count": 7,
+  "verbs": [
+    {
+      "receipts": [
+        "648a3b13d2d3d12368643bcc7c00f248731c578c2a645b9e5d90f5bcae2db606",
+        "a81d9eb4776021f83c6f08c80e117e10abc15401d2b670c5a076f280e227b4ad"
+      ],
+      "tasks": 2,
+      "verb": "write-script"
+    },
+    {
+      "receipts": [
+        "44c9e595570700d0c0bc175d5f625a66d9749bb5bc683056175749167c58ea08"
+      ],
+      "tasks": 1,
+      "verb": "capture-screens"
+    },
+    {
+      "receipts": [
+        "26c13c31a0f7fa9cb15df62df65abca7db9800a6c878cba42d414a53e43595fd"
+      ],
+      "tasks": 1,
+      "verb": "make-narration"
+    },
+    {
+      "receipts": [
+        "ee1fa852703db8a115692e99e655033fdc827bb3a7196a1812c8a3976ca3be84",
+        "8d46f2c08e3ae44ea6b5ccd9825056240eaf395808de02addf956bd9d6425b3d"
+      ],
+      "tasks": 2,
+      "verb": "write-captions"
+    },
+    {
+      "receipts": [
+        "12b23e46740cc156b229df699d4c2fc52bf7abc061b2d0f7d20cf039c21061d9",
+        "13180af403ec093249bca73e05f21e263214edba7c409d7b564e9622ca9b6816"
+      ],
+      "tasks": 2,
+      "verb": "compose-sequence"
+    },
+    {
+      "receipts": [
+        "e40f9176282cbf5612e71676b96a3230cd966a9fbccf6466715a46dae92d4783",
+        "d19fb0536a53907b2e553fcbb17cb70cf790cf50edff9ccf17cc6b813b0b7534",
+        "d80c6759e259dc5bbd966c09c0fca1bf856bf55c7088c546e207aae4bad8bf2c",
+        "97d421159f87c70d2c9b6bc11009dde4eebf5761592db15e01237a83d8d88f00"
+      ],
+      "tasks": 4,
+      "verb": "render"
+    },
+    {
+      "receipts": [
+        "0cc1b9e8f718841b6536bae728b15fa99c5d77fb0a76ad9558ce29ce0332704f",
+        "ebb63feec7e93ffb7d7ec5b7ac0e748fb23e75b577d8114934637244622295c1",
+        "bf4ad0c2bee76e2d9eac74b72161c417916c89a1e1724d972f3b6f5044dce304",
+        "61672029e55e651405bcec38e5a3e77095973a8a15796e233ab9f8099f1115bb"
+      ],
+      "tasks": 4,
+      "verb": "check-video"
+    }
+  ],
+  "workers": [
+    "check-worker",
+    "production-worker"
+  ]
+}

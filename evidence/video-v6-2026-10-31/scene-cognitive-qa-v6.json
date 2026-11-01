@@ -1,0 +1,130 @@
+{
+  "3m": {
+    "cut": "3m",
+    "summary": {
+      "media_sha256": "2c5268babf5707410214b7c62bc3863047044e19d263435833c2b6aa03fdaef2",
+      "min_shot_s": 2.2,
+      "flash_shots": 0,
+      "ghost_transitions": 0,
+      "drifting_static_scenes": 0,
+      "unreadable_items": 0,
+      "cognitive_conflicts": 0,
+      "unconvincing_journeys": 0,
+      "caption_center_offset_x_px": 0.001,
+      "caption_center_offset_y_px": 0.0,
+      "overall_verdict": "pass"
+    },
+    "caption_band": {
+      "burned_into_video": true,
+      "uses_native_track_in_fullscreen": false,
+      "has_frosted_glass_pill": true,
+      "rounded_radius_px": 18.0,
+      "pill_center_x": 960.001,
+      "pill_center_y": 960.0,
+      "pill_top_y": 918.0,
+      "pill_bottom_y": 1002.0,
+      "pill_left_x": 580.7,
+      "pill_right_x": 1339.3
+    },
+    "dwell_and_transitions": {
+      "shot_count": 23,
+      "min_shot_s": 2.2,
+      "median_shot_s": 6.1333,
+      "flash_shots": 0,
+      "ghost_transitions": 0,
+      "findings": [],
+      "verdict": "pass"
+    },
+    "slide_stability": {
+      "scene_count": 23,
+      "drifting_static_scenes": 0,
+      "findings": [],
+      "verdict": "pass"
+    },
+    "cognitive_load": {
+      "text_item_count": 23,
+      "unreadable_items": 0,
+      "cognitive_conflicts": 0,
+      "max_stage_wps": 0.455,
+      "findings": [],
+      "verdict": "pass"
+    },
+    "web_provenance": {
+      "journey_count": 1,
+      "unconvincing_journeys": 0,
+      "findings": [],
+      "verdict": "pass"
+    },
+    "caption_geometry": {
+      "center_offset_x_px": 0.001,
+      "center_offset_y_px": 0.0,
+      "orphan_cues": 0,
+      "findings": [],
+      "verdict": "pass"
+    }
+  },
+  "60s": {
+    "cut": "60s",
+    "summary": {
+      "media_sha256": "bb4af98056e631f21e02260aad4c599ec95c3b26740ce5f4c0c8d36e7aa29115",
+      "min_shot_s": 2.3,
+      "flash_shots": 0,
+      "ghost_transitions": 0,
+      "drifting_static_scenes": 0,
+      "unreadable_items": 0,
+      "cognitive_conflicts": 0,
+      "unconvincing_journeys": 0,
+      "caption_center_offset_x_px": 0.0,
+      "caption_center_offset_y_px": 0.0,
+      "overall_verdict": "pass"
+    },
+    "caption_band": {
+      "burned_into_video": true,
+      "uses_native_track_in_fullscreen": false,
+      "has_frosted_glass_pill": true,
+      "rounded_radius_px": 18.0,
+      "pill_center_x": 960.0,
+      "pill_center_y": 960.0,
+      "pill_top_y": 918.0,
+      "pill_bottom_y": 1002.0,
+      "pill_left_x": 591.34,
+      "pill_right_x": 1328.65
+    },
+    "dwell_and_transitions": {
+      "shot_count": 9,
+      "min_shot_s": 2.3,
+      "median_shot_s": 5.6,
+      "flash_shots": 0,
+      "ghost_transitions": 0,
+      "findings": [],
+      "verdict": "pass"
+    },
+    "slide_stability": {
+      "scene_count": 9,
+      "drifting_static_scenes": 0,
+      "findings": [],
+      "verdict": "pass"
+    },
+    "cognitive_load": {
+      "text_item_count": 9,
+      "unreadable_items": 0,
+      "cognitive_conflicts": 0,
+      "max_stage_wps": 0.435,
+      "findings": [],
+      "verdict": "pass"
+    },
+    "web_provenance": {
+      "journey_count": 1,
+      "unconvincing_journeys": 0,
+      "findings": [],
+      "verdict": "pass"
+    },
+    "caption_geometry": {
+      "center_offset_x_px": 0.0,
+      "center_offset_y_px": 0.0,
+      "orphan_cues": 0,
+      "findings": [],
+      "verdict": "pass"
+    }
+  }
+}

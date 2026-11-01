@@ -1,0 +1,1654 @@
+{
+  "cell_telemetry": [
+    {
+      "cell_id": "cell-01",
+      "counts": {
+        "as_of": 1793419748.796,
+        "queues": {
+          "aq02": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "aq04": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "aq05": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "aq85": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "aq86": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "build": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "catchall": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "distill": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "draft": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "eq01": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "eq02": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 4,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "eq03": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 4,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "expand": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "fetch": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "multiply": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "problemize": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "q01": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 443,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "q02": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 443,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "q03": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 434,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "q04": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 434,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "q_bench": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "q_stall": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 4,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "research": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "review": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "seed": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "situate": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "solve": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "verify": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          }
+        }
+      },
+      "queues": [
+        "q01",
+        "q02",
+        "q03",
+        "q04"
+      ],
+      "recent_audit_sample_count": 50,
+      "stores": [
+        {
+          "namespace": "main",
+          "records": 250,
+          "store": "swarm.inputs",
+          "updated_at": 1793419714.83
+        },
+        {
+          "namespace": "main",
+          "records": 125,
+          "store": "swarm.kits.nonprofit",
+          "updated_at": 1793419715.215
+        },
+        {
+          "namespace": "main",
+          "records": 16,
+          "store": "swarm.knowledge",
+          "updated_at": 1793419504.91
+        },
+        {
+          "namespace": "main",
+          "records": 125,
+          "store": "swarm.quant.regimes",
+          "updated_at": 1793419715.131
+        },
+        {
+          "namespace": "main",
+          "records": 250,
+          "store": "swarm.reviews",
+          "updated_at": 1793419715.407
+        },
+        {
+          "namespace": "main",
+          "records": 288,
+          "store": "swarm.shims",
+          "updated_at": 1793419715.043
+        },
+        {
+          "namespace": "main",
+          "records": 38,
+          "store": "swarm.tombstones",
+          "updated_at": 1793419713.001
+        }
+      ]
+    },
+    {
+      "cell_id": "cell-02",
+      "counts": {
+        "as_of": 1793419749.034,
+        "queues": {
+          "aq02": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "aq04": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "aq05": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "aq85": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "aq86": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "build": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "catchall": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "distill": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "draft": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "eq01": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "eq02": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 4,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "eq03": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 4,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "expand": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "fetch": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "multiply": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "problemize": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "q05": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 419,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "q06": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 415,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "q07": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 410,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "q08": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 414,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "q_bench": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "q_stall": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 4,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "research": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "review": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "seed": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "situate": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "solve": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "verify": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          }
+        }
+      },
+      "queues": [
+        "q05",
+        "q06",
+        "q07",
+        "q08"
+      ],
+      "recent_audit_sample_count": 50,
+      "stores": [
+        {
+          "namespace": "main",
+          "records": 125,
+          "store": "swarm.evals.harnesses",
+          "updated_at": 1793419711.066
+        },
+        {
+          "namespace": "main",
+          "records": 250,
+          "store": "swarm.inputs",
+          "updated_at": 1793419709.582
+        },
+        {
+          "namespace": "main",
+          "records": 16,
+          "store": "swarm.knowledge",
+          "updated_at": 1793419505.539
+        },
+        {
+          "namespace": "main",
+          "records": 250,
+          "store": "swarm.reviews",
+          "updated_at": 1793419711.17
+        },
+        {
+          "namespace": "main",
+          "records": 288,
+          "store": "swarm.shims",
+          "updated_at": 1793419710.696
+        },
+        {
+          "namespace": "main",
+          "records": 125,
+          "store": "swarm.shims.knapsack",
+          "updated_at": 1793419710.111
+        },
+        {
+          "namespace": "main",
+          "records": 38,
+          "store": "swarm.tombstones",
+          "updated_at": 1793419710.405
+        }
+      ]
+    },
+    {
+      "cell_id": "cell-03",
+      "counts": {
+        "as_of": 1793419749.123,
+        "queues": {
+          "aq02": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "aq04": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "aq05": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "aq85": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "aq86": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "build": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "catchall": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "distill": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "draft": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "eq01": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "eq02": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 4,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "eq03": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 4,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "expand": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "fetch": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "multiply": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "problemize": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "q09": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 399,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "q10": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 399,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "q11": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 398,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "q12": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 394,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "q_bench": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "q_stall": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 4,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "research": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "review": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "seed": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "situate": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "solve": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "verify": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          }
+        }
+      },
+      "queues": [
+        "q09",
+        "q10",
+        "q11",
+        "q12"
+      ],
+      "recent_audit_sample_count": 50,
+      "stores": [
+        {
+          "namespace": "main",
+          "records": 250,
+          "store": "swarm.inputs",
+          "updated_at": 1793419711.907
+        },
+        {
+          "namespace": "main",
+          "records": 16,
+          "store": "swarm.knowledge",
+          "updated_at": 1793419506.109
+        },
+        {
+          "namespace": "main",
+          "records": 125,
+          "store": "swarm.models.lora_router",
+          "updated_at": 1793419712.154
+        },
+        {
+          "namespace": "main",
+          "records": 125,
+          "store": "swarm.qa.multimodal",
+          "updated_at": 1793419712.957
+        },
+        {
+          "namespace": "main",
+          "records": 250,
+          "store": "swarm.reviews",
+          "updated_at": 1793419713.22
+        },
+        {
+          "namespace": "main",
+          "records": 287,
+          "store": "swarm.shims",
+          "updated_at": 1793419712.637
+        },
+        {
+          "namespace": "main",
+          "records": 37,
+          "store": "swarm.tombstones",
+          "updated_at": 1793419712.134
+        }
+      ]
+    },
+    {
+      "cell_id": "cell-04",
+      "counts": {
+        "as_of": 1793419749.19,
+        "queues": {
+          "aq02": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "aq04": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "aq05": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "aq85": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "aq86": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "build": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "catchall": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "distill": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "draft": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "eq01": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "eq02": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 4,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "eq03": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 4,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "expand": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "fetch": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "multiply": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "problemize": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "q13": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 399,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "q14": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 403,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "q15": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 394,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "q16": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 394,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "q_bench": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "q_stall": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 4,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "research": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "review": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "seed": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "situate": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "solve": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          },
+          "verify": {
+            "cancelled": 0,
+            "dead": 0,
+            "done": 0,
+            "leased": 0,
+            "ready": 0,
+            "waiting": 0
+          }
+        }
+      },
+      "queues": [
+        "q13",
+        "q14",
+        "q15",
+        "q16"
+      ],
+      "recent_audit_sample_count": 50,
+      "stores": [
+        {
+          "namespace": "main",
+          "records": 125,
+          "store": "swarm.index.ecosystem",
+          "updated_at": 1793419712.327
+        },
+        {
+          "namespace": "main",
+          "records": 250,
+          "store": "swarm.inputs",
+          "updated_at": 1793419712.266
+        },
+        {
+          "namespace": "main",
+          "records": 16,
+          "store": "swarm.knowledge",
+          "updated_at": 1793419506.789
+        },
+        {
+          "namespace": "main",
+          "records": 250,
+          "store": "swarm.reviews",
+          "updated_at": 1793419713.143
+        },
+        {
+          "namespace": "main",
+          "records": 125,
+          "store": "swarm.security.firewall",
+          "updated_at": 1793419712.964
+        },
+        {
+          "namespace": "main",
+          "records": 287,
+          "store": "swarm.shims",
+          "updated_at": 1793419712.744
+        },
+        {
+          "namespace": "main",
+          "records": 37,
+          "store": "swarm.tombstones",
+          "updated_at": 1793419709.239
+        }
+      ]
+    }
+  ],
+  "datasets_manifest_sha256": "74403224026a02bf63244871526b1c41a630723e52ad2d1690ee26bd7eadaa9a",
+  "fabric_topology": {
+    "cells": [
+      "cell-01",
+      "cell-02",
+      "cell-03",
+      "cell-04"
+    ],
+    "distinct_worker_principals": 256,
+    "herma_context_shim": "In-process BM25(k1=1.5,b=0.75) + RRF(k=60) + 0/1 DP Token-Budget Knapsack",
+    "queues": [
+      "q01",
+      "q02",
+      "q03",
+      "q04",
+      "q05",
+      "q06",
+      "q07",
+      "q08",
+      "q09",
+      "q10",
+      "q11",
+      "q12",
+      "q13",
+      "q14",
+      "q15",
+      "q16"
+    ],
+    "role_breakdown": {
+      "builder": 88,
+      "decomposer": 32,
+      "requester": 48,
+      "retriever": 32,
+      "verifier": 56
+    },
+    "runtime": "Miniflare / workerd with local SQLite Durable Objects and D1 (outbound network denied)"
+  },
+  "fault_injection_and_safety": {
+    "attempt1_flaw_rate": 0.15,
+    "attempt1_flaws_tombstoned_and_repaired": 150,
+    "authority_refusal_samples": [
+      {
+        "actor_key_id": "k_452a52c05269",
+        "cell_id": "cell-01",
+        "error_code": "forbidden",
+        "http_status": 403,
+        "probe_type": "role_queue_capability_firewall",
+        "target_task_id": "t_7b36823da2a94e00bcde57d7e6368bc0"
+      },
+      {
+        "attempted_self_reviewer_key_id": "k_fa444639e917",
+        "cell_id": "cell-01",
+        "drafter_key_id": "k_fa444639e917",
+        "error_message": "",
+        "http_status": 403,
+        "independent_receipt_hash": "bc37e09df1db985af31cc4c489295f962290497059702d433392bd78420d3aaf",
+        "probe_type": "eq03_reviewProof_self_approval_forbidden",
+        "subsequent_independent_verifier_key_id": "k_8bfcfe1f4cd7",
+        "target_task_id": "t_7b36823da2a94e00bcde57d7e6368bc0"
+      },
+      {
+        "actor_key_id": "k_452a52c05269",
+        "cell_id": "cell-01",
+        "error_code": "forbidden",
+        "http_status": 403,
+        "probe_type": "role_queue_capability_firewall",
+        "target_task_id": "t_ec4448c640c8405b953e558f7cc9c663"
+      },
+      {
+        "attempted_self_reviewer_key_id": "k_fa444639e917",
+        "cell_id": "cell-01",
+        "drafter_key_id": "k_fa444639e917",
+        "error_message": "",
+        "http_status": 403,
+        "independent_receipt_hash": "8b13a923477b7661d5e155a9443a1f74974104d3d3c80d7563b0744cce080aa1",
+        "probe_type": "eq03_reviewProof_self_approval_forbidden",
+        "subsequent_independent_verifier_key_id": "k_8bfcfe1f4cd7",
+        "target_task_id": "t_ec4448c640c8405b953e558f7cc9c663"
+      },
+      {
+        "actor_key_id": "k_452a52c05269",
+        "cell_id": "cell-01",
+        "error_code": "forbidden",
+        "http_status": 403,
+        "probe_type": "role_queue_capability_firewall",
+        "target_task_id": "t_b098bf6a8c1640e3a37cc1daf7ec3aef"
+      },
+      {
+        "attempted_self_reviewer_key_id": "k_fa444639e917",
+        "cell_id": "cell-01",
+        "drafter_key_id": "k_fa444639e917",
+        "error_message": "",
+        "http_status": 403,
+        "independent_receipt_hash": "6d7a1b86ea2fed2db4a41a1ab280b5b60c181db7282f3ec905565652915c2b25",
+        "probe_type": "eq03_reviewProof_self_approval_forbidden",
+        "subsequent_independent_verifier_key_id": "k_8bfcfe1f4cd7",
+        "target_task_id": "t_b098bf6a8c1640e3a37cc1daf7ec3aef"
+      },
+      {
+        "actor_key_id": "k_452a52c05269",
+        "cell_id": "cell-01",
+        "error_code": "forbidden",
+        "http_status": 403,
+        "probe_type": "role_queue_capability_firewall",
+        "target_task_id": "t_dedb0683c7a744b9ac7b864000379c8a"
+      },
+      {
+        "attempted_self_reviewer_key_id": "k_fa444639e917",
+        "cell_id": "cell-01",
+        "drafter_key_id": "k_fa444639e917",
+        "error_message": "",
+        "http_status": 403,
+        "independent_receipt_hash": "ba2e01cd3dd067ef79560fb9f65836ba0f8e0ed7a1c295759cab29f26f86f4ca",
+        "probe_type": "eq03_reviewProof_self_approval_forbidden",
+        "subsequent_independent_verifier_key_id": "k_8bfcfe1f4cd7",
+        "target_task_id": "t_dedb0683c7a744b9ac7b864000379c8a"
+      }
+    ],
+    "self_approval_refusals_enforced": 32,
+    "split_brain_lease_collisions": 0,
+    "stale_lease_http_409_fenced": 16,
+    "stale_lease_samples": [
+      {
+        "active_fencing_token": 2,
+        "cell_id": "cell-01",
+        "late_heartbeat_http_status": 409,
+        "late_submit_error_code": "stale_lease",
+        "late_submit_http_status": 409,
+        "reaped_count_on_cell": 4,
+        "stale_fencing_token": 1,
+        "task_id": "t_8f401bfdddc04ba7b8c4d5bef2e109d2",
+        "winner_receipt_hash": "bb4e988a4236e69a9b454c1f8f1fc8f28bd0b706dbfcd360989c8605d4d8998c"
+      },
+      {
+        "active_fencing_token": 2,
+        "cell_id": "cell-01",
+        "late_heartbeat_http_status": 409,
+        "late_submit_error_code": "stale_lease",
+        "late_submit_http_status": 409,
+        "reaped_count_on_cell": 4,
+        "stale_fencing_token": 1,
+        "task_id": "t_76266038dc404fc7814cbca92a69b331",
+        "winner_receipt_hash": "5387f4f0be268e2ac939d29d08895bf2bd8a4c7e30a4a140f10ffb375390d1f9"
+      },
+      {
+        "active_fencing_token": 2,
+        "cell_id": "cell-01",
+        "late_heartbeat_http_status": 409,
+        "late_submit_error_code": "stale_lease",
+        "late_submit_http_status": 409,
+        "reaped_count_on_cell": 4,
+        "stale_fencing_token": 1,
+        "task_id": "t_0d0254425b154752b0f8e6212736d8ed",
+        "winner_receipt_hash": "fe143698960bf30d33f2951ac07f762f9d27e231baba6376d5e6c2686987fbd9"
+      },
+      {
+        "active_fencing_token": 2,
+        "cell_id": "cell-01",
+        "late_heartbeat_http_status": 409,
+        "late_submit_error_code": "stale_lease",
+        "late_submit_http_status": 409,
+        "reaped_count_on_cell": 4,
+        "stale_fencing_token": 1,
+        "task_id": "t_e63f4e995aa84870a1d5ef381dd28758",
+        "winner_receipt_hash": "e9ecd681864e5e086d8e8383e4f718825a067869cd86933cfbd4a18bc02f52d4"
+      },
+      {
+        "active_fencing_token": 2,
+        "cell_id": "cell-02",
+        "late_heartbeat_http_status": 409,
+        "late_submit_error_code": "stale_lease",
+        "late_submit_http_status": 409,
+        "reaped_count_on_cell": 4,
+        "stale_fencing_token": 1,
+        "task_id": "t_616556bcecc04f5e848ecf073915ac4a",
+        "winner_receipt_hash": "59bbb91706d021fffcfb58fb12fa8374eb0e2343a78069e72d2149d56ab7957d"
+      },
+      {
+        "active_fencing_token": 2,
+        "cell_id": "cell-02",
+        "late_heartbeat_http_status": 409,
+        "late_submit_error_code": "stale_lease",
+        "late_submit_http_status": 409,
+        "reaped_count_on_cell": 4,
+        "stale_fencing_token": 1,
+        "task_id": "t_35dcdf4e39114b24aa6dbb772d2af700",
+        "winner_receipt_hash": "d2a078379e669b0fdcb9ccf998f1469738ea75bfec689101fa3fcda0187adf38"
+      }
+    ]
+  },
+  "measured_at_utc": "2026-10-31T04:09:09Z",
+  "real_opencode_cli_wave": {
+    "binary": "<home>/.local/bin/opencode",
+    "observed_spend_usd": 0.000721,
+    "runs": [
+      {
+        "cell_id": "cell-01",
+        "domain": "nonprofit_scheduling_triage",
+        "elapsed_seconds": 27.65,
+        "harness": "opencode",
+        "mcp_tools_called": [
+          "search_nouns",
+          "claim",
+          "get_record",
+          "heartbeat",
+          "put_record",
+          "submit"
+        ],
+        "model": "kimi-k2.7-code",
+        "provider": "ollama-cloud",
+        "provider_calls": 9,
+        "queue": "q01",
+        "returncode": 0,
+        "stderr_tail": "",
+        "verified_on_workerd": true,
+        "version": "2.1.2",
+        "worker_id": "opencode-cli-01",
+        "workflow_id": "wf-0000-nonprofit-"
+      },
+      {
+        "cell_id": "cell-02",
+        "domain": "agent_harness_benchmarks",
+        "elapsed_seconds": 37.92,
+        "harness": "opencode",
+        "mcp_tools_called": [
+          "claim",
+          "get_record",
+          "search_nouns",
+          "heartbeat",
+          "put_record",
+          "submit"
+        ],
+        "model": "kimi-k2.7-code",
+        "provider": "ollama-cloud",
+        "provider_calls": 9,
+        "queue": "q05",
+        "returncode": 0,
+        "stderr_tail": "",
+        "verified_on_workerd": true,
+        "version": "2.1.2",
+        "worker_id": "opencode-cli-02",
+        "workflow_id": "wf-0001-agent-harn"
+      },
+      {
+        "cell_id": "cell-03",
+        "domain": "video_cv_audio_qa",
+        "elapsed_seconds": 55.88,
+        "harness": "opencode",
+        "mcp_tools_called": [
+          "search_nouns",
+          "claim",
+          "get_record",
+          "heartbeat",
+          "put_record",
+          "submit"
+        ],
+        "model": "kimi-k2.7-code",
+        "provider": "ollama-cloud",
+        "provider_calls": 11,
+        "queue": "q09",
+        "returncode": 0,
+        "stderr_tail": "",
+        "verified_on_workerd": true,
+        "version": "2.1.2",
+        "worker_id": "opencode-cli-03",
+        "workflow_id": "wf-0002-video-cv-a"
+      },
+      {
+        "cell_id": "cell-04",
+        "domain": "ecosystem_707_queries",
+        "elapsed_seconds": 29.47,
+        "harness": "opencode",
+        "mcp_tools_called": [
+          "search_nouns",
+          "claim",
+          "get_record",
+          "heartbeat",
+          "put_record",
+          "submit"
+        ],
+        "model": "kimi-k2.7-code",
+        "provider": "ollama-cloud",
+        "provider_calls": 9,
+        "queue": "q13",
+        "returncode": 0,
+        "stderr_tail": "",
+        "verified_on_workerd": true,
+        "version": "2.1.2",
+        "worker_id": "opencode-cli-04",
+        "workflow_id": "wf-0003-ecosystem-"
+      },
+      {
+        "cell_id": "cell-01",
+        "domain": "leakage_safe_backtests",
+        "elapsed_seconds": 28.38,
+        "harness": "opencode",
+        "mcp_tools_called": [
+          "search_nouns",
+          "claim",
+          "get_record",
+          "heartbeat",
+          "put_record",
+          "submit"
+        ],
+        "model": "kimi-k2.7-code",
+        "provider": "ollama-cloud",
+        "provider_calls": 9,
+        "queue": "q02",
+        "returncode": 0,
+        "stderr_tail": "",
+        "verified_on_workerd": true,
+        "version": "2.1.2",
+        "worker_id": "opencode-cli-05",
+        "workflow_id": "wf-0004-leakage-sa"
+      },
+      {
+        "cell_id": "cell-02",
+        "domain": "context_knapsack_shims",
+        "elapsed_seconds": 43.46,
+        "harness": "opencode",
+        "mcp_tools_called": [
+          "claim",
+          "search_nouns",
+          "get_record",
+          "heartbeat",
+          "put_record",
+          "submit"
+        ],
+        "model": "kimi-k2.7-code",
+        "provider": "ollama-cloud",
+        "provider_calls": 9,
+        "queue": "q06",
+        "returncode": 0,
+        "stderr_tail": "",
+        "verified_on_workerd": true,
+        "version": "2.1.2",
+        "worker_id": "opencode-cli-06",
+        "workflow_id": "wf-0005-context-kn"
+      },
+      {
+        "cell_id": "cell-03",
+        "domain": "lora_routing",
+        "elapsed_seconds": 32.1,
+        "harness": "opencode",
+        "mcp_tools_called": [
+          "claim",
+          "get_record",
+          "heartbeat",
+          "put_record",
+          "submit"
+        ],
+        "model": "kimi-k2.7-code",
+        "provider": "ollama-cloud",
+        "provider_calls": 8,
+        "queue": "q10",
+        "returncode": 0,
+        "stderr_tail": "",
+        "verified_on_workerd": true,
+        "version": "2.1.2",
+        "worker_id": "opencode-cli-07",
+        "workflow_id": "wf-0006-lora-routi"
+      },
+      {
+        "cell_id": "cell-04",
+        "domain": "capability_firewall_audits",
+        "elapsed_seconds": 30.86,
+        "harness": "opencode",
+        "mcp_tools_called": [
+          "claim",
+          "get_record",
+          "heartbeat",
+          "put_record",
+          "submit"
+        ],
+        "model": "kimi-k2.7-code",
+        "provider": "ollama-cloud",
+        "provider_calls": 8,
+        "queue": "q14",
+        "returncode": 0,
+        "stderr_tail": "",
+        "verified_on_workerd": true,
+        "version": "2.1.2",
+        "worker_id": "opencode-cli-08",
+        "workflow_id": "wf-0007-capability"
+      },
+      {
+        "cell_id": "cell-01",
+        "domain": "nonprofit_scheduling_triage",
+        "elapsed_seconds": 9.79,
+        "harness": "opencode",
+        "mcp_tools_called": [],
+        "model": "muse-spark-1.3-contributor",
+        "provider": "meta",
+        "provider_calls": 2,
+        "queue": "q03",
+        "returncode": 0,
+        "stderr_tail": "",
+        "verified_on_workerd": false,
+        "version": "2.1.2",
+        "worker_id": "opencode-cli-09",
+        "workflow_id": "wf-0008-nonprofit-"
+      },
+      {
+        "cell_id": "cell-02",
+        "domain": "agent_harness_benchmarks",
+        "elapsed_seconds": 35.44,
+        "harness": "opencode",
+        "mcp_tools_called": [
+          "search_nouns",
+          "claim",
+          "get_record",
+          "heartbeat",
+          "put_record",
+          "submit"
+        ],
+        "model": "kimi-k2.7-code",
+        "provider": "ollama-cloud",
+        "provider_calls": 9,
+        "queue": "q07",
+        "returncode": 0,
+        "stderr_tail": "",
+        "verified_on_workerd": true,
+        "version": "2.1.2",
+        "worker_id": "opencode-cli-10",
+        "workflow_id": "wf-0009-agent-harn"
+      }
+    ],
+    "runs_executed": 10,
+    "runs_verified_on_workerd": 9,
+    "spend_cap_usd": 0.4,
+    "version": "2.1.2"
+  },
+  "scaling_curve": [
+    {
+      "cells": 1,
+      "elapsed_seconds": 1.475,
+      "mcp_ops": 100,
+      "mcp_ops_per_sec": 67.8,
+      "p50_ms": 13.24,
+      "p95_ms": 23.97,
+      "p99_ms": 29.89,
+      "queues": 4,
+      "split_brain_collisions": 0,
+      "tasks_completed": 32,
+      "tasks_per_sec": 21.7,
+      "workers": 1
+    },
+    {
+      "cells": 1,
+      "elapsed_seconds": 2.6638,
+      "mcp_ops": 196,
+      "mcp_ops_per_sec": 73.58,
+      "p50_ms": 46.56,
+      "p95_ms": 98.48,
+      "p99_ms": 200.48,
+      "queues": 4,
+      "split_brain_collisions": 0,
+      "tasks_completed": 64,
+      "tasks_per_sec": 24.03,
+      "workers": 4
+    },
+    {
+      "cells": 2,
+      "elapsed_seconds": 2.3618,
+      "mcp_ops": 400,
+      "mcp_ops_per_sec": 169.36,
+      "p50_ms": 83.34,
+      "p95_ms": 182.8,
+      "p99_ms": 238.36,
+      "queues": 8,
+      "split_brain_collisions": 0,
+      "tasks_completed": 128,
+      "tasks_per_sec": 54.2,
+      "workers": 16
+    },
+    {
+      "cells": 4,
+      "elapsed_seconds": 3.6115,
+      "mcp_ops": 832,
+      "mcp_ops_per_sec": 230.38,
+      "p50_ms": 190.49,
+      "p95_ms": 412.65,
+      "p99_ms": 817.08,
+      "queues": 16,
+      "split_brain_collisions": 0,
+      "tasks_completed": 256,
+      "tasks_per_sec": 70.89,
+      "workers": 64
+    },
+    {
+      "cells": 4,
+      "elapsed_seconds": 6.6606,
+      "mcp_ops": 1792,
+      "mcp_ops_per_sec": 269.05,
+      "p50_ms": 678.99,
+      "p95_ms": 1354.95,
+      "p99_ms": 1537.24,
+      "queues": 16,
+      "split_brain_collisions": 0,
+      "tasks_completed": 512,
+      "tasks_per_sec": 76.87,
+      "workers": 256
+    }
+  ],
+  "schema_version": 1,
+  "swarm_flywheel_metrics": {
+    "async_swarm_wave_seconds": 111.445,
+    "attempt1_flaws_injected": 150,
+    "attempt2_tombstone_repairs_certified": 150,
+    "distinct_active_worker_principals": 256,
+    "mcp_latency_p50_ms": 54.441,
+    "mcp_latency_p95_ms": 145.205,
+    "mcp_latency_p99_ms": 242.575,
+    "total_mcp_calls_measured": 25620,
+    "total_workflows_completed": 1000
+  },
+  "tessera_source_revision": "4d11e8731068b40d2ad0ff1ac95e32011fb9ce14",
+  "total_elapsed_seconds": 251.66
+}

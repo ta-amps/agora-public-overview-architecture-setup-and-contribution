@@ -13,7 +13,7 @@
     "items": [
       {"version": "v4", "title": "v4, a draft for feedback", "about": "A separate revision with an Eranos slide, speaker notes, an outline, a note under each slide whose facts changed, and a claim review of every number.", "extra": [{"href": "decks/2026-10-29/v4/#claim-review", "label": "Claim review"}]},
       {"version": "v3", "title": "v3, the qualified draft plus one point", "about": "v2 with one change: slide 2 adds that today's AI doesn't break work into small, atomic, decentralized pieces in a graph that many workers can claim, check and finish."},
-      {"version": "v2", "title": "v2, the qualified draft", "about": "The same slide design as v1, with more precise distinctions between observed results, experiments and planned work."},
+      {"version": "v2", "title": "v2, the qualified draft", "about": "The same slide design as v1, with clearer distinctions between observed results, experiments and proposed next steps."},
       {"version": "v1", "title": "v1, the original draft", "about": "The original slide wording and speaker notes, kept for review. Some claims and pending results in it are unverified."}
     ]
   },
@@ -30,21 +30,20 @@
       "heading": "Storyboards",
       "items": [
         {"href": "storyboards/2026-10-29/eranos-video-v1/", "title": "The Eranos video storyboard", "about": "Draft 1, the evening plan: a small nonprofit needs an agent kit it can't afford to build, and a volunteer's agent builds a reviewed kit with spare tokens.", "html_sha256": "33b0b50d733799e86291567c18a176a53193740675ef6db5c803e66570cdd1b5"},
-        {"href": "storyboards/2026-10-29/two-videos/", "title": "The two-video draft", "about": "The first storyboard, from the afternoon, which planned two separate videos.", "html_sha256": "aae6a382379b94a13d2bb92cc0748dcb622f38b10aa811f8517b54b2787237fb"},
+        {"href": "storyboards/2026-10-29/two-videos/", "title": "The two-video draft", "about": "The first storyboard, from the afternoon, which outlined two separate videos.", "html_sha256": "aae6a382379b94a13d2bb92cc0748dcb622f38b10aa811f8517b54b2787237fb"},
         {"href": "storyboards/feedback/", "title": "How feedback will work", "about": "The first design for ratings and comments, described as nouns and verbs."}
       ]
     }
   ],
   "notes": [
-    {"text": "The version manifest records each deck version's file hashes.", "href": "decks.json", "label": "Version manifest"},
-    {"text": "v1 and v2 together, as PowerPoint and PDF. For matching type in PowerPoint, install Space Grotesk, IBM Plex Sans and JetBrains Mono; the PDFs embed their fonts.", "href": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/releases/download/pitch-drafts-2026-10-29/ta-amps-decks-2026-10-29.zip", "label": "Download v1 and v2"}
+    {"text": "The version manifest records each deck version's file hashes.", "href": "decks.json", "label": "Version manifest"}
   ],
   "storyboards_page": {
     "title": "Video storyboards | ta-amps",
     "description": "The video storyboards and the draft animatic, kept as earlier drafts.",
     "crumb": "Earlier drafts",
     "heading": "Video storyboards",
-    "lead": "The plans and drafts behind the demo video, kept as they were written. The video tells a nonprofit story first, and its closing line about nouns and verbs stays planned until a production record proves it.",
+    "lead": "The plans and drafts behind the demo video, kept as they were written. The video tells a nonprofit story first, and its closing line about nouns and verbs counts only once a production record proves every step.",
     "groups": ["video", "storyboards"]
   }
 }
