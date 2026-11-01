@@ -14,8 +14,12 @@ SITE = Path(__file__).resolve().parents[1] / "site"
 WORD = re.compile(r"synthetic", re.I)
 TEXT = {".html", ".txt", ".json", ".js", ".css", ".svg", ".md", ".xml", ".webmanifest"}
 
-# Kept on purpose, each with its reason. Each entry is (path, exact count, reason).
+# Kept on purpose, each with its reason. Each entry is path: exact count, with its reason above it.
 KEPT = {
+    # The feeds' data, copied byte for byte from the dedicated workers' builder, holds one third-party repository
+    # whose own name says it (gmikros/synthetic-aphasia-evaluation, in its name and its address). The build reads the
+    # file but the bundle does not serve site/content/feeds/, and the page leaves that entry out.
+    "content/feeds/eval-frameworks.json": 2,
 }
 
 

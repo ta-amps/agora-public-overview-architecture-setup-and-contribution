@@ -1,25 +1,11 @@
 {
-  "about": "One recorded run, replayed on the how-it-works page. scripts/sync_real_run.py writes this noun and the files under site/evidence/real-run-20261031T065341Z/ from the run's own folder, and checks every hash it shows. Its words describe what the records show.",
-  "format": "ta-amps.real-run-replay.v1",
+  "about": "One recorded run, replayed on the how-it-works page, in people-readable facts. scripts/sync_real_run.py writes this file and the run's records under site/evidence/real-run-20261031T065341Z/ from the run's own folder, after checking every value against Tessera's own records. Each step's record, under steps/, keeps what the step comes from.",
+  "format": "ta-amps.real-run-replay.v2",
   "run": {
     "id": "20261031T065341Z",
     "started_utc": "2026-10-31T06:53:41Z",
     "fabric": "local Tessera: actual workerd (Miniflare) with SQLite Durable Objects and D1, outbound network denied",
-    "tessera_revision": "4d11e8731068b40d2ad0ff1ac95e32011fb9ce14",
-    "tessera_repository": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine",
     "model": "muse-spark-1.3-contributor",
-    "builder": {
-      "program": "Muse Code",
-      "version": "1.4.14-R7309.1",
-      "route": "/v1/responses",
-      "key_id": "k_cc60da07d74a"
-    },
-    "reviewer": {
-      "program": "nanoMuse",
-      "version": "1.0.8",
-      "route": "/v1/chat/completions",
-      "key_id": "k_b514f2a59964"
-    },
     "builder_is_not_reviewer": true,
     "made_up_data_only": true,
     "private_or_ngo_data_sent": false,
@@ -38,33 +24,21 @@
       "review": "done"
     }
   },
-  "receipt": "evidence/real-e2e-meta-2026-10-31/public-e2e-receipt.json",
+  "spend_folder": "evidence/real-e2e-meta-2026-10-31",
   "files": {
     "facts": "evidence/real-run-20261031T065341Z/run-facts.json",
     "trace": "evidence/real-run-20261031T065341Z/trace.jsonl",
-    "tessera": "evidence/real-run-20261031T065341Z/tessera-readback.json"
+    "tessera": "evidence/real-run-20261031T065341Z/tessera-readback.json",
+    "steps": "evidence/real-run-20261031T065341Z/steps/"
   },
   "steps": [
     {
       "n": 1,
       "id": "request",
-      "title": "The request became two tasks",
-      "text": "A food pantry, made up for this run, signed itself up with no operator and asked for a kit that turns its volunteers’ availability into a weekly shift schedule. A fixed script, with no model, claimed the request, saved the availability list as a noun and split the request into two tasks: a build, and a review that waits for it.",
-      "actor": "The requester, key k_f617cd3167ed, then the classify step, key k_054b985efbe7: a fixed script with no model",
-      "hash": {
-        "value": "6709f71fb10238ebe4ce06c987937b1ba5301646be9b5bd474f1a4844089f795",
-        "kind": "noun",
-        "label": "SHA-256 of the availability noun"
-      },
+      "by": "script",
       "at_utc": "2026-10-31T06:53:43.574Z",
-      "tasks": [
-        "t_f05e739efc644796a94b27c7d9fac0be",
-        "t_06e3ef2acaa54c7297b5c0dfca3e2c70",
-        "t_cc69cdcb8fa3404dbf37eb4d38c684b5"
-      ],
       "changes": [
         {
-          "task": "t_f05e739efc644796a94b27c7d9fac0be",
           "kind": "request",
           "new": true,
           "states": [
@@ -79,7 +53,6 @@
           ]
         },
         {
-          "task": "t_06e3ef2acaa54c7297b5c0dfca3e2c70",
           "kind": "build",
           "new": true,
           "states": [
@@ -90,7 +63,6 @@
           ]
         },
         {
-          "task": "t_cc69cdcb8fa3404dbf37eb4d38c684b5",
           "kind": "review",
           "new": true,
           "states": [
@@ -101,7 +73,6 @@
           ]
         }
       ],
-      "receipt": "evidence/real-run-20261031T065341Z/steps/1-request.json",
       "trace": [],
       "events": [
         7,
@@ -112,27 +83,15 @@
         12
       ],
       "model_calls": 0,
-      "request_title": "EXAMPLE: weekly volunteer shift schedule kit",
       "request_label": "weekly volunteer shift schedule kit"
     },
     {
       "n": 2,
       "id": "build",
-      "title": "The builder made four nouns",
-      "text": "The builder’s first claim came back empty, and its second got the build. It read the availability noun, wrote a scheduler, its tests and a README, and stored them with the availability list as four nouns, each with its SHA-256. One digest covers all four.",
-      "actor": "Muse Code 1.4.14-R7309.1, the builder, key k_cc60da07d74a, calling muse-spark-1.3-contributor",
-      "hash": {
-        "value": "a30b48b17ba2a20c60a3fdabcb67874760e96c4215d58ed4141288d763f5d34e",
-        "kind": "digest",
-        "label": "Digest of the four nouns"
-      },
+      "by": "builder",
       "at_utc": "2026-10-31T06:53:43.749Z",
-      "tasks": [
-        "t_06e3ef2acaa54c7297b5c0dfca3e2c70"
-      ],
       "changes": [
         {
-          "task": "t_06e3ef2acaa54c7297b5c0dfca3e2c70",
           "kind": "build",
           "new": false,
           "states": [
@@ -144,7 +103,6 @@
           ]
         }
       ],
-      "receipt": "evidence/real-run-20261031T065341Z/steps/2-build.json",
       "trace": [
         1,
         2,
@@ -232,28 +190,25 @@
         20
       ],
       "model_calls": 23,
-      "nouns": [
+      "lease_seconds": 1800,
+      "files": [
         {
           "path": "README.md",
-          "sha256": "faa26f17fdde72804043644e45ad7684b23211a8bae724530834e189649099cb",
           "bytes": 2313,
           "file": "evidence/real-run-20261031T065341Z/kit/README.md"
         },
         {
           "path": "data/availability.csv",
-          "sha256": "6709f71fb10238ebe4ce06c987937b1ba5301646be9b5bd474f1a4844089f795",
           "bytes": 758,
           "file": "evidence/real-run-20261031T065341Z/kit/data/availability.csv"
         },
         {
           "path": "shift_scheduler.py",
-          "sha256": "b3c4b5867fa3e26b180a5c3185f9de27a13dc096c92a9ea9f4d2f316eef1908b",
           "bytes": 7945,
           "file": "evidence/real-run-20261031T065341Z/kit/shift_scheduler.py"
         },
         {
           "path": "tests/test_shift_scheduler.py",
-          "sha256": "ec0e90bfaf5f0edb51f289168e689932b628d5c86fa46f98005670eb85f29a76",
           "bytes": 6537,
           "file": "evidence/real-run-20261031T065341Z/kit/tests/test_shift_scheduler.py"
         }
@@ -261,23 +216,11 @@
     },
     {
       "n": 3,
-      "id": "build-receipt",
-      "title": "Tessera wrote the build’s receipt",
-      "text": "Tessera turned down the builder’s first submit as an invalid request. The builder submitted again, and Tessera accepted it, wrote a receipt and marked the build done. That released the review, which had been waiting for the build.",
-      "actor": "Muse Code 1.4.14-R7309.1, the builder, key k_cc60da07d74a, calling muse-spark-1.3-contributor",
-      "hash": {
-        "value": "aee19212277a83ff5c2e69964b9bf7a19a7e32455cb6ecb9d21d5d6c06fc0491",
-        "kind": "receipt",
-        "label": "Tessera’s receipt for the build"
-      },
+      "id": "build-recorded",
+      "by": "builder",
       "at_utc": "2026-10-31T06:57:01.268Z",
-      "tasks": [
-        "t_06e3ef2acaa54c7297b5c0dfca3e2c70",
-        "t_cc69cdcb8fa3404dbf37eb4d38c684b5"
-      ],
       "changes": [
         {
-          "task": "t_06e3ef2acaa54c7297b5c0dfca3e2c70",
           "kind": "build",
           "new": false,
           "states": [
@@ -289,7 +232,6 @@
           ]
         },
         {
-          "task": "t_cc69cdcb8fa3404dbf37eb4d38c684b5",
           "kind": "review",
           "new": false,
           "states": [
@@ -301,7 +243,6 @@
           ]
         }
       ],
-      "receipt": "evidence/real-run-20261031T065341Z/steps/3-build-receipt.json",
       "trace": [
         75,
         76,
@@ -316,26 +257,16 @@
         21,
         22
       ],
-      "model_calls": 2
+      "model_calls": 2,
+      "lease_seconds": 1800
     },
     {
       "n": 4,
       "id": "review",
-      "title": "A different agent reviewed it",
-      "text": "The reviewer, holding its own key, claimed the review and read all four nouns. It reported that the kit’s 8 tests pass, that the scheduler finds 0 coverage violations and that every digest matches. It stored its verdict as a noun and submitted it: approve. Tessera wrote a receipt and marked the review done.",
-      "actor": "nanoMuse 1.0.8, the reviewer, key k_b514f2a59964, calling muse-spark-1.3-contributor",
-      "hash": {
-        "value": "0ae5dc2ef738409c70dd914a4a0ef9aee8a89d55ac5ad308fee4ab057bff5d78",
-        "kind": "receipt",
-        "label": "Tessera’s receipt for the review"
-      },
+      "by": "reviewer",
       "at_utc": "2026-10-31T06:57:12.764Z",
-      "tasks": [
-        "t_cc69cdcb8fa3404dbf37eb4d38c684b5"
-      ],
       "changes": [
         {
-          "task": "t_cc69cdcb8fa3404dbf37eb4d38c684b5",
           "kind": "review",
           "new": false,
           "states": [
@@ -349,7 +280,6 @@
           ]
         }
       ],
-      "receipt": "evidence/real-run-20261031T065341Z/steps/4-review.json",
       "trace": [
         83,
         84,
@@ -412,6 +342,7 @@
         28
       ],
       "model_calls": 14,
+      "lease_seconds": 1500,
       "verdict": {
         "store": "kit.reviews",
         "verdict": "approve",
@@ -423,21 +354,10 @@
     {
       "n": 5,
       "id": "held",
-      "title": "The request waits for a person",
-      "text": "With both tasks done, Tessera put the request back to ready. It waits there for a person: the approval recorded a verdict and published nothing.",
-      "actor": "Tessera, on the review’s submit",
-      "hash": {
-        "value": "0ae5dc2ef738409c70dd914a4a0ef9aee8a89d55ac5ad308fee4ab057bff5d78",
-        "kind": "receipt",
-        "label": "The review’s receipt, which released the request"
-      },
+      "by": "tessera",
       "at_utc": "2026-10-31T06:58:24.780Z",
-      "tasks": [
-        "t_f05e739efc644796a94b27c7d9fac0be"
-      ],
       "changes": [
         {
-          "task": "t_f05e739efc644796a94b27c7d9fac0be",
           "kind": "request",
           "new": false,
           "states": [
@@ -449,7 +369,6 @@
           ]
         }
       ],
-      "receipt": "evidence/real-run-20261031T065341Z/steps/5-held.json",
       "trace": [],
       "events": [
         27

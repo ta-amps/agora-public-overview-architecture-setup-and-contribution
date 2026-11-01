@@ -1,0 +1,197 @@
+{
+ "schema": "ta-amps.agora.feeds.index.v1",
+ "generated_at": "2026-11-01T00:47:22Z",
+ "workers": "dedicated workers run by ta-amps on the project's own machine, every 6 hours, categories in turn",
+ "categories": [
+  {
+   "id": "agent-harnesses",
+   "label": "Agent harnesses",
+   "path": "feeds/agent-harnesses.json",
+   "last_run": {
+    "at": "2026-11-01T00:44:50Z",
+    "scan_id": "20261101T0041Z-agent-harnesses",
+    "receipt_hash": "d8aec151f8ffdc609edeb20a1d51c61bdf0c312d8f4d63ed34fbab0e8f426d9b",
+    "scan_task_id": "feed-scan-agent-harnesses-20261101T00",
+    "schedule": "every 6 hours, categories in turn; dedicated workers run by ta-amps on the project's own machine"
+   },
+   "count_total": 1723,
+   "item_count": 374,
+   "verified_quotes": 2,
+   "top": [
+    {
+     "repo": "Louis-CFM/coucou",
+     "url": "https://github.com/Louis-CFM/coucou",
+     "score": 0.7198,
+     "stars": 6845,
+     "licence": "MIT"
+    },
+    {
+     "repo": "microsoft/TokenEconomizer",
+     "url": "https://github.com/microsoft/TokenEconomizer",
+     "score": 0.7158,
+     "stars": 3061,
+     "licence": "Apache-2.0"
+    },
+    {
+     "repo": "zai-org/ZCode",
+     "url": "https://github.com/zai-org/ZCode",
+     "score": 0.7116,
+     "stars": 8401,
+     "licence": "Apache-2.0"
+    }
+   ]
+  },
+  {
+   "id": "eval-frameworks",
+   "label": "LLM evaluation frameworks",
+   "path": "feeds/eval-frameworks.json",
+   "last_run": {
+    "at": "2026-11-01T00:44:50Z",
+    "scan_id": "20261101T0041Z-eval-frameworks",
+    "receipt_hash": "e4860e62112482052a373035fcba8a1619b4aeaa84a9a09f4706fa8f52af3a0e",
+    "scan_task_id": "feed-scan-eval-frameworks-20261101T00",
+    "schedule": "every 6 hours, categories in turn; dedicated workers run by ta-amps on the project's own machine"
+   },
+   "count_total": 222,
+   "item_count": 397,
+   "verified_quotes": 0,
+   "top": [
+    {
+     "repo": "ifixai-ai/iFixAi",
+     "url": "https://github.com/ifixai-ai/iFixAi",
+     "score": 0.8387,
+     "stars": 41451,
+     "licence": "Apache-2.0"
+    },
+    {
+     "repo": "jwuthri-cloud/Tracely-ai",
+     "url": "https://github.com/jwuthri-cloud/Tracely-ai",
+     "score": 0.8375,
+     "stars": 1212,
+     "licence": "MIT"
+    },
+    {
+     "repo": "scaleapi/agentenv-framework",
+     "url": "https://github.com/scaleapi/agentenv-framework",
+     "score": 0.8118,
+     "stars": 399,
+     "licence": "Apache-2.0"
+    }
+   ]
+  },
+  {
+   "id": "memory-systems",
+   "label": "Memory systems for agents",
+   "path": "feeds/memory-systems.json",
+   "last_run": {
+    "at": "2026-11-01T00:45:04Z",
+    "scan_id": "20261101T0041Z-memory-systems",
+    "receipt_hash": "53f6107c834efd50e5a254b1e97f52eaccd617b459466d6838a56b68e73c715e",
+    "scan_task_id": "feed-scan-memory-systems-20261101T00",
+    "schedule": "every 6 hours, categories in turn; dedicated workers run by ta-amps on the project's own machine"
+   },
+   "count_total": 310,
+   "item_count": 583,
+   "verified_quotes": 0,
+   "top": [
+    {
+     "repo": "deeplethe/utopia",
+     "url": "https://github.com/deeplethe/utopia",
+     "score": 0.6783,
+     "stars": 8652,
+     "licence": "Apache-2.0"
+    },
+    {
+     "repo": "xerj-org/xerj",
+     "url": "https://github.com/xerj-org/xerj",
+     "score": 0.6737,
+     "stars": 17946,
+     "licence": "Apache-2.0"
+    },
+    {
+     "repo": "tigerless-labs/agent-memory",
+     "url": "https://github.com/tigerless-labs/agent-memory",
+     "score": 0.6728,
+     "stars": 4303,
+     "licence": "MIT"
+    }
+   ]
+  },
+  {
+   "id": "ocr-llm",
+   "label": "OCR and LLM document tools",
+   "path": "feeds/ocr-llm.json",
+   "last_run": {
+    "at": "2026-11-01T00:45:49Z",
+    "scan_id": "20261101T0041Z-ocr-llm",
+    "receipt_hash": "6151b8de387cd4fa0c5c3f763b25f71a8321c044975d60740820c4fbb0344e6b",
+    "scan_task_id": "feed-scan-ocr-llm-20261101T00",
+    "schedule": "every 6 hours, categories in turn; dedicated workers run by ta-amps on the project's own machine"
+   },
+   "count_total": 44,
+   "item_count": 327,
+   "verified_quotes": 0,
+   "top": [
+    {
+     "repo": "jev-chat/jev-chat-jarvis",
+     "url": "https://github.com/jev-chat/jev-chat-jarvis",
+     "score": 0.6587,
+     "stars": 8200,
+     "licence": "MIT"
+    },
+    {
+     "repo": "opendataloader-project/opendataloader-pdf",
+     "url": "https://github.com/opendataloader-project/opendataloader-pdf",
+     "score": 0.5959,
+     "stars": 30131,
+     "licence": "Apache-2.0"
+    },
+    {
+     "repo": "Unstructured-IO/unstructured",
+     "url": "https://github.com/Unstructured-IO/unstructured",
+     "score": 0.5843,
+     "stars": 15654,
+     "licence": "Apache-2.0"
+    }
+   ]
+  },
+  {
+   "id": "pii-redaction",
+   "label": "PII detection and redaction",
+   "path": "feeds/pii-redaction.json",
+   "last_run": {
+    "at": "2026-11-01T00:46:06Z",
+    "scan_id": "20261101T0041Z-pii-redaction",
+    "receipt_hash": "91a857379a0535c9f27caae233442ad53835601c0a06f64b26d7359966a14005",
+    "scan_task_id": "feed-scan-pii-redaction-20261101T00",
+    "schedule": "every 6 hours, categories in turn; dedicated workers run by ta-amps on the project's own machine"
+   },
+   "count_total": 123,
+   "item_count": 351,
+   "verified_quotes": 2,
+   "top": [
+    {
+     "repo": "ArgirisViv/bulwark-llm-gateway",
+     "url": "https://github.com/ArgirisViv/bulwark-llm-gateway",
+     "score": 0.655,
+     "stars": 2,
+     "licence": "MIT"
+    },
+    {
+     "repo": "lemonadesaltbagel/veil",
+     "url": "https://github.com/lemonadesaltbagel/veil",
+     "score": 0.6129,
+     "stars": 76,
+     "licence": "Apache-2.0"
+    },
+    {
+     "repo": "jialuncai/diurnix",
+     "url": "https://github.com/jialuncai/diurnix",
+     "score": 0.5853,
+     "stars": 21,
+     "licence": "MIT"
+    }
+   ]
+  }
+ ]
+}

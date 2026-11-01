@@ -1,41 +1,136 @@
 {
-  "about": "The words of the memory-systems feed page. The page's data is its own noun, feeds-memory-systems.json, copied byte for byte from the feed's builder (functional/builds/memory-feed/agora), which reads it from the feed's records in Tessera. scripts/build_site.py renders both into site/feeds/memory-systems/index.html, says which Tessera the scans ran on, and shows the schedule only when the scans ran on hosted Tessera.",
-  "title": "The memory-systems feed | Agora",
-  "description": "A feed of new memory systems for agents: what appeared on GitHub in two days, which fits a given setup, and the benchmark numbers each project reports, self-reported by the project and quoted from its own README or paper.",
-  "heading": "The memory‑systems feed",
-  "lead": "Hundreds of memory systems for agents appear on GitHub in days, far more than anyone can test. This feed gathers them, keeps each as a task object with its source, and answers which fits your setup from what it stored.",
-  "where_hosted": "Scanned on hosted Tessera",
-  "where_local": "Scanned on a local copy of Tessera, with real reads of GitHub and arXiv",
-  "last_scan": "Latest scan",
-  "schedule": "Schedule",
-  "scan_id": "Scan",
-  "receipt": "Receipt",
-  "scans": "Scans so far",
-  "count_heading": "What appeared in two days",
-  "count_line": "repositories created on GitHub in the 48 hours to",
-  "count_query": "The exact search",
-  "count_response": "Response SHA-256",
-  "count_secondary": "Stricter readings are smaller:",
-  "fits_heading": "Which fits",
-  "fits_lead": "Each setup lists the projects first in feed rank, as of {as_of}: ranked by quoted evidence, then stars, then recent commits.",
-  "fits_count": "fit",
-  "stars": "stars",
-  "last_commit": "last commit",
-  "not_reported": "No benchmark claim quoted",
-  "answer_heading": "Ask it in plain words",
-  "answer_label": "The answer from stored task objects, with no model call",
-  "claims_heading": "Quoted benchmark claims",
-  "claims_lead": "These benchmark numbers are self-reported by each project, quoted from its README or paper and checked character by character. Nobody here re-ran them.",
-  "claims_cols": ["Source", "Metric", "Quote"],
-  "items_heading": "Everything gathered",
-  "items_summary": "memory systems among",
-  "items_summary_tail": "repositories gathered",
-  "items_cols": ["Repository", "Stars", "Licence", "Language", "Last commit"],
-  "papers_heading": "Papers",
-  "how_heading": "How it works",
-  "how": [
-    "A timer enqueues one scan task within its allowance; a worker with a scoped key claims it and reads only official public APIs.",
-    "Each repository, paper and quoted claim becomes a task object with its source and the time it was seen, written with compare-and-set.",
-    "Extracting the benchmark claims and comparing the projects are follow-up tasks, each with its own receipt."
-  ]
+  "about": "The words of the feeds pages: the index, /feeds/, and one page per category, /feeds/<id>/ (the AgoraFeeds board, November 1, 2026). Their data is its own set of Task Objects, site/content/feeds/: index.json and one file per category, copied byte for byte from the dedicated workers' builder (functional/builds/memory-feed/agora/feeds). The build reads that data; the bundle does not serve it. scripts/build_site.py renders a category only once its first run is recorded and says where its scans ran. Every repository field and quote is third-party text, rendered escaped, and never rewritten: an entry whose name, address or text the owner's rules keep off the pages is left out, and each page says how many. Feed rank is dated and is never called a rating; benchmark numbers are self-reported by the project.",
+  "index": {
+    "title": "Feeds | Agora",
+    "description": "Categorized feeds of new open-source tools for agents: memory systems, PII detection and redaction, OCR and LLM document tools, agent harnesses and LLM evaluation frameworks, each found by dedicated workers run by ta-amps and ordered by a dated feed rank.",
+    "kicker": "Agora · Feeds",
+    "heading": "What’s new, found and ranked",
+    "lead": "New tools for agents appear on GitHub every day, far more than anyone can try. For each category, a dedicated worker run by ta-amps searches GitHub and arXiv every 6 hours, keeps each project as a Task Object with its source, and orders the projects by an open feed rank: how new, stars, license, recent commits and quoted benchmarks, each with its link. We don’t run the tools ourselves.",
+    "chips": [
+      "found on GitHub and arXiv",
+      "every 6 hours",
+      "ordered by a dated feed rank",
+      "a dedicated worker run by ta-amps"
+    ],
+    "cards_heading": "Categories",
+    "cards_lead": "A category appears here only after its first run.",
+    "last_run": "Last run",
+    "new": "new on GitHub in the 48 hours before the run",
+    "gathered": "projects gathered",
+    "quotes": "benchmark quotes checked",
+    "top": "First by feed rank, as of {as_of}",
+    "open": "Open the feed →",
+    "where_local": "Ran on a local copy of Tessera on the project’s own machine.",
+    "where_hosted": "Ran on hosted Tessera.",
+    "which": {
+      "heading": "Which fits?",
+      "text": "Each feed lists the projects that fit a setup, such as Python, MIT licence, runs locally, first by feed rank. The answer comes from the feed’s last run, with no model calls, so the same question gets the same answer until the next run.",
+      "privacy": "Which fits works from public facts about each project. We don't accept private information at this stage.",
+      "example": "See a question asked in plain words, and its answer",
+      "example_href": "feeds/memory-systems/#ask"
+    },
+    "notes": [
+      {
+        "heading": "Tasks and Task Objects",
+        "text": "Each scan is a task that a dedicated worker claims, does and reports. Each project it finds is a Task Object with its source and the time it was seen. Nothing here is a separate service."
+      },
+      {
+        "heading": "Feed rank",
+        "text": "Feed rank orders a feed by how new a project is, its stars, its license, its recent commits and its quoted benchmarks. It is dated, it is not a rating or a measure of quality, and we don’t run the tools ourselves."
+      }
+    ],
+    "left_out_one": "1 entry from this run is left out of the feed’s page.",
+    "left_out_many": "{n} entries from this run are left out of the feed’s page."
+  },
+  "category": {
+    "title": "{label}: the feed | Agora",
+    "description": "{label}: what appeared on GitHub in two days, which project fits a given setup, how the dated feed rank orders them, and the benchmark numbers each project reports, self-reported by the project.",
+    "crumb": "All feeds",
+    "kicker": "Agora · Feeds",
+    "finds": {
+      "agent-harnesses": "New agent harnesses, and new versions of the ones people use.",
+      "eval-frameworks": "Frameworks for testing and scoring LLM apps and agents.",
+      "memory-systems": "Ways to give an agent memory across sessions.",
+      "ocr-llm": "Tools and models that read scans, forms and handwriting.",
+      "pii-redaction": "Open-source projects that find and remove personal data in text and documents."
+    },
+    "facts": {
+      "last_run": "Last run",
+      "where": "Where it ran",
+      "where_local": "A local copy of Tessera on the project’s own machine, with real reads of GitHub and arXiv",
+      "where_hosted": "Hosted Tessera",
+      "schedule": "Schedule",
+      "who": "Who runs it",
+      "who_text": "Dedicated workers run by ta-amps"
+    },
+    "count_heading": "What appeared in two days",
+    "count_line": "repositories created on GitHub in the 48 hours to",
+    "count_query": "The exact search",
+    "count_secondary": "Other readings of the same window and topic:",
+    "which_heading": "Which fits?",
+    "which_lead": "Each setup lists the projects first in feed rank, as of {as_of}. The answer comes from the last run, with no model calls.",
+    "fit": "fit",
+    "stars": "stars",
+    "feed_rank": "feed rank",
+    "last_commit": "last commit",
+    "hosting": {
+      "local": "runs locally",
+      "hosted": "hosted",
+      "local+hosted": "runs locally or hosted",
+      "unclear": ""
+    },
+    "reported": "self-reported by the project",
+    "not_reported": "No benchmark claim quoted",
+    "rank_heading": "How the feed rank works",
+    "rank_lead": "Feed rank, as of {as_of}, is an open score: the weighted mean of the parts below that are known, each from 0 to 1. A part with no data stays empty and is never counted as 0. We don’t run the tools ourselves; feed rank only orders this feed, and it is not a rating or a measure of quality.",
+    "components": {
+      "stars": "Stars",
+      "recency": "How new",
+      "last_commit": "Recent commits",
+      "licence": "License",
+      "benchmarks": "Quoted benchmarks"
+    },
+    "weight": "weight",
+    "rank_project": "Project",
+    "rank_value": "Feed rank",
+    "rank_top": 10,
+    "rank_caption": "The first {n} by feed rank, with each part.",
+    "claims_heading": "Quoted benchmark claims",
+    "claims_lead": "These benchmark numbers are self-reported by the project, quoted from its own README or paper and checked word for word. Nobody here ran them again.",
+    "basis": {
+      "readme": "self-reported by the project",
+      "abstract": "from the paper’s abstract"
+    },
+    "claims_cols": [
+      "Source",
+      "Metric",
+      "Quote",
+      "Basis"
+    ],
+    "claims_none": "The last run quoted no benchmark claim in this category.",
+    "items_heading": "Everything gathered",
+    "items_summary": "{shown} of the {relevant} relevant projects, most stars first, out of {total} gathered.",
+    "items_cols": [
+      "Repository",
+      "Stars",
+      "License",
+      "Language",
+      "Last commit"
+    ],
+    "items_top": 40,
+    "papers_heading": "Papers",
+    "folded_heading": "Also in Tessera",
+    "folded_lead": "Feeds about agent harnesses that Tessera already holds as Task Objects:",
+    "folded_version": "version",
+    "answer_heading": "Ask it in plain words",
+    "answer_label": "The answer came from the stored Task Objects, with no model call.",
+    "how_heading": "How it works",
+    "how": [
+      "Each scan is one task: a dedicated worker run by ta-amps claims it with a scoped key and reads only official public APIs, GitHub’s and arXiv’s.",
+      "Each repository, paper and quoted claim becomes a Task Object with its source and the time it was seen, written with compare-and-set.",
+      "Quoting the benchmark claims and comparing the projects are follow-up tasks, each recorded on its own."
+    ],
+    "left_out_one": "1 entry from this run is left out of this page.",
+    "left_out_many": "{n} entries from this run are left out of this page."
+  }
 }

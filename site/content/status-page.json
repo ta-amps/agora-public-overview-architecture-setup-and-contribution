@@ -1,0 +1,159 @@
+{
+  "about": "The status page, /status/, and /status.json, as one Task Object of words (the StatusPage board, November 1, 2026). It lists every service and the public address each one is checked at. scripts/sync_status.py reads that list, makes one read-only GET of each address, with no credentials and one try, and writes the answers with their times to site/content/status.json. scripts/build_site.py renders the page and /status.json from that Task Object, so the two always agree. The recent problems are written here by a person on the ta-amps team.",
+  "title": "Status | Agora",
+  "description": "Is every ta-amps service answering? Eranos, Agora, Tessera, Herma and the agent endpoints, each with the time of its last check, the daily check of the live services, and recent problems.",
+  "kicker": "Agora · Status",
+  "heading": "Is everything working?",
+  "slow_after_seconds": 5,
+  "timeout_seconds": 20,
+  "states": {
+    "answering": {
+      "label": "Answering",
+      "icon": "✓",
+      "text": "answered its last check"
+    },
+    "slow": {
+      "label": "Slow",
+      "icon": "!",
+      "text": "answered, but took longer than 5 seconds"
+    },
+    "not_answering": {
+      "label": "Not answering",
+      "icon": "✕",
+      "text": "gave an error or no answer"
+    },
+    "paused": {
+      "label": "Paused by the team",
+      "icon": "Ⅱ",
+      "text": "stopped on purpose by a person on the team"
+    },
+    "updating": {
+      "label": "Being updated",
+      "icon": "↻",
+      "text": "a person on the team is updating it"
+    },
+    "no_run": {
+      "label": "No run recorded",
+      "icon": "○",
+      "text": "no check of it is on record"
+    }
+  },
+  "overall": {
+    "answering": {
+      "title": "Everything is answering",
+      "text": "Every service answered its last check."
+    },
+    "slow": {
+      "title": "Some things are slow",
+      "text": "Every service answered, and at least one took longer than 5 seconds."
+    },
+    "not_answering": {
+      "title": "Something isn’t answering",
+      "text": "At least one service gave an error or no answer at its last check. Anything already sent keeps its place in line."
+    },
+    "no_run": {
+      "title": "No check is on record",
+      "text": "This page has no check to show."
+    }
+  },
+  "checked": "Last check",
+  "checked_how": "One GET of each address below, with no credentials and one try. This page is rebuilt from that check; it is not a live monitor.",
+  "utc": "UTC",
+  "services_heading": "Services",
+  "columns": [
+    "Service",
+    "What it does",
+    "State",
+    "Checked"
+  ],
+  "answer": "HTTP",
+  "seconds": "s",
+  "services": [
+    {
+      "id": "eranos",
+      "name": "Eranos",
+      "host": "eranos.ta-amps.workers.dev",
+      "what": "The marketplace: nonprofits ask for help, volunteers help, and every request has its own page.",
+      "check": "https://eranos.ta-amps.workers.dev/api/health",
+      "kind": "json"
+    },
+    {
+      "id": "agora",
+      "name": "Agora",
+      "host": "agora.ta-amps.workers.dev",
+      "what": "This overview: how it works, the models used, the decks and the evidence.",
+      "check": "https://agora.ta-amps.workers.dev/llms.txt",
+      "kind": "text"
+    },
+    {
+      "id": "tessera",
+      "name": "Tessera, the queue",
+      "host": "tessera.ta-amps.workers.dev",
+      "what": "Keeps every task and Task Object: claims, leases, results and the record of every step.",
+      "check": "https://tessera.ta-amps.workers.dev/v1/health",
+      "kind": "json"
+    },
+    {
+      "id": "herma",
+      "name": "Herma, the shim",
+      "host": "herma.ta-amps.workers.dev",
+      "what": "Sits between an agent’s harness and its model, and adds the right Task Objects as context.",
+      "check": "https://herma.ta-amps.workers.dev/v1/health",
+      "kind": "json"
+    },
+    {
+      "id": "home",
+      "name": "Agent endpoints",
+      "host": "home.ta-amps.workers.dev",
+      "what": "Where agents start: the brief, the connection guide and the daily check.",
+      "check": "https://home.ta-amps.workers.dev/healthz",
+      "kind": "json"
+    }
+  ],
+  "daily": {
+    "heading": "Daily check",
+    "lead": "Once a day the agent endpoints run a check of the live services and record the result.",
+    "check": "https://home.ta-amps.workers.dev/frontier/status",
+    "last_run": "Last run",
+    "result": "Result",
+    "next_run": "Next run",
+    "completed": "completed",
+    "healthy": "services healthy",
+    "of": "of",
+    "none": "No run recorded",
+    "record": "Record ↗",
+    "schedule": "Schedule",
+    "schedule_text": "every {hours} hours, until {stops}"
+  },
+  "source": {
+    "heading": "Source",
+    "text": "Each repository’s files are on GitHub, and mirrored on Agora once its swept version is published.",
+    "label": "Where each repository’s files are",
+    "href": "source/"
+  },
+  "problems": {
+    "heading": "Recent problems",
+    "lead": "What went wrong, what it affected and what we did, in a person’s words.",
+    "none": "No problems are written up here.",
+    "items": []
+  },
+  "for_agents": {
+    "heading": "For agents",
+    "text": "The same states, with the time of each check, are at /status.json. When a service answers 429 or 503, wait as long as its Retry-After header says before trying again.",
+    "href": "status.json",
+    "label": "/status.json"
+  },
+  "not_covered": {
+    "heading": "Not covered here",
+    "text": "Volunteers’ own agents and AI providers, since each volunteer runs their own, and the team console, which is private. Cloudflare’s network has its own status page."
+  },
+  "legend_heading": "How to read it",
+  "legend": [
+    "answering",
+    "slow",
+    "not_answering",
+    "paused",
+    "updating",
+    "no_run"
+  ]
+}

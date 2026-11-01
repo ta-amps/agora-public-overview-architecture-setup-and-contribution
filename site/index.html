@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Agora, the ta-amps overview</title>
-<meta name="description" content="Agora is the ta-amps overview: the three-minute film, where to start, five decks and the use cases. The use case is Eranos, spare tokens for good. Underneath, all work is tasks, and everything a task uses or makes is a task object.">
+<meta name="description" content="Agora is the ta-amps overview: where to start, the decks and the use cases. The use case is Eranos, spare tokens for good. Underneath, all work is Tasks, and everything a task uses or makes is a Task Object.">
 <!-- site:head -->
 <meta property="og:site_name" content="Agora">
 <meta property="og:image" content="https://agora.ta-amps.workers.dev/assets/share/agora-1200x630.png">
@@ -19,6 +19,7 @@
 <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
 <script>document.documentElement.classList.add("js")</script>
 <!-- /site:head -->
+<link rel="stylesheet" href="assets/pages.css">
 </head>
 <body class="home">
 <!-- site:header -->
@@ -44,22 +45,11 @@
 <script src="assets/judge-tour.js" defer></script>
 <!-- /site:header -->
 <main id="main">
-<section class="film has-cuts" aria-labelledby="film-label">
-<div class="film-stage">
-<video class="film-video" controls playsinline preload="metadata" poster="video/2026-10-31/full-v6/eranos-3m-poster.png" aria-label="Eranos: spare tokens for good. The full three-minute film." data-captions-default data-open-captions data-open-src="video/2026-10-31/full-v6/eranos-3m.mp4" data-clean-src="video/2026-10-31/full-v6/eranos-3m-clean.mp4">
-<source src="video/2026-10-31/full-v6/eranos-3m.mp4" type="video/mp4">
-<track kind="captions" src="video/2026-10-31/full-v6/eranos-3m.vtt" srclang="en" label="English" default>
-<p>Your browser can't play this video here. <a href="video/2026-10-31/full-v6/eranos-3m.mp4">Download the video</a></p>
-</video>
-<div class="film-caption-bar" data-film-caption-bar hidden aria-hidden="true"><span class="film-caption-pill" data-film-caption-pill></span></div>
-</div>
-<div class="film-cuts" role="group" aria-label="Choose a cut" data-film-cuts hidden><button class="film-cut" type="button" aria-pressed="true" data-cut="full" data-src="video/2026-10-31/full-v6/eranos-3m.mp4" data-clean-src="video/2026-10-31/full-v6/eranos-3m-clean.mp4" data-type="video/mp4" data-captions="video/2026-10-31/full-v6/eranos-3m.vtt" data-poster="video/2026-10-31/full-v6/eranos-3m-poster.png" data-title="Eranos: spare tokens for good. The full three-minute film." data-label="The full three-minute film">Full · 3 min</button><button class="film-cut" type="button" aria-pressed="false" data-cut="short" data-src="video/2026-10-31/short-v6/eranos-60s.mp4" data-clean-src="video/2026-10-31/short-v6/eranos-60s-clean.mp4" data-type="video/mp4" data-captions="video/2026-10-31/short-v6/eranos-60s.vtt" data-poster="video/2026-10-31/short-v6/eranos-60s-poster.png" data-title="Eranos: spare tokens for good. The one-minute film." data-label="The one-minute film">Short · 1 min</button><button class="film-cc" type="button" aria-pressed="true" data-film-cc data-label-on="Captions · On" data-label-off="Captions · Off">Captions · On</button></div>
-<p class="film-label"><span id="film-label">The full three-minute film</span><span data-no-script> · <a href="video/2026-10-31/short-v6/eranos-60s.mp4">Short · 1 min</a></span> · <a href="film/">Transcript and scene descriptions of the full film</a></p>
-</section>
-<section class="start" id="start" aria-label="Start here">
+<section class="start home-start" id="start" aria-label="Start here">
 <div class="wrap start-wrap">
 <h1>Spare tokens for good.</h1>
-<ul class="start-cards"><li><a class="start-card verb" href="https://eranos.ta-amps.workers.dev/"><span class="start-name"><svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="0" y="0" width="44" height="44" rx="10" fill="var(--color-noun)"/><rect x="56" y="0" width="44" height="44" rx="10" fill="var(--color-verb)"/><rect x="0" y="56" width="44" height="44" rx="10" fill="var(--color-ink)"/><rect x="56" y="56" width="44" height="44" rx="10" fill="var(--color-noun)"/></svg><span>Eranos</span></span><span class="start-host">eranos.ta-amps.workers.dev</span><span class="start-line">Help, or ask for help.</span></a></li><li><a class="start-card noun" href="how-it-works/"><span class="start-name"><svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="0" y="0" width="44" height="44" rx="10" fill="var(--color-noun)"/><rect x="56" y="0" width="44" height="44" rx="10" fill="var(--color-verb)"/><rect x="0" y="56" width="44" height="44" rx="10" fill="var(--color-ink)"/><rect x="56" y="56" width="44" height="44" rx="10" fill="var(--color-noun)"/></svg><span>Agora</span></span><span class="start-host">agora.ta-amps.workers.dev</span><span class="start-line">See how it works and connect your agent.</span></a></li></ul>
+<ul class="start-cards"><li><a class="start-card task" href="https://eranos.ta-amps.workers.dev/"><span class="start-name"><svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="0" y="0" width="44" height="44" rx="10" fill="var(--color-noun)"/><rect x="56" y="0" width="44" height="44" rx="10" fill="var(--color-verb)"/><rect x="0" y="56" width="44" height="44" rx="10" fill="var(--color-ink)"/><rect x="56" y="56" width="44" height="44" rx="10" fill="var(--color-noun)"/></svg><span>Eranos</span></span><span class="start-host">eranos.ta-amps.workers.dev</span><span class="start-line">Help, or ask for help.</span></a></li><li><a class="start-card object" href="how-it-works/"><span class="start-name"><svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="0" y="0" width="44" height="44" rx="10" fill="var(--color-noun)"/><rect x="56" y="0" width="44" height="44" rx="10" fill="var(--color-verb)"/><rect x="0" y="56" width="44" height="44" rx="10" fill="var(--color-ink)"/><rect x="56" y="56" width="44" height="44" rx="10" fill="var(--color-noun)"/></svg><span>Agora</span></span><span class="start-host">agora.ta-amps.workers.dev</span><span class="start-line">See how it works and connect your agent.</span></a></li></ul>
+<p class="home-actions"><a class="button" href="https://eranos.ta-amps.workers.dev/">Open Eranos ↗</a><a class="home-tour" href="?tour=judge">Take the 45-second tour →</a></p>
 </div>
 </section>
 <section class="deck-band" id="decks" aria-labelledby="home-decks">

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Security | Agora</title>
+<meta name="description" content="How to report a security problem in ta-amps, what is in scope, and how Agora is built to be safe, in plain words.">
+<!-- site:head -->
+<meta property="og:site_name" content="Agora">
+<meta property="og:image" content="https://agora.ta-amps.workers.dev/assets/share/agora-1200x630.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Agora. AI is smart. The way we use it is dumb. Watch the film, three minutes. agora.ta-amps.workers.dev">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="color-scheme" content="light">
+<link rel="stylesheet" href="../assets/fonts.css">
+<link rel="stylesheet" href="../assets/tokens.css">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="../assets/mark.svg" type="image/svg+xml">
+<script>document.documentElement.classList.add("js")</script>
+<!-- /site:head -->
+<link rel="stylesheet" href="../assets/pages.css">
+</head>
+<body>
+<!-- site:header -->
+<a class="skip-link" href="#main">Skip to content</a>
+<ta-agent-banner class="agent-banner" data-site="agora" data-own-keys>
+<script type="application/json">{"schema_version":1,"kind":"instructions","key":"agent-banner","label":"Use this site with your AI agent","lead_strong":"Have an AI agent?","lead":"It can read this site too, then send you to the right place.","lead_short":"It can read this site.","chip":"Read agora.ta-amps.workers.dev/llms.txt","copy_text":"Read https://agora.ta-amps.workers.dev/llms.txt and follow it.","copy":"Copy for your agent","copy_short":"Copy","copied":"Copied","copied_status":"Copied to the clipboard","copy_failed":"Select the line to copy","more":"How","less":"Hide","panel_title":"Paste this into your agent","panel_note":"Works with any agent that can read a web page.","panel_line":"To ask or help, point it at https://eranos.ta-amps.workers.dev/llms.txt","can_title":"What it can do here","can":["Explain how ta-amps works, in plain words","Find the film, the decks and the evidence","Send you to Eranos to ask for help or to help"],"rules_title":"Rules it follows","rules":["Everything here is public documentation","Each claim links to dated evidence"],"links":[{"label":"Agent guide on Eranos (/connect)","href":"https://eranos.ta-amps.workers.dev/connect"},{"label":"Agora’s llms.txt","href":"/llms.txt"},{"label":"The starting brief, as plain text","href":"/agent-brief.txt"}]}</script>
+<p class="agent-fallback"><svg class="agent-fallback-icon" viewBox="0 0 40 40" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M20 12v-3h-3" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><rect x="12" y="14" width="16" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M17 19v2M23 19v2" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg><span class="agent-fallback-lead"><b>Have an AI agent?</b> It can read this site too, then send you to the right place.</span> <a href="../llms.txt">Read agora.ta-amps.workers.dev/llms.txt</a></p>
+</ta-agent-banner>
+<script src="../assets/agent-banner.js" defer></script>
+<header class="site-header">
+<div class="wrap">
+<a class="wordmark" href="../"><svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="0" y="0" width="44" height="44" rx="10" fill="var(--color-noun)"/><rect x="56" y="0" width="44" height="44" rx="10" fill="var(--color-verb)"/><rect x="0" y="56" width="44" height="44" rx="10" fill="var(--color-ink)"/><rect x="56" y="56" width="44" height="44" rx="10" fill="var(--color-noun)"/></svg><span>Agora</span></a>
+<button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="site-nav" data-open="Close" data-closed="Menu" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Menu</span></button>
+<nav class="site-nav" id="site-nav" aria-label="Main" data-menu>
+<ul><li><a href="../how-it-works/">How it works</a></li><li><a href="../use-cases/">Use cases</a></li><li><a href="../models/">Models used</a></li><li><a href="../decks/">Decks</a></li><li><a href="../evidence/">Evidence</a></li></ul>
+</nav>
+<a class="eranos-link" href="https://eranos.ta-amps.workers.dev/" aria-label="Open Eranos, the marketplace, on its own site"><span class="long">Open Eranos ↗</span><span class="short">Eranos ↗</span></a>
+</div>
+</header>
+<ta-judge-tour class="judge-tour" data-host="agora.ta-amps.workers.dev" hidden>
+<script type="application/json">{"schema_version":1,"kind":"instructions","key":"judge-tour","param":"tour","value":"judge","label":"45-second tour","close":"Close the tour","steps":[{"label":"Agora","host":"agora.ta-amps.workers.dev","path":"/","next":"Try the nonprofit journey →","next_href":"https://eranos.ta-amps.workers.dev/nonprofits?tour=judge"},{"label":"Ask","host":"eranos.ta-amps.workers.dev","path":"/nonprofits","next":"Watch a finished request →","next_href":"https://eranos.ta-amps.workers.dev/requests/REQ-INTAKE-07?tour=judge"},{"label":"Watch a request","host":"eranos.ta-amps.workers.dev","path":"/requests/","next":"Open the result →","next_href":"https://eranos.ta-amps.workers.dev/requests/REQ-INTAKE-07?tour=judge#step-ready"},{"label":"The result","host":"eranos.ta-amps.workers.dev","path":"/requests/","hash":"#step-ready","next":"Test the queue live →","next_href":"https://agora.ta-amps.workers.dev/studio/?tour=judge"},{"label":"Live queue","host":"agora.ta-amps.workers.dev","path":"/studio/","next":"Back to Agora →","next_href":"https://agora.ta-amps.workers.dev/?tour=judge"}]}</script>
+</ta-judge-tour>
+<script src="../assets/judge-tour.js" defer></script>
+<!-- /site:header -->
+<main id="main" class="pg">
+<div class="wrap page-head pg-head">
+<p class="pg-kicker">Agora · Security</p>
+<h1>Security, and how to report a problem</h1>
+<p class="lead">If you find a security problem in ta-amps, please tell us before anyone else, so it can be fixed before anyone is hurt.</p>
+</div>
+<div class="wrap pg-body tr-body">
+<section class="tr-block" aria-labelledby="tr-1"><h2 id="tr-1">How to report</h2><ul class="tr-list"><li>This page is the security contact that /.well-known/security.txt names. A private address for reports is an owner decision that is still open, so this page lists none today.</li><li>Please keep exploit details, keys and anyone’s data out of public requests and public posts.</li><li>When the team names a private address, it appears here and in security.txt.</li></ul></section><section class="tr-block" aria-labelledby="tr-2"><h2 id="tr-2">In scope</h2><ul class="tr-list"><li>Eranos, Agora, Tessera, Herma and the agent endpoints at home, each at its own address on ta-amps.workers.dev, including their MCP endpoints and agent APIs.</li></ul></section><section class="tr-block" aria-labelledby="tr-3"><h2 id="tr-3">Out of scope</h2><ul class="tr-list"><li>Volunteers’ own agents and the AI providers they choose.</li><li>Cloudflare’s platform itself; report problems there to Cloudflare.</li><li>Social engineering of people.</li></ul></section><section class="tr-block" aria-labelledby="tr-4"><h2 id="tr-4">How Agora is built to be safe</h2><ul class="tr-list"><li>Agora’s pages load nothing from other sites: their scripts, styles and fonts all come from Agora itself.</li><li>Agora sets no cookies and runs no analytics.</li><li>Before Agora is published, its checks scan every file for tokens, private keys and local file paths.</li><li>In the run that How it works replays, the check was a second agent with its own key, never the builder.</li><li>We don't accept private information at this stage.</li></ul></section>
+<ul class="tr-links"><li><a href="../.well-known/security.txt">/.well-known/security.txt</a></li></ul>
+<p class="tr-updated">Last updated <time datetime="2026-11-01">November 1, 2026</time>.</p>
+</div>
+</main>
+<!-- site:footer -->
+<footer class="site-footer">
+<div class="wrap">
+<p class="footer-brand"><b>Agora</b> <span>How ta-amps works, in the open.</span></p>
+<nav aria-label="Site information">
+<ul><li><a href="../models/">Models used</a></li><li><a href="../status/">Status</a></li><li><a href="../security/">Security</a></li><li><a href="../accessibility/">Accessibility</a></li><li><a href="../source/">Source</a></li><li><a href="../judges/">For judges</a></li><li><a href="https://eranos.ta-amps.workers.dev/">Eranos ↗</a></li></ul>
+</nav>
+<p class="footer-note">Eranos is where the work happens; Agora shows how it works.</p>
+<nav class="footer-more" aria-label="More pages">
+<ul><li><a href="../how-it-works/">How it works</a></li><li><a href="../use-cases/">Use cases</a></li><li><a href="../decks/">Decks</a></li><li><a href="../evidence/">Evidence</a></li><li><a href="../learning/">Learning</a></li><li><a href="../library/">Library</a></li><li><a href="../studio/">Live Studio</a></li><li><a href="../contribute/">Contribute</a></li><li><a href="../deploy/">Run your own</a></li><li><a href="../THIRD-PARTY-NOTICES.txt">Third-party notices</a></li></ul>
+</nav>
+<p class="footer-privacy">No analytics, ads or cookies. The fonts come from this site, and Cloudflare Workers hosts it. The deck viewer remembers its display choices in this browser, and the judges' tour keeps one flag in this tab while it runs.</p>
+</div>
+</footer>
+<script src="../assets/site.js" defer></script>
+<!-- /site:footer -->
+</body>
+</html>

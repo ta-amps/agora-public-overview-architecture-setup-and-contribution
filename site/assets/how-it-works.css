@@ -1,7 +1,8 @@
-/* How it works, after the design board Agora-HowItWorks: a hero with the page's parts as chips, why, the map of
-   verbs and nouns, a real run replayed from its receipts, what sits underneath, and the Meta models on a dark band.
-   Verbs are rust pills, nouns blue tiles, receipts carry their hash. Colours, type and space are the site's tokens,
-   so light and dark modes follow site.css. */
+/* How it works, after the design board AgoraHowItWorks (November 1, light only): a hero with the page's parts as
+   chips, why, the map of Tasks and Task Objects, a real run replayed step by step, what sits underneath, and Meta's
+   Muse models on a light band. Tasks are rust pills and Task Objects blue tiles; a finished task is marked recorded,
+   never with a hash. Colours, type and space are the site's tokens (--task* and --object* for the two kinds). Text is
+   at least 14 px, and 13 px only for mono. */
 
 .how-head { padding-block: var(--space-8) var(--space-7); }
 .how-head .lead { max-width: 46rem; }
@@ -44,8 +45,8 @@
   max-width: 22ch;
 }
 .how-line { display: block; }
-.how-statement .noun-word { color: var(--color-noun); font-weight: inherit; }
-.how-statement .verb-word { color: var(--color-verb); font-weight: inherit; }
+.how-statement .object-word { color: var(--object); font-weight: inherit; }
+.how-statement .task-word { color: var(--task); font-weight: inherit; }
 
 .how-why-list { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); }
 .how-why-list li {
@@ -71,21 +72,19 @@
 .how-sides { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-6); }
 .how-side { display: grid; gap: var(--space-3); align-content: start; }
 .how-big { font-size: clamp(3rem, 1.9rem + 3.4vw, 4.5rem); line-height: 1; letter-spacing: -0.025em; }
-.how-side.verb .how-big { color: var(--color-verb); }
-.how-side.noun .how-big { color: var(--color-noun); }
+.how-side.task .how-big { color: var(--task); }
+.how-side.object .how-big { color: var(--object); }
 .how-side-text { font-size: 1.1875rem; color: var(--color-ink-2); }
-.how-side.verb .how-side-text strong { color: var(--color-verb-ink); }
-.how-side.noun .how-side-text strong { color: var(--color-noun-ink); }
 .how-chips { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2); }
 .how-chips li { font-weight: 600; font-size: 1.0625rem; line-height: 1.3; }
-/* Filled verb shapes use the darker verb ink, so paper text on them passes 4.5:1 (review N4: 4.34:1 before). */
-.how-chips.verb li { padding: 0.45rem 1rem; border-radius: 999px; background: var(--color-verb-ink); color: var(--color-paper); }
-.how-chips.noun li {
+/* Filled task shapes use the darker task ink, so paper text on them passes 4.5:1 (review N4: 4.34:1 before). */
+.how-chips.task li { padding: 0.45rem 1rem; border-radius: 999px; background: var(--task-text); color: var(--color-paper); }
+.how-chips.object li {
   padding: 0.35rem 0.85rem;
   border-radius: 10px;
-  border: 2px solid var(--color-noun);
-  background: var(--color-noun-wash);
-  color: var(--color-noun-ink);
+  border: 2px solid var(--object);
+  background: var(--object-wash);
+  color: var(--object-text);
 }
 .how-notes {
   list-style: none;
@@ -116,9 +115,9 @@
   font-size: var(--text-small);
 }
 .rr-facts div { display: grid; gap: 0.125rem; align-content: start; min-width: 0; }
-.rr-facts dt { color: var(--color-muted); font-size: var(--text-micro); letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600; }
+.rr-facts dt { color: var(--color-muted); font-size: 0.875rem; letter-spacing: 0.04em; text-transform: uppercase; font-weight: 600; }
 .rr-facts dd { margin: 0; color: var(--color-ink); overflow-wrap: anywhere; }
-.rr-facts a { color: var(--color-noun-ink); }
+.rr-facts a { color: var(--object-text); font-weight: 600; }
 
 /* The stage: request, then two lanes, build and review, then the request held for a person */
 
@@ -146,7 +145,7 @@
   align-items: center;
 }
 
-/* The fork: a trunk from the request, a bar between the two lanes, a branch into each lane's verb */
+/* The fork: a trunk from the request, a bar between the two lanes, a branch into each lane's task */
 .rr-request::after,
 .rr-lane::before,
 .rr-lane::after { content: ""; position: absolute; pointer-events: none; }
@@ -154,7 +153,7 @@
 .rr-lane::before { left: calc(var(--rr-gap) / -2); width: calc(var(--rr-gap) / 2 - 7px); top: 50%; border-top: 2px solid var(--rr-line); }
 .rr-lane-build::after { left: calc(var(--rr-gap) / -2); top: 50%; bottom: calc(-1 * var(--space-5)); border-left: 2px solid var(--rr-line); }
 .rr-lane-review::after { left: calc(var(--rr-gap) / -2); top: 0; height: calc(50% + 1px); border-left: 2px solid var(--rr-line); }
-.rr-lane .rr-verb::before {
+.rr-lane .rr-task::before {
   content: "";
   position: absolute;
   left: -8px;
@@ -163,60 +162,59 @@
   border-block: 6px solid transparent;
 }
 
-.rr-verb {
+.rr-task {
   position: relative;
   display: grid;
   justify-items: start;
   gap: 0.2rem;
   padding: 0.6rem 0.9rem;
   border-radius: 22px;
-  background: var(--color-verb-ink);
+  background: var(--task-text);
   color: var(--color-paper);
   line-height: 1.2;
 }
-.rr-verb-request { padding: 0.8rem 1rem; }
-.rr-kind { font-family: var(--font-mono); font-size: var(--text-micro); opacity: 0.92; }
-.rr-name { font-weight: 600; font-size: 1.0625rem; }
-.rr-verb-request .rr-name { font-size: 1.125rem; }
+.rr-task-request { padding: 0.8rem 1rem; }
+.rr-kind { font-family: var(--font-mono); font-size: 0.8125rem; }
+.rr-name { font-weight: 600; font-size: 1rem; }
+.rr-task-request .rr-name { font-size: 1.125rem; }
 
 .rr-state {
   display: inline-block;
   padding: 0 0.45rem;
   border-radius: 999px;
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   line-height: 1.5;
   background: var(--color-paper-2);
   color: var(--color-ink);
   border: 1px solid transparent;
 }
 .rr-state[data-state="done"] { background: var(--color-real-wash); color: var(--color-real); }
-.rr-state[data-state="leased"] { background: var(--color-verb-wash); color: var(--color-verb-ink); }
+.rr-state[data-state="leased"] { background: var(--task-wash); color: var(--task-text); }
 .rr-state[data-state="waiting"] { background: var(--color-needed-wash); color: var(--color-needed); border-style: dashed; border-color: currentColor; }
 .rr-state[data-state="ready"] { background: var(--color-paper-2); color: var(--color-ink); border-color: var(--color-rule-strong); }
 
 .rr-link { display: grid; place-items: center; color: var(--rr-line); }
 .rr-link .rr-arrow { width: 2rem; height: auto; }
 
-.rr-nouns { list-style: none; padding: 0; display: grid; gap: var(--space-2); }
-.rr-noun {
+.rr-objects { list-style: none; padding: 0; display: grid; gap: var(--space-2); }
+.rr-object {
   display: grid;
   gap: 0.1rem;
   padding: 0.4rem 0.75rem;
   border-radius: 12px;
-  border: 2px solid var(--color-noun);
-  background: var(--color-noun-wash);
-  color: var(--color-noun-ink);
+  border: 2px solid var(--object);
+  background: var(--object-wash);
+  color: var(--object-text);
   line-height: 1.25;
   min-width: 0;
 }
 .rr-file { font-weight: 600; font-size: 0.9375rem; overflow-wrap: anywhere; }
-.rr-sha { font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-ink-2); background: none; padding: 0; }
+.rr-detail { font-size: 0.875rem; color: var(--color-ink-2); }
 .rr-verdict { justify-self: stretch; }
 
-.rr-receipt {
+.rr-recorded {
   display: grid;
-  gap: 0.15rem;
   justify-items: start;
   padding: 0.55rem 0.8rem;
   border-radius: 12px;
@@ -224,8 +222,7 @@
   background: var(--color-real-wash);
   color: var(--color-real);
 }
-.rr-receipt-label { display: inline-flex; align-items: center; gap: 0.3rem; font-weight: 600; font-size: 0.9375rem; }
-.rr-receipt code { background: none; padding: 0; color: var(--color-ink); font-size: 0.8125rem; }
+.rr-recorded-label { display: inline-flex; align-items: center; gap: 0.3rem; font-weight: 600; font-size: 0.9375rem; }
 
 .rr-held { grid-area: held; justify-self: end; width: 10.5rem; display: grid; justify-items: center; gap: var(--space-1); color: var(--rr-line); }
 .rr-held .rr-arrow { width: 1.75rem; height: auto; transform: rotate(90deg); margin-block: 0.4rem; }
@@ -241,7 +238,7 @@
   text-align: center;
   line-height: 1.25;
 }
-.rr-held-box span { font-size: var(--text-micro); color: var(--color-ink-2); }
+.rr-held-box span { font-size: 0.875rem; color: var(--color-ink-2); }
 
 /* The replay: parts wait for their step */
 .rr-stage [data-at] { transition: opacity 320ms ease-out, transform 320ms ease-out; }
@@ -274,7 +271,7 @@
   width: 2.25rem;
   height: 2.25rem;
   border-radius: 50%;
-  background: var(--color-verb-ink);
+  background: var(--task-text);
   color: var(--color-paper);
   display: grid;
   place-items: center;
@@ -284,7 +281,7 @@
 .rr-when, .rr-title, .rr-text { grid-column: 2; }
 .rr-meta { grid-column: 3; grid-row: 1 / span 3; }
 .rr-open { grid-column: 2; align-self: end; }
-.rr-when { font-family: var(--font-mono); font-size: var(--text-micro); color: var(--color-muted); }
+.rr-when { font-family: var(--font-mono); font-size: 0.8125rem; color: var(--color-muted); }
 .rr-title { font-size: var(--text-title); line-height: 1.2; }
 .rr-text { color: var(--color-ink-2); line-height: 1.55; text-wrap: pretty; }
 .rr-meta { display: grid; grid-template-columns: minmax(5.5rem, 8.5rem) minmax(0, 1fr); gap: 0.35rem var(--space-4); align-content: start; font-size: var(--text-small); }
@@ -292,14 +289,11 @@
 .rr-meta dt { color: var(--color-muted); }
 .rr-list { list-style: none; padding: 0; display: grid; gap: 0.15rem; }
 .rr-meta dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
-.rr-meta code { font-size: 0.8125rem; }
-.rr-hash { overflow-wrap: anywhere; word-break: break-all; }
 .rr-step.rr-later { opacity: 0.42; }
-.rr-step.rr-current { border-color: var(--color-verb); box-shadow: inset 0 0 0 1px var(--color-verb); }
+.rr-step.rr-current { border-color: var(--task); box-shadow: inset 0 0 0 1px var(--task); }
 
 .rr-check { margin-top: var(--space-5); max-width: 70ch; color: var(--color-ink-2); font-size: var(--text-small); }
-.rr-files { margin-top: var(--space-4); display: grid; gap: var(--space-2); }
-.rr-files > p:first-child { font-weight: 600; font-size: var(--text-small); }
+.rr-id a { font-weight: 600; }
 
 /* Underneath */
 
@@ -331,9 +325,9 @@
 .ud-stage > .ud-link:nth-of-type(2) { grid-area: l2; }
 .ud-link { display: grid; place-items: center; color: var(--color-ink-2); }
 .ud-link .rr-arrow { width: 2.5rem; height: auto; }
-.ud-edge { grid-area: edge; position: relative; display: flex; align-items: center; justify-self: center; padding-block: var(--space-3); color: var(--color-noun); font-size: var(--text-small); }
+.ud-edge { grid-area: edge; position: relative; display: flex; align-items: center; justify-self: center; padding-block: var(--space-3); color: var(--object); font-size: var(--text-small); }
 .ud-edge .rr-arrow { width: 3rem; height: auto; transform: rotate(-90deg); }
-.ud-edge span { position: absolute; left: 100%; white-space: nowrap; color: var(--color-noun-ink); }
+.ud-edge span { position: absolute; left: 100%; white-space: nowrap; color: var(--object-text); }
 .ud-tessera {
   grid-area: tessera;
   display: flex;
@@ -350,13 +344,12 @@
 .ud-note { margin-top: var(--space-4); max-width: 70ch; color: var(--color-ink-2); }
 .ud-note + .ud-note { margin-top: var(--space-2); }
 
-/* Meta models, on the dark band */
+/* Meta's Muse models, on a light band */
 
-.how-meta { background: var(--color-band); color: var(--color-band-ink); }
+.how-meta { background: var(--color-paper-3); color: var(--color-ink); border-top: 1px solid var(--color-rule); }
 .how-meta-head { display: grid; gap: var(--space-3); max-width: 50rem; }
-.how-meta h2 { color: var(--color-band-ink); font-size: var(--text-section); line-height: 1.05; letter-spacing: -0.02em; }
-.how-meta-head p { color: var(--color-band-ink-2); font-size: 1.0625rem; }
-.how-meta code { background: rgb(255 255 255 / 0.08); color: var(--color-band-ink); }
+.how-meta h2 { color: var(--color-ink); font-size: var(--text-section); line-height: 1.05; letter-spacing: -0.02em; }
+.how-meta-head p { color: var(--color-ink-2); font-size: 1.0625rem; }
 .how-results { list-style: none; padding: 0; margin-top: var(--space-6); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); }
 .how-result {
   display: grid;
@@ -365,10 +358,10 @@
   min-width: 0;
   padding: var(--space-5);
   border-radius: var(--radius-2);
-  border: 1px solid rgb(255 255 255 / 0.14);
-  background: rgb(255 255 255 / 0.03);
+  border: 1px solid var(--color-rule);
+  background: var(--color-paper-2);
 }
-.how-result-model { font-family: var(--font-mono); font-size: var(--text-micro); letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-band-verb); }
+.how-result-model { font-weight: 600; font-size: 1rem; color: var(--task-text); }
 .how-result-figure {
   display: flex;
   flex-wrap: wrap;
@@ -381,14 +374,12 @@
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
 }
-.how-result-before { color: var(--color-band-ink-2); opacity: 0.75; }
-.how-result-after { color: var(--color-band-noun); }
-.how-result-figure .rr-arrow { width: 1.75rem; height: auto; color: var(--color-band-ink-2); }
-.how-result-line { color: var(--color-band-ink-2); font-size: var(--text-small); line-height: 1.55; text-wrap: pretty; }
-.how-result-evidence { font-size: var(--text-small); color: var(--color-band-ink-2); }
+.how-result-before { color: var(--color-ink-2); }
+.how-result-after { color: var(--object-text); }
+.how-result-figure .rr-arrow { width: 1.75rem; height: auto; color: var(--color-ink-2); }
+.how-result-line { color: var(--color-ink-2); font-size: var(--text-small); line-height: 1.55; text-wrap: pretty; }
+.how-result-evidence { font-size: var(--text-small); color: var(--color-ink-2); }
 .how-result-evidence span { margin-inline-end: var(--space-2); }
-.how-result-evidence a,
-.how-meta .use-link { color: var(--color-band-noun); }
 .how-meta-links { margin-top: var(--space-5); }
 
 /* Narrower screens */
@@ -417,17 +408,17 @@
   .rr-lane::before { left: -1.25rem; width: calc(1.25rem - 7px); top: 1.4rem; }
   .rr-lane-build::after { left: -1.25rem; top: calc(-1 * var(--space-4)); bottom: calc(-1 * var(--space-5)); }
   .rr-lane-review::after { left: -1.25rem; top: 0; height: calc(1.4rem + 1px); }
-  .rr-lane .rr-verb::before { top: calc(1.4rem - 6px); }
-  .rr-lane .rr-verb { min-width: 12rem; }
+  .rr-lane .rr-task::before { top: calc(1.4rem - 6px); }
+  .rr-lane .rr-task { min-width: 12rem; }
   .rr-link { width: 2rem; height: 2rem; margin-left: 1rem; }
   .rr-link .rr-arrow { width: 1.75rem; transform: rotate(90deg); }
-  .rr-nouns, .rr-verdict, .rr-receipt { width: min(100%, 22rem); }
+  .rr-objects, .rr-verdict, .rr-recorded { width: min(100%, 22rem); }
   .rr-held { justify-self: start; width: min(calc(100% - 2.5rem), 22rem); margin-left: 2.5rem; justify-items: start; }
   .rr-held .rr-arrow { margin-left: 1.125rem; }
   .ud-stage { grid-template-columns: minmax(0, 1fr) 1.5rem minmax(0, 1fr) 1.5rem minmax(0, 1fr); }
   .ud-node { min-height: 4.5rem; padding: var(--space-2); font-size: 0.9375rem; }
   .ud-herma strong { font-size: 0.9375rem; }
-  .ud-herma span { font-size: 0.8125rem; }
+  .ud-herma span { font-size: 0.875rem; }
   .ud-link .rr-arrow { width: 1.25rem; }
   .ud-edge .rr-arrow { width: 2.25rem; }
 }
@@ -444,18 +435,9 @@
   .ud-tessera span { font-size: 0.8125rem; }
 }
 
-/* In dark mode the band colour is the card colour, so the dark boxes keep an edge. */
-[data-mode="dark"] .how-under,
-[data-mode="dark"] .ud-herma { box-shadow: inset 0 0 0 1px var(--color-rule-strong); }
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-mode]) .how-under,
-  :root:not([data-mode]) .ud-herma { box-shadow: inset 0 0 0 1px var(--color-rule-strong); }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .rr-stage [data-at],
-  .rr-verb,
+  .rr-task,
   .rr-step { transition: none; }
   .rr-stage .rr-off { transform: none; }
 }

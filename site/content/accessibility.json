@@ -1,0 +1,45 @@
+{
+  "about": "The accessibility statement, /accessibility/, as one Task Object (the TrustPages board, November 1, 2026). Every line must be true on the day it is published, and each line under 'What we do' names the check that keeps it true (proof_by), which tests/test_pages_nov1.py runs. 'Known gaps' lists only what an audit found, with its date; no audit is on record, and the page says so rather than listing none.",
+  "title": "Accessibility | Agora",
+  "description": "Agora's accessibility statement: what the site does for people who use a keyboard or reduced motion, what no audit has checked, and how to reach the team.",
+  "kicker": "Agora · Accessibility",
+  "heading": "Accessibility",
+  "intro": "We aim for WCAG 2.2 level AA on Agora, and we say plainly where we fall short.",
+  "blocks": [
+    {
+      "heading": "What we do",
+      "items": [
+        {
+          "text": "Every page starts with a link that skips straight to its main content.",
+          "proof_by": "skip link"
+        },
+        {
+          "text": "Links, buttons and other controls show a clear focus ring when you reach them with a keyboard.",
+          "proof_by": "focus ring"
+        },
+        {
+          "text": "Agora has one light theme, and its body text and links pass WCAG AA contrast on its paper.",
+          "proof_by": "contrast"
+        },
+        {
+          "text": "When your device asks for reduced motion, the replay on How it works changes steps in place, without moving.",
+          "proof_by": "reduced motion"
+        }
+      ]
+    },
+    {
+      "heading": "Known gaps",
+      "items": [
+        "No full accessibility audit of Agora is on record. When one runs, what it finds is listed here with its date."
+      ]
+    },
+    {
+      "heading": "Tell us",
+      "items": [
+        "A contact for accessibility reports is an owner decision that is still open, so this page lists none today. When one is named, it appears here."
+      ]
+    }
+  ],
+  "updated_label": "Last checked",
+  "updated": "2026-11-01"
+}
