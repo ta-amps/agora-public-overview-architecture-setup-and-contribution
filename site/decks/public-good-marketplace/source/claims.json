@@ -1,5 +1,5 @@
 {
-  "about": "Every number on these slides, with its source. All examples use made-up data. Live facts were read from public, read-only endpoints on October 30, 2026 at 07:09 UTC, after Tessera's redeploy at 06:53 UTC and Eranos's at 06:55 UTC; nothing that changes state was called, and no request was sent.",
+  "about": "Every number on these slides, with its source. All examples use example data. Live facts were read from public, read-only endpoints on October 30, 2026 at 07:09 UTC, after Tessera's redeploy at 06:53 UTC and Eranos's at 06:55 UTC; nothing that changes state was called, and no request was sent.",
   "as_of": "2026-10-30",
   "claims": [
     {
@@ -34,7 +34,7 @@
       "slide": "status",
       "number": "14 example kits pass build, check and review on a desktop computer",
       "status": "measured",
-      "source": "Eranos's /api/examples at 07:09 UTC: 14 recorded example runs on a desktop computer, with made-up data and 0 model calls, each ending published to a local catalog after building, checking and an independent review, recorded at 04:31 UTC on October 30, 2026. Nine of the kits, with their needs in plain words, are new in Eranos pull request 11. No hosted volunteer run is claimed.",
+      "source": "Eranos's /api/examples at 07:09 UTC: 14 recorded example runs on a desktop computer, with example data and 0 model calls, each ending published to a local catalog after building, checking and an independent review, recorded at 04:31 UTC on October 30, 2026. Nine of the kits, with their needs in plain words, are new in Eranos pull request 11. No hosted volunteer run is claimed.",
       "link": "https://eranos.ta-amps.workers.dev/api/examples"
     },
     {

@@ -121,7 +121,7 @@
       "reviewer": "Reviewer",
       "model": "Model",
       "data": "Data",
-      "data_text": "Made-up data only. The public receipt records that no private or nonprofit data and no credential was sent.",
+      "data_text": "Example data only. The public receipt records that no private or nonprofit data and no credential was sent.",
       "spend": "Recorded spend",
       "actual": "actual",
       "conservative": "conservative",
@@ -221,7 +221,7 @@
   "meta": {
     "heading": "Built on Meta models",
     "lead_before": "Both agents in the run above called",
-    "lead_after": "through Meta’s model API. Tuned Llama 3.2 and Muse Glimmer models were also measured on tests we wrote. Each result below is the learning page’s, with its evidence.",
+    "lead_after": "through Meta’s model API. Tuned Llama 3.2 and Muse Glimmer models were also measured on our evaluations. Each result below is the learning page’s, with its evidence.",
     "to": "to",
     "evidence": "Evidence",
     "results": [

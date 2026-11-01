@@ -21,7 +21,7 @@
     "heading": "A public-good marketplace",
     "summary": "Eranos, the two-sided marketplace: nonprofits say what they need in plain words, and spare AI capacity does the work.",
     "description": "The Eranos deck: people donate spare AI capacity, and nonprofits type what they need. The first step sorts each request: parts that touch private files become an agent kit for the nonprofit’s own agent, parts that public information can answer are done by donated agents, and a different volunteer reviews every part. How a kit is made, what stays with people, and where it stands.",
-    "intro": "Eranos is live at eranos.ta-amps.workers.dev. Every example uses made-up data, and the numbers on these slides are listed below with their sources.",
+    "intro": "Eranos is live at eranos.ta-amps.workers.dev. Every example uses example data, and the numbers on these slides are listed below with their sources.",
     "date": "2026-10-30",
     "date_text": "October 30, 2026",
     "pdf": "ta-amps-public-good-marketplace.pdf",

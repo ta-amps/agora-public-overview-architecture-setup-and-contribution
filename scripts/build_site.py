@@ -566,16 +566,30 @@ def repoint(content: str, links: dict) -> str:
 
 # Plain words instead of "synthetic" (owner, October 31: "DO NOT INCLUDE SYNTHETIC") ---------------------------
 
-WE_WROTE = (r"(?:tool-call |150-row |normalized )?(?:test cases|test data|tests?|holdouts?|benchmarks?|evaluations|"
-            r"slot templates|templates|training rows|rows|tasks?|workloads|swarm traces|periodic scores)")
+# The owner's style for anything about tests: tests, evaluations, accuracy, performance; data and cases are examples.
 PLAIN_RULES = [
-    (re.compile(r"\bsynthetic_disclosure\b"), "made_up_disclosure"),  # a video check's name, shown in a table
+    (re.compile(r"\bsynthetic_disclosure\b"), "example_data_disclosure"),  # a video check's name, shown in a table
     (re.compile(r"\ba synthetic voice\b", re.I), "an AI voice"),
     (re.compile(r"\bsynthetic voice\b", re.I), "AI voice"),
-    (re.compile(r"\bsynthetic[- ]only\b", re.I), "made-up-data-only"),
+    (re.compile(r"\bsynthetic[- ]only\b", re.I), "example-data-only"),
     (re.compile(r"\banything synthetic\b", re.I), "anything made up"),
-    (re.compile(r"\bsynthetic (" + WE_WROTE + r")\b", re.I), r"\1 we wrote"),
-    (re.compile(r"\bsynthetic\b", re.I), "made-up"),
+    (re.compile(r"\b(?:a )?frozen, synthetic tool-call test of 150 rows\b", re.I), "a fixed 150-task evaluation"),
+    (re.compile(r"\bscored on synthetic tests\b", re.I), "measured on our evaluations"),
+    (re.compile(r"\bsynthetic 150-row test\b", re.I), "150-task evaluation"),
+    (re.compile(r"\bsynthetic tool-call tests?\b", re.I), "tool-call evaluation"),
+    (re.compile(r"\bsynthetic (pre-registered )?holdouts\b", re.I), r"\1held-out evaluations"),
+    (re.compile(r"\bsynthetic (pre-registered )?holdout\b", re.I), r"\1held-out evaluation"),
+    (re.compile(r"\bsynthetic test (cases|data)\b", re.I), r"example test \1"),
+    (re.compile(r"\bsynthetic (tests|evaluations)\b", re.I), "our evaluations"),
+    (re.compile(r"\bsynthetic test\b", re.I), "our evaluation"),
+    (re.compile(r"\bsynthetic tasks\b", re.I), "our evaluation tasks"),
+    (re.compile(r"\ba synthetic task\b", re.I), "an evaluation task"),
+    (re.compile(r"\bsynthetic task\b", re.I), "evaluation task"),
+    (re.compile(r"\bsynthetic (normalized )?benchmark(s?)\b", re.I), r"our \1benchmark\2"),
+    (re.compile(r"\bsynthetic ((?:slot )?templates|(?:template |training )?rows)\b", re.I), r"\1"),
+    (re.compile(r"\bis synthetic\b", re.I), "is made up"),
+    (re.compile(r"\ba synthetic\b", re.I), "an example"),
+    (re.compile(r"\bsynthetic\b", re.I), "example"),
 ]
 
 
@@ -588,12 +602,12 @@ def _match_case(found: str, replacement: str) -> str:
 
 
 def plain_words(content: str) -> str:
-    """Every "synthetic" a page or noun would show, in plain words that keep the same honesty: data and cases are
-    made up, tests and tasks are ones we wrote. Keys and class names are rewritten too, so nothing renders it."""
+    """Every "synthetic" a page or noun would show, in the owner's plain words with the same honesty: tests become
+    our evaluations, data and cases become example data and cases, a synthetic voice an AI voice."""
     for pattern, replacement in PLAIN_RULES:
         content = pattern.sub(lambda m: _match_case(m.group(0), m.expand(replacement)), content)
-    return content.replace("made-up-data-only", "made-up data only").replace("Made-up-data-only", "Made-up data only") \
-        .replace("MADE-UP-DATA-ONLY", "MADE-UP DATA ONLY")
+    return content.replace("example-data-only", "example data only").replace("Example-data-only", "Example data only") \
+        .replace("EXAMPLE-DATA-ONLY", "EXAMPLE DATA ONLY")
 
 
 # Slides --------------------------------------------------------------------------------------------

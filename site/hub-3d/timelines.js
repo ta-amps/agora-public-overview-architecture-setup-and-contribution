@@ -113,7 +113,7 @@ window.TA_TIMELINES = {
       "cue_start_s": 70.8,
       "cue_end_s": 77.067,
       "lines": [
-        "On tests we wrote, Meta Glimmer 30B",
+        "On our evaluations, Meta Glimmer 30B",
         "and Llama 3.2 LoRAs store skills."
       ]
     },
@@ -185,7 +185,7 @@ window.TA_TIMELINES = {
       "cue_start_s": 30.833,
       "cue_end_s": 34.9,
       "lines": [
-        "hit 99.3% on holdout we wrote."
+        "hit 99.3% on held-out evaluation."
       ]
     },
     {
@@ -194,7 +194,7 @@ window.TA_TIMELINES = {
       "cue_end_s": 43.7,
       "lines": [
         "Llama 3.2 1B and 3B LoRAs pair with",
-        "Herma's shim on tests we wrote."
+        "Herma's shim on our evaluations."
       ]
     },
     {

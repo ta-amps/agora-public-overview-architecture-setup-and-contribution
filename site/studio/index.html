@@ -129,7 +129,7 @@
         <div class="panel-intro panel-intro-compact">
           <div class="panel-intro-top">
             <span class="kicker kicker-emerald">Public-Good Flow · Tessera CAS + Queue + Herma + Eranos Verifier</span>
-            <span class="made-up-pill">Use made-up details only</span>
+            <span class="example-pill">Use example details only</span>
           </div>
           <p class="panel-desc">Choose a nonprofit brief and click <strong>Submit NGO Task</strong>. The page makes real calls in order: it stores the request as <code>noun.request</code> in Tessera, enqueues <code>verb.build_agent_kit</code>, claims that verb itself (this browser plays the worker), asks Herma for guardrails, sends the brief's kit draft to Eranos's practice check, stores it as <code>noun.agent_kit</code> over MCP with <code>review_gate: held_for_person</code>, and submits the verb. It stops at the first call that fails and shows that service's own status and error.</p>
         </div>
@@ -139,7 +139,7 @@
             <span class="field-label">1. Choose a nonprofit brief</span>
             <span class="field-hint">Never enter real personal, medical, or payment data (Tessera's demo sessions refuse it)</span>
           </div>
-          <div class="preset-grid" role="radiogroup" aria-label="Made-up NGO presets">
+          <div class="preset-grid" role="radiogroup" aria-label="Example NGO presets">
             <button type="button" class="preset-card is-selected" data-ngo-preset="clinic" role="radio" aria-checked="true">
               <span class="preset-tag">KIT-CLINIC-01 · Volunteer SOP</span>
               <strong class="preset-title">Free Clinic Weekend Shift Roster</strong>
@@ -159,8 +159,8 @@
 
           <div class="ngo-constraint-row">
             <div class="ngo-constraint-col">
-              <label class="field-label" for="ngo-constraint-input">2. The organization's constraint, in plain words (made-up details only)</label>
-              <textarea id="ngo-constraint-input" class="ngo-textarea" rows="2" maxlength="500">MADE-UP DATA ONLY: Match bilingual greeters, supply leads, and licensed nurse leads across Saturday and Sunday shifts using role IDs only; route any clinical or crisis question to human_only medical lead.</textarea>
+              <label class="field-label" for="ngo-constraint-input">2. The organization's constraint, in plain words (example details only)</label>
+              <textarea id="ngo-constraint-input" class="ngo-textarea" rows="2" maxlength="500">EXAMPLE DATA ONLY: Match bilingual greeters, supply leads, and licensed nurse leads across Saturday and Sunday shifts using role IDs only; route any clinical or crisis question to human_only medical lead.</textarea>
             </div>
             <div class="ngo-submit-col">
               <button type="button" class="btn btn-emerald btn-tall" id="ngo-submit-btn" data-needs-session>

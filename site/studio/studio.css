@@ -562,7 +562,7 @@ body.is-embedded .quick-links {
 .kicker-amber { color: var(--amber-bright); }
 
 .metric-chip,
-.made-up-pill {
+.example-pill {
   font-family: var(--font-mono);
   font-size: 11px;
   padding: 2px 8px;
@@ -572,7 +572,7 @@ body.is-embedded .quick-links {
   color: var(--text-secondary);
 }
 
-.made-up-pill {
+.example-pill {
   border-color: rgba(245, 158, 11, 0.4);
   color: #fde68a;
   background: rgba(120, 53, 15, 0.24);

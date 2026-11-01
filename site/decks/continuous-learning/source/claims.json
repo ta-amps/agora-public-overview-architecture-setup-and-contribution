@@ -1,19 +1,19 @@
 {
-  "about": "Every number on these slides and in their speaker notes, with its source. All of them come from tasks we wrote, measured on October 29, 2026. The learning page, site/content/learning.json, uses the same numbers.",
+  "about": "Every number on these slides and in their speaker notes, with its source. All of them come from our evaluation tasks, measured on October 29, 2026. The learning page, site/content/learning.json, uses the same numbers.",
   "as_of": "2026-10-30",
   "claims": [
     {
       "slide": "why",
       "number": "Llama 3.2 1B and 3B, unchanged, on the same frozen 150-row test: exact match 12.0% and 52.0%; typed values written as strings in 8.3% and 17.5% of calls",
       "status": "measured",
-      "source": "Tessera’s continuous-tuning record: the unchanged base models on the frozen, tool-call test we wrote. A typed value written as a string, such as a quoted number, makes a strict server reject the call.",
+      "source": "Tessera’s continuous-tuning record: the unchanged base models on the frozen, tool-call evaluation. A typed value written as a string, such as a quoted number, makes a strict server reject the call.",
       "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md"
     },
     {
       "slide": "why",
       "number": "Muse Glimmer 30B, unchanged, on a fresh 150-row test: exact match 93.3%, valid JSON 96.7%",
       "status": "measured",
-      "source": "The base model’s scores in the published run record, on a fresh, tool-call test we wrote whose hashes were registered before scoring.",
+      "source": "The base model’s scores in the published run record, on a fresh, tool-call evaluation whose hashes were registered before scoring.",
       "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/glimmer-30b-2026-10-29/README.md"
     },
     {
@@ -46,7 +46,7 @@
     },
     {
       "slide": "small-models",
-      "number": "Llama 3.2 1B, rounds 0 to 4 on the frozen, 150-row test we wrote: exact match 12.0%, 43.3%, 43.3%, 50.7% and 50.7%; promoted in rounds 1 and 3",
+      "number": "Llama 3.2 1B, rounds 0 to 4 on the frozen, 150-task evaluation: exact match 12.0%, 43.3%, 43.3%, 50.7% and 50.7%; promoted in rounds 1 and 3",
       "status": "measured",
       "source": "Tessera’s continuous-tuning record: one local GPU, one seed per configuration. Rounds 2 and 4 did not beat the champion, so the pre-registered rule kept it.",
       "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md"
@@ -76,7 +76,7 @@
       "slide": "small-models",
       "number": "Llama 3.2 3B (Hybrid LoRA + Compact Pointer): exact recall 64.2% to 91.7% on a 120-row test with a 38.5-token pointer, cutting shim tokens by 91.0% vs a 427.6-token BM25 shim (8 of 8 reload check)",
       "status": "measured",
-      "source": "Local RTX 3060 LoRA-as-Memory paired with a 1-line compact pointer for live post-training delta Task Objects; made-up data only, nothing admitted or deployed.",
+      "source": "Local RTX 3060 LoRA-as-Memory paired with a 1-line compact pointer for live post-training delta Task Objects; example data only, nothing admitted or deployed.",
       "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/meta-evals-2026-10-31/README.md"
     },
     {
@@ -137,7 +137,7 @@
     },
     {
       "slide": "free-gpus",
-      "number": "Muse Glimmer 30B QLoRA on Kaggle’s two free T4 GPUs: 64 training steps in 83 minutes, on 511 rows we wrote",
+      "number": "Muse Glimmer 30B QLoRA on Kaggle’s two free T4 GPUs: 64 training steps in 83 minutes, on 511 rows",
       "status": "measured",
       "source": "The 511-row run record: 64 steps and 4,997.5 seconds of training, with each stage, library version and the peak memory of both GPUs recorded. The whole job took 8,789.5 seconds. The notebooks themselves aren’t public yet.",
       "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/glimmer-30b-2026-10-29/phase2b-tuning511-summary.json"

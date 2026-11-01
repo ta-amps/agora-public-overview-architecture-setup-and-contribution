@@ -5,7 +5,7 @@
 <div style="flex:1.1;display:flex;flex-direction:column;justify-content:center;gap:16px">
 <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#F0884F;letter-spacing:1px">MUSE GLIMMER 30B · QLORA ON FREE CLOUD GPUS</p>
 <p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:124px;font-weight:700;line-height:1.02;color:#6FA3F0;white-space:nowrap"><span style="color:#8C96A6">93.3%</span> → 99.3%</p>
-<p style="font-size:30px;line-height:1.4;color:#C8D0DC">Exact match on a fresh 150-row test whose hashes were registered before scoring. Trained on 511 rows we wrote.</p>
+<p style="font-size:30px;line-height:1.4;color:#C8D0DC">Exact match on a fresh 150-row test whose hashes were registered before scoring. Trained on 511 rows.</p>
 </div>
 <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;gap:20px">
 <div style="background:#1B2230;border-radius:18px;padding:26px 30px;display:flex;flex-direction:column;gap:6px">
@@ -31,6 +31,6 @@
 <p style="font-size:26px;line-height:1.4;color:#C8D0DC">Valid JSON rose from 96.7% to 100.0% and correct refusals from 97.3% to 99.3%, with 0 test rows matching the 511 training rows.</p>
 </div>
 <svg aria-label="ta-amps mark" width="32" height="32" viewBox="0 0 32 32" style="position:absolute;left:128px;bottom:64px;width:32px;height:32px"><rect x="0" y="0" width="14" height="14" rx="3" fill="#6FA3F0"/><rect x="18" y="0" width="14" height="14" rx="3" fill="#F0884F"/><rect x="0" y="18" width="14" height="14" rx="3" fill="#C8D0DC"/><rect x="18" y="18" width="14" height="14" rx="3" fill="#6FA3F0"/></svg>
-<p style="position:absolute;left:176px;bottom:64px;width:1616px;font-size:24px;color:#8C96A6">What we measured · Muse Glimmer 30B, tasks we wrote</p>
-<aside>The largest model we tuned is Muse Glimmer 30B, with QLoRA on free cloud GPUs and 511 training rows we wrote. It was scored on a fresh 150-row test built after training, with its hashes registered before scoring. Exact match rose from 93.3% to 99.3%, a gain of 6.0 points with a 95% interval of 2.0 to 10.7: 10 rows got better and 1 got worse. Valid JSON went from 96.7% to 100.0%, and no test row matched a training row. The promotion rule, fixed before scoring, passed all 12 checks, and a fresh reload of the adapter reproduced its replies on 8 of 8 rows. On the frozen development test it went from 87.3% to 98.7%. The rule said promote, but nothing has been promoted or admitted, and the adapter weights aren’t published.</aside>
+<p style="position:absolute;left:176px;bottom:64px;width:1616px;font-size:24px;color:#8C96A6">What we measured · Muse Glimmer 30B, our evaluation tasks</p>
+<aside>The largest model we tuned is Muse Glimmer 30B, with QLoRA on free cloud GPUs and 511 training rows. It was scored on a fresh 150-row test built after training, with its hashes registered before scoring. Exact match rose from 93.3% to 99.3%, a gain of 6.0 points with a 95% interval of 2.0 to 10.7: 10 rows got better and 1 got worse. Valid JSON went from 96.7% to 100.0%, and no test row matched a training row. The promotion rule, fixed before scoring, passed all 12 checks, and a fresh reload of the adapter reproduced its replies on 8 of 8 rows. On the frozen development test it went from 87.3% to 98.7%. The rule said promote, but nothing has been promoted or admitted, and the adapter weights aren’t published.</aside>
 </section>

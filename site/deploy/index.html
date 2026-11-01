@@ -114,7 +114,7 @@ vllm serve meta-llama/Llama-3.2-3B-Instruct \
 kaggle kernels push -p training/kaggle-glimmer-lora/
 
 # 3. Run governed multi-harness E2E (Muse Code builder != nanoMuse reviewer) on api.meta.ai:
-# Enforces muse-spark-1.3-contributor ONLY on made-up/public data (HTTP 403 on private scopes):
+# Enforces muse-spark-1.3-contributor ONLY on example/public data (HTTP 403 on private scopes):
 META_API_MODEL=muse-spark-1.3-contributor python3 examples/meta_stack/run_governed_e2e.py</code></pre>
 </div></li><li class="deploy-card" id="slice-partners"><p class="deploy-badge">Modal · Baseten 2M TPM · Fireworks ($100 event credits each)</p><h3>Slice E: Event inference &amp; training partner cascade (Modal, Baseten, Fireworks)</h3><p class="deploy-summary">Combine event partner credits into a 5-tier open-weights cascade (80.7% cost reduction in local_verified simulation: $1.84 vs $9.50 per 1,000 requests): Herma &lt;2 ms shims -&gt; Modal serverless QLoRA &amp; isolated verification sandboxes (Muse Glimmer 30B NF4 19.7 GiB on A100-40GB, Llama 3.2 3B 5.4 GiB on L4-24GB) -&gt; Fireworks specialist multi-LoRA &amp; rubric verification -&gt; Baseten 2M TPM high-concurrency worker burst -&gt; Muse Spark 1.3.</p><p class="deploy-when">Best when bursting parallel worker swarms up to 2M TPM on Baseten, fine-tuning new QLoRA adapters from verified Tessera traces on Modal GPUs, or serving multi-LoRA specialists on Fireworks.</p><div class="deploy-code-wrap">
 <div class="deploy-code-bar">

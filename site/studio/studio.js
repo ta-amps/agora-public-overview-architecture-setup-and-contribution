@@ -21,7 +21,7 @@
       id: "clinic",
       label: "Free Clinic Weekend Shift Roster",
       constraint:
-        "MADE-UP DATA ONLY: Match bilingual greeters, supply leads, and licensed nurse leads across Saturday and Sunday shifts using role IDs only; route any clinical or crisis question to human_only medical lead.",
+        "EXAMPLE DATA ONLY: Match bilingual greeters, supply leads, and licensed nurse leads across Saturday and Sunday shifts using role IDs only; route any clinical or crisis question to human_only medical lead.",
       hermaPrompt:
         "Design a nonprofit free clinic weekend volunteer intake and shift roster workflow with strict human-only safety boundaries",
       draft: {
@@ -31,7 +31,7 @@
         spdx_license: "Apache-2.0",
         title: "Free Clinic Weekend Shift Roster and Escalation Kit",
         summary:
-          "Equips volunteer-run free clinics with made-up shift roster checks, bilingual role cards, and strict human-only clinical escalation gates.",
+          "Equips volunteer-run free clinics with example shift roster checks, bilingual role cards, and strict human-only clinical escalation gates.",
         target_org: "Community Free Clinic Volunteer Desk (example.org)",
         drafted_by: "agora-studio-preset",
         steps: [
@@ -42,7 +42,7 @@
             boundary: "drafts",
             actor: "Volunteer agent",
             guidance:
-              "Compare made-up weekend shift slots against required bilingual greeter and nurse-lead roles."
+              "Compare example weekend shift slots against required bilingual greeter and nurse-lead roles."
           },
           {
             id: "clinical_safety_escalation",
@@ -66,10 +66,10 @@
         skill: {
           name: "clinic-shift-roster-drafter",
           description:
-            "Drafts privacy-safe weekend volunteer shift rosters and role handoff cards from slot templates we wrote.",
+            "Drafts privacy-safe weekend volunteer shift rosters and role handoff cards from slot templates.",
           boundary: "drafts",
           instructions:
-            "Verify coverage across intake desk, interpreter support, and supply restock slots using made-up role IDs only. Flag uncovered shifts and hold all individual schedule approvals for the human coordinator.",
+            "Verify coverage across intake desk, interpreter support, and supply restock slots using example role IDs only. Flag uncovered shifts and hold all individual schedule approvals for the human coordinator.",
           refuses: [
             "Triaging medical symptoms or clinical urgency",
             "Storing real volunteer phone numbers or personal email addresses"
@@ -90,7 +90,7 @@
           output_fields: ["covered_roles", "open_gaps", "requires_coordinator_signoff"]
         },
         checklist: [
-          "Confirm every shift slot uses made-up role placeholders with zero personal contact data.",
+          "Confirm every shift slot uses example role placeholders with zero personal contact data.",
           "Verify licensed medical lead sign-off is scheduled before Saturday clinic doors open.",
           "Keep crisis safety planning and individual volunteer assignments strictly human_only."
         ],
@@ -127,7 +127,7 @@
       id: "pantry",
       label: "Community Food Pantry Multilingual Triage",
       constraint:
-        "MADE-UP DATA ONLY: Match Spanish, Cantonese, and English pantry hours and allergy-safe box rules from public schedules; keep all household eligibility decisions and interviews strictly human_only.",
+        "EXAMPLE DATA ONLY: Match Spanish, Cantonese, and English pantry hours and allergy-safe box rules from public schedules; keep all household eligibility decisions and interviews strictly human_only.",
       hermaPrompt:
         "Design a nonprofit multilingual food pantry intake and warm-referral workflow keeping interviews human-only",
       draft: {
@@ -172,7 +172,7 @@
         skill: {
           name: "pantry-multilingual-matcher",
           description:
-            "Matches made-up language tags and dietary constraints to published pantry windows and partner hubs.",
+            "Matches example language tags and dietary constraints to published pantry windows and partner hubs.",
           boundary: "assists",
           instructions:
             "Compare requested language code and dietary flags against open distribution slots. Never deny eligibility or contact households automatically.",
@@ -198,7 +198,7 @@
         checklist: [
           "Verify published pantry hours and interpreter availability were checked within the last 7 days.",
           "Keep all household interviews and special-delivery approvals strictly human_only.",
-          "Use made-up household tokens only and never copy names or phone numbers into public prompts."
+          "Use example household tokens only and never copy names or phone numbers into public prompts."
         ],
         sources: [
           {
@@ -233,7 +233,7 @@
       id: "shelter",
       label: "Emergency Shelter Bed & Supply Matcher",
       constraint:
-        "MADE-UP DATA ONLY: Reconcile made-up cot counts, blanket inventory, and ADA-accessible bay readiness before night shift handoff; keep crisis safety planning and individual placements human_only.",
+        "EXAMPLE DATA ONLY: Reconcile example cot counts, blanket inventory, and ADA-accessible bay readiness before night shift handoff; keep crisis safety planning and individual placements human_only.",
       hermaPrompt:
         "Design an emergency winter warming shelter bed and supply readiness workflow keeping crisis safety plans human-only",
       draft: {
@@ -243,7 +243,7 @@
         spdx_license: "Apache-2.0",
         title: "Emergency Shelter Bed and Supply Matcher Kit",
         summary:
-          "Reconciles made-up warming-shelter cot counts, ADA bay readiness, and blanket stock before night shift handoff under human steward control.",
+          "Reconciles example warming-shelter cot counts, ADA bay readiness, and blanket stock before night shift handoff under human steward control.",
         target_org: "Winter Warming Shelter Operations Desk (example.org)",
         drafted_by: "agora-studio-preset",
         steps: [
@@ -254,7 +254,7 @@
             boundary: "drafts",
             actor: "Volunteer agent",
             guidance:
-              "Check made-up bay capacity and thermal blanket counts before evening intake opens."
+              "Check example bay capacity and thermal blanket counts before evening intake opens."
           },
           {
             id: "shelter_crisis_plan",
@@ -278,7 +278,7 @@
         skill: {
           name: "shelter-supply-readiness-drafter",
           description:
-            "Drafts shift-start bed, ADA bay, and winter supply readiness summaries from made-up shelter counters.",
+            "Drafts shift-start bed, ADA bay, and winter supply readiness summaries from example shelter counters.",
           boundary: "drafts",
           instructions:
             "Calculate open standard cots, accessible ground-floor bays, and clean blanket kits against minimum night buffer thresholds. Hold overflow routing for the human supervisor.",
@@ -3203,7 +3203,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     clean:
       "---\n" +
       "name: ngo-kit-reviewer\n" +
-      "description: Use when verifying submitted NGO seed-pack JSON manifests and made-up CSV fixtures; read-only and never mutates live queues.\n" +
+      "description: Use when verifying submitted NGO seed-pack JSON manifests and example CSV fixtures; read-only and never mutates live queues.\n" +
       "model: inherit\n" +
       "tools: [read_file, search_nouns, practice_verify_kit]\n" +
       "permissions: read-only\n" +
@@ -3214,7 +3214,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     fluff:
       "---\n" +
       "name: pantry-roster-auditor\n" +
-      "description: Audits made-up volunteer shift CSV schedules and JSON schemas in read-only local mode without mutating external services.\n" +
+      "description: Audits example volunteer shift CSV schedules and JSON schemas in read-only local mode without mutating external services.\n" +
       "model: inherit\n" +
       "tools: [read_file, search_nouns]\n" +
       "permissions: read-only\n" +

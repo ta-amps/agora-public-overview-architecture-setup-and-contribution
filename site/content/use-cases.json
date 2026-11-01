@@ -13,7 +13,7 @@
       "home": {"title": "Spare tokens for good", "line": "Nonprofits ask in plain words; volunteers’ agents do the work.", "live_href": "https://eranos.ta-amps.workers.dev/"},
       "line": "Spare tokens for good. It comes first because AI has to help everyone, not just the tech world. People donate AI capacity they won’t use, and nonprofits type what they need in plain words.",
       "detail": "Donated agents do the parts that public information can answer, with citations. Parts that touch private files become agent kits the nonprofit’s own agent runs.",
-      "nouns": ["Requests", "Cited reports", "Agent kits", "Test cases we wrote", "Reviews"],
+      "nouns": ["Requests", "Cited reports", "Agent kits", "Example test cases", "Reviews"],
       "verbs": ["Sort and split a request", "Do the public part", "Build a kit", "Review it", "Deliver it"],
       "packs": ["public-good-kits", "policy-and-law-watch", "public-budget-report", "kit-handwritten-statements", "kit-food-bank-pickups"],
       "links": [
