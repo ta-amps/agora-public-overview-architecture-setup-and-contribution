@@ -318,8 +318,13 @@ class Builder(unittest.TestCase):
         self.assertIn("2 min 10 s", page)
         self.assertIn('href="../../evidence/"', page)
         self.assertIsNone(re.search(r"\b[0-9a-f]{12,}\b", build.plain_text(build.main_of(page))))
-        self.assertEqual(self.nouns.film_made is not None and self.nouns.film_made.get("status") in build.FILM_MADE_STATES,
-                         build.SITE / "film" / "made" / "index.html" in self.outputs)
+        built = self.nouns.film_made is not None and self.nouns.film_made.get("status") in build.FILM_MADE_STATES
+        self.assertEqual(built, build.SITE / "film" / "made" / "index.html" in self.outputs)
+        # Whenever the page is built, its noun is served byte for byte beside it (the production agent reads it).
+        self.assertEqual(built, build.SITE / "film" / "made" / "film-made.json" in self.outputs)
+        if built:
+            self.assertEqual((build.CONTENT / "film-made.json").read_text(encoding="utf-8"),
+                             self.outputs[build.SITE / "film" / "made" / "film-made.json"])
 
     def test_nonprofits_never_choose_a_kind_of_request(self):
         # A nonprofit types what it needs; the request's first step sorts it into a kit, public work or both.

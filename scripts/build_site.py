@@ -2481,6 +2481,13 @@ def render_judges(nouns: Nouns) -> str:
         '<div class="wrap pg-body">',
         f'<section aria-labelledby="jg-steps"><h2 id="jg-steps">{text(page["steps_heading"])}</h2>'
         f'<ol class="jg-steps">{steps}</ol></section>',
+        # Track 2: Push the Frontier (ported from Gemini's d5d02e3 guide, Nov 1): what ta-amps adds to each part.
+        f'<section class="pg-card jg-track" aria-labelledby="jg-track"><p class="jg-track-kicker">{text(page["track"]["kicker"])}</p>'
+        f'<h2 id="jg-track">{text(page["track"]["heading"])}</h2><p>{text(page["track"]["lead"])}</p>'
+        '<ul class="jg-track-list">' + "".join(
+            f'<li><b>{text(item["title"])}</b> {text(item["text"])} '
+            f'<a href="{link(prefix, item["href"])}">{text(item["label"])} →</a></li>' for item in page["track"]["items"])
+        + "</ul></section>",
         f'<section class="pg-card" aria-labelledby="jg-real"><h2 id="jg-real">{text(page["real_heading"])}</h2>'
         f'<p>{text(page["real_lead"])}</p><div class="pg-table"><table><thead><tr>{head}</tr></thead>'
         f"<tbody>{rows}</tbody></table></div></section>",
@@ -3466,7 +3473,11 @@ def outputs_for(nouns: Nouns) -> dict[Path, str]:
     outputs[SITE / "llms.txt"] = render_llms(nouns, set(outputs))
     outputs[STATUS_JSON] = status_json_text(nouns)
     outputs[SECURITY_TXT] = security_txt(nouns)
-    return {path: plain_words(repoint(meta_models(content, nouns.models), nouns.links)) for path, content in outputs.items()}
+    done = {path: plain_words(repoint(meta_models(content, nouns.models), nouns.links)) for path, content in outputs.items()}
+    if nouns.film_made and nouns.film_made.get("status") in FILM_MADE_STATES:
+        # The production agent's phase-2 check reads the noun itself, so it is served byte for byte beside the page.
+        done[SITE / "film" / "made" / "film-made.json"] = (CONTENT / "film-made.json").read_text(encoding="utf-8")
+    return done
 
 
 def build(check: bool, pdf: bool) -> list[str]:

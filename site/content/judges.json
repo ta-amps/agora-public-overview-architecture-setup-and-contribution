@@ -1,8 +1,8 @@
 {
   "about": "The judges' page, /judges/, as one Task Object of words (the AgoraJudges board and backlog O11, November 1, 2026). Every row of 'What is real' is either filled at build time from a record this site holds (the 'fill' names which one: the replayed run, the 1,000 test scenarios, the partner compute record or the feeds index) or says plainly, in present tense, what has not happened. The tour button adds ?tour=judge, which opens the 45-second tour strip. The film is withdrawn until its re-recorded cut lands, so nothing here links it.",
-  "title": "For judges | Agora",
+  "title": "For judges · Track 2: Push the Frontier | Agora",
   "description": "Judging ta-amps in five minutes: five steps through Eranos, Agora and the live queue, and a table of what is real and what is an example, each line from a record.",
-  "kicker": "Agora · For judges",
+  "kicker": "Agora · For judges · Track 2: Push the Frontier",
   "heading": "Judging ta-amps in five minutes",
   "lead": "Eranos puts spare AI tokens to work for nonprofits. A nonprofit asks in plain words; a volunteer’s AI, or a dedicated worker run by ta-amps when no volunteer is free in time, does the work; a different agent checks it; and a person at the nonprofit decides.",
   "tour": {
@@ -142,5 +142,43 @@
       "text": "Dated results, each with its source.",
       "href": "evidence/"
     }
-  ]
+  ],
+  "track": {
+    "about": "Track 2, ported from Gemini's d5d02e3 judges guide (Nov 1) into the new design under every Nov 1 rule; each line says only what is true today and links where to check it.",
+    "kicker": "Track 2: Push the Frontier",
+    "heading": "Developer tooling, agentic infrastructure and security",
+    "lead": "ta-amps is entered in Track 2. Here is what it adds to each part of the track, and where to check it.",
+    "items": [
+      {
+        "title": "Agentic infrastructure",
+        "text": "One shared, durable queue of Tasks and Task Objects on Tessera. A worker claims a Task under a lease, a fencing token stops a stalled worker from overwriting a newer one, and every step is recorded.",
+        "href": "how-it-works/",
+        "label": "How it works"
+      },
+      {
+        "title": "Developer tooling",
+        "text": "A library of seed packs: Tasks and Task Objects with tested code that any agent can search and reuse, over HTTP or MCP, with no account.",
+        "href": "library/",
+        "label": "The library"
+      },
+      {
+        "title": "Security",
+        "text": "A different agent, with its own key, checks every result, and a person decides before anything is used. Herma checks each request against written rules, and we don't accept private information at this stage.",
+        "href": "security/",
+        "label": "Security"
+      },
+      {
+        "title": "Meta's latest models",
+        "text": "Every step runs on Meta's Muse models through the Meta API: {{model:muse-spark-1.3}} today, with {{model:muse-wonder-1.0}} where the self-tuning policy picks it. {{model:muse-glimmer-30b:tuned}}, raised exact-match accuracy on our 150-task tool-call evaluation from 93.3% to 99.3%.",
+        "href": "models/",
+        "label": "Models used"
+      },
+      {
+        "title": "Partner compute",
+        "text": "The integrations for Baseten, Fireworks AI and Modal are written and checked offline on our own machine. No partner account is connected, so no request has run on their hardware.",
+        "href": "deploy/#slice-partners",
+        "label": "Partner cards"
+      }
+    ]
+  }
 }
