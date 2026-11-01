@@ -271,6 +271,21 @@
       "path": "assets/share/agora-1200x630.png",
       "sha256": "416c85ec3cfcf52a676ff5df4e8b95d0325b2d8b4b48ca3ecc6369904265b84d",
       "bytes": 40884
+    },
+    {
+      "path": "assets/fonts/IBMPlexSans-wdth-wght.woff2",
+      "sha256": "4aea8c49bb04155bced7cdea9ed0ed86b5a45da94b2ca54065ac9cb4098efcdb",
+      "bytes": 229852
+    },
+    {
+      "path": "assets/fonts/JetBrainsMono-wght.woff2",
+      "sha256": "06d2b1a8d4793bffc26426e5b16f016acc6efa1015a6518e1845995161eeb1d5",
+      "bytes": 43920
+    },
+    {
+      "path": "assets/fonts/SpaceGrotesk-wght.woff2",
+      "sha256": "b1c8815991ea826ccd01a187838c2f2211ff15a4c433455d852047ed8fb9b448",
+      "bytes": 31200
     }
   ]
 }

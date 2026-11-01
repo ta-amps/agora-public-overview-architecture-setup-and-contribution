@@ -48,6 +48,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
+Self-hosted fonts (assets/fonts/, November 1, 2026)
+
+IBM Plex Sans, Space Grotesk and JetBrains Mono, each under the SIL Open Font License, Version 1.1.
+The same files Eranos serves; each license text sits beside its font:
+assets/fonts/OFL-IBMPlexSans.txt (Reserved Font Name "Plex"; the unmodified variable font, repacked as WOFF2),
+assets/fonts/OFL-SpaceGrotesk.txt and assets/fonts/OFL-JetBrainsMono.txt (Latin subsets).
+
+
 Fonts from https://github.com/google/fonts/tree/main/ofl/spacegrotesk
 
 Copyright 2020 The Space Grotesk Project Authors (https://github.com/floriankarsten/space-grotesk)

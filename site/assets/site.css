@@ -1,47 +1,58 @@
-/* Design record: theme custom, inherited from the October 29 draft deck. Idea: every piece of AI work is a tile; blue tiles are nouns (reusable things), rust tiles are verbs (work), and the page lays them into a path. Paper #F5F2EA and ink #11161F with the deck's blue and rust; Space Grotesk display, IBM Plex Sans body, JetBrains Mono for commands only. Modes: light and dark from one token set. October 30: a home page that opens on the draft video, three decks and use cases, in a quieter frame: a slim header with four links, an agent banner under it on every current page, wide cards with live cover thumbnails, and generous space. Nav: wordmark, Home, Decks, Use cases, Learning, Library and a mode switch; on a phone the five links share one row at 390px, with fallback fonts too. Footer: one row of links and the date of the snapshot. Later on October 30: the statement under the film reads in two labelled parts, the use case and then the architecture underneath. */
+/* Design record: Paper & Ink, light only (owner, Nov 1: dark ink is only for text, primary buttons and the logo; it is
+   never a page or panel background, the agent banner included). Every piece of AI work is a tile: blue tiles are Task
+   Objects (reusable things), rust tiles are Tasks (work). Tokens v3 come from assets/tokens.css (copied from Eranos);
+   this block maps Agora's older names onto them. CSS names may keep --noun/--verb; new code uses --task* and --object*.
+   Space Grotesk display, IBM Plex Sans body, JetBrains Mono for commands only, all self-hosted (assets/fonts.css). */
 
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
 
-  --color-paper: #F5F2EA;
-  --color-paper-2: #FFFDF8;
-  --color-paper-3: #EDE8DC;
+  --color-paper: var(--bg);
+  --color-paper-2: var(--surface);
+  --color-paper-3: var(--sunken);
   --color-stage: #E3DDCF;
-  --color-rule: #E4DED1;
-  --color-rule-strong: #C9C1B1;
-  --color-ink: #11161F;
-  --color-ink-2: #3B4252;
-  --color-muted: #5E6472;
+  --color-rule: var(--line);
+  --color-rule-strong: var(--line-strong);
+  --color-ink: var(--text);
+  --color-ink-2: var(--text-2);
+  --color-muted: var(--text-3);
   --color-muted-on-stage: #555B68;
-  --color-noun: #2A5DB0;
-  --color-noun-ink: #2A5DB0;
-  --color-noun-wash: #E5ECF7;
-  --color-verb: #B8541F;
-  --color-verb-ink: #9C4416;
-  --color-verb-wash: #F6E7DD;
-  --color-band: #11161F;
-  --color-band-ink: #F5F2EA;
-  --color-band-ink-2: #C8D0DC;
-  --color-band-noun: #6FA3F0;
-  --color-band-verb: #F0884F;
-  --color-code: #11161F;
-  --color-code-ink: #EDEAE1;
-  --color-film: #0B0F16;
-  --color-film-ink: #A3ABB9;
-  --color-button: #11161F;
-  --color-button-ink: #F5F2EA;
-  --color-button-hover: #2B3442;
-  --color-focus: #B8541F;
-  --color-real: #1F6B43;
-  --color-real-wash: #E1F0E6;
-  --color-building: #8A5A00;
-  --color-building-wash: #FBEFD2;
-  --color-needed: #5E6472;
-  --color-needed-wash: #E9E6DF;
-  --shadow-lift: 0 12px 32px rgb(17 22 31 / 0.09), 0 2px 6px rgb(17 22 31 / 0.05);
+  --color-noun: var(--noun);
+  --color-noun-ink: var(--noun-text);
+  --color-noun-wash: var(--noun-wash);
+  --color-verb: var(--verb);
+  --color-verb-ink: var(--verb-text);
+  --color-verb-wash: var(--verb-wash);
+  --object: var(--noun);
+  --object-text: var(--noun-text);
+  --object-wash: var(--noun-wash);
+  --task: var(--verb);
+  --task-text: var(--verb-text);
+  --task-wash: var(--verb-wash);
+  /* Bands, code and the film section were dark; they are light panels now, with ink text. */
+  --color-band: var(--sunken);
+  --color-band-ink: var(--text);
+  --color-band-ink-2: var(--text-2);
+  --color-band-noun: var(--noun-text);
+  --color-band-verb: var(--verb-text);
+  --color-code: var(--sunken);
+  --color-code-ink: var(--text);
+  --color-film: var(--sunken);
+  --color-film-ink: var(--text-3);
+  --color-button: var(--action);
+  --color-button-ink: var(--action-text);
+  --color-button-hover: var(--action-hover);
+  --color-focus: var(--focus);
+  --color-real: var(--real);
+  --color-real-wash: var(--real-wash);
+  --color-building: var(--attention);
+  --color-building-wash: var(--attention-wash);
+  --color-needed: var(--waiting);
+  --color-needed-wash: var(--waiting-wash);
+  --shadow-lift: var(--e2);
 
-  --font-display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
-  --font-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-display: "Space Grotesk", "IBM Plex Sans", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 
   --space-1: 0.25rem;
@@ -73,86 +84,6 @@
   --header-height: 3.75rem;
 }
 
-[data-mode="dark"] {
-  --color-paper: #11161F;
-  --color-paper-2: #1B2230;
-  --color-paper-3: #171D29;
-  --color-stage: #0C1017;
-  --color-rule: #2C3443;
-  --color-rule-strong: #3E4759;
-  --color-ink: #F5F2EA;
-  --color-ink-2: #C8D0DC;
-  --color-muted: #9AA3B2;
-  --color-muted-on-stage: #9AA3B2;
-  --color-noun: #6FA3F0;
-  --color-noun-ink: #8DB7F4;
-  --color-noun-wash: #1A2741;
-  --color-verb: #F0884F;
-  --color-verb-ink: #F39A68;
-  --color-verb-wash: #35231A;
-  --color-band: #1B2230;
-  --color-band-ink: #F5F2EA;
-  --color-band-ink-2: #C8D0DC;
-  --color-band-noun: #8DB7F4;
-  --color-band-verb: #F39A68;
-  --color-code: #0C1017;
-  --color-code-ink: #E7E2D6;
-  --color-film: #070A0F;
-  --color-film-ink: #9AA3B2;
-  --color-button: #F5F2EA;
-  --color-button-ink: #11161F;
-  --color-button-hover: #DCD6C8;
-  --color-focus: #F0884F;
-  --color-real: #7FD3A0;
-  --color-real-wash: #15281D;
-  --color-building: #F2C66B;
-  --color-building-wash: #2B2210;
-  --color-needed: #B4BCC8;
-  --color-needed-wash: #222A37;
-  --shadow-lift: 0 12px 32px rgb(0 0 0 / 0.35), 0 2px 6px rgb(0 0 0 / 0.25);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-mode]) {
-    --color-paper: #11161F;
-    --color-paper-2: #1B2230;
-    --color-paper-3: #171D29;
-    --color-stage: #0C1017;
-    --color-rule: #2C3443;
-    --color-rule-strong: #3E4759;
-    --color-ink: #F5F2EA;
-    --color-ink-2: #C8D0DC;
-    --color-muted: #9AA3B2;
-    --color-muted-on-stage: #9AA3B2;
-    --color-noun: #6FA3F0;
-    --color-noun-ink: #8DB7F4;
-    --color-noun-wash: #1A2741;
-    --color-verb: #F0884F;
-    --color-verb-ink: #F39A68;
-    --color-verb-wash: #35231A;
-    --color-band: #1B2230;
-    --color-band-ink: #F5F2EA;
-    --color-band-ink-2: #C8D0DC;
-    --color-band-noun: #8DB7F4;
-    --color-band-verb: #F39A68;
-    --color-code: #0C1017;
-    --color-code-ink: #E7E2D6;
-    --color-film: #070A0F;
-    --color-film-ink: #9AA3B2;
-    --color-button: #F5F2EA;
-    --color-button-ink: #11161F;
-    --color-button-hover: #DCD6C8;
-    --color-focus: #F0884F;
-    --color-real: #7FD3A0;
-    --color-real-wash: #15281D;
-    --color-building: #F2C66B;
-    --color-building-wash: #2B2210;
-    --color-needed: #B4BCC8;
-    --color-needed-wash: #222A37;
-    --shadow-lift: 0 12px 32px rgb(0 0 0 / 0.35), 0 2px 6px rgb(0 0 0 / 0.25);
-  }
-}
-
 /* Base */
 
 *,
@@ -176,12 +107,6 @@ body {
   font-size: var(--text-body);
   line-height: 1.6;
   font-synthesis: none;
-}
-
-[data-mode="dark"] body { font-weight: 350; }
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-mode]) body { font-weight: 350; }
 }
 
 img,
@@ -289,20 +214,18 @@ ta-agent-banner {
   background: var(--agent-banner-bg);
   color: var(--agent-banner-ink);
   border-bottom: 1px solid var(--agent-banner-line);
-  --agent-banner-bg: #11161F;
-  --agent-banner-ink: #F5F2EA;
-  --agent-banner-muted: #C8D0DC;
-  --agent-banner-raised: #222732;
-  --agent-banner-line: #2B313D;
-  --agent-banner-edge: #3B4252;
-  --agent-banner-link: #9DBBF0;
-  --agent-banner-focus: #F0884F;
+  /* The light paper tint (owner, Nov 1), set through the shared element's theme variables. */
+  --agent-banner-bg: var(--sunken);
+  --agent-banner-ink: var(--text);
+  --agent-banner-muted: var(--text-2);
+  --agent-banner-raised: var(--surface);
+  --agent-banner-line: var(--line);
+  --agent-banner-edge: var(--line-strong);
+  --agent-banner-link: var(--link);
+  --agent-banner-focus: var(--focus);
 }
 
-[data-mode="dark"] ta-agent-banner { --agent-banner-bg: #0B0F16; --agent-banner-raised: #1B2230; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-mode]) ta-agent-banner { --agent-banner-bg: #0B0F16; --agent-banner-raised: #1B2230; }
-}
+
 
 .agent-fallback {
   max-width: 78rem;
@@ -436,35 +359,13 @@ ta-agent-banner[data-ready] .agent-fallback { display: none; }
   cursor: pointer;
 }
 
-.mode-toggle {
-  font: inherit;
-  font-size: var(--text-small);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: none;
-  min-width: 40px;
-  min-height: 40px;
-  padding: 0 var(--space-2);
-  border: 1px solid var(--color-rule-strong);
-  border-radius: 999px;
-  background: var(--color-paper-2);
-  color: var(--color-ink);
-  cursor: pointer;
-  white-space: nowrap;
-}
 
-.mode-toggle[hidden] { display: none; }
-.mode-toggle:hover { border-color: var(--color-ink-2); }
-.mode-toggle:active { background: var(--color-paper-3); }
-.mode-toggle[aria-pressed="true"] svg { transform: rotate(180deg); }
-.mode-toggle:disabled,
 .button[aria-disabled="true"] { opacity: 0.5; cursor: not-allowed; }
 
 .eranos-link .short { display: none; }
 
 /* Narrow screens: the header keeps the mark, Eranos and a Menu button on one row (the SiteHeader board's compact
-   form, 56 px); the links and the mode switch fold behind Menu. Without scripts the Menu button stays hidden and
+   form, 56 px); the links fold behind Menu. Without scripts the Menu button stays hidden and
    the links wrap onto a second row instead. */
 @media (max-width: 56rem) {
   .site-header .wrap { flex-wrap: wrap; min-height: 3.5rem; gap: 0 var(--space-2); padding-inline: var(--space-4); }
@@ -473,13 +374,10 @@ ta-agent-banner[data-ready] .agent-fallback { display: none; }
   .eranos-link .long { display: none; }
   .eranos-link .short { display: inline; }
   .js .menu-toggle:not([hidden]) { display: inline-flex; order: 3; }
-  .mode-toggle { order: 6; }
-  .js .site-header:not(.menu-open) .mode-toggle { display: none; }
   .site-nav { order: 5; flex-basis: 100%; }
   .js .site-nav[data-menu]:not(.is-open) { display: none; }
   .site-nav ul { flex-direction: column; align-items: stretch; gap: 2px; padding-block: var(--space-2) var(--space-3); }
   .site-nav a { width: 100%; }
-  .js .site-header.menu-open .mode-toggle { margin-block: 0 var(--space-3); }
 }
 
 @media (max-width: 22rem) {
@@ -1301,7 +1199,6 @@ tbody th { font-weight: 600; }
 
 @media print {
   .site-header nav,
-  .mode-toggle,
   .agent-banner,
   .skip-link { display: none; }
 }

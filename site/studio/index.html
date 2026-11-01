@@ -1,11 +1,13 @@
 <!doctype html>
-<html lang="en" data-mode="dark">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Live Studio | Agora</title>
 <meta name="description" content="The Live Studio calls the live Tessera, Herma and Eranos from your browser and shows every request and answer: Herma's context shim, a preset agent kit checked by Eranos and held for a person, Tessera atomic leases and HTTP 409 CAS fencing, and live MCP wire calls directly in your browser.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='0' y='0' width='14' height='14' rx='3' fill='%2338bdf8'/%3E%3Crect x='18' y='0' width='14' height='14' rx='3' fill='%2310b981'/%3E%3Crect x='0' y='18' width='14' height='14' rx='3' fill='%23f59e0b'/%3E%3Crect x='18' y='18' width='14' height='14' rx='3' fill='%2338bdf8'/%3E%3C/svg%3E" type="image/svg+xml">
+<meta name="color-scheme" content="light">
+<link rel="stylesheet" href="../assets/fonts.css">
 <link rel="stylesheet" href="studio.css">
 </head>
 <body>
@@ -135,7 +137,7 @@
             <span class="kicker kicker-emerald">Public-Good Flow · Tessera CAS + Queue + Herma + Eranos Verifier</span>
             <span class="example-pill">Use example details only</span>
           </div>
-          <p class="panel-desc">Choose a nonprofit brief and click <strong>Submit NGO Task</strong>. The page makes real calls in order: it stores the request as <code>noun.request</code> in Tessera, enqueues <code>verb.build_agent_kit</code>, claims that verb itself (this browser plays the worker), asks Herma for guardrails, sends the brief's kit draft to Eranos's practice check, stores it as <code>noun.agent_kit</code> over MCP with <code>review_gate: held_for_person</code>, and submits the verb. It stops at the first call that fails and shows that service's own status and error.</p>
+          <p class="panel-desc">Choose a nonprofit brief and click <strong>Submit NGO Task</strong>. The page makes real calls in order: it stores the request as <code>noun.request</code> in Tessera, enqueues <code>verb.build_agent_kit</code>, claims that Task itself (this browser plays the worker), asks Herma for guardrails, sends the brief's kit draft to Eranos's practice check, stores it as <code>noun.agent_kit</code> over MCP with <code>review_gate: held_for_person</code>, and submits the Task. It stops at the first call that fails and shows that service's own status and error.</p>
         </div>
 
         <div class="ngo-form-card">
@@ -203,7 +205,7 @@
             <span class="kicker kicker-amber">Worker Lab · Fencing Tokens &amp; CAS expected_version</span>
             <button type="button" class="btn btn-subtle btn-xs" id="worker-run-all-btn" data-needs-session>Run Steps 1 -&gt; 4</button>
           </div>
-          <p class="panel-desc">This browser plays a contributor's worker. Enqueue and lease a real verb, write a noun as <code>v1 -&gt; v2</code> with compare-and-set, then send a stale overwrite: a real request that still carries the old <code>expected_version</code>. The feed shows what <code>tessera.ta-amps.workers.dev</code> answered; it should refuse with <strong>HTTP 409 Conflict</strong>.</p>
+          <p class="panel-desc">This browser plays a contributor's worker. Enqueue and lease a real Task, write a Task Object as <code>v1 -&gt; v2</code> with compare-and-set, then send a stale overwrite: a real request that still carries the old <code>expected_version</code>. The feed shows what <code>tessera.ta-amps.workers.dev</code> answered; it should refuse with <strong>HTTP 409 Conflict</strong>.</p>
         </div>
 
         <div class="worker-actions-grid">
@@ -224,7 +226,7 @@
           <button type="button" class="worker-step-btn" id="worker-btn-3" data-worker-step="3" data-needs-session>
             <span class="w-num">[3]</span>
             <span class="w-body">
-              <strong>Write a Noun v1 -&gt; v2, Then Submit</strong>
+              <strong>Write a Task Object v1 -&gt; v2, Then Submit</strong>
               <small>expected_version 0, then 1, then submit</small>
             </span>
           </button>
@@ -323,7 +325,7 @@
             <span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span>
           </div>
           <span class="cli-title" id="cli-window-title">studio-cli · visitor@ta-amps:~/no-session</span>
-          <span class="cli-hint">Shares the GUI's session, tasks, nouns &amp; wire log</span>
+          <span class="cli-hint">Shares the GUI's session, Tasks, Task Objects &amp; wire log</span>
         </div>
 
         <div class="cli-chips" aria-label="Quick terminal commands">
@@ -333,7 +335,7 @@
           <button type="button" class="cli-chip" data-cli-cmd="worker claim" data-needs-session>worker claim</button>
           <button type="button" class="cli-chip cli-chip-warn" data-cli-cmd="worker conflict" data-needs-session>worker conflict</button>
           <button type="button" class="cli-chip" data-cli-cmd="eranos tracks">eranos tracks</button>
-          <button type="button" class="cli-chip" data-cli-cmd="nouns ls" data-needs-session>nouns ls</button>
+          <button type="button" class="cli-chip" data-cli-cmd="objects ls" data-needs-session>objects ls</button>
           <button type="button" class="cli-chip" data-cli-cmd="tasks ls" data-needs-session>tasks ls</button>
           <button type="button" class="cli-chip" data-cli-cmd="curl last">curl last</button>
           <button type="button" class="cli-chip" data-cli-cmd="clear">clear</button>
@@ -346,7 +348,7 @@
 
         <form class="cli-input-row" id="cli-form" autocomplete="off">
           <label class="cli-prompt" id="cli-prompt-label" for="cli-input">visitor@ta-amps:~/no-session$</label>
-          <input id="cli-input" class="cli-input" type="text" spellcheck="false" autocomplete="off" placeholder="Type a command (e.g. help, eranos tracks, worker conflict, nouns ls)...">
+          <input id="cli-input" class="cli-input" type="text" spellcheck="false" autocomplete="off" placeholder="Type a command (e.g. help, eranos tracks, worker conflict, objects ls)...">
           <button type="submit" class="btn btn-subtle btn-xs">Run</button>
         </form>
       </div>
@@ -459,11 +461,11 @@
           <span class="count-pill" id="count-wire">0</span>
         </button>
         <button type="button" role="tab" class="inspector-tab" id="insp-tab-tasks" aria-selected="false" aria-controls="insp-panel-tasks" data-insp="tasks">
-          <span>Tasks (Verbs) &amp; Leases</span>
+          <span>Tasks &amp; Leases</span>
           <span class="count-pill" id="count-tasks">0</span>
         </button>
         <button type="button" role="tab" class="inspector-tab" id="insp-tab-nouns" aria-selected="false" aria-controls="insp-panel-nouns" data-insp="nouns">
-          <span>Task Objects (Nouns)</span>
+          <span>Task Objects</span>
           <span class="count-pill" id="count-nouns">0</span>
         </button>
         <button type="button" role="tab" class="inspector-tab" id="insp-tab-mcp" aria-selected="false" aria-controls="insp-panel-mcp" data-insp="mcp">
@@ -487,8 +489,8 @@
       <!-- INSPECTOR 2: TASKS (VERBS) & LEASES -->
       <div class="inspector-panel" id="insp-panel-tasks" role="tabpanel" aria-labelledby="insp-tab-tasks" hidden>
         <div class="inspector-subbar">
-          <span>Verbs in demo namespace <code id="tasks-ns-label">(no demo session)</code> <span class="sync-status" id="tasks-sync-status"></span> <span class="session-gate-note session-gate-note-inline" data-session-note="short" hidden></span></span>
-          <button type="button" class="btn-link" id="tasks-refresh-btn" data-needs-session>Sync ready verbs via MCP list_verbs</button>
+          <span>Tasks in demo namespace <code id="tasks-ns-label">(no demo session)</code> <span class="sync-status" id="tasks-sync-status"></span> <span class="session-gate-note session-gate-note-inline" data-session-note="short" hidden></span></span>
+          <button type="button" class="btn-link" id="tasks-refresh-btn" data-needs-session>Sync ready Tasks via MCP list_verbs</button>
         </div>
         <div class="inspector-scroll" id="tasks-table-wrap">
           <!-- Live Tasks & Leases table -->

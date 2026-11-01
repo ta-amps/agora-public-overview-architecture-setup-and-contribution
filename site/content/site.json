@@ -2,7 +2,6 @@
   "about": "The text every Agora page shares, kept as one noun: the header and its navigation, the endpoints, the deck viewer's labels and the footer. The agent banner's words are their own noun, agent-banner.json. scripts/build_site.py renders both into every page that is not frozen. Fields ending in _html hold trusted markup; every other field is plain text.",
   "name": "ta-amps",
   "skip_link": "Skip to content",
-  "mode_toggle": "Dark mode",
   "decks": [
     "overview-and-architecture",
     "public-good-marketplace",
@@ -139,7 +138,7 @@
         "local": true
       }
     ],
-    "privacy": "No analytics, ads or cookies. Fonts load from Google Fonts, which sees your IP address, and Cloudflare Workers hosts the site. Display choices, such as dark mode, stay in this browser."
+    "privacy": "No analytics, ads or cookies. The fonts come from this site, and Cloudflare Workers hosts it. The deck viewer remembers its display choices in this browser, and the judges' tour keeps one flag in this tab while it runs."
   },
   "header": {
     "brand": "Agora",

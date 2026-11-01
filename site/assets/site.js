@@ -1,38 +1,5 @@
-// Light and dark mode switch. Without this script the page follows the
-// system setting, and the switch stays hidden.
-(function () {
-  var root = document.documentElement;
-  root.classList.add("js");
-  var button = document.querySelector("[data-mode-toggle]");
-  if (!button) return;
-  var media = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
-
-  function current() {
-    if (root.dataset.mode === "dark" || root.dataset.mode === "light") return root.dataset.mode;
-    return media && media.matches ? "dark" : "light";
-  }
-
-  function render() {
-    button.setAttribute("aria-pressed", current() === "dark" ? "true" : "false");
-  }
-
-  button.hidden = false;
-  render();
-  // A choice that matches the system setting is not stored, so the page follows the system again
-  // from then on, in this tab and the next.
-  button.addEventListener("click", function () {
-    var next = current() === "dark" ? "light" : "dark";
-    var system = media && media.matches ? "dark" : "light";
-    try {
-      if (next === system) localStorage.removeItem("ta-amps-mode");
-      else localStorage.setItem("ta-amps-mode", next);
-    } catch (error) { /* storage can be unavailable */ }
-    if (next === system) delete root.dataset.mode;
-    else root.dataset.mode = next;
-    render();
-  });
-  if (media && media.addEventListener) media.addEventListener("change", render);
-})();
+// Light only (owner, Nov 1): there is no mode switch. The page marks that scripts run, for the parts that need them.
+document.documentElement.classList.add("js");
 
 // Show and hide. A button with data-toggle="ID" shows or hides the element with that id, and swaps its
 // label between data-closed and data-open. Without this script the button stays hidden, and an element
