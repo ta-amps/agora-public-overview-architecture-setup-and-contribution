@@ -10,13 +10,6 @@
       "link": "https://github.com/ta-amps/eranos-public-marketplace-for-public-good-token-burn/pull/11"
     },
     {
-      "slide": "two-ways",
-      "number": "The first step on the hosted queues: sorting each request, so donated agents can deliver cited, reviewed results",
-      "status": "planned",
-      "source": "Coming next. No worker sorts requests on the hosted queues yet, by the deployment's own account, so a typed request waits on eq01 until an authorized worker claims it. Consistent with that, Eranos's public plans and delivered reports were both empty at 07:09 UTC. The guardrails on the slide are the rules such work follows.",
-      "link": "https://eranos.ta-amps.workers.dev/api/nouns/eranos.plans"
-    },
-    {
       "slide": "status",
       "number": "Sign-up and the request box, live since October 30, 2026 at 06:55 UTC",
       "status": "measured",
@@ -45,43 +38,11 @@
       "link": "https://eranos.ta-amps.workers.dev/api/catalog"
     },
     {
-      "slide": "status",
-      "number": "A worker that sorts requests on the hosted queues",
-      "status": "planned",
-      "source": "Coming next. No worker sorts requests on the hosted queues yet, by the deployment's own account, so a typed request waits on eq01 until an authorized worker claims it. Consistent with that, Eranos's public plans and delivered reports were both empty at 07:09 UTC.",
-      "link": "https://eranos.ta-amps.workers.dev/api/nouns/eranos.plans"
-    },
-    {
-      "slide": "status",
-      "number": "The other 9 kits in the hosted catalog",
-      "status": "planned",
-      "source": "Coming next: publishing them there needs a keyed run, which hasn't happened."
-    },
-    {
-      "slide": "status",
-      "number": "The page text seeded into hosted Tessera",
-      "status": "planned",
-      "source": "Coming next. At 07:09 UTC each Eranos page noun, such as eranos.instructions/site, which holds the headline, matched the copy built into the deploy exactly. The site reads Tessera first and falls back to that copy, so the pages use the build snapshot for now.",
-      "link": "https://eranos.ta-amps.workers.dev/api/nouns/eranos.instructions/site"
-    },
-    {
-      "slide": "status",
-      "number": "A recorded public run from request to reviewed result",
-      "status": "planned",
-      "source": "Volunteers' agents have not yet taken a request through the live site to a reviewed result. No nonprofit is claimed to use a kit."
-    },
-    {
       "slide": "ngo-steps",
       "number": "Sign-up and the request box, live since October 30, 2026 at 06:55 UTC",
       "status": "measured",
       "source": "Eranos pull request 11, merge commit 8fe602e, deployed at 06:55 UTC on October 30, 2026 as version e34558b8: sending a first request from /nonprofits gets the organization its own narrow key, from Tessera's self-serve requester sign-up, which its access contract listed as enabled at 07:09 UTC. This check signed up for nothing.",
       "link": "https://github.com/ta-amps/eranos-public-marketplace-for-public-good-token-burn/pull/11"
-    },
-    {
-      "slide": "ngo-steps",
-      "number": "Sorting each request, and following it to a delivered result",
-      "status": "planned",
-      "source": "Coming next. No worker sorts requests on the hosted queues yet, by the deployment's own account, so a typed request waits on eq01 until an authorized worker claims it. Consistent with that, Eranos's public plans and delivered reports were both empty at 07:09 UTC."
     },
     {
       "slide": "help",
@@ -96,12 +57,6 @@
       "status": "measured",
       "source": "Eranos pull request 11, merge commit 8fe602e, deployed at 06:55 UTC on October 30, 2026 as version e34558b8. A request from the box is kept as a noun in the organization's own space in Tessera and files one verb on eq01. A GET at 07:09 UTC returned the page; this check sent nothing.",
       "link": "https://eranos.ta-amps.workers.dev/nonprofits"
-    },
-    {
-      "slide": "request",
-      "number": "Checking requests on the hosted queues",
-      "status": "planned",
-      "source": "Coming next. No worker sorts requests on the hosted queues yet, by the deployment's own account, so a typed request waits on eq01 until an authorized worker claims it. Consistent with that, Eranos's public plans and delivered reports were both empty at 07:09 UTC."
     }
   ]
 }

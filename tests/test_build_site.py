@@ -248,42 +248,29 @@ class Builder(unittest.TestCase):
         first = re.search(r"\bverbs?\b", market)
         self.assertEqual(" (a task)", market[first.end():first.end() + len(" (a task)")])
 
-    def test_the_worked_examples_are_illustrations_and_their_numbers_have_claims(self):
-        # Feedback, October 30: two worked examples show nouns and verbs at work, one right after the slide that
-        # defines them and one right after feeds. They show how the work is organized, not measured runs, so each
-        # says so on the slide and in its notes, and every number on them has a claim. A measured precedent links to
-        # public evidence; the memory-systems feeds are planned, and the slide says so.
+    def test_the_memory_systems_slide_is_a_measured_scan_and_no_slide_is_an_illustration(self):
+        # Review, October 31: the illustrated worked example is gone (the How it works page replays a real run), and the
+        # memory-systems slide is the feed's real scan. Every number on it has a measured claim, and no current slide or
+        # claim is marked illustration or planned.
         deck = next(deck for deck in self.nouns.decks if deck["id"] == "overview-and-architecture")
         order = [slide["name"] for slide in deck["slides"]]
-        self.assertEqual(order.index("nouns-and-verbs") + 1, order.index("worked-example"))
+        self.assertNotIn("worked-example", order)
         self.assertEqual(order.index("feeds") + 1, order.index("memory-systems"))
-        slides = {slide["name"]: slide for slide in deck["slides"]}
-        claims = deck["claims"]["claims"]
-        # October 31: the memory-systems slide became a real scan (the feed's own data), so it is measured, and only the
-        # worked example is still an illustration.
-        for name in ("worked-example", "memory-systems"):
-            shown, notes = build.plain_text(without_number(slides[name]["inner"])), build.plain_text(slides[name]["notes"])
-            mine = [claim for claim in claims if claim["slide"] == name]
-            if name == "worked-example":
-                self.assertIn("ILLUSTRATION · NOT A MEASURED RUN", shown, name)
-                self.assertIn("illustration", notes.lower(), name)
-                self.assertTrue(any(claim["status"] == "illustration" for claim in mine), name)
-            else:
-                self.assertNotIn("ILLUSTRATION", shown)
-                self.assertNotIn("PLANNED", shown)
-                self.assertTrue(all(claim["status"] == "measured" for claim in mine), name)
-            listed = " ".join(claim["number"] for claim in mine)
-            for part in (shown, notes):
-                for number in re.findall(r"\d+(?:[.,]\d+)?", part):
-                    self.assertIn(number, listed, (name, number))
-            for claim in mine:
-                if claim["status"] == "measured":
-                    # Public evidence: the source mirror's provenance address, or the page on Agora that shows it.
-                    self.assertTrue(claim["link"].startswith(("https://github.com/ta-amps/", "https://agora.ta-amps.workers.dev/")),
-                                    claim["number"])
-        self.assertIn("0 tokens", build.plain_text(slides["worked-example"]["inner"]))
-        self.assertIn("agora.ta-amps.workers.dev/feeds/memory-systems", build.plain_text(slides["memory-systems"]["inner"]))
-        # Every claim status, illustration included, has its own label style in the notes.
+        slide = next(slide for slide in deck["slides"] if slide["name"] == "memory-systems")
+        shown, notes = build.plain_text(without_number(slide["inner"])), build.plain_text(slide["notes"])
+        mine = [claim for claim in deck["claims"]["claims"] if claim["slide"] == "memory-systems"]
+        self.assertTrue(mine and all(claim["status"] == "measured" for claim in mine))
+        listed = " ".join(claim["number"] for claim in mine)
+        for part in (shown, notes):
+            for number in re.findall(r"\d+(?:[.,]\d+)?", part):
+                self.assertIn(number, listed, number)
+        for current in self.nouns.decks:
+            for claim in (current["claims"] or {"claims": []})["claims"]:
+                self.assertNotIn(claim["status"], ("illustration", "planned"), (current["id"], claim["number"]))
+            for each in current["slides"]:
+                self.assertIsNone(re.search(r"(?i)\b(illustration|planned|coming next|not yet)\b", build.plain_text(each["inner"])),
+                                  (current["id"], each["name"]))
+        # Every claim status still has its own label style in the notes.
         css = (build.SITE / "assets" / "viewer.css").read_text(encoding="utf-8")
         for status in build.CLAIM_STATUSES:
             self.assertIn(f".claim-status.{status} {{", css, status)

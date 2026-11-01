@@ -129,13 +129,6 @@
       "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/execution-learning.md"
     },
     {
-      "slide": "learners",
-      "number": "Tuning on opted-in, verified, rights-cleared real runs",
-      "status": "planned",
-      "source": "The training export is a proposed design in Tessera’s execution-learning record. Nothing exports data from real runs yet.",
-      "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/execution-learning.md"
-    },
-    {
       "slide": "free-gpus",
       "number": "Muse Glimmer 30B QLoRA on Kaggle’s two free T4 GPUs: 64 training steps in 83 minutes, on 511 rows",
       "status": "measured",
@@ -176,13 +169,6 @@
       "status": "measured",
       "source": "Deterministic Latin-hypercube evaluation over 10^12 addressable 4D tuples (persona, environment, method, stakeholder constraint), separating direct agent work, human-partitioned drafts, and stakeholder-blocked escalations.",
       "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/sira-are-cascade-2026-10-31/README.md"
-    },
-    {
-      "slide": "limits",
-      "number": "Learning from live traffic",
-      "status": "planned",
-      "source": "Rounds start on demand today. A schedule that only enqueues the tick verb, and the export of real runs for training, are designed, not built.",
-      "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md"
     }
   ]
 }

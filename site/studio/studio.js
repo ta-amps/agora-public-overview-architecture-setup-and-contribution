@@ -90,7 +90,7 @@
           output_fields: ["covered_roles", "open_gaps", "requires_coordinator_signoff"]
         },
         checklist: [
-          "Confirm every shift slot uses example role placeholders with zero personal contact data.",
+          "Confirm every shift slot uses example role names with zero personal contact data.",
           "Verify licensed medical lead sign-off is scheduled before Saturday clinic doors open.",
           "Keep crisis safety planning and individual volunteer assignments strictly human_only."
         ],

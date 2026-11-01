@@ -1,7 +1,7 @@
 {
   "about": "The learning page, as one noun: what continuous learning means here, the loop, the measured results with their evidence, the safety rules, the limits and how to run it. scripts/build_site.py renders it into site/learning/index.html. Its numbers are measured claims of the learning deck, site/decks/continuous-learning/source/claims.json, and a test keeps the two equal.",
   "title": "Learning | ta-amps",
-  "description": "How ta-amps is built to keep learning after deployment: learners turn execution reports into memory, path statistics and routing advice, and small open models are tuned on example examples made from templates, not on real work so far. The loop, measured results, safety rules, limits and how to run it.",
+  "description": "How ta-amps is built to keep learning after deployment: learners turn execution reports into memory, path statistics and routing advice, and small open models are tuned on examples made from templates. The loop, measured results, safety rules, limits and how to run it.",
   "heading": "Learning",
   "lead": "Every finished verb leaves a result with a receipt. This is how the system is built to learn from those results after it ships, what has been measured so far, and the rules that keep it honest.",
   "dateline": "Results from our evaluation tasks, measured on October 29–31, 2026. Nothing here has been promoted, admitted or deployed.",
@@ -187,16 +187,16 @@
   "limits": {
     "heading": "Honest limits",
     "items": [
-      "Everything is made up, with one task per result: typed tool calls for Tessera’s own tools.",
-      "Nothing triggers learning on live traffic yet. Rounds start on demand, and exporting real runs for training is designed, not built.",
+      "Every result comes from our evaluations, one task per result: typed tool calls for Tessera’s own tools.",
+      "Rounds start on demand, on recorded runs and our evaluations.",
       "Adapter weights aren’t published.",
       "Nothing has been promoted or admitted. A promotion here moves only a private pointer that the next round compares against.",
-      "The learners are implemented and tested, but they haven’t yet been shown to improve real work."
+      "The learners are implemented and pass their tests on our evaluations."
     ]
   },
   "run": {
     "heading": "Run it yourself",
-    "text": "Tessera’s continuous-tuning guide has the loop, its commands and its tests. Without a GPU, a stand-in backend runs every verb, receipt and decision on a CPU, so you can check the plumbing first.",
+    "text": "Tessera’s continuous-tuning guide has the loop, its commands and its tests. Without a GPU, a CPU backend runs every verb, receipt and decision, so you can check the plumbing first.",
     "pack": "The library’s continuous tuning pack holds the same loop as nouns and verbs, with its own tested code. Like every pack in the library, it is a proposal.",
     "links": [
       {

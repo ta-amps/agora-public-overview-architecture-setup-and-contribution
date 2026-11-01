@@ -4,7 +4,7 @@
   "lists": "css",
   "title": "Overview and architecture",
   "cover": "cover",
-  "order": ["cover", "problem", "nouns-and-verbs", "worked-example", "fixes", "feeds", "memory-systems", "seed-packs", "map", "tessera", "herma", "learning", "evidence", "proof", "repos", "limits"],
+  "order": ["cover", "problem", "nouns-and-verbs", "fixes", "feeds", "memory-systems", "seed-packs", "map", "tessera", "herma", "learning", "evidence", "proof", "repos", "limits"],
   "sections": {
     "s1": {"description": "The problem, and the idea", "start": "cover"},
     "s2": {"description": "How the pieces fit", "start": "seed-packs"},

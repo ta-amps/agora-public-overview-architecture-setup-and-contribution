@@ -586,6 +586,7 @@ def repoint(content: str, links: dict) -> str:
 # The owner's style for anything about tests: tests, evaluations, accuracy, performance; data and cases are examples.
 PLAIN_RULES = [
     (re.compile(r"\bsynthetic_disclosure\b"), "example_data_disclosure"),  # a video check's name, shown in a table
+    (re.compile(r"\bsynthetic examples\b", re.I), "examples"),
     (re.compile(r"\ba synthetic voice\b", re.I), "an AI voice"),
     (re.compile(r"\bsynthetic voice\b", re.I), "AI voice"),
     (re.compile(r"\bsynthetic[- ]only\b", re.I), "example-data-only"),
