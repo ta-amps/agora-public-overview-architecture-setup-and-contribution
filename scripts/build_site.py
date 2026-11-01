@@ -518,7 +518,7 @@ def page_shell(title: str, description: str, main: str, extra_head: str = "", bo
 
 # Links into the retired GitHub organization --------------------------------------------------------
 
-GITHUB_LINK = re.compile(r"https://github\.com/ta-amps(?:/(?P<repo>[A-Za-z0-9._-]+?)(?:\.git)?"
+GITHUB_LINK = re.compile(r"https://github\.com/ta-amps(?:/(?P<repo>[A-Za-z0-9._-]+?)(?P<dotgit>\.git)?"
                          r"(?:/(?P<kind>[a-z]+)(?:/(?P<rest>[^\s\"'<>)\]]*))?)?)?(?=[\s\"'<>)\]]|/?$|/[\s\"'<>)\]])/?")
 PAGES_LINK = re.compile(r"https://ta-amps\.github\.io/[A-Za-z0-9._-]+/")
 FULL_OR_SHORT_SHA = re.compile(r"[0-9a-f]{7,40}\Z")
@@ -532,6 +532,11 @@ def source_link(match: re.Match, links: dict) -> str:
         return mirror
     if repo not in links["heads"]:
         fail(f"a link names a repository the source mirror does not hold: {match.group(0)}")
+    if not kind and match.group("dotgit"):
+        # A clone address: git clones the same repository from Agora's git mirror over plain HTTP.
+        if repo in links["git_held_back"]:
+            fail(f"a clone address names a repository whose git mirror is not published: {match.group(0)}")
+        return f"{links['git_mirror']}{repo}.git"
     if not kind:
         return f"{mirror}{repo}/"
     rest, _, query = rest.partition("?")

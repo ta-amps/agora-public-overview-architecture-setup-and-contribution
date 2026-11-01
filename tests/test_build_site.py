@@ -590,6 +590,15 @@ class Builder(unittest.TestCase):
             build.repoint("https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/tree/some-branch/x", links)
         with self.assertRaises(build.BuildError):
             build.repoint("https://github.com/ta-amps/another-repo", links)
+        # A clone address goes to the git mirror, which git can clone; the file view cannot be cloned. Agora's own
+        # repository has no published mirror, so a clone address for it stops the build.
+        self.assertEqual("git clone https://agora.ta-amps.workers.dev/git/tessera-infrastructure-work-and-storage-engine.git\n",
+                         build.repoint("git clone https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine.git\n", links))
+        with self.assertRaises(build.BuildError):
+            build.repoint("https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution.git", links)
+        for page in build.SITE.rglob("*.html"):
+            if not page.relative_to(build.SITE).as_posix().startswith(("decks/2026-10-29/", "storyboards/")):
+                self.assertNotRegex(page.read_text(encoding="utf-8"), r"git clone /", page)
         # The release files the frozen drafts link are served here, byte for byte as recorded.
         for version in self.nouns.manifest["versions"]:
             for download in version.get("downloads", []):
