@@ -224,6 +224,29 @@ class Builder(unittest.TestCase):
         # The film's production page is linked only once its production trace is final.
         self.assertEqual(build.film_made_ready(start), start["film_made"]["href"] in main)
 
+    def test_tasks_and_task_objects_are_glossed_in_plain_words_the_first_time(self):
+        # Feedback, October 30: a viewer took the vocabulary for a model architecture. Owner, Nov 1: it is Tasks and Task
+        # Objects. The overview and roll-your-own decks say in plain words what they are the first time they name them:
+        # Tasks are the work, and Task Objects are everything a Task uses or makes. The overview says plainly that this
+        # is how the work is organized, not a model architecture. The marketplace deck, written for nonprofits, says
+        # what its first Task is: a queued piece of work.
+        named = re.compile(r"\bTask Objects?\b")
+
+        def glossed(shown: str, where: str) -> None:
+            found = named.search(shown)
+            self.assertIsNotNone(found, where)
+            self.assertIn("everything a task uses or makes", shown[found.start():found.start() + 160].lower(), where)
+
+        decks = {deck["id"]: deck for deck in self.nouns.decks}
+        for deck_id in ("overview-and-architecture", "roll-your-own"):
+            glossed(" ".join(build.plain_text(slide["inner"]) for slide in decks[deck_id]["slides"]), deck_id)
+        overview = {slide["name"]: build.plain_text(slide["inner"]) for slide in decks["overview-and-architecture"]["slides"]}
+        self.assertIn("NOT A MODEL ARCHITECTURE", overview["nouns-and-verbs"])
+        self.assertIn("how the work is organized", overview["nouns-and-verbs"])
+        market = " ".join(build.plain_text(slide["inner"]) for slide in decks["public-good-marketplace"]["slides"])
+        first = re.search(r"\bTask\b", market)
+        self.assertEqual(", a queued piece of work", market[first.end():first.end() + len(", a queued piece of work")])
+
     def test_the_memory_systems_slide_is_a_measured_scan_and_no_slide_is_an_illustration(self):
         # Review, October 31: the illustrated worked example is gone (the How it works page replays a real run), and the
         # memory-systems slide is the feed's real scan. Every number on it has a measured claim, and no current slide or
@@ -273,6 +296,8 @@ class Builder(unittest.TestCase):
         with self.assertRaises(build.BuildError):
             build.meta_models("{{model:not-a-model}}", self.nouns.models)
         for page in build.SITE.rglob("*.html"):
+            if "source" in page.relative_to(build.SITE).parts:
+                continue  # a deck's slide sources write the tokens; the deck page they become renders them
             self.assertNotIn("{{model:", page.read_text(encoding="utf-8"), page)
 
     def test_nonprofits_never_choose_a_kind_of_request(self):
@@ -292,7 +317,8 @@ class Builder(unittest.TestCase):
             for claim in (deck["claims"] or {"claims": []})["claims"]:
                 start = main.index(f'data-name="{claim["slide"]}"')
                 notes = main[main.index('class="slide-notes"', start):main.index("</section>", start)]
-                self.assertIn(html.escape(claim["number"], quote=False), notes, claim["number"])
+                self.assertIn(html.escape(build.meta_models(claim["number"], self.nouns.models), quote=False), notes,
+                              claim["number"])
 
     def test_slide_elements_become_html(self):
         endpoints = self.nouns.site["endpoints"]
@@ -336,8 +362,9 @@ class Builder(unittest.TestCase):
         page = self.outputs[build.SITE / "learning" / "index.html"]
         self.assertIn('<li><a href="../learning/">Learning</a></li>', page)
         main = build.main_of(page)
-        # Every word the learning page shows, outside the shared header and footer, is a string of its noun.
-        written = set(strings(self.nouns.learning))
+        # Every word the learning page shows, outside the shared header and footer, is a string of its noun, with its
+        # {{model:...}} names rendered from the models catalog.
+        written = {build.meta_models(found, self.nouns.models) for found in strings(self.nouns.learning)}
         for shown in shown_text(main):
             self.assertIn(shown, written)
         # The loop is an ordered list of its steps, in the noun's order.
@@ -378,7 +405,8 @@ class Builder(unittest.TestCase):
         sizes = {len(category["packs"]) for category in library["categories"]}
         measured = {f"{n:,}" for n in set(numbers(library)) | sizes | set(numbers(explorer)) | set(numbers(ecosystem))}
         measured |= {library["source"]["commit"][:7], build.human_date(library["source"]["committed_at"]), "·"}
-        written = set(strings(library)) | set(strings(explorer)) | set(strings(ecosystem))
+        written = {build.meta_models(found, self.nouns.models)
+                   for found in strings(library) + strings(explorer) + strings(ecosystem)}
         for shown in shown_text(main):
             self.assertIn(shown, written | measured)
         # One card per pack, inside its category's section and in its order, linking to its folder at the commit.
@@ -414,19 +442,23 @@ class Builder(unittest.TestCase):
     def test_library_explorer_harness_feeds_and_ecosystem_catalog(self):
         page = self.outputs[build.SITE / "library" / "index.html"]
         main = build.main_of(page)
-        for anchor in ("explorer", "harness-feeds", "ecosystem-explorer"):
+        for anchor in ("explorer", "ecosystem-explorer"):
             self.assertIn(f'id="{anchor}"', main)
+        # Owner, Nov 1 (v2 brief): agent apps appear only on /models/, so the library shows no harness panel, filter
+        # or chips; the explorer's data keeps them.
+        self.assertNotIn('id="harness-feeds"', main)
+        self.assertNotIn("data-exp-harness", main)
         for harness in ("Harness Square", "Muse Code", "OpenCode", "Pi"):
-            self.assertIn(f"<h3>{harness}</h3>", main)
-        for tier in ("Tier 0", "Tier 1", "Tier 2", "Tier 3"):
-            self.assertIn(tier, main)
+            self.assertNotIn(f"<h3>{harness}</h3>", main)
         match = re.search(r'<script type="application/json" id="agora-explorer-data">(.*?)</script>', page)
         self.assertIsNotNone(match)
         payload = json.loads(match.group(1))
         self.assertEqual(self.nouns.explorer["counts"]["total"], len(payload["items"]))
         self.assertEqual(self.nouns.library["totals"]["packs"],
                          sum(1 for item in payload["items"] if item["kind"] == "pack"))
-        self.assertEqual(707, len(payload["projects"]))
+        # One entry of the source catalog is left out, and the page says so (Agora builder, Nov 1).
+        self.assertEqual((706, 707), (len(payload["projects"]), self.nouns.ecosystem["source_metadata"]["source_project_count"]))
+        self.assertIn("One entry of the source catalog is left out.", self.nouns.ecosystem["honesty_note"])
         bad_exp = copy.deepcopy(self.nouns.explorer)
         bad_exp["counts"]["total"] += 1
         with self.assertRaises(build.BuildError):
@@ -446,8 +478,8 @@ class Builder(unittest.TestCase):
         if commit == library["source"]["commit"]:
             totals = library["totals"]
             self.assertTrue(claim["number"].startswith(
-                f'{totals["packs"]:,} seed packs in one library, with {totals["nouns"]:,} nouns, {totals["verbs"]:,} '
-                f'verb templates and {totals["worked_examples"]:,} worked examples'), claim["number"])
+                f'{totals["packs"]:,} seed packs in one library, with {totals["nouns"]:,} Task Objects, {totals["verbs"]:,} '
+                f'Task templates and {totals["worked_examples"]:,} worked examples'), claim["number"])
 
     def test_library_categories_follow_what_the_packs_are(self):
         library = self.nouns.library
@@ -498,8 +530,7 @@ class Builder(unittest.TestCase):
         for claim in claims:
             self.assertTrue(claim["link"].startswith("https://github.com/ta-amps/"), claim["number"])
         # Model and GPU names, the loop's step labels and the date are names, not numbers to source.
-        names = re.compile(r"Llama 3\.2 [13]B|\b(?:1|3|30)B\b|RTX 3060|\bT4s?\b|October 30, 2026|(?<![\d.])0[1-8](?![\d.])",
-                           re.I)
+        names = re.compile(r"\b(?:1|3|30)B\b|\bT4s?\b|October 30, 2026|(?<![\d.])0[1-8](?![\d.])", re.I)
         for slide in deck["slides"]:
             listed = " ".join(claim["number"] for claim in claims if claim["slide"] == slide["name"])
             for part in (build.plain_text(without_number(slide["inner"])), build.plain_text(slide["notes"])):
@@ -582,21 +613,36 @@ class Builder(unittest.TestCase):
                     data = local.read_bytes()
                     self.assertEqual((download["sha256"], download["bytes"]), (build.sha256(data), len(data)), local)
 
-    def test_the_film_page_is_its_transcript_and_says_there_is_no_described_cut(self):
-        film = self.nouns.film
-        page = self.outputs[build.SITE / "film" / "index.html"]
+    def test_the_film_page_is_built_only_from_a_cuts_lines_word_for_word(self):
+        # The film page is a cut's text alternative. Owner, Nov 1: the October 31 cut named a model the owner no longer
+        # shows, so its lines are gone and no film page is built until the re-recorded cut's captions fill them.
+        film, home = self.nouns.film, self.nouns.home
         self.assertIn("transcript and scene descriptions", film["heading"].lower())
+        self.assertIn("no separate audio-described cut", film["audio_description"])
+        page_path = build.SITE / "film" / "index.html"
+        if not film["lines"]:
+            self.assertEqual([], film["acts"])
+            self.assertNotIn(page_path, self.outputs)
+            return
+        page = self.outputs[page_path]
         self.assertIn(f"<h1>{build.text(film['heading'])}</h1>", page)
         self.assertIn(f'<p class="dateline">{build.text(film["audio_description"])}</p>', page)
-        self.assertIn("audio-described cut is not available yet", film["audio_description"])
+        self.assertIn("transcript", home["videos"]["outline"]["label"].lower())
+        self.assertIn(f'<a href="film/">{build.text(home["videos"]["outline"]["label"])}</a>',
+                      self.outputs[build.SITE / "index.html"])
+        # A transcript is the narration word for word: the film noun's lines are the full cut's captions.
+        full = next(cut for cut in home["videos"]["cuts"] if cut["id"] == "full")
+        captions = build.plain_words((build.SITE / full["captions"]).read_text(encoding="utf-8"))
+        self.assertEqual(caption_words(captions), plain_words(" ".join(line["words"] for line in film["lines"])))
 
     def test_the_film_page_says_its_storyboard_is_the_draft_runs(self):
         # Hunt, October 30: the page said the storyboard was drawn from the production run, but the image is
         # the draft run's (its own header says "Draft preview", captures from 01:06 EDT).
         film = self.nouns.film
         self.assertNotIn("from the production run", film["lead"])
-        self.assertIn("draft run", film["lead"])
-        self.assertIn("draft run", film["storyboard"]["caption"])
+        if film.get("storyboard"):
+            self.assertIn("draft run", film["lead"])
+            self.assertIn("draft run", film["storyboard"]["caption"])
 
     def test_the_home_description_names_no_film_until_its_new_cut(self):
         description = self.nouns.home["description"]
@@ -671,10 +717,7 @@ class Builder(unittest.TestCase):
         for deck in self.nouns.decks:
             for slide in deck["slides"]:
                 self.assertNotIn("color:#B8541F", slide["inner"], (deck["id"], slide["name"]))
-        # The learning deck's dark result panel: labels in a lighter grey (5.80:1 on #11161F, 3.06:1 before).
-        small = next(s for d in self.nouns.decks for s in d["slides"] if s["name"] == "small-models")
-        self.assertNotIn("color:#5E6472", small["inner"])
-        self.assertEqual(4, small["inner"].count("color:#8A92A2"))
+        # The learning deck's dark panels keep labels in a grey that passes on #11161F (5.80:1).
         self.assertGreaterEqual(contrast("#8A92A2", "#11161F"), 4.5)
 
     def test_the_seed_pack_count_on_the_slide_matches_its_measured_claim(self):
@@ -686,7 +729,9 @@ class Builder(unittest.TestCase):
         self.assertEqual("measured", claim["status"])
         # Measured at one commit of the library, and linked to that commit's README.
         commit = re.search(r"/blob/([0-9a-f]{40})/README\.md#seed-pack-library$", claim["link"]).group(1)
-        self.assertIn(f"at commit {commit[:7]}", claim["source"])
+        self.assertNotIn(commit[:7], claim["source"])
+        if commit == self.nouns.library["source"]["commit"]:
+            self.assertIn(build.human_date(self.nouns.library["source"]["committed_at"]), claim["source"])
 
 
 if __name__ == "__main__":

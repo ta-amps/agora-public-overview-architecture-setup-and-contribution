@@ -417,9 +417,9 @@ document.documentElement.classList.add("js");
     li.appendChild(el("p", "exp-card-summary", item.summary));
 
     var specs = el("div", "exp-card-group");
+    // Agent apps appear only on /models/ (owner, Nov 1), so cards show no harness chips.
     var specChips = [
-      (labels.ceiling_prefix || "Ceiling:") + " " + (ceilingMap[item.ceiling] || item.ceiling),
-      (labels.harnesses_prefix || "Harnesses:") + " " + formatHarnesses(item.harnesses)
+      (labels.ceiling_prefix || "Ceiling:") + " " + (ceilingMap[item.ceiling] || item.ceiling)
     ];
     specs.appendChild(makeChipList(specChips, "plain"));
     li.appendChild(specs);
@@ -427,7 +427,7 @@ document.documentElement.classList.add("js");
     var foot = el("p", "exp-card-foot");
     var left = el("span", "");
     if (item.kind === "pack") {
-      left.textContent = item.nouns + " nouns · " + item.verbs + " verbs ";
+      left.textContent = item.nouns + " Task Objects · " + item.verbs + " Tasks ";
       var jump = el("a", "", labels.open_card || "Jump to pack");
       jump.href = item.anchor;
       left.appendChild(jump);
@@ -463,14 +463,14 @@ document.documentElement.classList.add("js");
 
     if (proj.tasks && proj.tasks.length) {
       var vGroup = el("div", "exp-card-group");
-      vGroup.appendChild(el("p", "exp-card-label", labels.tasks_label || "Candidate Tasks (verbs):"));
+      vGroup.appendChild(el("p", "exp-card-label", labels.tasks_label || "Candidate Tasks:"));
       vGroup.appendChild(makeChipList(proj.tasks, "verb"));
       li.appendChild(vGroup);
     }
 
     if (proj.task_objects && proj.task_objects.length) {
       var nGroup = el("div", "exp-card-group");
-      nGroup.appendChild(el("p", "exp-card-label", labels.objects_label || "Candidate Task Objects (nouns):"));
+      nGroup.appendChild(el("p", "exp-card-label", labels.objects_label || "Candidate Task Objects:"));
       nGroup.appendChild(makeChipList(proj.task_objects, "noun"));
       li.appendChild(nGroup);
     }
@@ -484,7 +484,6 @@ document.documentElement.classList.add("js");
     li.appendChild(sGroup);
 
     var foot = el("p", "exp-card-foot");
-    foot.appendChild(el("span", "", (labels.harnesses_prefix || "Harnesses:") + " " + formatHarnesses(proj.harnesses)));
     var repoLink = el("a", "", labels.open_repo || "Open repository");
     repoLink.href = proj.url;
     foot.appendChild(repoLink);
@@ -507,7 +506,7 @@ document.documentElement.classList.add("js");
     var kind = kindSelect.value;
     var cat = catSelect.value;
     var ceil = ceilSelect.value;
-    var harn = harnSelect.value;
+    var harn = harnSelect ? harnSelect.value : "all";
 
     if (activeTab === "library") {
       return (data.items || []).filter(function (item) {
@@ -605,7 +604,7 @@ document.documentElement.classList.add("js");
       kindSelect.value = "all";
       catSelect.value = "all";
       ceilSelect.value = "all";
-      harnSelect.value = "all";
+      if (harnSelect) harnSelect.value = "all";
       shownLimit = PAGE_SIZE;
       updateView();
     });

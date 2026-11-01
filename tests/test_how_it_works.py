@@ -301,7 +301,7 @@ class Pages(unittest.TestCase):
         main = build.meta_models(build.main_of(self.how), self.nouns.models)
         for pick in how["results"]:
             item = results[pick["model"]]
-            self.assertTrue(pick["model"].startswith("Muse"), "the results name Meta's Muse models only")
+            self.assertTrue(build.meta_models(pick["name"], self.nouns.models).startswith("Muse"), "Meta's Muse models only")
             for figure in (item["before"], item["after"]):
                 self.assertNotIn(figure, typed, pick["model"])
             self.assertIn(f'<span class="how-result-before">{html.escape(item["before"])}</span>', main)
@@ -326,7 +326,12 @@ class Pages(unittest.TestCase):
                            for p in (SITE / "evidence" / folder["id"]).rglob("*") if p.is_file())
             self.assertEqual(files, [f["path"] for f in folder["files"]])
             for path in files:
-                self.assertIn(f'href="../evidence/{folder["id"]}/{html.escape(path)}"', main)
+                if folder.get("raw_files"):
+                    # The bundle leaves these raw files out (their traces name an agent app), so the page links the
+                    # replay on How it works instead of them (Agora builder, Nov 1).
+                    self.assertNotIn(f'href="../evidence/{folder["id"]}/{html.escape(path)}"', main)
+                else:
+                    self.assertIn(f'href="../evidence/{folder["id"]}/{html.escape(path)}"', main)
         # A served folder without a line stops the build.
         nouns = copy.copy(self.nouns)
         nouns.evidence = copy.deepcopy(self.nouns.evidence)

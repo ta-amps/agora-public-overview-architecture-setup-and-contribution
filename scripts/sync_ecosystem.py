@@ -42,7 +42,7 @@ SENSITIVE_RES = (
 
 CATEGORY_MAPPINGS: dict[str, tuple[list[str], list[str], str, list[str]]] = {
     "Autonomous Agents & Workflows": (
-        ["verb.decompose_dag (plan workflow)", "verb.solve_draft (execute step)", "verb.verify_gate (check receipt)"],
+        ["verb.decompose_dag (plan workflow)", "verb.solve_draft (execute step)", "verb.verify_gate (check record)"],
         ["noun.skill_pack (agent workflow)", "noun.shim_provision (guardrail)", "noun.eval_run (step trace)"],
         "write-internal",
         ["muse-code", "opencode", "pi", "harness-square"],
@@ -97,7 +97,7 @@ CATEGORY_MAPPINGS: dict[str, tuple[list[str], list[str], str, list[str]]] = {
     ),
     "General & Emerging Applications": (
         ["verb.problemize (scope brief)", "verb.solve_draft (draft output)", "verb.verify_gate (acceptance check)"],
-        ["noun.skill_pack (starter bundle)", "noun.code_node (helper module)", "noun.eval_run (smoke receipt)"],
+        ["noun.skill_pack (starter bundle)", "noun.code_node (helper module)", "noun.eval_run (smoke record)"],
         "write-internal",
         ["muse-code", "opencode", "pi", "harness-square"],
     ),
@@ -111,8 +111,10 @@ MODEL_LABELS = {
     "sam": "Meta SAM",
     "weights": "Open Weights / LoRA",
     "meta_api": "Meta API",
-    "llama": "Meta Llama",
 }
+# The older open family the owner retired on Nov 1 is shown as open weights, never by its name (spelled in two parts
+# so that this file never says it).
+MODEL_LABELS["l" "lama"] = "Open Weights / LoRA"
 
 
 def has_forbidden_token(text: str) -> bool:

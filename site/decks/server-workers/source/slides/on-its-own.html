@@ -1,57 +1,57 @@
-<section id="on-its-own" data-transition="fade" style="background:#F5F2EA;color:#11161F;font-family:'IBM Plex Sans', Arial, sans-serif;padding:104px 128px 150px;display:flex;flex-direction:column;gap:26px">
-<div style="position:absolute;left:0;top:0;width:1920px;height:10px;background:linear-gradient(90deg, #2A5DB0, #B8541F)"></div>
-<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;color:#11161F">What runs on its own</h2>
+<section id="on-its-own" data-transition="fade" style="background:#EDE8DC;color:#5E6472;font-family:'IBM Plex Sans', Arial, sans-serif;padding:104px 128px 150px;display:flex;flex-direction:column;gap:26px">
+<div style="position:absolute;left:0;top:0;width:1920px;height:10px;background:linear-gradient(90deg, #2A5DB0, #9E3A26)"></div>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;color:#5E6472">What runs on its own</h2>
 <div style="display:flex;flex-direction:column">
-<div style="display:flex;flex-direction:row;align-items:center;gap:40px;padding:27px 0;border-top:2px solid #E4DED1">
+<div style="display:flex;flex-direction:row;align-items:center;gap:40px;padding:27px 0;border-top:2px solid #8A8476">
 <div style="width:420px;display:flex;flex-direction:column;gap:6px">
 <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#5E6472;letter-spacing:1px">INFRASTRUCTURE</p>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:36px;font-weight:700;line-height:1.1;color:#11161F">Lease reaping</h3>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:36px;font-weight:700;line-height:1.1;color:#5E6472">Lease reaping</h3>
 </div>
 <div style="flex:1;display:flex;flex-direction:column;gap:6px">
-<p style="font-size:25px;line-height:1.35;color:#11161F;font-weight:600">Shortly after each lease expires, and on a cron every six hours</p>
-<p style="font-size:23px;line-height:1.4;color:#3B4252">Expired leases go back to the queue and timed waits wake up, so a stalled worker can’t hold a verb forever. Plain code, with no model.</p>
+<p style="font-size:25px;line-height:1.35;color:#5E6472;font-weight:600">Shortly after each lease expires, and on a cron every six hours</p>
+<p style="font-size:23px;line-height:1.4;color:#5E6472">Expired leases go back to the queue and timed waits wake up, so a stalled worker can’t hold a Task forever. Plain code, with no model.</p>
 </div>
-<p style="width:180px;text-align:center;background:#E1F0E6;color:#1F6B43;border-radius:999px;padding:6px 0;font-size:22px;font-weight:600">Every 6 hours</p>
+<p style="width:180px;text-align:center;background:#EDE8DC;color:#1F6B43;border-radius:999px;padding:6px 0;font-size:22px;font-weight:600">Every 6 hours</p>
 </div>
-<div style="display:flex;flex-direction:row;align-items:center;gap:40px;padding:27px 0;border-top:2px solid #E4DED1">
+<div style="display:flex;flex-direction:row;align-items:center;gap:40px;padding:27px 0;border-top:2px solid #8A8476">
 <div style="width:420px;display:flex;flex-direction:column;gap:6px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#A84B1B;letter-spacing:1px">A SERVER WORKER</p>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:36px;font-weight:700;line-height:1.1;color:#11161F">The daily check</h3>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#9E3A26;letter-spacing:1px">A DEDICATED WORKER</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:36px;font-weight:700;line-height:1.1;color:#5E6472">The daily check</h3>
 </div>
 <div style="flex:1;display:flex;flex-direction:column;gap:6px">
-<p style="font-size:25px;line-height:1.35;color:#11161F;font-weight:600">Every 24 hours from 13:00 UTC, or on demand</p>
-<p style="font-size:23px;line-height:1.4;color:#3B4252">Reads the health, agent card, llms.txt and tool list of four services, records what changed as nouns and queues repair verbs. No model call.</p>
+<p style="font-size:25px;line-height:1.35;color:#5E6472;font-weight:600">Every 24 hours from 13:00 UTC, or on demand</p>
+<p style="font-size:23px;line-height:1.4;color:#5E6472">Reads the health, agent card, llms.txt and tool list of four services, records what changed as Task Objects and queues repair Tasks. No model call.</p>
 </div>
-<p style="width:180px;text-align:center;background:#E1F0E6;color:#1F6B43;border-radius:999px;padding:6px 0;font-size:22px;font-weight:600">Daily</p>
+<p style="width:180px;text-align:center;background:#EDE8DC;color:#1F6B43;border-radius:999px;padding:6px 0;font-size:22px;font-weight:600">Daily</p>
 </div>
-<div style="display:flex;flex-direction:row;align-items:center;gap:40px;padding:27px 0;border-top:2px solid #E4DED1">
+<div style="display:flex;flex-direction:row;align-items:center;gap:40px;padding:27px 0;border-top:2px solid #8A8476">
 <div style="width:420px;display:flex;flex-direction:column;gap:6px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#2A5DB0;letter-spacing:1px">VERBS THAT READ REPORTS</p>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:36px;font-weight:700;line-height:1.1;color:#11161F">Learners</h3>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#24519B;letter-spacing:1px">TASKS THAT READ REPORTS</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:36px;font-weight:700;line-height:1.1;color:#5E6472">Learners</h3>
 </div>
 <div style="flex:1;display:flex;flex-direction:column;gap:6px">
-<p style="font-size:25px;line-height:1.35;color:#11161F;font-weight:600">Execution reports become memory, path statistics and routing advice</p>
-<p style="font-size:23px;line-height:1.4;color:#3B4252">A person starts each run, on recorded reports. The learning slide on the overview deck has the measured results.</p>
+<p style="font-size:25px;line-height:1.35;color:#5E6472;font-weight:600">Execution reports become memory, path statistics and routing advice</p>
+<p style="font-size:23px;line-height:1.4;color:#5E6472">A person starts each run, on recorded reports. The learning slide on the overview deck has the measured results.</p>
 </div>
-<p style="width:180px;text-align:center;background:#E9E6DF;color:#3B4252;border-radius:999px;padding:6px 0;font-size:22px;font-weight:600">By hand</p>
+<p style="width:180px;text-align:center;background:#EDE8DC;color:#5E6472;border-radius:999px;padding:6px 0;font-size:22px;font-weight:600">By hand</p>
 </div>
-<div style="display:flex;flex-direction:row;align-items:center;gap:40px;padding:27px 0;border-top:2px solid #E4DED1;border-bottom:2px solid #E4DED1">
+<div style="display:flex;flex-direction:row;align-items:center;gap:40px;padding:27px 0;border-top:2px solid #8A8476;border-bottom:2px solid #8A8476">
 <div style="width:420px;display:flex;flex-direction:column;gap:6px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#A84B1B;letter-spacing:1px">SCHEDULED VERBS</p>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:36px;font-weight:700;line-height:1.1;color:#11161F">Feeds of what’s new</h3>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:19px;color:#9E3A26;letter-spacing:1px">SCHEDULED TASKS</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:36px;font-weight:700;line-height:1.1;color:#5E6472">Feeds of what’s new</h3>
 </div>
 <div style="flex:1;display:flex;flex-direction:column;gap:6px">
-<p style="font-size:25px;line-height:1.35;color:#11161F;font-weight:600">New repos, papers, model releases and tool updates</p>
-<p style="font-size:23px;line-height:1.4;color:#3B4252">Tessera serves the feed tools to keyed agents, and the tool-discovery and freshness-checks packs hold the scan verbs. A scan runs when a worker claims it.</p>
+<p style="font-size:25px;line-height:1.35;color:#5E6472;font-weight:600">New repos, papers, model releases and tool updates</p>
+<p style="font-size:23px;line-height:1.4;color:#5E6472">Tessera serves the feed tools to keyed agents, and the tool-discovery and freshness-checks packs hold the scan Tasks. A scan runs when a worker claims it.</p>
 <x-feed-status kind="line" style="font-size:22px;line-height:1.4;color:#1F6B43;font-weight:600"></x-feed-status>
 </div>
-<p style="width:180px;text-align:center;background:#E9E6DF;color:#3B4252;border-radius:999px;padding:6px 0;font-size:22px;font-weight:600">When claimed</p>
+<p style="width:180px;text-align:center;background:#EDE8DC;color:#5E6472;border-radius:999px;padding:6px 0;font-size:22px;font-weight:600">When claimed</p>
 </div>
 </div>
 <div style="display:flex;flex-direction:row;align-items:center;gap:36px;font-size:22px;color:#5E6472">
 <p>Each tile says when it runs. The live ones show their last run in public: Tessera’s health and the daily check’s status.</p>
 </div>
-<svg aria-label="ta-amps mark" width="32" height="32" viewBox="0 0 32 32" style="position:absolute;left:128px;bottom:64px;width:32px;height:32px"><rect x="0" y="0" width="14" height="14" rx="3" fill="#2A5DB0"/><rect x="18" y="0" width="14" height="14" rx="3" fill="#B8541F"/><rect x="0" y="18" width="14" height="14" rx="3" fill="#11161F"/><rect x="18" y="18" width="14" height="14" rx="3" fill="#2A5DB0"/></svg>
+<svg aria-label="ta-amps mark" width="32" height="32" viewBox="0 0 32 32" style="position:absolute;left:128px;bottom:64px;width:32px;height:32px"><rect x="0" y="0" width="14" height="14" rx="3" fill="#E5ECF7"/><rect x="18" y="0" width="14" height="14" rx="3" fill="#F8E6E1"/><rect x="0" y="18" width="14" height="14" rx="3" fill="#F5F2EA"/><rect x="18" y="18" width="14" height="14" rx="3" fill="#E5ECF7"/></svg>
 <p style="position:absolute;left:176px;bottom:64px;width:1616px;font-size:24px;color:#5E6472">What runs on its own, and when</p>
-<aside>Four things run without anyone at a keyboard, and each says when. Lease reaping is infrastructure, not a worker: Tessera gives expired leases back to the queue shortly after they lapse and again on a cron every six hours, and its public health shows the last run. The daily check is a server worker: once a day, or when an operator asks, it reads the public health, agent card, llms.txt and tool list of four services, Eranos, Tessera, Herma and Home’s agent endpoints, records what changed as nouns and queues repair or investigate verbs for authorized workers, with no model call. Learners run when a person starts them, on recorded execution reports; the overview deck’s learning slide has the measured results. Feeds run when a worker claims a scan verb: Tessera serves the feed tools to keyed agents, and the tool-discovery and freshness-checks packs hold the verbs.</aside>
+<aside>Four things run without anyone at a keyboard, and each says when. Lease reaping is infrastructure, not a worker: Tessera gives expired leases back to the queue shortly after they lapse and again on a cron every six hours, and its public health shows the last run. The daily check is a dedicated worker run by ta-amps: once a day, or when an operator asks, it reads the public health, agent card, llms.txt and tool list of four services, Eranos, Tessera, Herma and Home’s agent endpoints, records what changed as Task Objects and queues repair or investigate Tasks for authorized workers, with no model call. Learners run when a person starts them, on recorded execution reports; the overview deck’s learning slide has the measured results. Feeds run when a worker claims a scan Task: Tessera serves the feed tools to keyed agents, and the tool-discovery and freshness-checks packs hold the Tasks.</aside>
 </section>

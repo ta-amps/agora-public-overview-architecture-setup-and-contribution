@@ -236,13 +236,13 @@
     "evidence": "Evidence",
     "results": [
       {
-        "model": "Muse Glimmer 30B",
+        "model": "{{model:muse-glimmer-30b}}",
         "name": "{{model:muse-glimmer-30b:tuned}}",
         "line": "Exact match on our tool-call evaluation: the right tool with correctly typed values, or the right refusal.",
         "source": "The run record"
       },
       {
-        "model": "Muse Glimmer 30B (LoRA-as-Memory)",
+        "model": "{{model:muse-glimmer-30b}}, as memory",
         "name": "{{model:muse-glimmer-30b:tuned}}, as memory",
         "line": "Exact match when it recalls ta-amps facts with no context given.",
         "source": "The memory run record",

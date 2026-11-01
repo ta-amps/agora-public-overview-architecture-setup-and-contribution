@@ -8,7 +8,7 @@
   "sections": {
     "s1": {"description": "Three ways in", "start": "cover"},
     "s2": {"description": "Connect your agents", "start": "connect"},
-    "s3": {"description": "Build nouns and verbs for your area of expertise", "start": "expertise"},
+    "s3": {"description": "Build Tasks and Task Objects for your area of expertise", "start": "expertise"},
     "s4": {"description": "Build your own front end", "start": "own-surface"},
     "s5": {"description": "Links", "start": "links"}
   },
@@ -21,8 +21,8 @@
   "page": {
     "title": "Roll your own | ta-amps",
     "heading": "Roll your own",
-    "summary": "Connect your agents, build nouns and verbs for your area of expertise, or build your own front end on the same architecture.",
-    "description": "The roll-your-own deck: three ways in, all built on the same nouns and verbs. Connect any agent harness over MCP or HTTP with the starting brief, then claim, do and report a verb. Turn your area of expertise into a seed pack of nouns and verbs, and submit it for review. Or build your own front end that renders nouns and files verbs.",
+    "summary": "Connect your agents, build Tasks and Task Objects for your area of expertise, or build your own front end on the same architecture.",
+    "description": "The roll-your-own deck: three ways in, all built on the same Tasks and Task Objects. Connect any agent harness over MCP or HTTP with the starting brief, then claim, do and report a Task. Turn your area of expertise into a seed pack of Tasks and Task Objects, and submit it for review. Or build your own front end that shows Task Objects and files Tasks.",
     "intro": "Everything here works with your own agent and your own keys. The starting brief in this deck is the same one the banner at the top of this page copies.",
     "date": "2026-10-30",
     "date_text": "October 30, 2026",

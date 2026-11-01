@@ -1,30 +1,25 @@
-<section id="free-gpus" data-transition="fade" style="background:#F5F2EA;color:#11161F;font-family:'IBM Plex Sans', Arial, sans-serif;padding:120px 128px 150px;display:flex;flex-direction:column;gap:36px">
-<div style="position:absolute;left:0;top:0;width:1920px;height:10px;background:linear-gradient(90deg, #2A5DB0, #B8541F)"></div>
-<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;color:#11161F">Run it on free GPUs</h2>
+<section id="free-gpus" data-transition="fade" style="background:#EDE8DC;color:#5E6472;font-family:'IBM Plex Sans', Arial, sans-serif;padding:120px 128px 150px;display:flex;flex-direction:column;gap:36px">
+<div style="position:absolute;left:0;top:0;width:1920px;height:10px;background:linear-gradient(90deg, #2A5DB0, #9E3A26)"></div>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;color:#5E6472">Run it on free GPUs</h2>
 <div style="display:flex;flex-direction:row;gap:28px">
-<div style="flex:1;background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:32px 34px;display:flex;flex-direction:column;gap:10px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#A84B1B;letter-spacing:1px">FREE NOTEBOOK GPUS</p>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:36px;font-weight:700;line-height:1.15;color:#11161F">A 30B model on two free T4s</h3>
-<p style="font-size:25px;line-height:1.4;color:#3B4252">Muse Glimmer 30B was tuned with QLoRA on Kaggle’s free notebook GPUs: 64 training steps in 83 minutes.</p>
+<div style="flex:1;background:#EDE8DC;border:2px solid #8A8476;border-radius:20px;padding:32px 34px;display:flex;flex-direction:column;gap:10px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#9E3A26;letter-spacing:1px">FREE NOTEBOOK GPUS</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:36px;font-weight:700;line-height:1.15;color:#5E6472">A 30B model on two free T4s</h3>
+<p style="font-size:25px;line-height:1.4;color:#5E6472">{{model:muse-glimmer-30b}} was tuned with QLoRA on Kaggle’s free notebook GPUs: 64 training steps in 83 minutes.</p>
 </div>
-<div style="flex:1;background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:32px 34px;display:flex;flex-direction:column;gap:10px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#A84B1B;letter-spacing:1px">A GPU YOU OWN</p>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:36px;font-weight:700;line-height:1.15;color:#11161F">1B and 3B on one RTX 3060</h3>
-<p style="font-size:25px;line-height:1.4;color:#3B4252">Every round of both on one 12 GB card: about 46 and 51 GPU-minutes, with no provider calls and no spending.</p>
-</div>
-<div style="flex:1;background:#11161F;border-radius:20px;padding:32px 34px;display:flex;flex-direction:column;gap:10px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#F0884F;letter-spacing:1px">NO GPU</p>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:36px;font-weight:700;line-height:1.15;color:#F5F2EA">Check the plumbing first</h3>
-<p style="font-size:25px;line-height:1.4;color:#C8D0DC">A CPU backend runs every verb, receipt, report and decision without a GPU. Its numbers describe the plumbing only.</p>
+<div style="flex:1;background:#F5F2EA;border-radius:20px;padding:32px 34px;display:flex;flex-direction:column;gap:10px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px;color:#9C4416;letter-spacing:1px">NO GPU</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:36px;font-weight:700;line-height:1.15;color:#11161F">Check the plumbing first</h3>
+<p style="font-size:25px;line-height:1.4;color:#11161F">A CPU backend runs every Task, report and decision, and records each step, without a GPU. Its numbers describe the plumbing only.</p>
 </div>
 </div>
-<div style="background:#0C1017;border:2px solid #2C3443;border-radius:20px;padding:28px 36px;display:flex;flex-direction:column;gap:8px;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:25px;line-height:1.45">
-<p style="color:#8C96A6"># one tick plans and runs one round; every verb is claimed, kept alive and submitted for a receipt</p>
-<p style="color:#F5F2EA"><span style="color:#F0884F">$</span> PYTHONPATH=src:. python -m examples.continuous_tuning.cli tick \</p>
-<p style="color:#F5F2EA;padding-left:44px">--root &lt;runs&gt; --base &lt;base noun&gt; --base-path &lt;weights&gt; --backend hf</p>
+<div style="background:#F5F2EA;border:2px solid #8A8476;border-radius:20px;padding:28px 36px;display:flex;flex-direction:column;gap:8px;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:25px;line-height:1.45">
+<p style="color:#5E6472"># one tick plans and runs one round; every Task is claimed, kept alive and recorded</p>
+<p style="color:#11161F"><span style="color:#9C4416">$</span> PYTHONPATH=src:. python -m examples.continuous_tuning.cli tick \</p>
+<p style="color:#11161F;padding-left:44px">--root &lt;runs&gt; --base &lt;base model&gt; --base-path &lt;weights&gt; --backend hf</p>
 </div>
-<p style="font-size:26px;line-height:1.4;color:#5E6472">The guide, its tests and the CPU backend: <a href="https://agora.ta-amps.workers.dev/source/tessera-infrastructure-work-and-storage-engine/95e434eb820f/docs/continuous-tuning.md" style="color:#2A5DB0;text-decoration:none;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px">tessera-infrastructure-work-and-storage-engine/docs/continuous-tuning.md</a></p>
-<svg aria-label="ta-amps mark" width="32" height="32" viewBox="0 0 32 32" style="position:absolute;left:128px;bottom:64px;width:32px;height:32px"><rect x="0" y="0" width="14" height="14" rx="3" fill="#2A5DB0"/><rect x="18" y="0" width="14" height="14" rx="3" fill="#B8541F"/><rect x="0" y="18" width="14" height="14" rx="3" fill="#11161F"/><rect x="18" y="18" width="14" height="14" rx="3" fill="#2A5DB0"/></svg>
+<p style="font-size:26px;line-height:1.4;color:#5E6472">The guide, its tests and the CPU backend: <a href="https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md" style="color:#24519B;text-decoration:none;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:22px">tessera-infrastructure-work-and-storage-engine/docs/continuous-tuning.md</a></p>
+<svg aria-label="ta-amps mark" width="32" height="32" viewBox="0 0 32 32" style="position:absolute;left:128px;bottom:64px;width:32px;height:32px"><rect x="0" y="0" width="14" height="14" rx="3" fill="#E5ECF7"/><rect x="18" y="0" width="14" height="14" rx="3" fill="#F8E6E1"/><rect x="0" y="18" width="14" height="14" rx="3" fill="#F5F2EA"/><rect x="18" y="18" width="14" height="14" rx="3" fill="#E5ECF7"/></svg>
 <p style="position:absolute;left:176px;bottom:64px;width:1616px;font-size:24px;color:#5E6472">How it runs · free GPUs</p>
-<aside>You don’t need to rent a GPU to try this. Muse Glimmer 30B was tuned with QLoRA on Kaggle’s free notebook GPUs, two T4s: its 511-row run took 64 training steps in 83 minutes. The run record lists every notebook file’s hash. Llama 3.2 1B and 3B ran every round on one RTX 3060 with 12 GB: about 46 and 51 GPU-minutes, with no provider calls and no spending. Without a GPU, a CPU backend runs every verb, receipt, report and decision, so you can check the plumbing before you spend anything. One tick command plans and runs a round, and Tessera’s continuous-tuning guide has the rest.</aside>
+<aside>You don’t need to rent a GPU to try this. {{model:muse-glimmer-30b}} was tuned with QLoRA on Kaggle’s free notebook GPUs, two T4s: its 511-row run took 64 training steps in 83 minutes. The run record lists every notebook file. Without a GPU, a CPU backend runs every Task, report and decision and records each step, so you can check the plumbing before you spend anything. One tick command plans and runs a round, and Tessera’s continuous-tuning guide has the rest.</aside>
 </section>

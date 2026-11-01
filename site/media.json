@@ -3,71 +3,6 @@
   "publication_does_not_certify_claims": true,
   "items": [
     {
-      "path": "film/compare/arch-anim-16s.mp4",
-      "sha256": "969d47f3981c36c00f85a1bb21e5e928125f7e146411f702427e377369397272",
-      "bytes": 661828
-    },
-    {
-      "path": "film/compare/arch-anim-8s.mp4",
-      "sha256": "50bf1aaef8bfaa7fe667daf4257389e94ce9ee53339f17663e1f61b4b07abfb1",
-      "bytes": 456143
-    },
-    {
-      "path": "film/compare/arch-anim-poster.png",
-      "sha256": "ac112af23bfc99eae5f99412609ab749ed0335e714f4884771835670ba2ea605",
-      "bytes": 417110
-    },
-    {
-      "path": "film/compare/assets/d-contact-sheet.png",
-      "sha256": "bf1c5334a80907ef4d16d58c34983bbf6120a0c8514d67a696f0345ace919fda",
-      "bytes": 672355
-    },
-    {
-      "path": "film/compare/assets/fonts/IBMPlexSans-wdth-wght.ttf",
-      "sha256": "3b031aa4216174205bd8471f88a49b91f093169e9e87bd5262242bc5967fe2e3",
-      "bytes": 537244
-    },
-    {
-      "path": "film/compare/assets/fonts/JetBrainsMono-wght.ttf",
-      "sha256": "48715a42ec242c21e9f02692891e147d022299a52e48d5e413e1a942193ffeda",
-      "bytes": 187208
-    },
-    {
-      "path": "film/compare/assets/fonts/SpaceGrotesk-wght.ttf",
-      "sha256": "acad6de1fc93436f5c0f1f4137751ef04f1aea3063e7036535970ffcfbd79f72",
-      "bytes": 136676
-    },
-    {
-      "path": "film/compare/assets/s1-contact-sheet.png",
-      "sha256": "8c3e3c6c5fe1ed91e3b6c1b226257b5ff37e376820dab8ad0192f74d309e4159",
-      "bytes": 632179
-    },
-    {
-      "path": "film/compare/assets/s2-contact-sheet.png",
-      "sha256": "9975dec50a57b90297f3cf21bd0953ee048381d6dca6d4f91ff73d59d2670b14",
-      "bytes": 556348
-    },
-    {
-      "path": "film/compare/assets/s3-contact-sheet.png",
-      "sha256": "f1939fade826f5ebd4a6518f24463f08762b6ac0a390c457723fdc7eccdeebf7",
-      "bytes": 561341
-    },
-    {
-      "path": "film/compare/assets/s5-contact-sheet.png",
-      "sha256": "8a2070ae99137657324d281eba19f6a97cbc00c75976e3eb03dd1c818f660d0d",
-      "bytes": 527578
-    },
-    {
-      "path": "film/compare/assets/v3-storyboard-3m.png",
-      "sha256": "9d4a5e6a11e384f3ebfa8518971e43139f87c7c712990a5ded21821b2b059c61",
-      "bytes": 1826374
-    },
-    {
-      "path": "film/compare/assets/v3-storyboard-60s.png",
-      "sha256": "829eccd0d3ff6a26113a921e566a4a751ca8e92914c6284bf257c5a341abd0f8",
-      "bytes": 694393
-    },
-    {
       "path": "hub-3d/assets/fonts/IBMPlexSans-wdth-wght.ttf",
       "sha256": "3b031aa4216174205bd8471f88a49b91f093169e9e87bd5262242bc5967fe2e3",
       "bytes": 537244,
@@ -148,46 +83,6 @@
       "bytes": 7544380
     },
     {
-      "path": "video/2026-10-30/full-v2/eranos-3m-poster.png",
-      "sha256": "bb9dc69c7aac53e6bfb74a4273ee8b29736d402c04b0245a8a52cbdf9ee961d3",
-      "bytes": 256475
-    },
-    {
-      "path": "video/2026-10-30/full-v2/eranos-3m.mp4",
-      "sha256": "14aa3f163a434436dfa1447c179ac921edcfe37880f27d5d8c95aac687d24030",
-      "bytes": 33723327
-    },
-    {
-      "path": "video/2026-10-30/hub-v3/meta-frontier-60s-poster.png",
-      "sha256": "c81cfa8191f83edf0a0e3c578e4ee6cfe10c5bea0119833ef83ebf838c0e6368",
-      "bytes": 151375
-    },
-    {
-      "path": "video/2026-10-30/hub-v3/meta-frontier-60s.mp4",
-      "sha256": "43885e2986efc4f177159a7383d448eda985a3b6072447305f4cb1ce5a6a0817",
-      "bytes": 5969477
-    },
-    {
-      "path": "video/2026-10-30/hub-v3/threejs-hub-90s-poster.png",
-      "sha256": "37dcbc1482581b90e8d2beb0d4c9a5f64c4235aa7d5ec2f90351fee1baaae585",
-      "bytes": 369741
-    },
-    {
-      "path": "video/2026-10-30/hub-v3/threejs-hub-90s.mp4",
-      "sha256": "fd5d1f5b15fc0c3fe5c8ca23678e4ca660bfd3762501731f6441f318533b790d",
-      "bytes": 9044307
-    },
-    {
-      "path": "video/2026-10-30/short-v2/eranos-60s-poster.png",
-      "sha256": "13370edc106c5f7229b01e8dfe88530a0fa29600f722c2ef3ccd02f76bf04fa9",
-      "bytes": 225662
-    },
-    {
-      "path": "video/2026-10-30/short-v2/eranos-60s.mp4",
-      "sha256": "ac84820a99eaa2e8bfebd2abf049e0175ef4d035f96421ef26030b8b650517ce",
-      "bytes": 17206643
-    },
-    {
       "path": "video/2026-10-30/spare-tokens-for-good-poster.png",
       "sha256": "f7d93a785ae48fcc18715babe3698b73c8f3d4e37ab9c0a82f232072d1635737",
       "bytes": 59067
@@ -196,21 +91,6 @@
       "path": "video/2026-10-30/storyboard-3m.png",
       "sha256": "8506851b433b321b1c59a067f5ced443d1c5f90e048829b14f2a49b2d6b9c624",
       "bytes": 2000577
-    },
-    {
-      "path": "video/2026-10-31/full-v3/eranos-3m-frosted-captions.mp4",
-      "sha256": "17dbc9c61e31391ee6fefb034cd5706ce76d4e4a87633b0ce30f3147fddfadfb",
-      "bytes": 20794414
-    },
-    {
-      "path": "video/2026-10-31/full-v3/eranos-3m-poster.png",
-      "sha256": "c36aea34ef38725a95f739bec1077e8738205d951f2ccfac166851f1201243fa",
-      "bytes": 140594
-    },
-    {
-      "path": "video/2026-10-31/full-v3/eranos-3m.mp4",
-      "sha256": "21ad58c83033ae45251e7c304af79680630e712f2352594d69f4798df21dadc3",
-      "bytes": 18038877
     },
     {
       "path": "video/2026-10-31/full-v6/eranos-3m-clean.mp4",
@@ -226,21 +106,6 @@
       "path": "video/2026-10-31/full-v6/eranos-3m.mp4",
       "sha256": "2c5268babf5707410214b7c62bc3863047044e19d263435833c2b6aa03fdaef2",
       "bytes": 15210558
-    },
-    {
-      "path": "video/2026-10-31/short-v3/eranos-60s-frosted-captions.mp4",
-      "sha256": "9871e858ce6e5de153f1316cab5fa98aa63e247d128baa50b2041670f9662df9",
-      "bytes": 10954721
-    },
-    {
-      "path": "video/2026-10-31/short-v3/eranos-60s-poster.png",
-      "sha256": "783af9ad7bdc85b1d43c523a9c1305e89be286cae4bc8b6773febcfc2444d0dc",
-      "bytes": 43591
-    },
-    {
-      "path": "video/2026-10-31/short-v3/eranos-60s.mp4",
-      "sha256": "1d582ef4526fc4d71e25a1084055dd3a3712071d0d0a0267288c2a9d69f56f94",
-      "bytes": 10962711
     },
     {
       "path": "video/2026-10-31/short-v6/eranos-60s-clean.mp4",

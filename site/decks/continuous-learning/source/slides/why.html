@@ -1,31 +1,26 @@
-<section id="why" data-transition="fade" style="background:#F5F2EA;color:#11161F;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:36px">
-<div style="position:absolute;left:0;top:0;width:1920px;height:10px;background:linear-gradient(90deg, #2A5DB0, #B8541F)"></div>
-<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;color:#11161F">Why training alone doesn’t fix it</h2>
+<section id="why" data-transition="fade" style="background:#EDE8DC;color:#5E6472;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:36px">
+<div style="position:absolute;left:0;top:0;width:1920px;height:10px;background:linear-gradient(90deg, #2A5DB0, #9E3A26)"></div>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;color:#5E6472">Why training alone doesn’t fix it</h2>
 <div style="display:flex;flex-direction:row;gap:32px">
-<div style="flex:1;background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:36px;display:flex;flex-direction:column;gap:12px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#A84B1B">01</p>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:38px;font-weight:700;line-height:1.15;color:#11161F">A model freezes when it ships</h3>
-<p style="font-size:26px;line-height:1.4;color:#3B4252">It never sees the tools, schemas and failures that appear after its release, so the same mistakes repeat.</p>
+<div style="flex:1;background:#EDE8DC;border:2px solid #8A8476;border-radius:20px;padding:36px;display:flex;flex-direction:column;gap:12px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#9E3A26">01</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:38px;font-weight:700;line-height:1.15;color:#5E6472">A model freezes when it ships</h3>
+<p style="font-size:26px;line-height:1.4;color:#5E6472">It never sees the tools, schemas and failures that appear after its release, so the same mistakes repeat.</p>
 </div>
-<div style="flex:1;background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:36px;display:flex;flex-direction:column;gap:12px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#A84B1B">02</p>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:38px;font-weight:700;line-height:1.15;color:#11161F">Bigger isn’t the fix</h3>
-<p style="font-size:26px;line-height:1.4;color:#3B4252">On the same frozen test, Llama 3.2 3B beat the 1B, 52.0% to 12.0%, yet wrote typed values as strings in 17.5% of its calls, against 8.3%.</p>
-</div>
-<div style="flex:1;background:#FFFDF8;border:2px solid #E4DED1;border-radius:20px;padding:36px;display:flex;flex-direction:column;gap:12px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#A84B1B">03</p>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:38px;font-weight:700;line-height:1.15;color:#11161F">Even a 30B model misses</h3>
-<p style="font-size:26px;line-height:1.4;color:#3B4252">Unchanged, Muse Glimmer 30B answered 93.3% of a fresh tool-call test exactly right, and 96.7% of its replies were valid JSON.</p>
+<div style="flex:1;background:#EDE8DC;border:2px solid #8A8476;border-radius:20px;padding:36px;display:flex;flex-direction:column;gap:12px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#9E3A26">02</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:38px;font-weight:700;line-height:1.15;color:#5E6472">Even a 30B model misses</h3>
+<p style="font-size:26px;line-height:1.4;color:#5E6472">Unchanged, {{model:muse-glimmer-30b}} answered 93.3% of a fresh tool-call test exactly right, and 96.7% of its replies were valid JSON.</p>
 </div>
 </div>
-<div style="background:#11161F;border-radius:20px;padding:32px 40px;display:flex;flex-direction:row;align-items:center;gap:32px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#F0884F;white-space:nowrap">THE FIX</p>
+<div style="background:#F5F2EA;border-radius:20px;padding:32px 40px;display:flex;flex-direction:row;align-items:center;gap:32px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#9C4416;white-space:nowrap">THE FIX</p>
 <div style="flex:1;display:flex;flex-direction:column;gap:6px">
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:36px;font-weight:700;line-height:1.15;color:#F5F2EA">Re-tune on demand, promote after evaluation</h3>
-<p style="font-size:26px;line-height:1.4;color:#C8D0DC">Tune on checked examples of the job, and keep a tuned model only when it beats its base on a test it never saw, under a rule fixed in advance.</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:36px;font-weight:700;line-height:1.15;color:#11161F">Re-tune on demand, promote after evaluation</h3>
+<p style="font-size:26px;line-height:1.4;color:#11161F">Tune on checked examples of the job, and keep a tuned model only when it beats its base on a test it never saw, under a rule fixed in advance.</p>
 </div>
 </div>
-<svg aria-label="ta-amps mark" width="32" height="32" viewBox="0 0 32 32" style="position:absolute;left:128px;bottom:64px;width:32px;height:32px"><rect x="0" y="0" width="14" height="14" rx="3" fill="#2A5DB0"/><rect x="18" y="0" width="14" height="14" rx="3" fill="#B8541F"/><rect x="0" y="18" width="14" height="14" rx="3" fill="#11161F"/><rect x="18" y="18" width="14" height="14" rx="3" fill="#2A5DB0"/></svg>
+<svg aria-label="ta-amps mark" width="32" height="32" viewBox="0 0 32 32" style="position:absolute;left:128px;bottom:64px;width:32px;height:32px"><rect x="0" y="0" width="14" height="14" rx="3" fill="#E5ECF7"/><rect x="18" y="0" width="14" height="14" rx="3" fill="#F8E6E1"/><rect x="0" y="18" width="14" height="14" rx="3" fill="#F5F2EA"/><rect x="18" y="18" width="14" height="14" rx="3" fill="#E5ECF7"/></svg>
 <p style="position:absolute;left:176px;bottom:64px;width:1616px;font-size:24px;color:#5E6472">The problem</p>
-<aside>Training made the model, and then it froze. The tools, schemas and failures it meets after its release never reach its weights, so the same mistakes repeat. A bigger model isn’t the fix: on the same frozen test, Llama 3.2 3B beat the 1B, 52.0% to 12.0% exact match, but it wrote typed values as strings even more often, in 17.5% of its calls against 8.3%, and strict servers reject those calls. Even Muse Glimmer 30B, unchanged, answered 93.3% of a fresh test exactly right, and 96.7% of its replies were valid JSON. The fix is a loop we run on demand: we re-tune and promote only after evaluation, keeping only what beats the base on our evaluations.</aside>
+<aside>Training made the model, and then it froze. The tools, schemas and failures it meets after its release never reach its weights, so the same mistakes repeat. Even a 30B model misses: {{model:muse-glimmer-30b}}, unchanged, answered 93.3% of a fresh test exactly right, and 96.7% of its replies were valid JSON. The fix is a loop we run on demand: we re-tune and promote only after evaluation, keeping only what beats the base on our evaluations.</aside>
 </section>
