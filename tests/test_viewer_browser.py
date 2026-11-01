@@ -263,80 +263,33 @@ class Viewer(LocalSite):
 
 @unittest.skipIf(sync_playwright is None, "needs the Playwright package")
 class SitePages(LocalSite):
-    """The home page's light and dark switch and film cuts (site.js), in the same local browser."""
+    """Light only (owner, Nov 1) and the library explorer (site.js), in the same local browser."""
 
     def open(self, path="", **context):
         ctx = self.browser.new_context(**context)
         self.addCleanup(ctx.close)
         page = ctx.new_page()
         page.route("**/*", lambda route: route.continue_() if route.request.url.startswith(self.base) else route.abort())
-        page.goto(self.base + path)
-        page.wait_for_function("!document.querySelector('[data-mode-toggle]').hidden")
+        page.goto(self.base + path, wait_until="load")
         return page
 
-    def mode(self, page):
-        return page.evaluate("""() => ({mode: document.documentElement.dataset.mode || null,
-          stored: localStorage.getItem('ta-amps-mode'), pressed: document.querySelector('[data-mode-toggle]').getAttribute('aria-pressed'),
-          background: getComputedStyle(document.body).backgroundColor})""")
+    def test_every_page_stays_light_even_when_the_system_asks_for_dark(self):
+        # Light only (owner, Nov 1): no mode switch, nothing stored, and the body stays paper under the dark scheme.
+        for path in ("", "how-it-works/", "models/", "use-cases/", "decks/overview-and-architecture/", "studio/"):
+            page = self.open(path, color_scheme="dark")
+            state = page.evaluate("""() => ({toggle: !!document.querySelector('[data-mode-toggle]'),
+              stored: localStorage.getItem('ta-amps-mode'), mode: document.documentElement.dataset.mode || null,
+              background: getComputedStyle(document.body).backgroundColor,
+              scheme: (document.querySelector('meta[name=color-scheme]') || {}).content || null})""")
+            self.assertEqual((False, None, None, "rgb(245, 242, 234)"),
+                             (state["toggle"], state["stored"], state["mode"], state["background"]), path)
+            self.assertEqual("light", state["scheme"], path)
 
-    def test_a_choice_that_matches_the_system_follows_the_system_again(self):
-        page = self.open(color_scheme="light")
-        light = self.mode(page)["background"]
-        page.click("[data-mode-toggle]")
-        chosen = self.mode(page)
-        self.assertEqual(("dark", "dark", "true"), (chosen["mode"], chosen["stored"], chosen["pressed"]))
-        page.click("[data-mode-toggle]")
-        back = self.mode(page)
-        # Before: "light" was stored for good, so the page could never follow the system again.
-        self.assertEqual((None, None, "false", light), (back["mode"], back["stored"], back["pressed"], back["background"]))
-        page.emulate_media(color_scheme="dark")
-        # The media query's change event arrives a moment later; the button then reads dark.
-        page.wait_for_function("document.querySelector('[data-mode-toggle]').getAttribute('aria-pressed') === 'true'", timeout=3000)
-        self.assertNotEqual(light, self.mode(page)["background"])
-        page.reload()
-        page.wait_for_function("!document.querySelector('[data-mode-toggle]').hidden")
-        self.assertEqual(None, self.mode(page)["stored"])
-
-    def cut(self, page):
-        return page.evaluate("""() => ({pressed: document.querySelector('[data-cut][aria-pressed=true]').getAttribute('data-cut'),
-          src: document.querySelector('.film-video source').getAttribute('src'), search: location.search,
-          ccPressed: document.querySelector('[data-film-cc]').getAttribute('aria-pressed'),
-          barHidden: document.querySelector('[data-film-caption-bar]').hidden,
-          captions: Array.from(document.querySelector('.film-video').textTracks).filter(t => t.kind === 'captions').map(t => t.mode)})""")
-
-    def test_a_cut_can_be_linked_and_keeps_the_caption_choice(self):
-        page = self.open("?cut=short", viewport={"width": 1280, "height": 800})
-        state = self.cut(page)
-        cuts = json.loads((SITE / "content" / "home.json").read_text(encoding="utf-8"))["videos"]["cuts"]
-        full_cut, short_cut = cuts[0], cuts[1]
-        # Captions run in mode="hidden" so native square browser cue boxes never appear even on fullscreenchange.
-        self.assertEqual(("short", short_cut["src"], "?cut=short", "true", ["hidden"]),
-                         (state["pressed"], state["src"], state["search"], state["ccPressed"], state["captions"]))
-        if short_cut.get("clean_src"):
-            self.assertTrue(state["barHidden"])
-        page.evaluate("document.dispatchEvent(new Event('fullscreenchange'))")
-        self.assertEqual(["hidden"], self.cut(page)["captions"])
-        # The viewer turns captions off; switching cuts keeps them off ("disabled") and selects clean_src when present.
-        page.click("[data-film-cc]")
-        if short_cut.get("clean_src"):
-            self.assertEqual(short_cut["clean_src"], self.cut(page)["src"])
-        page.click("[data-cut=full]")
-        state = self.cut(page)
-        self.assertEqual(("full", full_cut.get("clean_src") or full_cut["src"], "", "false", ["disabled"]),
-                         (state["pressed"], state["src"], state["search"], state["ccPressed"], state["captions"]))
-        page.click("[data-cut=short]")
-        self.assertEqual("?cut=short", self.cut(page)["search"])
-        # An unknown cut opens the default one, and filleted blurred custom caption styling in the bottom widescreen band is ready.
-        page = self.open("?cut=nope", viewport={"width": 1280, "height": 800})
-        self.assertEqual(("full", full_cut["src"], "true", ["hidden"]),
-                         (self.cut(page)["pressed"], self.cut(page)["src"], self.cut(page)["ccPressed"], self.cut(page)["captions"]))
-        pill_style = page.evaluate("""() => {
-          const s = getComputedStyle(document.querySelector('[data-film-caption-pill]'));
-          return {radius: s.borderRadius, blur: s.backdropFilter || s.webkitBackdropFilter || '', hasJs: document.documentElement.classList.contains('js')};
-        }""")
-        self.assertEqual("14px", pill_style["radius"])
-        self.assertIn("blur", pill_style["blur"])
-        self.assertTrue(pill_style["hasJs"])
+    def test_the_home_page_has_no_film_until_the_new_cut_exists(self):
+        # Owner, Nov 1: the film is withdrawn until a cut with no banned word exists; no slot and no placeholder.
+        page = self.open("", viewport={"width": 1280, "height": 800})
+        self.assertEqual(0, page.locator(".film-video").count())
+        self.assertEqual(0, page.locator('.site-nav a[href="film/"]').count())
 
     def test_library_explorer_filters_and_switches_to_706_ecosystem_offline(self):
         page = self.open("library/", viewport={"width": 1280, "height": 900})
@@ -349,8 +302,8 @@ class SitePages(LocalSite):
         self.assertEqual(24, page.locator("[data-exp-results] .exp-card").count())
         page.select_option("[data-exp-kind]", "verb")
         self.assertIn("0 Seed Packs", page.locator("[data-exp-status]").text_content())
-        page.select_option("[data-exp-harness]", "harness-square")
-        self.assertGreater(page.locator("[data-exp-results] .exp-card").count(), 0)
+        # Agent apps appear only on /models/ (owner, Nov 1): no harness filter here.
+        self.assertEqual(0, page.locator("[data-exp-harness]").count())
         page.click("[data-exp-reset]")
         page.click("[data-exp-tab=ecosystem]")
         eco_status = page.locator("[data-exp-status]").text_content()
