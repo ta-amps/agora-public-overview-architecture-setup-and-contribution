@@ -102,7 +102,7 @@ class SnapshotHeads(unittest.TestCase):
 
     def test_the_pattern_finds_the_name(self):
         self.assertTrue(NAME.search("L" + "lama 3.2"))
-        self.assertTrue(NAME.search("o" + "llama"))
+        self.assertTrue(NAME.search("O" + "l" + "lama"))
         self.assertIsNone(NAME.search("Muse Glimmer 30B"))
 
 
