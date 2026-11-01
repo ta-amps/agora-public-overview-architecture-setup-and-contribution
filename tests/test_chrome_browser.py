@@ -40,6 +40,20 @@ class Chrome(LocalSite):
         # It scrolls away with the page: never sticky or fixed.
         self.assertEqual("relative", page.evaluate("getComputedStyle(document.querySelector('ta-agent-banner')).position"))
 
+    def test_the_banner_names_its_toggle_and_keeps_only_web_links(self):
+        # Review N3: on a phone the toggle shows only its glyph, so it carries its name from the first paint.
+        page = self.open(viewport={"width": 390, "height": 844})
+        self.assertEqual("How", page.locator("ta-agent-banner .toggle").get_attribute("aria-label"))
+        # Review N2: a noun fetched from another site cannot run script through a link.
+        hrefs = page.evaluate("""() => {
+            const b = document.querySelector("ta-agent-banner");
+            return [b.href("javascript:alert(1)"), b.href("data:text/html,x"), b.href("/llms.txt"),
+                    b.href("https://eranos.ta-amps.workers.dev/connect")];
+        }""")
+        self.assertEqual(["#", "#"], hrefs[:2])
+        self.assertTrue(hrefs[2].endswith("/llms.txt"), hrefs[2])
+        self.assertEqual("https://eranos.ta-amps.workers.dev/connect", hrefs[3])
+
     def test_copy_puts_exactly_the_line_on_the_clipboard_and_says_so(self):
         page = self.open(grant_clipboard=True, viewport={"width": 1280, "height": 720})
         page.click("ta-agent-banner button.copy")
