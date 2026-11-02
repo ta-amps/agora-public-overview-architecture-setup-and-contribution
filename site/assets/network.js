@@ -219,8 +219,12 @@
     return window.fetch(this.address(replay), { credentials: "omit", headers: { accept: "application/json" }, signal: controller ? controller.signal : undefined })
       .then((response) => {
         window.clearTimeout(stop);
-        if (response.status === 429) {
-          const wait = Math.max(60, Number(response.headers.get("retry-after")) || 0);  // never sooner than a minute
+        const retry = response.headers.get("retry-after");
+        if (response.status === 429 || (response.status === 503 && retry)) {
+          // Retry-After in seconds or as an HTTP date; never sooner than a minute.
+          let seconds = Number(retry);
+          if (!Number.isFinite(seconds)) { const at = Date.parse(retry || ""); seconds = Number.isFinite(at) ? Math.ceil((at - Date.now()) / 1000) : 0; }
+          const wait = Math.max(60, seconds || 0);
           const error = new Error("busy");
           error.wait = wait;
           throw error;
@@ -248,18 +252,20 @@
       self.schedule(self.refresh);
     }).catch((error) => {
       if (self.replaying) return;
+      // Every failed read counts: any 4xx or 5xx, a network or CORS failure (an over-limit page without CORS reads as
+      // one), a malformed answer. After 3 in a row the page reads on its own only every 5 minutes, until one read
+      // succeeds; a click (a filter, Resume) still reads at once.
+      self.misses = (self.misses || 0) + 1;
+      const backoff = self.misses >= MISSES_BEFORE_BACKOFF ? BACKOFF_MS : 0;
       if (error && error.wait) {
         self.status(fill(self.words.busy, { seconds: error.wait }));
-        self.schedule(error.wait * 1000);
+        self.schedule(Math.max(error.wait * 1000, backoff));
         return;
       }
       self.root.setAttribute("data-failed", "");
       self.status(self.words.error.text, { text: self.words.error.link, href: self.words.herma.dashboard });
       if (!self.data) self.renderEmpty();
-      // After 3 not-found or server-error answers in a row, read on its own only every 5 minutes, until one read
-      // succeeds. A click (a filter, Resume) still reads at once.
-      self.misses = error && (error.status === 404 || error.status >= 500) ? (self.misses || 0) + 1 : 0;
-      self.schedule(self.misses >= MISSES_BEFORE_BACKOFF ? Math.max(self.refresh, BACKOFF_MS) : self.refresh);
+      self.schedule(Math.max(self.refresh, backoff));
     });
   };
 
@@ -409,7 +415,7 @@
     if (page) this.layoutPills();
     const empty = !d.centers.length && !d.continents.length && !d.totals.workers;
     const sentence = empty ? this.words.map_aria.empty : fill(this.words.map_aria.some, {
-      centers: d.centers.length ? d.centers.map((c) => c.city + " (" + c.workers + " workers)").join(", ") : this.words.map_aria.centers_none,
+      centers: d.centers.length ? d.centers.map((c) => fill(this.words.map_aria.center, { city: c.city, workers: c.workers })).join(", ") : this.words.map_aria.centers_none,
       continents: d.continents.length ? d.continents.map((c) => c.name + " (" + c.workers + ")").join(", ") : this.words.map_aria.continents_none,
       claims: d.totals.claims,
     });

@@ -125,7 +125,7 @@ class NetworkPage(unittest.TestCase):
         script = (ROOT / "site/assets/network.js").read_text(encoding="utf-8")
         self.assertGreaterEqual(self.words["refresh_seconds"], 60)
         self.assertIn("Math.max(60, num(this.words.refresh_seconds) || 60) * 1000", script)
-        self.assertIn('Math.max(60, Number(response.headers.get("retry-after")) || 0)', script)
+        self.assertIn("const wait = Math.max(60, seconds || 0);", script)  # Retry-After, never under a minute
         self.assertIn("if (since >= self.refresh) self.load(); else self.schedule(self.refresh - since);", script)
         self.assertIn("if (document.hidden) { clearTimeout(self.timer); self.timer = 0; return; }", script)
         self.assertNotRegex(json.dumps(self.words), r"every 30 seconds")
@@ -138,11 +138,14 @@ class NetworkPage(unittest.TestCase):
             for form in forms:
                 self.assertIn(form, template)
         self.assertIn('make("h2", "nw-card-title"', script)  # the open card's title sits under the page's h1
-        self.assertIn("error.status === 404 || error.status >= 500", script)
+        self.assertIn("fill(this.words.map_aria.center, { city: c.city, workers: c.workers })", script)
+        self.assertIn("{workers:worker:workers}", self.words["map_aria"]["center"])
         # After 3 not-found answers in a row it reads on its own every 5 minutes, and the first success resets that.
         self.assertIn("const MISSES_BEFORE_BACKOFF = 3, BACKOFF_MS = 5 * 60 * 1000;", script)
-        self.assertIn("self.misses = error && (error.status === 404 || error.status >= 500) ? (self.misses || 0) + 1 : 0;", script)
-        self.assertIn("self.schedule(self.misses >= MISSES_BEFORE_BACKOFF ? Math.max(self.refresh, BACKOFF_MS) : self.refresh);", script)
+        self.assertIn("self.misses = (self.misses || 0) + 1;", script)  # any failed read: 4xx, 5xx, network or CORS
+        self.assertIn("const backoff = self.misses >= MISSES_BEFORE_BACKOFF ? BACKOFF_MS : 0;", script)
+        self.assertIn("self.schedule(Math.max(self.refresh, backoff));", script)
+        self.assertIn('if (response.status === 429 || (response.status === 503 && retry)) {', script)
         self.assertIn("self.misses = 0;  // the first success ends any back-off", script)
         # B1: the failed state dims only the map stage; the legend keeps its full contrast.
         css = (ROOT / "site/assets/network.css").read_text(encoding="utf-8")

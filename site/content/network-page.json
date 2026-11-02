@@ -51,7 +51,8 @@
     "some": "World map. Data centers where 2 or more workers were busy within 15 minutes of each other in the last 24 hours: {centers}. Counted by continent: {continents}. {claims} {claims:Task:Tasks} claimed.",
     "centers_none": "none",
     "continents_none": "none",
-    "empty": "World map. No workers in the last 24 hours."
+    "empty": "World map. No workers in the last 24 hours.",
+    "center": "{city} ({workers} {workers:worker:workers})"
   },
   "callout": "{kind} claimed · {ago}",
   "quiet": "No Tasks claimed in the last 10 minutes. The map updates when one is.",
