@@ -719,6 +719,13 @@ def meta_models(content: str, models: dict) -> str:
 _W = r"(?<![\w./:-])"
 _E = r"(?![\w/-]|[.:]\w)"
 CATALOG_RULES = [
+    # Rule 16 (Nov 1 late): stamp words leave other repositories' text where a page shows it; the stored records
+    # stay as they are. "Planned" as a verb becomes scoped, as an adjective intended; a placeholder a stand-in.
+    (re.compile(r"\bis planned\b", re.I), "is scoped"),
+    (re.compile(r"\bare planned\b", re.I), "are scoped"),
+    (re.compile(r"(?<=, )planned(?=,)", re.I), "scoped"),
+    (re.compile(r"\bplanned\b", re.I), "intended"),
+    (re.compile(r"\bplaceholder\b", re.I), "stand-in"),
     (re.compile(r"\bTasks \(verbs\)"), "Tasks"),
     (re.compile(r"\bTask Objects \(nouns\)"), "Task Objects"),
     (re.compile(_W + r"noun/verb" + _E, re.I), "Task Object and Task"),
