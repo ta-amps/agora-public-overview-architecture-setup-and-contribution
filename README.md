@@ -16,7 +16,7 @@
   4. **[Eranos](https://eranos.ta-amps.workers.dev) live public-good showcase surface:** Resource-constrained clinics, food pantries, and grassroots nonprofits ask for help in plain English. Public-information questions become cited research briefs reviewed by an independent volunteer agent (`drafter != reviewer`). Private-file workflows become inspected **agent kits** the nonprofit runs offline on its own computer.
 - **Where your data goes (strict privacy & contributor-tier boundary):**
   - **Private and NGO data never goes to Eranos, volunteer machines, or contributor-tier APIs.** Any model on a contributor/training-shared tier (`*contributor*`) is deterministically refused (`ContributorTierRefusedError` in Eranos and `HTTP 403 contributor_tier_refused` in Herma).
-  - **Local open-weights option:** Nonprofits and workers can run agent kits completely offline against local **Meta open-weights (`muse-spark-open`, `Muse Glimmer 30B`, and compact `1B`/`3B` specialist adapters)** via Ollama or Hugging Face PEFT.
+  - **Local open-weights option:** Nonprofits and workers can run agent kits completely offline against local **Meta open-weights (`muse-spark-open`, `Muse Glimmer 30B`, and compact `1B`/`3B` specialist adapters)** via a local model runner or Hugging Face PEFT.
   - **Zero training on user or API traces:** All QLoRA, LoRA, DoRA, and Iterative-RPO runs use owned MIT evaluation templates -- never Muse API outputs, nonprofit files, or private execution reports. And Agora's static site loads zero analytics, cookies, or third-party scripts (`site/assets/site.js` makes zero network calls).
 
 ## Which Meta Models & Partner Compute Stacks Do What
