@@ -605,7 +605,10 @@ class Builder(unittest.TestCase):
                 if not (dotgit and repo not in links.get("git_served", [])):
                     self.assertNotIn(repo, mirrored, path)
             for href in re.findall(r'\shref="(/source/[^"]*)"', page):
-                self.assertRegex(href, r"^/source/(?:[a-z0-9-]+/(?:[0-9a-f]{12}/.*)?)?$", path)
+                self.assertRegex(href, r"^/source/(?:#[a-z0-9-]+|[a-z0-9-]+/(?:[0-9a-f]{12}/.*)?)?$", path)
+                if href.startswith("/source/#"):  # a repository shown as a card (the lead, Nov 2): no file view
+                    self.assertIn(href[len("/source/#"):], links.get("cards", []), (path, href))
+                    continue
                 repo = href.split("/")[2]
                 if repo:  # the /source/ index itself always exists: it lists every repository and where its files are
                     source_links += 1
@@ -621,13 +624,13 @@ class Builder(unittest.TestCase):
             self.assertRegex(sha, r"^[0-9a-f]{40}$")
         # Both states of the switch. Not mirrored: the GitHub address stays exactly as the noun wrote it.
         tessera = "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine"
-        off = dict(links, mirrored=[], git_served=[])
+        off = dict(links, mirrored=[], git_served=[], cards=[])
         for url in (f"{tessera}/blob/main/docs/x.md", f"git clone {tessera}.git\n", f"{tessera}/tree/some-branch/x"):
             self.assertEqual(url, build.repoint(url, off))
         # Mirrored: every link means the swept head (a branch name, a full commit or a pull request alike: Agora serves
         # no older tree), and an address without a home fails; a clone address goes to the git mirror, which git can
         # clone; the file view cannot be cloned.
-        on = dict(links, mirrored=sorted(links["heads"]), git_served=sorted(links["heads"]))
+        on = dict(links, mirrored=sorted(links["heads"]), git_served=sorted(links["heads"]), cards=[])
         head12 = links["heads"]["tessera-infrastructure-work-and-storage-engine"][:12]
         for ref in ("main", "95e434eb820f2dbc3873cd443e4ba144acefc762"):
             self.assertEqual(f"/source/tessera-infrastructure-work-and-storage-engine/{head12}/docs/x.md",
@@ -638,6 +641,11 @@ class Builder(unittest.TestCase):
             build.repoint("https://github.com/ta-amps/another-repo", on)
         self.assertEqual("git clone https://agora.ta-amps.workers.dev/git/tessera-infrastructure-work-and-storage-engine.git\n",
                          build.repoint(f"git clone {tessera}.git\n", on))
+        # Cards (the lead, Nov 2): every link into a repository shown as a card goes to its card; a clone keeps GitHub.
+        shown = dict(links, mirrored=[], git_served=[], cards=["tessera-infrastructure-work-and-storage-engine"])
+        for url in (f"{tessera}/blob/main/docs/x.md", f"{tessera}/tree/some-branch/x", tessera):
+            self.assertEqual("/source/#tessera-infrastructure-work-and-storage-engine", build.repoint(url, shown))
+        self.assertEqual(f"git clone {tessera}.git\n", build.repoint(f"git clone {tessera}.git\n", shown))
         # Agora's own repository has no published git mirror, so a clone address for it stops the build when mirrored.
         with self.assertRaises(build.BuildError):
             build.repoint("https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution.git", on)
@@ -648,7 +656,7 @@ class Builder(unittest.TestCase):
         for version in self.nouns.manifest["versions"]:
             for download in version.get("downloads", []):
                 if "url" in download:
-                    local = build.SITE / build.repoint(download["url"], dict(links, mirrored=sorted(links["heads"]))).lstrip("/")
+                    local = build.SITE / build.repoint(download["url"], dict(links, mirrored=sorted(links["heads"]), cards=[])).lstrip("/")
                     data = local.read_bytes()
                     self.assertEqual((download["sha256"], download["bytes"]), (build.sha256(data), len(data)), local)
 

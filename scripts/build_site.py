@@ -555,6 +555,8 @@ def source_link(match: re.Match, links: dict) -> str:
     """One GitHub address, as the address of the same thing in Agora's source mirror (see source-links.json)."""
     repo, kind, rest = match.group("repo"), match.group("kind"), match.group("rest") or ""
     mirror = links["mirror"]
+    if repo and repo in links.get("cards", []) and not (not match.group("kind") and match.group("dotgit")):
+        return f"{mirror}#{repo}"  # a card on the source page (the lead, Nov 2): no file views; clones keep GitHub
     if repo and repo in links["heads"] and repo not in links["mirrored"]:
         return match.group(0)  # not mirrored on Agora (yet to be swept): its GitHub page, as written
     if not repo:
@@ -2099,9 +2101,10 @@ def render_llms(nouns: Nouns, built: set[Path]) -> str:
     for row in nouns.site["endpoints"]["rows"]:
         lines.append(f"- {row['name']}: {row['what']}. MCP {row['mcp']}; llms.txt {row['llms']}")
     # The served repositories come from the per-repository mirror switch (source-links.json), so this line follows it.
-    mirrored = [name for name in nouns.links["heads"] if name in nouns.links.get("mirrored", [])]
-    named = ", ".join(mirrored[:-1]) + (" and " if len(mirrored) > 1 else "") + mirrored[-1] if mirrored else "none yet"
-    lines += ["", f"## {page['source_title']}", ""] + [f"- {fill(item, {'mirrored': named}, 'llms.json') if '{mirrored}' in item else item}"
+    # The repositories shown as cards come from source-links.json, so this line follows it.
+    shown = [name for name in nouns.links["heads"] if name in nouns.links.get("cards", [])]
+    named = ", ".join(shown[:-1]) + (" and " if len(shown) > 1 else "") + shown[-1] if shown else "none yet"
+    lines += ["", f"## {page['source_title']}", ""] + [f"- {fill(item, {'cards': named}, 'llms.json') if '{cards}' in item else item}"
                                                          for item in page["source"]]
     lines += ["", f"## {page['rules_title']}", ""] + [f"- {item}" for item in page["rules"]]
     lines += ["", f"## {page['brief_title']}", "", page["brief_note"], ""]
@@ -3304,8 +3307,10 @@ def fill_evidence(noun: dict) -> dict:
             fail(f"evidence.json: {folder['id']} needs the date its name carries")
         days.append(folder["date"])
         root = EVIDENCE_DIR / folder["id"]
+        # Review B7 (rule 16): a saved answer whose raw text holds a banned word stays in git, unserved and unlisted.
+        withheld = set(page["live"].get("withheld", [])) if folder["id"] == Path(page["live"]["record"]).parent.name else set()
         folder["files"] = [{"path": p.relative_to(root).as_posix(), "bytes": p.stat().st_size}
-                           for p in sorted(root.rglob("*")) if p.is_file()]
+                           for p in sorted(root.rglob("*")) if p.is_file() and p.relative_to(root).as_posix() not in withheld]
     if days != sorted(days, reverse=True):
         fail("evidence.json: served folders go newest first")
     items = page["source"]["items"]
@@ -3337,7 +3342,8 @@ def fill_evidence(noun: dict) -> dict:
             fields = {key: answer[key] for key in live["fields"] if key in answer}
         checks.append({"name": check["name"], "url": check["url"], "started_utc": check["started_utc"],
                        "http_status": check["http_status"],
-                       "body": f"{Path(live['record']).parent.as_posix()}/{check['body']}" if check["body"] else None,
+                       "body": f"{Path(live['record']).parent.as_posix()}/{check['body']}"
+                       if check["body"] and check["body"] not in live.get("withheld", []) else None,
                        "fields": fields})
     live["snapshot"] = {"checked_at": record["checked_at"], "how": record["how"], "checks": checks}
     return page

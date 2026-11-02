@@ -8,7 +8,9 @@ A route fails when:
   * any stylesheet (shadow roots included), <link>, <style> or <source> carries a prefers-color-scheme: dark query;
   * any visible opaque element larger than 5% of the viewport is dark: relative luminance below 0.25 for its
     background or SVG fill (composited over the page's paper), or, for an image, video, canvas, SVG, frame or a
-    background image, for the mean of its rendered pixels.
+    background image, for the mean of its rendered pixels;
+  * any element wider than half the viewport and taller than 8 px has a dark background (a thin band, such as a
+    36 px ink banner, which the area rule misses); buttons and links are exempt.
 One brand colour is accepted by token, not by luminance: the Task chips' orange (--verb-text, #9C4416; the Agora
 review of Nov 1). The exemption matches that token's resolved value exactly, so nothing else dark slips through.
 
@@ -135,17 +137,23 @@ PROBE = r"""
     const x0 = Math.max(0, r.left + scrollX), y0 = Math.max(0, r.top + scrollY);
     const x1 = Math.min(docW, r.right + scrollX), y1 = Math.min(docH, r.bottom + scrollY);
     const w = x1 - x0, h = y1 - y0;
-    if (w <= 0 || h <= 0 || w * h <= limit) continue;
-    out.large += 1;
+    if (w <= 0 || h <= 0) continue;
     const tag = el.tagName.toLowerCase();
+    // The thin-band rule (the lead, Nov 2): a dark strip wider than half the viewport and taller than 8 px fails
+    // even under 5% of the area, like the old 36 px ink banner; buttons and links are exempt.
+    const band = w > 0.5 * innerWidth && h > 8 && tag !== "button" && tag !== "a";
+    const big = w * h > limit;
+    if (!big && !band) continue;
+    if (big) out.large += 1;
     const bg = parse(cs.backgroundColor);
     if (bg[3] > 0.02) {
       const shown = over(bg, paper), l = lum(shown);
       if (l < dark) {
         if (exempt.some((e) => same(e, bg))) out.exempted += 1;
-        else out.darkAreas.push({element: name(el), kind: "background", color: cs.backgroundColor, luminance: +l.toFixed(3), area: Math.round(w * h)});
+        else out.darkAreas.push({element: name(el), kind: big ? "background" : "band", color: cs.backgroundColor, luminance: +l.toFixed(3), area: Math.round(w * h)});
       }
     }
+    if (!big) continue;
     if (el instanceof SVGElement && SHAPES.has(tag) && cs.fill && cs.fill !== "none" && !cs.fill.startsWith("url(")) {
       const fill = parse(cs.fill);
       fill[3] *= parseFloat(cs.fillOpacity || "1");

@@ -126,8 +126,8 @@
   "endpoints_title": "Machine endpoints",
   "source_title": "Source",
   "source": [
-    "Agora serves the files of each swept repository under https://agora.ta-amps.workers.dev/source/, as a snapshot and a file view: {mirrored}. Their history, and Agora's own repository, are on GitHub under ta-amps.",
-    "https://agora.ta-amps.workers.dev/source/ lists every repository and where its files are; Agora mirrors a repository there once its swept version is published."
+    "https://agora.ta-amps.workers.dev/source/ shows each repository as a card: what it is, its latest commit date and its GitHub address, for {cards}. Their files and history, and Agora's own repository, are on GitHub under ta-amps.",
+    "Agora serves no repository files itself."
   ],
   "rules_title": "Rules",
   "rules": [

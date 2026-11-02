@@ -35,6 +35,10 @@
     ]
   },
   "live": {
+    "withheld": [
+      "eranos-api-health.json"
+    ],
+    "withheld_why": "Review B7 and rule 16: Eranos's saved health answer holds a banned word as a field name, so it stays in git, unserved; the page shows what it said.",
     "heading": "What answered at the last check",
     "lead": "One moment, kept as it was: a plain curl of each public health address, with no credentials. It is a dated snapshot, not a monitor.",
     "record": "evidence/live-check-2026-10-31/checks.json",
@@ -91,7 +95,7 @@
           "url": "https://eranos.ta-amps.workers.dev/api/health",
           "started_utc": "2026-10-31T23:14:08Z",
           "http_status": 200,
-          "body": "evidence/live-check-2026-10-31/eranos-api-health.json",
+          "body": null,
           "fields": {
             "ok": true,
             "version": "0.1.0"
@@ -177,10 +181,6 @@
           {
             "path": "checks.json",
             "bytes": 1871
-          },
-          {
-            "path": "eranos-api-health.json",
-            "bytes": 91
           },
           {
             "path": "herma-v1-health.json",

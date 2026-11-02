@@ -2,10 +2,12 @@
   "about": "How links into the ta-amps GitHub organization become links that work. A repository Agora mirrors (listed under mirrored) is linked in Agora's own read-only source mirror, at a pinned commit: a branch name such as main means the commit listed under heads. Any other repository keeps its GitHub address, exactly as the page's Task Objects wrote it. scripts/build_site.py applies this to every page it writes. release_files lists each file a retired GitHub release held, now served by this site, with its hash.",
   "date": "2026-10-31",
   "mirror": "/source/",
-  "mirrored": ["eranos-public-marketplace-for-public-good-token-burn", "herma-infrastructure-shim-for-intelligent-agents", "seed-packs-library-of-nouns-and-verbs", "ta-amps-hackathon", "tessera-infrastructure-work-and-storage-engine"],
+  "mirrored": [],
   "mirrored_about": "The repositories Agora serves in its own source mirror and git mirrors. The lead's rule (Nov 1): a repository is mirrored only once its head is free of every banned word (deploy/repos.json mirror: true, which the deploy builder checks against this list); until then its links go to its GitHub page.",
   "git_mirror": "https://agora.ta-amps.workers.dev/git/",
-  "git_held_back": ["agora-public-overview-architecture-setup-and-contribution"],
+  "git_held_back": [
+    "agora-public-overview-architecture-setup-and-contribution"
+  ],
   "git_served": [],
   "git_served_about": "The repositories whose git history Agora serves (deploy/repos.json serve_history). None does today: a history can still name a banned word, so a clone address keeps its GitHub form even for a repository whose files Agora mirrors.",
   "git_about": "A clone address (one ending in .git) becomes the same repository in Agora's git mirror, which git can clone over plain HTTP. Agora's own repository has no published mirror, so the build stops at any clone address for it.",
@@ -60,5 +62,13 @@
       "sha256": "d5d5295b85d0b146002f14e435d33c56d1d77d2be54e1f841d2920ff845813e4",
       "bytes": 112687
     }
-  ]
+  ],
+  "cards": [
+    "ta-amps-hackathon",
+    "eranos-public-marketplace-for-public-good-token-burn",
+    "tessera-infrastructure-work-and-storage-engine",
+    "herma-infrastructure-shim-for-intelligent-agents",
+    "seed-packs-library-of-nouns-and-verbs"
+  ],
+  "cards_about": "The lead's decision of November 2: Agora shows these repositories as cards on its source page (name, what it is, its latest commit date, its README only when it passes the shared word list, and its GitHub address), with no file views. A link into one of them goes to its card; a clone address keeps its GitHub form."
 }

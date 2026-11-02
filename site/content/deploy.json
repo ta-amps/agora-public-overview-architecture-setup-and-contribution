@@ -94,7 +94,7 @@
       },
       "live_probe": {
         "state": "{count}",
-        "text": "{count} ran on {name}: {when}. Nothing else has run there; the code and its rules are also checked on our own machine."
+        "text": "{count} ran on {name}: {when}. Nothing else has run there on record; the code and its rules are also checked on our own machine."
       }
     },
     "checked_title": "Checked offline",

@@ -322,9 +322,15 @@ class Pages(unittest.TestCase):
         main = build.main_of(self.evidence)
         for folder in self.filled["served"]["folders"]:
             self.assertIn(f'id="{folder["id"]}"', main)
+            # Review B7: a saved answer the live record withholds (a banned word in its raw text) is neither listed
+            # nor linked, and the bundle does not serve it; it stays in git.
+            withheld = set(self.filled["live"].get("withheld", [])) if folder["id"] == "live-check-2026-10-31" else set()
             files = sorted(p.relative_to(SITE / "evidence" / folder["id"]).as_posix()
                            for p in (SITE / "evidence" / folder["id"]).rglob("*") if p.is_file())
+            files = [f for f in files if f not in withheld]
             self.assertEqual(files, [f["path"] for f in folder["files"]])
+            for name in withheld:
+                self.assertNotIn(name, main)
             for path in files:
                 if folder.get("raw_files"):
                     # The bundle leaves these raw files out (their traces name an agent app), so the page links the

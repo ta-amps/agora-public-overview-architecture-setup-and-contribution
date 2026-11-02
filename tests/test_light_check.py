@@ -50,6 +50,8 @@ PAGES = {
     "panel": page('<section style="background:#1b2230;color:#fff;height:300px">An ink panel</section>'),
     "band": page('<footer style="background:rgba(17,22,31,0.92);height:120px;color:#fff">An ink footer</footer>'),
     "picture": page('<img src="dark.png" width="800" height="400" alt="">'),
+    "band": page('<div style="background:#11161F;height:36px;color:#fff">An ink band, 36 px tall</div><p>Paper below.</p>'),
+    "thin-ok": page('<div style="background:#11161F;height:6px"></div><a href="#" style="display:block;background:#11161F;color:#fff;height:40px">A full-width ink link</a>'),
     "brand": page('<div style="background:var(--verb-text);height:300px;color:#fff">The Task orange, by its token</div>'),
     "near-brand": page('<div style="background:#9C4417;height:300px;color:#fff">Almost the Task orange</div>'),
     "shadow": page('<x-banner></x-banner><script>customElements.define("x-banner", class extends HTMLElement {'
@@ -102,12 +104,16 @@ class LightCheck(unittest.TestCase):
             "band": "dark background on footer",
             "picture": "dark picture img",
             "near-brand": "dark background on div",
+            "band": "dark band on div",
             "shadow": "dark media query",
         }
         for name, words in expected.items():
             with self.subTest(name):
                 found = self.problems(name)
                 self.assertTrue(any(words in line for line in found), found)
+
+    def test_a_hairline_and_a_link_are_not_bands(self):
+        self.assertEqual([], self.problems("thin-ok"))
 
     def test_only_the_brand_token_is_exempt(self):
         self.assertEqual([], self.problems("brand"))

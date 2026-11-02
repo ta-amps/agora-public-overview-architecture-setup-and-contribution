@@ -43,8 +43,8 @@
 
 ## Source
 
-- Agora serves the files of each swept repository under https://agora.ta-amps.workers.dev/source/, as a snapshot and a file view: ta-amps-hackathon, eranos-public-marketplace-for-public-good-token-burn, tessera-infrastructure-work-and-storage-engine, herma-infrastructure-shim-for-intelligent-agents and seed-packs-library-of-nouns-and-verbs. Their history, and Agora's own repository, are on GitHub under ta-amps.
-- https://agora.ta-amps.workers.dev/source/ lists every repository and where its files are; Agora mirrors a repository there once its swept version is published.
+- https://agora.ta-amps.workers.dev/source/ shows each repository as a card: what it is, its latest commit date and its GitHub address, for ta-amps-hackathon, eranos-public-marketplace-for-public-good-token-burn, tessera-infrastructure-work-and-storage-engine, herma-infrastructure-shim-for-intelligent-agents and seed-packs-library-of-nouns-and-verbs. Their files and history, and Agora's own repository, are on GitHub under ta-amps.
+- Agora serves no repository files itself.
 
 ## Rules
 
