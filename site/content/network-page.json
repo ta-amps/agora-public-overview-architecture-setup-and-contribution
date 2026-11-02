@@ -62,6 +62,7 @@
     "link": "See Herma's dashboard"
   },
   "busy": "Many people are reading the map right now. It tries again in {seconds} seconds.",
+  "busy_hour": "Many people are reading the map right now. It tries again in an hour.",
   "feed": {
     "title": "Claimed just now",
     "title_quiet": "Claimed earlier",

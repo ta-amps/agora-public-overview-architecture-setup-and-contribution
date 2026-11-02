@@ -233,11 +233,37 @@ class RetryAfterInBrowser(unittest.TestCase):
         page = self.open(429, "86400", clock=True)
         page.clock.run_for(2000)
         self.assertEqual(1, page.evaluate("window.__reads.length"))
-        self.assertIn("3600 seconds", page.locator(".nw [data-status], .nw-status").first.inner_text())
+        line = page.locator(".nw [data-status], .nw-status").first.inner_text()
+        self.assertIn("It tries again in an hour.", line)  # review nit, Nov 2: not "3600 seconds"
+        self.assertNotIn("3600", line)
         page.clock.run_for(3600 * 1000 - 5000)
         self.assertEqual(1, page.evaluate("window.__reads.length"))
         page.clock.run_for(10000)
         self.assertEqual(2, page.evaluate("window.__reads.length"))
+
+    def test_a_wait_under_the_cap_still_says_its_seconds(self) -> None:
+        for status, value, said in ((429, "120", "120 seconds"), (429, "3599", "3599 seconds"), (503, "90", "90 seconds")):
+            with self.subTest(status=status, retry_after=value):
+                page = self.open(status, value, clock=True)
+                page.clock.run_for(2000)
+                line = page.locator(".nw [data-status], .nw-status").first.inner_text()
+                self.assertIn(f"It tries again in {said}.", line)
+                self.assertNotIn("an hour", line)
+
+    def test_a_delay_that_is_not_a_number_waits_a_minute(self) -> None:
+        # Review nit, Nov 2: schedule() once turned a value that is not a number into 0, an immediate read.
+        for value in ("undefined", "NaN", "null", "'soon'", "({})", "[]"):
+            with self.subTest(value=value):
+                page = self.open(500, "", clock=True)
+                page.clock.run_for(2000)
+                self.assertEqual(1, page.evaluate("window.__reads.length"))
+                page.evaluate(f"document.querySelector('[data-network]').taNetwork.schedule({value})")
+                page.clock.run_for(1000)
+                self.assertEqual(1, page.evaluate("window.__reads.length"), "read at once")
+                page.clock.run_for(57000)
+                self.assertEqual(1, page.evaluate("window.__reads.length"), "read before the minute")
+                page.clock.run_for(3000)
+                self.assertEqual(2, page.evaluate("window.__reads.length"), "no read after the minute")
 
 
 if __name__ == "__main__":

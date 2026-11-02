@@ -104,6 +104,7 @@
 
   const MISSES_BEFORE_BACKOFF = 3, BACKOFF_MS = 5 * 60 * 1000;  // review, Nov 2: failed reads back off
   const MAX_WAIT_MS = 60 * 60 * 1000;  // no automatic read waits longer than an hour
+  const DEFAULT_WAIT_MS = 60 * 1000;  // a delay that is not a number waits a minute (review nit, Nov 2)
 
   Network.prototype.now = function () { return Date.now() - this.skew; };
 
@@ -189,7 +190,9 @@
 
   Network.prototype.schedule = function (ms) {
     const self = this;
-    ms = Math.min(Math.max(0, Number(ms) || 0), MAX_WAIT_MS);  // a timer's delay stays far below the browser's limit
+    // A delay that is not a number waits a minute, never an immediate read; none waits over an hour, so a timer's
+    // delay stays far below the browser's limit.
+    ms = typeof ms === "number" && !Number.isNaN(ms) ? Math.min(Math.max(0, ms), MAX_WAIT_MS) : DEFAULT_WAIT_MS;
     clearTimeout(this.timer);
     this.timer = document.hidden || this.paused || this.replaying ? 0 : window.setTimeout(() => { self.timer = 0; self.load(); }, ms);
   };
@@ -262,9 +265,11 @@
       self.misses = (self.misses || 0) + 1;
       const backoff = self.misses >= MISSES_BEFORE_BACKOFF ? BACKOFF_MS : 0;
       if (error && error.wait) {
-        // The busy line says the real wait: the larger of the server's Retry-After and the back-off.
+        // The busy line says the real wait: the larger of the server's Retry-After and the back-off; a wait at the
+        // one-hour cap reads "an hour" (review nit, Nov 2), and older words without that line keep the seconds.
         const delay = Math.min(Math.max(error.wait * 1000, backoff), MAX_WAIT_MS);
-        self.status(fill(self.words.busy, { seconds: Math.round(delay / 1000) }));
+        self.status(delay >= MAX_WAIT_MS && self.words.busy_hour ? self.words.busy_hour
+          : fill(self.words.busy, { seconds: Math.round(delay / 1000) }));
         self.schedule(delay);
         return;
       }
