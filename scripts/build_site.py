@@ -3307,10 +3307,8 @@ def fill_evidence(noun: dict) -> dict:
             fail(f"evidence.json: {folder['id']} needs the date its name carries")
         days.append(folder["date"])
         root = EVIDENCE_DIR / folder["id"]
-        # Review B7 (rule 16): a saved answer whose raw text holds a banned word stays in git, unserved and unlisted.
-        withheld = set(page["live"].get("withheld", [])) if folder["id"] == Path(page["live"]["record"]).parent.name else set()
         folder["files"] = [{"path": p.relative_to(root).as_posix(), "bytes": p.stat().st_size}
-                           for p in sorted(root.rglob("*")) if p.is_file() and p.relative_to(root).as_posix() not in withheld]
+                           for p in sorted(root.rglob("*")) if p.is_file()]
     if days != sorted(days, reverse=True):
         fail("evidence.json: served folders go newest first")
     items = page["source"]["items"]
@@ -3340,10 +3338,12 @@ def fill_evidence(noun: dict) -> dict:
                 fail(f"evidence.json: the saved answer {check['body']} changed after the check")
             answer = json.loads(body)
             fields = {key: answer[key] for key in live["fields"] if key in answer}
+        elif check.get("body_not_kept") and isinstance(check.get("fields"), dict):
+            # Review B7/B8: an answer kept in the repository's evidence folder, not here; the record copies its fields.
+            fields = {key: check["fields"][key] for key in live["fields"] if key in check["fields"]}
         checks.append({"name": check["name"], "url": check["url"], "started_utc": check["started_utc"],
                        "http_status": check["http_status"],
-                       "body": f"{Path(live['record']).parent.as_posix()}/{check['body']}"
-                       if check["body"] and check["body"] not in live.get("withheld", []) else None,
+                       "body": f"{Path(live['record']).parent.as_posix()}/{check['body']}" if check["body"] else None,
                        "fields": fields})
     live["snapshot"] = {"checked_at": record["checked_at"], "how": record["how"], "checks": checks}
     return page
@@ -3416,7 +3416,9 @@ def render_evidence(nouns: Nouns) -> str:
     for item in source["items"]:
         line = (f'{text(source["same"])} <a href="#{attr(item["same_as"])}"><code>{text(item["same_as"])}/</code></a>.'
                 if "same_as" in item else text(item["line"]))
-        anchor = "" if "same_as" in item else f' id="{attr(Path(item["path"].rstrip("/")).name)}"'
+        name = Path(item["path"].rstrip("/")).name
+        # Its own anchor, unless a served folder of the same name already holds it.
+        anchor = "" if "same_as" in item or name in {f["id"] for f in served["folders"]} else f' id="{attr(name)}"'
         items.append(f'<li{anchor}><p class="ev-date"><time datetime="{attr(item["date"])}">{text(human_date(item["date"]))}'
                      f'</time></p><p><code>{text(item["path"])}</code></p><p class="ev-line">{line}</p></li>')
     main = "\n".join([

@@ -50,7 +50,12 @@
       "content_type": "application/json",
       "body_bytes": 91,
       "body_sha256": "ee5f20c9b34432b1eafebbd33b8b4e962a9fe8f7257fd010821b2d609b61703b",
-      "body": "eranos-api-health.json"
+      "body": null,
+      "fields": {
+        "ok": true,
+        "version": "0.1.0"
+      },
+      "body_not_kept": "The saved answer stays in the repository's evidence folder, not on this site: its raw text holds a word this site does not show. Its fields are copied here, and body_sha256 is the hash of the kept file."
     }
   ]
 }

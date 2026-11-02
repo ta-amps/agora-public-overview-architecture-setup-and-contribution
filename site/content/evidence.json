@@ -1,7 +1,7 @@
 {
   "about": "The evidence page, as one Task Object. scripts/build_site.py renders it into site/evidence/index.html. The words are kept as written; the build fills each served folder's files from site/evidence/ and the last live check from its saved record, and stops when a served folder or a folder of the repository's evidence/ has no line here.",
   "title": "Evidence | ta-amps",
-  "description": "Every dated evidence folder this site serves, what each one shows and its files, the evidence kept in the source download, and a dated check of what answered.",
+  "description": "Every dated evidence folder this site serves, what each one shows and its files, the evidence kept in the repository on GitHub, and a dated check of what answered.",
   "heading": "Evidence and status",
   "headline": {
     "text": "{{model:muse-glimmer-30b:tuned}}: 93 → 99% exact-match on our 150-task tool-call evaluation.",
@@ -30,15 +30,11 @@
       },
       {
         "href": "source",
-        "label": "In the source download"
+        "label": "In the repository on GitHub"
       }
     ]
   },
   "live": {
-    "withheld": [
-      "eranos-api-health.json"
-    ],
-    "withheld_why": "Review B7 and rule 16: Eranos's saved health answer holds a banned word as a field name, so it stays in git, unserved; the page shows what it said.",
     "heading": "What answered at the last check",
     "lead": "One moment, kept as it was: a plain curl of each public health address, with no credentials. It is a dated snapshot, not a monitor.",
     "record": "evidence/live-check-2026-10-31/checks.json",
@@ -180,7 +176,7 @@
         "files": [
           {
             "path": "checks.json",
-            "bytes": 1871
+            "bytes": 2154
           },
           {
             "path": "herma-v1-health.json",
@@ -328,14 +324,19 @@
     "not_served": "Its raw files stay in the source, not on this site."
   },
   "source": {
-    "heading": "In the source download",
-    "lead": "This evidence sits in the repository’s evidence folder, which the site does not serve. It is inside Agora’s source download at /source/, under these paths.",
+    "heading": "In the repository on GitHub",
+    "lead": "This evidence sits in the repository’s evidence folder, which the site does not serve. It is in Agora’s repository on GitHub, under these paths; the newest folders arrive there when this version is merged.",
     "link": {
-      "href": "https://agora.ta-amps.workers.dev/source/",
-      "label": "Open the source download"
+      "href": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution",
+      "label": "Open the repository on GitHub ↗"
     },
     "same": "The same files as the served folder",
     "items": [
+      {
+        "path": "evidence/live-check-2026-10-31/",
+        "date": "2026-10-31",
+        "line": "The last live check's saved Eranos answer, kept here because its raw text holds a word this site does not show; the live check above shows what it said."
+      },
       {
         "path": "evidence/glimmer-30b-2026-10-29/",
         "date": "2026-10-29",

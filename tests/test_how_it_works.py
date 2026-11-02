@@ -322,15 +322,9 @@ class Pages(unittest.TestCase):
         main = build.main_of(self.evidence)
         for folder in self.filled["served"]["folders"]:
             self.assertIn(f'id="{folder["id"]}"', main)
-            # Review B7: a saved answer the live record withholds (a banned word in its raw text) is neither listed
-            # nor linked, and the bundle does not serve it; it stays in git.
-            withheld = set(self.filled["live"].get("withheld", [])) if folder["id"] == "live-check-2026-10-31" else set()
             files = sorted(p.relative_to(SITE / "evidence" / folder["id"]).as_posix()
                            for p in (SITE / "evidence" / folder["id"]).rglob("*") if p.is_file())
-            files = [f for f in files if f not in withheld]
             self.assertEqual(files, [f["path"] for f in folder["files"]])
-            for name in withheld:
-                self.assertNotIn(name, main)
             for path in files:
                 if folder.get("raw_files"):
                     # The bundle leaves these raw files out (their traces name an agent app), so the page links the
@@ -338,6 +332,9 @@ class Pages(unittest.TestCase):
                     self.assertNotIn(f'href="../evidence/{folder["id"]}/{html.escape(path)}"', main)
                 else:
                     self.assertIn(f'href="../evidence/{folder["id"]}/{html.escape(path)}"', main)
+        # Review B7/B8: the saved Eranos answer is kept in the repository's evidence folder; nothing served names it.
+        self.assertNotIn("eranos-api-health", main)
+        self.assertNotIn("eranos-api-health", (SITE / "evidence/live-check-2026-10-31/checks.json").read_text(encoding="utf-8"))
         # A served folder without a line stops the build.
         nouns = copy.copy(self.nouns)
         nouns.evidence = copy.deepcopy(self.nouns.evidence)
@@ -345,7 +342,7 @@ class Pages(unittest.TestCase):
         with self.assertRaises(build.BuildError):
             build.render_evidence(nouns)
 
-    def test_repository_evidence_is_named_in_the_source_download_and_never_linked(self):
+    def test_repository_evidence_is_named_in_the_repository_on_github_and_never_linked(self):
         repo = sorted("evidence/" + p.name for p in (ROOT / "evidence").iterdir())
         items = self.nouns.evidence["source"]["items"]
         self.assertEqual(repo, sorted(item["path"].rstrip("/") for item in items))
@@ -356,7 +353,9 @@ class Pages(unittest.TestCase):
         for href in links:
             if href.startswith("../evidence/"):
                 self.assertTrue((SITE / href[3:].split("#")[0]).exists(), href)
-        self.assertIn("https://agora.ta-amps.workers.dev/source/", links)
+        # Review B8 (Nov 2): Agora serves no repository files, so the link is the repository on GitHub.
+        self.assertIn("https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution", links)
+        self.assertNotIn("source download", main)
 
     def test_what_is_live_is_a_dated_snapshot_of_the_saved_check(self):
         live = self.filled["live"]

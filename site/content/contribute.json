@@ -146,7 +146,7 @@
     {
       "id": "clone",
       "heading": "Clone the source",
-      "lead": "Five repositories are mirrored here, read-only, at the commits this site was built from. Clone them with plain git; no account needed. Agora’s own source is here as files and an archive.",
+      "lead": "Each repository is on GitHub; clone it with plain git, no account needed. Agora’s source page shows a card for each.",
       "repos": [
         "ta-amps-hackathon",
         "eranos-public-marketplace-for-public-good-token-burn",
@@ -156,7 +156,7 @@
       ],
       "clone_prefix": "git clone https://github.com/ta-amps/",
       "code_id": "contribute-clone-commands",
-      "source_label": "Every repository’s source, archive and record, and Agora’s files",
+      "source_label": "A card for every repository, with its GitHub address",
       "source_href": "source/"
     }
   ],

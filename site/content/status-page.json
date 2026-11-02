@@ -127,7 +127,7 @@
   },
   "source": {
     "heading": "Source",
-    "text": "Each repository’s files are on GitHub, and mirrored on Agora once its swept version is published.",
+    "text": "Each repository is on GitHub; Agora’s source page shows a card for each.",
     "label": "Where each repository’s files are",
     "href": "source/"
   },
