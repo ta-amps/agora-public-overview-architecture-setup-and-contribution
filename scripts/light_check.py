@@ -277,6 +277,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.base:
         base = args.base.rstrip("/")
         routes = crawl(base, args.routes, args.limit) if args.crawl else (args.routes or ["/"])
+        print(f"light-check: {len(routes)} pages found at {base}", flush=True)
     else:
         import check
 
@@ -317,7 +318,10 @@ def main(argv: list[str] | None = None) -> int:
                     results.append({"route": route, "scheme": scheme, "status": status, "problems": problems,
                                     "large_elements": probe.get("large", 0), "brand_exempted": probe.get("exempted", 0)})
                     if problems:
-                        print(f"FAIL {scheme:5} {route}", *problems, sep="\n    ")
+                        print(f"FAIL {scheme:5} {route}", *problems, sep="\n    ", flush=True)
+                    done = len(results)
+                    if done % 100 == 0:
+                        print(f"light-check: {done} of {2 * len(routes)} checked, {failed} failed so far", flush=True)
                 context.close()
             browser.close()
     except Exception as error:  # noqa: BLE001 - no browser means no check: fail closed
