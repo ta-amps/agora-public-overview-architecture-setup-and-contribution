@@ -155,5 +155,24 @@
     "paused",
     "updating",
     "no_run"
-  ]
+  ],
+  "site": {
+    "heading": "About this site",
+    "text": "How Agora is kept safe and usable, and the licences of what it is built with:",
+    "links": [
+      {
+        "href": "security/",
+        "label": "Security"
+      },
+      {
+        "href": "accessibility/",
+        "label": "Accessibility"
+      },
+      {
+        "href": "THIRD-PARTY-NOTICES.txt",
+        "label": "Third-party notices",
+        "local": true
+      }
+    ]
+  }
 }

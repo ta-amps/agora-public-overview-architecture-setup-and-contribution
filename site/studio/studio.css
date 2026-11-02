@@ -1,6 +1,7 @@
 /* Light only (owner, Nov 1): the Studio's dark stage turned into Paper & Ink, declaration by declaration
    (backgrounds to paper, surface and washes; text, borders and marks to ink and the strong accents). */
 :root {
+  color-scheme: only light;
   --bg-obsidian: #F5F2EA;
   --bg-elevated: #FFFDF8;
   --bg-card: rgba(255, 253, 248, 0.88);

@@ -40,6 +40,23 @@ class Chrome(LocalSite):
         # It scrolls away with the page: never sticky or fixed.
         self.assertEqual("relative", page.evaluate("getComputedStyle(document.querySelector('ta-agent-banner')).position"))
 
+    def test_the_banner_shows_a_focus_ring_and_its_hairline(self):
+        # Review B3 (Nov 1): the banner's theme variables are literal colours, so its shadow CSS gets a real --focus.
+        # After the skip link, the next two tab stops are the banner's buttons, and each draws a 3 px blue ring.
+        page = self.open("")
+        for expected in ("copy", "toggle"):
+            page.keyboard.press("Tab")
+            if page.evaluate("document.activeElement && document.activeElement.classList.contains('skip-link')"):
+                page.keyboard.press("Tab")
+            ring = page.evaluate("""() => { const host = document.activeElement;
+              const el = host && host.shadowRoot ? host.shadowRoot.activeElement : host;
+              const cs = getComputedStyle(el);
+              return {cls: el.className, style: cs.outlineStyle, width: cs.outlineWidth, color: cs.outlineColor}; }""")
+            self.assertIn(expected, ring["cls"])
+            self.assertEqual(("solid", "3px", "rgb(42, 93, 176)"), (ring["style"], ring["width"], ring["color"]), ring)
+        line = page.evaluate("getComputedStyle(document.querySelector('ta-agent-banner')).borderBottom")
+        self.assertEqual("1px solid rgb(226, 220, 207)", line)
+
     def test_the_banner_names_its_toggle_and_keeps_only_web_links(self):
         # Review N3: on a phone the toggle shows only its glyph, so it carries its name from the first paint.
         page = self.open(viewport={"width": 390, "height": 844})

@@ -382,11 +382,12 @@ class Builder(unittest.TestCase):
 
     def test_learning_is_a_tab_of_agora_built_from_its_noun(self):
         # A page of Agora, not a new surface. November 1 (v2 brief): the header reads How it works, Use cases, Models used, Decks,
-        # Evidence (the film is withdrawn until its re-recorded cut lands), and Learning sits in the footer's second row.
+        # Evidence (the film is withdrawn until its re-recorded cut lands). The standard footer (ta-amps.footer/1) lists
+        # the same links on every surface, so How it works is the page that links Learning.
         self.assertEqual(["How it works", "Use cases", "Models used", "Decks", "Evidence"],
                          [item["label"] for item in self.nouns.site["nav"]])
         page = self.outputs[build.SITE / "learning" / "index.html"]
-        self.assertIn('<li><a href="../learning/">Learning</a></li>', page)
+        self.assertIn('href="../learning/"', self.outputs[build.SITE / "how-it-works" / "index.html"])
         main = build.main_of(page)
         # Every word the learning page shows, outside the shared header and footer, is a string of its noun, with its
         # {{model:...}} names rendered from the models catalog.
@@ -398,8 +399,14 @@ class Builder(unittest.TestCase):
         self.assertEqual(len(steps), main.count('<li class="loop-step">'))
         places = [main.index(f'<h3 class="loop-verb">{build.text(step)}</h3>') for step in steps]
         self.assertEqual(sorted(places), places)
-        # Every measured result links to public evidence, and the build refuses one that doesn't.
+        # Every measured result links to public evidence, and the build refuses one that doesn't: a record on GitHub,
+        # or (review B4) its line on the evidence page while GitHub main does not have it yet.
+        evidence = self.outputs[build.SITE / "evidence" / "index.html"]
         for item in self.nouns.learning["results"]["items"]:
+            if item["link"].startswith("evidence/#"):
+                self.assertIn(f'id="{item["link"].split("#", 1)[1]}"', evidence, item["model"])
+                self.assertIn(f'href="../{html.escape(item["link"])}"', main)
+                continue
             self.assertTrue(item["link"].startswith("https://github.com/ta-amps/"), item["model"])
             self.assertIn(f'href="{html.escape(build.repoint(item["link"], self.nouns.links))}"', main)
         nouns = copy.copy(self.nouns)
@@ -424,7 +431,7 @@ class Builder(unittest.TestCase):
     def test_the_library_is_a_page_of_agora_built_from_its_noun(self):
         library, explorer, ecosystem = self.nouns.library, self.nouns.explorer, self.nouns.ecosystem
         page = self.outputs[build.SITE / "library" / "index.html"]
-        self.assertIn('<li><a href="../library/">Library</a></li>', page)
+        self.assertIn('href="../library/"', self.outputs[build.SITE / "judges" / "index.html"])  # not in the footer now
         main = build.main_of(page)
         # Every word the page shows is a string of its nouns. The rest is the measured part: numbers, the commit and
         # its date.
@@ -553,7 +560,11 @@ class Builder(unittest.TestCase):
     def test_every_number_in_the_learning_deck_has_a_claim_with_public_evidence(self):
         deck = next(deck for deck in self.nouns.decks if deck["id"] == "continuous-learning")
         claims = deck["claims"]["claims"]
+        evidence = self.outputs[build.SITE / "evidence" / "index.html"]
         for claim in claims:
+            if claim["link"].startswith("evidence/#"):  # review B4: its line on the evidence page, which must exist
+                self.assertIn(f'id="{claim["link"].split("#", 1)[1]}"', evidence, claim["number"])
+                continue
             self.assertTrue(claim["link"].startswith("https://github.com/ta-amps/"), claim["number"])
         # Model and GPU names, the loop's step labels and the date are names, not numbers to source.
         names = re.compile(r"\b(?:1|3|30)B\b|\bT4s?\b|October 30, 2026|(?<![\d.])0[1-8](?![\d.])", re.I)
@@ -678,11 +689,31 @@ class Builder(unittest.TestCase):
         self.assertNotIn("film", description)  # withdrawn until the re-recorded cut lands
         self.assertIn(f'<meta name="description" content="{build.attr(description)}">', self.outputs[build.SITE / "index.html"])
 
-    def test_the_footer_privacy_line_comes_from_its_noun_and_matches_what_the_pages_load(self):
-        privacy = self.nouns.site["footer"]["privacy"]
+    def test_the_footer_is_the_standard_one_and_the_privacy_facts_match_what_the_pages_load(self):
+        # MUST-FOLLOW rule 13 and ta-amps.footer/1: the tile mark and the name, ONE row of links (the same links in the
+        # same order on every surface; a link to another site carries the mark) and one short line. Never two rows.
+        footer = self.nouns.site["footer"]
+        here = footer["here"]
+        spec_path = ROOT.parent.parent / "shared" / "footer.v1.json"
+        if spec_path.is_file():  # the shared spec sits beside this checkout in the working notes
+            spec = json.loads(spec_path.read_text(encoding="utf-8"))
+            self.assertEqual(spec["links"], footer["links"])
+            self.assertEqual((spec["external_mark"], spec["line"]["default"]), (footer["external_mark"], footer["line"]))
+        expected = [e["label"] + ("" if e["href"].startswith(here) else footer["external_mark"]) for e in footer["links"]]
         for path, page in self.outputs.items():
             if path.suffix == ".html" and "<!-- site:footer -->" in page:
-                self.assertEqual(1, page.count(f'<p class="footer-privacy">{build.text(privacy)}</p>'), path)
+                block = page[page.index('<footer class="site-footer">'):page.index("</footer>")]
+                self.assertEqual(1, block.count("<nav"), path)
+                self.assertEqual(1, block.count("<ul>"), path)
+                self.assertEqual(expected, re.findall(r"<a href=\"[^\"]*\">([^<]*)</a>", block), path)
+                self.assertEqual(1, block.count(f'<p class="footer-line">{build.text(footer["line"])}</p>'), path)
+        # What the site keeps in the browser is on the Security page now, the Live Studio's demo session included.
+        security = next(b for b in self.nouns.security["blocks"] if b["heading"] == "What this site keeps in your browser")
+        privacy = " ".join(security["items"])
+        shown = self.outputs[build.SITE / "security" / "index.html"]
+        for item in security["items"]:
+            self.assertIn(build.text(item), shown)
+        self.assertIn("one-hour demo session", privacy)
         # "The fonts come from this site": no current page loads anything from another host (self-hosted fonts, Nov 1).
         loads = re.compile(r'<(?:link|script|img|video|source|track|iframe)\b[^>]*?\s(?:href|src)="(https?://[^"/]+)', re.I)
         hosts = {host for path, page in self.outputs.items() if path.suffix == ".html" for host in loads.findall(page)}

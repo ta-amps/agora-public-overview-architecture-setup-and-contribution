@@ -30,6 +30,10 @@
       "tour": {
         "label": "Take the 45-second tour →",
         "href": "?tour=judge"
+      },
+      "judges": {
+        "label": "For judges →",
+        "href": "judges/"
       }
     },
     "film_made": {

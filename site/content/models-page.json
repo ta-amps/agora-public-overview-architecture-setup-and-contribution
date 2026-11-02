@@ -1,5 +1,5 @@
 {
-  "about": "The Models used page (board ModelsUsed), as one Task Object: its words only. Every model, agent app, number, version and timing comes from the models catalog Task Object (site/content/models.meta.json, version 3, a copy of models.meta), and only entries whose state is live or measured are shown. Notes for each step of the request track are words, with no numbers.",
+  "about": "The Models used page (board ModelsUsed), as one Task Object: its words only. Every model, agent app, number, version and timing comes from the models catalog Task Object (site/content/models.meta.json, version 4, a copy of models.meta), and only entries whose state is live or measured are shown. Notes for each step of the request track are words, with no numbers.",
   "title": "Models used | Agora",
   "description": "ta-amps runs on Meta's Muse models, through the Meta API: every model, what it does to a request, and how we tested it.",
   "heading": "Models used",

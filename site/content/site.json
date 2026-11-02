@@ -95,91 +95,46 @@
     "selected": "Selected"
   },
   "footer": {
+    "standard": "ta-amps.footer/1, version 1 (notes/claude-work-2026-10-31/shared/footer.v1.json): the same links in the same order on every surface, one row of links and one short line (MUST-FOLLOW rule 13). A link to this site is a relative path with no mark; a link to another site carries the mark.",
     "nav_label": "Site information",
     "brand": "Agora",
-    "line": "How ta-amps works, in the open.",
-    "note": "Eranos is where the work happens; Agora shows how it works.",
+    "here": "https://agora.ta-amps.workers.dev",
     "links": [
       {
-        "href": "models/",
-        "label": "Models used"
+        "label": "Library",
+        "href": "https://eranos.ta-amps.workers.dev/library"
       },
       {
-        "href": "status/",
-        "label": "Status"
+        "label": "Your requests",
+        "href": "https://eranos.ta-amps.workers.dev/requests"
       },
       {
-        "href": "security/",
-        "label": "Security"
+        "label": "Status",
+        "href": "https://agora.ta-amps.workers.dev/status/"
       },
       {
-        "href": "accessibility/",
-        "label": "Accessibility"
+        "label": "Agora",
+        "href": "https://agora.ta-amps.workers.dev/"
       },
       {
-        "href": "source/",
-        "label": "Source"
+        "label": "Source",
+        "href": "https://agora.ta-amps.workers.dev/source/"
       },
       {
-        "href": "judges/",
-        "label": "For judges"
+        "label": "Privacy",
+        "href": "https://eranos.ta-amps.workers.dev/privacy"
+      },
+      {
+        "label": "Terms",
+        "href": "https://eranos.ta-amps.workers.dev/terms"
+      },
+      {
+        "label": "Report a problem",
+        "href": "https://eranos.ta-amps.workers.dev/report"
       }
     ],
-    "outside": [
-      {
-        "href": "https://eranos.ta-amps.workers.dev/",
-        "label": "Eranos ↗"
-      }
-    ],
-    "more_label": "More pages",
-    "more": [
-      {
-        "href": "how-it-works/",
-        "label": "How it works"
-      },
-      {
-        "href": "use-cases/",
-        "label": "Use cases"
-      },
-      {
-        "href": "feeds/",
-        "label": "Feeds"
-      },
-      {
-        "href": "decks/",
-        "label": "Decks"
-      },
-      {
-        "href": "evidence/",
-        "label": "Evidence"
-      },
-      {
-        "href": "learning/",
-        "label": "Learning"
-      },
-      {
-        "href": "library/",
-        "label": "Library"
-      },
-      {
-        "href": "studio/",
-        "label": "Live Studio"
-      },
-      {
-        "href": "contribute/",
-        "label": "Contribute"
-      },
-      {
-        "href": "deploy/",
-        "label": "Run your own"
-      },
-      {
-        "href": "THIRD-PARTY-NOTICES.txt",
-        "label": "Third-party notices",
-        "local": true
-      }
-    ],
-    "privacy": "No analytics, ads or cookies. The fonts come from this site, and Cloudflare Workers hosts it. The deck viewer remembers its display choices in this browser, and the judges' tour keeps one flag in this tab while it runs."
+    "external_mark": " ↗",
+    "line": "Part of ta-amps: spare AI tokens, for good."
   },
   "header": {
     "brand": "Agora",
@@ -196,6 +151,11 @@
     "image": "https://agora.ta-amps.workers.dev/assets/share/agora-1200x630.png",
     "width": 1200,
     "height": 630,
-    "alt": "Agora. AI is smart. The way we use it is dumb. Watch the film, three minutes. agora.ta-amps.workers.dev"
+    "alt": "Agora. Spare tokens for good. agora.ta-amps.workers.dev",
+    "card": {
+      "name": "Agora",
+      "line": "Spare tokens for good.",
+      "address": "agora.ta-amps.workers.dev"
+    }
   }
 }

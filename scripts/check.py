@@ -340,6 +340,19 @@ DARK_RULE = re.compile(r"prefers-color-scheme\s*:\s*dark|color-scheme\s*:[^;\"'}
 LIGHT_META = '<meta name="color-scheme" content="only light">'
 
 
+def current_pages(site: Path) -> list[Path]:
+    """The pages a visitor can reach today: every page of the site but the frozen drafts (decks.json's versions and
+    the hash-pinned drafts in content/earlier-drafts.json, with their folders) and the deck sources. The light check
+    (scripts/light_check.py) renders exactly these."""
+    root = site.resolve()
+    frozen = {(root / v["path"] / "index.html").resolve() for v in load(root / "decks.json")["versions"]}
+    drafts = root / "content/earlier-drafts.json"
+    if drafts.exists():
+        frozen |= frozen_drafts(load(drafts), root)
+    return [page for page in site_pages(root) if page not in frozen and "source" not in page.relative_to(root).parts
+            and not any(f.parent in page.parents for f in frozen)]
+
+
 def light_only(site: Path, pages: dict, frozen: set[Path]) -> None:
     """Every current page pins only light in its one color-scheme meta, and no current page, stylesheet or script
     carries a dark rule. Frozen drafts keep their bytes (the bundle does not serve them); deck sources are not pages."""

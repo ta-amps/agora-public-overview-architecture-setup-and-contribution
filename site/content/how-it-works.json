@@ -264,6 +264,10 @@
       {
         "href": "feeds/",
         "label": "Feeds"
+      },
+      {
+        "href": "contribute/",
+        "label": "Contribute"
       }
     ]
   }

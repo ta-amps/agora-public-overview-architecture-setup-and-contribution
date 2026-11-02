@@ -52,6 +52,15 @@
           "proof_by": "privacy line"
         }
       ]
+    },
+    {
+      "heading": "What this site keeps in your browser",
+      "items": [
+        "No analytics, ads or cookies. The fonts come from this site, and Cloudflare Workers hosts it.",
+        "The deck viewer remembers its display choices in this browser.",
+        "The judges’ tour keeps one flag in this tab while it runs.",
+        "The Live Studio keeps its one-hour demo session (a session token, its namespace and when it ends) in this browser’s local and session storage, so a reload can reuse it. The Studio clears it a minute before it ends."
+      ]
     }
   ],
   "updated_label": "Last updated",

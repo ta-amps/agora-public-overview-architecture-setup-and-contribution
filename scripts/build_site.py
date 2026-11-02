@@ -463,26 +463,30 @@ def banner_block(prefix: str, nouns: Nouns) -> str:
 
 
 def footer_block(prefix: str, nouns: Nouns) -> str:
-    """The SiteFooter board (Nov 1): the brand and its line, the trust links (Status · Security · Accessibility ·
-    Source · For judges, plus Models used) and Eranos, the note, then a quieter row of the other pages."""
+    """The standard footer (ta-amps.footer/1, the same links in the same order on Eranos, Agora and Herma; MUST-FOLLOW
+    rule 13): the tile mark and the name, ONE row of links, and one short line. A link to this site becomes a path
+    from the page with no mark; a link to another site keeps its address and gets the external mark."""
     footer = nouns.site["footer"]
+    here = footer["here"].rstrip("/")
 
     def item(entry: dict) -> str:
-        href = attr(prefix + entry["href"]) if entry.get("local") else (
-            attr(entry["href"]) if entry["href"].startswith("http") else link(prefix, entry["href"]))
-        return f'<li><a href="{href}">{text(entry["label"])}</a></li>'
+        href = entry["href"]
+        if href == here or href.startswith(here + "/"):
+            return f'<li><a href="{link(prefix, href[len(here) + 1:])}">{text(entry["label"])}</a></li>'
+        if not href.startswith("https://"):
+            fail(f"site.json: the footer link {entry['label']!r} needs a full address, as the standard footer gives it")
+        return f'<li><a href="{attr(href)}">{text(entry["label"] + footer["external_mark"])}</a></li>'
     return "\n".join([
         '<footer class="site-footer">',
         '<div class="wrap">',
-        f'<p class="footer-brand"><b>{text(footer["brand"])}</b> <span>{text(footer["line"])}</span></p>',
+        '<div class="footer-row">',
+        f'<p class="footer-name"><img src="{prefix}assets/mark.svg" alt="" width="20" height="20">'
+        f'<strong>{text(footer["brand"])}</strong></p>',
         f'<nav aria-label="{attr(footer["nav_label"])}">',
-        "<ul>" + "".join(item(e) for e in footer["links"] + footer["outside"]) + "</ul>",
+        "<ul>" + "".join(item(e) for e in footer["links"]) + "</ul>",
         "</nav>",
-        f'<p class="footer-note">{text(footer["note"])}</p>',
-        f'<nav class="footer-more" aria-label="{attr(footer["more_label"])}">',
-        "<ul>" + "".join(item(e) for e in footer["more"]) + "</ul>",
-        "</nav>",
-        f'<p class="footer-privacy">{text(footer["privacy"])}</p>',
+        "</div>",
+        f'<p class="footer-line">{text(footer["line"])}</p>',
         "</div>",
         "</footer>",
         f'<script src="{prefix}assets/site.js" defer></script>',
@@ -986,12 +990,13 @@ def render_slide(i: int, slide: dict, total: int, ui: dict, sources: str = "") -
     return "\n".join(parts)
 
 
-def slide_sources(name: str, deck: dict, ui: dict) -> str:
+def slide_sources(name: str, deck: dict, ui: dict, prefix: str = "") -> str:
     """Every number on one slide, with its source: shown with the speaker notes, never under the slides."""
     claims = [claim for claim in (deck["claims"] or {"claims": []})["claims"] if claim["slide"] == name]
     items = []
     for claim in claims:
-        evidence = (f' <a href="{attr(claim["link"])}">{text(ui["evidence"])}</a>' if claim.get("link") else "")
+        # A record GitHub main does not have yet links its line on this site's evidence page (review B4, Nov 1).
+        evidence = (f' <a href="{page_href(claim["link"], prefix)}">{text(ui["evidence"])}</a>' if claim.get("link") else "")
         items.append(f'<li><span class="claim-status {claim["status"]}">{text(claim["status"].capitalize())}</span> '
                      f'{text(claim["number"])}. {text(claim["source"])}{evidence}</li>')
     return f'<ul class="slide-sources">{"".join(items)}</ul>' if items else ""
@@ -1007,7 +1012,7 @@ def render_deck(deck: dict, nouns: Nouns) -> str:
         + "".join(f'<li><a href="#slide-{i + 1}" data-goto="{i}">{text(slides[i]["title"])}</a></li>'
                   for i in range(part["start"], part["stop"]))
         + "</ol></div>" for part in deck["sections"])
-    body = "\n".join(render_slide(i, slide, total, ui, slide_sources(slide["name"], deck, ui))
+    body = "\n".join(render_slide(i, slide, total, ui, slide_sources(slide["name"], deck, ui, prefix_for(deck["page"])))
                      for i, slide in enumerate(slides))
     main = "\n".join(filter(None, [
         f'<main id="main" class="deck" data-total="{total}">',
@@ -1186,7 +1191,8 @@ def render_home(nouns: Nouns) -> str:
         f'<ul class="start-cards">{doors}</ul>',
         f'<p class="home-actions"><a class="button" href="{page_href(actions["eranos"]["href"], "")}">'
         f'{text(actions["eranos"]["label"])}</a>'
-        f'<a class="home-tour" href="{page_href(actions["tour"]["href"], "")}">{text(actions["tour"]["label"])}</a></p>',
+        f'<a class="home-tour" href="{page_href(actions["tour"]["href"], "")}">{text(actions["tour"]["label"])}</a>'
+        f'<a class="home-tour" href="{page_href(actions["judges"]["href"], "")}">{text(actions["judges"]["label"])}</a></p>',
         made,
         "</div>",
         "</section>",
@@ -1492,7 +1498,9 @@ def render_learning(nouns: Nouns) -> str:
     prefix = "../"
     meaning, loop, results, run = page["meaning"], page["loop"], page["results"], page["run"]
     for item in results["items"]:
-        if not item.get("link", "").startswith("https://github.com/ta-amps/"):
+        # Public evidence: a record on GitHub, or (review B4, Nov 1) its line on this site's evidence page while GitHub
+        # main does not have it yet; check.py proves the anchor exists.
+        if not item.get("link", "").startswith(("https://github.com/ta-amps/", "evidence/#")):
             fail(f"learning.json: the {item['model']} result needs a public evidence link")
     means = "".join(
         f'<li class="learn-mean {attr(item["kind"])}"><p class="learn-kind">{text(meaning["kinds"][item["kind"]])}</p>'
@@ -1508,7 +1516,7 @@ def render_learning(nouns: Nouns) -> str:
         f'<span class="result-after">{text(item["after"])}</span></p>'
         f'<p class="result-line">{text(item["line"])}</p>'
         f'<p class="result-evidence"><span>{text(results["evidence"])}</span> '
-        f'<a href="{attr(item["link"])}">{text(item["source"])}</a></p></li>' for item in results["items"])
+        f'<a href="{page_href(item["link"], prefix)}">{text(item["source"])}</a></p></li>' for item in results["items"])
     rules = "".join(f"<li><h3>{text(rule['name'])}</h3><p>{text(rule['text'])}</p></li>" for rule in page["safety"]["items"])
     limits = "".join(f"<li>{text(limit)}</li>" for limit in page["limits"]["items"])
     main = "\n".join([
@@ -2083,7 +2091,11 @@ def render_llms(nouns: Nouns, built: set[Path]) -> str:
     lines += ["", f"## {page['endpoints_title']}", ""]
     for row in nouns.site["endpoints"]["rows"]:
         lines.append(f"- {row['name']}: {row['what']}. MCP {row['mcp']}; llms.txt {row['llms']}")
-    lines += ["", f"## {page['source_title']}", ""] + [f"- {item}" for item in page["source"]]
+    # The served repositories come from the per-repository mirror switch (source-links.json), so this line follows it.
+    mirrored = [name for name in nouns.links["heads"] if name in nouns.links.get("mirrored", [])]
+    named = ", ".join(mirrored[:-1]) + (" and " if len(mirrored) > 1 else "") + mirrored[-1] if mirrored else "none yet"
+    lines += ["", f"## {page['source_title']}", ""] + [f"- {fill(item, {'mirrored': named}, 'llms.json') if '{mirrored}' in item else item}"
+                                                         for item in page["source"]]
     lines += ["", f"## {page['rules_title']}", ""] + [f"- {item}" for item in page["rules"]]
     lines += ["", f"## {page['brief_title']}", "", page["brief_note"], ""]
     return "\n".join(lines)
@@ -2645,6 +2657,10 @@ def render_status(nouns: Nouns) -> str:
         f'<p><a class="use-link" href="{page_href(dw["check"], prefix)}">{text(dw["record"])}</a></p></section>',
         f'<section aria-labelledby="st-source"><h2 id="st-source">{text(source["heading"])}</h2>'
         f'<p>{text(source["text"])} <a href="{page_href(source["href"], prefix)}">{text(source["label"])}</a></p></section>',
+        f'<section aria-labelledby="st-site"><h2 id="st-site">{text(words["site"]["heading"])}</h2>'
+        f'<p>{text(words["site"]["text"])} ' + " · ".join(
+            f'<a href="{(prefix + attr(item["href"])) if item.get("local") else page_href(item["href"], prefix)}">'
+            f'{text(item["label"])}</a>' for item in words["site"]["links"]) + "</p></section>",
         f'<section aria-labelledby="st-problems"><h2 id="st-problems">{text(problems["heading"])}</h2>'
         f'<p>{text(problems["lead"])}</p>{problems_html}</section>',
         '<div class="pg-notes-row">',
@@ -3155,6 +3171,8 @@ def how_meta(words: dict, run: dict, learning: dict, prefix: str) -> str:
             href = prefix + attr(pick["served"])
         elif item["link"].startswith("https://github.com/ta-amps/"):
             href = attr(item["link"])
+        elif item["link"].startswith("evidence/#"):
+            href = page_href(item["link"], prefix)
         else:
             fail(f"how-it-works.json: the {pick['model']} result needs public evidence")
         cards.append(
@@ -3347,7 +3365,8 @@ def render_evidence(nouns: Nouns) -> str:
     for item in source["items"]:
         line = (f'{text(source["same"])} <a href="#{attr(item["same_as"])}"><code>{text(item["same_as"])}/</code></a>.'
                 if "same_as" in item else text(item["line"]))
-        items.append(f'<li><p class="ev-date"><time datetime="{attr(item["date"])}">{text(human_date(item["date"]))}'
+        anchor = "" if "same_as" in item else f' id="{attr(Path(item["path"].rstrip("/")).name)}"'
+        items.append(f'<li{anchor}><p class="ev-date"><time datetime="{attr(item["date"])}">{text(human_date(item["date"]))}'
                      f'</time></p><p><code>{text(item["path"])}</code></p><p class="ev-line">{line}</p></li>')
     main = "\n".join([
         '<main id="main" class="ev">',

@@ -63,7 +63,7 @@
       "number": "{{model:muse-glimmer-30b}}, as memory: closed-book exact match 0.0% to 62.5% on a 120-row test fixed before scoring, with 0 added tokens (+33.3 points vs a 222.3-token BM25 shim, 2.28 times faster, 8 of 8 reload check)",
       "status": "measured",
       "source": "QLoRA on two free Kaggle T4 GPUs, October 31, 2026: recalling the library’s Task Objects and multi-step workflows from the model’s own weights, with nothing added to the prompt. A promoted candidate only; nothing has been admitted or deployed.",
-      "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/glimmer-30b-lora-memory-2026-10-31/README.md"
+      "link": "evidence/#glimmer-30b-lora-memory-2026-10-31"
     },
     {
       "slide": "learners",
@@ -98,7 +98,7 @@
       "number": "Self-learning library search with Herma shims, a local check: Recall@1 23.3% to 100.0% across 60 queries over 79 seed packs (MRR 0.341 to 1.000 in 1.0 round, 82.8% token reduction, 0.30 ms retrieval, 10 compiled shims at 0.026 ms, 10 of 10 independent reviews)",
       "status": "measured",
       "source": "An offline evaluation over the 79-pack library, with no model calls: each pack’s Task Objects enriched for search, an index across fields, reflection on misses, and an independent check (a self-approval was refused with a 409).",
-      "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/sira-are-cascade-2026-10-31/README.md"
+      "link": "evidence/#sira-are-cascade-2026-10-31"
     }
   ]
 }

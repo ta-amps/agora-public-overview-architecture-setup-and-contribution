@@ -214,15 +214,17 @@ ta-agent-banner {
   background: var(--agent-banner-bg);
   color: var(--agent-banner-ink);
   border-bottom: 1px solid var(--agent-banner-line);
-  /* The light paper tint (owner, Nov 1), set through the shared element's theme variables. */
-  --agent-banner-bg: var(--sunken);
-  --agent-banner-ink: var(--text);
-  --agent-banner-muted: var(--text-2);
-  --agent-banner-raised: var(--surface);
-  --agent-banner-line: var(--line);
-  --agent-banner-edge: var(--line-strong);
-  --agent-banner-link: var(--link);
-  --agent-banner-focus: var(--focus);
+  /* The light paper tint (owner, Nov 1), set through the shared element's theme variables. They are the tokens'
+     values written out (sunken, text, text-2, surface, line, line-strong, link, focus): the element's shadow CSS sets
+     --line, --link and --focus from these, so var(--line) here would be a cycle and draw no focus ring (review B3). */
+  --agent-banner-bg: #EDE8DC;
+  --agent-banner-ink: #11161F;
+  --agent-banner-muted: #3B4252;
+  --agent-banner-raised: #FFFDF8;
+  --agent-banner-line: #E2DCCF;
+  --agent-banner-edge: #8A8476;
+  --agent-banner-link: #24519B;
+  --agent-banner-focus: #2A5DB0;
 }
 
 
@@ -491,12 +493,11 @@ h3[id] { scroll-margin-top: var(--space-6); }
   width: 100%;
   height: auto;
   aspect-ratio: 16 / 9;
-  background: #222732;
 }
 
 /* Suppress ugly native square WebVTT cue boxes inline (including Chromium shadow DOM)
    while keeping textTracks active in mode="hidden" so the custom widescreen bottom-border
-   .film-caption-pill renders cleanly inside the #222732 grayish-black letterbox band. */
+   .film-caption-pill renders cleanly over the picture. */
 html.js .film-video:not(:fullscreen)::cue,
 .film-video:not(:fullscreen)::cue {
   opacity: 0 !important;
@@ -591,7 +592,7 @@ html.js .film-video:not(:fullscreen)::-webkit-media-text-track-display-backdrop 
 }
 
 .film-cut[aria-pressed="true"],
-.film-cc[aria-pressed="true"] { background: var(--color-film-ink); color: var(--color-film); border-color: var(--color-film-ink); border-style: solid; }
+.film-cc[aria-pressed="true"] { background: var(--surface); color: var(--color-ink); border-color: var(--color-ink); border-style: solid; }
 .film-cut:focus-visible,
 .film-cc:focus-visible { outline: 2px solid var(--color-film-ink); outline-offset: 3px; }
 
@@ -1184,18 +1185,33 @@ tbody th { font-weight: 600; }
 
 /* Footer */
 
+/* The standard footer (ta-amps.footer/1, MUST-FOLLOW rule 13): the tile mark and the name, one row of links that
+   wraps only when the screen is too narrow, and one short line under it at 14 px. Paper tint, ink, link blue. */
 .site-footer {
+  background: var(--sunken);
   border-top: 1px solid var(--color-rule);
-  padding-block: var(--space-6) var(--space-7);
-  font-size: var(--text-micro);
-  color: var(--color-muted);
+  color: var(--color-ink);
 }
-
-.site-footer .wrap { display: grid; gap: var(--space-3); }
-.site-footer ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); }
-.site-footer a { color: var(--color-ink-2); text-decoration: none; }
-.site-footer a:hover { color: var(--color-ink); text-decoration: underline; }
-.site-footer p { max-width: none; }
+.site-footer .footer-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-6);
+  padding-block: var(--space-5) var(--space-1);
+}
+.site-footer .footer-name {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+}
+.site-footer .footer-name img { display: block; }
+.site-footer ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-5); }
+.site-footer a { display: inline-block; padding-block: 3px; color: var(--link); text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
+.site-footer a:hover { color: var(--link-hover); }
+.site-footer .footer-line { margin: 0; padding-block: 0 var(--space-6); font-size: 0.875rem; line-height: 1.45; color: var(--color-ink-2); }
 
 @media print {
   .site-header nav,
@@ -2255,8 +2271,4 @@ pre code {
 .jg-track-list li { line-height: 1.55; }
 .jg-track-list a { white-space: nowrap; font-weight: 600; }
 
-/* SiteFooter (Nov 1): the brand line, the trust links, the note, then the other pages in a quieter row. */
-.footer-brand { margin: 0 0 var(--space-3); font-size: var(--text-body); color: var(--color-ink-2); }
-.footer-brand b { font-family: var(--font-display); color: var(--color-ink); margin-inline-end: var(--space-2); }
-.site-footer .footer-more ul { margin-top: var(--space-2); font-size: var(--text-small); }
-.site-footer .footer-more a { color: var(--color-muted); }
+

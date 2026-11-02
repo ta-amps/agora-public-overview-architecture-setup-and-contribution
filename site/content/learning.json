@@ -102,7 +102,7 @@
         "after": "62.5%",
         "line": "Answering from memory alone, with no library text added to the prompt: exact match on a 120-task recall and workflow evaluation fixed before scoring. That is 33.3 points above adding 222.3 tokens of retrieved text, 2.28 times faster, and 8 of 8 answers matched after a reload.",
         "source": "The run record",
-        "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/glimmer-30b-lora-memory-2026-10-31/README.md"
+        "link": "evidence/#glimmer-30b-lora-memory-2026-10-31"
       },
       {
         "model": "Self-learning library search",
@@ -110,7 +110,7 @@
         "after": "100.0%",
         "line": "A local check with no model calls: across 60 hard search queries over 79 seed packs, the first result was the right pack every time, while the text added to a prompt shrank by 82.8%. Each search took 0.30 ms, and 10 of 10 independent reviews passed.",
         "source": "The benchmark record",
-        "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/sira-are-cascade-2026-10-31/README.md"
+        "link": "evidence/#sira-are-cascade-2026-10-31"
       }
     ]
   },

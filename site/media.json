@@ -3,66 +3,6 @@
   "publication_does_not_certify_claims": true,
   "items": [
     {
-      "path": "hub-3d/assets/fonts/IBMPlexSans-wdth-wght.ttf",
-      "sha256": "3b031aa4216174205bd8471f88a49b91f093169e9e87bd5262242bc5967fe2e3",
-      "bytes": 537244,
-      "description": "3D Spatial Hub offline font: IBMPlexSans-wdth-wght.ttf"
-    },
-    {
-      "path": "hub-3d/assets/fonts/JetBrainsMono-wght.ttf",
-      "sha256": "48715a42ec242c21e9f02692891e147d022299a52e48d5e413e1a942193ffeda",
-      "bytes": 187208,
-      "description": "3D Spatial Hub offline font: JetBrainsMono-wght.ttf"
-    },
-    {
-      "path": "hub-3d/assets/fonts/SpaceGrotesk-wght.ttf",
-      "sha256": "acad6de1fc93436f5c0f1f4137751ef04f1aea3063e7036535970ffcfbd79f72",
-      "bytes": 136676,
-      "description": "3D Spatial Hub offline font: SpaceGrotesk-wght.ttf"
-    },
-    {
-      "path": "hub-3d/assets/screens/agora-arch.png",
-      "sha256": "b4b0e77464f26b40fe1a4a3b2d0f9eb8cda182e81b01b41e2ec98eb2ff0d89c8",
-      "bytes": 69444,
-      "description": "3D Spatial Hub screen texture: agora-arch.png"
-    },
-    {
-      "path": "hub-3d/assets/screens/agora-home.png",
-      "sha256": "118724a2463efead85eb4a6918bfa64cb55fe0de5a1f974f922d70152cd4e1ac",
-      "bytes": 70162,
-      "description": "3D Spatial Hub screen texture: agora-home.png"
-    },
-    {
-      "path": "hub-3d/assets/screens/eranos-catalog.png",
-      "sha256": "452f5d7446b16b3b55164f4e47938d49acb162507dec3bfb7893cce93a4fdedc",
-      "bytes": 145502,
-      "description": "3D Spatial Hub screen texture: eranos-catalog.png"
-    },
-    {
-      "path": "hub-3d/assets/screens/eranos-home.png",
-      "sha256": "003d05c570bae7c858ef0d55f949f50281cd9d77594d797bbcecd205ccec11c0",
-      "bytes": 83367,
-      "description": "3D Spatial Hub screen texture: eranos-home.png"
-    },
-    {
-      "path": "hub-3d/assets/screens/eranos-nonprofits.png",
-      "sha256": "714adda060a1a80afb990f756ade86d5eab9dfd377309a6fc844b55cead999d2",
-      "bytes": 99133,
-      "description": "3D Spatial Hub screen texture: eranos-nonprofits.png"
-    },
-    {
-      "path": "hub-3d/assets/screens/herma-live.png",
-      "sha256": "f90b6ec40f393772f1299cabac0999e408d7dc8629ba499b22369bab8b3ba175",
-      "bytes": 85640,
-      "description": "3D Spatial Hub screen texture: herma-live.png"
-    },
-    {
-      "path": "hub-3d/assets/screens/tessera-live.png",
-      "sha256": "a1a7bb356fbcd8d61663486f9ee7be98090e45d4e87bcbba5327d4cedef19393",
-      "bytes": 84685,
-      "description": "3D Spatial Hub screen texture: tessera-live.png"
-    },
-    {
       "path": "video/2026-10-29/animatic-60s-v1/contact-sheet-60s.png",
       "sha256": "1829d144d5f1f1b01aa839882946b9bfb6d5d0d64855a584028ce4bfecd2b89c",
       "bytes": 484722
@@ -88,24 +28,9 @@
       "bytes": 59067
     },
     {
-      "path": "video/2026-10-30/storyboard-3m.png",
-      "sha256": "8506851b433b321b1c59a067f5ced443d1c5f90e048829b14f2a49b2d6b9c624",
-      "bytes": 2000577
-    },
-    {
-      "path": "video/2026-10-31/walkthroughs/walkthrough-agora-live.mp4",
-      "sha256": "d177f2f213e583ca18d0d828f9d4bf624c0e56f86417eb4182ed4bef0a30546a",
-      "bytes": 4101965
-    },
-    {
-      "path": "video/2026-10-31/walkthroughs/walkthrough-eranos-live.mp4",
-      "sha256": "27bab450393d3d0b7bc0b8ede4a356278454f8eb9e4bcb2eb6c37b44da195cfb",
-      "bytes": 6016258
-    },
-    {
       "path": "assets/share/agora-1200x630.png",
-      "sha256": "416c85ec3cfcf52a676ff5df4e8b95d0325b2d8b4b48ca3ecc6369904265b84d",
-      "bytes": 40884
+      "sha256": "4b9511089ed9d697d433795d8a6f6b58fccf3fa6b269e95822deb0e9362c4e2c",
+      "bytes": 34686
     },
     {
       "path": "assets/fonts/IBMPlexSans-wdth-wght.woff2",
