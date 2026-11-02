@@ -17,8 +17,8 @@
   "replay_seconds": 10,
   "loading": "Reading the map…",
   "totals": {
-    "big": "{workers} workers · {data_centers} data centers",
-    "sub": "{continents} continents · {claims} Tasks claimed, {nonprofit_claims} for nonprofits · last 24 hours"
+    "big": "{workers} {workers:worker:workers} · {data_centers} {data_centers:data center:data centers}",
+    "sub": "{continents} {continents:continent:continents} · {claims} {claims:Task:Tasks} claimed, {nonprofit_claims} for nonprofits · last 24 hours"
   },
   "controls": {
     "replay": "Replay the last hour",
@@ -43,12 +43,12 @@
   "data_center": {
     "aria": "{city} data center, {continent}. Show its numbers.",
     "card_title": "{city} data center",
-    "card_counts": "{workers} workers there together · {claims} Tasks claimed together there in the last 24 hours",
+    "card_counts": "{workers} {workers:worker:workers} there together · {claims} {claims:Task:Tasks} claimed together there in the last 24 hours",
     "card_note": "Where connections entered Cloudflare's network, not where anyone lives.",
     "close": "Close"
   },
   "map_aria": {
-    "some": "World map. Data centers where 2 or more workers were busy within 15 minutes of each other in the last 24 hours: {centers}. Counted by continent: {continents}. {claims} Tasks claimed.",
+    "some": "World map. Data centers where 2 or more workers were busy within 15 minutes of each other in the last 24 hours: {centers}. Counted by continent: {continents}. {claims} {claims:Task:Tasks} claimed.",
     "centers_none": "none",
     "continents_none": "none",
     "empty": "World map. No workers in the last 24 hours."
@@ -153,7 +153,7 @@
     "eranos": {
       "eyebrow": "Right now",
       "label": "Where workers are picking up Tasks right now",
-      "headline": "{workers} workers on {continents} continents are picking up Tasks",
+      "headline": "{workers} {workers:worker:workers} on {continents} {continents:continent:continents} {workers:is:are} picking up Tasks",
       "sub": "{nonprofit_claims} for nonprofits today. Shown by Cloudflare data center, never by home.",
       "quiet": "No Tasks claimed in the last 10 minutes.",
       "last": "Last claim: {kind} claimed · {model} · via {city} data center · {ago}",
@@ -164,7 +164,7 @@
     "teleion": {
       "eyebrow": "Live capacity",
       "label": "Workers on the shared queue in the last 24 hours",
-      "headline": "{workers} workers on the shared queue in the last 24 hours",
+      "headline": "{workers} {workers:worker:workers} on the shared queue in the last 24 hours",
       "sub": "Dedicated workers run on Meta's Muse models through the Meta API; every claim records the model and persona that ran.",
       "quiet": "No Tasks claimed in the last 10 minutes.",
       "last": "Last claim: {kind} claimed · {model} · via {city} data center · {ago}",

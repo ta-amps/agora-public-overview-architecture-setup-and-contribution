@@ -69,7 +69,9 @@ class NetworkPage(unittest.TestCase):
             self.skipTest("the design copy contract sits beside this checkout in the working notes")
         agora = json.loads(COPY.read_text(encoding="utf-8"))["surfaces"]["agora"]
         us = lambda s: s.replace("data centres", "data centers").replace("Data centres", "Data centers").replace("data centre", "data center").replace("Data centre", "Data center")
-        w = self.words
+        # Our counts pick a singular or plural word ({n:one:many}, the lead, Nov 2); the contract writes the plural.
+        plural = lambda s: re.sub(r"\{(\w+):[^:{}]*:([^:{}]*)\}", r"\2", s)
+        w = json.loads(plural(json.dumps(self.words, ensure_ascii=False)))
         pairs = {
             "network.h1": w["heading"], "network.lede": w["lead"], "network.replay": w["controls"]["replay"], "network.replay.stop": w["controls"]["replay_stop"],
             "network.pause": w["controls"]["pause"], "network.resume": w["controls"]["resume"], "network.table": w["controls"]["table"], "network.map": w["controls"]["map"],
@@ -127,9 +129,19 @@ class NetworkPage(unittest.TestCase):
         self.assertIn("if (since >= self.refresh) self.load(); else self.schedule(self.refresh - since);", script)
         self.assertIn("if (document.hidden) { clearTimeout(self.timer); self.timer = 0; return; }", script)
         self.assertNotRegex(json.dumps(self.words), r"every 30 seconds")
+        # Singular forms wherever a count is shown (1 worker, 1 Task, 1 data center, 1 continent), filled by the script.
+        self.assertIn("if (one !== undefined) return Number(values[key]) === 1 ? one : many;", script)
+        for template, forms in ((self.words["totals"]["big"], ("{workers:worker:workers}", "{data_centers:data center:data centers}")),
+                                (self.words["totals"]["sub"], ("{continents:continent:continents}", "{claims:Task:Tasks}")),
+                                (self.words["data_center"]["card_counts"], ("{workers:worker:workers}", "{claims:Task:Tasks}")),
+                                (self.words["map_aria"]["some"], ("{claims:Task:Tasks}",))):
+            for form in forms:
+                self.assertIn(form, template)
+        self.assertIn('make("h2", "nw-card-title"', script)  # the open card's title sits under the page's h1
+        self.assertIn("error.status === 404 || error.status >= 500", script)
         # After 3 not-found answers in a row it reads on its own every 5 minutes, and the first success resets that.
         self.assertIn("const MISSES_BEFORE_BACKOFF = 3, BACKOFF_MS = 5 * 60 * 1000;", script)
-        self.assertIn("self.misses = error && error.status === 404 ? (self.misses || 0) + 1 : 0;", script)
+        self.assertIn("self.misses = error && (error.status === 404 || error.status >= 500) ? (self.misses || 0) + 1 : 0;", script)
         self.assertIn("self.schedule(self.misses >= MISSES_BEFORE_BACKOFF ? Math.max(self.refresh, BACKOFF_MS) : self.refresh);", script)
         self.assertIn("self.misses = 0;  // the first success ends any back-off", script)
         # B1: the failed state dims only the map stage; the legend keeps its full contrast.

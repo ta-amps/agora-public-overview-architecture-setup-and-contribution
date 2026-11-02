@@ -19,8 +19,13 @@
     try { return JSON.parse(node.textContent); } catch (e) { return null; }
   }
 
+  // A noun's sentence with its places filled. "{n:one:many}" picks a word by the count (1 Task, 2 Tasks).
   function fill(template, values) {
-    return String(template == null ? "" : template).replace(/\{(\w+)\}/g, (all, key) => (values[key] == null ? all : String(values[key])));
+    return String(template == null ? "" : template).replace(/\{(\w+)(?::([^:{}]*):([^:{}]*))?\}/g, (all, key, one, many) => {
+      if (values[key] == null) return all;
+      if (one !== undefined) return Number(values[key]) === 1 ? one : many;
+      return String(values[key]);
+    });
   }
 
   function make(tag, cls, words) {
@@ -251,9 +256,9 @@
       self.root.setAttribute("data-failed", "");
       self.status(self.words.error.text, { text: self.words.error.link, href: self.words.herma.dashboard });
       if (!self.data) self.renderEmpty();
-      // After 3 not-found answers in a row, read on its own only every 5 minutes, until one read succeeds. A click
-      // (a filter, Resume) still reads at once.
-      self.misses = error && error.status === 404 ? (self.misses || 0) + 1 : 0;
+      // After 3 not-found or server-error answers in a row, read on its own only every 5 minutes, until one read
+      // succeeds. A click (a filter, Resume) still reads at once.
+      self.misses = error && (error.status === 404 || error.status >= 500) ? (self.misses || 0) + 1 : 0;
       self.schedule(self.misses >= MISSES_BEFORE_BACKOFF ? Math.max(self.refresh, BACKOFF_MS) : self.refresh);
     });
   };
@@ -646,7 +651,7 @@
     this.closeCard(false);
     const w = this.words.data_center;
     while (card.firstChild) card.removeChild(card.firstChild);
-    const head = make("h3", "nw-card-title", fill(w.card_title, { city: c.city }));
+    const head = make("h2", "nw-card-title", fill(w.card_title, { city: c.city }));  // under the page's h1
     head.tabIndex = -1;
     const close = make("button", "nw-card-close", "✕");
     close.type = "button";
