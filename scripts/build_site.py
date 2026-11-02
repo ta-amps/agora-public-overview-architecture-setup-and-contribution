@@ -2385,22 +2385,62 @@ def page_top(kicker: str, heading: str, lead: str, extra: str = "", crumb: tuple
 
 
 def partner_facts(page: dict) -> dict[str, dict]:
-    """The partner compute facts deploy.json copies from its source record, by provider. Each provider's mode must
-    have words, and a provider without a live account may only be an offline check."""
-    facts = page["partners"]["facts"]
+    """The partner compute facts deploy.json copies from the partner record, by provider: what ran, never which
+    accounts exist (the reviewer, Nov 2). An offline check has no runs; a provider with runs lists each run's time,
+    in order, and the last one cannot be later than the record it was copied from."""
+    facts, record = page["partners"]["facts"], page["partners"]["record"]
     for card in page["partners"]["cards"]:
         fact = facts.get(card["provider"])
         if fact is None:
             fail(f"deploy.json: no copied facts for {card['provider']}")
         if fact["mode"] not in page["partners"]["modes"]:
             fail(f"deploy.json: no words for the partner mode {fact['mode']!r}")
-        if fact["mode"] == "local_verified" and fact["live_credentials_present"] is not False:
-            fail(f"deploy.json: {card['name']} is an offline check, so no account may be connected")
-        if fact["mode"] == "live_probe":
-            probe = fact.get("probe") or {}
-            if fact["live_credentials_present"] is not True or probe.get("requests") != 1 or not probe.get("at"):
-                fail(f"deploy.json: {card['name']}'s one test request needs a connected account, its time and a count of 1")
+        runs = fact.get("runs")
+        if not isinstance(runs, list) or any(not ISO_UTC.fullmatch(str(r)) for r in runs) or runs != sorted(runs):
+            fail(f"deploy.json: {card['name']}'s runs must be a list of UTC times in order")
+        if (fact["mode"] == "live_probe") != bool(runs):
+            fail(f"deploy.json: {card['name']} says {fact['mode']}, which needs {'runs' if fact['mode'] == 'live_probe' else 'no runs'}")
+        if runs and runs[-1] > record["verified_at"]:
+            fail(f"deploy.json: {card['name']} lists a run after the record it was copied from")
     return facts
+
+
+ISO_UTC = re.compile(r"\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ")
+COUNTS = {1: "One test request", 2: "Two test requests", 3: "Three test requests"}
+
+
+def run_words(runs: list[str]) -> dict:
+    """How many test requests ran and when, in ET, as the pages say them."""
+    times = [eastern(r) for r in runs]
+    when = times[0] if len(times) == 1 else ", ".join(times[:-1]) + " and " + times[-1]
+    return {"count": COUNTS.get(len(runs), f"{len(runs)} test requests"), "when": when}
+
+
+def partner_record_differences(page: dict, record: dict) -> list[str]:
+    """Where deploy.json's partner facts differ from the partner record's current values (the deploy build stops on
+    any). A probe ran when its mode is live_api, or another live mode that is not only ready; it ran at the record's
+    verification time. A provider ran if any of its probes ran."""
+    facts = page["partners"]["facts"]
+    verified = dt.datetime.fromisoformat(record["verified_at"].replace("Z", "+00:00")).astimezone(dt.timezone.utc)
+    stamp = verified.strftime("%Y-%m-%dT%H:%M:%SZ")
+    owners = {"baseten": "baseten", "modal": "modal", "fireworks": "fireworks_ai"}
+    ran = {provider: False for provider in facts}
+    for name, probe in record.get("probes", {}).items():
+        provider = next((v for k, v in owners.items() if name.startswith(k)), None)
+        if provider is None:
+            continue
+        mode = str(probe.get("mode", ""))
+        if probe.get("ok") is True and (mode == "live_api" or (mode.startswith("live") and "ready" not in mode)):
+            ran[provider] = True
+    problems = []
+    if page["partners"]["record"]["verified_at"] != stamp:
+        problems.append(f"deploy.json copies the record of {page['partners']['record']['verified_at']}; it is now {stamp}")
+    for provider, fact in facts.items():
+        if ran.get(provider) and (fact["mode"] != "live_probe" or not fact["runs"] or fact["runs"][-1] != stamp):
+            problems.append(f"{provider}: the record shows a run at {stamp}, which deploy.json does not list last")
+        if not ran.get(provider) and fact["runs"] and fact["runs"][-1] >= stamp:
+            problems.append(f"{provider}: deploy.json lists a run at {fact['runs'][-1]}, which the record does not show")
+    return problems
 
 
 def eastern(iso: str) -> str:
@@ -2410,19 +2450,17 @@ def eastern(iso: str) -> str:
 
 
 def partner_words(page: dict) -> dict | None:
-    """What the partner record says ran, for the lines outside the cards: None while every partner is an offline
-    check, else the partners with one test request, when it ran and the partners with nothing run on them."""
+    """What the partner record says ran, for the lines outside the cards: None while nothing has run on any partner,
+    else how many test requests ran and when, where, and the partners nothing has run on."""
     facts = partner_facts(page)
     names = {c["provider"]: c["name"] for c in page["partners"]["cards"]}
-    if any(f["mode"] not in ("local_verified", "live_probe") for f in facts.values()):
-        fail("deploy.json: a partner has a state the judges' lines cannot say; say what ran")
     live = [p for p, f in facts.items() if f["mode"] == "live_probe"]
     if not live:
         return None
+    if len(live) > 1:
+        fail("deploy.json: runs on more than one partner need their own words on the judges' page")
     offline = [names[p] for p in facts if p not in live]
-    return {"live": " and ".join(names[p] for p in live),
-            "when": eastern(min(facts[p]["probe"]["at"] for p in live)),
-            "offline": " or ".join(offline)}
+    return {**run_words(facts[live[0]]["runs"]), "live": names[live[0]], "offline": " or ".join(offline)}
 
 
 def partner_cards(page: dict, prefix: str) -> str:
@@ -2437,7 +2475,7 @@ def partner_cards(page: dict, prefix: str) -> str:
         words = part["modes"][fact["mode"]]
         card_values = {"name": card["name"]}
         if fact["mode"] == "live_probe":
-            card_values["when"] = eastern(fact["probe"]["at"])
+            card_values.update(run_words(fact["runs"]))
         checked = []
         for line in card["checked"]:
             if fact["checks"].get(line["check"]) is not True:
@@ -2454,7 +2492,7 @@ def partner_cards(page: dict, prefix: str) -> str:
             f'<li class="partner-card" id="partner-{attr(card["provider"])}">'
             f'<div class="partner-head"><h3>{text(card["name"])}</h3><span class="partner-kind">{text(card["kind"])}</span></div>'
             f'<p class="partner-role">{text(card["role"])}</p>'
-            f'<p class="partner-state"><span class="pg-state pg-state-{attr(fact["mode"])}">{text(words["state"])}</span> '
+            f'<p class="partner-state"><span class="pg-state pg-state-{attr(fact["mode"])}">{text(fill(words["state"], card_values, "deploy.json"))}</span> '
             f'{text(fill(words["text"], card_values, "deploy.json"))}</p>'
             f'<p class="partner-checked-title">{text(part["checked_title"])}</p>'
             f'<ul class="partner-checked">{"".join(checked)}</ul>{try_it}</li>')

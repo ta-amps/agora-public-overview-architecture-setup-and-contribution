@@ -93,7 +93,7 @@
     "notes": [
       {
         "name": "Seed packs",
-        "text": "bundle Tasks and Task Objects. An agent kit is a seed pack made for one organization’s agent."
+        "text": "are ready-made sets of Tasks, with their Task Objects. An agent kit is a seed pack made for one organization’s agent."
       },
       {
         "name": "Two surfaces.",
@@ -101,7 +101,7 @@
       },
       {
         "name": "Infrastructure.",
-        "text": "Tessera keeps the work and storage. Herma is the shim."
+        "text": "Tessera, the infrastructure startup by Teleion Labs, keeps the work and storage; its model shim adds the right Task Objects."
       }
     ]
   },
@@ -211,7 +211,7 @@
     "heading": "Underneath",
     "harness": "Any agent’s harness",
     "herma": {
-      "name": "Herma, the shim",
+      "name": "Herma, Tessera's model shim",
       "text": "adds context, or answers directly"
     },
     "model": "Its model",
@@ -226,8 +226,8 @@
       ]
     },
     "edge": "the right Task Objects",
-    "note": "Is a shim the same as RAG? No. RAG pastes search results into a prompt. Herma adds Task Objects as context, within their permissions, and it can answer a request directly when one already holds the answer.",
-    "run_note": "The run above did not pass through Herma: both agents called Tessera and the model directly."
+    "note": "Is a shim the same as RAG? No. RAG pastes search results into a prompt. The shim adds Task Objects as context, within their permissions, and it can answer a request directly when one already holds the answer.",
+    "run_note": "The run above did not pass through the shim: both agents called Tessera and the model directly."
   },
   "meta": {
     "heading": "Built on Meta’s Muse models",

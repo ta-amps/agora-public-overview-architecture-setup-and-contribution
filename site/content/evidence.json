@@ -379,7 +379,7 @@
       {
         "path": "evidence/meta-evals-2026-10-31/",
         "date": "2026-10-31",
-        "line": "Local evaluations of adapter memory and the Herma router, image and speech checks, a many-worker scaling run and a fault-injection test."
+        "line": "Local evaluations of adapter memory and the model shim's router, image and speech checks, a many-worker scaling run and a fault-injection test."
       },
       {
         "path": "evidence/sira-are-cascade-2026-10-31/",

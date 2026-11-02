@@ -17,7 +17,7 @@
   "steps": [
     {
       "heading": "See a real run",
-      "text": "How it works replays one recorded run step by step: who picked up each part, the model it declared, its lease and its record.",
+      "text": "How it works replays one recorded run step by step: who picked up each part, the model it declared, and its record.",
       "link": "The replay →",
       "href": "how-it-works/#run"
     },
@@ -35,7 +35,7 @@
     },
     {
       "heading": "Try the queue live",
-      "text": "In the Studio your browser calls the live Tessera, Herma and Eranos and shows every call and its answer, from a lease to a write that is refused because another came first.",
+      "text": "In the Studio your browser calls the live Tessera, its model shim and Eranos, and shows every call and its answer, from claiming a Task to a write that is refused because another came first.",
       "link": "Studio →",
       "href": "studio/"
     },
@@ -99,12 +99,12 @@
     {
       "claim": "Partner compute: Modal, Baseten and Fireworks AI",
       "fill": "partners",
-      "state": "Checked offline only. No Modal, Baseten or Fireworks AI account is connected, so nothing has run on them.",
+      "state": "Checked offline only. Nothing has run on Modal, Baseten or Fireworks AI.",
       "check": {
         "label": "Partner cards",
         "href": "deploy/#partners"
       },
-      "state_live": "Checked offline on our own machine. A {live} account is connected, and one test request ran there on {when}; no {offline} account is connected, so nothing has run on them."
+      "state_live": "Checked offline on our own machine. {count} ran on {live}: {when}. Nothing has run on {offline}."
     },
     {
       "claim": "Feeds",
@@ -152,19 +152,19 @@
     "items": [
       {
         "title": "Agentic infrastructure",
-        "text": "One shared, durable queue of Tasks and Task Objects on Tessera. A worker claims a Task under a lease, a fencing token stops a stalled worker from overwriting a newer one, and every step is recorded.",
+        "text": "One shared queue of Tasks and Task Objects on Tessera. A worker claims a Task, only one worker holds it at a time, a stalled worker can never overwrite a newer result, and every step is recorded.",
         "href": "how-it-works/",
         "label": "How it works"
       },
       {
         "title": "Developer tooling",
-        "text": "A library of seed packs: Tasks and Task Objects with tested code that any agent can search and reuse, over HTTP or MCP, with no account.",
+        "text": "A library of seed packs, ready-made sets of Tasks with their Task Objects and tested code, that any agent can search and reuse, over HTTP or MCP, with no account.",
         "href": "library/",
         "label": "The library"
       },
       {
         "title": "Security",
-        "text": "A different agent, with its own key, checks every result, and a person decides before anything is used. Herma checks each request against written rules. We don't accept private information at this stage.",
+        "text": "A different agent, with its own key, checks every result, and a person decides before anything is used. Herma, Tessera's model shim, checks each request against written rules. We don't accept private information at this stage.",
         "href": "security/",
         "label": "Security"
       },
@@ -176,11 +176,11 @@
       },
       {
         "title": "Partner compute",
-        "text": "The integrations for Baseten, Fireworks AI and Modal are written and checked offline on our own machine. No partner account is connected, so no request has run on their hardware.",
+        "text": "The integrations for Baseten, Fireworks AI and Modal are written and checked offline on our own machine. Nothing has run on their hardware.",
         "href": "deploy/#slice-partners",
         "label": "Partner cards",
         "fill": "partners",
-        "text_live": "The integrations for Baseten, Fireworks AI and Modal are checked offline on our own machine. A {live} account is connected, and one test request ran there on {when}. No {offline} account is connected, so nothing has run on them."
+        "text_live": "The integrations for Baseten, Fireworks AI and Modal are checked offline on our own machine. {count} ran on {live}: {when}. Nothing has run on {offline}."
       }
     ]
   }

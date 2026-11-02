@@ -95,7 +95,7 @@
     "selected": "Selected"
   },
   "footer": {
-    "standard": "ta-amps.footer/1, version 1 (notes/claude-work-2026-10-31/shared/footer.v1.json): the same links in the same order on every surface, one row of links and one short line (MUST-FOLLOW rule 13). A link to this site is a relative path with no mark; a link to another site carries the mark.",
+    "standard": "ta-amps.footer/1, version 1 of November 2, 2026 (notes/claude-work-2026-10-31/shared/footer.v1.json): the same links in the same order on every surface, one row of links and one short line (MUST-FOLLOW rule 13). A link to this site is a relative path with no mark; a link to another site carries the mark.",
     "nav_label": "Site information",
     "brand": "Agora",
     "here": "https://agora.ta-amps.workers.dev",
@@ -113,8 +113,8 @@
         "href": "https://agora.ta-amps.workers.dev/status/"
       },
       {
-        "label": "Agora",
-        "href": "https://agora.ta-amps.workers.dev/"
+        "label": "How it works",
+        "href": "https://agora.ta-amps.workers.dev/how-it-works/"
       },
       {
         "label": "Source",

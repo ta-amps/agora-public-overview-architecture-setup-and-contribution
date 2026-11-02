@@ -3,7 +3,7 @@
   "title": "Run your own | ta-amps",
   "description": "How to run any slice of ta-amps yourself: seed packs in your own agent, Tessera and Herma on Cloudflare, the Docker sandbox, fine-tuning Muse Glimmer 30B, and the partner compute cards for Modal, Baseten and Fireworks.",
   "heading": "Run any slice yourself",
-  "lead": "You don’t have to adopt the whole stack at once. Start with seed packs inside an agent you already use, run your own Tessera and Herma on Cloudflare, try the whole loop offline in Docker, or fine-tune {{model:muse-glimmer-30b}} adapters on your own GPUs.",
+  "lead": "You don’t have to adopt the whole stack at once. Start with seed packs, ready-made sets of Tasks, inside an agent you already use, run your own Tessera and its model shim on Cloudflare, try the whole loop offline in Docker, or fine-tune {{model:muse-glimmer-30b}} adapters on your own GPUs.",
   "dateline": "Run-your-own guide · November 1, 2026 · MIT license",
   "quick_links": [
     {
@@ -54,9 +54,9 @@
       {
         "id": "slice-cloudflare",
         "badge": "Cloudflare Workers",
-        "title": "Slice B: your own Tessera and Herma on Cloudflare Workers, Durable Objects and D1",
+        "title": "Slice B: your own Tessera and its model shim on Cloudflare",
         "summary": "Run your own queue and Task Object store (Tessera) and your own shim (Herma) on Cloudflare, with the commands each repository gives.",
-        "when": "Best for teams, labs or nonprofits that want an always-on HTTPS and MCP endpoint with fenced leases and compare-and-set storage.",
+        "when": "Best for teams, labs or nonprofits that want an always-on HTTPS and MCP endpoint, where only one worker holds a Task at a time and no write overwrites a newer one.",
         "code_id": "cmd-slice-cf",
         "commands": "# 1. Sign in to your Cloudflare account\nnpx wrangler login\n\n# Your account needs its own D1 databases: create each one that deploy/cloudflare/wrangler.jsonc names\n# (npx wrangler d1 create <name>) and put its id in that file before you deploy.\n\n# 2. Tessera: the queue, the Task Object stores and the /mcp endpoint\ngit clone https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine.git\ncd tessera-infrastructure-work-and-storage-engine\nnpx --yes wrangler@4.154.0 secret put BOOTSTRAP_SECRET --config deploy/cloudflare/wrangler.jsonc\nnpx --yes wrangler@4.154.0 deploy --config deploy/cloudflare/wrangler.jsonc\n\n# 3. Herma: the shim, with its own D1 database\ncd ..\ngit clone https://github.com/ta-amps/herma-infrastructure-shim-for-intelligent-agents.git\ncd herma-infrastructure-shim-for-intelligent-agents\nnpx --yes wrangler@4.149.0 d1 execute ta-amps-herma --remote --file deploy/cloudflare/d1-herma.sql --config deploy/cloudflare/wrangler.jsonc -y\nnpx --yes wrangler@4.149.0 deploy --config deploy/cloudflare/wrangler.jsonc\nnpx --yes wrangler@4.149.0 secret put BOOTSTRAP_SECRET --config deploy/cloudflare/wrangler.jsonc"
       },
@@ -64,7 +64,7 @@
         "id": "slice-docker",
         "badge": "Docker",
         "title": "Slice C: the whole loop offline, in Docker",
-        "summary": "Run Tessera locally, check the starter seed pack, and run a two-worker smoke test of a lease and an independent review, with no keys and no outside network.",
+        "summary": "Run Tessera locally, check the starter seed pack, and run a two-worker test of claiming a Task and an independent review, with no keys and no outside network.",
         "when": "Best for offline demos, internal CI or strict data residency.",
         "code_id": "cmd-slice-docker",
         "commands": "git clone https://github.com/ta-amps/ta-amps-hackathon.git\ncd ta-amps-hackathon\ndocker compose up --build --abort-on-container-exit --exit-code-from sample-worker-smoke"
@@ -90,11 +90,11 @@
     "modes": {
       "local_verified": {
         "state": "Offline check",
-        "text": "No {name} account is connected, so nothing has run on {name}. The code and its rules are checked on our own machine."
+        "text": "Nothing has run on {name}. The code and its rules are checked on our own machine."
       },
       "live_probe": {
-        "state": "One test request",
-        "text": "A {name} account is connected, and one test request ran on {name} on {when}. That is the only run on record there; the code and its rules are also checked on our own machine."
+        "state": "{count}",
+        "text": "{count} ran on {name}: {when}. Nothing else has run there; the code and its rules are also checked on our own machine."
       }
     },
     "checked_title": "Checked offline",
@@ -142,10 +142,10 @@
         "provider": "fireworks_ai",
         "name": "Fireworks AI",
         "kind": "fast inference",
-        "role": "Routes a task to a small specialist adapter behind Herma, with a different adapter as the checker.",
+        "role": "Routes a task to a small specialist adapter behind Tessera's model shim, with a different adapter as the checker.",
         "checked": [
           {
-            "text": "The routing rule picked an adapter within Herma’s time budget.",
+            "text": "The routing rule picked an adapter within the shim’s time budget.",
             "check": "shim_within_2ms"
           },
           {
@@ -162,7 +162,7 @@
     "facts": {
       "modal": {
         "mode": "local_verified",
-        "live_credentials_present": false,
+        "runs": [],
         "checks": {
           "qlora_configs.Muse-Glimmer-30B.fits_within_92pct_vram": true,
           "sandbox_contract.contract_valid": true
@@ -175,26 +175,28 @@
       },
       "baseten": {
         "mode": "live_probe",
-        "live_credentials_present": true,
+        "runs": [
+          "2026-11-01T03:05:33Z",
+          "2026-11-02T01:04:11Z"
+        ],
         "checks": {
           "respected_2m_tpm_ceiling": true,
           "retried_429_preserved_in_ledger": true
-        },
-        "probe": {
-          "at": "2026-11-01T03:05:33Z",
-          "requests": 1,
-          "source": "The partner live-verification record of November 1, 2026 at 03:05 UTC (notes/coordination-2026-10-31/artifacts), its Baseten open-weights probe, mode live_api; read without key values."
         }
       },
       "fireworks_ai": {
         "mode": "local_verified",
-        "live_credentials_present": false,
+        "runs": [],
         "checks": {
           "shim_within_2ms": true,
           "self_verification_blocked": true,
           "pii_leak_escalated": true
         }
       }
+    },
+    "record": {
+      "verified_at": "2026-11-02T01:04:11Z",
+      "about": "Copied from the partner live-verification record (notes/coordination-2026-10-31/artifacts), read without key values. Each card says what ran, never which accounts exist. A run is a probe whose mode is live_api (or another live mode that is not only ready); its time is the record's verification time. The record keeps its latest probe only, so earlier runs stay listed here as they were read. The deploy build stops when these facts differ from the record's current values."
     }
   },
   "surfaces": {

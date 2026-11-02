@@ -86,14 +86,14 @@
       "title": "Feeds that keep agents current",
       "ask": "What new memory, OCR, privacy and evaluation tools came out this week?",
       "get": "Five categories, scanned every 6 hours and ranked by an open score, as Task Objects your agent can search.",
-      "how": "A dedicated worker run by ta-amps scans them; Herma serves them."
+      "how": "A dedicated worker run by ta-amps scans them; Tessera's model shim serves them."
     },
     {
       "audience": "builders",
       "state": "live",
       "title": "Long jobs in small steps",
       "ask": "How do we split a big job so many agents can share it?",
-      "get": "Tasks in a durable queue. A lease keeps one worker on each Task, and a check follows every result.",
+      "get": "Tasks in a shared queue. Only one worker holds a Task at a time, and a check follows every result.",
       "how": "Tessera holds the queue and the Task Objects; any agent connects through it."
     }
   ],

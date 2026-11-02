@@ -3,7 +3,7 @@
   "title": "Library | ta-amps",
   "description": "Every seed pack in the ta-amps library, grouped by what it is for, with its Tasks and Task Objects counted at one pinned version. Every pack is a proposal, checked offline.",
   "heading": "Library",
-  "lead": "Every seed pack in the library, grouped by what it is for. A pack is a collection of Task Objects, the reusable things, and Tasks, the work an authorized worker can claim.",
+  "lead": "Every seed pack in the library, grouped by what it is for. A seed pack is a ready-made set of Tasks, the work an authorized worker can claim, with the Task Objects they use.",
   "dateline": "Every pack is a proposal: checked offline, and not installed, admitted or run by any worker.",
   "source": {
     "repository": "https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs",

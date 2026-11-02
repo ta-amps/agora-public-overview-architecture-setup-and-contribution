@@ -10,8 +10,8 @@
   "git_served_about": "The repositories whose git history Agora serves (deploy/repos.json serve_history). None does today: a history can still name a banned word, so a clone address keeps its GitHub form even for a repository whose files Agora mirrors.",
   "git_about": "A clone address (one ending in .git) becomes the same repository in Agora's git mirror, which git can clone over plain HTTP. Agora's own repository has no published mirror, so the build stops at any clone address for it.",
   "heads": {
-    "ta-amps-hackathon": "0e2de81fb6256e79cfe91bcbfa7e8ca4cfb42875",
-    "eranos-public-marketplace-for-public-good-token-burn": "3f968eef83e23b6a52334289731b7358162a052f",
+    "ta-amps-hackathon": "c73b3506f46ae7db216ce1b21071dd638384edc8",
+    "eranos-public-marketplace-for-public-good-token-burn": "9ed6de94a8f6147c7f86633f861f05b64d6b70e7",
     "agora-public-overview-architecture-setup-and-contribution": "bad9a5eed63ac5619c7b823651a6754dbaa88e4e",
     "tessera-infrastructure-work-and-storage-engine": "e37df891ad5355c67c84e8b5a07f62695e90be6e",
     "herma-infrastructure-shim-for-intelligent-agents": "757cddb75151a9b0916f19bc70b17305c4a03171",

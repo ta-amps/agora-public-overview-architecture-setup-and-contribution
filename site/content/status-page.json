@@ -89,13 +89,13 @@
       "id": "tessera",
       "name": "Tessera, the queue",
       "host": "tessera.ta-amps.workers.dev",
-      "what": "Keeps every task and Task Object: claims, leases, results and the record of every step.",
+      "what": "Keeps every Task and Task Object: who is working on what, the results and the record of every step.",
       "check": "https://tessera.ta-amps.workers.dev/v1/health",
       "kind": "json"
     },
     {
       "id": "herma",
-      "name": "Herma, the shim",
+      "name": "Herma, Tessera's model shim",
       "host": "herma.ta-amps.workers.dev",
       "what": "Sits between an agent’s harness and its model, and adds the right Task Objects as context.",
       "check": "https://herma.ta-amps.workers.dev/v1/health",

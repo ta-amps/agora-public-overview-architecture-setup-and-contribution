@@ -36,9 +36,9 @@
         {
           "format": "pdf",
           "path": "decks/public-good-marketplace/ta-amps-public-good-marketplace.pdf",
-          "sha256": "942bc1da90dffa43c3364241791fdff3d5c3cca2f56ef6feb10b42b82e7f484f",
+          "sha256": "b99593b8b3867db07765b42b8f1b4b5ea9255280ba35ff715a7781e463056bfb",
           "bytes": 385494,
-          "printed_from_main_sha256": "69349fc4e4cd9cac24c4058b426a9e6803e268e1ae60287f310c967cb75c3873"
+          "printed_from_main_sha256": "a50ef43a5e568a2035577000f9debb04843fb455c30a448fcf51618f7a28b2f5"
         }
       ]
     },

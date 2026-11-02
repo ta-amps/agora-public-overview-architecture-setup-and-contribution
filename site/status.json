@@ -48,7 +48,7 @@
     },
     {
       "id": "herma",
-      "name": "Herma, the shim",
+      "name": "Herma, Tessera's model shim",
       "host": "herma.ta-amps.workers.dev",
       "state": "answering",
       "label": "Answering",

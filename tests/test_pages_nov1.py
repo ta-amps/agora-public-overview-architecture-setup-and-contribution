@@ -177,16 +177,16 @@ class Pages(unittest.TestCase):
         self.assertIn(f"{len(build.ran_feeds(self.nouns))} categories", text)
         self.assertIn(build.human_date(latest), text)
         self.assertIn("Nothing in it was sent, built or run", text)
-        # The partner row and the Track 2 line say what the partner record says ran: one Baseten request, in ET.
-        when = build.eastern(self.nouns.deploy["partners"]["facts"]["baseten"]["probe"]["at"])
-        self.assertEqual("October 31, 2026 at 23:05 ET", when)
-        self.assertEqual(2, text.count(f"A Baseten account is connected, and one test request ran there on {when}"))
-        self.assertNotIn("No partner account is connected", text)
+        # The partner row and the Track 2 line say what the partner record says ran: two Baseten requests, in ET.
+        words = build.run_words(self.nouns.deploy["partners"]["facts"]["baseten"]["runs"])
+        self.assertEqual("October 31, 2026 at 23:05 ET and November 1, 2026 at 20:04 ET", words["when"])
+        self.assertEqual(2, text.count(f"Two test requests ran on Baseten: {words['when']}. Nothing has run on Modal or Fireworks AI."))
+        self.assertNotIn("account is connected", text)
         # A filled row whose record no longer matches its words stops the build.
         nouns = type(self.nouns).__new__(type(self.nouns))
         nouns.__dict__.update(self.nouns.__dict__)
         nouns.deploy = json.loads(json.dumps(self.nouns.deploy))
-        nouns.deploy["partners"]["facts"]["modal"]["live_credentials_present"] = True
+        nouns.deploy["partners"]["facts"]["modal"]["runs"] = ["2026-11-01T03:05:33Z"]  # a run on an offline card
         with self.assertRaises(build.BuildError):
             build.judges_rows(nouns)
 
@@ -391,12 +391,16 @@ class Pages(unittest.TestCase):
         facts = self.nouns.deploy["partners"]["facts"]
         live = [p for p, f in facts.items() if f["mode"] == "live_probe"]
         self.assertEqual(len(facts) - len(live), text.count("Offline check"))
-        # A partner with one recorded test request says so, with the record's time in ET; nothing else is claimed.
+        # A partner with recorded test requests says how many ran and when, in ET; nothing else is claimed, and no card
+        # says which accounts exist (the reviewer, Nov 2).
         for p in live:
-            when = build.eastern(facts[p]["probe"]["at"])
-            self.assertIn(f"one test request ran on Baseten on {when}", text)
-            text = text.replace(when, "")
-        self.assertEqual(["baseten"], live, "the partner record shows one live request, on Baseten")
+            words = build.run_words(facts[p]["runs"])
+            self.assertIn(f"{words['count']} ran on Baseten: {words['when']}", text)
+            for run in facts[p]["runs"]:
+                text = text.replace(build.eastern(run), "")
+        self.assertEqual(["baseten"], live, "the partner record shows test requests on Baseten only")
+        self.assertEqual("Two test requests", build.run_words(facts["baseten"]["runs"])["count"])
+        self.assertNotIn("account is connected", text)
         self.assertIsNone(re.search(r"\d", text.replace("30B", "")), "the cards show no number")
         self.assertNotIn("receipt", page.lower())
         self.assertNotIn("film/compare", page)
@@ -408,12 +412,37 @@ class Pages(unittest.TestCase):
         nouns.deploy["partners"]["facts"]["baseten"]["checks"]["respected_2m_tpm_ceiling"] = False
         with self.assertRaises(build.BuildError):
             build.render_deploy(nouns)
-        # A test request needs its connected account, its time and a count of one.
-        for key, value in (("live_credentials_present", False), ("probe", {"at": "2026-11-01T03:05:33Z", "requests": 2})):
+        # Runs are UTC times in order, a live card needs at least one, an offline card none, and no run may come after
+        # the record the facts were copied from.
+        for provider, runs in (("baseten", []), ("baseten", ["2026-11-02T01:04:11Z", "2026-11-01T03:05:33Z"]),
+                               ("baseten", ["2026-11-03T00:00:00Z"]), ("modal", ["2026-11-01T03:05:33Z"]),
+                               ("baseten", ["November 1"])):
             nouns.deploy = json.loads(json.dumps(self.nouns.deploy))
-            nouns.deploy["partners"]["facts"]["baseten"][key] = value
+            nouns.deploy["partners"]["facts"][provider]["runs"] = runs
             with self.assertRaises(build.BuildError):
                 build.render_deploy(nouns)
+
+    def test_the_partner_facts_match_the_partner_record(self):
+        # The reviewer, Nov 2: the pages may never lag the record. The deploy build stops on any difference; this
+        # test reads the record too when it sits beside this checkout in the working notes.
+        record_path = Path(build.ROOT).parents[2] / "coordination-2026-10-31" / "artifacts" / "partner_live_verification_receipt.json"
+        page = self.nouns.deploy
+        if record_path.is_file():
+            record = json.loads(record_path.read_text(encoding="utf-8"))
+            self.assertEqual([], build.partner_record_differences(page, record))
+        # A record that shows a newer live run, or a run on a partner the facts call offline, is a difference.
+        base = {"verified_at": "2026-11-02T01:04:11.495764+00:00",
+                "probes": {"baseten_open_weights": {"ok": True, "mode": "live_api"},
+                           "modal_sandbox": {"ok": True, "mode": "modal_cli_ready_local_isolated"},
+                           "modal_dora_irpo_plan": {"mode": "live_modal_ready"},
+                           "fireworks_multilora": {"ok": True, "mode": "local_verified"}}}
+        self.assertEqual([], build.partner_record_differences(page, base))
+        newer = json.loads(json.dumps(base))
+        newer["verified_at"] = "2026-11-02T03:00:00+00:00"
+        self.assertTrue(build.partner_record_differences(page, newer))
+        modal_ran = json.loads(json.dumps(base))
+        modal_ran["probes"]["modal_sandbox"]["mode"] = "live_api"
+        self.assertTrue(build.partner_record_differences(page, modal_ran))
 
     def test_the_deploy_page_names_no_old_model_and_no_hand_written_mirror(self):
         raw = (build.CONTENT / "deploy.json").read_text(encoding="utf-8")
