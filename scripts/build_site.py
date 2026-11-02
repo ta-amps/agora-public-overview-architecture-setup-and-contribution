@@ -2068,7 +2068,7 @@ def network_strip(nouns: Nouns, site: str = "eranos") -> str:
 def render_network(nouns: Nouns) -> str:
     """Where workers connect (/network/; board LiveMap): a live map of the Cloudflare data centers workers connect
     through and the Tasks they claim, from Herma's GET /q/network. The page holds no number: assets/network.js reads the
-    noun's source every 30 seconds, draws each data center at its latitude and longitude on the dot-matrix land, rings it
+    noun's source at most once a minute, draws each data center at its latitude and longitude on the dot-matrix land, rings it
     twice for each new claim (never with reduced motion), filters by kind of Task (?kind=), replays the last hour,
     pauses, and shows the same facts as two tables. Every word is from the network-page noun; models, cities and kinds
     come with the answer."""

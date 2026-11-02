@@ -107,6 +107,21 @@ class NetworkPage(unittest.TestCase):
             self.assertTrue(0 <= x <= p["width"] and 0 <= y <= p["height"])
         self.assertNotRegex(json.dumps(geo), r"\b[0-9a-f]{12,}\b")
 
+    def test_it_reads_at_most_once_a_minute_and_keeps_the_legend_readable(self) -> None:
+        # Review of 214a0afa (Nov 2), B2: one read a minute at most, from the noun and a floor in the code; a returning
+        # tab waits out the minute; a 429 waits at least a minute; nothing reads while the tab is hidden.
+        script = (ROOT / "site/assets/network.js").read_text(encoding="utf-8")
+        self.assertGreaterEqual(self.words["refresh_seconds"], 60)
+        self.assertIn("Math.max(60, num(this.words.refresh_seconds) || 60) * 1000", script)
+        self.assertIn('Math.max(60, Number(response.headers.get("retry-after")) || 0)', script)
+        self.assertIn("if (since >= self.refresh) self.load(); else self.schedule(self.refresh - since);", script)
+        self.assertIn("if (document.hidden) { clearTimeout(self.timer); self.timer = 0; return; }", script)
+        self.assertNotRegex(json.dumps(self.words), r"every 30 seconds")
+        # B1: the failed state dims only the map stage; the legend keeps its full contrast.
+        css = (ROOT / "site/assets/network.css").read_text(encoding="utf-8")
+        self.assertIn(".nw[data-failed] .nw-stage { opacity: 0.75; }", css)
+        self.assertNotIn(".nw[data-failed] .nw-map {", css)
+
     def test_the_strips_are_the_same_map_in_a_small_box(self) -> None:
         for site, eyebrow in (("eranos", "Right now"), ("teleion", "Live capacity")):
             strip = build.network_strip(self.nouns, site)

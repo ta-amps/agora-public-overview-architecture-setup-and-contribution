@@ -107,7 +107,8 @@ span.nw-dc { width: var(--d, 10px); height: var(--d, 10px); cursor: default; }
 
 .nw-line { margin: 0.7rem 0 0; color: var(--text-2); font-size: 0.9375rem; text-align: center; }
 .nw-line[hidden] { display: none; }
-.nw[data-failed] .nw-map { opacity: 0.75; }
+/* Review B1 (Nov 2): only the map is dimmed when the data cannot load; the legend keeps its contrast. */
+.nw[data-failed] .nw-stage { opacity: 0.75; }
 
 .nw-legend { display: flex; flex-wrap: wrap; gap: 0.4rem 1.5rem; margin: 0.75rem 0 0; color: var(--text-3); font-size: 0.8125rem; }
 .nw-legend-item { display: flex; align-items: center; gap: 0.5rem; }

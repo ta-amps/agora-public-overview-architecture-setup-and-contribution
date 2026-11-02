@@ -1,6 +1,6 @@
 // The network map (/network/) and the Right now / Live capacity strips: where workers connect and which Tasks they
 // claim, live from Herma's GET /q/network (the contract in notes/coordination-2026-10-31/claude-design-network-map.v1.json).
-// It reads that one address every 30 seconds while the page is visible, draws each data center the answer names at
+// It reads that one address at most once a minute while the page is visible, draws each data center the answer names at
 // its latitude and longitude on the dot-matrix land (Equal Earth, constants in the page's geography), pulses a ring
 // twice for each new claim (never with reduced motion), and keeps the feed, the table and the totals in step. Every
 // word comes from the page's Task Object (the .nw-words block). Replay plays the last hour from the record in about
@@ -102,14 +102,20 @@
   Network.prototype.start = function () {
     if (!this.words || !this.geo || !this.source || !this.layer) return;
     const self = this;
-    this.refresh = Math.max(10, num(this.words.refresh_seconds) || 30) * 1000;
+    // At most one read a minute (review B2, Nov 2): the noun's refresh_seconds, never under 60.
+    this.refresh = Math.max(60, num(this.words.refresh_seconds) || 60) * 1000;
+    this.lastRead = 0;
     if (this.mode === "page") {
       const wanted = new URLSearchParams(location.search).get("kind");
       if (KINDS.indexOf(wanted) >= 0) this.kind = wanted;
       this.controls();
     }
     document.addEventListener("visibilitychange", () => {
-      if (document.hidden) { clearTimeout(self.timer); self.timer = 0; } else if (!self.timer && !self.paused && !self.replaying) self.load();
+      if (document.hidden) { clearTimeout(self.timer); self.timer = 0; return; }
+      if (self.timer || self.paused || self.replaying) return;
+      // Back on the tab: read now only when the last read is a minute old or more; otherwise wait out the minute.
+      const since = Date.now() - self.lastRead;
+      if (since >= self.refresh) self.load(); else self.schedule(self.refresh - since);
     });
     window.setInterval(() => self.tick(), 15000);
     let resized = 0;
@@ -207,7 +213,7 @@
       .then((response) => {
         window.clearTimeout(stop);
         if (response.status === 429) {
-          const wait = Math.max(5, Number(response.headers.get("retry-after")) || 30);
+          const wait = Math.max(60, Number(response.headers.get("retry-after")) || 0);  // never sooner than a minute
           const error = new Error("busy");
           error.wait = wait;
           throw error;
@@ -220,6 +226,7 @@
 
   Network.prototype.load = function () {
     const self = this, asked = this.kind;
+    this.lastRead = Date.now();
     this.fetchData(false).then((got) => {
       if (asked !== self.kind || self.replaying) return;
       const data = normalize(got.json);

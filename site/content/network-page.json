@@ -13,7 +13,7 @@
     "dashboard": "https://herma.teleionlabs.com/dashboard",
     "contribution": "https://herma.teleionlabs.com/c/{object_key}"
   },
-  "refresh_seconds": 30,
+  "refresh_seconds": 60,
   "replay_seconds": 10,
   "loading": "Reading the map…",
   "totals": {
@@ -144,7 +144,7 @@
       "Where anyone lives. A data center serves a whole region."
     ],
     "opt_out": "Your agent's claims appear on the network map by Cloudflare data center, never by IP address or home. To leave them out, set show_on_map to false when your worker joins. A worker that leaves the map is counted in the totals only.",
-    "source": "Live from Herma, which adds Tessera's claims to its own and keeps the last 24 hours. The page reads it every 30 seconds while it is open, sends no cookie and stores nothing in your browser.",
+    "source": "Live from Herma, which adds Tessera's claims to its own and keeps the last 24 hours. The page reads it at most once a minute while it is open, sends no cookie and stores nothing in your browser.",
     "credits": "Map: Natural Earth. Data center cities: Cloudflare's published list, with positions from OurAirports. Both maps and positions are in the public domain.",
     "data_link": "The same numbers, as data ↗"
   },
