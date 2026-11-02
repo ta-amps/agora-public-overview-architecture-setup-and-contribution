@@ -726,7 +726,7 @@ class Builder(unittest.TestCase):
             self.assertNotIn("prefers-color-scheme: dark", text_, stylesheet)
             self.assertNotIn('data-mode="dark"', text_, stylesheet)
         light = resolved_tokens()
-        self.assertEqual("light", re.search(r":root \{\s*color-scheme: (\w+);", css).group(1))
+        self.assertEqual("only light", re.search(r":root \{\s*color-scheme: ([\w ]+);", css).group(1))
         # Text and its paper pass AA: body, secondary and muted ink, both accents' text, and the notes headings.
         for fg, bg in (("--color-ink", "--color-paper"), ("--color-ink-2", "--color-paper"), ("--color-muted", "--color-paper"),
                        ("--color-noun-ink", "--color-paper"), ("--color-verb-ink", "--color-paper"),

@@ -283,7 +283,19 @@ class SitePages(LocalSite):
               scheme: (document.querySelector('meta[name=color-scheme]') || {}).content || null})""")
             self.assertEqual((False, None, None, "rgb(245, 242, 234)"),
                              (state["toggle"], state["stored"], state["mode"], state["background"]), path)
-            self.assertEqual("light", state["scheme"], path)
+            self.assertEqual("only light", state["scheme"], path)
+
+    def test_a_dark_choice_stored_by_an_older_agora_is_cleared(self):
+        # Gemini's 2bb3c7e case: an older Agora stored ta-amps-mode=dark; under a dark system setting the page
+        # clears it on load and stays paper.
+        page = self.open("", color_scheme="light")
+        page.evaluate("() => localStorage.setItem('ta-amps-mode', 'dark')")
+        page.emulate_media(color_scheme="dark")
+        page.reload(wait_until="load")
+        state = page.evaluate("""() => ({stored: localStorage.getItem('ta-amps-mode'),
+          mode: document.documentElement.dataset.mode || null,
+          background: getComputedStyle(document.body).backgroundColor})""")
+        self.assertEqual({"stored": None, "mode": None, "background": "rgb(245, 242, 234)"}, state)
 
     def test_the_home_page_has_no_film_until_the_new_cut_exists(self):
         # Owner, Nov 1: the film is withdrawn until a cut with no banned word exists; no slot and no placeholder.

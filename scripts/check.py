@@ -332,6 +332,41 @@ def moved_pages(listing: dict, site: Path, pages: dict[Path, set[str]]) -> froze
     return frozenset(moved)
 
 
+# Rule 13, light only (owner, Nov 1; Gemini's LightThemeOnlyGate in 2bb3c7e, widened to every current file): no dark
+# palette, no dark media query, no dark colour scheme and no stored dark mode in any current page, style or script.
+DARK_RULE = re.compile(r"prefers-color-scheme\s*:\s*dark|color-scheme\s*:[^;\"'}>]*\bdark\b|"
+                       r"name=[\"']color-scheme[\"'][^>]*content=[\"'][^\"']*\bdark\b|"
+                       r"data-mode\s*=\s*[\"']?dark|\[data-mode=[\"']?dark", re.I)
+LIGHT_META = '<meta name="color-scheme" content="only light">'
+
+
+def light_only(site: Path, pages: dict, frozen: set[Path]) -> None:
+    """Every current page pins only light in its one color-scheme meta, and no current page, stylesheet or script
+    carries a dark rule. Frozen drafts keep their bytes (the bundle does not serve them); deck sources are not pages."""
+    root = site.resolve()
+
+    def current(path: Path) -> bool:
+        path = path.resolve()
+        return (path not in frozen and "source" not in path.relative_to(root).parts
+                and not any(f.parent in path.parents for f in frozen))
+
+    for page in pages:
+        if not current(page):
+            continue
+        body = page.read_text(encoding="utf-8")
+        name = page.resolve().relative_to(root).as_posix()
+        require(DARK_RULE.search(body) is None, "light only: a dark rule in " + name)
+        require(body.count('name="color-scheme"') == 1 and LIGHT_META in body,
+                "light only: the page must pin one color-scheme meta, only light: " + name)
+    for path in sorted(root.rglob("*")):
+        if path.suffix in (".css", ".js") and path.is_file() and current(path):
+            require(DARK_RULE.search(path.read_text(encoding="utf-8")) is None,
+                    "light only: a dark rule in " + path.relative_to(root).as_posix())
+    for sheet in ("assets/tokens.css", "assets/site.css"):
+        require("color-scheme: only light;" in (root / sheet).read_text(encoding="utf-8"),
+                f"light only: {sheet} must declare color-scheme: only light;")
+
+
 def check(root: Path = ROOT) -> dict:
     data = load(root / "status.json")
     evidence = load(root / data["evidence_path"])
@@ -429,6 +464,7 @@ def check(root: Path = ROOT) -> dict:
         if (site / "llms.txt").exists():
             for found in RETIRED_HOSTS.finditer((site / "llms.txt").read_text(encoding="utf-8")):
                 require(found.group(0) == "github.com/ta-amps", "llms.txt links a retired Pages site")
+        light_only(site, pages, frozen)
     report = (root / "docs/status.md").read_text(encoding="utf-8")
     for repo in data["repositories"]:
         require(repo["main_revision"] in report, "status page missing exact revision")

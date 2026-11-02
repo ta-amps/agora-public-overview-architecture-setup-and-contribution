@@ -139,7 +139,10 @@ def arrow(cls: str) -> str:
             '<path d="M0 6H17.36V0L28 12L17.36 24V18H0Z" fill="currentColor"/></svg>')
 
 
-JS_CLASS = '<script>document.documentElement.classList.add("js")</script>'  # light only: no stored mode
+# Light only (rule 13): no mode switch and nothing stored. An older Agora kept a dark choice under ta-amps-mode in
+# the browser; every page clears it (Gemini's 2bb3c7e does the same).
+JS_CLASS = ('<script>try{localStorage.removeItem("ta-amps-mode")}catch(e){}'
+            'document.documentElement.classList.add("js")</script>')
 
 MONO = "font-family:'JetBrains Mono', 'Courier New', monospace"
 
@@ -383,7 +386,7 @@ def head_block(prefix: str, nouns: Nouns | None = None) -> str:
         '<meta name="twitter:card" content="summary_large_image">',
     ]
     return "\n".join(tags + [
-        '<meta name="color-scheme" content="light">',
+        '<meta name="color-scheme" content="only light">',
         f'<link rel="stylesheet" href="{prefix}assets/fonts.css">',
         f'<link rel="stylesheet" href="{prefix}assets/tokens.css">',
         f'<link rel="stylesheet" href="{prefix}assets/site.css">',

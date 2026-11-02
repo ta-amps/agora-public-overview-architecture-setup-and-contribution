@@ -5,7 +5,7 @@
    Space Grotesk display, IBM Plex Sans body, JetBrains Mono for commands only, all self-hosted (assets/fonts.css). */
 
 :root {
-  color-scheme: light;
+  color-scheme: only light;
 
   --color-paper: var(--bg);
   --color-paper-2: var(--surface);
