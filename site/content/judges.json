@@ -97,13 +97,14 @@
       }
     },
     {
-      "claim": "Partner compute: Modal, Baseten and Fireworks",
+      "claim": "Partner compute: Modal, Baseten and Fireworks AI",
       "fill": "partners",
-      "state": "Checked offline only. No Modal, Baseten or Fireworks account is connected, so nothing has run on them.",
+      "state": "Checked offline only. No Modal, Baseten or Fireworks AI account is connected, so nothing has run on them.",
       "check": {
         "label": "Partner cards",
         "href": "deploy/#partners"
-      }
+      },
+      "state_live": "Checked offline on our own machine. A {live} account is connected, and one test request ran there on {when}; no {offline} account is connected, so nothing has run on them."
     },
     {
       "claim": "Feeds",
@@ -163,7 +164,7 @@
       },
       {
         "title": "Security",
-        "text": "A different agent, with its own key, checks every result, and a person decides before anything is used. Herma checks each request against written rules, and we don't accept private information at this stage.",
+        "text": "A different agent, with its own key, checks every result, and a person decides before anything is used. Herma checks each request against written rules. We don't accept private information at this stage.",
         "href": "security/",
         "label": "Security"
       },
@@ -177,7 +178,9 @@
         "title": "Partner compute",
         "text": "The integrations for Baseten, Fireworks AI and Modal are written and checked offline on our own machine. No partner account is connected, so no request has run on their hardware.",
         "href": "deploy/#slice-partners",
-        "label": "Partner cards"
+        "label": "Partner cards",
+        "fill": "partners",
+        "text_live": "The integrations for Baseten, Fireworks AI and Modal are checked offline on our own machine. A {live} account is connected, and one test request ran there on {when}. No {offline} account is connected, so nothing has run on them."
       }
     ]
   }

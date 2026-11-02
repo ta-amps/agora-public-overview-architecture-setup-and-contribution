@@ -66,6 +66,7 @@ import threading
 from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
@@ -2380,7 +2381,33 @@ def partner_facts(page: dict) -> dict[str, dict]:
             fail(f"deploy.json: no words for the partner mode {fact['mode']!r}")
         if fact["mode"] == "local_verified" and fact["live_credentials_present"] is not False:
             fail(f"deploy.json: {card['name']} is an offline check, so no account may be connected")
+        if fact["mode"] == "live_probe":
+            probe = fact.get("probe") or {}
+            if fact["live_credentials_present"] is not True or probe.get("requests") != 1 or not probe.get("at"):
+                fail(f"deploy.json: {card['name']}'s one test request needs a connected account, its time and a count of 1")
     return facts
+
+
+def eastern(iso: str) -> str:
+    """A recorded moment in the owner's time zone, as the pages say it: October 31, 2026 at 23:05 ET."""
+    when = dt.datetime.fromisoformat(iso.replace("Z", "+00:00")).astimezone(ZoneInfo("America/New_York"))
+    return f"{when:%B} {when.day}, {when.year} at {when:%H:%M} ET"
+
+
+def partner_words(page: dict) -> dict | None:
+    """What the partner record says ran, for the lines outside the cards: None while every partner is an offline
+    check, else the partners with one test request, when it ran and the partners with nothing run on them."""
+    facts = partner_facts(page)
+    names = {c["provider"]: c["name"] for c in page["partners"]["cards"]}
+    if any(f["mode"] not in ("local_verified", "live_probe") for f in facts.values()):
+        fail("deploy.json: a partner has a state the judges' lines cannot say; say what ran")
+    live = [p for p, f in facts.items() if f["mode"] == "live_probe"]
+    if not live:
+        return None
+    offline = [names[p] for p in facts if p not in live]
+    return {"live": " and ".join(names[p] for p in live),
+            "when": eastern(min(facts[p]["probe"]["at"] for p in live)),
+            "offline": " or ".join(offline)}
 
 
 def partner_cards(page: dict, prefix: str) -> str:
@@ -2393,6 +2420,9 @@ def partner_cards(page: dict, prefix: str) -> str:
     for card in part["cards"]:
         fact = facts[card["provider"]]
         words = part["modes"][fact["mode"]]
+        card_values = {"name": card["name"]}
+        if fact["mode"] == "live_probe":
+            card_values["when"] = eastern(fact["probe"]["at"])
         checked = []
         for line in card["checked"]:
             if fact["checks"].get(line["check"]) is not True:
@@ -2410,11 +2440,19 @@ def partner_cards(page: dict, prefix: str) -> str:
             f'<div class="partner-head"><h3>{text(card["name"])}</h3><span class="partner-kind">{text(card["kind"])}</span></div>'
             f'<p class="partner-role">{text(card["role"])}</p>'
             f'<p class="partner-state"><span class="pg-state pg-state-{attr(fact["mode"])}">{text(words["state"])}</span> '
-            f'{text(fill(words["text"], {"name": card["name"]}, "deploy.json"))}</p>'
+            f'{text(fill(words["text"], card_values, "deploy.json"))}</p>'
             f'<p class="partner-checked-title">{text(part["checked_title"])}</p>'
             f'<ul class="partner-checked">{"".join(checked)}</ul>{try_it}</li>')
     return (f'<ul class="partner-cards">{"".join(cards)}</ul>'
             f'<p class="partner-never"><strong>{text(part["never"]["heading"])}</strong> {text(part["never"]["text"])}</p>')
+
+
+def track_text(item: dict, nouns: Nouns) -> str:
+    """A Track 2 line. The partner compute line is filled from the partner record, like the cards and the table."""
+    if item.get("fill") != "partners":
+        return item["text"]
+    words = partner_words(nouns.deploy)
+    return fill(item["text_live"], words, "judges.json") if words else item["text"]
 
 
 def judges_rows(nouns: Nouns) -> list[tuple[str, str, dict]]:
@@ -2438,10 +2476,8 @@ def judges_rows(nouns: Nouns) -> list[tuple[str, str, dict]]:
                                         "direct": f"{facts['approved_direct']:,}", "split": f"{facts['approved_partitioned']:,}",
                                         "blocked": f"{facts['blocked']:,}"}, "judges.json")
         elif kind == "partners":
-            facts = partner_facts(nouns.deploy)
-            if any(f["mode"] != "local_verified" for f in facts.values()):
-                fail("judges.json: a partner is no longer an offline check; say what ran")
-            state = row["state"]
+            words = partner_words(nouns.deploy)
+            state = fill(row["state_live"], words, "judges.json") if words else row["state"]
         elif kind == "feeds":
             ran = ran_feeds(nouns)
             hosted = {feed_hosted(nouns.feeds[r["id"]]) for r in ran}
@@ -2485,7 +2521,7 @@ def render_judges(nouns: Nouns) -> str:
         f'<section class="pg-card jg-track" aria-labelledby="jg-track"><p class="jg-track-kicker">{text(page["track"]["kicker"])}</p>'
         f'<h2 id="jg-track">{text(page["track"]["heading"])}</h2><p>{text(page["track"]["lead"])}</p>'
         '<ul class="jg-track-list">' + "".join(
-            f'<li><b>{text(item["title"])}</b> {text(item["text"])} '
+            f'<li><b>{text(item["title"])}</b> {text(track_text(item, nouns))} '
             f'<a href="{link(prefix, item["href"])}">{text(item["label"])} →</a></li>' for item in page["track"]["items"])
         + "</ul></section>",
         f'<section class="pg-card" aria-labelledby="jg-real"><h2 id="jg-real">{text(page["real_heading"])}</h2>'

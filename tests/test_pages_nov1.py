@@ -177,6 +177,11 @@ class Pages(unittest.TestCase):
         self.assertIn(f"{len(build.ran_feeds(self.nouns))} categories", text)
         self.assertIn(build.human_date(latest), text)
         self.assertIn("Nothing in it was sent, built or run", text)
+        # The partner row and the Track 2 line say what the partner record says ran: one Baseten request, in ET.
+        when = build.eastern(self.nouns.deploy["partners"]["facts"]["baseten"]["probe"]["at"])
+        self.assertEqual("October 31, 2026 at 23:05 ET", when)
+        self.assertEqual(2, text.count(f"A Baseten account is connected, and one test request ran there on {when}"))
+        self.assertNotIn("No partner account is connected", text)
         # A filled row whose record no longer matches its words stops the build.
         nouns = type(self.nouns).__new__(type(self.nouns))
         nouns.__dict__.update(self.nouns.__dict__)
@@ -374,16 +379,24 @@ class Pages(unittest.TestCase):
 
     # Partner compute ---------------------------------------------------------------------------------------------
 
-    def test_partner_cards_are_offline_checks_with_no_numbers_and_no_record_line(self):
+    def test_partner_cards_say_what_ran_with_no_numbers_and_no_record_line(self):
         page = self.outputs[PAGES["deploy"]]
         cards = page[page.index('<ul class="partner-cards">'):page.index('<p class="partner-never">')]
         words_only = re.sub(r"<pre\b.*?</pre>", "", cards, flags=re.S)
         parser = Shown()
         parser.feed(words_only)
         text = " ".join(parser.text)
-        for name in ("Modal", "Baseten", "Fireworks"):
+        for name in ("Modal", "Baseten", "Fireworks AI"):
             self.assertIn(name, text)
-        self.assertEqual(3, text.count("Offline check"))
+        facts = self.nouns.deploy["partners"]["facts"]
+        live = [p for p, f in facts.items() if f["mode"] == "live_probe"]
+        self.assertEqual(len(facts) - len(live), text.count("Offline check"))
+        # A partner with one recorded test request says so, with the record's time in ET; nothing else is claimed.
+        for p in live:
+            when = build.eastern(facts[p]["probe"]["at"])
+            self.assertIn(f"one test request ran on Baseten on {when}", text)
+            text = text.replace(when, "")
+        self.assertEqual(["baseten"], live, "the partner record shows one live request, on Baseten")
         self.assertIsNone(re.search(r"\d", text.replace("30B", "")), "the cards show no number")
         self.assertNotIn("receipt", page.lower())
         self.assertNotIn("film/compare", page)
@@ -395,6 +408,12 @@ class Pages(unittest.TestCase):
         nouns.deploy["partners"]["facts"]["baseten"]["checks"]["respected_2m_tpm_ceiling"] = False
         with self.assertRaises(build.BuildError):
             build.render_deploy(nouns)
+        # A test request needs its connected account, its time and a count of one.
+        for key, value in (("live_credentials_present", False), ("probe", {"at": "2026-11-01T03:05:33Z", "requests": 2})):
+            nouns.deploy = json.loads(json.dumps(self.nouns.deploy))
+            nouns.deploy["partners"]["facts"]["baseten"][key] = value
+            with self.assertRaises(build.BuildError):
+                build.render_deploy(nouns)
 
     def test_the_deploy_page_names_no_old_model_and_no_hand_written_mirror(self):
         raw = (build.CONTENT / "deploy.json").read_text(encoding="utf-8")

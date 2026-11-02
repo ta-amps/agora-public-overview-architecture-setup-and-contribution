@@ -91,6 +91,10 @@
       "local_verified": {
         "state": "Offline check",
         "text": "No {name} account is connected, so nothing has run on {name}. The code and its rules are checked on our own machine."
+      },
+      "live_probe": {
+        "state": "One test request",
+        "text": "A {name} account is connected, and one test request ran on {name} on {when}. That is the only run on record there; the code and its rules are also checked on our own machine."
       }
     },
     "checked_title": "Checked offline",
@@ -136,7 +140,7 @@
       },
       {
         "provider": "fireworks_ai",
-        "name": "Fireworks",
+        "name": "Fireworks AI",
         "kind": "fast inference",
         "role": "Routes a task to a small specialist adapter behind Herma, with a different adapter as the checker.",
         "checked": [
@@ -170,11 +174,16 @@
         ]
       },
       "baseten": {
-        "mode": "local_verified",
-        "live_credentials_present": false,
+        "mode": "live_probe",
+        "live_credentials_present": true,
         "checks": {
           "respected_2m_tpm_ceiling": true,
           "retried_429_preserved_in_ledger": true
+        },
+        "probe": {
+          "at": "2026-11-01T03:05:33Z",
+          "requests": 1,
+          "source": "The partner live-verification record of November 1, 2026 at 03:05 UTC (notes/coordination-2026-10-31/artifacts), its Baseten open-weights probe, mode live_api; read without key values."
         }
       },
       "fireworks_ai": {
