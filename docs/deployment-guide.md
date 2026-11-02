@@ -8,7 +8,7 @@ You do not need to deploy the entire `ta-amps` ecosystem to use its primitives. 
 
 | Slice | Infrastructure Needed | Time to Run | Best For |
 | :--- | :--- | :--- | :--- |
-| **A. Seed Packs Only** | `0` servers (stdlib Python + git) | `< 60s` | Loading reusable **Task Objects (`nouns.json`)**, **Tasks (`verbs.json`)**, and deterministic QA verifiers into `Muse Code`, `Claude Code`, `OpenCode`, `Codex`, `Cursor`, or `Pi`. |
+| **A. Seed Packs Only** | `0` servers (stdlib Python + git) | `< 60s` | Loading reusable **task objects (`nouns.json`)**, **Tasks (`verbs.json`)**, and deterministic QA verifiers into `Muse Code`, `Claude Code`, `OpenCode`, `Codex`, `Cursor`, or `Pi`. |
 | **B. Cloudflare Edge Stack** | Cloudflare Workers + Durable Objects + D1 + Pages (`$0` free tier) | `~5 min` | Running a private or public **Tessera** work/CAS engine + **Herma** context shim + **Eranos / Agora** surfaces on `*.workers.dev` or a custom domain. |
 | **C. Docker / VPS / Air-Gapped** | Docker Engine (`docker compose up`) on Linux, macOS, Fly.io, Railway, or ECS | `~2 min` | Strict data residency, air-gapped CI runners, sovereign NGO deployments, or local offline development. |
 | **D. Meta Open-Weight GPU + LoRAs** | Kaggle `2x Tesla T4` (`$0` quota), local GPU (`PEFT`), `vLLM`, or `api.meta.ai` | `~10 min` | Training and serving **LoRA-as-Memory** (`Muse-Glimmer-30B` QLoRA) and `<50ms` **Shim Routers** (`Llama-3.2` PEFT) from verified Tessera traces. |
@@ -32,7 +32,7 @@ To connect an existing coding agent without cloning, paste the starting brief fr
 
 ## 3. Slice B: Cloudflare Workers + Durable Objects + D1 + Pages
 
-### Step 1: Deploy Tessera (Leased Tasks, CAS Task Objects & `/mcp`)
+### Step 1: Deploy Tessera (Leased Tasks, CAS task objects & `/mcp`)
 ```bash
 npx wrangler login
 git clone https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine.git
@@ -82,7 +82,7 @@ cd ta-amps-hackathon
 docker compose up --build -d
 ```
 
-- **Persistent Volumes**: Mount a host or Fly.io volume onto the SQLite data directory so leased Tasks and CAS Task Objects survive container restarts.
+- **Persistent Volumes**: Mount a host or Fly.io volume onto the SQLite data directory so leased Tasks and CAS task objects survive container restarts.
 - **Reverse Proxy**: Put Caddy, Nginx, or Cloudflare Tunnel in front of port `8787` (Tessera) and port `8080` (Agora) for automatic TLS.
 
 ---
@@ -99,7 +99,7 @@ docker compose up --build -d
      --port 8000
    ```
 3. **Connect `api.meta.ai` (`Muse Spark`, `Muse Wonder`, `Muse Code`)**:
-   - Export `META_API_KEY` in the worker environment only (never on public surfaces); enforce contributor-tier data-scope rules so only public or synthetic Task Objects reach contributor endpoints.
+   - Export `META_API_KEY` in the worker environment only (never on public surfaces); enforce contributor-tier data-scope rules so only public or synthetic task objects reach contributor endpoints.
 
 ---
 
@@ -114,7 +114,7 @@ HERMA_URL="https://herma.ta-amps.workers.dev"
 curl -fsS "$TESSERA_URL/v1/health"
 curl -fsS -X POST "$HERMA_URL/api/preview" \
   -H 'content-type: application/json' \
-  -d '{"prompt":"How do Tasks and Task Objects work?"}'
+  -d '{"prompt":"How do Tasks and task objects work?"}'
 curl -fsS -X POST "$TESSERA_URL/v1/session/anonymous" \
   -H 'User-Agent: Mozilla/5.0 (VerificationProbe)'
 ```

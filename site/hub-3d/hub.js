@@ -154,7 +154,7 @@
       auraA: 'rgba(56,189,248,0.55)',
       auraB: 'rgba(99,102,241,0.16)',
       kicker: 'PILLAR 2  ·  INFRASTRUCTURE',
-      title: 'Task & Task-Object Engine',
+      title: 'Task & task-object Engine',
       site: 'tessera + herma.ta-amps.workers.dev',
       sub: 'Queues, leases, context shims & receipts stop dumb repeat work'
     },
@@ -736,10 +736,10 @@
     g.fillText('ARCHITECTURE BRIDGE  ·  PILLAR 1 (ERANOS)  ->  PILLAR 2 (TESSERA + HERMA)', 960, 130);
     g.font = `700 38px 'Space Grotesk', sans-serif`;
     g.fillStyle = '#ffffff';
-    g.fillText('Zooming into the Tasks & Task Objects Engine Underneath', 960, 180);
+    g.fillText('Zooming into the Tasks & task objects Engine Underneath', 960, 180);
   }
 
-  // 4. Pillar 2 View: Tasks & Task-Objects Engine (Animated Component Edge Packets + Live Tessera/Herma tabs)
+  // 4. Pillar 2 View: Tasks & task-objects Engine (Animated Component Edge Packets + Live Tessera/Herma tabs)
   const TRACE_STEPS = [
     { id: 'claim',       from: 0, to: 1, label: '1 · claim(verb)',            col: '#38bdf8', bg: '#082536' },
     { id: 'lease',       from: 1, to: 2, label: '2 · lease #1 granted',       col: '#34d399', bg: '#062c24' },
@@ -821,7 +821,7 @@
 
     // Top Summary Strip inside Graph
     drawPill(g, gx + 20, gy + 16, 'VERBS = LEASED TASKS', '#67e8f9', '#082536', '#38bdf8', 25, true);
-    drawPill(g, gx + 390, gy + 16, 'NOUNS = VERSIONED TASK OBJECTS', '#fde047', '#292109', '#f59e0b', 25, true);
+    drawPill(g, gx + 390, gy + 16, 'NOUNS = VERSIONED task objects', '#fde047', '#292109', '#f59e0b', 25, true);
     drawPill(g, gx + 960, gy + 16, 'HUMAN DECIDES FOR PEOPLE', '#6ee7b7', '#062c24', '#10b981', 25, true);
 
     // 6 Nodes in 2 clean rows (3x2 grid with wide spacing for moving edge packets)
@@ -831,7 +831,7 @@
       { title: 'Muse Code / nano',  sub: 'Authorized workers',     x: gx + 1140, y: gy + 96,  w: 468, h: 146, col: '#818cf8' },
       { title: 'Herma Shim',        sub: 'Context & 0-tok cache',  x: gx + 1140, y: gy + 326, w: 468, h: 146, col: '#c084fc' },
       { title: 'Meta Models',       sub: 'Muse Spark · Glimmer · Llama', x: gx + 590, y: gy + 326, w: 460, h: 146, col: '#f59e0b' },
-      { title: 'Task Objects',      sub: 'Kits, nouns & receipts', x: gx + 40,   y: gy + 326, w: 460, h: 146, col: '#34d399' }
+      { title: 'task objects',      sub: 'Kits, nouns & receipts', x: gx + 40,   y: gy + 326, w: 460, h: 146, col: '#34d399' }
     ];
 
     function edgePorts(aNode, bNode) {
