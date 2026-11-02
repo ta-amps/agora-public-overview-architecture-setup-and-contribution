@@ -102,7 +102,8 @@
     this.pulses = this.find("pulses");
   }
 
-  const MISSES_BEFORE_BACKOFF = 3, BACKOFF_MS = 5 * 60 * 1000;  // review, Nov 2: 404s back off
+  const MISSES_BEFORE_BACKOFF = 3, BACKOFF_MS = 5 * 60 * 1000;  // review, Nov 2: failed reads back off
+  const MAX_WAIT_MS = 60 * 60 * 1000;  // no automatic read waits longer than an hour
 
   Network.prototype.now = function () { return Date.now() - this.skew; };
 
@@ -188,6 +189,7 @@
 
   Network.prototype.schedule = function (ms) {
     const self = this;
+    ms = Math.min(Math.max(0, Number(ms) || 0), MAX_WAIT_MS);  // a timer's delay stays far below the browser's limit
     clearTimeout(this.timer);
     this.timer = document.hidden || this.paused || this.replaying ? 0 : window.setTimeout(() => { self.timer = 0; self.load(); }, ms);
   };
@@ -224,7 +226,9 @@
           // Retry-After in seconds or as an HTTP date; never sooner than a minute.
           let seconds = Number(retry);
           if (!Number.isFinite(seconds)) { const at = Date.parse(retry || ""); seconds = Number.isFinite(at) ? Math.ceil((at - Date.now()) / 1000) : 0; }
-          const wait = Math.max(60, seconds || 0);
+          // Never under a minute or over an hour: a browser fires a timer over about 24.8 days at once, so an
+          // unbounded Retry-After would poll in a tight loop (the review of c09566d measured 930 reads in 4 s).
+          const wait = Math.min(Math.max(60, seconds || 0), 3600);
           const error = new Error("busy");
           error.wait = wait;
           throw error;
@@ -258,8 +262,10 @@
       self.misses = (self.misses || 0) + 1;
       const backoff = self.misses >= MISSES_BEFORE_BACKOFF ? BACKOFF_MS : 0;
       if (error && error.wait) {
-        self.status(fill(self.words.busy, { seconds: error.wait }));
-        self.schedule(Math.max(error.wait * 1000, backoff));
+        // The busy line says the real wait: the larger of the server's Retry-After and the back-off.
+        const delay = Math.min(Math.max(error.wait * 1000, backoff), MAX_WAIT_MS);
+        self.status(fill(self.words.busy, { seconds: Math.round(delay / 1000) }));
+        self.schedule(delay);
         return;
       }
       self.root.setAttribute("data-failed", "");

@@ -128,7 +128,7 @@ class NetworkPage(unittest.TestCase):
         script = (ROOT / "site/assets/network.js").read_text(encoding="utf-8")
         self.assertGreaterEqual(self.words["refresh_seconds"], 60)
         self.assertIn("Math.max(60, num(this.words.refresh_seconds) || 60) * 1000", script)
-        self.assertIn("const wait = Math.max(60, seconds || 0);", script)  # Retry-After, never under a minute
+        self.assertIn("const wait = Math.min(Math.max(60, seconds || 0), 3600);", script)  # a minute to an hour
         self.assertIn("if (since >= self.refresh) self.load(); else self.schedule(self.refresh - since);", script)
         self.assertIn("if (document.hidden) { clearTimeout(self.timer); self.timer = 0; return; }", script)
         self.assertNotRegex(json.dumps(self.words), r"every 30 seconds")
@@ -173,6 +173,71 @@ class NetworkPage(unittest.TestCase):
             self.assertIn(build.text(eyebrow), strip)
             self.assertIn(f'href="{self.words["strip"]["href"]}"', strip)
             self.assertEqual(block(self.page, "nw-geo"), block(strip, "nw-geo"))
+
+
+try:
+    from playwright.sync_api import sync_playwright
+except ImportError:  # the CI runner has no browser
+    sync_playwright = None
+
+STUB = """(() => { window.__reads = []; const real = window.fetch.bind(window);
+  window.fetch = (input, init) => { const url = typeof input === "string" ? input : input.url;
+    if (!String(url).includes("/q/network")) return real(input, init);
+    window.__reads.push(Date.now());
+    return Promise.resolve(new Response("{}", { status: %(status)d, headers: { "retry-after": %(ra)s } })); }; })();"""
+
+
+@unittest.skipIf(sync_playwright is None, "needs the Playwright package")
+class RetryAfterInBrowser(unittest.TestCase):
+    """The review of c09566d: a Retry-After the browser's timer cannot hold made the page read in a tight loop."""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        import threading
+        from functools import partial
+        import sys
+        from http.server import ThreadingHTTPServer
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import light_check
+        cls.server = ThreadingHTTPServer(("127.0.0.1", 0), partial(light_check.Quiet, directory=str(ROOT / "site")))
+        threading.Thread(target=cls.server.serve_forever, daemon=True).start()
+        cls.base = f"http://127.0.0.1:{cls.server.server_port}"
+        cls.pw = sync_playwright().start()
+        cls.browser = cls.pw.chromium.launch()
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        cls.browser.close()
+        cls.pw.stop()
+        cls.server.shutdown()
+
+    def open(self, status: int, retry_after: str, clock: bool = False):
+        ctx = self.browser.new_context()
+        self.addCleanup(ctx.close)
+        page = ctx.new_page()
+        if clock:
+            page.clock.install()
+        page.add_init_script(STUB % {"status": status, "ra": json.dumps(retry_after)})
+        page.route("**/*", lambda route: route.continue_() if route.request.url.startswith(self.base) else route.abort())
+        page.goto(self.base + "/network/", wait_until="load")
+        return page
+
+    def test_a_huge_retry_after_reads_once_in_four_seconds_of_real_time(self) -> None:
+        for status, value in ((429, "2147484"), (503, "4000000"), (503, "1e12"), (503, "Fri, 31 Dec 9999 23:59:59 GMT")):
+            with self.subTest(status=status, retry_after=value):
+                page = self.open(status, value)
+                page.wait_for_timeout(4000)
+                self.assertEqual(1, page.evaluate("window.__reads.length"))
+
+    def test_a_day_long_retry_after_waits_an_hour_and_the_busy_line_says_so(self) -> None:
+        page = self.open(429, "86400", clock=True)
+        page.clock.run_for(2000)
+        self.assertEqual(1, page.evaluate("window.__reads.length"))
+        self.assertIn("3600 seconds", page.locator(".nw [data-status], .nw-status").first.inner_text())
+        page.clock.run_for(3600 * 1000 - 5000)
+        self.assertEqual(1, page.evaluate("window.__reads.length"))
+        page.clock.run_for(10000)
+        self.assertEqual(2, page.evaluate("window.__reads.length"))
 
 
 if __name__ == "__main__":
