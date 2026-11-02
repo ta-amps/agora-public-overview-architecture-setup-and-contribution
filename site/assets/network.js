@@ -97,6 +97,8 @@
     this.pulses = this.find("pulses");
   }
 
+  const MISSES_BEFORE_BACKOFF = 3, BACKOFF_MS = 5 * 60 * 1000;  // review, Nov 2: 404s back off
+
   Network.prototype.now = function () { return Date.now() - this.skew; };
 
   Network.prototype.start = function () {
@@ -218,7 +220,7 @@
           error.wait = wait;
           throw error;
         }
-        if (!response.ok) throw new Error("status " + response.status);
+        if (!response.ok) { const error = new Error("status " + response.status); error.status = response.status; throw error; }
         const age = Number(response.headers.get("age")) || 0;
         return response.json().then((json) => ({ json, age }));
       });
@@ -236,6 +238,7 @@
       self.data = data;
       self.status("");
       self.root.removeAttribute("data-failed");
+      self.misses = 0;  // the first success ends any back-off
       self.render(!fresh);
       self.schedule(self.refresh);
     }).catch((error) => {
@@ -248,7 +251,10 @@
       self.root.setAttribute("data-failed", "");
       self.status(self.words.error.text, { text: self.words.error.link, href: self.words.herma.dashboard });
       if (!self.data) self.renderEmpty();
-      self.schedule(self.refresh);
+      // After 3 not-found answers in a row, read on its own only every 5 minutes, until one read succeeds. A click
+      // (a filter, Resume) still reads at once.
+      self.misses = error && error.status === 404 ? (self.misses || 0) + 1 : 0;
+      self.schedule(self.misses >= MISSES_BEFORE_BACKOFF ? Math.max(self.refresh, BACKOFF_MS) : self.refresh);
     });
   };
 

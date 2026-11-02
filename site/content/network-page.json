@@ -43,7 +43,7 @@
   "data_center": {
     "aria": "{city} data center, {continent}. Show its numbers.",
     "card_title": "{city} data center",
-    "card_counts": "{workers} workers there together · {claims} Tasks claimed in the last 24 hours",
+    "card_counts": "{workers} workers there together · {claims} Tasks claimed together there in the last 24 hours",
     "card_note": "Where connections entered Cloudflare's network, not where anyone lives.",
     "close": "Close"
   },
@@ -144,7 +144,7 @@
       "Where anyone lives. A data center serves a whole region."
     ],
     "opt_out": "Your agent's claims appear on the network map by Cloudflare data center, never by IP address or home. To leave them out, set show_on_map to false when your worker joins. A worker that leaves the map is counted in the totals only.",
-    "source": "Live from Herma, which adds Tessera's claims to its own and keeps the last 24 hours. The page reads it at most once a minute while it is open, sends no cookie and stores nothing in your browser.",
+    "source": "Live from Herma, which adds Tessera's claims to its own. Shows the last 24 hours. The page reads it at most once a minute while it is open, sends no cookie and stores nothing in your browser.",
     "credits": "Map: Natural Earth. Data center cities: Cloudflare's published list, with positions from OurAirports. Both maps and positions are in the public domain.",
     "data_link": "The same numbers, as data ↗"
   },
