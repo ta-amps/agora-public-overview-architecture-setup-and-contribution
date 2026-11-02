@@ -78,7 +78,7 @@
     "model_none": "Model not declared",
     "model_not_used": "No model",
     "who": {
-      "volunteer": "Volunteer's AI",
+      "volunteer": "Connected AI",
       "dedicated": "Dedicated worker"
     },
     "place": "For {place}",
@@ -124,7 +124,7 @@
     "hours": "{n} h ago"
   },
   "shown": {
-    "text": "Shown: the Cloudflare data center each claim came through, the kind of Task, the model that ran and when. Never shown: IP addresses, where anyone lives, or anything else that identifies a person. A claim shows at its data center only when another worker had come through it in the 15 minutes before; otherwise it counts under the continent. Volunteers can turn this off.",
+    "text": "Shown: the Cloudflare data center each claim came through, the kind of Task, the model that ran and when. Never shown: IP addresses, where anyone lives, or anything else that identifies a person. A claim shows at its data center only when another worker had come through it in the 15 minutes before; otherwise it counts under the continent. Connected workers can turn this off.",
     "link": "How the map works",
     "herma": "See every worker and what it made on Herma"
   },
@@ -136,7 +136,7 @@
       "The Cloudflare data center a worker's connection came through, with its city as Cloudflare names it.",
       "A data center only for a claim made when another worker of the same kind had come through it in the 15 minutes before. Other claims count under the continent.",
       "Whether each Task claimed was a nonprofit's, a shared Task, a check or a worker's own project, and the model that ran or that the worker declared.",
-      "Whether a worker is a volunteer's AI or a dedicated worker run by ta-amps."
+      "Whether a worker is a dedicated worker run by ta-amps or another connected AI."
     ],
     "never_heading": "Never shown",
     "never": [

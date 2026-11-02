@@ -89,9 +89,12 @@ class NetworkPage(unittest.TestCase):
         # The contract's words for these three still describe the old rule (2 workers in the window). Since Tessera
         # places each claim by who was there in the 15 minutes before it, the page says so; INTEGRATE.md lists them.
         reworded = {
+            # The lead, Nov 2 (honesty): Herma marks every connected worker "volunteer", and many are run by our own team,
+            # so the page says "Connected AI" until Herma tells them apart; Claude Design updates the contract.
+            "network.feed.who.volunteer": "Connected AI",
             "network.lede": "Every worker reaches the shared queue through Cloudflare's network. Each dot is a data center where 2 or more workers were busy within 15 minutes of each other in the last 24 hours; the list shows what they claimed.",
             "network.dc.card.counts": "{workers} workers there together · {claims} Tasks claimed together there in the last 24 hours",
-            "network.shown": "Shown: the Cloudflare data center each claim came through, the kind of Task, the model that ran and when. Never shown: IP addresses, where anyone lives, or anything else that identifies a person. A claim shows at its data center only when another worker had come through it in the 15 minutes before; otherwise it counts under the continent. Volunteers can turn this off.",
+            "network.shown": "Shown: the Cloudflare data center each claim came through, the kind of Task, the model that ran and when. Never shown: IP addresses, where anyone lives, or anything else that identifies a person. A claim shows at its data center only when another worker had come through it in the 15 minutes before; otherwise it counts under the continent. Connected workers can turn this off.",
         }
         for key, ours in pairs.items():
             if key in reworded:
@@ -151,6 +154,16 @@ class NetworkPage(unittest.TestCase):
         css = (ROOT / "site/assets/network.css").read_text(encoding="utf-8")
         self.assertIn(".nw[data-failed] .nw-stage { opacity: 0.75; }", css)
         self.assertNotIn(".nw[data-failed] .nw-map {", css)
+
+    def test_rows_herma_marks_volunteer_never_say_volunteer(self) -> None:
+        # The lead, Nov 2: Herma sends worker_kind "volunteer" for every connected worker, and many are our own team's
+        # agents, so nothing the page shows for such rows says "volunteer": the chip is "Connected AI", the rules line
+        # and the map note are neutral, and the script maps any other worker_kind to that same chip.
+        self.assertEqual("Connected AI", self.words["feed"]["who"]["volunteer"])
+        self.assertEqual("Dedicated worker", self.words["feed"]["who"]["dedicated"])
+        self.assertNotRegex(json.dumps(self.words, ensure_ascii=False), r"(?i)volunteer'?s?\b(?! *\":)")
+        visible = re.sub(r"<script\b.*?</script>", " ", self.page, flags=re.S)
+        self.assertNotRegex(re.sub(r"<[^>]+>", " ", visible), r"(?i)volunteer")
 
     def test_the_strips_are_the_same_map_in_a_small_box(self) -> None:
         for site, eyebrow in (("eranos", "Right now"), ("teleion", "Live capacity")):
