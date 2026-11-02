@@ -84,7 +84,17 @@ class NetworkPage(unittest.TestCase):
             "network.table.dc.caption": w["table"]["centers_caption"], "network.table.claims.caption": w["table"]["claims_caption"], "network.shown": w["shown"]["text"],
             "network.shown.link": w["shown"]["link"], "network.herma.link": w["shown"]["herma"], "network.dc.aria": w["data_center"]["aria"], "network.dc.card.title": w["data_center"]["card_title"],
         }
+        # The contract's words for these three still describe the old rule (2 workers in the window). Since Tessera
+        # places each claim by who was there in the 15 minutes before it, the page says so; INTEGRATE.md lists them.
+        reworded = {
+            "network.lede": "Every worker reaches the shared queue through Cloudflare's network. Each dot is a data center where 2 or more workers were busy within 15 minutes of each other in the last 24 hours; the list shows what they claimed.",
+            "network.dc.card.counts": "{workers} workers there together · {claims} Tasks claimed in the last 24 hours",
+            "network.shown": "Shown: the Cloudflare data center each claim came through, the kind of Task, the model that ran and when. Never shown: IP addresses, where anyone lives, or anything else that identifies a person. A claim shows at its data center only when another worker had come through it in the 15 minutes before; otherwise it counts under the continent. Volunteers can turn this off.",
+        }
         for key, ours in pairs.items():
+            if key in reworded:
+                self.assertEqual(reworded[key], ours, key)
+                continue
             theirs = us(agora[key]).replace("{data_centres}", "{data_centers}")
             self.assertEqual(theirs, ours.replace(" ↗", ""), key)
         self.assertEqual(us(agora["network.totals.big"]).replace("{data_centres}", "{data_centers}"), w["totals"]["big"])
