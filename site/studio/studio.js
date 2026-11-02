@@ -2,10 +2,10 @@
   "use strict";
 
   const ENDPOINTS = {
-    tessera: "https://tessera.ta-amps.workers.dev",
-    herma: "https://herma.ta-amps.workers.dev",
-    eranos: "https://eranos.ta-amps.workers.dev",
-    agora: "https://agora.ta-amps.workers.dev/"
+    tessera: "https://tessera.teleionlabs.com",
+    herma: "https://herma.teleionlabs.com",
+    eranos: "https://eranosforgood.org",
+    agora: "https://agora.eranosforgood.org/"
   };
 
   const SESSION_STORAGE_KEY = "ta_amps_demo_session_v1";
@@ -345,16 +345,16 @@
   "mcpServers": {
     "tessera": {
       "type": "streamable-http",
-      "url": "https://tessera.ta-amps.workers.dev/mcp",
+      "url": "https://tessera.teleionlabs.com/mcp",
       "headers": { "Authorization": "Bearer $TESSERA_TOKEN" }
     },
     "herma": {
       "type": "streamable-http",
-      "url": "https://herma.ta-amps.workers.dev/mcp"
+      "url": "https://herma.teleionlabs.com/mcp"
     },
     "eranos": {
       "type": "streamable-http",
-      "url": "https://eranos.ta-amps.workers.dev/mcp"
+      "url": "https://eranosforgood.org/mcp"
     }
   }
 }`,
@@ -363,21 +363,21 @@
   "mcp": {
     "tessera": {
       "type": "remote",
-      "url": "https://tessera.ta-amps.workers.dev/mcp",
+      "url": "https://tessera.teleionlabs.com/mcp",
       "headers": { "Authorization": "Bearer {env:TESSERA_TOKEN}" }
     },
-    "herma": { "type": "remote", "url": "https://herma.ta-amps.workers.dev/mcp" },
-    "eranos": { "type": "remote", "url": "https://eranos.ta-amps.workers.dev/mcp" }
+    "herma": { "type": "remote", "url": "https://herma.teleionlabs.com/mcp" },
+    "eranos": { "type": "remote", "url": "https://eranosforgood.org/mcp" }
   }
 }`,
     claude: `# Connect Claude Code to Tessera, Herma & Eranos MCP doors:
-claude mcp add --transport http tessera https://tessera.ta-amps.workers.dev/mcp \\
+claude mcp add --transport http tessera https://tessera.teleionlabs.com/mcp \\
   --header "Authorization: Bearer $TESSERA_TOKEN"
-claude mcp add --transport http herma https://herma.ta-amps.workers.dev/mcp
-claude mcp add --transport http eranos https://eranos.ta-amps.workers.dev/mcp`,
+claude mcp add --transport http herma https://herma.teleionlabs.com/mcp
+claude mcp add --transport http eranos https://eranosforgood.org/mcp`,
     pi: `# Start a scoped Pi contributor worker against Tessera + Herma shim:
-export TESSERA_MCP_URL="https://tessera.ta-amps.workers.dev/mcp"
-export HERMA_SHIM_URL="https://herma.ta-amps.workers.dev/v1/chat/completions"
+export TESSERA_MCP_URL="https://tessera.teleionlabs.com/mcp"
+export HERMA_SHIM_URL="https://herma.teleionlabs.com/v1/chat/completions"
 pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
   };
 
@@ -1488,7 +1488,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       '<div class="shim-card" id="chat-welcome-card">' +
       '<div class="shim-head">' +
       '<div class="shim-prov-badges"><span class="prov-badge">Herma public preview</span><span class="ref-badge">no key needed</span></div>' +
-      '<span class="shim-latency">herma.ta-amps.workers.dev/api/preview</span>' +
+      '<span class="shim-latency">herma.teleionlabs.com/api/preview</span>' +
       "</div>" +
       '<div class="shim-answer">Click a starter prompt above or type your own below. Each prompt is a real POST to Herma. The card that comes back shows only what Herma returned: the provisions it matched, its direct answer when it gives one, and the system message it added to the payload.</div>' +
       "</div>";
@@ -2791,14 +2791,14 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       appendCliLine(
         [
           "Commands (each one makes real calls):",
-          "  shim <prompt>         -> POST https://herma.ta-amps.workers.dev/api/preview",
+          "  shim <prompt>         -> POST https://herma.teleionlabs.com/api/preview",
           "  ngo submit [preset]   -> the NGO run, steps 1-6 (clinic | pantry | shelter)",
           "  worker claim          -> enqueue a Task, then claim it as this browser",
           "  worker conflict       -> write v1 and v2, then send a stale overwrite (Tessera should answer 409)",
-          "  eranos tracks         -> GET https://eranos.ta-amps.workers.dev/api/tracks",
-          "  eranos catalog        -> GET https://eranos.ta-amps.workers.dev/api/catalog + /api/examples",
-          "  objects ls            -> MCP search_nouns on https://tessera.ta-amps.workers.dev/mcp",
-          "  tasks ls              -> MCP list_verbs (ready Tasks) on https://tessera.ta-amps.workers.dev/mcp",
+          "  eranos tracks         -> GET https://eranosforgood.org/api/tracks",
+          "  eranos catalog        -> GET https://eranosforgood.org/api/catalog + /api/examples",
+          "  objects ls            -> MCP search_nouns on https://tessera.teleionlabs.com/mcp",
+          "  tasks ls              -> MCP list_verbs (ready Tasks) on https://tessera.teleionlabs.com/mcp",
           "  curl last             -> print a curl command for the latest Wire Log call",
           "  clear                 -> clear the terminal",
           "ngo, worker, objects and tasks need a live Tessera demo session; shim and eranos do not."

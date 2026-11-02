@@ -1,6 +1,6 @@
 {
   "format": "ta-amps.agora.status.public.v1",
-  "page": "https://agora.ta-amps.workers.dev/status/",
+  "page": "https://agora.eranosforgood.org/status/",
   "checked_at": "2026-11-01T13:29:32Z",
   "how": "one GET of each address, no credentials, a 20-second timeout and one try",
   "overall": "answering",

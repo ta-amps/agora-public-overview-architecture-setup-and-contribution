@@ -1,16 +1,16 @@
 {
-  "about": "How links into the ta-amps GitHub organization become links that work. A repository Agora mirrors (listed under mirrored) is linked in Agora's own read-only source mirror, at a pinned commit: a branch name such as main means the commit listed under heads. Any other repository keeps its GitHub address, exactly as the page's Task Objects wrote it. scripts/build_site.py applies this to every page it writes. release_files lists each file a retired GitHub release held, now served by this site, with its hash.",
+  "about": "How links into the ta-amps GitHub organization become links that work (scripts/build_site.py applies it to every page it writes). A repository shown as a card (listed under cards) is linked at its card on Agora's source page; any other repository keeps its GitHub address, exactly as the page's Task Objects wrote it. Agora serves no repository files, archives or git mirrors. release_files lists each file a retired GitHub release held, now served by this site, with its hash.",
   "date": "2026-10-31",
   "mirror": "/source/",
   "mirrored": [],
-  "mirrored_about": "The repositories Agora serves in its own source mirror and git mirrors. The lead's rule (Nov 1): a repository is mirrored only once its head is free of every banned word (deploy/repos.json mirror: true, which the deploy builder checks against this list); until then its links go to its GitHub page.",
-  "git_mirror": "https://agora.ta-amps.workers.dev/git/",
+  "mirrored_about": "Not used since November 2: Agora mirrors no repository (the lead's decision: cards only). The list stays empty.",
+  "git_mirror": "https://agora.eranosforgood.org/git/",
   "git_held_back": [
     "agora-public-overview-architecture-setup-and-contribution"
   ],
   "git_served": [],
-  "git_served_about": "The repositories whose git history Agora serves (deploy/repos.json serve_history). None does today: a history can still name a banned word, so a clone address keeps its GitHub form even for a repository whose files Agora mirrors.",
-  "git_about": "A clone address (one ending in .git) becomes the same repository in Agora's git mirror, which git can clone over plain HTTP. Agora's own repository has no published mirror, so the build stops at any clone address for it.",
+  "git_served_about": "Not used: Agora serves no git history; every clone address keeps its GitHub form.",
+  "git_about": "A clone address (one ending in .git) keeps its GitHub form; Agora serves no git mirror.",
   "heads": {
     "ta-amps-hackathon": "a42c1768ca75ac476ef4f2feeacf86e89330cd1b",
     "eranos-public-marketplace-for-public-good-token-burn": "9ed6de94a8f6147c7f86633f861f05b64d6b70e7",
@@ -28,7 +28,7 @@
     "agora-public-overview-architecture-setup-and-contribution/pitch-drafts-2026-10-29": "/downloads/pitch-drafts-2026-10-29/"
   },
   "forms": {
-    "eranos-public-marketplace-for-public-good-token-burn/request-a-kit.yml": "https://eranos.ta-amps.workers.dev/nonprofits",
+    "eranos-public-marketplace-for-public-good-token-burn/request-a-kit.yml": "https://eranosforgood.org/nonprofits",
     "agora-public-overview-architecture-setup-and-contribution/feedback.yml": "/contribute/",
     "agora-public-overview-architecture-setup-and-contribution/seed-pack-proposal.yml": "/contribute/#seed-pack"
   },

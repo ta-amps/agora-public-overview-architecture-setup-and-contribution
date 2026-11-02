@@ -10,5 +10,12 @@
  "picture_label": "On screen",
  "acts": [],
  "lines": [],
- "note": "Narration is an AI voice. Every example in the film uses example data, and every number comes from one of our measured evaluations."
+ "note": "Narration is an AI voice. Every example in the film uses example data, and every number comes from one of our measured evaluations.",
+ "made_quiet": {
+  "title": "How this film was made | Agora",
+  "description": "How the film was made, step by step, with the model each step named and its production record.",
+  "heading": "How this film was made",
+  "lead": "Each step of making the film, who did it, the model it named and how long it took, from the production record.",
+  "note": "The production record of the new cut is not written yet. This page fills in from it once it is."
+ }
 }

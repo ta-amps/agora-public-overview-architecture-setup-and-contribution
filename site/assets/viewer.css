@@ -75,7 +75,7 @@
 .outline-group li + li { margin-top: var(--space-1); }
 .outline-group a { color: var(--color-ink); text-decoration: none; }
 .outline-group a:hover { text-decoration: underline; }
-.outline-group a[aria-current="true"] { font-weight: 600; color: var(--color-verb-ink); }
+.outline-group a[aria-current="true"] { font-weight: 600; color: var(--color-task-ink); }
 
 @media (max-width: 48rem) {
   .deck-outline { grid-template-columns: minmax(0, 1fr); }
@@ -353,5 +353,5 @@
     font-size: 19px;
     line-height: 1.35;
   }
-  .slide-update strong { color: var(--verb-text); }
+  .slide-update strong { color: var(--task-text); }
 }

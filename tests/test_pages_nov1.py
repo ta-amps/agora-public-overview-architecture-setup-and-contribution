@@ -100,9 +100,9 @@ class Pages(unittest.TestCase):
         self.assertIn(build.STATUS_JSON, self.outputs)
         self.assertIn(build.SECURITY_TXT, self.outputs)
         llms = self.outputs[SITE / "llms.txt"]
-        for path in ("judges/", "status/", "security/", "accessibility/", "scenarios/", "feeds/", "models/"):
-            self.assertIn(f"https://agora.ta-amps.workers.dev/{path})", llms, path)
-        self.assertNotIn("agora.ta-amps.workers.dev/film/)", llms)  # the film is withdrawn until its new cut
+        for path in ("judges/", "status/", "security/", "accessibility/", "scenarios/", "feeds/", "models/", "network/"):
+            self.assertIn(f"https://agora.eranosforgood.org/{path})", llms, path)
+        self.assertNotIn("agora.eranosforgood.org/film/)", llms)  # the film is withdrawn until its new cut
 
     def test_no_page_shows_a_banned_word_a_hash_or_a_stamp(self):
         for name, path in PAGES.items():
@@ -158,9 +158,9 @@ class Pages(unittest.TestCase):
         page = self.outputs[PAGES["judges"]]
         hrefs = shown(page).hrefs
         self.assertIn('<a class="button" href="?tour=judge" data-judge-tour>Take the 45-second tour →</a>', page)
-        self.assertIn("https://eranos.ta-amps.workers.dev/requests/REQ-INTAKE-07?replay=1", hrefs)
+        self.assertIn("https://eranosforgood.org/requests/REQ-INTAKE-07?replay=1", hrefs)
         self.assertIn("../studio/", hrefs)
-        self.assertIn("https://eranos.ta-amps.workers.dev/", hrefs)
+        self.assertIn("https://eranosforgood.org/", hrefs)
         self.assertIn("../models/", hrefs)
         self.assertNotIn("../film/", hrefs)  # withdrawn until its new cut
 
@@ -180,7 +180,8 @@ class Pages(unittest.TestCase):
         # The partner row and the Track 2 line say what the partner record says ran: two Baseten requests, in ET.
         words = build.run_words(self.nouns.deploy["partners"]["facts"]["baseten"]["runs"])
         self.assertEqual("October 31, 2026 at 23:05 ET and November 1, 2026 at 20:04 ET", words["when"])
-        self.assertEqual(2, text.count(f"Two test requests ran on Baseten: {words['when']}. Nothing has run on Modal or Fireworks AI."))
+        # The judges' table row says it; Push the Frontier makes no partner claim (Nov 2).
+        self.assertEqual(1, text.count(f"Two test requests ran on Baseten: {words['when']}. Nothing has run on Modal or Fireworks AI."))
         self.assertNotIn("account is connected", text)
         # A filled row whose record no longer matches its words stops the build.
         nouns = type(self.nouns).__new__(type(self.nouns))
@@ -254,9 +255,9 @@ class Pages(unittest.TestCase):
         self.assertLess(written, expires)
         self.assertLessEqual(expires - written, dt.timedelta(days=365))
         self.assertGreater(expires, dt.datetime.now(dt.timezone.utc), "renew security.txt: its Expires has passed")
-        self.assertEqual("https://agora.ta-amps.workers.dev/.well-known/security.txt", fields["Canonical"])
+        self.assertEqual("https://agora.eranosforgood.org/.well-known/security.txt", fields["Canonical"])
         # The Contact is a real address this site serves, never a made-up mailbox.
-        self.assertEqual("https://agora.ta-amps.workers.dev/security/", fields["Contact"])
+        self.assertEqual("https://agora.eranosforgood.org/security/", fields["Contact"])
         self.assertIn(PAGES["security"], self.outputs)
         self.assertNotIn("@", txt)
         self.assertIn("../.well-known/security.txt", shown(self.outputs[PAGES["security"]]).hrefs)
@@ -286,7 +287,7 @@ class Pages(unittest.TestCase):
             self.assertIn("owner decision that is still open", text)  # no made-up contact
 
     def no_outside_hosts(self):
-        loads = re.compile(r'<(?:link|script|img|video|source|track|iframe)\b[^>]*?\s(?:href|src)="(https?://[^"/]+)', re.I)
+        loads = re.compile(r'<(?:link(?![^>]*rel="canonical")|script|img|video|source|track|iframe)\b[^>]*?\s(?:href|src)="(https?://[^"/]+)', re.I)
         hosts = {h for path, page in self.outputs.items() if path.suffix == ".html" for h in loads.findall(page)}
         self.assertEqual(set(), hosts)
 
@@ -447,8 +448,8 @@ class Pages(unittest.TestCase):
     def test_the_deploy_page_names_no_old_model_and_no_hand_written_mirror(self):
         raw = (build.CONTENT / "deploy.json").read_text(encoding="utf-8")
         self.assertIsNone(re.search(r"l[l]ama", raw, re.I))
-        self.assertNotIn("agora.ta-amps.workers.dev/source/", raw)
-        self.assertNotIn("agora.ta-amps.workers.dev/git/", raw)
+        self.assertNotIn("agora.eranosforgood.org/source/", raw)
+        self.assertNotIn("agora.eranosforgood.org/git/", raw)
         self.assertIn('id="slice-partners"', self.outputs[PAGES["deploy"]])
 
 

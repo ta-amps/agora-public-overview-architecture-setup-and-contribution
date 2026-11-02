@@ -74,7 +74,7 @@ CONTENT = SITE / "content"
 BRIEF = SITE / "agent-brief.txt"
 DECKS = SITE / "decks"
 MANIFEST = SITE / "decks.json"
-# The site is served from the root of agora.ta-amps.workers.dev; the worker redirects the old GitHub Pages path.
+# The site is served from the root of agora.eranosforgood.org; the worker redirects the old GitHub Pages path.
 PAGES_PREFIX = "/"
 CANVAS_W, CANVAS_H = 1920, 1080
 # "illustration" marks a number in a worked example that shows how the work is organized, not a measured run.
@@ -105,10 +105,10 @@ ICONS = {
 }
 
 MARK = ('<svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true" focusable="false">'
-        '<rect x="0" y="0" width="44" height="44" rx="10" fill="var(--color-noun)"/>'
-        '<rect x="56" y="0" width="44" height="44" rx="10" fill="var(--color-verb)"/>'
+        '<rect x="0" y="0" width="44" height="44" rx="10" fill="var(--color-object)"/>'
+        '<rect x="56" y="0" width="44" height="44" rx="10" fill="var(--color-task)"/>'
         '<rect x="0" y="56" width="44" height="44" rx="10" fill="var(--color-ink)"/>'
-        '<rect x="56" y="56" width="44" height="44" rx="10" fill="var(--color-noun)"/></svg>')
+        '<rect x="56" y="56" width="44" height="44" rx="10" fill="var(--color-object)"/></svg>')
 # The agent banner's robot head, drawn for the AgentBanner board, and the header's menu lines.
 AGENT_ICON = ('<svg class="agent-fallback-icon" viewBox="0 0 40 40" width="18" height="18" aria-hidden="true" '
               'focusable="false"><circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2.6"/>'
@@ -229,6 +229,8 @@ class Nouns:
                 if "tuned by us" in m.get("kind", ""):
                     self.models[m["id"]]["display_tuned"] = f"{m['name']}, fine-tuned by ta-amps"
         self.models_page = load_json(CONTENT / "models-page.json")
+        self.network_page = load_json(CONTENT / "network-page.json")
+        self.network_geo = load_json(CONTENT / "network-geo.json")
         # How this film was made: written by the production agent once real evidence exists (gated; may be absent).
         self.film_made = load_json(CONTENT / "film-made.json") if (CONTENT / "film-made.json").is_file() else None
         self.manifest = load_json(MANIFEST)
@@ -375,7 +377,19 @@ def section_for(page: Path) -> str:
     return {"storyboards": "decks", "video": "decks"}.get(first, first)
 
 
-def head_block(prefix: str, nouns: Nouns | None = None) -> str:
+CANONICAL = "https://agora.eranosforgood.org/"  # Nov 2 domains: the one canonical host; workers.dev answers 301/308
+
+
+def canonical_link(page: Path | None) -> str:
+    """rel=canonical on the canonical host, for every page but the not-found page (it answers at any missing path)."""
+    if page is None or page.name == "404.html":
+        return ""
+    rel = page.relative_to(SITE).as_posix()
+    path = rel[: -len("index.html")] if rel.endswith("index.html") else rel
+    return f'<link rel="canonical" href="{attr(CANONICAL + path)}">'
+
+
+def head_block(prefix: str, nouns: Nouns | None = None, page: Path | None = None) -> str:
     share = nouns.site["share"] if nouns else None
     tags = [] if not share else [
         f'<meta property="og:site_name" content="{attr(share["site_name"])}">',
@@ -385,7 +399,7 @@ def head_block(prefix: str, nouns: Nouns | None = None) -> str:
         f'<meta property="og:image:alt" content="{attr(share["alt"])}">',
         '<meta name="twitter:card" content="summary_large_image">',
     ]
-    return "\n".join(tags + [
+    return "\n".join(tags + [x for x in [canonical_link(page)] if x] + [
         '<meta name="color-scheme" content="only light">',
         f'<link rel="stylesheet" href="{prefix}assets/fonts.css">',
         f'<link rel="stylesheet" href="{prefix}assets/tokens.css">',
@@ -434,7 +448,7 @@ def tour_block(prefix: str, nouns: Nouns) -> str:
     raw = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
     raw = raw.replace("<", "\\u003c").replace(">", "\\u003e").replace("&", "\\u0026")
     return "\n".join([
-        '<ta-judge-tour class="judge-tour" data-host="agora.ta-amps.workers.dev" hidden>',
+        '<ta-judge-tour class="judge-tour" data-host="agora.eranosforgood.org" hidden>',
         f'<script type="application/json">{raw}</script>',
         "</ta-judge-tour>",
         f'<script src="{prefix}assets/judge-tour.js" defer></script>',
@@ -463,19 +477,18 @@ def banner_block(prefix: str, nouns: Nouns) -> str:
 
 
 def footer_block(prefix: str, nouns: Nouns) -> str:
-    """The standard footer (ta-amps.footer/1, the same links in the same order on Eranos, Agora and Herma; MUST-FOLLOW
-    rule 13): the tile mark and the name, ONE row of links, and one short line. A link to this site becomes a path
-    from the page with no mark; a link to another site keeps its address and gets the external mark."""
+    """The standard footer v2 (ta-amps.footer/2, components v2 SiteFooter for Agora; MUST-FOLLOW rule 13): the tile mark
+    and the name, ONE row of links, and one short line. An external link keeps its address and its mark as the
+    contract gives them; a link on this host becomes a path from the page."""
     footer = nouns.site["footer"]
-    here = footer["here"].rstrip("/")
 
     def item(entry: dict) -> str:
         href = entry["href"]
-        if href == here or href.startswith(here + "/"):
-            return f'<li><a href="{link(prefix, href[len(here) + 1:])}">{text(entry["label"])}</a></li>'
-        if not href.startswith("https://"):
-            fail(f"site.json: the footer link {entry['label']!r} needs a full address, as the standard footer gives it")
-        return f'<li><a href="{attr(href)}">{text(entry["label"] + footer["external_mark"])}</a></li>'
+        if entry.get("external"):
+            if not href.startswith("https://") or not entry["label"].endswith("↗"):
+                fail(f"site.json: the footer link {entry['label']!r} is external, so it needs a full address and the mark")
+            return f'<li><a href="{attr(href)}">{text(entry["label"])}</a></li>'
+        return f'<li><a href="{link(prefix, href.lstrip("/"))}">{text(entry["label"])}</a></li>'
     return "\n".join([
         '<footer class="site-footer">',
         '<div class="wrap">',
@@ -508,7 +521,7 @@ def render_page(page: Path, content: str, nouns: Nouns) -> str:
         # A page that keeps its own head and header, such as the Studio, still gets the agent banner first, and the
         # judge tour under it (the Studio is the tour's live-queue step).
         return replace_block(content, "banner", banner_block(prefix, nouns) + "\n" + tour_block(prefix, nouns), page)
-    content = replace_block(content, "head", head_block(prefix, nouns), page)
+    content = replace_block(content, "head", head_block(prefix, nouns, page), page)
     content = replace_block(content, "header", header_block(page, prefix, nouns), page)
     return replace_block(content, "footer", footer_block(prefix, nouns), page)
 
@@ -1936,8 +1949,14 @@ def render_models(nouns: Nouns) -> str:
             rows.append((page["on_track"], ", ".join(stations)))
         for t in m.get("tested", []):
             rows.append((page["tested"], when(t)))
+        if m.get("hosting"):
+            rows.append((page["hosting"], m["hosting"]))
         dl = "".join(f"<dt>{text(k)}</dt><dd>{text(v)}</dd>" for k, v in rows)
-        extra = "".join(f'<p class="mu-note-small">{text(m[k])}</p>' for k in ("variant_note", "note") if m.get(k))
+        # Catalog v6 (Nov 2): each measured or trial-ready use, word for word as the catalog states it.
+        uses = "".join(f'<li><span class="mu-use-state">{text(page["use_states"][u["state"]])}</span> {text(u["text"])}</li>'
+                       for u in m.get("uses", []) if u.get("state") in page["use_states"])
+        uses = f'<p class="mu-uses-h">{text(page["uses_heading"])}</p><ul class="mu-uses">{uses}</ul>' if uses else ""
+        extra = uses + "".join(f'<p class="mu-note-small">{text(m[k])}</p>' for k in ("variant_note", "note") if m.get(k))
         model_id = f'<p class="mu-id"><code>{text(m["model_id"])}</code></p>' if m.get("model_id") else ""
         cid = card_id(m)
         return (f'<li class="mu-card{" mu-tuned" if "tuned" in m.get("kind", "") else ""}" id="{attr(cid)}" '
@@ -1992,17 +2011,167 @@ def render_models(nouns: Nouns) -> str:
     return page_shell(page["title"], page["description"], main)
 
 
+def network_json(value: dict) -> str:
+    """A noun as JSON that is safe inside a script element (the same escaping as banner_json)."""
+    raw = json.dumps(value, ensure_ascii=False, separators=(",", ":"))
+    return raw.replace("<", "\\u003c").replace(">", "\\u003e").replace("&", "\\u0026")
+
+
+def network_words(nouns: Nouns) -> dict:
+    """The words assets/network.js shows: the network-page noun. Model names, cities and kinds come with the answer."""
+    return {k: v for k, v in nouns.network_page.items() if k != "about"}
+
+
+def network_geo_block(nouns: Nouns) -> str:
+    geo = nouns.network_geo
+    if not re.fullmatch(r"[0-9Mmh. -]+", geo["dots"]) or geo["viewbox"][:2] != [0, 0]:
+        fail("network-geo.json: the land must be a plain dot path in a 0 0 W H viewBox")
+    data = {k: geo[k] for k in ("viewbox", "projection", "continents")}
+    return f'<script type="application/json" class="nw-geo">{network_json(data)}</script>'
+
+
+def network_world(nouns: Nouns, label: str | None, page: bool) -> str:
+    """The land as a dot matrix in inline SVG (Natural Earth 1:110m, Equal Earth), the layers the data centers, continent
+    pills, rings and the selection card are drawn on, and the quiet and empty lines."""
+    geo = nouns.network_geo
+    w, h = geo["viewbox"][2], geo["viewbox"][3]
+    aria = f'role="img" aria-label="{attr(label)}"' if label else 'aria-hidden="true"'
+    card = ('<div class="nw-card" data-card role="group" hidden></div>' if page else "")
+    return (f'<div class="nw-stage"><svg class="nw-world" viewBox="0 0 {int(w)} {int(h)}" {aria} focusable="false">'
+            f'<path class="nw-land" d="{attr(geo["dots"])}"/></svg>'
+            '<div class="nw-layer" data-layer></div><div class="nw-pulses" data-pulses aria-hidden="true"></div>'
+            f"{card}</div>")
+
+
+def network_strip(nouns: Nouns, site: str = "eranos") -> str:
+    """The strip for a home page (site "eranos": Right now; "teleion": Live capacity): the map without labels, one
+    headline, the last claim and a link to the full map. network.js fills it; without scripts it is the link alone."""
+    page = nouns.network_page
+    s = page["strip"][site]
+    return "\n".join([
+        f'<section class="nw-strip" data-network data-mode="strip" data-site="{attr(site)}" data-source="{attr(page["source"])}" '
+        f'aria-label="{attr(s["label"])}">',
+        network_world(nouns, None, False),
+        '<div class="nw-strip-text">',
+        f'<p class="nw-strip-eyebrow">{text(s["eyebrow"])}</p>',
+        f'<p class="nw-strip-headline" data-headline>{text(page["loading"])}</p>',
+        '<p class="nw-strip-sub" data-sub></p>',
+        '<p class="nw-strip-last" data-last hidden></p>',
+        f'<a class="nw-strip-cta" href="{attr(page["strip"]["href"])}">{text(s["cta"])}</a>',
+        "</div>",
+        f'<script type="application/json" class="nw-words">{network_json(network_words(nouns))}</script>',
+        network_geo_block(nouns),
+        "</section>",
+    ])
+
+
+def render_network(nouns: Nouns) -> str:
+    """Where workers connect (/network/; board LiveMap): a live map of the Cloudflare data centers workers connect
+    through and the Tasks they claim, from Herma's GET /q/network. The page holds no number: assets/network.js reads the
+    noun's source every 30 seconds, draws each data center at its latitude and longitude on the dot-matrix land, rings it
+    twice for each new claim (never with reduced motion), filters by kind of Task (?kind=), replays the last hour,
+    pauses, and shows the same facts as two tables. Every word is from the network-page noun; models, cities and kinds
+    come with the answer."""
+    page, prefix = nouns.network_page, "../"
+    c, f = page["controls"], page["feed"]
+    legend = page["legend"]
+    how = page["how"]
+    action = lambda name, label: (f'<button type="button" class="nw-action" data-act="{name}" aria-pressed="false" hidden>'
+                                  f"<span>{text(label)}</span></button>")
+    cols = lambda items: "".join(f'<th scope="col">{text(x)}</th>' for x in items)
+    shows = "".join(f"<li>{text(x)}</li>" for x in how["shows"])
+    never = "".join(f"<li>{text(x)}</li>" for x in how["never"])
+    t = page["table"]
+    main = "\n".join([
+        '<main id="main">',
+        f'<section class="nw" data-network data-mode="page" data-source="{attr(page["source"])}">',
+        '<div class="wrap page-head pg-head nw-head">',
+        '<div class="nw-head-text">',
+        f'<p class="pg-kicker">{text(page["eyebrow"])}</p>',
+        f'<h1>{text(page["heading"])}</h1>',
+        f'<p class="lead">{text(page["lead"])}</p>',
+        "</div>",
+        '<div class="nw-headline">',
+        f'<p class="nw-big" role="status" data-totals-big>{text(page["loading"])}</p>',
+        '<p class="nw-sub" data-totals-sub></p>',
+        "</div>",
+        "</div>",
+        '<div class="wrap nw-page">',
+        '<div class="nw-controls">',
+        '<div class="nw-actions">' + action("replay", c["replay"]) + action("pause", c["pause"]) + action("table", c["table"]) + "</div>",
+        f'<div class="nw-group" role="group" aria-label="{attr(page["filter"]["label"])}" data-kinds hidden>'
+        f'<span class="nw-group-label">{text(page["filter"]["label"])}</span></div>',
+        "</div>",
+        f'<p class="nw-band" data-band hidden><b>{text(page["replay_band"]["label"])}</b> · {text(page["replay_band"]["text"])}</p>',
+        '<p class="nw-status" data-status></p>',
+        '<div class="nw-body">',
+        '<div class="nw-view" data-view-map>',
+        '<figure class="nw-map">',
+        network_world(nouns, page["map_aria"]["empty"], True),
+        '<p class="nw-line" data-quiet hidden></p><p class="nw-line" data-empty hidden></p>',
+        '<figcaption class="nw-legend">'
+        f'<span class="nw-legend-item"><span class="nw-key nw-key-dot" aria-hidden="true"></span>{text(legend["data_center"])}</span>'
+        f'<span class="nw-legend-item"><span class="nw-key nw-key-continent" aria-hidden="true"></span>{text(legend["continent"])}</span>'
+        "</figcaption>",
+        "</figure>",
+        "</div>",
+        # Beside the map the feed is as tall as the map and scrolls; under it, on a phone, it shows the latest few.
+        '<div class="nw-feed" data-feed-card><div class="nw-feed-in">',
+        f'<div class="nw-feed-head"><h2 id="nw-feed-h" data-feed-title>{text(f["title"])}</h2>'
+        f'<span class="nw-state" data-state-chip data-state="live">{text(f["state"]["live"])}</span></div>',
+        '<div class="nw-feed-scroll" role="region" aria-labelledby="nw-feed-h" tabindex="0">',
+        '<ol class="nw-feed-list" data-feed></ol>',
+        '<p class="nw-feed-empty" data-feed-empty hidden></p>',
+        "</div>",
+        "</div></div>",
+        "</div>",
+        '<div class="nw-tables" data-view-table hidden>',
+        f'<div class="nw-table-wrap"><table class="nw-table"><caption>{text(t["centers_caption"])}</caption><thead><tr>{cols(t["centers_cols"])}</tr></thead>'
+        '<tbody data-rows-centers></tbody></table></div>',
+        f'<div class="nw-table-wrap"><table class="nw-table"><caption>{text(t["claims_caption"])}</caption><thead><tr>{cols(t["claims_cols"])}</tr></thead>'
+        '<tbody data-rows-claims></tbody></table></div>',
+        "</div>",
+        f'<p class="nw-shown">{text(page["shown"]["text"])} <a href="#{attr(how["id"])}">{text(page["shown"]["link"])}</a> · '
+        f'<a href="{attr(page["herma"]["dashboard"])}">{text(page["shown"]["herma"])} ↗</a></p>',
+        f'<noscript><p class="nw-noscript">{text(page["noscript"])}</p></noscript>',
+        f'<script type="application/json" class="nw-words">{network_json(network_words(nouns))}</script>',
+        network_geo_block(nouns),
+        "</div>",
+        "</section>",
+        '<div class="wrap nw-page nw-page-more">',
+        f'<section id="{attr(how["id"])}" class="nw-about" aria-labelledby="nw-about-h">',
+        f'<h2 id="nw-about-h">{text(how["heading"])}</h2>',
+        '<div class="nw-about-grid">',
+        f'<div><h3>{text(how["shows_heading"])}</h3><ul>{shows}</ul></div>',
+        f'<div><h3>{text(how["never_heading"])}</h3><ul>{never}</ul></div>',
+        "</div>",
+        f'<p class="nw-optout">{text(how["opt_out"])}</p>',
+        f'<p class="nw-source">{text(how["source"])} <a href="{attr(page["source"])}">{text(how["data_link"])}</a></p>',
+        f'<p class="nw-credits">{text(how["credits"])}</p>',
+        "</section>",
+        "</div>",
+        "</main>",
+        f'<script src="{prefix}assets/network.js" defer></script>',
+    ])
+    return page_shell(page["title"], page["description"], main,
+                      extra_head=pages_head(prefix) + f'\n<link rel="stylesheet" href="{prefix}assets/network.css">')
+
+
 FILM_MADE_STATES = ("phase-1", "final")
 
 
 def render_film_made(nouns: Nouns) -> str | None:
     """How this film was made (/film/made/; board AgoraFilmMade, gated). The production agent writes the people-readable
     facts into site/content/film-made.json: each step of making the film, who did it, the model it named, when and how
-    long, and one "Record ↗" link per film to its production record, never a hash. The page exists only once real
-    evidence does (status phase-1 or final); before that, nothing is built and nothing links it."""
+    long, and one "Record ↗" link per film to its production record, never a hash. Until real evidence exists (status
+    phase-1 or final) the page is a quiet state from the film noun (the lead, Nov 2: the route is served from now on),
+    and nothing links it."""
     noun = nouns.film_made
     if not noun or noun.get("status") not in FILM_MADE_STATES:
-        return None
+        quiet = nouns.film["made_quiet"]
+        main = "\n".join(['<main id="main">', page_head(quiet["heading"], quiet["lead"]),
+                          f'<div class="wrap uc-page"><p class="uc-note">{text(quiet["note"])}</p></div>', "</main>"])
+        return page_shell(quiet["title"], quiet["description"], main)
     prefix = "../../"
     sections = []
     for film in noun["films"]:
@@ -2510,12 +2679,28 @@ def partner_cards(page: dict, prefix: str) -> str:
             f'<p class="partner-never"><strong>{text(part["never"]["heading"])}</strong> {text(part["never"]["text"])}</p>')
 
 
-def track_text(item: dict, nouns: Nouns) -> str:
-    """A Track 2 line. The partner compute line is filled from the partner record, like the cards and the table."""
-    if item.get("fill") != "partners":
+def frontier_text(item: dict, nouns: Nouns) -> str:
+    """A Push the Frontier fact, filled from its record: the tuned model's measured numbers from the models catalog, or
+    the catalog's recorded Oct 31 run (its build and check times, tests and rule breaks). A record that no longer
+    supports the words stops the build."""
+    kind = item.get("fill")
+    if kind is None:
         return item["text"]
-    words = partner_words(nouns.deploy)
-    return fill(item["text_live"], words, "judges.json") if words else item["text"]
+    if kind == "glimmer":
+        model = next(m for m in nouns.catalog["meta_models"] if m["id"] == "muse-glimmer-30b")
+        numbers = model["tested"][0]["numbers"]
+        return fill(item["text"], {"before": f'{numbers["before_pct"]:.1f}', "after": f'{numbers["after_pct"]:.1f}',
+                                   "n": numbers["n"]}, "judges.json")
+    if kind == "checked_run":
+        steps = nouns.catalog["featured_use_case"]["steps"]
+        built = next(s for s in steps if s["title"] == "Built")
+        checked = next(s for s in steps if "tests_passed" in s)
+        if checked["rule_violations"] != 0:
+            fail("judges.json: the recorded run broke a rule, so its line cannot say none was broken")
+        return fill(item["text"], {"date": "Oct 31", "built": minutes_seconds(built["seconds"]),
+                                   "checked": minutes_seconds(checked["seconds"]), "tests": checked["tests_passed"]},
+                    "judges.json")
+    fail(f"judges.json: no record fills {kind!r}")
 
 
 def judges_rows(nouns: Nouns) -> list[tuple[str, str, dict]]:
@@ -2580,13 +2765,13 @@ def render_judges(nouns: Nouns) -> str:
         '<div class="wrap pg-body">',
         f'<section aria-labelledby="jg-steps"><h2 id="jg-steps">{text(page["steps_heading"])}</h2>'
         f'<ol class="jg-steps">{steps}</ol></section>',
-        # Track 2: Push the Frontier (ported from Gemini's d5d02e3 guide, Nov 1): what ta-amps adds to each part.
-        f'<section class="pg-card jg-track" aria-labelledby="jg-track"><p class="jg-track-kicker">{text(page["track"]["kicker"])}</p>'
-        f'<h2 id="jg-track">{text(page["track"]["heading"])}</h2><p>{text(page["track"]["lead"])}</p>'
+        # Push the Frontier, the event's second theme (Nov 2): four facts, each from its record.
+        f'<section class="pg-card jg-track" aria-labelledby="jg-track"><p class="jg-track-kicker">{text(page["frontier"]["eyebrow"])}</p>'
+        f'<h2 id="jg-track">{text(page["frontier"]["heading"])}</h2><p>{text(page["frontier"]["lead"])}</p>'
         '<ul class="jg-track-list">' + "".join(
-            f'<li><b>{text(item["title"])}</b> {text(track_text(item, nouns))} '
-            f'<a href="{link(prefix, item["href"])}">{text(item["label"])} →</a></li>' for item in page["track"]["items"])
-        + "</ul></section>",
+            f'<li><b>{text(item["title"])}</b> {text(frontier_text(item, nouns))} '
+            f'<a href="{link(prefix, item["href"])}">{text(item["label"])} →</a></li>' for item in page["frontier"]["items"])
+        + f'</ul><p class="jg-note">{text(page["frontier"]["footnote"])}</p></section>',
         f'<section class="pg-card" aria-labelledby="jg-real"><h2 id="jg-real">{text(page["real_heading"])}</h2>'
         f'<p>{text(page["real_lead"])}</p><div class="pg-table"><table><thead><tr>{head}</tr></thead>'
         f"<tbody>{rows}</tbody></table></div></section>",
@@ -2630,7 +2815,7 @@ def status_json_text(nouns: Nouns) -> str:
     view, words = status_view(nouns), nouns.status_words
     data = {
         "format": "ta-amps.agora.status.public.v1",
-        "page": "https://agora.ta-amps.workers.dev/status/",
+        "page": "https://agora.eranosforgood.org/status/",
         "checked_at": view["checked_at"],
         "how": view["how"],
         "overall": view["overall"],
@@ -3551,6 +3736,7 @@ def outputs_for(nouns: Nouns) -> dict[Path, str]:
     generated[SITE / "deploy" / "index.html"] = render_deploy(nouns)
     generated[SITE / "contribute" / "index.html"] = render_contribute(nouns)
     generated[SITE / "models" / "index.html"] = render_models(nouns)
+    generated[SITE / "network" / "index.html"] = render_network(nouns)
     film_made = render_film_made(nouns)
     if film_made:
         generated[SITE / "film" / "made" / "index.html"] = film_made

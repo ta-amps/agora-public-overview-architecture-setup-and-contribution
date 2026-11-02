@@ -9,7 +9,7 @@
 .home-start { padding-block: var(--space-8) var(--space-7); }
 .home-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--space-3) var(--space-6); }
 .home-actions .button { min-height: 48px; padding-inline: var(--space-5); }
-.home-tour { font-weight: 600; color: var(--color-noun-ink); }
+.home-tour { font-weight: 600; color: var(--color-object-ink); }
 .home-uses-all { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-6); }
 
 /* Shared parts */
@@ -17,7 +17,7 @@
 .pg-head { padding-block: var(--space-7) var(--space-6); }
 .pg-head h1 { max-width: 22ch; }
 .pg-head .lead { max-width: 48rem; }
-.pg-kicker { font-size: var(--text-small); font-weight: 600; color: var(--color-noun-ink); margin-bottom: var(--space-2); }
+.pg-kicker { font-size: var(--text-small); font-weight: 600; color: var(--color-object-ink); margin-bottom: var(--space-2); }
 .pg-chips { list-style: none; padding: 0; margin-top: var(--space-4); display: flex; flex-wrap: wrap; gap: var(--space-2); }
 .pg-chips li {
   font-size: 0.875rem;
@@ -78,7 +78,7 @@
 }
 .pg-state.st-answering { background: var(--color-real-wash); color: var(--color-real); }
 .pg-state.st-slow { background: var(--color-building-wash); color: var(--color-building); }
-.pg-state.st-not_answering { background: var(--color-verb-wash); color: var(--color-verb-ink); }
+.pg-state.st-not_answering { background: var(--color-task-wash); color: var(--color-task-ink); }
 
 /* Judges */
 
@@ -134,10 +134,10 @@
 }
 .st-overall.st-answering { border-color: var(--color-real); background: var(--color-real-wash); }
 .st-overall.st-slow { border-color: var(--color-building); background: var(--color-building-wash); }
-.st-overall.st-not_answering { border-color: var(--color-verb-ink); background: var(--color-verb-wash); }
+.st-overall.st-not_answering { border-color: var(--color-task-ink); background: var(--color-task-wash); }
 .st-overall-title { font-family: var(--font-display); font-size: var(--text-title); font-weight: 600; }
 .st-checked { margin-top: var(--space-3); max-width: 62ch; font-size: var(--text-small); color: var(--color-ink-2); }
-.st-host { display: block; font-family: var(--font-mono); font-size: 0.8125rem; font-weight: 400; color: var(--color-noun-ink); }
+.st-host { display: block; font-family: var(--font-mono); font-size: 0.8125rem; font-weight: 400; color: var(--color-object-ink); }
 .st-answer { display: block; font-family: var(--font-mono); font-size: 0.8125rem; color: var(--color-muted); }
 .st-problems { list-style: none; padding: 0; display: grid; gap: var(--space-3); }
 .st-problems li { padding: var(--space-3) var(--space-4); border-left: 3px solid var(--color-rule-strong); background: var(--color-paper-2); }

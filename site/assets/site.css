@@ -1,7 +1,7 @@
 /* Design record: Paper & Ink, light only (owner, Nov 1: dark ink is only for text, primary buttons and the logo; it is
    never a page or panel background, the agent banner included). Every piece of AI work is a tile: blue tiles are Task
    Objects (reusable things), rust tiles are Tasks (work). Tokens v3 come from assets/tokens.css (copied from Eranos);
-   this block maps Agora's older names onto them. CSS names may keep --noun/--verb; new code uses --task* and --object*.
+   this block maps Agora's older names onto them. CSS names may keep --object/--task; new code uses --task* and --object*.
    Space Grotesk display, IBM Plex Sans body, JetBrains Mono for commands only, all self-hosted (assets/fonts.css). */
 
 :root {
@@ -17,24 +17,18 @@
   --color-ink-2: var(--text-2);
   --color-muted: var(--text-3);
   --color-muted-on-stage: #555B68;
-  --color-noun: var(--noun);
-  --color-noun-ink: var(--noun-text);
-  --color-noun-wash: var(--noun-wash);
-  --color-verb: var(--verb);
-  --color-verb-ink: var(--verb-text);
-  --color-verb-wash: var(--verb-wash);
-  --object: var(--noun);
-  --object-text: var(--noun-text);
-  --object-wash: var(--noun-wash);
-  --task: var(--verb);
-  --task-text: var(--verb-text);
-  --task-wash: var(--verb-wash);
+  --color-object: var(--object);
+  --color-object-ink: var(--object-text);
+  --color-object-wash: var(--object-wash);
+  --color-task: var(--task);
+  --color-task-ink: var(--task-text);
+  --color-task-wash: var(--task-wash);
   /* Bands, code and the film section were dark; they are light panels now, with ink text. */
   --color-band: var(--sunken);
   --color-band-ink: var(--text);
   --color-band-ink-2: var(--text-2);
-  --color-band-noun: var(--noun-text);
-  --color-band-verb: var(--verb-text);
+  --color-band-noun: var(--object-text);
+  --color-band-verb: var(--task-text);
   --color-code: var(--sunken);
   --color-code-ink: var(--text);
   --color-film: var(--sunken);
@@ -137,7 +131,7 @@ figure,
 blockquote { margin: 0; }
 
 a {
-  color: var(--color-noun-ink);
+  color: var(--color-object-ink);
   text-decoration-thickness: 1px;
   text-underline-offset: 0.2em;
 }
@@ -221,6 +215,7 @@ ta-agent-banner {
   --agent-banner-ink: #11161F;
   --agent-banner-muted: #3B4252;
   --agent-banner-raised: #FFFDF8;
+  --agent-banner-paper: #F5F2EA;
   --agent-banner-line: #E2DCCF;
   --agent-banner-edge: #8A8476;
   --agent-banner-link: #24519B;
@@ -675,12 +670,12 @@ html.js .film-video:not(:fullscreen)::-webkit-media-text-track-display-backdrop 
   min-width: 0;
   padding: var(--space-6);
   border: 1px solid var(--color-rule);
-  border-top: 5px solid var(--color-noun);
+  border-top: 5px solid var(--color-object);
   border-radius: var(--radius-3);
   background: var(--color-paper-2);
 }
 
-.hub-card.hub-verb { border-top-color: var(--color-verb); }
+.hub-card.hub-verb { border-top-color: var(--color-task); }
 .hub-card.hub-cascade { border-top-color: var(--color-ink); }
 
 .hub-step {
@@ -689,10 +684,10 @@ html.js .film-video:not(:fullscreen)::-webkit-media-text-track-display-backdrop 
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--color-noun-ink);
+  color: var(--color-object-ink);
 }
 
-.hub-card.hub-verb .hub-step { color: var(--color-verb-ink); }
+.hub-card.hub-verb .hub-step { color: var(--color-task-ink); }
 .hub-card.hub-cascade .hub-step { color: var(--color-muted); }
 .hub-card-title { font-size: 1.3125rem; line-height: 1.2; }
 .hub-card-summary { color: var(--color-ink-2); font-size: var(--text-small); line-height: 1.55; text-wrap: pretty; }
@@ -790,7 +785,7 @@ html.js .film-video:not(:fullscreen)::-webkit-media-text-track-display-backdrop 
   font-size: var(--text-small);
 }
 
-.deck-card-cta { display: inline-flex; align-items: center; gap: var(--space-1); font-weight: 600; color: var(--color-noun-ink); }
+.deck-card-cta { display: inline-flex; align-items: center; gap: var(--space-1); font-weight: 600; color: var(--color-object-ink); }
 .deck-card-cta .chevron { transform: rotate(-90deg); }
 .deck-card-pdf { position: relative; z-index: 1; color: var(--color-muted); font-weight: 600; }
 .deck-card-pdf:hover { color: var(--color-ink); }
@@ -873,8 +868,8 @@ html.js .film-video:not(:fullscreen)::-webkit-media-text-track-display-backdrop 
   border-radius: 999px;
 }
 
-.chips.noun li { background: var(--color-noun-wash); color: var(--color-noun-ink); }
-.chips.verb li { background: var(--color-verb-wash); color: var(--color-verb-ink); }
+.chips.noun li { background: var(--color-object-wash); color: var(--color-object-ink); }
+.chips.verb li { background: var(--color-task-wash); color: var(--color-task-ink); }
 
 /* A use case's packs: links to their cards on the library page, outlined so they read as links, not terms */
 .chips.pack li { padding: 0; }
@@ -902,7 +897,7 @@ html.js .film-video:not(:fullscreen)::-webkit-media-text-track-display-backdrop 
   padding-block: var(--space-1);
   font-size: var(--text-small);
   font-weight: 600;
-  color: var(--color-noun-ink);
+  color: var(--color-object-ink);
 }
 
 .use-link .chevron { flex: none; transform: rotate(-90deg); }
@@ -919,7 +914,7 @@ html.js .film-video:not(:fullscreen)::-webkit-media-text-track-display-backdrop 
   gap: var(--space-5) var(--space-8);
   padding: var(--space-7);
   border-color: var(--color-rule-strong);
-  border-top: 6px solid var(--color-noun);
+  border-top: 6px solid var(--color-object);
 }
 
 .use-card.use-lead .use-head { display: contents; }
@@ -1101,8 +1096,8 @@ tbody th { font-weight: 600; }
 .term-list dt { font-weight: 600; color: var(--color-ink); }
 .term-list dd { margin: var(--space-1) 0 0; color: var(--color-ink-2); }
 
-.noun-word { color: var(--color-noun-ink); font-weight: 600; }
-.verb-word { color: var(--color-verb-ink); font-weight: 600; }
+.noun-word { color: var(--color-object-ink); font-weight: 600; }
+.verb-word { color: var(--color-task-ink); font-weight: 600; }
 .statement .noun-word,
 .statement .verb-word { font-weight: inherit; }
 
@@ -1232,10 +1227,10 @@ tbody th { font-weight: 600; }
   padding-block: var(--space-4);
   border-top: 1px solid var(--color-rule-strong);
 }
-.film-at { font-family: var(--font-mono); font-size: var(--text-small); color: var(--color-verb-ink); padding-top: 0.2em; }
+.film-at { font-family: var(--font-mono); font-size: var(--text-small); color: var(--color-task-ink); padding-top: 0.2em; }
 .film-words { font-size: var(--text-lead); line-height: 1.45; color: var(--color-ink); max-width: 62ch; }
 .film-picture { margin-top: var(--space-2); font-size: var(--text-small); color: var(--color-ink-2); max-width: 72ch; }
-.film-picture-label { font-weight: 600; color: var(--color-noun-ink); }
+.film-picture-label { font-weight: 600; color: var(--color-object-ink); }
 .film-note { font-size: var(--text-small); color: var(--color-muted); max-width: 72ch; }
 .film-label a { color: inherit; }
 
@@ -1265,14 +1260,14 @@ tbody th { font-weight: 600; }
   min-width: 0;
   padding: var(--space-6);
   border: 1px solid var(--color-rule);
-  border-top: 6px solid var(--color-verb);
+  border-top: 6px solid var(--color-task);
   border-radius: var(--radius-3);
   background: var(--color-paper-2);
 }
 
-.learn-mean.noun { border-top-color: var(--color-noun); }
-.learn-kind { font-size: var(--text-micro); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-verb-ink); }
-.learn-mean.noun .learn-kind { color: var(--color-noun-ink); }
+.learn-mean.noun { border-top-color: var(--color-object); }
+.learn-kind { font-size: var(--text-micro); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-task-ink); }
+.learn-mean.noun .learn-kind { color: var(--color-object-ink); }
 .learn-mean h3 { font-size: var(--text-title); line-height: 1.2; }
 .learn-text { color: var(--color-ink-2); line-height: 1.55; text-wrap: pretty; }
 .learn-note { max-width: 62ch; color: var(--color-ink-2); }
@@ -1298,7 +1293,7 @@ tbody th { font-weight: 600; }
   min-width: 0;
   padding: var(--space-5);
   border: 1px solid var(--color-rule);
-  border-top: 4px solid var(--color-verb);
+  border-top: 4px solid var(--color-task);
   border-radius: var(--radius-2);
   background: var(--color-paper-2);
 }
@@ -1308,7 +1303,7 @@ tbody th { font-weight: 600; }
   font-family: var(--font-mono);
   font-size: var(--text-micro);
   letter-spacing: 0.04em;
-  color: var(--color-verb-ink);
+  color: var(--color-task-ink);
 }
 
 .loop-verb { font-size: 1.25rem; line-height: 1.2; }
@@ -1320,8 +1315,8 @@ tbody th { font-weight: 600; }
   line-height: 1.4;
   padding: 0.125rem var(--space-2);
   border-radius: 999px;
-  background: var(--color-noun-wash);
-  color: var(--color-noun-ink);
+  background: var(--color-object-wash);
+  color: var(--color-object-ink);
 }
 
 .loop-text { font-size: var(--text-small); line-height: 1.5; color: var(--color-ink-2); text-wrap: pretty; }
@@ -1342,7 +1337,7 @@ tbody th { font-weight: 600; }
 .loop-back {
   max-width: 62ch;
   padding-inline-start: var(--space-4);
-  border-inline-start: 3px solid var(--color-verb);
+  border-inline-start: 3px solid var(--color-task);
   color: var(--color-ink-2);
 }
 
@@ -1486,8 +1481,8 @@ tbody th { font-weight: 600; }
   border-inline-start: 3px solid var(--color-rule-strong);
 }
 
-.lib-stat.noun { border-inline-start-color: var(--color-noun); }
-.lib-stat.verb { border-inline-start-color: var(--color-verb); }
+.lib-stat.noun { border-inline-start-color: var(--color-object); }
+.lib-stat.verb { border-inline-start-color: var(--color-task); }
 
 .lib-stat-n {
   font-family: var(--font-display);
@@ -1499,8 +1494,8 @@ tbody th { font-weight: 600; }
   color: var(--color-ink);
 }
 
-.lib-stat.noun .lib-stat-n { color: var(--color-noun-ink); }
-.lib-stat.verb .lib-stat-n { color: var(--color-verb-ink); }
+.lib-stat.noun .lib-stat-n { color: var(--color-object-ink); }
+.lib-stat.verb .lib-stat-n { color: var(--color-task-ink); }
 .lib-stat-label { font-size: var(--text-small); line-height: 1.35; color: var(--color-ink-2); text-wrap: balance; }
 
 .lib-about { display: grid; gap: var(--space-2); padding-top: var(--space-5); border-top: 1px solid var(--color-rule); }
@@ -1605,7 +1600,7 @@ tbody th { font-weight: 600; }
 
 .lib-card:hover { border-color: var(--color-rule-strong); box-shadow: var(--shadow-lift); }
 .lib-card:has(.lib-card-link:focus-visible) { outline: 3px solid var(--color-focus); outline-offset: 3px; }
-.lib-card:target { border-color: var(--color-verb); box-shadow: 0 0 0 3px var(--color-verb-wash); }
+.lib-card:target { border-color: var(--color-task); box-shadow: 0 0 0 3px var(--color-task-wash); }
 
 .lib-card-meta {
   display: flex;
@@ -1663,7 +1658,7 @@ tbody th { font-weight: 600; }
 }
 
 .lib-card-counts { display: inline-flex; flex-wrap: wrap; gap: var(--space-1) var(--space-3); font-variant-numeric: tabular-nums; }
-.lib-card-cta { display: inline-flex; align-items: center; gap: var(--space-1); font-weight: 600; color: var(--color-noun-ink); }
+.lib-card-cta { display: inline-flex; align-items: center; gap: var(--space-1); font-weight: 600; color: var(--color-object-ink); }
 .lib-card-cta .chevron { transform: rotate(-90deg); }
 
 @media (max-width: 64rem) {
@@ -1703,7 +1698,7 @@ tbody th { font-weight: 600; }
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--color-verb-ink);
+  color: var(--color-task-ink);
 }
 
 .exp-shell h2,
@@ -1837,10 +1832,10 @@ tbody th { font-weight: 600; }
   background: var(--color-paper);
 }
 
-.exp-card.exp-kind-noun { border-top-color: var(--color-noun); }
-.exp-card.exp-kind-verb { border-top-color: var(--color-verb); }
+.exp-card.exp-kind-noun { border-top-color: var(--color-object); }
+.exp-card.exp-kind-verb { border-top-color: var(--color-task); }
 .exp-card.exp-kind-pack { border-top-color: var(--color-ink); }
-.exp-card.exp-kind-project { border-top-color: var(--color-noun); }
+.exp-card.exp-kind-project { border-top-color: var(--color-object); }
 
 .exp-card-meta {
   display: flex;
@@ -1862,8 +1857,8 @@ tbody th { font-weight: 600; }
   color: var(--color-ink);
 }
 
-.exp-pill.noun { background: var(--color-noun-wash); color: var(--color-noun-ink); }
-.exp-pill.verb { background: var(--color-verb-wash); color: var(--color-verb-ink); }
+.exp-pill.noun { background: var(--color-object-wash); color: var(--color-object-ink); }
+.exp-pill.verb { background: var(--color-task-wash); color: var(--color-task-ink); }
 
 .exp-card-title { font-size: 1.125rem; line-height: 1.25; }
 .exp-card-title a { color: var(--color-ink); text-decoration: none; }
@@ -1909,13 +1904,13 @@ tbody th { font-weight: 600; }
   min-width: 0;
   padding: var(--space-4) var(--space-5);
   border: 1px solid var(--color-rule);
-  border-top: 4px solid var(--color-noun);
+  border-top: 4px solid var(--color-object);
   border-radius: var(--radius-2);
   background: var(--color-paper);
 }
 
 .harness-card h3 { font-size: 1.125rem; line-height: 1.2; }
-.harness-role { font-family: var(--font-mono); font-size: var(--text-micro); color: var(--color-noun-ink); font-weight: 600; }
+.harness-role { font-family: var(--font-mono); font-size: var(--text-micro); color: var(--color-object-ink); font-weight: 600; }
 .harness-detail { font-size: var(--text-small); line-height: 1.5; color: var(--color-ink-2); }
 
 .harness-routing {
@@ -1943,13 +1938,13 @@ tbody th { font-weight: 600; }
   min-width: 0;
   padding: var(--space-4) var(--space-5);
   border: 1px solid var(--color-rule);
-  border-inline-start: 4px solid var(--color-verb);
+  border-inline-start: 4px solid var(--color-task);
   border-radius: var(--radius-2);
   background: var(--color-paper);
 }
 
 .routing-mode { font-family: var(--font-display); font-weight: 700; color: var(--color-ink); font-size: 1.0625rem; }
-.routing-when { font-family: var(--font-mono); font-size: var(--text-micro); color: var(--color-verb-ink); font-weight: 600; }
+.routing-when { font-family: var(--font-mono); font-size: var(--text-micro); color: var(--color-task-ink); font-weight: 600; }
 .routing-outcome { font-size: var(--text-small); line-height: 1.5; color: var(--color-ink-2); }
 
 /* Ecosystem callout banner */
@@ -2027,7 +2022,7 @@ tbody th { font-weight: 600; }
   font-family: var(--font-mono);
   font-size: var(--text-micro);
   font-weight: 600;
-  color: var(--color-verb-ink);
+  color: var(--color-task-ink);
 }
 
 .deploy-card h3 {
@@ -2122,7 +2117,7 @@ pre code {
 .start-name { display: flex; align-items: center; gap: var(--space-3); font-family: var(--font-display); font-weight: 600;
   font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.25rem); }
 .start-name svg { width: 30px; height: 30px; flex: none; }
-.start-host { font-family: var(--font-mono); font-size: 1.125rem; color: var(--color-noun-ink); overflow-wrap: anywhere; }
+.start-host { font-family: var(--font-mono); font-size: 1.125rem; color: var(--color-object-ink); overflow-wrap: anywhere; }
 .start-line { font-size: 1.25rem; color: var(--color-ink-2); }
 .start-made { font-family: var(--font-mono); font-size: var(--text-small); color: var(--color-ink-2); text-align: center; }
 .band-head { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-2) var(--space-5); flex-wrap: wrap; }
@@ -2162,7 +2157,7 @@ pre code {
 .feed-pick a { font-weight: 600; }
 .feed-meta { color: var(--color-ink-2); font-size: var(--text-small); }
 .feed-claims { list-style: none; padding: 0; display: grid; gap: var(--space-1); font-size: var(--text-small); }
-.feed-metric { font-family: var(--font-mono); font-size: var(--text-micro); color: var(--color-noun-ink); }
+.feed-metric { font-family: var(--font-mono); font-size: var(--text-micro); color: var(--color-object-ink); }
 .feed-none { font-size: var(--text-small); color: var(--color-muted); }
 .feed-question { font-size: var(--text-lead); max-width: var(--measure); }
 .feed-answer { white-space: pre-wrap; overflow-wrap: anywhere; font-family: var(--font-mono); font-size: var(--text-small); line-height: 1.6;
@@ -2272,3 +2267,10 @@ pre code {
 .jg-track-list a { white-space: nowrap; font-weight: 600; }
 
 
+
+/* Models used, catalog v6: a tuned model's measured uses, each with its state. */
+.mu-uses-h { margin: var(--space-3) 0 var(--space-1); font-weight: 600; }
+.mu-uses { margin: 0; padding-left: 1.1em; display: grid; gap: var(--space-2); }
+.mu-use-state { font-weight: 600; color: var(--color-ink); margin-inline-end: 0.35em; }
+
+.jg-note { margin: var(--space-4) 0 0; font-size: var(--text-small); color: var(--color-ink-2); }

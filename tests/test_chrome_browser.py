@@ -12,7 +12,7 @@ try:
 except ImportError:  # run as tests.test_chrome_browser from the repository root
     from tests.test_viewer_browser import LocalSite, sync_playwright
 
-LINE = "Read https://agora.ta-amps.workers.dev/llms.txt and follow it."
+LINE = "Read https://agora.eranosforgood.org/llms.txt and follow it."
 
 
 @unittest.skipIf(sync_playwright is None, "needs the Playwright package")
@@ -65,11 +65,11 @@ class Chrome(LocalSite):
         hrefs = page.evaluate("""() => {
             const b = document.querySelector("ta-agent-banner");
             return [b.href("javascript:alert(1)"), b.href("data:text/html,x"), b.href("/llms.txt"),
-                    b.href("https://eranos.ta-amps.workers.dev/connect")];
+                    b.href("https://eranosforgood.org/connect")];
         }""")
         self.assertEqual(["#", "#"], hrefs[:2])
         self.assertTrue(hrefs[2].endswith("/llms.txt"), hrefs[2])
-        self.assertEqual("https://eranos.ta-amps.workers.dev/connect", hrefs[3])
+        self.assertEqual("https://eranosforgood.org/connect", hrefs[3])
 
     def test_copy_puts_exactly_the_line_on_the_clipboard_and_says_so(self):
         page = self.open(grant_clipboard=True, viewport={"width": 1280, "height": 720})
@@ -117,7 +117,7 @@ class Chrome(LocalSite):
             link = page.locator(".eranos-link")
             self.assertTrue(link.is_visible(), viewport)
             self.assertLess(link.bounding_box()["y"] + link.bounding_box()["height"], viewport["height"], viewport)
-            self.assertEqual("https://eranos.ta-amps.workers.dev/", link.get_attribute("href"))
+            self.assertEqual("https://eranosforgood.org/", link.get_attribute("href"))
 
     def test_the_phone_menu_opens_and_closes_the_links(self):
         page = self.open(viewport={"width": 390, "height": 844})
@@ -139,7 +139,7 @@ class Chrome(LocalSite):
         tour = page.locator("ta-judge-tour")
         self.assertEqual("1", tour.get_attribute("data-step"))
         self.assertIn("45-second tour", page.locator("ta-judge-tour nav").inner_text())
-        self.assertEqual("https://eranos.ta-amps.workers.dev/nonprofits?tour=judge", page.locator("ta-judge-tour a").get_attribute("href"))
+        self.assertEqual("https://eranosforgood.org/nonprofits?tour=judge", page.locator("ta-judge-tour a").get_attribute("href"))
         self.assertEqual("step", page.locator("ta-judge-tour li").first.get_attribute("aria-current"))
         header = page.locator(".site-header").bounding_box()
         self.assertGreaterEqual(tour.bounding_box()["y"], header["y"] + header["height"] - 1)  # under the header
@@ -147,7 +147,7 @@ class Chrome(LocalSite):
         page.goto(self.base + "studio/?tour=judge", wait_until="domcontentloaded")
         page.wait_for_selector("ta-judge-tour[data-active=\"true\"]", state="attached")
         self.assertEqual("5", page.locator("ta-judge-tour").get_attribute("data-step"))
-        self.assertEqual("https://agora.ta-amps.workers.dev/?tour=judge", page.locator("ta-judge-tour a").get_attribute("href"))
+        self.assertEqual("https://agora.eranosforgood.org/?tour=judge", page.locator("ta-judge-tour a").get_attribute("href"))
         page.click("ta-judge-tour button")
         self.assertTrue(page.evaluate("document.querySelector('ta-judge-tour').hidden"))
         self.assertNotIn("tour=judge", page.url)

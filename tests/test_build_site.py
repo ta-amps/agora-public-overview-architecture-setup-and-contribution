@@ -133,7 +133,7 @@ class Builder(unittest.TestCase):
         # from the agent-banner noun for the shared <ta-agent-banner> element, with a plain line and an llms.txt
         # link for readers without scripts. The copied line is exactly the noun's.
         embedded = f'<script type="application/json">{build.banner_json(self.nouns)}</script>'
-        self.assertEqual("Read https://agora.ta-amps.workers.dev/llms.txt and follow it.", self.nouns.banner["copy_text"])
+        self.assertEqual("Read https://agora.eranosforgood.org/llms.txt and follow it.", self.nouns.banner["copy_text"])
         for path, content in self.outputs.items():
             if path.suffix != ".html":
                 continue
@@ -211,9 +211,9 @@ class Builder(unittest.TestCase):
         self.assertEqual(1, main.count("<h1"))
         self.assertIn(f"<h1>{build.text(start['heading'])}</h1>", main)
         self.assertEqual(["Eranos", "Agora"], [card["name"] for card in start["cards"]])
-        self.assertIn('href="https://eranos.ta-amps.workers.dev/"', main)
+        self.assertIn('href="https://eranosforgood.org/"', main)
         self.assertIn('href="how-it-works/"', main)
-        self.assertIn('<a class="button" href="https://eranos.ta-amps.workers.dev/">Open Eranos ↗</a>', main)
+        self.assertIn('<a class="button" href="https://eranosforgood.org/">Open Eranos ↗</a>', main)
         self.assertIn('<a class="home-tour" href="?tour=judge">Take the 45-second tour →</a>', main)
         self.assertEqual(5, main.count('class="deck-card"'))
         # The same six use cases as /use-cases/ (board AgoraHome, Nov 1), each with its present-tense state.
@@ -300,13 +300,15 @@ class Builder(unittest.TestCase):
                 continue  # a deck's slide sources write the tokens; the deck page they become renders them
             self.assertNotIn("{{model:", page.read_text(encoding="utf-8"), page)
 
-    def test_the_film_made_page_exists_only_with_real_evidence_and_shows_no_hash(self):
-        # Gated (board AgoraFilmMade): no page until the production agent writes phase-1 or final facts.
+    def test_the_film_made_page_is_quiet_until_real_evidence_and_shows_no_hash(self):
+        # The lead, Nov 2: the route is served from now on; until the production agent writes phase-1 or final facts it
+        # is a quiet state from the film noun, with no step, no number and no record link.
         nouns = copy.copy(self.nouns)
-        nouns.film_made = None
-        self.assertIsNone(build.render_film_made(nouns))
-        nouns.film_made = {"status": "draft", "films": []}
-        self.assertIsNone(build.render_film_made(nouns))
+        for noun in (None, {"status": "draft", "films": []}):
+            nouns.film_made = noun
+            quiet = build.render_film_made(nouns)
+            self.assertIn(build.text(self.nouns.film["made_quiet"]["note"]), quiet)
+            self.assertNotIn("uc-steps", quiet)
         nouns.film_made = {
             "status": "phase-1", "title": "How this film was made | Agora", "description": "d", "heading": "How this film was made",
             "lead": "Every step of making the film is a Task, and every step is recorded.",
@@ -319,7 +321,7 @@ class Builder(unittest.TestCase):
         self.assertIn('href="../../evidence/"', page)
         self.assertIsNone(re.search(r"\b[0-9a-f]{12,}\b", build.plain_text(build.main_of(page))))
         built = self.nouns.film_made is not None and self.nouns.film_made.get("status") in build.FILM_MADE_STATES
-        self.assertEqual(built, build.SITE / "film" / "made" / "index.html" in self.outputs)
+        self.assertIn(build.SITE / "film" / "made" / "index.html", self.outputs)
         # Whenever the page is built, its noun is served byte for byte beside it (the production agent reads it).
         self.assertEqual(built, build.SITE / "film" / "made" / "film-made.json" in self.outputs)
         if built:
@@ -382,9 +384,9 @@ class Builder(unittest.TestCase):
 
     def test_learning_is_a_tab_of_agora_built_from_its_noun(self):
         # A page of Agora, not a new surface. November 1 (v2 brief): the header reads How it works, Use cases, Models used, Decks,
-        # Evidence (the film is withdrawn until its re-recorded cut lands). The standard footer (ta-amps.footer/1) lists
-        # the same links on every surface, so How it works is the page that links Learning.
-        self.assertEqual(["How it works", "Use cases", "Models used", "Decks", "Evidence"],
+        # Evidence (the film is withdrawn until its re-recorded cut lands); November 2 adds Network after Models used. The
+        # standard footer (ta-amps.footer/1) lists the same links on every surface, so How it works is the page that links Learning.
+        self.assertEqual(["How it works", "Use cases", "Models used", "Network", "Decks", "Evidence"],
                          [item["label"] for item in self.nouns.site["nav"]])
         page = self.outputs[build.SITE / "learning" / "index.html"]
         self.assertIn('href="../learning/"', self.outputs[build.SITE / "how-it-works" / "index.html"])
@@ -431,7 +433,7 @@ class Builder(unittest.TestCase):
     def test_the_library_is_a_page_of_agora_built_from_its_noun(self):
         library, explorer, ecosystem = self.nouns.library, self.nouns.explorer, self.nouns.ecosystem
         page = self.outputs[build.SITE / "library" / "index.html"]
-        self.assertIn('href="../library/"', self.outputs[build.SITE / "judges" / "index.html"])  # not in the footer now
+        self.assertIn('href="../library/', self.outputs[build.SITE / "learning" / "index.html"])  # not in the footer now
         main = build.main_of(page)
         # Every word the page shows is a string of its nouns. The rest is the measured part: numbers, the commit and
         # its date.
@@ -639,7 +641,7 @@ class Builder(unittest.TestCase):
             build.repoint(f"{tessera}/tree/some-branch/x", on)
         with self.assertRaises(build.BuildError):
             build.repoint("https://github.com/ta-amps/another-repo", on)
-        self.assertEqual("git clone https://agora.ta-amps.workers.dev/git/tessera-infrastructure-work-and-storage-engine.git\n",
+        self.assertEqual("git clone https://agora.eranosforgood.org/git/tessera-infrastructure-work-and-storage-engine.git\n",
                          build.repoint(f"git clone {tessera}.git\n", on))
         # Cards (the lead, Nov 2): every link into a repository shown as a card goes to its card; a clone keeps GitHub.
         shown = dict(links, mirrored=[], git_served=[], cards=["tessera-infrastructure-work-and-storage-engine"])
@@ -698,22 +700,23 @@ class Builder(unittest.TestCase):
         self.assertIn(f'<meta name="description" content="{build.attr(description)}">', self.outputs[build.SITE / "index.html"])
 
     def test_the_footer_is_the_standard_one_and_the_privacy_facts_match_what_the_pages_load(self):
-        # MUST-FOLLOW rule 13 and ta-amps.footer/1: the tile mark and the name, ONE row of links (the same links in the
-        # same order on every surface; a link to another site carries the mark) and one short line. Never two rows.
+        # MUST-FOLLOW rule 13 and ta-amps.footer/2 (components v2 SiteFooter, surface agora): the tile mark and the
+        # name, ONE row of links (another host's link absolute with the mark; this host's a path) and one short line.
         footer = self.nouns.site["footer"]
-        here = footer["here"]
-        spec_path = ROOT.parent.parent / "shared" / "footer.v1.json"
-        if spec_path.is_file():  # the shared spec sits beside this checkout in the working notes
-            spec = json.loads(spec_path.read_text(encoding="utf-8"))
-            self.assertEqual(spec["links"], footer["links"])
-            self.assertEqual((spec["external_mark"], spec["line"]["default"]), (footer["external_mark"], footer["line"]))
-        expected = [e["label"] + ("" if e["href"].startswith(here) else footer["external_mark"]) for e in footer["links"]]
+        spec_path = ROOT.parents[2] / "coordination-2026-10-31" / "claude-design-components.v2.json"
+        if spec_path.is_file():  # the shared contract sits beside this checkout in the working notes
+            spec = json.loads(spec_path.read_text(encoding="utf-8"))["components"]["SiteFooter"]["surfaces"]["agora"]
+            self.assertEqual((spec["links"], spec["line"]), (footer["links"], footer["line"]))
+        expected = [e["label"] for e in footer["links"]]
         for path, page in self.outputs.items():
             if path.suffix == ".html" and "<!-- site:footer -->" in page:
                 block = page[page.index('<footer class="site-footer">'):page.index("</footer>")]
                 self.assertEqual(1, block.count("<nav"), path)
                 self.assertEqual(1, block.count("<ul>"), path)
                 self.assertEqual(expected, re.findall(r"<a href=\"[^\"]*\">([^<]*)</a>", block), path)
+                for entry in footer["links"]:
+                    if entry["external"]:
+                        self.assertIn(f'href="{entry["href"]}"', block, path)
                 self.assertEqual(1, block.count(f'<p class="footer-line">{build.text(footer["line"])}</p>'), path)
         # What the site keeps in the browser is on the Security page now, the Live Studio's demo session included.
         security = next(b for b in self.nouns.security["blocks"] if b["heading"] == "What this site keeps in your browser")
@@ -723,7 +726,7 @@ class Builder(unittest.TestCase):
             self.assertIn(build.text(item), shown)
         self.assertIn("one-hour demo session", privacy)
         # "The fonts come from this site": no current page loads anything from another host (self-hosted fonts, Nov 1).
-        loads = re.compile(r'<(?:link|script|img|video|source|track|iframe)\b[^>]*?\s(?:href|src)="(https?://[^"/]+)', re.I)
+        loads = re.compile(r'<(?:link(?![^>]*rel="canonical")|script|img|video|source|track|iframe)\b[^>]*?\s(?:href|src)="(https?://[^"/]+)', re.I)
         hosts = {host for path, page in self.outputs.items() if path.suffix == ".html" for host in loads.findall(page)}
         self.assertEqual(set(), hosts)
         self.assertNotIn("Google Fonts", privacy)
@@ -735,6 +738,8 @@ class Builder(unittest.TestCase):
         banner_script = scripts.pop("agent-banner.js")
         # The judge tour can read its noun from a src address too; on Agora it is embedded and no tour has a src.
         tour_script = scripts.pop("judge-tour.js")
+        # The network page reads Herma's public network answer (tests/test_network_page.py holds its rules).
+        scripts.pop("network.js")
         self.assertEqual(1, len(re.findall(r"\bfetch\(", tour_script)))
         self.assertIsNone(re.search(r"\b(XMLHttpRequest|sendBeacon|WebSocket|localStorage)\b", tour_script))
         for path, page in self.outputs.items():
@@ -768,7 +773,7 @@ class Builder(unittest.TestCase):
         self.assertEqual("only light", re.search(r":root \{\s*color-scheme: ([\w ]+);", css).group(1))
         # Text and its paper pass AA: body, secondary and muted ink, both accents' text, and the notes headings.
         for fg, bg in (("--color-ink", "--color-paper"), ("--color-ink-2", "--color-paper"), ("--color-muted", "--color-paper"),
-                       ("--color-noun-ink", "--color-paper"), ("--color-verb-ink", "--color-paper"),
+                       ("--color-object-ink", "--color-paper"), ("--color-task-ink", "--color-paper"),
                        ("--color-band-ink", "--color-band"), ("--color-code-ink", "--color-code"),
                        ("--color-button-ink", "--color-button")):
             self.assertGreaterEqual(contrast(light[fg], light[bg]), 4.5, (fg, bg))

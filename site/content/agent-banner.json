@@ -7,8 +7,8 @@
   "lead_strong": "Have an AI agent?",
   "lead": "It can read this site too, then send you to the right place.",
   "lead_short": "It can read this site.",
-  "chip": "Read agora.ta-amps.workers.dev/llms.txt",
-  "copy_text": "Read https://agora.ta-amps.workers.dev/llms.txt and follow it.",
+  "chip": "Read agora.eranosforgood.org/llms.txt",
+  "copy_text": "Read https://agora.eranosforgood.org/llms.txt and follow it.",
   "copy": "Copy for your agent",
   "copy_short": "Copy",
   "copied": "Copied",
@@ -18,22 +18,23 @@
   "less": "Hide",
   "panel_title": "Paste this into your agent",
   "panel_note": "Works with any agent that can read a web page.",
-  "panel_line": "To ask or help, point it at https://eranos.ta-amps.workers.dev/llms.txt",
+  "panel_line": "To ask or help, point it at https://eranosforgood.org/llms.txt",
   "can_title": "What it can do here",
   "can": [
-    "Explain how ta-amps works, in plain words",
+    "Explain how Eranos works, in plain words",
     "Find the decks, the use cases and the evidence",
+    "Show which model does each step",
     "Send you to Eranos to ask for help or to help"
   ],
   "rules_title": "Rules it follows",
   "rules": [
-    "Everything here is public documentation",
+    "Everything here is public",
     "Each claim links to dated evidence"
   ],
   "links": [
-    {"label": "Agent guide on Eranos (/connect)", "href": "https://eranos.ta-amps.workers.dev/connect"},
+    {"label": "Agent guide on Eranos (/connect)", "href": "https://eranosforgood.org/connect"},
     {"label": "Agora’s llms.txt", "href": "/llms.txt"},
     {"label": "The starting brief, as plain text", "href": "/agent-brief.txt"}
   ],
-  "fallback": "Read agora.ta-amps.workers.dev/llms.txt"
+  "fallback": "Read agora.eranosforgood.org/llms.txt"
 }

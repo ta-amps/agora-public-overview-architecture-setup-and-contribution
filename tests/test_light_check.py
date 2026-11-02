@@ -23,7 +23,7 @@ try:
 except ImportError:  # the CI runner has no browser; make light-check itself fails closed without one
     sync_playwright = None
 
-TOKENS = ":root { color-scheme: only light; --paper: #F5F2EA; --text: #11161F; --verb-text: #9C4416; } " \
+TOKENS = ":root { color-scheme: only light; --paper: #F5F2EA; --text: #11161F; --task-text: #9C4416; } " \
          "body { margin: 0; background: var(--paper); color: var(--text); font: 16px sans-serif; }"
 
 
@@ -52,7 +52,7 @@ PAGES = {
     "picture": page('<img src="dark.png" width="800" height="400" alt="">'),
     "band": page('<div style="background:#11161F;height:36px;color:#fff">An ink band, 36 px tall</div><p>Paper below.</p>'),
     "thin-ok": page('<div style="background:#11161F;height:6px"></div><a href="#" style="display:block;background:#11161F;color:#fff;height:40px">A full-width ink link</a>'),
-    "brand": page('<div style="background:var(--verb-text);height:300px;color:#fff">The Task orange, by its token</div>'),
+    "brand": page('<div style="background:var(--task-text);height:300px;color:#fff">The Task orange, by its token</div>'),
     "near-brand": page('<div style="background:#9C4417;height:300px;color:#fff">Almost the Task orange</div>'),
     "shadow": page('<x-banner></x-banner><script>customElements.define("x-banner", class extends HTMLElement {'
                    'constructor() { super(); this.attachShadow({mode: "open"}).innerHTML = '

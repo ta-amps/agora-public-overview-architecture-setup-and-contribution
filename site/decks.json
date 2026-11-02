@@ -17,9 +17,9 @@
         {
           "format": "pdf",
           "path": "decks/overview-and-architecture/ta-amps-overview-and-architecture.pdf",
-          "sha256": "307a46233e448a612a5aabb7ecaed0baa61fdc41b5f10a1062876caca59daa90",
-          "bytes": 501923,
-          "printed_from_main_sha256": "29fbe1b47797934ad06d0e2452a1e60c9d7ff8298b2a7af6cd7f96a923ae8e15"
+          "sha256": "110055a0b01ef16c1041b6d7844d626527e65523ab6b11e01f1169fbf22af5da",
+          "bytes": 501887,
+          "printed_from_main_sha256": "4f12620ac22aa5b1ac5e8a7993e8d86c88c36f743b2173275c0152e3fc37b204"
         }
       ]
     },
@@ -36,9 +36,9 @@
         {
           "format": "pdf",
           "path": "decks/public-good-marketplace/ta-amps-public-good-marketplace.pdf",
-          "sha256": "2d47c1aea32b303fedbc884ab35ec74df62c9410bb7965c742df5098c035cc0a",
-          "bytes": 385494,
-          "printed_from_main_sha256": "882fa2842e06fbf1d3ccd3876f0d8ab13227bde4e12e56dc9071ee55545d6f59"
+          "sha256": "cb3b0600701ed27b16175855793ccaca621b2c4557caaf64fc342658de4bc0b0",
+          "bytes": 384772,
+          "printed_from_main_sha256": "3f5a31d8270882b5d2b9b3fbeb1e2b95f4fe254b4bdeec4376c3bb1acf759cc8"
         }
       ]
     },
@@ -55,9 +55,9 @@
         {
           "format": "pdf",
           "path": "decks/roll-your-own/ta-amps-roll-your-own.pdf",
-          "sha256": "fddf41c400f872980fb3b06840c8bc45fc7067e74e955379f7a5896c40ef8790",
-          "bytes": 383942,
-          "printed_from_main_sha256": "6d8abed7b2c7c9423affb5c3ea5a7852c0fb6faf605312a52835bcc6c8ade6eb"
+          "sha256": "99afcf8fb650297cabfb9e955df8db994aa9b8ff575bc1259715a0c681e2747e",
+          "bytes": 383761,
+          "printed_from_main_sha256": "b370b36b9bc34c5760eb37435132b452f7033921b339d3c86ab0dd61b661497f"
         }
       ]
     },
@@ -74,9 +74,9 @@
         {
           "format": "pdf",
           "path": "decks/server-workers/ta-amps-server-workers.pdf",
-          "sha256": "6b06b353f05c87400a3ceba28ddfa682b0da0d6a58ff5050eda3ac59becb7518",
-          "bytes": 408125,
-          "printed_from_main_sha256": "380965bfaa8bd318ec7059236044f79fc4636012fc87a09d3b513f2e0703747f"
+          "sha256": "ca43f838a5e54c987b53c6b5a1b3192640c9109b68312e260ee612fd5d0b005f",
+          "bytes": 408121,
+          "printed_from_main_sha256": "245782452c6bbe90b17653923713239e316ae917ed544dca8b622c7b891af807"
         }
       ]
     },

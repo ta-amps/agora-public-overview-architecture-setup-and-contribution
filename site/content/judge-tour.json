@@ -10,39 +10,39 @@
   "steps": [
     {
       "label": "Agora",
-      "host": "agora.ta-amps.workers.dev",
+      "host": "agora.eranosforgood.org",
       "path": "/",
       "next": "Try the nonprofit journey →",
-      "next_href": "https://eranos.ta-amps.workers.dev/nonprofits?tour=judge"
+      "next_href": "https://eranosforgood.org/nonprofits?tour=judge"
     },
     {
       "label": "Ask",
-      "host": "eranos.ta-amps.workers.dev",
+      "host": "eranosforgood.org",
       "path": "/nonprofits",
       "next": "Watch a finished request →",
-      "next_href": "https://eranos.ta-amps.workers.dev/requests/REQ-INTAKE-07?tour=judge"
+      "next_href": "https://eranosforgood.org/requests/REQ-INTAKE-07?tour=judge"
     },
     {
       "label": "Watch a request",
-      "host": "eranos.ta-amps.workers.dev",
+      "host": "eranosforgood.org",
       "path": "/requests/",
       "next": "Open the result →",
-      "next_href": "https://eranos.ta-amps.workers.dev/requests/REQ-INTAKE-07?tour=judge#step-ready"
+      "next_href": "https://eranosforgood.org/requests/REQ-INTAKE-07?tour=judge#step-ready"
     },
     {
       "label": "The result",
-      "host": "eranos.ta-amps.workers.dev",
+      "host": "eranosforgood.org",
       "path": "/requests/",
       "hash": "#step-ready",
       "next": "Test the queue live →",
-      "next_href": "https://agora.ta-amps.workers.dev/studio/?tour=judge"
+      "next_href": "https://agora.eranosforgood.org/studio/?tour=judge"
     },
     {
       "label": "Live queue",
-      "host": "agora.ta-amps.workers.dev",
+      "host": "agora.eranosforgood.org",
       "path": "/studio/",
       "next": "Back to Agora →",
-      "next_href": "https://agora.ta-amps.workers.dev/?tour=judge"
+      "next_href": "https://agora.eranosforgood.org/?tour=judge"
     }
   ]
 }

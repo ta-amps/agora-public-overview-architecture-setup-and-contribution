@@ -7,14 +7,14 @@
       "number": "314 repositories about agent memory created on GitHub in the 48 hours to October 31, 2026 at 23:27 UTC",
       "status": "measured",
       "source": "GitHub search 'agent memory created:2026-10-29T23:27:00Z..2026-10-31T23:27:00Z', measured at 2026-10-31T23:27:59Z, with the response kept in the scan’s record; the memory-systems feed’s scan of October 31 at 23:27 UTC on a local copy of Tessera.",
-      "link": "https://agora.ta-amps.workers.dev/feeds/memory-systems/"
+      "link": "https://agora.eranosforgood.org/feeds/memory-systems/"
     },
     {
       "slide": "memory-systems",
       "number": "587 repositories gathered; the first four in feed rank, as of October 31, for Python, MIT licence, runs locally have 14,358, 4,303, 4,085, 3,858 stars",
       "status": "measured",
       "source": "The feed’s stored Task Objects from the scan of October 31 at 23:27 UTC, rendered on Agora’s feed page, which links the scan’s record.",
-      "link": "https://agora.ta-amps.workers.dev/feeds/memory-systems/"
+      "link": "https://agora.eranosforgood.org/feeds/memory-systems/"
     },
     {
       "slide": "memory-systems",

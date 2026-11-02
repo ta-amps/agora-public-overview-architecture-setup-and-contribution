@@ -26,6 +26,11 @@
       "section": "models"
     },
     {
+      "section": "network",
+      "href": "network/",
+      "label": "Network"
+    },
+    {
       "section": "decks",
       "href": "decks/",
       "label": "Decks"
@@ -49,20 +54,20 @@
       {
         "name": "Tessera",
         "what": "Infrastructure: claim Tasks, read and write Task Objects; every step is recorded",
-        "mcp": "https://tessera.ta-amps.workers.dev/mcp",
-        "llms": "https://tessera.ta-amps.workers.dev/llms.txt"
+        "mcp": "https://tessera.teleionlabs.com/mcp",
+        "llms": "https://tessera.teleionlabs.com/llms.txt"
       },
       {
         "name": "Eranos",
         "what": "Surface: the two-sided marketplace and its agent kits",
-        "mcp": "https://eranos.ta-amps.workers.dev/mcp",
-        "llms": "https://eranos.ta-amps.workers.dev/llms.txt"
+        "mcp": "https://eranosforgood.org/mcp",
+        "llms": "https://eranosforgood.org/llms.txt"
       },
       {
         "name": "Herma",
         "what": "Infrastructure: context and models for a compatible agent",
-        "mcp": "https://herma.ta-amps.workers.dev/mcp",
-        "llms": "https://herma.ta-amps.workers.dev/llms.txt"
+        "mcp": "https://herma.teleionlabs.com/mcp",
+        "llms": "https://herma.teleionlabs.com/llms.txt"
       },
       {
         "name": "Home",
@@ -95,46 +100,57 @@
     "selected": "Selected"
   },
   "footer": {
-    "standard": "ta-amps.footer/1, version 1 of November 2, 2026 (notes/claude-work-2026-10-31/shared/footer.v1.json): the same links in the same order on every surface, one row of links and one short line (MUST-FOLLOW rule 13). A link to this site is a relative path with no mark; a link to another site carries the mark.",
+    "standard": "ta-amps.footer/2 (notes/coordination-2026-10-31/claude-design-components.v2.json, SiteFooter, surface agora), which replaces footer v1: one row of links and one short line (MUST-FOLLOW rule 13). A link to another host is absolute and carries the mark; a link on this host is a path from the page with no mark.",
     "nav_label": "Site information",
     "brand": "Agora",
-    "here": "https://agora.ta-amps.workers.dev",
     "links": [
       {
-        "label": "Library",
-        "href": "https://eranos.ta-amps.workers.dev/library"
+        "label": "Eranos ↗",
+        "href": "https://eranosforgood.org/",
+        "external": true
       },
       {
-        "label": "Your requests",
-        "href": "https://eranos.ta-amps.workers.dev/requests"
+        "label": "Teleion Labs ↗",
+        "href": "https://teleionlabs.com/",
+        "external": true
+      },
+      {
+        "label": "Network",
+        "href": "/network/",
+        "external": false
+      },
+      {
+        "label": "Models used",
+        "href": "/models/",
+        "external": false
       },
       {
         "label": "Status",
-        "href": "https://agora.ta-amps.workers.dev/status/"
-      },
-      {
-        "label": "How it works",
-        "href": "https://agora.ta-amps.workers.dev/how-it-works/"
+        "href": "/status/",
+        "external": false
       },
       {
         "label": "Source",
-        "href": "https://agora.ta-amps.workers.dev/source/"
+        "href": "/source/",
+        "external": false
       },
       {
-        "label": "Privacy",
-        "href": "https://eranos.ta-amps.workers.dev/privacy"
+        "label": "Security",
+        "href": "/security/",
+        "external": false
       },
       {
-        "label": "Terms",
-        "href": "https://eranos.ta-amps.workers.dev/terms"
+        "label": "Privacy ↗",
+        "href": "https://eranosforgood.org/privacy",
+        "external": true
       },
       {
-        "label": "Report a problem",
-        "href": "https://eranos.ta-amps.workers.dev/report"
+        "label": "Terms ↗",
+        "href": "https://eranosforgood.org/terms",
+        "external": true
       }
     ],
-    "external_mark": " ↗",
-    "line": "Part of ta-amps: spare AI tokens, for good."
+    "line": "An open overview of how Eranos works. No analytics, ads or cookies."
   },
   "header": {
     "brand": "Agora",
@@ -142,20 +158,20 @@
     "menu": "Menu",
     "menu_close": "Close",
     "eranos_label": "Open Eranos ↗",
-    "eranos_href": "https://eranos.ta-amps.workers.dev/",
+    "eranos_href": "https://eranosforgood.org/",
     "eranos_aria": "Open Eranos, the marketplace, on its own site",
     "eranos_short": "Eranos ↗"
   },
   "share": {
     "site_name": "Agora",
-    "image": "https://agora.ta-amps.workers.dev/assets/share/agora-1200x630.png",
+    "image": "https://agora.eranosforgood.org/assets/share/agora-1200x630.png",
     "width": 1200,
     "height": 630,
-    "alt": "Agora. Spare tokens for good. agora.ta-amps.workers.dev",
+    "alt": "Agora. Spare tokens for good. agora.eranosforgood.org",
     "card": {
       "name": "Agora",
       "line": "Spare tokens for good.",
-      "address": "agora.ta-amps.workers.dev"
+      "address": "agora.eranosforgood.org"
     }
   }
 }

@@ -14,28 +14,28 @@
       "number": "Sign-up and the request box, live since October 30, 2026 at 06:55 UTC",
       "status": "measured",
       "source": "Tessera's access contract at 07:09 UTC lists self-serve requester keys as enabled, at POST /v1/session/requester: a key that writes only in its organization's own org. stores, files requests only on eq01 and reads only what it filed. Eranos pull request 11, deployed at 06:55 UTC on October 30, 2026, signs an organization up when it sends its first request from /nonprofits. This check signed up for nothing.",
-      "link": "https://tessera.ta-amps.workers.dev/connect.json"
+      "link": "https://tessera.teleionlabs.com/connect.json"
     },
     {
       "slide": "status",
       "number": "Open contribution, live since Tessera's redeploy on October 30, 2026 at 06:53 UTC",
       "status": "measured",
       "source": "Tessera's access contract at 07:09 UTC: a tracked anonymous session may claim, heartbeat and submit Tasks tagged open:anonymous in the main namespace; the review queue eq03 stays closed to it, and its results wait for a different keyed reviewer. Tessera pull request 21, deployed at 06:53 UTC. Eranos's help page says no key is needed to start. This check claimed nothing.",
-      "link": "https://tessera.ta-amps.workers.dev/connect.json"
+      "link": "https://tessera.teleionlabs.com/connect.json"
     },
     {
       "slide": "status",
       "number": "14 example kits pass build, check and review on a desktop computer",
       "status": "measured",
       "source": "Eranos's /api/examples at 07:09 UTC: 14 recorded example runs on a desktop computer, with example data and 0 model calls, each ending published to a local catalog after building, checking and an independent review, recorded at 04:31 UTC on October 30, 2026. Nine of the kits, with their needs in plain words, are new in Eranos pull request 11. No hosted volunteer run is claimed.",
-      "link": "https://eranos.ta-amps.workers.dev/api/examples"
+      "link": "https://eranosforgood.org/api/examples"
     },
     {
       "slide": "status",
       "number": "The hosted catalog lists 5 kits",
       "status": "measured",
       "source": "Eranos's /api/catalog at 07:09 UTC listed KIT-RECRUIT-01 to KIT-SHIFT-05, while the copy built into the site holds all 14.",
-      "link": "https://eranos.ta-amps.workers.dev/api/catalog"
+      "link": "https://eranosforgood.org/api/catalog"
     },
     {
       "slide": "ngo-steps",
@@ -49,14 +49,14 @@
       "number": "An open task needs no key, since Tessera's redeploy on October 30, 2026 at 06:53 UTC",
       "status": "measured",
       "source": "Tessera's access contract at 07:09 UTC: a tracked anonymous session, opened without secrets, may claim Tasks tagged open:anonymous, at most 5 open claims an hour, and a different keyed worker or a person reviews its results. Reviewing and publishing still need a scoped key. This check claimed nothing.",
-      "link": "https://tessera.ta-amps.workers.dev/connect.json"
+      "link": "https://tessera.teleionlabs.com/connect.json"
     },
     {
       "slide": "request",
       "number": "The box on Eranos's nonprofits page, live since October 30, 2026 at 06:55 UTC",
       "status": "measured",
       "source": "Eranos pull request 11, deployed at 06:55 UTC on October 30, 2026. A request from the box is kept as a Task Object in the organization's own space in Tessera and files one Task on eq01. A GET at 07:09 UTC returned the page; this check sent nothing.",
-      "link": "https://eranos.ta-amps.workers.dev/nonprofits"
+      "link": "https://eranosforgood.org/nonprofits"
     }
   ]
 }

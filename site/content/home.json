@@ -9,14 +9,14 @@
     "cards": [
       {
         "name": "Eranos",
-        "host": "eranos.ta-amps.workers.dev",
+        "host": "eranosforgood.org",
         "line": "Help, or ask for help.",
-        "href": "https://eranos.ta-amps.workers.dev/",
+        "href": "https://eranosforgood.org/",
         "tone": "task"
       },
       {
         "name": "Agora",
-        "host": "agora.ta-amps.workers.dev",
+        "host": "agora.eranosforgood.org",
         "line": "See how it works and connect your agent.",
         "href": "how-it-works/",
         "tone": "object"
@@ -25,7 +25,7 @@
     "actions": {
       "eranos": {
         "label": "Open Eranos ↗",
-        "href": "https://eranos.ta-amps.workers.dev/"
+        "href": "https://eranosforgood.org/"
       },
       "tour": {
         "label": "Take the 45-second tour →",

@@ -243,6 +243,6 @@
     "heading": "5. Check a live deployment",
     "text": "Point these three probes at the public ta-amps services, or swap the addresses for your own.",
     "code_id": "cmd-verify-stack",
-    "commands": "# 1. Tessera's health\ncurl -fsS https://tessera.ta-amps.workers.dev/v1/health\n\n# 2. Herma's preview of the context it would add (it stores nothing)\ncurl -fsS -X POST https://herma.ta-amps.workers.dev/api/preview \\\n  -H 'content-type: application/json' \\\n  -d '{\"prompt\":\"How do Tasks and Task Objects work with Agent Harness Feeds?\"}'\n\n# 3. The brief agents start from\ncurl -fsS https://home.ta-amps.workers.dev/llms.txt | head -n 25"
+    "commands": "# 1. Tessera's health\ncurl -fsS https://tessera.teleionlabs.com/v1/health\n\n# 2. Herma's preview of the context it would add (it stores nothing)\ncurl -fsS -X POST https://herma.teleionlabs.com/api/preview \\\n  -H 'content-type: application/json' \\\n  -d '{\"prompt\":\"How do Tasks and Task Objects work with Agent Harness Feeds?\"}'\n\n# 3. The brief agents start from\ncurl -fsS https://home.ta-amps.workers.dev/llms.txt | head -n 25"
   }
 }

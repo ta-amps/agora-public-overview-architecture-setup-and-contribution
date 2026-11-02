@@ -59,7 +59,8 @@
         "No analytics, ads or cookies. The fonts come from this site, and Cloudflare Workers hosts it.",
         "The deck viewer remembers its display choices in this browser.",
         "The judges’ tour keeps one flag in this tab while it runs.",
-        "The Live Studio keeps its one-hour demo session (a session token, its namespace and when it ends) in this browser’s local and session storage, so a reload can reuse it. The Studio clears it a minute before it ends."
+        "The Live Studio keeps its one-hour demo session (a session token, its namespace and when it ends) in this browser’s local and session storage, so a reload can reuse it. The Studio clears it a minute before it ends.",
+        "The network page reads Herma’s public network map every 30 seconds while it is open. It sends no cookie and keeps nothing in this browser."
       ]
     }
   ],
@@ -68,12 +69,12 @@
   "security_txt": {
     "path": ".well-known/security.txt",
     "comment": "Agora's security contact (RFC 9116). The page below says how to report a problem.",
-    "contact": "https://agora.ta-amps.workers.dev/security/",
+    "contact": "https://agora.eranosforgood.org/security/",
     "expires": "2027-10-31T00:00:00Z",
     "preferred_languages": "en",
     "canonical": [
-      "https://agora.ta-amps.workers.dev/.well-known/security.txt"
+      "https://agora.eranosforgood.org/.well-known/security.txt"
     ],
-    "policy": "https://agora.ta-amps.workers.dev/security/"
+    "policy": "https://agora.eranosforgood.org/security/"
   }
 }

@@ -11,7 +11,7 @@ A route fails when:
     background image, for the mean of its rendered pixels;
   * any element wider than half the viewport and taller than 8 px has a dark background (a thin band, such as a
     36 px ink banner, which the area rule misses); buttons and links are exempt.
-One brand colour is accepted by token, not by luminance: the Task chips' orange (--verb-text, #9C4416; the Agora
+One brand colour is accepted by token, not by luminance: the Task chips' orange (--task-text, #9C4416; the Agora
 review of Nov 1). The exemption matches that token's resolved value exactly, so nothing else dark slips through.
 
 Two ways to run it:
@@ -45,7 +45,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 VIEWPORT = {"width": 1280, "height": 800}
 SHARE = 0.05            # of the viewport's area
 DARK = 0.25             # relative luminance (WCAG): below this, an opaque area is dark
-EXEMPT_TOKENS = ("--verb-text",)  # the Task chips' brand orange, accepted by token (review, Nov 1)
+EXEMPT_TOKENS = ("--task-text",)  # the Task chips' brand orange, accepted by token (review, Nov 1)
 MISSING = "/__light-check-not-found__/"
 SKIP_SUFFIXES = (".pdf", ".zip", ".pptx", ".png", ".jpg", ".jpeg", ".gif", ".svg", ".mp4", ".webm", ".vtt", ".srt",
                  ".json", ".txt", ".xml", ".css", ".js", ".woff2", ".ttf", ".bundle", ".tar.gz", ".gz", ".md", ".csv")
