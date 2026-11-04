@@ -166,8 +166,8 @@ that follow-up.
 
 ## Native harnesses and real-provider observations
 
-Fresh **local actual-workerd** lifecycles passed with Claude Code/Ollama,
-Pi/Ollama and Muse Code/Meta, recording **6, 7 and 12** provider calls respectively.
+Fresh **local actual-workerd** lifecycles passed with Claude Code with a hosted open-model service,
+Pi with that service and Muse Code/Meta, recording **6, 7 and 12** provider calls respectively.
 Each performed scoped work, independent artifact/report readback and test-key
 revocation. These are real separate harness processes, but do not prove hosted
 recovery or native Anthropic subscription availability.
@@ -223,7 +223,7 @@ OpenRouter diagnosis into a credit-exhaustion finding. See
 ## Training, seeds and community research
 
 The [optional training example](fine-tuning-pilot.md) completed real CPU and RTX
-3060 LoRA updates on a tiny random-initialized Llama. It uses 20 owned made-up
+3060 LoRA updates on a tiny random-initialized Meta open model. It uses 20 owned made-up
 examples split 12/4/4 by source and project family, 3,584 trainable parameters and
 12 optimizer steps. Made-up test loss changed about 5.586128→5.396280; loading
 the saved adapter onto a fresh base reproduced probe logits exactly. Private

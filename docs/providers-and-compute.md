@@ -11,7 +11,7 @@ merged source, deployed versions, local observations and remaining work.
 | --- | --- | --- |
 | OpenAI | the Teleion Fabric shim Responses adapter | API credentials and allowance are separate from a signed-in ChatGPT/Codex session |
 | Anthropic | the Teleion Fabric shim Messages adapter | Claude Code subscription authentication is not an Anthropic backend API key |
-| Ollama Cloud | Native chat provider; Messages compatibility exercised by the Claude fixture | Cloud inference access does not supply training GPUs or model-weight rights |
+| A hosted open-model service | Native chat provider; Messages compatibility exercised by the Claude fixture | Cloud inference access does not supply training GPUs or model-weight rights |
 | Muse / Meta | Meta model provider and a separate native harness family | Record both harness and exact requested/reported model; do not silently substitute models |
 | OpenRouter | Explicit Chat Completions gateway | Pin the model and underlying provider; no hidden gateway fallback, presets or automatic routing |
 | Jev / TypeSafe | Worker-side typed System One decision adapter | Typed state/questions, not a generative-chat fallback; no live qualification |
@@ -54,8 +54,8 @@ harness completing a Teleion Fabric verb.
 | Local the Teleion Fabric shim → OpenAI Responses | `gpt-6-luna` completed the bounded typed-conversation check | One provider/model fixture; no broad reliability claim |
 | Local the Teleion Fabric shim → Anthropic | Original HTTP 400 retained; a later diagnostic attempt reported credit or quota exhaustion | No successful inference; operator-funded calls are temporarily paused |
 | Local the Teleion Fabric shim → OpenRouter | Original HTTP 404 retained; a later diagnostic attempt reported no eligible provider endpoint | Exact exclusion constraint remains unknown; operator-funded calls are temporarily paused |
-| Native Claude Code → Ollama | Local actual-workerd lifecycle passed; six provider calls | Does not prove native Anthropic subscription availability |
-| Native Pi → Ollama | Local actual-workerd lifecycle passed; seven provider calls | One workload and configuration |
+| Native Claude Code → hosted open-model service | Local actual-workerd lifecycle passed; six provider calls | Does not prove native Anthropic subscription availability |
+| Native Pi → hosted open-model service | Local actual-workerd lifecycle passed; seven provider calls | One workload and configuration |
 | Native Muse Code → Meta | Local actual-workerd lifecycle passed; twelve provider calls | One workload and configuration |
 | Jev | Adapter and validation work only | No live call or inference qualification |
 
@@ -114,7 +114,7 @@ evidence in the status report. The new the Teleion Fabric shim code remains unde
 | Execution environment | Useful role | Observed or required boundary |
 | --- | --- | --- |
 | CPU worker | Deterministic data preparation and tiny adapter smoke | Actual local smoke completed; unsuitable evidence for a large-model training claim |
-| RTX 3060 worker | Small CUDA specialist LoRA experiments | Completed tiny smoke plus pretrained Llama 3.2 1B and 3B continuous tuning rounds on made-up unseen-family tool calls (`12.0% -> 50.7%` on 1B and `52.0% -> 72.7%` on 3B in bf16 LoRA within ~11.62 GiB VRAM); useful-task evaluation and admission remain unrun |
+| RTX 3060 worker | Small CUDA specialist LoRA experiments | Completed tiny smoke plus pretrained Meta open models (1B and 3B) continuous tuning rounds on made-up unseen-family tool calls (`12.0% -> 50.7%` on 1B and `52.0% -> 72.7%` on 3B in bf16 LoRA within ~11.62 GiB VRAM); useful-task evaluation and admission remain unrun |
 | Kaggle notebook | Bounded free 2x T4 GPU QLoRA training environment | Completed Muse Glimmer 30B 4-bit QLoRA specialist run across Kaggle's two free 16 GB T4 GPUs (`93.3% -> 99.3%` exact match on pre-registered 150-row made-up fresh holdout); adapter stays private and unadmitted; availability and allowance must be checked for each run |
 | H100 worker | Optional single-GPU Glimmer QLoRA environment | Official single-H100 recipe exists; unprovisioned and not needed after the free 2x T4 QLoRA run succeeded |
 | Cloudflare Workers | Authorization, storage access, records and job coordination | The service runtime is not the optional PyTorch/CUDA trainer |
