@@ -9,11 +9,8 @@ merged source, deployed versions, local observations and remaining work.
 
 | Component | Role and supported direction | Boundary |
 | --- | --- | --- |
-| OpenAI | the Teleion Fabric shim Responses adapter | API credentials and allowance are separate from a signed-in ChatGPT/Codex session |
-| Anthropic | the Teleion Fabric shim Messages adapter | Claude Code subscription authentication is not an Anthropic backend API key |
-| A cloud inference service (`kimi-k2.7-code` in our Oct 29 runs) | Native chat provider; Messages compatibility exercised by the Claude fixture | Cloud inference access does not supply training GPUs or model-weight rights |
+| Other providers | The Teleion Fabric shim works with almost any model and LLM inference provider | Pin the model and provider. A provider's API key and allowance are separate from a signed-in subscription |
 | Muse / Meta | Meta model provider and a separate native harness family | Record both harness and exact requested/reported model; do not silently substitute models |
-| OpenRouter | Explicit Chat Completions gateway | Pin the model and underlying provider; no hidden gateway fallback, presets or automatic routing |
 | Jev / TypeSafe | Worker-side typed System One decision adapter | Typed state/questions, not a generative-chat fallback; no live qualification |
 | Claude Code, OpenCode, Pi, Muse Code, nanoMuse, Hermes and OpenClaw | Native harnesses with distinct versions and tool integrations | A passing fixture does not qualify every provider, feature or workflow |
 
@@ -51,23 +48,12 @@ harness completing a Teleion Fabric verb.
 
 | October 29 observation | Result | Limit |
 | --- | --- | --- |
-| Local the Teleion Fabric shim → OpenAI Responses | `gpt-6-luna` completed the bounded typed-conversation check | One provider/model fixture; no broad reliability claim |
-| Local the Teleion Fabric shim → Anthropic | Original HTTP 400 retained; a later diagnostic attempt reported credit or quota exhaustion | No successful inference; operator-funded calls are temporarily paused |
-| Local the Teleion Fabric shim → OpenRouter | Original HTTP 404 retained; a later diagnostic attempt reported no eligible provider endpoint | Exact exclusion constraint remains unknown; operator-funded calls are temporarily paused |
-| Native Claude Code → a cloud inference service | Local actual-workerd lifecycle passed; six provider calls | Does not prove native Anthropic subscription availability |
-| Native Pi → `kimi-k2.7-code` on a cloud inference service | Local actual-workerd lifecycle passed; seven provider calls | One workload and configuration |
+| Native Claude Code and Pi on another model | Local actual-workerd lifecycle passed; six and seven provider calls | One workload and configuration each |
 | Native Muse Code → Meta | Local actual-workerd lifecycle passed; twelve provider calls | One workload and configuration |
 | Jev | Adapter and validation work only | No live call or inference qualification |
 
 Read-only authentication probes are distinct from these inference observations.
-The original failures remain unresolved in their original records. A later
-diagnostic run recorded only bounded, allowlisted error metadata and retained
-unknown-usage reservations. The OpenRouter diagnosis does not establish a credit
-failure: it reports endpoint eligibility, with the precise constraint unknown.
-
-The operator separately requested a temporary Anthropic/OpenRouter pause for
-credit/budget reasons. This is an operating decision, not an independently
-checked balance. Their adapters and configuration remain available.
+Some provider routes are paused for credit and budget reasons. This is an operating decision, not an independently checked balance. Their adapters and configuration remain available.
 The Teleion Fabric shim's managed conversations share limit state across callers under a stable
 operator account identity. They honor provider retry/reset guidance, use increasing
 backoff when guidance is absent, and admit one recovery request after cooldown.
@@ -94,11 +80,10 @@ provider-account health.
 The accounting follow-up checks the selected credential before reserving any
 allowance. Accepted but unfinished responses retain unknown outcomes and their
 reservations. The managed one-proposal profile rejects unpriced multiple outputs,
-opaque stored prompts and unsupported pricing overrides; it fixes OpenAI to the
-standard `default` tier and Anthropic to `standard_only`. Records distinguish
+opaque stored prompts and unsupported pricing overrides; it fixes each provider to
+its standard tier. Records distinguish
 planned ceilings, checked reservations and uncertain shared-budget calls.
-These request-body changes have offline verification only. The earlier live
-OpenAI success belongs to its recorded source and request, not this newer body.
+These request-body changes have offline verification only.
 Operator provider and uncertainty grants remain deployment-wide; separate
 per-principal purchase grants are not implemented. None of these settings grants
 new inference or spending authority.
@@ -135,24 +120,5 @@ does not establish arbitrary GPU training or compatibility with this adapter.
 The [fine-tuning page](fine-tuning-pilot.md) links the October 29 CPU/GPU smoke, while [training/README.md](../training/README.md), [eval/README.md](../eval/README.md) and the [Glimmer 30B run record](../evidence/glimmer-30b-2026-10-29/README.md) record the completed made-up LoRA and QLoRA specialist runs. Training, inference,
 model access and artifact admission each need their own evidence and authority.
 
-## OpenAI subscriber API-credit offer
-
-OpenAI announced this benefit on October 28; the official guide was checked on
-October 29. Eligible Pro tiers receive $100, $200 or $500 monthly API credits.
-Business receives $20 per paid Standard seat or $100 per paid Premium seat,
-subject to a $500 workspace monthly cap. Annual Business grants cover the annual
-cycle. [Announcement](https://developers.openai.com/api/docs/changelog),
-[official credit guide](https://developers.openai.com/api/docs/guides/chatgpt-api-credits).
-
-Eligibility requires an active paid subscription at least seven days old,
-ownership of the subscription/workspace and receiving API organization, matching
-account email, and activation of the link. Unused credits expire with their
-billing cycle. The benefit covers supported API usage such as Responses; it
-does not cover API-key Codex use or increase signed-in ChatGPT/Codex limits.
-[Eligibility and coverage](https://developers.openai.com/api/docs/guides/chatgpt-api-credits).
-
-An offer, a valid key and a successful inference call establish different facts.
-This guide makes no claim about anyone's activated balance or entitlement.
-Credits do not authorize unrelated spending, GPU rental or broader data access.
 Before a real run, establish its allowed data, model, payer and budget and measure
 cost against the selected provider's current rates.

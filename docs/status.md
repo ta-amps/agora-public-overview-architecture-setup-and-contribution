@@ -166,29 +166,23 @@ that follow-up.
 
 ## Native harnesses and real-provider observations
 
-Fresh **local actual-workerd** lifecycles passed with Claude Code on a cloud inference service,
-Pi with that service and Muse Code/Meta, recording **6, 7 and 12** provider calls respectively.
+Fresh **local actual-workerd** lifecycles passed with Claude Code and Pi on another model, and with Muse Code on Meta,
+recording **6, 7 and 12** provider calls respectively.
 Each performed scoped work, independent artifact/report readback and test-key
 revocation. These are real separate harness processes, but do not prove hosted
-recovery or native Anthropic subscription availability.
+recovery.
 
 The earlier six-harness matrix covers OpenCode, Pi, Hermes, Muse Code, nanoMuse
 and OpenClaw. Adding Claude Code gives seven distinct harnesses with a narrow
 completed lifecycle across those observations. OpenMuse TypeScript still has
 no checked connector. Full feature/version/provider reliability remains unmeasured.
 
-Local the Teleion Fabric shim called real providers in two bounded waves. The initial three calls
-used source [`bd4d9ff7`](https://github.com/ta-amps/herma-infrastructure-shim-for-intelligent-agents/commit/bd4d9ff7981b08231eced14b70c52de8dc206f0a);
-OpenAI `gpt-6-luna` completed that typed proposal check. The initial Anthropic HTTP 400 and OpenRouter
-HTTP 404 remained unexplained in their original records. A later two-call wave
-at [`b3715816`](https://github.com/ta-amps/herma-infrastructure-shim-for-intelligent-agents/commit/b3715816f18a6be468cab62131ac2a2f3d7f4337)
-captured provider-reported categories: Anthropic reported credit/quota exhaustion
-(`invalid_request_error`); OpenRouter reported no eligible provider endpoint
-(code 404), with the specific routing constraint still unknown. Both attempts
-were rejected, usage remained unknown and reservations were retained. There were
-**five provider calls total**, no retries or provider fallback, and no Jev call.
-These observations are not account-balance verification or provider invoices.
-Anthropic and OpenRouter remain temporarily paused by owner direction. Their
+Local the Teleion Fabric shim also called providers other than Meta in two bounded waves, at source
+[`bd4d9ff7`](https://github.com/ta-amps/herma-infrastructure-shim-for-intelligent-agents/commit/bd4d9ff7981b08231eced14b70c52de8dc206f0a) and
+[`b3715816`](https://github.com/ta-amps/herma-infrastructure-shim-for-intelligent-agents/commit/b3715816f18a6be468cab62131ac2a2f3d7f4337).
+They used no retries or provider fallback and no Jev call. They are not results for any Meta model,
+and they are not account-balance verification or provider invoices.
+Some provider routes remain temporarily paused by owner direction. Their
 adapters remain. The Teleion Fabric shim PR 10 implements and locally tests the manual pause,
 shared operator-account health and one authorized recovery request after an
 observed cooldown. Provider retry/reset guidance takes priority; fallback
@@ -212,12 +206,10 @@ remain unknown with reservations held; managed generation rejects unpriced
 options and explicitly selects standard service tiers; known denials and
 uncertain coordinator admission retain distinct reservation evidence. These
 checks passed offline, and exact-head/main CI passed after merge. Deployment
-remains held. Native proxy generation is unchanged. The earlier live OpenAI pass
-does not verify the newly emitted standard-tier request fields. Separate deployments do not synchronize health
+remains held. Native proxy generation is unchanged. Separate deployments do not synchronize health
 automatically, and legacy inference paths still need migration evidence.
 Rollback must preserve expanded state and use a roll-forward disable, without
-ledger or namespace resets. The owner pause does not change the observed
-OpenRouter diagnosis into a credit-exhaustion finding. See
+ledger or namespace resets. See
 [providers and compute](providers-and-compute.md).
 
 ## Training, seeds and community research
