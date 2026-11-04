@@ -13,7 +13,7 @@ operating-system clipboard interoperability.
 ## Native workers
 
 The October 29 matrix exercised installed harness processes, their own tool
-selection and actual hosted Tessera operations. Each passing lifecycle required
+selection and actual hosted Teleion Fabric operations. Each passing lifecycle required
 claim, input read, heartbeat, artifact write, artifact read-back and submission,
 plus an independently read execution report. Process exit status alone was
 insufficient.
@@ -26,11 +26,11 @@ insufficient.
 | Muse Code 1.4.14 | Complete lifecycle with approval checks enabled | Fixture-specific typed output contract; earlier schema mismatch retained |
 | nanoMuse 1.0.8 | Complete lifecycle with Sentinel checks and scoped approvals | Python OpenMuse successor; thin stdio transport and typed fixture |
 | OpenClaw 2026.10.8 | Complete lifecycle with Docker sandbox enabled | Explicit plugin/profile registration; earlier discovery failures retained |
-| OpenMuse TypeScript 0.1.0 | Source inspected | No native Tessera connector verified; not counted as an E2E pass |
+| OpenMuse TypeScript 0.1.0 | Source inspected | No native Teleion Fabric connector checked; not counted as an E2E pass |
 
 These tests do not certify every feature, model or deployment of a harness.
 The typed fixture overlay constrains an already known test output. It does not
-repair tool arguments or establish general Herma shim compatibility. The
+repair tool arguments or establish general the shim compatibility. The
 general shim admission, activation and rollback lifecycle remains unfinished.
 
 ## Creative alternatives
@@ -41,7 +41,7 @@ The source context comes from the public YC Requests for Startups page; the
 showcase is not endorsed by YC and does not independently validate its claims.
 
 Two workers may solve the same brief differently. Each attempt keeps a separate
-lease, artifact and receipt while referencing the same input nouns. Comparison,
+lease, artifact and record while referencing the same input nouns. Comparison,
 rating, benchmark design and remix procedures are reusable nouns for follow-up
 verbs. A proposal to create more seeds does not activate recursive work.
 
@@ -89,7 +89,7 @@ See [the owning implementation](https://github.com/ta-amps/tessera-infrastructur
 
 ## Before a broad public launch
 
-An invited pilot can use the existing scopes and receipts now. Broader claims
+An invited pilot can use the existing scopes and records now. Broader claims
 need repeated and sustained load with separate principals, restart and
 disconnection recovery, and measured database/latency behavior. A hundred
 protocol clients does not establish a
@@ -99,5 +99,5 @@ Research seed authoring is implemented for source discovery, collector proposals
 schedule proposals and scanning tasks. A live newsletter mailbox, activated
 collector code and a recurring research scheduler are still absent. Mailbox
 creation is usually a small setup task; reliable ingestion, deduplication,
-provenance and recovery are the larger integration. Those should create source
+source and recovery are the larger integration. Those should create source
 nouns and claimable work using the existing fabric.

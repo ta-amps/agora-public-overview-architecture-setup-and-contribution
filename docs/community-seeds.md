@@ -17,22 +17,22 @@ the application runs unchanged on this fabric.
 | [QorTime](https://github.com/ConWan30/qortime-ai) | Observation, rule, signature envelope and explanation | Verify, explain, challenge, review | A signed false claim passes integrity but remains unverified for correctness |
 | [LUCID](https://github.com/shittuquoyum-ui/LUCID) | Commit diff, exact quote, concept, lesson and question | Explain, verify quotes, test behavior, evaluate learning | Correct quotation paired with a false explanation must fail semantic evaluation |
 | [FrontierSight](https://github.com/tamzid2001/frontiersight-ai) | Scene tracks, calibration, assumptions and simulation evidence | Compute, simulate, compare, review | Missing calibration prevents metric claims |
-| [ANKITA](https://github.com/akyourowngames/A.N.K.I.T.A) | Job, cancellation state, output and delivery receipt | Execute, cancel, verify, deliver, recover delivery | Failed delivery must not repeat a completed external effect |
+| [ANKITA](https://github.com/akyourowngames/A.N.K.I.T.A) | Job, cancellation state, output and delivery record | Execute, cancel, verify, deliver, recover delivery | Failed delivery must not repeat a completed external effect |
 | [Skillry video](https://skillry.dev/skills/output/video) and [SPIDER](https://github.com/M4SPIDER/spider-game-engine-open-source-) | Storyboard, scene recipe, asset and render | Compose, render, inspect, revise | Actual frame/audio checks and evidence for demo claims |
 | [Carpathron](https://github.com/qubitpage/carpathron-muse) | Device profile, permitted command and telemetry | Simulate, dispatch, verify stop | Fake-device lease expiry, duplicate command and cancellation tests |
 | [VeeVee](https://github.com/wayneherrington/veevee) | Preference, private memory, source and media reference | Retrieve, answer, update/delete memory | Scoped data and explicit no-key behavior |
 
 These are original proposed mappings. Real-time rendering, audio and device
-safety loops remain in appropriate executors; Tessera coordinates useful work
+safety loops remain in appropriate executors; Teleion Fabric coordinates useful work
 units and records evidence, rather than scheduling every frame or control tick.
 Source text cannot change the worker's permissions. Upstream full-access or
 no-sandbox modes are not adopted.
 
 Six private draft bundles were authored: Community Scout, Working Practices,
-Cost Trials, Verified Outcomes, Commit Tutor and Demo Workshop. Together they
+Cost Trials, Checked Outcomes, Commit Tutor and Demo Workshop. Together they
 contain 14 candidate nouns and 12 alternative verb proposals. Their request
 shapes, registered category membership and local reference hashes were checked
-against Tessera. No pack was imported, no task enqueued and no artifact admitted.
+against Teleion Fabric. No pack was imported, no task enqueued and no artifact admitted.
 The [status evidence](status.md) records this limited authoring result.
 
 The best initial combination addresses the [research problem](research.md):

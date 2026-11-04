@@ -9,9 +9,9 @@ You do not need to deploy the entire `ta-amps` ecosystem to use its primitives. 
 | Slice | Infrastructure Needed | Time to Run | Best For |
 | :--- | :--- | :--- | :--- |
 | **A. Seed Packs Only** | `0` servers (stdlib Python + git) | `< 60s` | Loading reusable **task objects (`nouns.json`)**, **Tasks (`verbs.json`)**, and deterministic QA verifiers into `Muse Code`, `Claude Code`, `OpenCode`, `Codex`, `Cursor`, or `Pi`. |
-| **B. Cloudflare Edge Stack** | Cloudflare Workers + Durable Objects + D1 + Pages (`$0` free tier) | `~5 min` | Running a private or public **Tessera** work/CAS engine + **Herma** context shim + **Eranos / Agora** surfaces on `*.workers.dev` or a custom domain. |
+| **B. Cloudflare Edge Stack** | Cloudflare Workers + Durable Objects + D1 + Pages (`$0` free tier) | `~5 min` | Running a private or public **Teleion Fabric** work/CAS engine + **The Teleion Fabric shim** context shim + **Eranos / Agora** surfaces on `*.workers.dev` or a custom domain. |
 | **C. Docker / VPS / Air-Gapped** | Docker Engine (`docker compose up`) on Linux, macOS, Fly.io, Railway, or ECS | `~2 min` | Strict data residency, air-gapped CI runners, sovereign NGO deployments, or local offline development. |
-| **D. Meta Open-Weight GPU + LoRAs** | Kaggle `2x Tesla T4` (`$0` quota), local GPU (`PEFT`), `vLLM`, or `api.meta.ai` | `~10 min` | Training and serving **LoRA-as-Memory** (`Muse-Glimmer-30B` QLoRA) and `<50ms` **Shim Routers** (`Llama-3.2` PEFT) from verified Tessera traces. |
+| **D. Meta Open-Weight GPU + LoRAs** | Kaggle `2x Tesla T4` (`$0` quota), local GPU (`PEFT`), `vLLM`, or `api.meta.ai` | `~10 min` | Training and serving **LoRA-as-Memory** (`Muse-Glimmer-30B` QLoRA) and `<50ms` **Shim Routers** (`Llama-3.2` PEFT) from checked Teleion Fabric traces. |
 
 ---
 
@@ -26,13 +26,13 @@ python3 scripts/validate_packs.py
 make -C packs/frame-by-frame-video-qa/code check
 ```
 
-To connect an existing coding agent without cloning, paste the starting brief from `https://home.ta-amps.workers.dev/llms.txt`.
+To connect an existing coding agent without cloning, paste the starting brief from `https://teleionlabs.com/llms.txt`.
 
 ---
 
 ## 3. Slice B: Cloudflare Workers + Durable Objects + D1 + Pages
 
-### Step 1: Deploy Tessera (Leased Tasks, CAS task objects & `/mcp`)
+### Step 1: Deploy Teleion Fabric (Leased Tasks, CAS task objects & `/mcp`)
 ```bash
 npx wrangler login
 git clone https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine.git
@@ -43,7 +43,7 @@ openssl rand -hex 32 | npx wrangler secret put TESSERA_ADMIN_TOKEN
 npx wrangler deploy
 ```
 
-### Step 2: Deploy Herma (D1 Provision Search & `< 2ms` Context Shim)
+### Step 2: Deploy the Teleion Fabric shim (D1 Provision Search & `< 2ms` Context Shim)
 ```bash
 git clone https://github.com/ta-amps/herma-infrastructure-shim-for-intelligent-agents.git
 cd herma-infrastructure-shim-for-intelligent-agents
@@ -67,7 +67,7 @@ npx wrangler deploy
   git clone https://github.com/ta-amps/eranos-public-marketplace-for-public-good-token-burn.git
   cd eranos-public-marketplace-for-public-good-token-burn
   npm ci && npm test
-  # Mint a surface-scoped Tessera token (X-Surface-Id: eranos), never TESSERA_ADMIN_TOKEN:
+  # Mint a surface-scoped Teleion Fabric token (X-Surface-Id: eranos), never TESSERA_ADMIN_TOKEN:
   npx wrangler secret put TESSERA_SURFACE_TOKEN
   npx wrangler deploy
   ```
@@ -83,14 +83,14 @@ docker compose up --build -d
 ```
 
 - **Persistent Volumes**: Mount a host or Fly.io volume onto the SQLite data directory so leased Tasks and CAS task objects survive container restarts.
-- **Reverse Proxy**: Put Caddy, Nginx, or Cloudflare Tunnel in front of port `8787` (Tessera) and port `8080` (Agora) for automatic TLS.
+- **Reverse Proxy**: Put Caddy, Nginx, or Cloudflare Tunnel in front of port `8787` (Teleion Fabric) and port `8080` (Agora) for automatic TLS.
 
 ---
 
 ## 5. Slice D: GPU Fine-Tuning & Open-Weight Serving (`Kaggle 2xT4`, `vLLM`, `api.meta.ai`)
 
 1. **Train `Muse-Glimmer-30B` QLoRA on Free Kaggle `2x Tesla T4` (`32 GB` VRAM)**:
-   - Shard 4-bit NF4 base weights across `cuda:0` and `cuda:1` (`device_map="auto"`), train `r=16, alpha=32` adapters on verified Tessera SFT/DPO trace bundles, and export `adapter_model.safetensors` + SHA-256 receipts.
+   - Shard 4-bit NF4 base weights across `cuda:0` and `cuda:1` (`device_map="auto"`), train `r=16, alpha=32` adapters on checked Teleion Fabric SFT/DPO trace bundles, and export `adapter_model.safetensors` + SHA-256 records.
 2. **Serve Multi-LoRA Adapters with `vLLM`**:
    ```bash
    vllm serve meta-llama/Llama-3.2-3B-Instruct \
@@ -108,8 +108,8 @@ docker compose up --build -d
 Run these three probes against your deployed URLs before connecting production workers:
 
 ```bash
-TESSERA_URL="https://tessera.ta-amps.workers.dev"
-HERMA_URL="https://herma.ta-amps.workers.dev"
+TESSERA_URL="https://fabric.teleionlabs.com"
+HERMA_URL="https://shim.teleionlabs.com"
 
 curl -fsS "$TESSERA_URL/v1/health"
 curl -fsS -X POST "$HERMA_URL/api/preview" \

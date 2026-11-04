@@ -2,7 +2,7 @@
 
 Every model-tuning round in `ta-amps` is scored by a deterministic evaluation Task (`verb.benchmark_harness`) and gated by a pre-registered promotion rule task object (`tool-call-specialist.promotion` v1, `sha256: bf0fa821717c2400faab77652f067ea85f2616eea329c6e139af33a423e4b3b7`) fixed before training runs.
 
-> **What these benchmarks show -- and what they do not:** All splits evaluate one narrow, synthetic task (producing schema-valid Tessera MCP JSON tool calls or exact refusal reasons on unseen tool families). They prove that the continuous Task and task-object learning loop measures real specialist gains, blocks contaminated rows, and rejects regressions; they are not general LLM capability benchmarks.
+> **What these benchmarks show -- and what they do not:** All splits evaluate one narrow, synthetic task (producing schema-valid Teleion Fabric MCP JSON tool calls or exact refusal reasons on unseen tool families). They prove that the continuous Task and task-object learning loop measures real specialist gains, blocks contaminated rows, and rejects regressions; they are not general LLM capability benchmarks.
 
 ## Holdout Exact-Match Accuracy
 
@@ -26,8 +26,8 @@ Every model-tuning round in `ta-amps` is scored by a deterministic evaluation Ta
 2. **Pre-Registered SHA-256 Fresh Holdouts:** For Muse Glimmer 30B, the 150-row fresh holdout digest (`0ce30e9ff593a4e7238012236e38368c219fc235284d03e1fb898d728c196d56`) was recorded before any model scored it.
 3. **Negative Results Caught by the Gate:** On both Llama 3.2 1B (Round 2 and Round 4) and Llama 3.2 3B (Round 2, despite `79.3%` exact match), candidates that hurt schema validity or failed to clear paired bootstrap bounds were automatically kept out by `decide_promotion`.
 
-## Raw Receipts & Reproducible Verifiers
+## Raw Records & Reproducible Verifiers
 
 - **Muse Glimmer 30B Evidence Bundle:** [`../evidence/glimmer-30b-2026-10-29/README.md`](../evidence/glimmer-30b-2026-10-29/README.md)
 - **Llama 3.2 1B & 3B Evidence JSONs:** [`tessera/examples/continuous_tuning/evidence/`](https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/tree/main/examples/continuous_tuning/evidence)
-- **Adapter Configs & Provenance Digests:** [`../training/README.md`](../training/README.md)
+- **Adapter Configs & Source Digests:** [`../training/README.md`](../training/README.md)

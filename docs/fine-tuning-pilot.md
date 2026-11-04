@@ -1,11 +1,11 @@
 # Fine-tuning workers and the research pilot
 
-Updated October 29, 2026. Tessera now includes an optional training-worker
+Updated October 29, 2026. Teleion Fabric now includes an optional training-worker
 example, and real CPU and GPU adapter smoke runs passed. The useful research
 specialist remains a proposed experiment: no pretrained Meta model was adapted,
 and no improvement in research quality has been demonstrated.
 
-The implementation merged in [Tessera PR 9](https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/pull/9).
+The implementation merged in [Teleion Fabric PR 9](https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/pull/9).
 Read the [worker guide at the merged revision](https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/36526860b0048df2dec675051ec6681023bda3d9/docs/fine-tuning-workers.md)
 for runnable commands and the [dated smoke evidence](https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/36526860b0048df2dec675051ec6681023bda3d9/examples/finetuning/evidence/smoke-2026-10-29.json)
 for versions, hardware, losses, artifact hashes and implementation fingerprints.
@@ -21,9 +21,9 @@ for versions, hardware, losses, artifact hashes and implementation fingerprints.
 | Save/reload | Frozen base unchanged; adapter changed; fresh base plus saved adapter reproduced probe logits with zero measured difference | Verifies saved training artifacts, not their usefulness |
 | Private fabric lifecycle | Curate/train claims, heartbeats, six saved base/adapter blobs per run, execution capture and readback; cross-principal record/blob/execution reads denied | Real in-process Store coverage, not a native-harness or hosted training lifecycle |
 
-Data preparation, provenance and contract authoring are independent of the ML
+Data preparation, source and contract authoring are independent of the ML
 framework. The PEFT backend and its dependencies live in a separate worker
-environment. The Tessera server does not acquire torch or a GPU trainer, and
+environment. Teleion Fabric server does not acquire torch or a GPU trainer, and
 the example adds no scheduler.
 Full sequences must fit the explicit memory recipe; over-length examples are
 rejected with their identity and length. There is no silent truncation, padding
@@ -55,12 +55,12 @@ surface and does not introduce another primitive or authority.
 | Dataset and split manifest | `noun.benchmark_suite` | Permitted inputs, reviewed targets, evidence, fingerprints and family splits |
 | Base and candidate adapter | `noun.model_spec` | Exact base/tokenizer revision, license, adapter digest and lineage |
 | Training recipe | `noun.code_node` | Implementation, dependency versions, device, adapter settings and run allowance |
-| Evaluation and execution evidence | `noun.eval_run` and existing execution records | Baseline, adapter, failures, resource use, receipts and admission decision |
+| Evaluation and execution evidence | `noun.eval_run` and existing execution records | Baseline, adapter, failures, resource use, records and admission decision |
 
 The example authors curate/split and train as `verb.solve_draft`, evaluation as
 `verb.benchmark_harness`, and review as `verb.verify_gate`. These are existing
 contracts, not new ontology types. An authorized worker executes the training
-verb; Tessera retains scope, version, lease, CAS, blob and receipt authority.
+verb; Teleion Fabric retains scope, version, lease, CAS, blob and record authority.
 Server-side management also uses scoped nouns and verbs under the
 [architecture checkpoint](architecture-checkpoint.md).
 
@@ -71,7 +71,7 @@ No artifact is promoted automatically.
 
 Use only reviewed, permitted task inputs, final outputs and supporting evidence.
 Exclude raw session histories, credentials, private material without permission,
-and hidden reasoning. A successful receipt alone does not make an output a
+and hidden reasoning. A successful record alone does not make an output a
 valid training example.
 
 ## Pretrained recipes remain unrun
@@ -84,7 +84,7 @@ wrapper runs inside an already authorized notebook; it creates no notebook or
 GPU allocation. See [providers and compute](providers-and-compute.md).
 
 Muse Glimmer is a 30B model under Apache 2.0. Its official post-training guide
-includes LoRA and QLoRA, with QLoRA verified on one H100. Tessera's optional
+includes LoRA and QLoRA, with QLoRA checked on one H100. Teleion Fabric's optional
 bridge prepares a pinned official configuration and checks complete example
 lengths; it has not run Glimmer training. The H100 recipe is not evidence that
 30B training fits the smaller GPUs. [Official model card](https://huggingface.co/meta-models/Muse-Glimmer-30B),

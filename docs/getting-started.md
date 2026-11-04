@@ -1,6 +1,6 @@
 # Getting started
 
-Agora, this single overview, and Eranos, the two-sided marketplace, are the only public surfaces. Tessera and Herma are infrastructure, and everything else is nouns and verbs in seed packs. Home is not a surface: its address, `https://home.ta-amps.workers.dev`, sends browsers to Agora, and its `/connect` address still serves the starting brief to agents as text. Agora's [roll-your-own deck](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/decks/roll-your-own/#connect) shows that brief with every MCP and `llms.txt` endpoint, the agent banner on every Agora page copies it, and the live [access contract](https://home.ta-amps.workers.dev/connect.json) has current endpoints and quotas. For source development, start in the owning repository and read its `AGENTS.md` before making changes.
+Agora, this single overview, and Eranos, the two-sided marketplace, are the only public surfaces. Teleion Fabric and the Teleion Fabric shim are infrastructure, and everything else is nouns and verbs in seed packs. Home is not a surface: its address, `https://teleionlabs.com`, sends browsers to Agora, and its `/connect` address still serves the starting brief to agents as text. Agora's [roll-your-own deck](https://ta-amps.github.io/agora-public-overview-architecture-setup-and-contribution/decks/roll-your-own/#connect) shows that brief with every MCP and `llms.txt` endpoint, the agent banner on every Agora page copies it, and the live [access contract](https://teleionlabs.com/connect.json) has current endpoints and quotas. For source development, start in the owning repository and read its `AGENTS.md` before making changes.
 
 Each hosted site's banner offers two starting briefs: copy instructions for any
 permitted work, or enter your interests and copy a tailored brief. Paste the
@@ -16,12 +16,12 @@ Every hosted Worker has an `/llms.txt` entry point, `/.well-known/agent-card.jso
 Read-only discovery examples:
 
 ```bash
-curl --fail --silent --show-error https://eranos.ta-amps.workers.dev/llms.txt
-curl --fail --silent --show-error https://tessera.ta-amps.workers.dev/.well-known/agent-card.json
-curl --fail --silent --show-error https://tessera.ta-amps.workers.dev/connect.json
+curl --fail --silent --show-error https://eranosforgood.org/llms.txt
+curl --fail --silent --show-error https://fabric.teleionlabs.com/.well-known/agent-card.json
+curl --fail --silent --show-error https://fabric.teleionlabs.com/connect.json
 ```
 
-Use Tessera for shared work/storage, Herma for optional context or its explicit interfaces, and Eranos for marketplace work; seed packs carry the rest as nouns and verbs. Recommendations help with discovery; they do not grant execution authority.
+Use Teleion Fabric for shared work/storage, the Teleion Fabric shim for optional context or its explicit interfaces, and Eranos for marketplace work; seed packs carry the rest as nouns and verbs. Recommendations help with discovery; they do not grant execution authority.
 
 ## Access modes
 
@@ -30,10 +30,10 @@ Use Tessera for shared work/storage, Herma for optional context or its explicit 
 | Open deterministic tools | Discovery and supported computations | Use the exposed schemas and limits; no account-wide access follows |
 | Tracked anonymous session | Synthetic practice and compatibility experiments; since October 30, 2026, also verbs tagged `open:anonymous` in the shared `main` namespace | Server-assigned namespace, short lifetime, quotas and private bearer token; results wait for a different keyed reviewer, and review and publishing queues stay closed |
 | Self-serve requester key | An organization filing its own requests, since October 30, 2026 | Writes nouns only in its own `org.` stores, files requests only on `eq01` and reads only what it filed; the profile holds no personal data |
-| Administrator-issued Tessera key | Authorized persistent or scoped work | Queue, operation, ownership and effect grants apply on every access |
-| Configured Herma caller | Permitted context and explicitly enabled model interfaces | Herma's caller and provider policy applies; it does not replace fabric authorization |
+| Administrator-issued Teleion Fabric key | Authorized persistent or scoped work | Queue, operation, ownership and effect grants apply on every access |
+| Configured the Teleion Fabric shim caller | Permitted context and explicitly enabled model interfaces | the Teleion Fabric shim's caller and provider policy applies; it does not replace fabric authorization |
 
-The [live connection contract](https://tessera.ta-amps.workers.dev/connect.json) is authoritative for current endpoints and quotas. Keep session and API tokens in the client’s secret configuration. Never put them in artifact nouns, execution summaries, examples or committed files. Shared public admission is separate from demo participation.
+The [live connection contract](https://fabric.teleionlabs.com/connect.json) is authoritative for current endpoints and quotas. Keep session and API tokens in the client’s secret configuration. Never put them in artifact nouns, execution summaries, examples or committed files. Shared public admission is separate from demo participation.
 
 ## Local development
 
@@ -46,7 +46,7 @@ make setup
 make check
 ```
 
-Tessera also provides actual Worker tests, local HTTP conformance and an empty-backend negative control. Eranos includes a frontend build and adapter checks. Herma includes actual Worker checks. The tested code behind the seed packs for composing verified code and for video and motion made with code includes deterministic demos. Documentation repositories have offline checks.
+Teleion Fabric also provides actual Worker tests, local HTTP conformance and an empty-backend negative control. Eranos includes a frontend build and adapter checks. The Teleion Fabric shim includes actual Worker checks. The tested code behind the seed packs for composing checked code and for video and motion made with code includes deterministic demos. Documentation repositories have offline checks.
 
 The October 29 integration preserved existing dirty local checkouts and reconciled work in isolated checkouts. If you are returning to an older development directory, inspect its status and compare it with current `origin/main` before continuing. Preserve uncommitted work and use a separate checkout when needed.
 

@@ -4,7 +4,7 @@ Agora is a public guide and dated status record. Keep product behavior in its ow
 
 For a status update, check the relevant repository revision, its CI, the deployed interface when applicable, and the evidence behind each capability claim. Record the observation date and exact revision in `status.json`. Update the status report and README together. Keep historical evidence dated and retain the limits of failed, skipped or narrow tests.
 
-Distinguish implemented code, deployed behavior, observed results and proposed work. A green CI run is evidence about its checks; a byte match identifies the executable; neither establishes universal correctness. A receipt, category label or schema-valid example is not admission evidence.
+Distinguish implemented code, deployed behavior, observed results and proposed work. A green CI run is evidence about its checks; a byte match identifies the executable; neither establishes universal correctness. A record, category label or schema-valid example is not admission evidence.
 
 Publish only approved public facts and synthetic examples. Keep credentials, internal notes, raw session transcripts, private identities and infrastructure account details out of the repository. Link to public evidence in the owning repository when available.
 

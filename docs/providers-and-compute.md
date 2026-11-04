@@ -9,15 +9,15 @@ merged source, deployed versions, local observations and remaining work.
 
 | Component | Role and supported direction | Boundary |
 | --- | --- | --- |
-| OpenAI | Herma Responses adapter | API credentials and allowance are separate from a signed-in ChatGPT/Codex session |
-| Anthropic | Herma Messages adapter | Claude Code subscription authentication is not an Anthropic backend API key |
+| OpenAI | the Teleion Fabric shim Responses adapter | API credentials and allowance are separate from a signed-in ChatGPT/Codex session |
+| Anthropic | the Teleion Fabric shim Messages adapter | Claude Code subscription authentication is not an Anthropic backend API key |
 | Ollama Cloud | Native chat provider; Messages compatibility exercised by the Claude fixture | Cloud inference access does not supply training GPUs or model-weight rights |
 | Muse / Meta | Meta model provider and a separate native harness family | Record both harness and exact requested/reported model; do not silently substitute models |
 | OpenRouter | Explicit Chat Completions gateway | Pin the model and underlying provider; no hidden gateway fallback, presets or automatic routing |
 | Jev / TypeSafe | Worker-side typed System One decision adapter | Typed state/questions, not a generative-chat fallback; no live qualification |
 | Claude Code, OpenCode, Pi, Muse Code, nanoMuse, Hermes and OpenClaw | Native harnesses with distinct versions and tool integrations | A passing fixture does not qualify every provider, feature or workflow |
 
-Herma's [provider and conversation contracts](https://github.com/ta-amps/herma-infrastructure-shim-for-intelligent-agents/blob/main/docs/conversations.md)
+the Teleion Fabric shim's [provider and conversation contracts](https://github.com/ta-amps/herma-infrastructure-shim-for-intelligent-agents/blob/main/docs/conversations.md)
 own wire protocols and configuration. The ordinary shim preserves supported
 caller generation settings, including an omitted output limit. An explicitly
 enabled server conversation capability requires its own declared allowance;
@@ -45,30 +45,30 @@ remain separate work.
 
 ## Observed inference and native coverage
 
-These observations use synthetic inputs and specific fixtures. Local Herma
-calling a real provider is different from a deployed Herma test or a native
-harness completing a Tessera verb.
+These observations use synthetic inputs and specific fixtures. Local the Teleion Fabric shim
+calling a real provider is different from a deployed the Teleion Fabric shim test or a native
+harness completing a Teleion Fabric verb.
 
 | October 29 observation | Result | Limit |
 | --- | --- | --- |
-| Local Herma → OpenAI Responses | `gpt-6-luna` completed the bounded typed-conversation check | One provider/model fixture; no broad reliability claim |
-| Local Herma → Anthropic | Original HTTP 400 retained; a later diagnostic attempt reported credit or quota exhaustion | No successful inference; operator-funded calls are temporarily paused |
-| Local Herma → OpenRouter | Original HTTP 404 retained; a later diagnostic attempt reported no eligible provider endpoint | Exact exclusion constraint remains unknown; operator-funded calls are temporarily paused |
+| Local the Teleion Fabric shim → OpenAI Responses | `gpt-6-luna` completed the bounded typed-conversation check | One provider/model fixture; no broad reliability claim |
+| Local the Teleion Fabric shim → Anthropic | Original HTTP 400 retained; a later diagnostic attempt reported credit or quota exhaustion | No successful inference; operator-funded calls are temporarily paused |
+| Local the Teleion Fabric shim → OpenRouter | Original HTTP 404 retained; a later diagnostic attempt reported no eligible provider endpoint | Exact exclusion constraint remains unknown; operator-funded calls are temporarily paused |
 | Native Claude Code → Ollama | Local actual-workerd lifecycle passed; six provider calls | Does not prove native Anthropic subscription availability |
 | Native Pi → Ollama | Local actual-workerd lifecycle passed; seven provider calls | One workload and configuration |
 | Native Muse Code → Meta | Local actual-workerd lifecycle passed; twelve provider calls | One workload and configuration |
 | Jev | Adapter and validation work only | No live call or inference qualification |
 
 Read-only authentication probes are distinct from these inference observations.
-The original failures remain unresolved in their original receipts. A later
+The original failures remain unresolved in their original records. A later
 diagnostic run recorded only bounded, allowlisted error metadata and retained
 unknown-usage reservations. The OpenRouter diagnosis does not establish a credit
 failure: it reports endpoint eligibility, with the precise constraint unknown.
 
 The operator separately requested a temporary Anthropic/OpenRouter pause for
 credit/budget reasons. This is an operating decision, not an independently
-verified balance. Their adapters and configuration remain available.
-Herma's managed conversations share limit state across callers under a stable
+checked balance. Their adapters and configuration remain available.
+The Teleion Fabric shim's managed conversations share limit state across callers under a stable
 operator account identity. They honor provider retry/reset guidance, use increasing
 backoff when guidance is absent, and admit one recovery request after cooldown.
 That request must be fresh, already authorized and within its existing allowance;
@@ -95,8 +95,8 @@ The accounting follow-up checks the selected credential before reserving any
 allowance. Accepted but unfinished responses retain unknown outcomes and their
 reservations. The managed one-proposal profile rejects unpriced multiple outputs,
 opaque stored prompts and unsupported pricing overrides; it fixes OpenAI to the
-standard `default` tier and Anthropic to `standard_only`. Receipts distinguish
-planned ceilings, confirmed reservations and uncertain shared-budget calls.
+standard `default` tier and Anthropic to `standard_only`. Records distinguish
+planned ceilings, checked reservations and uncertain shared-budget calls.
 These request-body changes have offline verification only. The earlier live
 OpenAI success belongs to its recorded source and request, not this newer body.
 Operator provider and uncertainty grants remain deployment-wide; separate
@@ -106,8 +106,8 @@ new inference or spending authority.
 The earlier native matrix also completed scoped work with OpenCode, Hermes,
 nanoMuse and OpenClaw. Ten separate Pi processes and 100 logical protocol clients
 are different scale tests. See [swarm readiness](swarm-readiness.md) for their
-limits. Tessera's subsequent hosted recovery has separate release and smoke
-evidence in the status report. The new Herma code remains undeployed.
+limits. Teleion Fabric's subsequent hosted recovery has separate release and smoke
+evidence in the status report. The new the Teleion Fabric shim code remains undeployed.
 
 ## Training hardware and service boundaries
 
@@ -117,7 +117,7 @@ evidence in the status report. The new Herma code remains undeployed.
 | RTX 3060 worker | Small CUDA specialist LoRA experiments | Completed tiny smoke plus pretrained Llama 3.2 1B and 3B continuous tuning rounds on synthetic unseen-family tool calls (`12.0% -> 50.7%` on 1B and `52.0% -> 72.7%` on 3B in bf16 LoRA within ~11.62 GiB VRAM); useful-task evaluation and admission remain unrun |
 | Kaggle notebook | Bounded free 2x T4 GPU QLoRA training environment | Completed Muse Glimmer 30B 4-bit QLoRA specialist run across Kaggle's two free 16 GB T4 GPUs (`93.3% -> 99.3%` exact match on pre-registered 150-row synthetic fresh holdout); adapter stays private and unadmitted; availability and allowance must be checked for each run |
 | H100 worker | Optional single-GPU Glimmer QLoRA environment | Official single-H100 recipe exists; unprovisioned and not needed after the free 2x T4 QLoRA run succeeded |
-| Cloudflare Workers | Authorization, storage access, receipts and job coordination | The service runtime is not the optional PyTorch/CUDA trainer |
+| Cloudflare Workers | Authorization, storage access, records and job coordination | The service runtime is not the optional PyTorch/CUDA trainer |
 | Cloudflare Workers AI | Inference with supported base models and compatible adapters | Adapter compatibility must be checked; no Glimmer serving qualification |
 
 Kaggle documents two T4 GPUs with 16 GB each. Their memories are separate, not
