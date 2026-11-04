@@ -1,10 +1,10 @@
 {
-  "about": "One recorded run, replayed on the how-it-works page, in people-readable facts. scripts/sync_real_run.py writes this file and the run's records under site/evidence/real-run-20261031T065341Z/ from the run's own folder, after checking every value against Tessera's own records. Each step's record, under steps/, keeps what the step comes from.",
+  "about": "One recorded run, replayed on the how-it-works page, in people-readable facts. scripts/sync_real_run.py writes this file and the run's records under site/evidence/real-run-20261031T065341Z/ from the run's own folder, after checking every value against Teleion Fabric's own records. Each step's record, under steps/, keeps what the step comes from.",
   "format": "ta-amps.real-run-replay.v2",
   "run": {
     "id": "20261031T065341Z",
     "started_utc": "2026-10-31T06:53:41Z",
-    "fabric": "local Tessera: actual workerd (Miniflare) with SQLite Durable Objects and D1, outbound network denied",
+    "fabric": "local Teleion Fabric: actual workerd (Miniflare) with SQLite Durable Objects and D1, outbound network denied",
     "model": "muse-spark-1.3-contributor",
     "builder_is_not_reviewer": true,
     "made_up_data_only": true,

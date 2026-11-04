@@ -42,16 +42,16 @@
 </div>
 <div style="flex:1;display:flex;flex-direction:column;gap:6px">
 <p style="font-size:25px;line-height:1.35;color:#5E6472;font-weight:600">New repos, papers, model releases and tool updates</p>
-<p style="font-size:23px;line-height:1.4;color:#5E6472">Tessera serves the feed tools to keyed agents, and the tool-discovery and freshness-checks packs hold the scan Tasks. A scan runs when a worker claims it.</p>
+<p style="font-size:23px;line-height:1.4;color:#5E6472">Teleion Fabric serves the feed tools to keyed agents, and the tool-discovery and freshness-checks packs hold the scan Tasks. A scan runs when a worker claims it.</p>
 <x-feed-status kind="line" style="font-size:22px;line-height:1.4;color:#1F6B43;font-weight:600"></x-feed-status>
 </div>
 <p style="width:180px;text-align:center;background:#EDE8DC;color:#5E6472;border-radius:999px;padding:6px 0;font-size:22px;font-weight:600">When claimed</p>
 </div>
 </div>
 <div style="display:flex;flex-direction:row;align-items:center;gap:36px;font-size:22px;color:#5E6472">
-<p>Each tile says when it runs. The live ones show their last run in public: Tessera’s health and the daily check’s status.</p>
+<p>Each tile says when it runs. The live ones show their last run in public: Teleion Fabric’s health and the daily check’s status.</p>
 </div>
 <svg aria-label="ta-amps mark" width="32" height="32" viewBox="0 0 32 32" style="position:absolute;left:128px;bottom:64px;width:32px;height:32px"><rect x="0" y="0" width="14" height="14" rx="3" fill="#E5ECF7"/><rect x="18" y="0" width="14" height="14" rx="3" fill="#F8E6E1"/><rect x="0" y="18" width="14" height="14" rx="3" fill="#F5F2EA"/><rect x="18" y="18" width="14" height="14" rx="3" fill="#E5ECF7"/></svg>
 <p style="position:absolute;left:176px;bottom:64px;width:1616px;font-size:24px;color:#5E6472">What runs on its own, and when</p>
-<aside>Four things run without anyone at a keyboard, and each says when. Lease reaping is infrastructure, not a worker: Tessera gives expired leases back to the queue shortly after they lapse and again on a cron every six hours, and its public health shows the last run. The daily check is a dedicated worker run by ta-amps: once a day, or when an operator asks, it reads the public health, agent card, llms.txt and tool list of four services, Eranos, Tessera, Herma and Home’s agent endpoints, records what changed as Task Objects and queues repair or investigate Tasks for authorized workers, with no model call. Learners run when a person starts them, on recorded execution reports; the overview deck’s learning slide has the measured results. Feeds run when a worker claims a scan Task: Tessera serves the feed tools to keyed agents, and the tool-discovery and freshness-checks packs hold the Tasks.</aside>
+<aside>Four things run without anyone at a keyboard, and each says when. Lease reaping is infrastructure, not a worker: Teleion Fabric gives expired leases back to the queue shortly after they lapse and again on a cron every six hours, and its public health shows the last run. The daily check is a dedicated worker run by ta-amps: once a day, or when an operator asks, it reads the public health, agent card, llms.txt and tool list of four services, Eranos, Teleion Fabric, Teleion Fabric's model shim and Home’s agent endpoints, records what changed as Task Objects and queues repair or investigate Tasks for authorized workers, with no model call. Learners run when a person starts them, on recorded execution reports; the overview deck’s learning slide has the measured results. Feeds run when a worker claims a scan Task: Teleion Fabric serves the feed tools to keyed agents, and the tool-discovery and freshness-checks packs hold the Tasks.</aside>
 </section>

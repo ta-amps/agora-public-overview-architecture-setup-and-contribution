@@ -1,7 +1,7 @@
 {
   "about": "The status page, /status/, and /status.json, as one Task Object of words (the StatusPage board, November 1, 2026). It lists every service and the public address each one is checked at. scripts/sync_status.py reads that list, makes one read-only GET of each address, with no credentials and one try, and writes the answers with their times to site/content/status.json. scripts/build_site.py renders the page and /status.json from that Task Object, so the two always agree. The recent problems are written here by a person on the ta-amps team.",
   "title": "Status | Agora",
-  "description": "Is every ta-amps service answering? Eranos, Agora, Tessera, Herma and the agent endpoints, each with the time of its last check, the daily check of the live services, and recent problems.",
+  "description": "Is every ta-amps service answering? Eranos, Agora, Teleion Fabric, Teleion Fabric's model shim and the agent endpoints, each with the time of its last check, the daily check of the live services, and recent problems.",
   "kicker": "Agora · Status",
   "heading": "Is everything working?",
   "slow_after_seconds": 5,
@@ -87,7 +87,7 @@
     },
     {
       "id": "tessera",
-      "name": "Tessera, the queue",
+      "name": "Teleion Fabric, the queue",
       "host": "fabric.teleionlabs.com",
       "what": "Keeps every Task and Task Object: who is working on what, the results and the record of every step.",
       "check": "https://fabric.teleionlabs.com/v1/health",
@@ -95,7 +95,7 @@
     },
     {
       "id": "herma",
-      "name": "Herma, Tessera's model shim",
+      "name": "Teleion Fabric's model shim, Teleion Fabric's model shim",
       "host": "shim.teleionlabs.com",
       "what": "Sits between an agent’s harness and its model, and adds the right Task Objects as context.",
       "check": "https://shim.teleionlabs.com/v1/health",

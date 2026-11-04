@@ -20,8 +20,8 @@
     "quotes": "benchmark quotes checked",
     "top": "First by feed rank, as of {as_of}",
     "open": "Open the feed →",
-    "where_local": "Ran on a local copy of Tessera on the project’s own machine.",
-    "where_hosted": "Ran on hosted Tessera.",
+    "where_local": "Ran on a local copy of Teleion Fabric on the project’s own machine.",
+    "where_hosted": "Ran on hosted Teleion Fabric.",
     "which": {
       "heading": "Which fits?",
       "text": "Each feed lists the projects that fit a setup, such as Python, MIT licence, runs locally, first by feed rank. The answer comes from the feed’s last run, with no model calls, so the same question gets the same answer until the next run.",
@@ -57,8 +57,8 @@
     "facts": {
       "last_run": "Last run",
       "where": "Where it ran",
-      "where_local": "A local copy of Tessera on the project’s own machine, with real reads of GitHub and arXiv",
-      "where_hosted": "Hosted Tessera",
+      "where_local": "A local copy of Teleion Fabric on the project’s own machine, with real reads of GitHub and arXiv",
+      "where_hosted": "Hosted Teleion Fabric",
       "schedule": "Schedule",
       "who": "Who runs it",
       "who_text": "Dedicated workers"
@@ -119,8 +119,8 @@
     ],
     "items_top": 40,
     "papers_heading": "Papers",
-    "folded_heading": "Also in Tessera",
-    "folded_lead": "Feeds about agent harnesses that Tessera already holds as Task Objects:",
+    "folded_heading": "Also in Teleion Fabric",
+    "folded_lead": "Feeds about agent harnesses that Teleion Fabric already holds as Task Objects:",
     "folded_version": "version",
     "answer_heading": "Ask it in plain words",
     "answer_label": "The answer came from the stored Task Objects, with no model call.",

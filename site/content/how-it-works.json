@@ -1,7 +1,7 @@
 {
   "about": "The how-it-works page, as one Task Object of words (the AgoraHowItWorks board, November 1, 2026, light only). scripts/build_site.py renders it into site/how-it-works/index.html. The replayed run's facts come from site/content/real-run.json and the run's own records under site/evidence/, which scripts/sync_real_run.py writes; the step words here describe what those records show, and the build fills every number in them from the records. Model names come from the models catalog (site/content/models.meta.json) through {{model:<id>}}, and the run's own declared model picks one. Who did each step is said by role, never by agent app: agent apps appear only on Models used. The results' figures come from site/content/learning.json by model, so no number is typed twice. Pages show people-readable facts and a Record link, never a hash.",
   "title": "How it works | ta-amps",
-  "description": "How the work is organized: Tasks and Task Objects, one real run replayed step by step, Herma and Tessera underneath, and Meta's Muse models, which every step runs on.",
+  "description": "How the work is organized: Tasks and Task Objects, one real run replayed step by step, Teleion Fabric's model shim and Teleion Fabric underneath, and Meta's Muse models, which every step runs on.",
   "heading": "How it works",
   "lead": "Eranos runs on one simple principle that fits almost any project: all work is Tasks, and everything a task uses or makes is a Task Object.",
   "toc": {
@@ -101,7 +101,7 @@
       },
       {
         "name": "Infrastructure.",
-        "text": "Tessera, the infrastructure startup by Teleion Labs, keeps the work and storage; its model shim adds the right Task Objects."
+        "text": "Teleion Fabric, the infrastructure startup by Teleion Labs, keeps the work and storage; its model shim adds the right Task Objects."
       }
     ]
   },
@@ -109,11 +109,11 @@
     "heading": "A real run, replayed",
     "replay": "Replay",
     "steps_link": "Read it as steps",
-    "lead": "One request, from start to finish, as its own records tell it. It ran on a local copy of Tessera, not the hosted service, with outbound network denied. A dedicated worker run by ta-amps built the kit, and a second agent with its own key checked it; both ran {model} through the Meta API.",
+    "lead": "One request, from start to finish, as its own records tell it. It ran on a local copy of Teleion Fabric, not the hosted service, with outbound network denied. A dedicated worker run by ta-amps built the kit, and a second agent with its own key checked it; both ran {model} through the Meta API.",
     "facts": {
       "when": "Started",
       "where": "Ran on",
-      "where_text": "A local copy of Tessera, not the hosted service, with outbound network denied",
+      "where_text": "A local copy of Teleion Fabric, not the hosted service, with outbound network denied",
       "builder": "Built by",
       "builder_text": "A dedicated worker run by ta-amps, running {model}",
       "reviewer": "Checked by",
@@ -142,7 +142,7 @@
       "builder": "dedicated worker run by ta-amps",
       "reviewer": "second agent, its own key"
     },
-    "legend_label": "Tessera’s task states",
+    "legend_label": "Teleion Fabric’s task states",
     "legend": [
       {
         "state": "ready",
@@ -172,16 +172,16 @@
         "text": "The builder’s first try to pick up work came back empty, and its second got the build. It read the availability list, wrote a scheduler, its tests and a README, and stored them with the availability list as {files} Task Objects."
       },
       "build-recorded": {
-        "title": "Tessera recorded the build",
-        "text": "Tessera turned down the builder’s first submit as an invalid request. The builder submitted again, and Tessera accepted it, recorded it and marked the build done. That released the review, which had been waiting for the build."
+        "title": "Teleion Fabric recorded the build",
+        "text": "Teleion Fabric turned down the builder’s first submit as an invalid request. The builder submitted again, and Teleion Fabric accepted it, recorded it and marked the build done. That released the review, which had been waiting for the build."
       },
       "review": {
         "title": "A second agent checked it",
-        "text": "The checker, a second agent holding its own key, picked up the review and read all {files} Task Objects. It reported that the kit’s {tests_run} tests pass and that the scheduler finds {coverage_violations} coverage violations, and stored its verdict, {verdict}, as a Task Object. Tessera recorded it and marked the review done."
+        "text": "The checker, a second agent holding its own key, picked up the review and read all {files} Task Objects. It reported that the kit’s {tests_run} tests pass and that the scheduler finds {coverage_violations} coverage violations, and stored its verdict, {verdict}, as a Task Object. Teleion Fabric recorded it and marked the review done."
       },
       "held": {
         "title": "The request waits for a person",
-        "text": "With both tasks done, Tessera put the request back to ready. It waits there for a person: the approval recorded a verdict and published nothing."
+        "text": "With both tasks done, Teleion Fabric put the request back to ready. It waits there for a person: the approval recorded a verdict and published nothing."
       }
     },
     "who": {
@@ -189,7 +189,7 @@
       "build": "A dedicated worker run by ta-amps",
       "build-recorded": "A dedicated worker run by ta-amps",
       "review": "A second agent with its own key",
-      "held": "Tessera, on the check’s submit"
+      "held": "Teleion Fabric, on the check’s submit"
     },
     "labels": {
       "step": "Step",
@@ -205,18 +205,18 @@
       "record_label": "Record: the run’s records, listed on the evidence page",
       "utc": "UTC"
     },
-    "check": "Every step is recorded: each step’s record keeps, unchanged, the trace lines and Tessera events it comes from, and the evidence page lists them."
+    "check": "Every step is recorded: each step’s record keeps, unchanged, the trace lines and Teleion Fabric events it comes from, and the evidence page lists them."
   },
   "underneath": {
     "heading": "Underneath",
     "harness": "Any agent’s harness",
     "herma": {
-      "name": "Herma, Tessera's model shim",
+      "name": "Teleion Fabric's model shim, Teleion Fabric's model shim",
       "text": "adds context, or answers directly"
     },
     "model": "Its model",
     "tessera": {
-      "name": "Tessera",
+      "name": "Teleion Fabric",
       "items": [
         "queue",
         "leases",
@@ -227,7 +227,7 @@
     },
     "edge": "the right Task Objects",
     "note": "Is a shim the same as RAG? No. RAG pastes search results into a prompt. The shim adds Task Objects as context, within their permissions, and it can answer a request directly when one already holds the answer.",
-    "run_note": "The run above did not pass through the shim: both agents called Tessera and the model directly."
+    "run_note": "The run above did not pass through the shim: both agents called Teleion Fabric and the model directly."
   },
   "meta": {
     "heading": "Built on Meta’s Muse models",

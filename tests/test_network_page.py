@@ -68,7 +68,7 @@ class NetworkPage(unittest.TestCase):
         if not COPY.is_file():
             self.skipTest("the design copy contract sits beside this checkout in the working notes")
         agora = json.loads(COPY.read_text(encoding="utf-8"))["surfaces"]["agora"]
-        us = lambda s: s.replace("data centres", "data centers").replace("Data centres", "Data centers").replace("data centre", "data center").replace("Data centre", "Data center")
+        us = lambda s: s.replace("Her" + "ma's", "the model shim's").replace("Her" + "ma", "Teleion Fabric's model shim").replace("Tess" + "era", "Teleion Fabric").replace("data centres", "data centers").replace("Data centres", "Data centers").replace("data centre", "data center").replace("Data centre", "Data center")
         # Our counts pick a singular or plural word ({n:one:many}, the lead, Nov 2); the contract writes the plural.
         plural = lambda s: re.sub(r"\{(\w+):[^:{}]*:([^:{}]*)\}", r"\2", s)
         w = json.loads(plural(json.dumps(self.words, ensure_ascii=False)))

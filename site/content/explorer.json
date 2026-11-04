@@ -137,7 +137,7 @@
     "kicker": "Feeds about agent harnesses · overhead and routing",
     "heading": "Agent Harness Research Feeds",
     "lead": "A harness research feed is a Task Object that keeps dated profiles of coding harnesses, their trial records, and how many prompt and tool-schema tokens each one adds to every turn. Routing descriptions are kept apart from permissions, since a route never authorizes anything, and precision lives in Task Objects, output contracts, scoped tool limits and context shims.",
-    "status_note": "Today a daily check watches our own services, and Herma has a guide for adding harness feeds as context. Collecting outside GitHub and paper feeds automatically is a proposal.",
+    "status_note": "Today a daily check watches our own services, and Teleion Fabric's model shim has a guide for adding harness feeds as context. Collecting outside GitHub and paper feeds automatically is a proposal.",
     "harnesses": [
       {
         "id": "harness-square",
@@ -149,27 +149,27 @@
         "id": "muse-code",
         "name": "Muse Code",
         "role": "Meta’s coding agent program",
-        "detail": "Claimed leased Tasks on Tessera’s shared queue end to end, and received the caller’s own Herma context over /v1/responses and /v1/chat/completions."
+        "detail": "Claimed leased Tasks on Teleion Fabric’s shared queue end to end, and received the caller’s own Teleion Fabric's model shim context over /v1/responses and /v1/chat/completions."
       },
       {
         "id": "opencode",
         "name": "OpenCode",
         "role": "Configurable open-source terminal & swarm harness",
-        "detail": "Completed scoped Task lifecycles on Tessera, with Herma routing inline."
+        "detail": "Completed scoped Task lifecycles on Teleion Fabric, with Teleion Fabric's model shim routing inline."
       },
       {
         "id": "pi",
         "name": "Pi",
         "role": "Multi-process swarm & lightweight worker harness",
-        "detail": "Completed worker lifecycles and multi-process runs against leased Tessera queues, with every step recorded and a verifier who is never the builder."
+        "detail": "Completed worker lifecycles and multi-process runs against leased Teleion Fabric queues, with every step recorded and a verifier who is never the builder."
       }
     ],
     "routing": {
       "heading": "Many workers, and a model for each job",
-      "lead": "Many workers share leased Tasks across Tessera’s queues, and a different worker verifies each result. Verified results and rejected attempts become training examples for three tiers:",
+      "lead": "Many workers share leased Tasks across Teleion Fabric’s queues, and a different worker verifies each result. Verified results and rejected attempts become training examples for three tiers:",
       "rules": [
         {
-          "mode": "Tier 0 · Herma’s rules",
+          "mode": "Tier 0 · the model shim’s rules",
           "when": "Capability firewall, volatile facts and JSON repair",
           "outcome": "Runs inline, with no model tokens."
         },
@@ -5378,7 +5378,7 @@
       "pack_id": "hackathon-ecosystem-index",
       "pack_title": "Hackathon ecosystem index",
       "title": "Verify provenance, schema conformance and unverified labels across a catalog",
-      "summary": "Check every catalog record for unique repository identifiers, absence of em-dashes, valid Tessera Task Object and Task categories and honest candidate_unverified status.",
+      "summary": "Check every catalog record for unique repository identifiers, absence of em-dashes, valid Teleion Fabric Task Object and Task categories and honest candidate_unverified status.",
       "subtype": "verb.verify_gate",
       "category": "architecture-and-discovery",
       "category_label": "Discovery",
@@ -7083,7 +7083,7 @@
       "pack_id": "narrated-explainer-video",
       "pack_title": "Narrated explainer video",
       "title": "Compile the records ledger",
-      "summary": "Read the production's tasks from Tessera and list every step with its record, ready outcome, outputs and failed attempts, saying plainly whether every step has a record.",
+      "summary": "Read the production's tasks from Teleion Fabric and list every step with its record, ready outcome, outputs and failed attempts, saying plainly whether every step has a record.",
       "subtype": "verb.verify_gate",
       "category": "video-voice-and-media",
       "category_label": "Video and media",
@@ -12178,7 +12178,7 @@
       "pack_id": "combinatorial-niche-spider",
       "pack_title": "Combinatorial niche spider",
       "title": "Guardrail: spider waves emit inert TaskSpec proposals rather than running an independent scheduler",
-      "summary": "Preserves Tessera as the single task and schedule authority.",
+      "summary": "Preserves Teleion Fabric as the single task and schedule authority.",
       "subtype": "noun.skill_pack · guardrail",
       "category": "architecture-and-discovery",
       "category_label": "Discovery",
@@ -13558,7 +13558,7 @@
       "pack_id": "harness-onboarding-e2e",
       "pack_title": "Harness onboarding",
       "title": "Connecting a harness: transport, headers, arguments and credentials",
-      "summary": "Connection guidance is the adapter contract between a harness's tool calls and Tessera's interfaces.",
+      "summary": "Connection guidance is the adapter contract between a harness's tool calls and Teleion Fabric's interfaces.",
       "subtype": "noun.shim_provision · connection_guide",
       "category": "architecture-and-discovery",
       "category_label": "Discovery",

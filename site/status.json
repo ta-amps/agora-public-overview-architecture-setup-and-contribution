@@ -37,7 +37,7 @@
     },
     {
       "id": "tessera",
-      "name": "Tessera, the queue",
+      "name": "Teleion Fabric, the queue",
       "host": "fabric.teleionlabs.com",
       "state": "answering",
       "label": "Answering",
@@ -48,7 +48,7 @@
     },
     {
       "id": "herma",
-      "name": "Herma, Tessera's model shim",
+      "name": "Teleion Fabric's model shim, Teleion Fabric's model shim",
       "host": "shim.teleionlabs.com",
       "state": "answering",
       "label": "Answering",

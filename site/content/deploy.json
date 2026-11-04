@@ -1,9 +1,9 @@
 {
   "about": "The run-your-own page, /deploy/, as one Task Object (the AgoraPartners board, November 1, 2026): how to run any slice of ta-amps yourself, the partner compute cards, the security checklist and the probes that check a deployment. Every command follows the owning repository's own instructions; repository addresses are written as GitHub addresses and scripts/build_site.py points each one where its files are served. The partner cards take their state from the facts copied below from the partner compute record of October 31, evidence/sira-are-cascade-2026-10-31/partner_compute_cascade.json in the repository: while a partner's mode is local_verified its card is an offline check, so it shows no numbers and no record line, and each line under 'Checked offline' names the copied fact that keeps it true.",
   "title": "Run your own | ta-amps",
-  "description": "How to run any slice of ta-amps yourself: seed packs in your own agent, Tessera and Herma on Cloudflare, the Docker sandbox, fine-tuning Muse Glimmer 30B, and the partner compute cards for Modal, Baseten and Fireworks.",
+  "description": "How to run any slice of ta-amps yourself: seed packs in your own agent, Teleion Fabric and Teleion Fabric's model shim on Cloudflare, the Docker sandbox, fine-tuning Muse Glimmer 30B, and the partner compute cards for Modal, Baseten and Fireworks.",
   "heading": "Run any slice yourself",
-  "lead": "You don’t have to adopt the whole stack at once. Start with seed packs, ready-made sets of Tasks, inside an agent you already use, run your own Tessera and its model shim on Cloudflare, try the whole loop offline in Docker, or fine-tune {{model:muse-glimmer-30b}} adapters on your own GPUs.",
+  "lead": "You don’t have to adopt the whole stack at once. Start with seed packs, ready-made sets of Tasks, inside an agent you already use, run your own Teleion Fabric and its model shim on Cloudflare, try the whole loop offline in Docker, or fine-tune {{model:muse-glimmer-30b}} adapters on your own GPUs.",
   "dateline": "Run-your-own guide · November 1, 2026 · MIT license",
   "quick_links": [
     {
@@ -54,17 +54,17 @@
       {
         "id": "slice-cloudflare",
         "badge": "Cloudflare Workers",
-        "title": "Slice B: your own Tessera and its model shim on Cloudflare",
-        "summary": "Run your own queue and Task Object store (Tessera) and your own shim (Herma) on Cloudflare, with the commands each repository gives.",
+        "title": "Slice B: your own Teleion Fabric and its model shim on Cloudflare",
+        "summary": "Run your own queue and Task Object store (Teleion Fabric) and your own shim (Teleion Fabric's model shim) on Cloudflare, with the commands each repository gives.",
         "when": "Best for teams, labs or nonprofits that want an always-on HTTPS and MCP endpoint, where only one worker holds a Task at a time and no write overwrites a newer one.",
         "code_id": "cmd-slice-cf",
-        "commands": "# 1. Sign in to your Cloudflare account\nnpx wrangler login\n\n# Your account needs its own D1 databases: create each one that deploy/cloudflare/wrangler.jsonc names\n# (npx wrangler d1 create <name>) and put its id in that file before you deploy.\n\n# 2. Tessera: the queue, the Task Object stores and the /mcp endpoint\ngit clone https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine.git\ncd tessera-infrastructure-work-and-storage-engine\nnpx --yes wrangler@4.154.0 secret put BOOTSTRAP_SECRET --config deploy/cloudflare/wrangler.jsonc\nnpx --yes wrangler@4.154.0 deploy --config deploy/cloudflare/wrangler.jsonc\n\n# 3. Herma: the shim, with its own D1 database\ncd ..\ngit clone https://github.com/ta-amps/herma-infrastructure-shim-for-intelligent-agents.git\ncd herma-infrastructure-shim-for-intelligent-agents\nnpx --yes wrangler@4.149.0 d1 execute ta-amps-herma --remote --file deploy/cloudflare/d1-herma.sql --config deploy/cloudflare/wrangler.jsonc -y\nnpx --yes wrangler@4.149.0 deploy --config deploy/cloudflare/wrangler.jsonc\nnpx --yes wrangler@4.149.0 secret put BOOTSTRAP_SECRET --config deploy/cloudflare/wrangler.jsonc"
+        "commands": "# 1. Sign in to your Cloudflare account\nnpx wrangler login\n\n# Your account needs its own D1 databases: create each one that deploy/cloudflare/wrangler.jsonc names\n# (npx wrangler d1 create <name>) and put its id in that file before you deploy.\n\n# 2. Teleion Fabric: the queue, the Task Object stores and the /mcp endpoint\ngit clone https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine.git\ncd tessera-infrastructure-work-and-storage-engine\nnpx --yes wrangler@4.154.0 secret put BOOTSTRAP_SECRET --config deploy/cloudflare/wrangler.jsonc\nnpx --yes wrangler@4.154.0 deploy --config deploy/cloudflare/wrangler.jsonc\n\n# 3. Teleion Fabric's model shim: the shim, with its own D1 database\ncd ..\ngit clone https://github.com/ta-amps/herma-infrastructure-shim-for-intelligent-agents.git\ncd herma-infrastructure-shim-for-intelligent-agents\nnpx --yes wrangler@4.149.0 d1 execute ta-amps-herma --remote --file deploy/cloudflare/d1-herma.sql --config deploy/cloudflare/wrangler.jsonc -y\nnpx --yes wrangler@4.149.0 deploy --config deploy/cloudflare/wrangler.jsonc\nnpx --yes wrangler@4.149.0 secret put BOOTSTRAP_SECRET --config deploy/cloudflare/wrangler.jsonc"
       },
       {
         "id": "slice-docker",
         "badge": "Docker",
         "title": "Slice C: the whole loop offline, in Docker",
-        "summary": "Run Tessera locally, check the starter seed pack, and run a two-worker test of claiming a Task and an independent review, with no keys and no outside network.",
+        "summary": "Run Teleion Fabric locally, check the starter seed pack, and run a two-worker test of claiming a Task and an independent review, with no keys and no outside network.",
         "when": "Best for offline demos, internal CI or strict data residency.",
         "code_id": "cmd-slice-docker",
         "commands": "git clone https://github.com/ta-amps/ta-amps-hackathon.git\ncd ta-amps-hackathon\ndocker compose up --build --abort-on-container-exit --exit-code-from sample-worker-smoke"
@@ -142,7 +142,7 @@
         "provider": "fireworks_ai",
         "name": "Fireworks AI",
         "kind": "fast inference",
-        "role": "Routes a task to a small specialist adapter behind Tessera's model shim, with a different adapter as the checker.",
+        "role": "Routes a task to a small specialist adapter behind Teleion Fabric's model shim, with a different adapter as the checker.",
         "checked": [
           {
             "text": "The routing rule picked an adapter within the shim’s time budget.",
@@ -210,10 +210,10 @@
         "commands": "# Agora's source: https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution\n# In its folder, check that every page is built from its source:\npython3 scripts/build_site.py --check\n\n# Option 1: deploy the site/ folder to Cloudflare Pages\nnpx wrangler pages deploy site --project-name=agora-hub\n\n# Option 2: serve it with Docker on port 8080\ndocker build -t ta-amps-agora . && docker run --rm -p 8080:8080 ta-amps-agora"
       },
       {
-        "title": "Eranos, the marketplace (a Cloudflare Worker with D1 and a scoped Tessera key)",
-        "detail": "Eranos reads and writes Tessera with a scoped surface key, so visitors can browse reviewed kits and follow requests without touching any admin store.",
+        "title": "Eranos, the marketplace (a Cloudflare Worker with D1 and a scoped Teleion Fabric key)",
+        "detail": "Eranos reads and writes Teleion Fabric with a scoped surface key, so visitors can browse reviewed kits and follow requests without touching any admin store.",
         "code_id": "cmd-surface-eranos",
-        "commands": "git clone https://github.com/ta-amps/eranos-public-marketplace-for-public-good-token-burn.git\ncd eranos-public-marketplace-for-public-good-token-burn\nmake check\n\n# The surface key for your own Tessera (never an admin key):\nnpx wrangler secret put TESSERA_SURFACE_KEY --config deploy/cloudflare/wrangler.jsonc\npnpm --dir web install --frozen-lockfile && pnpm --dir web build\nnpx --yes wrangler@4.149.0 deploy --config deploy/cloudflare/wrangler.jsonc"
+        "commands": "git clone https://github.com/ta-amps/eranos-public-marketplace-for-public-good-token-burn.git\ncd eranos-public-marketplace-for-public-good-token-burn\nmake check\n\n# The surface key for your own Teleion Fabric (never an admin key):\nnpx wrangler secret put TESSERA_SURFACE_KEY --config deploy/cloudflare/wrangler.jsonc\npnpm --dir web install --frozen-lockfile && pnpm --dir web build\nnpx --yes wrangler@4.149.0 deploy --config deploy/cloudflare/wrangler.jsonc"
       }
     ]
   },
@@ -243,6 +243,6 @@
     "heading": "5. Check a live deployment",
     "text": "Point these three probes at the public ta-amps services, or swap the addresses for your own.",
     "code_id": "cmd-verify-stack",
-    "commands": "# 1. Tessera's health\ncurl -fsS https://fabric.teleionlabs.com/v1/health\n\n# 2. Herma's preview of the context it would add (it stores nothing)\ncurl -fsS -X POST https://shim.teleionlabs.com/api/preview \\\n  -H 'content-type: application/json' \\\n  -d '{\"prompt\":\"How do Tasks and Task Objects work with Agent Harness Feeds?\"}'\n\n# 3. The brief agents start from\ncurl -fsS https://home.ta-amps.workers.dev/llms.txt | head -n 25"
+    "commands": "# 1. Teleion Fabric's health\ncurl -fsS https://fabric.teleionlabs.com/v1/health\n\n# 2. the model shim's preview of the context it would add (it stores nothing)\ncurl -fsS -X POST https://shim.teleionlabs.com/api/preview \\\n  -H 'content-type: application/json' \\\n  -d '{\"prompt\":\"How do Tasks and Task Objects work with Agent Harness Feeds?\"}'\n\n# 3. The brief agents start from\ncurl -fsS https://home.ta-amps.workers.dev/llms.txt | head -n 25"
   }
 }

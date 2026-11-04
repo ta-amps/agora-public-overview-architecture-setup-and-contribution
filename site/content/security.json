@@ -17,7 +17,7 @@
     {
       "heading": "In scope",
       "items": [
-        "Eranos, Agora, Tessera, Herma (Tessera's model shim) and the agent endpoints at home, each at its own address on ta-amps.workers.dev, including their MCP endpoints and agent APIs."
+        "Eranos, Agora, Teleion Fabric, Teleion Fabric's model shim (Teleion Fabric's model shim) and the agent endpoints at home, each at its own address on ta-amps.workers.dev, including their MCP endpoints and agent APIs."
       ]
     },
     {
@@ -60,7 +60,7 @@
         "The deck viewer remembers its display choices in this browser.",
         "The judges’ tour keeps one flag in this tab while it runs.",
         "The Live Studio keeps its one-hour demo session (a session token, its namespace and when it ends) in this browser’s local and session storage, so a reload can reuse it. The Studio clears it a minute before it ends.",
-        "The network page reads Herma’s public network map at most once a minute while it is open. It sends no cookie and keeps nothing in this browser."
+        "The network page reads the model shim’s public network map at most once a minute while it is open. It sends no cookie and keeps nothing in this browser."
       ]
     }
   ],

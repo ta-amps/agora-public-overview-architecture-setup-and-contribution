@@ -1,5 +1,5 @@
 {
-  "about": "Every number on these slides, with its source. All examples use example data. Live facts were read from public, read-only endpoints on October 30, 2026 at 07:09 UTC, after Tessera's redeploy at 06:53 UTC and Eranos's at 06:55 UTC; nothing that changes state was called, and no request was sent.",
+  "about": "Every number on these slides, with its source. All examples use example data. Live facts were read from public, read-only endpoints on October 30, 2026 at 07:09 UTC, after Teleion Fabric's redeploy at 06:53 UTC and Eranos's at 06:55 UTC; nothing that changes state was called, and no request was sent.",
   "as_of": "2026-10-30",
   "claims": [
     {
@@ -13,14 +13,14 @@
       "slide": "status",
       "number": "Sign-up and the request box, live since October 30, 2026 at 06:55 UTC",
       "status": "measured",
-      "source": "Tessera's access contract at 07:09 UTC lists self-serve requester keys as enabled, at POST /v1/session/requester: a key that writes only in its organization's own org. stores, files requests only on eq01 and reads only what it filed. Eranos pull request 11, deployed at 06:55 UTC on October 30, 2026, signs an organization up when it sends its first request from /nonprofits. This check signed up for nothing.",
+      "source": "Teleion Fabric's access contract at 07:09 UTC lists self-serve requester keys as enabled, at POST /v1/session/requester: a key that writes only in its organization's own org. stores, files requests only on eq01 and reads only what it filed. Eranos pull request 11, deployed at 06:55 UTC on October 30, 2026, signs an organization up when it sends its first request from /nonprofits. This check signed up for nothing.",
       "link": "https://fabric.teleionlabs.com/connect.json"
     },
     {
       "slide": "status",
-      "number": "Open contribution, live since Tessera's redeploy on October 30, 2026 at 06:53 UTC",
+      "number": "Open contribution, live since Teleion Fabric's redeploy on October 30, 2026 at 06:53 UTC",
       "status": "measured",
-      "source": "Tessera's access contract at 07:09 UTC: a tracked anonymous session may claim, heartbeat and submit Tasks tagged open:anonymous in the main namespace; the review queue eq03 stays closed to it, and its results wait for a different keyed reviewer. Tessera pull request 21, deployed at 06:53 UTC. Eranos's help page says no key is needed to start. This check claimed nothing.",
+      "source": "Teleion Fabric's access contract at 07:09 UTC: a tracked anonymous session may claim, heartbeat and submit Tasks tagged open:anonymous in the main namespace; the review queue eq03 stays closed to it, and its results wait for a different keyed reviewer. Teleion Fabric pull request 21, deployed at 06:53 UTC. Eranos's help page says no key is needed to start. This check claimed nothing.",
       "link": "https://fabric.teleionlabs.com/connect.json"
     },
     {
@@ -41,21 +41,21 @@
       "slide": "ngo-steps",
       "number": "Sign-up and the request box, live since October 30, 2026 at 06:55 UTC",
       "status": "measured",
-      "source": "Eranos pull request 11, deployed at 06:55 UTC on October 30, 2026: sending a first request from /nonprofits gets the organization its own narrow key, from Tessera's self-serve requester sign-up, which its access contract listed as enabled at 07:09 UTC. This check signed up for nothing.",
+      "source": "Eranos pull request 11, deployed at 06:55 UTC on October 30, 2026: sending a first request from /nonprofits gets the organization its own narrow key, from Teleion Fabric's self-serve requester sign-up, which its access contract listed as enabled at 07:09 UTC. This check signed up for nothing.",
       "link": "https://github.com/ta-amps/eranos-public-marketplace-for-public-good-token-burn/pull/11"
     },
     {
       "slide": "help",
-      "number": "An open task needs no key, since Tessera's redeploy on October 30, 2026 at 06:53 UTC",
+      "number": "An open task needs no key, since Teleion Fabric's redeploy on October 30, 2026 at 06:53 UTC",
       "status": "measured",
-      "source": "Tessera's access contract at 07:09 UTC: a tracked anonymous session, opened without secrets, may claim Tasks tagged open:anonymous, at most 5 open claims an hour, and a different keyed worker or a person reviews its results. Reviewing and publishing still need a scoped key. This check claimed nothing.",
+      "source": "Teleion Fabric's access contract at 07:09 UTC: a tracked anonymous session, opened without secrets, may claim Tasks tagged open:anonymous, at most 5 open claims an hour, and a different keyed worker or a person reviews its results. Reviewing and publishing still need a scoped key. This check claimed nothing.",
       "link": "https://fabric.teleionlabs.com/connect.json"
     },
     {
       "slide": "request",
       "number": "The box on Eranos's nonprofits page, live since October 30, 2026 at 06:55 UTC",
       "status": "measured",
-      "source": "Eranos pull request 11, deployed at 06:55 UTC on October 30, 2026. A request from the box is kept as a Task Object in the organization's own space in Tessera and files one Task on eq01. A GET at 07:09 UTC returned the page; this check sent nothing.",
+      "source": "Eranos pull request 11, deployed at 06:55 UTC on October 30, 2026. A request from the box is kept as a Task Object in the organization's own space in Teleion Fabric and files one Task on eq01. A GET at 07:09 UTC returned the page; this check sent nothing.",
       "link": "https://eranosforgood.org/nonprofits"
     }
   ]

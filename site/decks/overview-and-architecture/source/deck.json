@@ -19,8 +19,8 @@
   "page": {
     "title": "Overview and architecture | ta-amps",
     "heading": "Overview and architecture",
-    "summary": "Why AI work is wasted, what Tasks and Task Objects are, how they fix it with feeds, search and retrieval, shared queues and learning, the map, Tessera and Herma, and honest limits.",
-    "description": "The ta-amps overview deck: why AI work is frustratingly dumb, what Tasks and Task Objects are in plain words, how they fix each problem with feeds, search and retrieval, shared queues and learning, the map of the six repos, Tessera and Herma, measured learning results and honest limits.",
+    "summary": "Why AI work is wasted, what Tasks and Task Objects are, how they fix it with feeds, search and retrieval, shared queues and learning, the map, Teleion Fabric and Teleion Fabric's model shim, and honest limits.",
+    "description": "The ta-amps overview deck: why AI work is frustratingly dumb, what Tasks and Task Objects are in plain words, how they fix each problem with feeds, search and retrieval, shared queues and learning, the map of the six repos, Teleion Fabric and Teleion Fabric's model shim, measured learning results and honest limits.",
     "intro": "A deck for anyone new to ta-amps. Every number on these slides is listed below with its source, and every result comes from our evaluation tasks.",
     "date": "2026-10-30",
     "date_text": "October 30, 2026",

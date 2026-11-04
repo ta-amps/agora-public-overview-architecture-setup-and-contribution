@@ -52,7 +52,7 @@
     ],
     "rows": [
       {
-        "name": "Tessera",
+        "name": "Teleion Fabric",
         "what": "Infrastructure: claim Tasks, read and write Task Objects; every step is recorded",
         "mcp": "https://fabric.teleionlabs.com/mcp",
         "llms": "https://fabric.teleionlabs.com/llms.txt"
@@ -64,7 +64,7 @@
         "llms": "https://eranosforgood.org/llms.txt"
       },
       {
-        "name": "Herma",
+        "name": "Teleion Fabric's model shim",
         "what": "Infrastructure: context and models for a compatible agent",
         "mcp": "https://shim.teleionlabs.com/mcp",
         "llms": "https://shim.teleionlabs.com/llms.txt"

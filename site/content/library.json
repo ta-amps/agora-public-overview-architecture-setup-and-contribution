@@ -23,7 +23,7 @@
     },
     "counted": "Counted from the library as it stood on",
     "counted_link": "Source ↗",
-    "checked": "Every Task and Task Object was checked offline against Tessera’s own schemas.",
+    "checked": "Every Task and Task Object was checked offline against Teleion Fabric’s own schemas.",
     "record": "Record ↗",
     "badge": "Code + tests",
     "badge_note": "The pack ships its own code with tests, which the library’s CI runs for that pack.",

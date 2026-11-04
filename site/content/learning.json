@@ -19,7 +19,7 @@
       {
         "kind": "noun",
         "name": "Checked results",
-        "text": "Every finished Task leaves a checked result, and Tessera records every step of how the run went. Workers can add a report of what went right and what went wrong."
+        "text": "Every finished Task leaves a checked result, and Teleion Fabric records every step of how the run went. Workers can add a report of what went right and what went wrong."
       },
       {
         "kind": "verb",
@@ -147,7 +147,7 @@
   "limits": {
     "heading": "Honest limits",
     "items": [
-      "Every result comes from our evaluations, each on one narrow job, such as typed tool calls for Tessera’s own tools.",
+      "Every result comes from our evaluations, each on one narrow job, such as typed tool calls for Teleion Fabric’s own tools.",
       "Rounds start on demand, on recorded runs and our evaluations.",
       "Adapter weights aren’t published.",
       "Nothing has been promoted or admitted. A promotion here moves only a private pointer that the next round compares against.",
@@ -156,7 +156,7 @@
   },
   "run": {
     "heading": "Run it yourself",
-    "text": "Tessera’s continuous-tuning guide has the loop, its commands and its tests. Without a GPU, a CPU backend runs every Task and decision and records every step, so you can check the plumbing first.",
+    "text": "Teleion Fabric’s continuous-tuning guide has the loop, its commands and its tests. Without a GPU, a CPU backend runs every Task and decision and records every step, so you can check the plumbing first.",
     "pack": "The library’s continuous tuning pack holds the same loop as Tasks and Task Objects, with its own tested code. Like every pack in the library, it is a proposal.",
     "links": [
       {

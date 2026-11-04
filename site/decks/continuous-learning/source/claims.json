@@ -13,7 +13,7 @@
       "slide": "pre-registration",
       "number": "Frozen test: 150 rows over tool families held out of training",
       "status": "measured",
-      "source": "Tessera’s continuous-tuning record: the test split holds the buckets and feeds tool families, pinned by digest, and training prompts only ever show other families. Each round also freezes a fresh holdout from the test families.",
+      "source": "Teleion Fabric’s continuous-tuning record: the test split holds the buckets and feeds tool families, pinned by digest, and training prompts only ever show other families. Each round also freezes a fresh holdout from the test families.",
       "link": "https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md"
     },
     {
@@ -69,7 +69,7 @@
       "slide": "learners",
       "number": "Memory, path-statistics and routing-weights learners: implemented and tested",
       "status": "measured",
-      "source": "Tessera’s execution-learning record. Local tests are not evidence that any learner improves real work; that needs the evaluations each learner names, on real permitted runs.",
+      "source": "Teleion Fabric’s execution-learning record. Local tests are not evidence that any learner improves real work; that needs the evaluations each learner names, on real permitted runs.",
       "link": "https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine/blob/main/docs/execution-learning.md"
     },
     {
@@ -90,12 +90,12 @@
       "slide": "limits",
       "number": "The 150-row tests are small",
       "status": "measured",
-      "source": "Tessera’s continuous-tuning record: with the disagreement these runs showed, a 150-row test detects a true 5-point gain only about 31% of the time, and 80% power needs about 560 rows.",
+      "source": "Teleion Fabric’s continuous-tuning record: with the disagreement these runs showed, a 150-row test detects a true 5-point gain only about 31% of the time, and 80% power needs about 560 rows.",
       "link": "https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md"
     },
     {
       "slide": "learners",
-      "number": "Self-learning library search with Herma shims, a local check: Recall@1 23.3% to 100.0% across 60 queries over 79 seed packs (MRR 0.341 to 1.000 in 1.0 round, 82.8% token reduction, 0.30 ms retrieval, 10 compiled shims at 0.026 ms, 10 of 10 independent reviews)",
+      "number": "Self-learning library search with Teleion Fabric's model shim shims, a local check: Recall@1 23.3% to 100.0% across 60 queries over 79 seed packs (MRR 0.341 to 1.000 in 1.0 round, 82.8% token reduction, 0.30 ms retrieval, 10 compiled shims at 0.026 ms, 10 of 10 independent reviews)",
       "status": "measured",
       "source": "An offline evaluation over the 79-pack library, with no model calls: each pack’s Task Objects enriched for search, an index across fields, reflection on misses, and an independent check (a self-approval was refused with a 409).",
       "link": "evidence/#sira-are-cascade-2026-10-31"

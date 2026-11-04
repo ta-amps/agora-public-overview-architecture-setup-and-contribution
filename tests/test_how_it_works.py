@@ -149,7 +149,7 @@ class Pages(unittest.TestCase):
         self.assertFalse(facts["private_or_ngo_data_sent"])
         self.assertFalse(facts["raw_credentials_included"])
         self.assertTrue(facts["builder_is_not_reviewer"])
-        self.assertTrue(facts["fabric"].startswith("local Tessera"), "the run is never shown as hosted Tessera")
+        self.assertTrue(facts["fabric"].startswith("local Teleion Fabric"), "the run is never shown as hosted Teleion Fabric")
         text = self.page_text()
         self.assertIn("not the hosted service", text)
         self.assertIn("Muse Spark 1.3, contributor tier, through the Meta API", text)  # the run's declared model

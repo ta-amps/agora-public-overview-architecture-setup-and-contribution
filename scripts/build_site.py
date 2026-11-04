@@ -943,7 +943,7 @@ FEED_TAG = re.compile(r'<x-feed-status kind="(line|row)" style="([^"]*)"></x-fee
 
 
 def feed_status(match: re.Match, feed: dict | None) -> str:
-    """The memory-systems feed's schedule and last run, drawn on a slide only once its scans run on hosted Tessera;
+    """The memory-systems feed's schedule and last run, drawn on a slide only once its scans run on hosted Teleion Fabric;
     until then the element draws nothing, so no slide says a feed runs when it does not."""
     if not feed or not feed_hosted(feed):
         return ""
@@ -2307,7 +2307,7 @@ def load_feeds() -> tuple[dict, dict[str, dict]]:
 
 
 def feed_hosted(feed: dict) -> bool:
-    """The feed's scans ran on hosted Tessera, so its schedule is real and the decks may say so."""
+    """The feed's scans ran on hosted Teleion Fabric, so its schedule is real and the decks may say so."""
     return feed["source"].get("hosted") is True
 
 
@@ -2723,8 +2723,8 @@ def judges_rows(nouns: Nouns) -> list[tuple[str, str, dict]]:
         elif kind == "real_run":
             check_real_run(nouns.real_run)
             run = nouns.real_run["run"]
-            if not run["fabric"].startswith("local Tessera"):
-                fail("judges.json: the recorded run's row says it ran on a local copy of Tessera")
+            if not run["fabric"].startswith("local Teleion Fabric"):
+                fail("judges.json: the recorded run's row says it ran on a local copy of Teleion Fabric")
             state = fill(row["state"], {"date": human_date(run["started_utc"]),
                                         "model": declared_model(run["model"])[0]}, "judges.json")
         elif kind == "scenarios":
@@ -2739,7 +2739,7 @@ def judges_rows(nouns: Nouns) -> list[tuple[str, str, dict]]:
             ran = ran_feeds(nouns)
             hosted = {feed_hosted(nouns.feeds[r["id"]]) for r in ran}
             if len(hosted) != 1:
-                fail("judges.json: some feeds ran on hosted Tessera and some did not; say which")
+                fail("judges.json: some feeds ran on hosted Teleion Fabric and some did not; say which")
             latest = max(r["last_run"]["at"] for r in ran)
             state = fill(row["state_hosted" if hosted.pop() else "state_local"],
                          {"count": len(ran), "date": human_date(latest)}, "judges.json")
@@ -3314,7 +3314,7 @@ def how_run(words: dict, run: dict, prefix: str) -> str:
     record picks from the models catalog."""
     steps = check_real_run(run)
     facts, fw, labels = run["run"], words["facts"], words["labels"]
-    if not (facts["fabric"].startswith("local Tessera") and "outbound network denied" in facts["fabric"]):
+    if not (facts["fabric"].startswith("local Teleion Fabric") and "outbound network denied" in facts["fabric"]):
         fail("how-it-works.json: the words for where the run ran no longer match its record")
     model, tier = declared_model(facts["model"])
     verdict = steps["review"]["verdict"]

@@ -2,7 +2,7 @@
   "schema_version": 2,
   "kind": "instructions",
   "key": "network-page",
-  "about": "The network page (/network/) and the Right now and Live capacity strips, as one Task Object: their words only. Counts, places, models and Tasks come live from Herma's GET /q/network, which merges Herma's claims with Tessera's; the land and the projection come from content/network-geo.json (Natural Earth, public domain). No number is written here. The strings follow notes/coordination-2026-10-31/claude-design-copy.v1.json (surfaces.agora, network.*) in American spelling: data center. Strings marked added are not in that contract yet.",
+  "about": "The network page (/network/) and the Right now and Live capacity strips, as one Task Object: their words only. Counts, places, models and Tasks come live from the model shim's GET /q/network, which merges the model shim's claims with Teleion Fabric's; the land and the projection come from content/network-geo.json (Natural Earth, public domain). No number is written here. The strings follow notes/coordination-2026-10-31/claude-design-copy.v1.json (surfaces.agora, network.*) in American spelling: data center. Strings marked added are not in that contract yet.",
   "title": "Network: where workers connect | Agora",
   "description": "A live map of where workers connect to the shared queue, by Cloudflare data center, and which Tasks they claim.",
   "eyebrow": "Network",
@@ -59,7 +59,7 @@
   "empty": "No workers in the last 24 hours.",
   "error": {
     "text": "The network map can't load right now.",
-    "link": "See Herma's dashboard"
+    "link": "See the model shim's dashboard"
   },
   "busy": "Many people are reading the map right now. It tries again in {seconds} seconds.",
   "busy_hour": "Many people are reading the map right now. It tries again in an hour.",
@@ -127,7 +127,7 @@
   "shown": {
     "text": "Shown: the Cloudflare data center each claim came through, the kind of Task, the model that ran and when. Never shown: IP addresses, where anyone lives, or anything else that identifies a person. A claim shows at its data center only when another worker had come through it in the 15 minutes before; otherwise it counts under the continent. Connected workers can turn this off.",
     "link": "How the map works",
-    "herma": "See every worker and what it made on Herma"
+    "herma": "See every worker and what it made on Teleion Fabric's model shim"
   },
   "how": {
     "id": "how-the-map-works",
@@ -146,7 +146,7 @@
       "Where anyone lives. A data center serves a whole region."
     ],
     "opt_out": "Your agent's claims appear on the network map by Cloudflare data center, never by IP address or home. To leave them out, set show_on_map to false when your worker joins. A worker that leaves the map is counted in the totals only.",
-    "source": "Live from Herma, which adds Tessera's claims to its own. Shows the last 24 hours. The page reads it at most once a minute while it is open, sends no cookie and stores nothing in your browser.",
+    "source": "Live from Teleion Fabric's model shim, which adds Teleion Fabric's claims to its own. Shows the last 24 hours. The page reads it at most once a minute while it is open, sends no cookie and stores nothing in your browser.",
     "credits": "Map: Natural Earth. Data center cities: Cloudflare's published list, with positions from OurAirports. Both maps and positions are in the public domain.",
     "data_link": "The same numbers, as data ↗"
   },

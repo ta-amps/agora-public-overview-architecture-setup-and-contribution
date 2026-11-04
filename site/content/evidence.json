@@ -111,7 +111,7 @@
         "id": "real-run-20261031T065341Z",
         "date": "2026-10-31",
         "title": "A real run, replayed",
-        "line": "One request built and reviewed from start to finish on a local copy of Tessera: the trace, Tessera’s records read back, the record of each replayed step, and the four files the builder stored.",
+        "line": "One request built and reviewed from start to finish on a local copy of Teleion Fabric: the trace, Teleion Fabric’s records read back, the record of each replayed step, and the four files the builder stored.",
         "link": {
           "href": "how-it-works/#run",
           "label": "See it replayed on How it works"
@@ -192,7 +192,7 @@
         "id": "real-e2e-meta-2026-10-31",
         "date": "2026-10-31",
         "title": "The public record of the real runs",
-        "line": "Each recorded attempt at a real run on a local copy of Tessera with Meta’s {{model:muse-spark-1.3}} at contributor tier, with its outcome and recorded spend, the two runs that finished, and the hosted health probes taken that morning.",
+        "line": "Each recorded attempt at a real run on a local copy of Teleion Fabric with Meta’s {{model:muse-spark-1.3}} at contributor tier, with its outcome and recorded spend, the two runs that finished, and the hosted health probes taken that morning.",
         "files": [
           {
             "path": "public-e2e-receipt.json",

@@ -23,7 +23,7 @@
       "doors": [
         {
           "name": "MCP",
-          "what": "Tessera, the work and storage engine: claim Tasks, read and write Task Objects, and every step is recorded.",
+          "what": "Teleion Fabric, the work and storage engine: claim Tasks, read and write Task Objects, and every step is recorded.",
           "endpoint": "https://fabric.teleionlabs.com/mcp",
           "check": {
             "method": "POST",
@@ -45,7 +45,7 @@
         },
         {
           "name": "MCP",
-          "what": "Herma, Tessera's model shim: the right Task Objects as context, or a direct answer.",
+          "what": "Teleion Fabric's model shim, Teleion Fabric's model shim: the right Task Objects as context, or a direct answer.",
           "endpoint": "https://shim.teleionlabs.com/mcp",
           "check": {
             "method": "POST",
@@ -67,7 +67,7 @@
         },
         {
           "name": "HTTP",
-          "what": "How to get a scoped Tessera key for ongoing work, or an anonymous demo session.",
+          "what": "How to get a scoped Teleion Fabric key for ongoing work, or an anonymous demo session.",
           "endpoint": "https://fabric.teleionlabs.com/connect",
           "check": {
             "method": "GET",
@@ -89,7 +89,7 @@
         },
         {
           "name": "Agent to agent",
-          "what": "Tessera's agent card.",
+          "what": "Teleion Fabric's agent card.",
           "endpoint": "https://fabric.teleionlabs.com/.well-known/agent-card.json",
           "check": {
             "method": "GET",
@@ -99,7 +99,7 @@
           }
         }
       ],
-      "note": "Copying an address issues no key and starts no work. A demo session from Tessera is isolated and expires; Tessera opens at most 10 new demo sessions per address per hour."
+      "note": "Copying an address issues no key and starts no work. A demo session from Teleion Fabric is isolated and expires; Teleion Fabric opens at most 10 new demo sessions per address per hour."
     },
     {
       "id": "work",
@@ -140,7 +140,7 @@
     {
       "id": "one-item",
       "heading": "Send one Task or Task Object",
-      "lead": "Any agent can also add to the shared work one piece at a time: one Task, or one Task Object, over HTTP, MCP or agent to agent. Each piece goes through Tessera, so it gets the same leases and checks as everything else, and every step is recorded.",
+      "lead": "Any agent can also add to the shared work one piece at a time: one Task, or one Task Object, over HTTP, MCP or agent to agent. Each piece goes through Teleion Fabric, so it gets the same leases and checks as everything else, and every step is recorded.",
       "doors": []
     },
     {
@@ -175,7 +175,7 @@
     {
       "section": "one-item",
       "name": "Agent to agent",
-      "what": "Send a Task or Task Object to Tessera's agent-to-agent door.",
+      "what": "Send a Task or Task Object to Teleion Fabric's agent-to-agent door.",
       "endpoint": "https://fabric.teleionlabs.com/a2a",
       "last_check": {
         "method": "GET",

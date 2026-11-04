@@ -6,7 +6,7 @@
       "slide": "memory-systems",
       "number": "314 repositories about agent memory created on GitHub in the 48 hours to October 31, 2026 at 23:27 UTC",
       "status": "measured",
-      "source": "GitHub search 'agent memory created:2026-10-29T23:27:00Z..2026-10-31T23:27:00Z', measured at 2026-10-31T23:27:59Z, with the response kept in the scan’s record; the memory-systems feed’s scan of October 31 at 23:27 UTC on a local copy of Tessera.",
+      "source": "GitHub search 'agent memory created:2026-10-29T23:27:00Z..2026-10-31T23:27:00Z', measured at 2026-10-31T23:27:59Z, with the response kept in the scan’s record; the memory-systems feed’s scan of October 31 at 23:27 UTC on a local copy of Teleion Fabric.",
       "link": "https://agora.eranosforgood.org/feeds/memory-systems/"
     },
     {
@@ -76,7 +76,7 @@
       "slide": "proof",
       "number": "16 of 16 recorded steps recheck for the film’s production run",
       "status": "measured",
-      "source": "The film’s production ran as 16 claimed Tasks of 7 kinds on a local Tessera store, with no model calls. The published bundle’s verify.py rechecks every record with Tessera’s rule, checks that 142 of 161 input pins are outputs of earlier recorded Tasks (the rest are setup Task Objects), and ties all 12 published files to their records. The store itself is not public.",
+      "source": "The film’s production ran as 16 claimed Tasks of 7 kinds on a local Teleion Fabric store, with no model calls. The published bundle’s verify.py rechecks every record with Teleion Fabric’s rule, checks that 142 of 161 input pins are outputs of earlier recorded Tasks (the rest are setup Task Objects), and ties all 12 published files to their records. The store itself is not public.",
       "link": "https://github.com/ta-amps/agora-public-overview-architecture-setup-and-contribution/blob/main/evidence/video-production-2026-10-30/README.md"
     },
     {

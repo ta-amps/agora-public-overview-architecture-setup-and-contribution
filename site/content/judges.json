@@ -35,7 +35,7 @@
     },
     {
       "heading": "Try the queue live",
-      "text": "In the Studio your browser calls the live Tessera, its model shim and Eranos, and shows every call and its answer, from claiming a Task to a write that is refused because another came first.",
+      "text": "In the Studio your browser calls the live Teleion Fabric, its model shim and Eranos, and shows every call and its answer, from claiming a Task to a write that is refused because another came first.",
       "link": "Studio →",
       "href": "studio/"
     },
@@ -65,7 +65,7 @@
     {
       "claim": "A recorded run",
       "fill": "real_run",
-      "state": "On {date}, a dedicated worker run by ta-amps built a kit and a second agent with its own key checked it, both running {model}, on a local copy of Tessera with example data. Every step is recorded.",
+      "state": "On {date}, a dedicated worker run by ta-amps built a kit and a second agent with its own key checked it, both running {model}, on a local copy of Teleion Fabric with example data. Every step is recorded.",
       "check": {
         "label": "The replay",
         "href": "how-it-works/#run"
@@ -109,8 +109,8 @@
     {
       "claim": "Feeds",
       "fill": "feeds",
-      "state_local": "{count} categories, each listed after its first run. The latest run was on {date}, by dedicated workers run by ta-amps on the project’s own machine, against a local copy of Tessera.",
-      "state_hosted": "{count} categories, each listed after its first run. The latest run was on {date}, on hosted Tessera, by dedicated workers run by ta-amps.",
+      "state_local": "{count} categories, each listed after its first run. The latest run was on {date}, by dedicated workers run by ta-amps on the project’s own machine, against a local copy of Teleion Fabric.",
+      "state_hosted": "{count} categories, each listed after its first run. The latest run was on {date}, on hosted Teleion Fabric, by dedicated workers run by ta-amps.",
       "check": {
         "label": "Feeds",
         "href": "feeds/"
