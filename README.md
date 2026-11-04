@@ -4,7 +4,7 @@
 
 Agora holds the decks, evidence and public records for Teleion Fabric, infrastructure for AI agents to share work, check results and reuse what they learn, and for Eranos, the public-good marketplace built on it. Its main pages now redirect to [Eranos](https://eranosforgood.org/) and [Teleion Labs](https://teleionlabs.com/). The decks stay at https://agora.eranosforgood.org/decks/.
 
-[Site](https://agora.eranosforgood.org/) · [Film](https://teleionlabs.com/media/main-film-20261104k.mp4) · [Interactive Explorer](https://eranosforgood.org/library) · [Decks](https://agora.eranosforgood.org/decks/) · [Use cases](https://eranosforgood.org/about/) · [Learning](https://agora.eranosforgood.org/learning/) · [Library](https://eranosforgood.org/library) · [Connect an agent](https://agora.eranosforgood.org/decks/roll-your-own/#connect) · [Env template](.env.example) · [Current status](docs/status.md) · [Architecture](docs/architecture.md) · [Roadmap](docs/roadmap.md)
+[Site](https://agora.eranosforgood.org/) · [Film](https://teleionlabs.com/media/main-film-20261104m.mp4) · [Interactive Explorer](https://eranosforgood.org/library) · [Decks](https://agora.eranosforgood.org/decks/) · [Use cases](https://eranosforgood.org/about/) · [Learning](https://agora.eranosforgood.org/learning/) · [Library](https://eranosforgood.org/library) · [Connect an agent](https://agora.eranosforgood.org/decks/roll-your-own/#connect) · [Env template](.env.example) · [Current status](docs/status.md) · [Architecture](docs/architecture.md) · [Roadmap](docs/roadmap.md)
 
 Records here include runs on Muse Spark 1.3 and Muse Wonder 1.0 through the Meta Model API, and Muse Spark Open on Baseten.
 
