@@ -1,6 +1,6 @@
 # Muse Glimmer 30B tuned as LoRA-as-Memory & Task-Object Specialist (October 31, 2026)
 
-This directory contains the reproducible SHA-256 records, raw model generations, GPU telemetry, and verification outputs for the second measured **Muse Glimmer 30B** fine-tuning run on free Kaggle `2x NVIDIA Tesla T4` GPUs (`$0.00` spend): **LoRA-as-Memory (`lora-memory-v1`)**.
+This directory contains the reproducible SHA-256 receipts, raw model generations, GPU telemetry, and verification outputs for the second measured **Muse Glimmer 30B** fine-tuning run on free Kaggle `2x NVIDIA Tesla T4` GPUs (`$0.00` spend): **LoRA-as-Memory (`lora-memory-v1`)**.
 
 - **How it was made:** trained on `2x Tesla T4` (`16 GB` each, `fp16` sharded across `cuda:0` and `cuda:1` at layer 24 with vision tower dropped, peak VRAM `10,505 MiB` / `11,619 MiB`) using `peft` LoRA (`r=16, alpha=32, dropout=0.05`, `95,846,400` trainable params across `364` linear projections, `48` steps in `2,327.1s`) strictly on owned deterministic synthetic MIT templates (`320` train rows).
 - **What it measures:** a pre-registered `120`-row unseen holdout (`sha256: a5f59267b0d62e65c04242f81d829068e567d6a92229a2ab8f9c493062f9cbc2`) comparing 4 regimes:
@@ -26,7 +26,7 @@ This directory contains the reproducible SHA-256 records, raw model generations,
 - **LoRA-as-Memory vs. Base Closed-Book (`0` shim tokens):** `+62.5` percentage points, 2,000-resample paired bootstrap 95% CI `[+53.3, +70.8]` pp (`75` improved, `0` regressed).
 - **LoRA-as-Memory (`0` shim tokens) vs. Base + BM25 Top-2 Shim (`222.3` shim tokens):** **`+33.3` percentage points**, 95% CI `[+22.5, +44.2]` pp (`45` improved, `5` regressed), while cutting median per-row latency from `19.75s` to `8.67s`.
 - **Governance & Safety Invariants on Unseen NGO Intakes (`n=60`):** LoRA-as-Memory achieved **`100.0%`** separation of `builder_principal != reviewer_principal` and **`100.0%`** contributor-tier refusal (`contributor_tier_allowed: false`) on private-data scenarios.
-- **General-Capability Sanity (`n=40`) & Fresh Reload Parity:** Sanity exact match `97.5% -> 95.0%` (`0.0%` JSON intrusion on plain-text questions); fresh base reload checked `disabled_vs_base_max_abs = 0.0`, `reloaded_vs_tuned_max_abs = 0.0`, and `8/8` byte-identical greedy regenerations; pre-registered `promotion.decide()` (`bf0fa821717c2400...`) returned `promote_candidate`.
+- **General-Capability Sanity (`n=40`) & Fresh Reload Parity:** Sanity exact match `97.5% -> 95.0%` (`0.0%` JSON intrusion on plain-text questions); fresh base reload verified `disabled_vs_base_max_abs = 0.0`, `reloaded_vs_tuned_max_abs = 0.0`, and `8/8` byte-identical greedy regenerations; pre-registered `promotion.decide()` (`bf0fa821717c2400...`) returned `promote_candidate`.
 
 ## Sanitization Note
 
