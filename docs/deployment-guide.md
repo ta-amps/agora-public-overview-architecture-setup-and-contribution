@@ -93,7 +93,8 @@ docker compose up --build -d
    - Shard 4-bit NF4 base weights across `cuda:0` and `cuda:1` (`device_map="auto"`), train `r=16, alpha=32` adapters on checked Teleion Fabric SFT/DPO trace bundles, and export `adapter_model.safetensors` + SHA-256 records.
 2. **Serve Multi-LoRA Adapters with `vLLM`**:
    ```bash
-   vllm serve meta-llama/Llama-3.2-3B-Instruct \
+   # Set META_OPEN_BASE_MODEL to a base from NOTICE-META-MODELS.txt.
+   vllm serve "$META_OPEN_BASE_MODEL" \
      --enable-lora \
      --lora-modules shim-router=./training/adapters/llama-3.2-1b-lora \
      --port 8000

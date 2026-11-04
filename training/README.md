@@ -2,7 +2,7 @@
 
 `ta-amps` treats continuous fine-tuning as ordinary **Tasks** (`verbs`) and **task objects** (`nouns`) on [Teleion Fabric](https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine), without adding a separate model registry, server-side training daemon, or task authority.
 
-> **Scope and honesty boundary:** Every training and evaluation example in these runs comes from owned made-up MIT repository templates. No Muse API outputs, provider completions, nonprofit files, or private execution traces enter training. Base weights and derived LoRA/QLoRA weights remain private under their respective licenses (*Built with Llama* under the Llama 3.2 Community License). Adapters are recorded as unadmitted candidate manifests, not deployed hosted endpoints or general-capability claims.
+> **Scope and honesty boundary:** Every training and evaluation example in these runs comes from owned made-up MIT repository templates. No Muse API outputs, provider completions, nonprofit files, or private execution traces enter training. Base weights and derived LoRA/QLoRA weights remain private under their respective licenses. See NOTICE-META-MODELS.txt. Adapters are recorded as unadmitted candidate manifests, not deployed hosted endpoints or general-capability claims.
 
 ## Fine-tuned Meta & Open-Weights Models
 
@@ -12,7 +12,7 @@
 | **Meta's open-weight 3B model** | bf16 `peft` LoRA with gradient checkpointing (rank 16, alpha 32, 24.3M trainable params) | Single local **RTX 3060 12 GB** | Continuous tool-call tuning + pre-registered schema-drop guard | **52.0% -> 72.7%** strict exact match on unseen families; stringified arguments **17.5% -> 0.0%** (Round 2 `79.3%` held back by `0.02` schema guard) |
 | **Meta's open-weight 1B model** | bf16 `peft` LoRA + multi-LoRA parametric memory (`load_adapter` / `set_adapter`, 11.3M trainable params) | Single local **RTX 3060 12 GB** | Continuous multi-round tuning + hot-swappable specialist routing | **12.0% -> 50.7%** strict exact match across 3 rounds (`8.3% -> 0.0%` stringified values); 3 adapters on 1 base checked at **80/80** byte-identical parity |
 
-**Which base models?** "Meta's open-weight 1B model" and "Meta's open-weight 3B model" are Meta's instruct checkpoints with about 1 billion and 3 billion parameters, used here as bases for tool-call tuning and specialist adapters. The tuning recipes use `bf16` with no quantization and `131,072` context tokens. The LoRA settings are `r=16, alpha=32` on seven projection modules, with `11.3M` (1B) and `24.3M` (3B) trainable params; the 3B swarm run used `fp16` on Kaggle. The exact 3B checkpoint id is in the [deployment guide](https://github.com/ta-amps/teleionlabs-teleion-fabric/blob/main/docs/deployment-guide.md#L108), and both recipes, with both ids, are at [this pinned commit](https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine/tree/0d7052cdfa2fdb13d9eb433e8b3038fd6599d4da/examples/continuous_tuning/recipes).
+**Which base models?** "Meta's open-weight 1B model" and "Meta's open-weight 3B model" are Meta's instruct checkpoints with about 1 billion and 3 billion parameters, used here as bases for tool-call tuning and specialist adapters. The tuning recipes use `bf16` with no quantization and `131,072` context tokens. The LoRA settings are `r=16, alpha=32` on seven projection modules, with `11.3M` (1B) and `24.3M` (3B) trainable params; the 3B swarm run used `fp16` on Kaggle. They are named in NOTICE-META-MODELS.txt, and both recipes, with the exact checkpoint ids, are at [this pinned commit](https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine/tree/0d7052cdfa2fdb13d9eb433e8b3038fd6599d4da/examples/continuous_tuning/recipes).
 
 ## Directory Contents
 
@@ -39,7 +39,7 @@ Each tuning round is enqueued by a single `tick` task (`verb.decompose_dag`) in 
   - **Tier 0:** Deterministic the Teleion Fabric shim rules & capability firewall (`respond_directly` + contributor-tier refusal).
   - **Tier 1 (Local GPU):** Meta's open-weight 1B and 3B models with hot-swappable PEFT LoRA task objects (`shim-router`, `lora-as-memory`, `task-decomposer`, `verifier-dpo`; tool-call specialist measured at `12.0% -> 50.7%` and `52.0% -> 72.7%`, with 3-adapter multi-LoRA serving checked at `80/80` exact parity).
   - **Tier 2 (Kaggle Free 2xT4):** `Muse Glimmer 30B` NF4 `bitsandbytes` QLoRA (`93.3% -> 99.3%` fresh holdout + LoRA-as-Memory).
-  - **Tier 3 (Frontier Standard Mode):** `Meta Muse Spark 1.3` and `Muse Wonder 1.0` reserved for novel synthesis whose checked records distill back down into Tier 1 and Tier 2 adapters.
+  - **Tier 3 (Frontier Standard Mode):** `Meta Muse Spark 1.3` and `Muse Wonder 1.0` reserved for novel synthesis.
 
 ## Reproducing the Loop
 
