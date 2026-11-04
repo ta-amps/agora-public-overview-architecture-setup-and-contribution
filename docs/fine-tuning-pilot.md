@@ -14,10 +14,10 @@ for versions, hardware, losses, artifact hashes and implementation fingerprints.
 
 | Observation | Result | Limit |
 | --- | --- | --- |
-| Training data | 20 owned synthetic examples, split 12/4/4 with disjoint source and project families | Template examples test the pipeline; they are not a research benchmark |
+| Training data | 20 owned made-up examples, split 12/4/4 with disjoint source and project families | Template examples test the pipeline; they are not a research benchmark |
 | Model and update | Random-initialized Llama architecture, 110,784 total parameters including 3,584 trainable LoRA parameters; 12 optimizer steps | No pretrained Llama or Muse Glimmer weights |
 | CPU and GPU | Both completed; the GPU was an RTX 3060 with about 11.62 GiB available VRAM | This does not establish memory fit for a 1B, 3B or 30B model |
-| Synthetic test loss | Approximately 5.586128 to 5.396280 on each device | Diagnostic loss only; factual grounding and useful task quality remain unmeasured |
+| Made-up test loss | Approximately 5.586128 to 5.396280 on each device | Diagnostic loss only; factual grounding and useful task quality remain unmeasured |
 | Save/reload | Frozen base unchanged; adapter changed; fresh base plus saved adapter reproduced probe logits with zero measured difference | Verifies saved training artifacts, not their usefulness |
 | Private fabric lifecycle | Curate/train claims, heartbeats, six saved base/adapter blobs per run, execution capture and readback; cross-principal record/blob/execution reads denied | Real in-process Store coverage, not a native-harness or hosted training lifecycle |
 

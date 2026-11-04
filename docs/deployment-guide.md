@@ -99,7 +99,7 @@ docker compose up --build -d
      --port 8000
    ```
 3. **Connect `api.meta.ai` (`Muse Spark`, `Muse Wonder`, `Muse Code`)**:
-   - Export `META_API_KEY` in the worker environment only (never on public surfaces); enforce contributor-tier data-scope rules so only public or synthetic task objects reach contributor endpoints.
+   - Export `META_API_KEY` in the worker environment only (never on public surfaces); enforce contributor-tier data-scope rules so only public or made-up task objects reach contributor endpoints.
 
 ---
 

@@ -59,7 +59,7 @@ described below. This is a dated cutoff, not continuous monitoring.
 | Community packs | Six private bundles with 14 noun and 12 verb candidate shapes checked | No installation, import, enqueue, execution or admission; nine external repositories reviewed statically at different depths |
 | Research and Opportunity Lab | Pinned research authoring; eleven themes, 21 seed nouns, 22 initial alternative attempts and seven procedure nouns | No mailbox, active feed collector, recurring research scheduler or checked novelty |
 | Agent onboarding | Seven recorded copyable starting briefs; 16 historical rendered Firefox cases | Copy grants no credentials; OS clipboard and fresh onboarding against the recovered fabric remain unqualified |
-| Exploitation and scam pack / Eranos | Synthetic evidence and donated-worker workflows with their existing review boundaries | Synthetic coverage; the pack's holds and referrals remain human-only and Eranos requires independent review/steward release |
+| Exploitation and scam pack / Eranos | Made-up evidence and donated-worker workflows with their existing review boundaries | Made-up coverage; the pack's holds and referrals remain human-only and Eranos requires independent review/steward release |
 | Home / Frontier | Recorded home release configures hourly due checks for a 24-hour cycle anchored 13:00 UTC, plus manual runs | Server repair off; 10-minute manual cooldown; no completed hosted daily/manual cycle or fresh home smoke demonstrated |
 
 Follow the [mandatory architecture checkpoint](architecture-checkpoint.md):
@@ -135,7 +135,7 @@ does not extend earlier local results to those newer commits.
 | Repository | Recorded result |
 | --- | --- |
 | tessera | Concurrent PR13 reports 327 Python passed/6 skipped and 38 workerd tests. Python totals were found in the inspected log;38 is from the PR body. PR12 reports 313/6 and 34 workerd plus32/4 HTTP; earlier counts remain historical. |
-| exploitation and scam pack, older repository | 259 tests passed; synthetic development cases, adapter conformance (30 passed, 6 skipped), TypeScript and frontend build passed. |
+| exploitation and scam pack, older repository | 259 tests passed; made-up development cases, adapter conformance (30 passed, 6 skipped), TypeScript and frontend build passed. |
 | eranos | 56 tests passed; example verification, adapter conformance (30 passed, 6 skipped), TypeScript and frontend build passed. |
 | herma | Accounting source passed 197 Python and 150 Worker checks plus an offline demo/index check; independent review passed 132 Python and 115 Worker checks across 36 unchanged source fingerprints. Counts overlap; exact-head and merged-main CI passed. |
 | code composition pack, older repository | Prior source: 42 owning tests plus a local three-task Teleion Fabric integration passed. Concurrent PR5 has independently observed green exact-head/main CI; this reviewer did not rerun its local checks. |
@@ -201,7 +201,7 @@ proxy routes selecting an operator fallback key. Explicit caller-owned proxy
 credentials retain their existing authorization and settings. Automatic health
 and recovery apply only to managed conversations; the proxy gains no automatic
 retry or rotation. Twenty-way local Python/Worker fixtures admit one recovery
-dispatch per limited-resource race. These are synthetic local tests.
+dispatch per limited-resource race. These are made-up local tests.
 
 The pause is present in local operator configuration and source rollout settings.
 No the Teleion Fabric shim deployment or live provider call occurred in its availability follow-up;
@@ -223,9 +223,9 @@ OpenRouter diagnosis into a credit-exhaustion finding. See
 ## Training, seeds and community research
 
 The [optional training example](fine-tuning-pilot.md) completed real CPU and RTX
-3060 LoRA updates on a tiny random-initialized Llama. It uses 20 owned synthetic
+3060 LoRA updates on a tiny random-initialized Llama. It uses 20 owned made-up
 examples split 12/4/4 by source and project family, 3,584 trainable parameters and
-12 optimizer steps. Synthetic test loss changed about 5.586128→5.396280; loading
+12 optimizer steps. Made-up test loss changed about 5.586128→5.396280; loading
 the saved adapter onto a fresh base reproduced probe logits exactly. Private
 Store tests saved six blobs per run and denied another principal record/blob/
 execution reads. This is training plumbing and access evidence, not pretrained
@@ -237,7 +237,7 @@ contracts. Their local HTTP
 lifecycles validate pinned inputs, actual deterministic execution, private writes,
 fenced submit/CAS and cross-principal/namespace denial. The worker implementation
 runs in the test process through FastAPI TestClient. The video and motion pack's
-media attribution digests remain synthetic examples.
+media attribution digests remain made-up examples.
 
 [Community seed ideas](community-seeds.md) came from four selected source/test
 reviews and five README reviews. Six private draft bundles contain 14 noun and

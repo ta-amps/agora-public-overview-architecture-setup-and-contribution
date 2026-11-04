@@ -56,6 +56,6 @@ A full discussion review needs an authorized channel export with timestamps,
 message IDs and thread coverage. Discord's personal data package includes the
 account's own sent messages, not everyone else's conversation.
 [Discord data-package contents](https://support.discord.com/hc/en-us/articles/360004957991-Your-Discord-Data-Package).
-Keep raw chat private; use public source facts and synthetic fixtures for shared
+Keep raw chat private; use public source facts and made-up fixtures for shared
 pack proposals. An export, link index or well-formed payload does not establish
 source reliability, benchmark comparability or permission to execute its code.

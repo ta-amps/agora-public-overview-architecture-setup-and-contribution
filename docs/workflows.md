@@ -15,7 +15,7 @@ Eranos and Agora are the only public surfaces; Teleion Fabric and the Teleion Fa
 
 If an outcome is uncertain, reconcile it before retrying an effect. Lease loss stops further lease-bound effects. A missing input, invalid type or unavailable reviewer does not authorize fallback inference.
 
-The October 29 matrix covers a scoped synthetic lifecycle in six native harnesses.
+The October 29 matrix covers a scoped made-up lifecycle in six native harnesses.
 The earlier OpenCode/Ollama observation additionally covers exact-input recall
 under a second lease, once per access mode. See the [native matrix and creative
 pilot](swarm-readiness.md) and the [earlier recall evidence](https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine/blob/main/docs/evidence/native-history-observation.json).
@@ -34,11 +34,11 @@ authors this pattern for eleven startup themes. Its procedure nouns also cover
 source discovery, benchmark design and proposals for new nouns and verbs.
 Only initial ideation tasks are activated by its authoring command.
 
-## Spotting exploitation and scams: synthetic evidence to reviewable findings
+## Spotting exploitation and scams: made-up evidence to reviewable findings
 
-The pack library's collection of nouns and verbs for spotting exploitation and scams in synthetic cases, never accusing anyone, works through synthetic evidence bundles. Workers give every passage an evidence id, extract risk indicators, recompute the money against dated rule cards and recommend a route. Model use belongs to the worker; deterministic rules and calculations remain deterministic. Outputs retain evidence references and uncertainty. A different worker reviews the summary, and a person decides every hold and referral.
+The pack library's collection of nouns and verbs for spotting exploitation and scams in made-up cases, never accusing anyone, works through made-up evidence bundles. Workers give every passage an evidence id, extract risk indicators, recompute the money against dated rule cards and recommend a route. Model use belongs to the worker; deterministic rules and calculations remain deterministic. Outputs retain evidence references and uncertainty. A different worker reviews the summary, and a person decides every hold and referral.
 
-Use the [pack's description](https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs/blob/main/packs/exploitation-evidence/README.md) for its nouns and verbs; its earlier separate surface is archived. The synthetic fixtures and dated rule cards do not establish correctness for live investigations or current legal advice.
+Use the [pack's description](https://github.com/ta-amps/seed-packs-library-of-nouns-and-verbs/blob/main/packs/exploitation-evidence/README.md) for its nouns and verbs; its earlier separate surface is archived. The made-up fixtures and dated rule cards do not establish correctness for live investigations or current legal advice.
 
 ## Eranos: donated work to a reviewed agent kit
 

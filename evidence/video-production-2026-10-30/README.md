@@ -65,7 +65,7 @@ Every task finished on its first attempt, with its verb's success outcome.
 - seven slides of Agora's live decks;
 - Tessera's public `llms.txt`, for its tool count.
 
-**The request box.** The synthetic need was typed into the live /nonprofits box with `fill()`: no click, no Enter, no submit. The capture records `"sent": false`. The box was cleared before the page closed.
+**The request box.** The made-up need was typed into the live /nonprofits box with `fill()`: no click, no Enter, no submit. The capture records `"sent": false`. The box was cleared before the page closed.
 
 ## How a receipt binds inputs to outputs
 
@@ -96,7 +96,7 @@ Every task finished on its first attempt, with its verb's success outcome.
   - Each is framed at about 2×, so body text is about 28 px at 1080p.
   - Each shot has a ring and a short label for what to notice.
   - The review, steward and volunteer terminals are stacked full width at 26–28 px.
-- **The need shot** opens on the live request box, with the synthetic need typed in stages and labelled SYNTHETIC EXAMPLE, not sent. The sorting that follows is still a labelled illustration.
+- **The need shot** opens on the live request box, with the made-up need typed in stages and labelled as a made-up example, not sent. The sorting that follows is still a labelled illustration.
 - **The map slide** is framed on a region with no cut line.
 - **The reveal board** fills the frame and counts its receipts up.
 - **The end card** shows the live Eranos hero next to Agora's home.
@@ -118,7 +118,7 @@ None of these earlier stores is in this bundle. All stay in the local workspace.
 
 - **The store is not public.** Nobody else can query the local Tessera store or its blobs. This bundle holds what you need to recompute the receipts and follow the chain, but the receipts are not anchored to a public log or to the hosted Tessera service.
 - **The voice is AI-generated.** It is Kokoro-82M, voice af_heart, and labelled on screen.
-- **The kit run is a local run with synthetic data.**
+- **The kit run is a local run with made-up data.**
   - Its agents and the steward are scripted stand-ins.
   - It used a local, unmerged branch of Eranos and of the seed-pack library for the handwritten-statements kit.
   - The sort-and-split step is a labelled illustration.
@@ -126,5 +126,5 @@ None of these earlier stores is in this bundle. All stay in the local workspace.
 - **QA is the video pack's automated checks.**
   - Both caption-free MP4s fail caption coverage by construction, because their captions ship as the WebVTT files.
   - No person has reviewed the cuts frame by frame yet.
-- **The learning results are quoted, not re-measured.** The learning slide's numbers are the deck's own results on synthetic tasks.
+- **The learning results are quoted, not re-measured.** The learning slide's numbers are the deck's own results on made-up tasks.
 - **Live captures are a snapshot.** They show the public pages as they were at 08:52–08:54 EDT.

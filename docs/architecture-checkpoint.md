@@ -68,7 +68,7 @@ what they do and kept separate from both surfaces. The collection of nouns and
 verbs for composing checked code without rewriting it packages checked code
 nodes, recipes, compiler/runtime tools and checks. The collection for video and
 motion made with code packages motion and scene recipes, formulas, assets, caption
-tools and checks. The collection for spotting exploitation and scams in synthetic
+tools and checks. The collection for spotting exploitation and scams in made-up
 cases, never accusing anyone, packages harm areas, pattern rules, dated rule
 cards, money-flow checks and routing rules. These are noun collections with verb
 templates describing useful work. The three older repositories that held them are
@@ -81,7 +81,7 @@ activate it.
 | --- | --- | --- |
 | Code composition | Node catalog, code, recipe, compiler, execution result, validation evidence | Compose, compile, execute and verify a recipe |
 | Video and motion | Scene, motion formula, asset reference, captions, evaluator, frame/QA result | Generate, retarget, evaluate and review motion |
-| Exploitation evidence | Synthetic case, harm area, pattern rule, rule card, money-flow check, evidence summary | Index evidence, extract indicators, recheck the money, write and review a summary; a person decides every hold and referral |
+| Exploitation evidence | Made-up case, harm area, pattern rule, rule card, money-flow check, evidence summary | Index evidence, extract indicators, recheck the money, write and review a summary; a person decides every hold and referral |
 | Training | Dataset, base revision, recipe, adapter and evaluation | Curate, train, evaluate and decide admission |
 | Research | Source, observation, project profile, collector and comparison | Discover feeds, scan, extract, benchmark, compare and propose adoption |
 

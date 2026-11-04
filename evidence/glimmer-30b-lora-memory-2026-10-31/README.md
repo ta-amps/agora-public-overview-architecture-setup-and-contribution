@@ -2,7 +2,7 @@
 
 This directory contains the reproducible SHA-256 receipts, raw model generations, GPU telemetry, and verification outputs for the second measured **Muse Glimmer 30B** fine-tuning run on free Kaggle `2x NVIDIA Tesla T4` GPUs (`$0.00` spend): **LoRA-as-Memory (`lora-memory-v1`)**.
 
-- **How it was made:** trained on `2x Tesla T4` (`16 GB` each, `fp16` sharded across `cuda:0` and `cuda:1` at layer 24 with vision tower dropped, peak VRAM `10,505 MiB` / `11,619 MiB`) using `peft` LoRA (`r=16, alpha=32, dropout=0.05`, `95,846,400` trainable params across `364` linear projections, `48` steps in `2,327.1s`) strictly on owned deterministic synthetic MIT templates (`320` train rows).
+- **How it was made:** trained on `2x Tesla T4` (`16 GB` each, `fp16` sharded across `cuda:0` and `cuda:1` at layer 24 with vision tower dropped, peak VRAM `10,505 MiB` / `11,619 MiB`) using `peft` LoRA (`r=16, alpha=32, dropout=0.05`, `95,846,400` trainable params across `364` linear projections, `48` steps in `2,327.1s`) strictly on owned deterministic made-up MIT templates (`320` train rows).
 - **What it measures:** a pre-registered `120`-row unseen holdout (`sha256: a5f59267b0d62e65c04242f81d829068e567d6a92229a2ab8f9c493062f9cbc2`) comparing 4 regimes:
   1. **Base Closed-Book (`0` shim tokens)**
   2. **Base + BM25 Top-2 Context Shim (`+222.3` shim tokens/call)**

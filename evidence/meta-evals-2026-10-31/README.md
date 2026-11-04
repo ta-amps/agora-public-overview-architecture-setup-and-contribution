@@ -1,6 +1,6 @@
-# Synthetic Meta Open-Weights & Swarm Evaluation Records (Oct 30-31, 2026)
+# Meta Open-Weights & Swarm Evaluation Records on Made-Up Tasks (Oct 30-31, 2026)
 
-All evaluations below were run on deterministic synthetic templates with SHA-256 holdout digests pinned before scoring. Zero `api.meta.ai` completions and zero private user or nonprofit files were used for training.
+All evaluations below were run on deterministic made-up templates with SHA-256 holdout digests pinned before scoring. Zero `api.meta.ai` completions and zero private user or nonprofit files were used for training.
 
 ## Artifacts & SHA-256 Digests
 

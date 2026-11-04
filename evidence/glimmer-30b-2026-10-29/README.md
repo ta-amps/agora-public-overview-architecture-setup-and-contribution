@@ -2,8 +2,8 @@
 
 This is the evidence for one measured result: a QLoRA adapter that makes Muse Glimmer 30B produce Tessera tool calls
 more reliably.
-- **How it was made:** trained on free cloud GPUs (Kaggle), with synthetic examples only.
-- **What it is:** one synthetic task. It shows the tuning loop works; it is not a general benchmark.
+- **How it was made:** trained on free cloud GPUs (Kaggle), with made-up examples only.
+- **What it is:** one made-up task. It shows the tuning loop works; it is not a general benchmark.
 - **What it is not:** nothing was promoted, admitted or registered, and the adapter weights are not published here.
 
 ## The result

@@ -6,7 +6,7 @@ For a status update, check the relevant repository revision, its CI, the deploye
 
 Distinguish implemented code, deployed behavior, observed results and proposed work. A green CI run is evidence about its checks; a byte match identifies the executable; neither establishes universal correctness. A record, category label or schema-valid example is not admission evidence.
 
-Publish only approved public facts and synthetic examples. Keep credentials, internal notes, raw session transcripts, private identities and infrastructure account details out of the repository. Link to public evidence in the owning repository when available.
+Publish only approved public facts and made-up examples. Keep credentials, internal notes, raw session transcripts, private identities and infrastructure account details out of the repository. Link to public evidence in the owning repository when available.
 
 Run `make check` before committing. The checker validates snapshot structure, revision formats, internal consistency, local Markdown links and common accidental secret/path patterns. It does not contact live services or make provider calls, and it cannot detect every private fact. Review the diff before publication.
 

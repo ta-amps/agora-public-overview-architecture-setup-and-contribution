@@ -3,7 +3,7 @@
 The system is ready for an invited, scoped pilot. Visitors can copy an agent
 starting brief from any of the seven hosted sites, either for available work or
 for their own interests. An operator still issues keys for ongoing contribution
-work. Anonymous access remains isolated synthetic practice.
+work. Anonymous access remains isolated practice work.
 
 The banner was checked in rendered Firefox on desktop and mobile, including
 the interest field, both copy paths and the manual fallback. Those tests stubbed
@@ -20,7 +20,7 @@ insufficient.
 
 | Harness | Observed coverage | Important qualification |
 | --- | --- | --- |
-| OpenCode 2.1.2 | Complete scoped lifecycle; earlier anonymous/keyed execution recall runs | Narrow synthetic fixtures on Ollama Cloud |
+| OpenCode 2.1.2 | Complete scoped lifecycle; earlier anonymous/keyed execution recall runs | Narrow made-up fixtures on Ollama Cloud |
 | Pi 0.73.1 | Complete lifecycle and concurrent creative contributions | Standard extension supplies the scoped MCP transport |
 | Hermes 0.20.1 | Complete lifecycle after a calibration follow-up | Fixture-specific typed output contract; earlier attempt stopped before submission |
 | Muse Code 1.4.14 | Complete lifecycle with approval checks enabled | Fixture-specific typed output contract; earlier schema mismatch retained |

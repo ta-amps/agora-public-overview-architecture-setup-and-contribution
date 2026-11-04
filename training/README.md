@@ -2,7 +2,7 @@
 
 `ta-amps` treats continuous fine-tuning as ordinary **Tasks** (`verbs`) and **task objects** (`nouns`) on [Teleion Fabric](https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine), without adding a separate model registry, server-side training daemon, or task authority.
 
-> **Scope and honesty boundary:** Every training and evaluation example in these runs comes from owned synthetic MIT repository templates. No Muse API outputs, provider completions, nonprofit files, or private execution traces enter training. Base weights and derived LoRA/QLoRA weights remain private under their respective licenses (*Built with Llama* under the Llama 3.2 Community License). Adapters are recorded as unadmitted candidate manifests, not deployed hosted endpoints or general-capability claims.
+> **Scope and honesty boundary:** Every training and evaluation example in these runs comes from owned made-up MIT repository templates. No Muse API outputs, provider completions, nonprofit files, or private execution traces enter training. Base weights and derived LoRA/QLoRA weights remain private under their respective licenses (*Built with Llama* under the Llama 3.2 Community License). Adapters are recorded as unadmitted candidate manifests, not deployed hosted endpoints or general-capability claims.
 
 ## Fine-tuned Meta & Open-Weights Models
 
@@ -24,7 +24,7 @@
 
 Each tuning round is enqueued by a single `tick` task (`verb.decompose_dag`) in [`tessera/examples/continuous_tuning/`](https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine/tree/main/examples/continuous_tuning):
 
-1. `curate_dataset` (`verb.ingest`): Fingerprints synthetic rows across exact content, normalized request, and slot-masked template shape so zero evaluation shapes leak into training.
+1. `curate_dataset` (`verb.ingest`): Fingerprints made-up rows across exact content, normalized request, and slot-masked template shape so zero evaluation shapes leak into training.
 2. `tune_hyperparameters` (`verb.benchmark_harness`) & `train_adapter` (`verb.solve_draft`): Trains PEFT LoRA / QLoRA candidates with completion-only loss.
 3. `evaluate` (`verb.benchmark_harness`): Scores greedy decoding on frozen unseen-family test (`n=150`), a freshly generated unseen-family holdout, and a general sanity split (`n=40`).
 4. `decide_promotion` (`verb.verify_gate`): Applies pre-registered rule `tool-call-specialist.promotion` v1 (`sha256: bf0fa821717c2400faab77652f067ea85f2616eea329c6e139af33a423e4b3b7`) with 2,000-resample paired bootstrap confidence intervals.
@@ -32,7 +32,7 @@ Each tuning round is enqueued by a single `tick` task (`verb.decompose_dag`) in 
 
 ## Horizontal Worker Swarms + Vertical Compute Cascade
 
-- **Horizontal Data Engine (`256` OpenCode & Multi-Harness Workers across `q01..q16`):** Sharded Teleion Fabric queues (`q01..q16`, Durable Object / SQLite shards, content-addressed CAS blobs) let up to `256` concurrent multi-harness workers decompose DAGs, retrieve context via the Teleion Fabric shim, build task objects, and enforce `verifier != builder` checks -- pairing checked execution records with rejected-attempt tombstones (`noun.negative_tombstone`) as structured preference / DPO pairs once real-trace consent and grading gates are enabled (all measured adapter runs below trained strictly on owned synthetic MIT templates).
+- **Horizontal Data Engine (`256` OpenCode & Multi-Harness Workers across `q01..q16`):** Sharded Teleion Fabric queues (`q01..q16`, Durable Object / SQLite shards, content-addressed CAS blobs) let up to `256` concurrent multi-harness workers decompose DAGs, retrieve context via the Teleion Fabric shim, build task objects, and enforce `verifier != builder` checks -- pairing checked execution records with rejected-attempt tombstones (`noun.negative_tombstone`) as structured preference / DPO pairs once real-trace consent and grading gates are enabled (all measured adapter runs below trained strictly on owned made-up MIT templates).
 - **4-Tier Vertical Compute Cascade & Composable Modular LoRAs:**
   - **Tier 0:** Deterministic the Teleion Fabric shim rules & capability firewall (`respond_directly` + contributor-tier refusal).
   - **Tier 1 (Local GPU):** `Llama 3.2 1B & 3B` with hot-swappable PEFT LoRA task objects (`shim-router`, `lora-as-memory`, `task-decomposer`, `verifier-dpo`; tool-call specialist measured at `12.0% -> 50.7%` and `52.0% -> 72.7%`, with 3-adapter multi-LoRA serving checked at `80/80` exact parity).

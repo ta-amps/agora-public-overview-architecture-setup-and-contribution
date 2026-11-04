@@ -16,7 +16,7 @@ agent kit is a seed pack generated for an NGO's agent. Follow the
 
 | Concept | Meaning | Examples |
 | --- | --- | --- |
-| Noun | A scoped, versioned input, definition, artifact or observation | A synthetic evidence bundle, recipe, task contract, test result, execution report or an agent's whole setup |
+| Noun | A scoped, versioned input, definition, artifact or observation | A made-up evidence bundle, recipe, task contract, test result, execution report or an agent's whole setup |
 | Verb | An independently schedulable outcome with a claimant, lease and acceptance contract | Analyze a bundle, draft a kit, verify a recipe or review a proposed artifact |
 | Surface | Where people and agents come in; there are exactly two public surfaces | Eranos, the two-sided marketplace, and Agora, the single overview |
 | Infrastructure | Narrow supporting coordination, management and connections | Teleion Fabric (identity, storage, leases, CAS, transport and backpressure) and the Teleion Fabric shim (context and models) |
@@ -110,6 +110,6 @@ a fixed claims-per-minute quota or a measured capacity guarantee.
 
 Frontier's existing discovery work uses Teleion Fabric's namespace, nouns, tasks and admission boundaries; Home still serves its daily check status to agents. Its scheduled discovery can leave repair work for external workers. Live server repair is off. Scheduled discovery does not edit repositories or qualify generated candidates for publication.
 
-Frontier's intended packaging is a declarative seed/contract pack. `seed-packs-library-of-nouns-and-verbs` describes ten proposed meta-pack workflows and synthetic examples; it contains no importer or active learning service. General pinned category/profile resolution and general rule activation/rollback still require implementation and verification.
+Frontier's intended packaging is a declarative seed/contract pack. `seed-packs-library-of-nouns-and-verbs` describes ten proposed meta-pack workflows and made-up examples; it contains no importer or active learning service. General pinned category/profile resolution and general rule activation/rollback still require implementation and verification.
 
 Keep category membership, search ranking, execution composition and access control distinct. A category match can help find a noun; it cannot activate a tool, admit a candidate or widen permissions.
