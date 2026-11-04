@@ -160,7 +160,7 @@
     "pack": "The library’s continuous tuning pack holds the same loop as Tasks and Task Objects, with its own tested code. Like every pack in the library, it is a proposal.",
     "links": [
       {
-        "href": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md",
+        "href": "https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md",
         "label": "The continuous-tuning guide"
       },
       {

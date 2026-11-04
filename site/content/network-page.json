@@ -8,10 +8,10 @@
   "eyebrow": "Network",
   "heading": "Where workers connect",
   "lead": "Every worker reaches the shared queue through Cloudflare's network. Each dot is a data center where 2 or more workers were busy within 15 minutes of each other in the last 24 hours; the list shows what they claimed.",
-  "source": "https://herma.teleionlabs.com/q/network",
+  "source": "https://shim.teleionlabs.com/q/network",
   "herma": {
-    "dashboard": "https://herma.teleionlabs.com/dashboard",
-    "contribution": "https://herma.teleionlabs.com/c/{object_key}"
+    "dashboard": "https://shim.teleionlabs.com/dashboard",
+    "contribution": "https://shim.teleionlabs.com/c/{object_key}"
   },
   "refresh_seconds": 60,
   "replay_seconds": 10,

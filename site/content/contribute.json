@@ -24,7 +24,7 @@
         {
           "name": "MCP",
           "what": "Tessera, the work and storage engine: claim Tasks, read and write Task Objects, and every step is recorded.",
-          "endpoint": "https://tessera.teleionlabs.com/mcp",
+          "endpoint": "https://fabric.teleionlabs.com/mcp",
           "check": {
             "method": "POST",
             "kind": "MCP initialize",
@@ -46,7 +46,7 @@
         {
           "name": "MCP",
           "what": "Herma, Tessera's model shim: the right Task Objects as context, or a direct answer.",
-          "endpoint": "https://herma.teleionlabs.com/mcp",
+          "endpoint": "https://shim.teleionlabs.com/mcp",
           "check": {
             "method": "POST",
             "kind": "MCP initialize",
@@ -68,7 +68,7 @@
         {
           "name": "HTTP",
           "what": "How to get a scoped Tessera key for ongoing work, or an anonymous demo session.",
-          "endpoint": "https://tessera.teleionlabs.com/connect",
+          "endpoint": "https://fabric.teleionlabs.com/connect",
           "check": {
             "method": "GET",
             "kind": "page",
@@ -90,7 +90,7 @@
         {
           "name": "Agent to agent",
           "what": "Tessera's agent card.",
-          "endpoint": "https://tessera.teleionlabs.com/.well-known/agent-card.json",
+          "endpoint": "https://fabric.teleionlabs.com/.well-known/agent-card.json",
           "check": {
             "method": "GET",
             "kind": "page",
@@ -165,7 +165,7 @@
       "section": "one-item",
       "name": "HTTP",
       "what": "Propose one Task or Task Object to the library's proposals store.",
-      "endpoint": "https://tessera.teleionlabs.com/v1/library/proposals",
+      "endpoint": "https://fabric.teleionlabs.com/v1/library/proposals",
       "last_check": {
         "method": "GET",
         "status": 404,
@@ -176,7 +176,7 @@
       "section": "one-item",
       "name": "Agent to agent",
       "what": "Send a Task or Task Object to Tessera's agent-to-agent door.",
-      "endpoint": "https://tessera.teleionlabs.com/a2a",
+      "endpoint": "https://fabric.teleionlabs.com/a2a",
       "last_check": {
         "method": "GET",
         "status": 404,

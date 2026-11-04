@@ -564,9 +564,13 @@ PAGES_LINK = re.compile(r"https://ta-amps\.github\.io/[A-Za-z0-9._-]+/")
 FULL_OR_SHORT_SHA = re.compile(r"[0-9a-f]{7,40}\Z")
 
 
+RENAMED_REPOS = {"teleion-fabric-infrastructure-work-and-storage-engine": "tessera-infrastructure-work-and-storage-engine"}
+
+
 def source_link(match: re.Match, links: dict) -> str:
     """One GitHub address, as the address of the same thing in Agora's source mirror (see source-links.json)."""
     repo, kind, rest = match.group("repo"), match.group("kind"), match.group("rest") or ""
+    repo = RENAMED_REPOS.get(repo, repo)  # the mirror keeps the folder name it was built under
     mirror = links["mirror"]
     if repo and repo in links.get("cards", []) and not (not match.group("kind") and match.group("dotgit")):
         return f"{mirror}#{repo}"  # a card on the source page (the lead, Nov 2): no file views; clones keep GitHub

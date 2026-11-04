@@ -602,7 +602,7 @@ class Builder(unittest.TestCase):
         for path, page in self.outputs.items():
             self.assertNotIn("ta-amps.github.io", page, path)
             for repo, dotgit in re.findall(r"github\.com/ta-amps/([A-Za-z0-9._-]+?)(\.git)?(?=[/\"'<\s?#]|$)", page):
-                self.assertIn(repo, links["heads"], path)
+                self.assertIn(build.RENAMED_REPOS.get(repo, repo), links["heads"], path)
                 # A mirrored repository's clone address stays on GitHub while Agora serves no history for it.
                 if not (dotgit and repo not in links.get("git_served", [])):
                     self.assertNotIn(repo, mirrored, path)

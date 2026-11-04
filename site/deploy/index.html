@@ -74,7 +74,7 @@ npx wrangler login
 # (npx wrangler d1 create &lt;name&gt;) and put its id in that file before you deploy.
 
 # 2. Tessera: the queue, the Task Object stores and the /mcp endpoint
-git clone https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine.git
+git clone https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine.git
 cd tessera-infrastructure-work-and-storage-engine
 npx --yes wrangler@4.154.0 secret put BOOTSTRAP_SECRET --config deploy/cloudflare/wrangler.jsonc
 npx --yes wrangler@4.154.0 deploy --config deploy/cloudflare/wrangler.jsonc
@@ -151,10 +151,10 @@ npx --yes wrangler@4.149.0 deploy --config deploy/cloudflare/wrangler.jsonc</cod
 <span class="visually-hidden" id="cmd-verify-stack-status" role="status"></span>
 </div>
 <pre class="deploy-pre" id="cmd-verify-stack" tabindex="0"><code># 1. Tessera's health
-curl -fsS https://tessera.teleionlabs.com/v1/health
+curl -fsS https://fabric.teleionlabs.com/v1/health
 
 # 2. Herma's preview of the context it would add (it stores nothing)
-curl -fsS -X POST https://herma.teleionlabs.com/api/preview \
+curl -fsS -X POST https://shim.teleionlabs.com/api/preview \
   -H 'content-type: application/json' \
   -d '{"prompt":"How do Tasks and Task Objects work with Agent Harness Feeds?"}'
 

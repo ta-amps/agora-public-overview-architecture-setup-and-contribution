@@ -54,8 +54,8 @@
       {
         "name": "Tessera",
         "what": "Infrastructure: claim Tasks, read and write Task Objects; every step is recorded",
-        "mcp": "https://tessera.teleionlabs.com/mcp",
-        "llms": "https://tessera.teleionlabs.com/llms.txt"
+        "mcp": "https://fabric.teleionlabs.com/mcp",
+        "llms": "https://fabric.teleionlabs.com/llms.txt"
       },
       {
         "name": "Eranos",
@@ -66,8 +66,8 @@
       {
         "name": "Herma",
         "what": "Infrastructure: context and models for a compatible agent",
-        "mcp": "https://herma.teleionlabs.com/mcp",
-        "llms": "https://herma.teleionlabs.com/llms.txt"
+        "mcp": "https://shim.teleionlabs.com/mcp",
+        "llms": "https://shim.teleionlabs.com/llms.txt"
       },
       {
         "name": "Home",

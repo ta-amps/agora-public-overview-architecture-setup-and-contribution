@@ -7,7 +7,7 @@
       "number": "Lease reaping runs shortly after each lease expires, and on a cron every six hours",
       "status": "measured",
       "source": "Tessera's Cloudflare configuration sets the cron 0 */6 * * *, whose handler runs the reaper, and the coordinator also wakes itself just after the earliest lease expiry. Its public health reported the last run at 06:00:40 UTC on October 30, 2026, read at 07:09 UTC.",
-      "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/deploy/cloudflare/wrangler.jsonc"
+      "link": "https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine/blob/main/deploy/cloudflare/wrangler.jsonc"
     },
     {
       "slide": "on-its-own",
@@ -35,7 +35,7 @@
       "number": "A fix merged in Tessera on October 30, 2026 at 02:52 UTC and went live with the redeploy at 06:53 UTC",
       "status": "measured",
       "source": "Tessera pull request 20, merged at 02:52 UTC, renders every tool list from the tools/list registry; its commit says the daily check recorded the gap. Tessera pull request 21, which includes it, merged at 06:52 UTC, and its deployment is recorded at 06:53 UTC. Public GETs at 06:57 and 07:09 UTC returned an llms.txt that names all 37 tools, in the same order as the agent card. Nothing shows that a worker claimed the repair Task.",
-      "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/pull/20"
+      "link": "https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine/pull/20"
     },
     {
       "slide": "first-check",
@@ -63,14 +63,14 @@
       "number": "Read on October 31, 2026 at 23:24 UTC",
       "status": "measured",
       "source": "Public GET requests to Tessera's health and agent card and to the daily check's status at 23:24 UTC on October 31, 2026; nothing that changes state was called.",
-      "link": "https://tessera.teleionlabs.com/v1/health"
+      "link": "https://fabric.teleionlabs.com/v1/health"
     },
     {
       "slide": "status",
       "number": "Last lease-reaper run: 18:00 UTC on October 31, 2026",
       "status": "measured",
       "source": "reaper_last_run in Tessera's public health, read at 23:24 UTC on October 31, 2026, was 1793469641.399, which is 18:00:41 UTC, matching the cron every six hours.",
-      "link": "https://tessera.teleionlabs.com/v1/health"
+      "link": "https://fabric.teleionlabs.com/v1/health"
     },
     {
       "slide": "status",
@@ -84,14 +84,14 @@
       "number": "Tessera serves list_feeds, poll_feed and publish_feed",
       "status": "measured",
       "source": "The tools listed in Tessera's public agent card at 07:09 UTC. Reading or publishing a feed needs a key; the unauthenticated feed list returned 401.",
-      "link": "https://tessera.teleionlabs.com/.well-known/agent-card.json"
+      "link": "https://fabric.teleionlabs.com/.well-known/agent-card.json"
     },
     {
       "slide": "status",
       "number": "Open Tasks and self-serve requester keys, live since Tessera's redeploy on October 30, 2026 at 06:53 UTC",
       "status": "measured",
       "source": "Tessera's access contract at /connect.json, read at 07:09 UTC: a tracked anonymous session may claim, heartbeat and submit Tasks tagged open:anonymous in the main namespace, while eq03, frontier.review and frontier.verify stay closed and its results wait for a different keyed reviewer; requester.enabled is true at POST /v1/session/requester, for a key that writes only in its organization's own org. stores and files requests only on eq01. Keyed worker keys stay admin-assisted. Both came in Tessera pull request 21, deployed at 06:53 UTC. This check signed up for nothing and claimed nothing. At the same time, Tessera's agent card and llms-full.txt still showed requester.enabled false; /connect.json is the access contract.",
-      "link": "https://tessera.teleionlabs.com/connect.json"
+      "link": "https://fabric.teleionlabs.com/connect.json"
     }
   ]
 }

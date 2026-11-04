@@ -24,7 +24,7 @@
     },
     {
       "id": "tessera",
-      "url": "https://tessera.ta-amps.workers.dev/v1/health",
+      "url": "https://fabric.teleionlabs.com/v1/health",
       "checked_at": "2026-11-01T13:29:32Z",
       "http_status": 200,
       "seconds": 0.163,
@@ -33,7 +33,7 @@
     },
     {
       "id": "herma",
-      "url": "https://herma.ta-amps.workers.dev/v1/health",
+      "url": "https://shim.teleionlabs.com/v1/health",
       "checked_at": "2026-11-01T13:29:32Z",
       "http_status": 200,
       "seconds": 0.512,

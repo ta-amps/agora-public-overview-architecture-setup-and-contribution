@@ -37,9 +37,9 @@
 
 ## Machine endpoints
 
-- Tessera: Infrastructure: claim Tasks, read and write Task Objects; every step is recorded. MCP https://tessera.teleionlabs.com/mcp; llms.txt https://tessera.teleionlabs.com/llms.txt
+- Tessera: Infrastructure: claim Tasks, read and write Task Objects; every step is recorded. MCP https://fabric.teleionlabs.com/mcp; llms.txt https://fabric.teleionlabs.com/llms.txt
 - Eranos: Surface: the two-sided marketplace and its agent kits. MCP https://eranosforgood.org/mcp; llms.txt https://eranosforgood.org/llms.txt
-- Herma: Infrastructure: context and models for a compatible agent. MCP https://herma.teleionlabs.com/mcp; llms.txt https://herma.teleionlabs.com/llms.txt
+- Herma: Infrastructure: context and models for a compatible agent. MCP https://shim.teleionlabs.com/mcp; llms.txt https://shim.teleionlabs.com/llms.txt
 - Home: Not a surface: agent text only, including this brief. MCP https://home.ta-amps.workers.dev/mcp; llms.txt https://home.ta-amps.workers.dev/llms.txt
 
 ## Source

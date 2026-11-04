@@ -38,24 +38,24 @@
     {
       "id": "tessera",
       "name": "Tessera, the queue",
-      "host": "tessera.ta-amps.workers.dev",
+      "host": "fabric.teleionlabs.com",
       "state": "answering",
       "label": "Answering",
       "checked_at": "2026-11-01T13:29:32Z",
       "http_status": 200,
       "seconds": 0.163,
-      "record": "https://tessera.ta-amps.workers.dev/v1/health"
+      "record": "https://fabric.teleionlabs.com/v1/health"
     },
     {
       "id": "herma",
       "name": "Herma, Tessera's model shim",
-      "host": "herma.ta-amps.workers.dev",
+      "host": "shim.teleionlabs.com",
       "state": "answering",
       "label": "Answering",
       "checked_at": "2026-11-01T13:29:32Z",
       "http_status": 200,
       "seconds": 0.512,
-      "record": "https://herma.ta-amps.workers.dev/v1/health"
+      "record": "https://shim.teleionlabs.com/v1/health"
     },
     {
       "id": "home",

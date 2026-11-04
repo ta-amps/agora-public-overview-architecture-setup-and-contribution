@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location("build_site", ROOT / "scripts/build_site.py")
 build = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(build)
-SOURCE = "https://herma.teleionlabs.com/q/network"
+SOURCE = "https://shim.teleionlabs.com/q/network"
 COPY = ROOT.parents[2] / "coordination-2026-10-31" / "claude-design-copy.v1.json"  # beside this checkout in the working notes
 
 

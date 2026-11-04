@@ -88,17 +88,17 @@
     {
       "id": "tessera",
       "name": "Tessera, the queue",
-      "host": "tessera.ta-amps.workers.dev",
+      "host": "fabric.teleionlabs.com",
       "what": "Keeps every Task and Task Object: who is working on what, the results and the record of every step.",
-      "check": "https://tessera.ta-amps.workers.dev/v1/health",
+      "check": "https://fabric.teleionlabs.com/v1/health",
       "kind": "json"
     },
     {
       "id": "herma",
       "name": "Herma, Tessera's model shim",
-      "host": "herma.ta-amps.workers.dev",
+      "host": "shim.teleionlabs.com",
       "what": "Sits between an agent’s harness and its model, and adds the right Task Objects as context.",
-      "check": "https://herma.ta-amps.workers.dev/v1/health",
+      "check": "https://shim.teleionlabs.com/v1/health",
       "kind": "json"
     },
     {

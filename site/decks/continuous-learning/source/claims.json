@@ -14,7 +14,7 @@
       "number": "Frozen test: 150 rows over tool families held out of training",
       "status": "measured",
       "source": "Tessera’s continuous-tuning record: the test split holds the buckets and feeds tool families, pinned by digest, and training prompts only ever show other families. Each round also freezes a fresh holdout from the test families.",
-      "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md"
+      "link": "https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md"
     },
     {
       "slide": "pre-registration",
@@ -70,7 +70,7 @@
       "number": "Memory, path-statistics and routing-weights learners: implemented and tested",
       "status": "measured",
       "source": "Tessera’s execution-learning record. Local tests are not evidence that any learner improves real work; that needs the evaluations each learner names, on real permitted runs.",
-      "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/execution-learning.md"
+      "link": "https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine/blob/main/docs/execution-learning.md"
     },
     {
       "slide": "free-gpus",
@@ -84,14 +84,14 @@
       "number": "Another key tried to read everything the earlier tuning rounds wrote: all 303 reads were denied",
       "status": "measured",
       "source": "A final sweep after one model’s tuning rounds: another principal tried to read 115 private records, 133 blob chunks and 55 execution runs. After a second model’s rounds, all 193 such reads were denied too.",
-      "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md"
+      "link": "https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md"
     },
     {
       "slide": "limits",
       "number": "The 150-row tests are small",
       "status": "measured",
       "source": "Tessera’s continuous-tuning record: with the disagreement these runs showed, a 150-row test detects a true 5-point gain only about 31% of the time, and 80% power needs about 560 rows.",
-      "link": "https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md"
+      "link": "https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md"
     },
     {
       "slide": "learners",

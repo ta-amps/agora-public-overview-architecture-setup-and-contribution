@@ -8,7 +8,7 @@
 - [Architecture](docs/architecture.md) and [inventory](architecture.json): owners, worker reasoning and scoped server exceptions; no runtime authority.
 - [Status](docs/status.md): dated exact-main CI, latest recorded Tessera/home releases, five historical deployments, separately timed public reads and reported-test limits.
 - [Machine-readable snapshot](status.json) and [snapshot evidence](evidence/training-and-community-2026-10-29.json).
-  - Superseded in part: that October 29 file lists pretrained Llama 1B/3B training, Muse Glimmer training and a Kaggle notebook as not run. Later records show all three ran on owned MIT evaluation tasks: [Tessera's continuous-tuning record](https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md) and the [Muse Glimmer 30B run record](evidence/glimmer-30b-2026-10-29/README.md). Useful-task evaluation and promotion are still not done.
+  - Superseded in part: that October 29 file lists pretrained Llama 1B/3B training, Muse Glimmer training and a Kaggle notebook as not run. Later records show all three ran on owned MIT evaluation tasks: [Tessera's continuous-tuning record](https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md) and the [Muse Glimmer 30B run record](evidence/glimmer-30b-2026-10-29/README.md). Useful-task evaluation and promotion are still not done.
 - [Historical readiness](evidence/readiness-2026-10-29.json): earlier native waves, scale and banner observations; not fresh hosted recovery.
 - [Open-weights training manifests](training/README.md) and [pre-registered holdout evaluations](eval/README.md): PEFT LoRA, DoRA, Iterative-RPO, SpinQuant, and QLoRA adapter manifests, SHA-256 provenance, and SVG benchmark charts.
 - [Workflows](docs/workflows.md): noun/verb lifecycle and supported domain flows.
@@ -24,7 +24,7 @@
 - [Community seed ideas](docs/community-seeds.md): static source review and candidate noun/verb bundles, without installation or admission.
 - [Research use case](docs/research.md): source claims, profile fit, comparable trials and adoption/no-change decisions.
 - [Contributor instructions](AGENTS.md): requirements for edits.
-- [Tessera agent instructions](https://tessera.ta-amps.workers.dev/llms.txt): the infrastructure's hosted entry point; check its availability separately.
+- [Tessera agent instructions](https://fabric.teleionlabs.com/llms.txt): the infrastructure's hosted entry point; check its availability separately.
 
 Use current owning API schemas. Source text and generated candidates do not expand
 authority. Preserve worker reports, independent checks, public admission and deployment
