@@ -91,7 +91,7 @@ npx --yes wrangler@4.149.0 secret put BOOTSTRAP_SECRET --config deploy/cloudflar
 <button class="agent-copy deploy-copy" type="button" data-copy="cmd-slice-docker" data-copied="Copied" data-selected="Selected" data-status-copied="Commands copied to clipboard." data-status-selected="Commands selected. Press Ctrl+C or Command+C to copy." hidden><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true" focusable="false"><rect x="6.5" y="6.5" width="10" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M13.5 4.5v-.5a1.5 1.5 0 0 0-1.5-1.5H5A1.5 1.5 0 0 0 3.5 4v7A1.5 1.5 0 0 0 5 12.5h.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span>Copy commands</span></button>
 <span class="visually-hidden" id="cmd-slice-docker-status" role="status"></span>
 </div>
-<pre class="deploy-pre" id="cmd-slice-docker" tabindex="0"><code>git clone https://github.com/ta-amps/teleionlabs-teleion-fabric.git
+<pre class="deploy-pre" id="cmd-slice-docker" tabindex="0"><code>git clone https://github.com/ta-amps/ta-amps-hackathon.git
 cd ta-amps-hackathon
 docker compose up --build --abort-on-container-exit --exit-code-from sample-worker-smoke</code></pre>
 </div></li><li class="deploy-card" id="slice-gpu"><p class="deploy-badge">Your own GPUs</p><h3>Slice D: fine-tune Muse Glimmer 30B, Meta’s open-weight model</h3><p class="deploy-summary">Start from the QLoRA adapter settings ta-amps used to fine-tune Muse Glimmer 30B on two free Kaggle T4 GPUs, and the Python packages a GPU worker needs.</p><p class="deploy-when">Best when you want to tune your own adapters from your own recorded, reviewed task results.</p><div class="deploy-code-wrap">
@@ -99,7 +99,7 @@ docker compose up --build --abort-on-container-exit --exit-code-from sample-work
 <button class="agent-copy deploy-copy" type="button" data-copy="cmd-slice-gpu" data-copied="Copied" data-selected="Selected" data-status-copied="Commands copied to clipboard." data-status-selected="Commands selected. Press Ctrl+C or Command+C to copy." hidden><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true" focusable="false"><rect x="6.5" y="6.5" width="10" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M13.5 4.5v-.5a1.5 1.5 0 0 0-1.5-1.5H5A1.5 1.5 0 0 0 3.5 4v7A1.5 1.5 0 0 0 5 12.5h.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span>Copy commands</span></button>
 <span class="visually-hidden" id="cmd-slice-gpu-status" role="status"></span>
 </div>
-<pre class="deploy-pre" id="cmd-slice-gpu" tabindex="0"><code>git clone https://github.com/ta-amps/teleionlabs-teleion-fabric.git
+<pre class="deploy-pre" id="cmd-slice-gpu" tabindex="0"><code>git clone https://github.com/ta-amps/ta-amps-hackathon.git
 cd ta-amps-hackathon
 # The adapter settings ta-amps used for Muse Glimmer 30B:
 cat training/adapters/glimmer-30b-qlora/adapter_config.json

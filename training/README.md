@@ -34,7 +34,7 @@ Each tuning round is enqueued by a single `tick` task (`verb.decompose_dag`) in 
 
 - **Horizontal Data Engine (`256` OpenCode & Multi-Harness Workers across `q01..q16`):** Sharded Teleion Fabric queues (`q01..q16`, Durable Object / SQLite shards, content-addressed CAS blobs) let up to `256` concurrent multi-harness workers decompose DAGs, retrieve context via the Teleion Fabric shim, build task objects, and enforce `verifier != builder` checks -- pairing checked execution records with rejected-attempt tombstones (`noun.negative_tombstone`) as structured preference / DPO pairs once real-trace consent and grading gates are enabled (all measured adapter runs below trained strictly on owned synthetic MIT templates).
 - **4-Tier Vertical Compute Cascade & Composable Modular LoRAs:**
-  - **Tier 0 (`< 2 ms`):** Deterministic the Teleion Fabric shim rules & capability firewall (`respond_directly` + contributor-tier refusal).
+  - **Tier 0:** Deterministic the Teleion Fabric shim rules & capability firewall (`respond_directly` + contributor-tier refusal).
   - **Tier 1 (Local GPU):** `Llama 3.2 1B & 3B` with hot-swappable PEFT LoRA task objects (`shim-router`, `lora-as-memory`, `task-decomposer`, `verifier-dpo`; tool-call specialist measured at `12.0% -> 50.7%` and `52.0% -> 72.7%`, with 3-adapter multi-LoRA serving checked at `80/80` exact parity).
   - **Tier 2 (Kaggle Free 2xT4):** `Muse Glimmer 30B` NF4 `bitsandbytes` QLoRA (`93.3% -> 99.3%` fresh holdout + LoRA-as-Memory).
   - **Tier 3 (Frontier Standard Mode):** `Meta Muse Spark 1.3` and `Muse Wonder 1.0` reserved for novel synthesis whose checked records distill back down into Tier 1 and Tier 2 adapters.
