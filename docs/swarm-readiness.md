@@ -20,7 +20,7 @@ insufficient.
 
 | Harness | Observed coverage | Important qualification |
 | --- | --- | --- |
-| OpenCode 2.1.2 | Complete scoped lifecycle; earlier anonymous/keyed execution recall runs | Narrow made-up fixtures on a hosted open-model service |
+| OpenCode 2.1.2 | Complete scoped lifecycle; earlier anonymous/keyed execution recall runs | Narrow made-up fixtures on `kimi-k2.7-code` on a cloud inference service |
 | Pi 0.73.1 | Complete lifecycle and concurrent creative contributions | Standard extension supplies the scoped MCP transport |
 | Hermes 0.20.1 | Complete lifecycle after a calibration follow-up | Fixture-specific typed output contract; earlier attempt stopped before submission |
 | Muse Code 1.4.14 | Complete lifecycle with approval checks enabled | Fixture-specific typed output contract; earlier schema mismatch retained |
@@ -52,7 +52,7 @@ separate three-process retry using native response settings. The original
 results remain **7/10 in the first wave and 3/3 in the retry**.
 A subsequent full ten-process wave with the corrected transport completed
 **10/10**, producing twenty private idea proposals across five themes. It used
-71 worker-side attempts on a hosted open-model service: 70 returned HTTP 200 and one disconnected
+71 worker-side attempts on a cloud inference service: 70 returned HTTP 200 and one disconnected
 with unknown usage before the harness recovered. One worker also corrected a
 rejected submission before completing. The runs shared a scoped cohort principal;
 they do not establish ten independent account grants. Novelty, usefulness and

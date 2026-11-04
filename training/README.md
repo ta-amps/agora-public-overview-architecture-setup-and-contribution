@@ -9,16 +9,18 @@
 | Model | Method & Stack | Compute | Target Specialist Task | Holdout Result |
 | --- | --- | --- | --- | --- |
 | **Muse Glimmer 30B** | 4-bit `bitsandbytes` QLoRA (`peft` rank 16, alpha 32, 364 modules, 95.8M trainable params) | Free cloud **2x NVIDIA T4 16 GB** (Kaggle) | Typed Teleion Fabric MCP tool calls & refusal reasons on unseen tool families | **93.3% -> 99.3%** strict exact match on pre-registered fresh holdout (`+6.0%`, 95% CI `[+2.0%, +10.7%]`, 12/12 checks) |
-| **Meta open model (3B)** | bf16 `peft` LoRA with gradient checkpointing (rank 16, alpha 32, 24.3M trainable params) | Single local **RTX 3060 12 GB** | Continuous tool-call tuning + pre-registered schema-drop guard | **52.0% -> 72.7%** strict exact match on unseen families; stringified arguments **17.5% -> 0.0%** (Round 2 `79.3%` held back by `0.02` schema guard) |
-| **Meta open model (1B)** | bf16 `peft` LoRA + multi-LoRA parametric memory (`load_adapter` / `set_adapter`, 11.3M trainable params) | Single local **RTX 3060 12 GB** | Continuous multi-round tuning + hot-swappable specialist routing | **12.0% -> 50.7%** strict exact match across 3 rounds (`8.3% -> 0.0%` stringified values); 3 adapters on 1 base checked at **80/80** byte-identical parity |
+| **Meta's open-weight 3B model** | bf16 `peft` LoRA with gradient checkpointing (rank 16, alpha 32, 24.3M trainable params) | Single local **RTX 3060 12 GB** | Continuous tool-call tuning + pre-registered schema-drop guard | **52.0% -> 72.7%** strict exact match on unseen families; stringified arguments **17.5% -> 0.0%** (Round 2 `79.3%` held back by `0.02` schema guard) |
+| **Meta's open-weight 1B model** | bf16 `peft` LoRA + multi-LoRA parametric memory (`load_adapter` / `set_adapter`, 11.3M trainable params) | Single local **RTX 3060 12 GB** | Continuous multi-round tuning + hot-swappable specialist routing | **12.0% -> 50.7%** strict exact match across 3 rounds (`8.3% -> 0.0%` stringified values); 3 adapters on 1 base checked at **80/80** byte-identical parity |
+
+**Which base models?** "Meta's open-weight 1B model" and "Meta's open-weight 3B model" are Meta's instruct checkpoints with about 1 billion and 3 billion parameters, used here as bases for tool-call tuning and specialist adapters. The tuning recipes use `bf16` with no quantization and `131,072` context tokens. The LoRA settings are `r=16, alpha=32` on seven projection modules, with `11.3M` (1B) and `24.3M` (3B) trainable params; the 3B swarm run used `fp16` on Kaggle. The exact 3B checkpoint id is in the [deployment guide](https://github.com/ta-amps/teleionlabs-teleion-fabric/blob/main/docs/deployment-guide.md#L108), and both recipes, with both ids, are at [this pinned commit](https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine/tree/0d7052cdfa2fdb13d9eb433e8b3038fd6599d4da/examples/continuous_tuning/recipes).
 
 ## Directory Contents
 
 - [requirements-train.txt](requirements-train.txt): GPU worker Python dependencies (`torch`, `transformers`, `peft`, `bitsandbytes`, `accelerate`, `safetensors`, `huggingface_hub`, `tokenizers`).
 - [adapters/source.json](adapters/provenance.json): Full SHA-256 source manifest linking base shards, promotion rule (`bf0fa821717c2400...`), holdout records, and evaluation outputs.
 - [adapters/glimmer-30b-qlora/adapter_config.json](adapters/glimmer-30b-qlora/adapter_config.json): PEFT LoRA configuration manifest for the Muse Glimmer 30B QLoRA run.
-- [1B adapter config](adapters/llama-3.2-1b-lora/adapter_config.json): PEFT LoRA configuration manifest for the Meta open model (1B) continuous tuning loop.
-- [3B adapter config](adapters/llama-3.2-3b-lora/adapter_config.json): PEFT LoRA configuration manifest for the Meta open model (3B) continuous tuning loop.
+- [1B adapter config](adapters/llama-3.2-1b-lora/adapter_config.json): PEFT LoRA configuration manifest for Meta's open-weight 1B model, continuous tuning loop.
+- [3B adapter config](adapters/llama-3.2-3b-lora/adapter_config.json): PEFT LoRA configuration manifest for Meta's open-weight 3B model, continuous tuning loop.
 
 ## How the Continuous Loop Runs on Tasks & task objects
 
@@ -35,7 +37,7 @@ Each tuning round is enqueued by a single `tick` task (`verb.decompose_dag`) in 
 - **Horizontal Data Engine (`256` OpenCode & Multi-Harness Workers across `q01..q16`):** Sharded Teleion Fabric queues (`q01..q16`, Durable Object / SQLite shards, content-addressed CAS blobs) let up to `256` concurrent multi-harness workers decompose DAGs, retrieve context via the Teleion Fabric shim, build task objects, and enforce `verifier != builder` checks -- pairing checked execution records with rejected-attempt tombstones (`noun.negative_tombstone`) as structured preference / DPO pairs once real-trace consent and grading gates are enabled (all measured adapter runs below trained strictly on owned made-up MIT templates).
 - **4-Tier Vertical Compute Cascade & Composable Modular LoRAs:**
   - **Tier 0:** Deterministic the Teleion Fabric shim rules & capability firewall (`respond_directly` + contributor-tier refusal).
-  - **Tier 1 (Local GPU):** Meta open models (1B and 3B) with hot-swappable PEFT LoRA task objects (`shim-router`, `lora-as-memory`, `task-decomposer`, `verifier-dpo`; tool-call specialist measured at `12.0% -> 50.7%` and `52.0% -> 72.7%`, with 3-adapter multi-LoRA serving checked at `80/80` exact parity).
+  - **Tier 1 (Local GPU):** Meta's open-weight 1B and 3B models with hot-swappable PEFT LoRA task objects (`shim-router`, `lora-as-memory`, `task-decomposer`, `verifier-dpo`; tool-call specialist measured at `12.0% -> 50.7%` and `52.0% -> 72.7%`, with 3-adapter multi-LoRA serving checked at `80/80` exact parity).
   - **Tier 2 (Kaggle Free 2xT4):** `Muse Glimmer 30B` NF4 `bitsandbytes` QLoRA (`93.3% -> 99.3%` fresh holdout + LoRA-as-Memory).
   - **Tier 3 (Frontier Standard Mode):** `Meta Muse Spark 1.3` and `Muse Wonder 1.0` reserved for novel synthesis whose checked records distill back down into Tier 1 and Tier 2 adapters.
 
@@ -52,12 +54,12 @@ python3 -m venv .venv-train && . .venv-train/bin/activate
 pip install -r training/requirements-train.txt
 PYTHONPATH=src:. python -m examples.continuous_tuning.cli tick \
   --root ./tuning-runs/meta-open-1b \
-  --base examples/continuous_tuning/recipes/base-llama-3.2-1b-instruct.json \
+  --base /private/bases/base-1b.json \
   --base-path "$TUNING_BASE_PATH" --backend hf
 ```
 
 ## Primary Evidence Bundles
 
-- **Meta open models (1B and 3B) Continuous Tuning Method & Records:** [`tessera/docs/continuous-tuning.md`](https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md)
+- **Continuous tuning method and records for Meta's open-weight 1B and 3B models:** [`tessera/docs/continuous-tuning.md`](https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md)
 - **Muse Glimmer 30B 2xT4 QLoRA Records & Pre-Registered Holdout:** [`../evidence/glimmer-30b-2026-10-29/README.md`](../evidence/glimmer-30b-2026-10-29/README.md)
 - **Evaluation Charts & Holdout Guard Analysis:** [`../eval/README.md`](../eval/README.md)

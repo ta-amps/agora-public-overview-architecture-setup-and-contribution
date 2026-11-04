@@ -6,7 +6,7 @@
 # - Muse Glimmer 30B QLoRA (2x T4, Kaggle): torch 2.11.0+cu128, transformers 5.22.0,
 #   peft 0.21.2, bitsandbytes 0.50.2, accelerate 1.15.0, safetensors 0.8.0,
 #   huggingface_hub 1.33.0, tokenizers 0.23.1
-# - Meta open models (1B and 3B) LoRA (RTX 3060 12 GB): torch 2.15.0+cu132, transformers 5.22.0,
+# - Meta's open-weight 1B and 3B models, LoRA (RTX 3060 12 GB): torch 2.15.0+cu132, transformers 5.22.0,
 #   peft 0.21.2, accelerate 1.15.0
 
 torch>=2.5.0

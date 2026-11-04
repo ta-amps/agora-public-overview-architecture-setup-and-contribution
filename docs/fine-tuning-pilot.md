@@ -15,7 +15,7 @@ for versions, hardware, losses, artifact hashes and implementation fingerprints.
 | Observation | Result | Limit |
 | --- | --- | --- |
 | Training data | 20 owned made-up examples, split 12/4/4 with disjoint source and project families | Template examples test the pipeline; they are not a research benchmark |
-| Model and update | Random-initialized Meta open-model architecture, 110,784 total parameters including 3,584 trainable LoRA parameters; 12 optimizer steps | No pretrained Meta open-model or Muse Glimmer weights |
+| Model and update | Tiny random-initialized model using the architecture of Meta's open-weight models, 110,784 total parameters including 3,584 trainable LoRA parameters; 12 optimizer steps | No pretrained weights: not Meta's open-weight 1B or 3B models, and not Muse Glimmer 30B |
 | CPU and GPU | Both completed; the GPU was an RTX 3060 with about 11.62 GiB available VRAM | This does not establish memory fit for a 1B, 3B or 30B model |
 | Made-up test loss | Approximately 5.586128 to 5.396280 on each device | Diagnostic loss only; factual grounding and useful task quality remain unmeasured |
 | Save/reload | Frozen base unchanged; adapter changed; fresh base plus saved adapter reproduced probe logits with zero measured difference | Verifies saved training artifacts, not their usefulness |
@@ -76,7 +76,7 @@ valid training example.
 
 ## Pretrained recipes remain unrun
 
-Pinned Meta open-model 1B and 3B QLoRA recipes are available for a small pilot
+Pinned QLoRA recipes for Meta's open-weight 1B and 3B models are available for a small pilot
 on one 12 GB RTX 3060 or 16 GB T4. Actual fit and throughput still need measurement.
 The runner uses an existing cache by default; downloads require explicit
 authorization and existing model access. It does not accept a license. A Kaggle
@@ -91,7 +91,7 @@ lengths; it has not run Glimmer training. The H100 recipe is not evidence that
 [Meta post-training guide](https://dev.meta.ai/docs/muse-glimmer/post-training).
 
 No pretrained model download, Kaggle training job, paid GPU rental or Glimmer
-training run was performed for this pilot. Muse and hosted open-model inference credentials
+training run was performed for this pilot. Muse and other hosted inference credentials
 do not supply training weights or hardware. Estimate time and cost only after
 the dataset, permitted base, device and recipe are selected and a measured
 training/reload/evaluation slice establishes their behavior.

@@ -11,7 +11,7 @@ You do not need to deploy the entire `ta-amps` ecosystem to use its primitives. 
 | **A. Seed Packs Only** | `0` servers (stdlib Python + git) | `< 60s` | Loading reusable **task objects (`nouns.json`)**, **Tasks (`verbs.json`)**, and deterministic QA verifiers into `Muse Code`, `Claude Code`, `OpenCode`, `Codex`, `Cursor`, or `Pi`. |
 | **B. Cloudflare Edge Stack** | Cloudflare Workers + Durable Objects + D1 + Pages (`$0` free tier) | `~5 min` | Running a private or public **Teleion Fabric** work/CAS engine + **The Teleion Fabric shim** context shim + **Eranos / Agora** surfaces on `*.workers.dev` or a custom domain. |
 | **C. Docker / VPS / Air-Gapped** | Docker Engine (`docker compose up`) on Linux, macOS, Fly.io, Railway, or ECS | `~2 min` | Strict data residency, air-gapped CI runners, sovereign NGO deployments, or local offline development. |
-| **D. Meta Open-Weight GPU + LoRAs** | Kaggle `2x Tesla T4` (`$0` quota), local GPU (`PEFT`), `vLLM`, or `api.meta.ai` | `~10 min` | Training and serving **LoRA-as-Memory** (`Muse-Glimmer-30B` QLoRA) and `<50ms` **Shim Routers** (Meta open model PEFT) from checked Teleion Fabric traces. |
+| **D. Meta Open-Weight GPU + LoRAs** | Kaggle `2x Tesla T4` (`$0` quota), local GPU (`PEFT`), `vLLM`, or `api.meta.ai` | `~10 min` | Training and serving **LoRA-as-Memory** (`Muse-Glimmer-30B` QLoRA) and `<50ms` **Shim Routers** (Meta's open-weight 1B and 3B models, with PEFT) from checked Teleion Fabric traces. |
 
 ---
 

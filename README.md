@@ -67,7 +67,7 @@ ninth public repository and contains documentation and offline validation only.
 06:53 and 06:55 UTC. Public read-only GETs checked open Tasks, self-serve
 requester keys, a Teleion Fabric `llms.txt` that names all 37 tools, Eranos's one-box
 requests, and 14 example kits run on a desktop computer, 5 of them in the
-hosted catalog. Completed owned-template open-weights specialist runs on compact 1B/3B Meta open weights and Muse Glimmer 30B QLoRA are recorded in [`training/README.md`](training/README.md) and [`eval/README.md`](eval/README.md), and live October 31 / November 1 services, feeds, and records are summarized on [`/status/`](https://teleionlabs.com/status/). What is live and what comes next is on the [marketplace](https://agora.eranosforgood.org/decks/public-good-marketplace/#status)
+hosted catalog. Completed owned-template open-weights specialist runs on Meta's open-weight 1B and 3B models and Muse Glimmer 30B QLoRA are recorded in [`training/README.md`](training/README.md) and [`eval/README.md`](eval/README.md), and live October 31 / November 1 services, feeds, and records are summarized on [`/status/`](https://teleionlabs.com/status/). What is live and what comes next is on the [marketplace](https://agora.eranosforgood.org/decks/public-good-marketplace/#status)
 and [server-workers](https://agora.eranosforgood.org/decks/server-workers/#status)
 decks' dated status slides; the earlier paragraphs remain the October 29 snapshot.
 

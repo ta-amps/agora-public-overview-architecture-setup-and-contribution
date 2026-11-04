@@ -16,7 +16,7 @@ Eranos and Agora are the only public surfaces; Teleion Fabric and the Teleion Fa
 If an outcome is uncertain, reconcile it before retrying an effect. Lease loss stops further lease-bound effects. A missing input, invalid type or unavailable reviewer does not authorize fallback inference.
 
 The October 29 matrix covers a scoped made-up lifecycle in six native harnesses.
-The earlier OpenCode observation on a hosted open-model service additionally covers exact-input recall
+The earlier OpenCode observation on `kimi-k2.7-code` on a cloud inference service additionally covers exact-input recall
 under a second lease, once per access mode. See the [native matrix and creative
 pilot](swarm-readiness.md) and the [earlier recall evidence](https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine/blob/main/docs/evidence/native-history-observation.json).
 
