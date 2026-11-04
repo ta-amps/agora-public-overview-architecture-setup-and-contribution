@@ -2339,6 +2339,11 @@ def left_out_line(n: int, words: dict) -> str:
     return fill(words["left_out_one"] if n == 1 else words["left_out_many"], {"n": f"{n:,}"}, "feeds-page.json")
 
 
+def feed_words(page: str) -> str:
+    """The feed files stay byte for byte as the workers wrote them; a page shows them in public words."""
+    return page.replace(" run by ta-amps", "").replace("a ta-amps feed", "a Teleion Labs feed")
+
+
 def render_feeds_index(nouns: Nouns) -> str:
     """The feeds index (the AgoraFeeds board): a card for each category that has run, with its last run, how many new
     repositories its search found, what it gathered and its first three by a dated feed rank, then Which fits? as a
@@ -3740,9 +3745,9 @@ def outputs_for(nouns: Nouns) -> dict[Path, str]:
     film_made = render_film_made(nouns)
     if film_made:
         generated[SITE / "film" / "made" / "index.html"] = film_made
-    generated[SITE / "feeds" / "index.html"] = render_feeds_index(nouns)
+    generated[SITE / "feeds" / "index.html"] = feed_words(render_feeds_index(nouns))
     for row in ran_feeds(nouns):
-        generated[SITE / "feeds" / row["id"] / "index.html"] = render_feed_category(nouns, row["id"])
+        generated[SITE / "feeds" / row["id"] / "index.html"] = feed_words(render_feed_category(nouns, row["id"]))
     generated[SITE / "judges" / "index.html"] = render_judges(nouns)
     generated[STATUS_PAGE] = render_status(nouns)
     generated[SITE / "security" / "index.html"] = render_trust(

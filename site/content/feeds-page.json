@@ -2,15 +2,15 @@
   "about": "The words of the feeds pages: the index, /feeds/, and one page per category, /feeds/<id>/ (the AgoraFeeds board, November 1, 2026). Their data is its own set of Task Objects, site/content/feeds/: index.json and one file per category, copied byte for byte from the dedicated workers' builder (functional/builds/memory-feed/agora/feeds). The build reads that data; the bundle does not serve it. scripts/build_site.py renders a category only once its first run is recorded and says where its scans ran. Every repository field and quote is third-party text, rendered escaped, and never rewritten: an entry whose name, address or text the owner's rules keep off the pages is left out, and each page says how many. Feed rank is dated and is never called a rating; benchmark numbers are self-reported by the project.",
   "index": {
     "title": "Feeds | Agora",
-    "description": "Categorized feeds of new open-source tools for agents: memory systems, PII detection and redaction, OCR and LLM document tools, agent harnesses and LLM evaluation frameworks, each found by dedicated workers run by ta-amps and ordered by a dated feed rank.",
+    "description": "Categorized feeds of new open-source tools for agents: memory systems, PII detection and redaction, OCR and LLM document tools, agent harnesses and LLM evaluation frameworks, each found by dedicated workers and ordered by a dated feed rank.",
     "kicker": "Agora · Feeds",
     "heading": "What’s new, found and ranked",
-    "lead": "New tools for agents appear on GitHub every day, far more than anyone can try. For each category, a dedicated worker run by ta-amps searches GitHub and arXiv every 6 hours, keeps each project as a Task Object with its source, and orders the projects by an open feed rank: how new, stars, license, recent commits and quoted benchmarks, each with its link. We don’t run the tools ourselves.",
+    "lead": "New tools for agents appear on GitHub every day, far more than anyone can try. For each category, a dedicated worker searches GitHub and arXiv every 6 hours, keeps each project as a Task Object with its source, and orders the projects by an open feed rank: how new, stars, license, recent commits and quoted benchmarks, each with its link. We don’t run the tools ourselves.",
     "chips": [
       "found on GitHub and arXiv",
       "every 6 hours",
       "ordered by a dated feed rank",
-      "a dedicated worker run by ta-amps"
+      "a dedicated worker"
     ],
     "cards_heading": "Categories",
     "cards_lead": "A category appears here only after its first run.",
@@ -61,7 +61,7 @@
       "where_hosted": "Hosted Tessera",
       "schedule": "Schedule",
       "who": "Who runs it",
-      "who_text": "Dedicated workers run by ta-amps"
+      "who_text": "Dedicated workers"
     },
     "count_heading": "What appeared in two days",
     "count_line": "repositories created on GitHub in the 48 hours to",
@@ -126,7 +126,7 @@
     "answer_label": "The answer came from the stored Task Objects, with no model call.",
     "how_heading": "How it works",
     "how": [
-      "Each scan is one task: a dedicated worker run by ta-amps claims it with a scoped key and reads only official public APIs, GitHub’s and arXiv’s.",
+      "Each scan is one task: a dedicated worker claims it with a scoped key and reads only official public APIs, GitHub’s and arXiv’s.",
       "Each repository, paper and quoted claim becomes a Task Object with its source and the time it was seen, written with compare-and-set.",
       "Quoting the benchmark claims and comparing the projects are follow-up tasks, each recorded on its own."
     ],

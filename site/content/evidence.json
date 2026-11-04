@@ -209,7 +209,7 @@
         "id": "glimmer-30b-lora-memory-2026-10-31",
         "date": "2026-10-31",
         "title": "{{model:muse-glimmer-30b}}, as memory",
-        "line": "{{model:muse-glimmer-30b}} tuned to recall Task Objects from its own weights, on Kaggle’s free GPUs and example data: the results, a chart and the verification record.",
+        "line": "{{model:muse-glimmer-30b}} tuned to recall Task Objects from its own weights, on Kaggle’s free GPUs and example data: the results, a chart and the record of the checks.",
         "files": [
           {
             "path": "README.md",
