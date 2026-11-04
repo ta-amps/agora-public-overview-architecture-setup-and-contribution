@@ -19,11 +19,9 @@ $ curl -s -o /dev/null -w '%{http_code} %{redirect_url}\n' https://agora.eranosf
 301 https://eranosforgood.org/
 ```
 
-## Limits
+## Notes
 
 - Agora's main pages redirect to Eranos and Teleion Labs. Records such as decks and evidence stay served.
-- Feed pages show the last recorded run, which may be days old.
-- The source mirror holds what was current when the site was last built.
 
 ## For your agent
 
