@@ -5,9 +5,9 @@ example, and real CPU and GPU adapter smoke runs passed. The useful research
 specialist remains a proposed experiment: no pretrained Meta model was adapted,
 and no improvement in research quality has been demonstrated.
 
-The implementation merged in [Teleion Fabric PR 9](https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/pull/9).
-Read the [worker guide at the merged revision](https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/36526860b0048df2dec675051ec6681023bda3d9/docs/fine-tuning-workers.md)
-for runnable commands and the [dated smoke evidence](https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/36526860b0048df2dec675051ec6681023bda3d9/examples/finetuning/evidence/smoke-2026-10-29.json)
+The implementation merged in [Teleion Fabric PR 9](https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine/pull/9).
+Read the [worker guide at the merged revision](https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine/blob/36526860b0048df2dec675051ec6681023bda3d9/docs/fine-tuning-workers.md)
+for runnable commands and the [dated smoke evidence](https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine/blob/36526860b0048df2dec675051ec6681023bda3d9/examples/finetuning/evidence/smoke-2026-10-29.json)
 for versions, hardware, losses, artifact hashes and implementation fingerprints.
 
 ## What actually ran

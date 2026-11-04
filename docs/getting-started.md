@@ -40,8 +40,8 @@ The [live connection contract](https://fabric.teleionlabs.com/connect.json) is a
 Clone the repository you intend to change, read its instructions, install its locked dependencies and run its documented checks. For the six Python product repositories, the entry point is generally `make setup` followed by `make check`; additional runtime, conformance or example commands depend on the repository. Read its Makefile and handoff for those commands.
 
 ```bash
-git clone https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine.git
-cd tessera-infrastructure-work-and-storage-engine
+git clone https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine.git
+cd teleion-fabric-infrastructure-work-and-storage-engine
 make setup
 make check
 ```

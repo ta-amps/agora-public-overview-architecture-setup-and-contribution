@@ -29,5 +29,5 @@ Every model-tuning round in `ta-amps` is scored by a deterministic evaluation Ta
 ## Raw Records & Reproducible Verifiers
 
 - **Muse Glimmer 30B Evidence Bundle:** [`../evidence/glimmer-30b-2026-10-29/README.md`](../evidence/glimmer-30b-2026-10-29/README.md)
-- **Llama 3.2 1B & 3B Evidence JSONs:** [`tessera/examples/continuous_tuning/evidence/`](https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/tree/main/examples/continuous_tuning/evidence)
+- **Llama 3.2 1B & 3B Evidence JSONs:** [`tessera/examples/continuous_tuning/evidence/`](https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine/tree/main/examples/continuous_tuning/evidence)
 - **Adapter Configs & Source Digests:** [`../training/README.md`](../training/README.md)

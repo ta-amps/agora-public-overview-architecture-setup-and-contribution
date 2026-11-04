@@ -18,7 +18,7 @@ If an outcome is uncertain, reconcile it before retrying an effect. Lease loss s
 The October 29 matrix covers a scoped synthetic lifecycle in six native harnesses.
 The earlier OpenCode/Ollama observation additionally covers exact-input recall
 under a second lease, once per access mode. See the [native matrix and creative
-pilot](swarm-readiness.md) and the [earlier recall evidence](https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/evidence/native-history-observation.json).
+pilot](swarm-readiness.md) and the [earlier recall evidence](https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine/blob/main/docs/evidence/native-history-observation.json).
 
 ## Several workers explore one brief
 
@@ -29,7 +29,7 @@ alternatives against explicit dimensions and evidence, and a remix verb can
 produce another candidate with parent references. Reusing input nouns preserves
 common context while separate records preserve who produced each result.
 
-The [Opportunity Lab](https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/opportunity-lab.md)
+The [Opportunity Lab](https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine/blob/main/docs/opportunity-lab.md)
 authors this pattern for eleven startup themes. Its procedure nouns also cover
 source discovery, benchmark design and proposals for new nouns and verbs.
 Only initial ideation tasks are activated by its authoring command.

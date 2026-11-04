@@ -38,7 +38,7 @@ solutions are useful. Separate leases, output keys and records preserve each
 contribution. Comparison and remixing are later verbs; the queue need not force
 one creative answer per input.
 
-The full policy and examples live with [Teleion Fabric](https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/WORKER-FIRST-EXECUTION.md). It is a design and migration requirement; universal coverage across every endpoint has not been measured.
+The full policy and examples live with [Teleion Fabric](https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine/blob/main/docs/WORKER-FIRST-EXECUTION.md). It is a design and migration requirement; universal coverage across every endpoint has not been measured.
 
 ## Work and storage authority
 
@@ -46,7 +46,7 @@ Teleion Fabric supplies authenticated scope, queue permissions, claims, fencing 
 
 Eranos uses Teleion Fabric for staged work and artifacts. The Teleion Fabric shim can read permitted context and expose explicitly requested model interfaces. The Python dependencies of both pin a tested, merged Teleion Fabric revision. The pack library distributes seed packs: versioned code references, recipes and deterministic tools a worker can invoke while holding a verb, such as the collections for composing checked code without rewriting it and for video and motion made with code. A pack has no surface or brand name of its own; the older pack websites will retire behind archive notices. The worker stores outputs using its own authorized fabric interface; exporting a pack or producing a tool result does not install, activate or admit an artifact by itself.
 
-Execution observations are protected nouns associated with accepted completion. They retain server-observed task and lease facts separately from optional worker-reported telemetry. Bounded recall can return permitted prior evidence. Recall does not authorize automatic replay, establish correctness or grant a new effect. See [execution reports and recall](https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/execution-memory.md).
+Execution observations are protected nouns associated with accepted completion. They retain server-observed task and lease facts separately from optional worker-reported telemetry. Bounded recall can return permitted prior evidence. Recall does not authorize automatic replay, establish correctness or grant a new effect. See [execution reports and recall](https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine/blob/main/docs/execution-memory.md).
 
 ## Reasoning and review
 

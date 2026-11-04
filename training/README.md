@@ -1,6 +1,6 @@
 # Open-Weights Fine-Tuning: QLoRA & Multi-LoRA Specialist Loop
 
-`ta-amps` treats continuous fine-tuning as ordinary **Tasks** (`verbs`) and **task objects** (`nouns`) on [Teleion Fabric](https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine), without adding a separate model registry, server-side training daemon, or task authority.
+`ta-amps` treats continuous fine-tuning as ordinary **Tasks** (`verbs`) and **task objects** (`nouns`) on [Teleion Fabric](https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine), without adding a separate model registry, server-side training daemon, or task authority.
 
 > **Scope and honesty boundary:** Every training and evaluation example in these runs comes from owned synthetic MIT repository templates. No Muse API outputs, provider completions, nonprofit files, or private execution traces enter training. Base weights and derived LoRA/QLoRA weights remain private under their respective licenses (*Built with Llama* under the Llama 3.2 Community License). Adapters are recorded as unadmitted candidate manifests, not deployed hosted endpoints or general-capability claims.
 
@@ -22,7 +22,7 @@
 
 ## How the Continuous Loop Runs on Tasks & task objects
 
-Each tuning round is enqueued by a single `tick` task (`verb.decompose_dag`) in [`tessera/examples/continuous_tuning/`](https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/tree/main/examples/continuous_tuning):
+Each tuning round is enqueued by a single `tick` task (`verb.decompose_dag`) in [`tessera/examples/continuous_tuning/`](https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine/tree/main/examples/continuous_tuning):
 
 1. `curate_dataset` (`verb.ingest`): Fingerprints synthetic rows across exact content, normalized request, and slot-masked template shape so zero evaluation shapes leak into training.
 2. `tune_hyperparameters` (`verb.benchmark_harness`) & `train_adapter` (`verb.solve_draft`): Trains PEFT LoRA / QLoRA candidates with completion-only loss.
@@ -43,8 +43,8 @@ Each tuning round is enqueued by a single `tick` task (`verb.decompose_dag`) in 
 
 ```bash
 # 1. CPU plumbing verification (zero GPU or external API required):
-git clone https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine.git
-cd tessera-infrastructure-work-and-storage-engine
+git clone https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine.git
+cd teleion-fabric-infrastructure-work-and-storage-engine
 make check
 
 # 2. Authorized CUDA GPU worker environment:
@@ -58,6 +58,6 @@ PYTHONPATH=src:. python -m examples.continuous_tuning.cli tick \
 
 ## Primary Evidence Bundles
 
-- **Llama 3.2 1B & 3B Continuous Tuning Method & Records:** [`tessera/docs/continuous-tuning.md`](https://github.com/ta-amps/tessera-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md)
+- **Llama 3.2 1B & 3B Continuous Tuning Method & Records:** [`tessera/docs/continuous-tuning.md`](https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine/blob/main/docs/continuous-tuning.md)
 - **Muse Glimmer 30B 2xT4 QLoRA Records & Pre-Registered Holdout:** [`../evidence/glimmer-30b-2026-10-29/README.md`](../evidence/glimmer-30b-2026-10-29/README.md)
 - **Evaluation Charts & Holdout Guard Analysis:** [`../eval/README.md`](../eval/README.md)
