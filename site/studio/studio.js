@@ -9,8 +9,8 @@
   };
 
   const SESSION_STORAGE_KEY = "ta_amps_demo_session_v1";
-  // Tessera's anonymous mint rule (DEMO_QUOTAS.sessions_per_ip_hour, published at /connect.json).
-  const SESSION_LIMIT_TEXT = "Tessera opens at most 10 new demo sessions per address per hour.";
+  // Teleion Fabric's anonymous mint rule (DEMO_QUOTAS.sessions_per_ip_hour, published at /connect.json).
+  const SESSION_LIMIT_TEXT = "Teleion Fabric opens at most 10 new demo sessions per address per hour.";
   const RETRY_FIRST_MS = 30000;
   const RETRY_MAX_MS = 300000;
   // The worker id this page sends when it claims verbs: the browser itself plays the worker.
@@ -343,14 +343,13 @@
   "harness": "muse-code",
   "headers": { "X-Herma-Harness": "muse-code" },
   "mcpServers": {
-    "tessera": {
+    "teleion-fabric": {
       "type": "streamable-http",
-      "url": "https://tessera.teleionlabs.com/mcp",
-      "headers": { "Authorization": "Bearer $TESSERA_TOKEN" }
+      "url": "https://fabric.teleionlabs.com/mcp"
     },
-    "herma": {
+    "teleion-fabric-shim": {
       "type": "streamable-http",
-      "url": "https://herma.teleionlabs.com/mcp"
+      "url": "https://shim.teleionlabs.com/mcp"
     },
     "eranos": {
       "type": "streamable-http",
@@ -361,25 +360,22 @@
     opencode: `{
   "$schema": "https://opencode.ai/config.json",
   "mcp": {
-    "tessera": {
-      "type": "remote",
-      "url": "https://tessera.teleionlabs.com/mcp",
-      "headers": { "Authorization": "Bearer {env:TESSERA_TOKEN}" }
-    },
-    "herma": { "type": "remote", "url": "https://herma.teleionlabs.com/mcp" },
+    "teleion-fabric": { "type": "remote", "url": "https://fabric.teleionlabs.com/mcp" },
+    "teleion-fabric-shim": { "type": "remote", "url": "https://shim.teleionlabs.com/mcp" },
     "eranos": { "type": "remote", "url": "https://eranosforgood.org/mcp" }
   }
 }`,
-    claude: `# Connect Claude Code to Tessera, Herma & Eranos MCP doors:
-claude mcp add --transport http tessera https://tessera.teleionlabs.com/mcp \\
-  --header "Authorization: Bearer $TESSERA_TOKEN"
-claude mcp add --transport http herma https://herma.teleionlabs.com/mcp
+    claude: `# Connect Claude Code to Teleion Fabric, its model shim and Eranos over MCP.
+# No key is needed through December 31, 2026.
+claude mcp add --transport http teleion-fabric https://fabric.teleionlabs.com/mcp
+claude mcp add --transport http teleion-fabric-shim https://shim.teleionlabs.com/mcp
 claude mcp add --transport http eranos https://eranosforgood.org/mcp`,
-    pi: `# Start a scoped Pi contributor worker against Tessera + Herma shim:
-export TESSERA_MCP_URL="https://tessera.teleionlabs.com/mcp"
-export HERMA_SHIM_URL="https://herma.teleionlabs.com/v1/chat/completions"
-pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
+    pi: `# Start a Pi contributor worker against Teleion Fabric and its model shim:
+export FABRIC_MCP_URL="https://fabric.teleionlabs.com/mcp"
+export SHIM_URL="https://shim.teleionlabs.com/v1/chat/completions"
+pi --mcp "$FABRIC_MCP_URL" --header "X-Herma-Harness: pi"`
   };
+
 
   const state = {
     session: null,
@@ -521,10 +517,10 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
 
   /* DEMO SESSION
      connecting: a mint or a check of the saved session is on the wire.
-     live:       a session opened by this page, or a saved one Tessera just accepted (GET /v1/me).
+     live:       a session opened by this page, or a saved one Teleion Fabric just accepted (GET /v1/me).
      waiting:    the last try failed; the page tries again after a visible countdown ("Try now" skips it).
-     error:      Tessera answered 2xx with nothing usable; the page waits for "Try now".
-     Only "live" says Connected, and only "live" lets buttons send to Tessera. */
+     error:      Teleion Fabric answered 2xx with nothing usable; the page waits for "Try now".
+     Only "live" says Connected, and only "live" lets buttons send to Teleion Fabric. */
   function makeRunId() {
     const alphabet = "abcdefghijklmnopqrstuvwxyz0123456789";
     const bytes = new Uint8Array(6);
@@ -569,7 +565,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     let detailText = "";
     if (st === "live" && state.session) {
       text =
-        "Connected: Tessera demo session " +
+        "Connected: Teleion Fabric demo session " +
         shortNs(state.session.namespace) +
         (state.sessionOrigin === "checked" ? " (saved session, checked by this page)" : " (opened by this page)");
     } else if (st === "waiting") {
@@ -578,7 +574,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     } else if (st === "error") {
       text = "No demo session. " + (info.reason || "");
     } else {
-      text = info.checking ? "Checking the saved demo session with Tessera..." : "Opening a demo session on Tessera...";
+      text = info.checking ? "Checking the saved demo session with Teleion Fabric..." : "Opening a demo session on Teleion Fabric...";
     }
     pill.dataset.state = st === "live" && !state.session ? "connecting" : st;
     if (label.textContent !== text) label.textContent = text;
@@ -611,18 +607,18 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       if (!state.flowBusy) return "";
       return short
         ? "Waiting for the current run to finish."
-        : "A run is using Tessera right now. These buttons turn back on when it finishes.";
+        : "A run is using Teleion Fabric right now. These buttons turn back on when it finishes.";
     }
     if (short) {
       return st === "connecting"
-        ? "Needs a Tessera demo session (opening one now)."
-        : "Needs a Tessera demo session (none yet, see the top of the page).";
+        ? "Needs a Teleion Fabric demo session (opening one now)."
+        : "Needs a Teleion Fabric demo session (none yet, see the top of the page).";
     }
-    if (st === "connecting") return "These buttons use Tessera. They turn on as soon as the demo session is open.";
+    if (st === "connecting") return "These buttons use Teleion Fabric. They turn on as soon as the demo session is open.";
     if (st === "waiting") {
-      return "These buttons use Tessera, so they are off while the page waits for a demo session (see the top of the page). They turn on when it opens. Nothing is queued in the meantime.";
+      return "These buttons use Teleion Fabric, so they are off while the page waits for a demo session (see the top of the page). They turn on when it opens. Nothing is queued in the meantime.";
     }
-    return "These buttons use Tessera, so they are off: there is no demo session (see the top of the page).";
+    return "These buttons use Teleion Fabric, so they are off: there is no demo session (see the top of the page).";
   }
 
   function applySessionGate() {
@@ -679,7 +675,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     setSessionState("live", {});
   }
 
-  /* Retry-After when Tessera sends it (seconds or an HTTP date); otherwise 30 s, doubling, at most 5 min. */
+  /* Retry-After when Teleion Fabric sends it (seconds or an HTTP date); otherwise 30 s, doubling, at most 5 min. */
   function retryDelay(res) {
     const raw = res && res.headers ? res.headers["retry-after"] : null;
     if (raw != null && String(raw).trim() !== "") {
@@ -703,7 +699,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     }, delay.ms);
     state.countdownTimer = setInterval(renderSessionPill, 1000);
     setSessionState("waiting", {
-      reason: reason + (delay.fromServer ? " Tessera's Retry-After header asked for this wait." : "")
+      reason: reason + (delay.fromServer ? " Teleion Fabric's Retry-After header asked for this wait." : "")
     });
   }
 
@@ -741,7 +737,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
         return;
       }
       if (check.ok || check.status === 401 || check.status === 403) {
-        // Tessera no longer accepts the saved session (or it belongs elsewhere): forget it and open a new one.
+        // Teleion Fabric no longer accepts the saved session (or it belongs elsewhere): forget it and open a new one.
         clearCachedSession();
       } else {
         enterWaiting(check, "Last try: could not check the saved session, " + failureText(check) + ".");
@@ -774,15 +770,15 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       }
       clearRetryTimers();
       setSessionState("error", {
-        reason: "Tessera answered HTTP " + res.status + ", but the answer has no " + missing + ". Use Try now to ask again."
+        reason: "Teleion Fabric answered HTTP " + res.status + ", but the answer has no " + missing + ". Use Try now to ask again."
       });
       return;
     }
     enterWaiting(res, "Last try: " + failureText(res) + ".");
   }
 
-  /* A 401 means Tessera no longer accepts the token: open a new session. A 403 may only refuse that one
-     request, so check the session first (GET /v1/me) and keep it when Tessera still accepts it. */
+  /* A 401 means Teleion Fabric no longer accepts the token: open a new session. A 403 may only refuse that one
+     request, so check the session first (GET /v1/me) and keep it when Teleion Fabric still accepts it. */
   async function sessionRejected(sess, res) {
     if (sess !== state.session || state.sessionAttempt) return;
     if (res.authStatus === 403) {
@@ -1125,11 +1121,11 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     return state.sessionState === "live" && state.session ? state.session : null;
   }
 
-  /* Calls Tessera with the live session. A run passes the session it started with, so a session that
+  /* Calls Teleion Fabric with the live session. A run passes the session it started with, so a session that
      changes halfway through stops the run instead of mixing two namespaces. */
   async function tesseraAuthedFetch(opts) {
     const current = liveSession();
-    if (!current) return notSent("Not sent: there is no live Tessera demo session.");
+    if (!current) return notSent("Not sent: there is no live Teleion Fabric demo session.");
     const sess = opts.session || current;
     if (sess !== current) return notSent("Not sent: the demo session changed during this run. Run it again.");
     const res = await liveWireFetch({
@@ -1162,7 +1158,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     });
   }
 
-  /* The structured result of a successful MCP tool call, as Tessera returned it. */
+  /* The structured result of a successful MCP tool call, as Teleion Fabric returned it. */
   function mcpContent(res) {
     const result = res && res.ok && res.data && res.data.result;
     return result && result.structuredContent && typeof result.structuredContent === "object"
@@ -1309,7 +1305,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       .join("");
   }
 
-  /* Each row shows what Tessera last said about a task. Blank means Tessera has not said it. */
+  /* Each row shows what Teleion Fabric last said about a task. Blank means Teleion Fabric has not said it. */
   function renderTasksInspector() {
     const countEl = $("count-tasks");
     const wrap = $("tasks-table-wrap");
@@ -1325,7 +1321,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
 
     wrap.innerHTML =
       '<table class="state-table">' +
-      "<thead><tr><th>Task ID</th><th>Task / Queue</th><th>Last answer from Tessera</th><th>Fence / Worker</th><th>Record</th></tr></thead>" +
+      "<thead><tr><th>Task ID</th><th>Task / Queue</th><th>Last answer from Teleion Fabric</th><th>Fence / Worker</th><th>Record</th></tr></thead>" +
       "<tbody>" +
       rows
         .map(function (t) {
@@ -1369,7 +1365,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
 
     if (!items.length) {
       wrap.innerHTML =
-        '<div class="empty-state">No Task Objects stored or matched in this view. Send a Herma prompt or run the NGO / Worker flows.</div>';
+        '<div class="empty-state">No Task Objects stored or matched in this view. Send a shim prompt or run the NGO / Worker flows.</div>';
       return;
     }
 
@@ -1409,8 +1405,8 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
   }
 
   /* FLOW 1: CHAT + HERMA SHIM
-     A card shows only what Herma returned: the provisions it matched, its direct answer when it gave one,
-     and the system message it added to the payload it would forward. Nothing is written for Herma. */
+     A card shows only what the shim returned: the provisions it matched, its direct answer when it gave one,
+     and the system message it added to the payload it would forward. Nothing is written for the shim. */
   function hermaInjectedSystemText(ap) {
     if (!ap || typeof ap !== "object") return [];
     const out = [];
@@ -1427,7 +1423,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     return out;
   }
 
-  /* True only when Herma's payload is the plain prompt it was given, with nothing added. */
+  /* True only when the shim's payload is the plain prompt it was given, with nothing added. */
   function hermaPayloadUnchanged(ap, prompt) {
     return Boolean(
       ap &&
@@ -1453,22 +1449,22 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
         ? data.direct_response_text
         : null;
     const lines = [];
-    if (!matches) lines.push("Herma's answer has no matches list.");
-    if (direct != null) lines.push("Herma answered directly:\n" + direct);
+    if (!matches) lines.push("The shim's answer has no matches list.");
+    if (direct != null) lines.push("The shim answered directly:\n" + direct);
     else if (data.responded_directly === true) {
-      lines.push("Herma marked its answer as direct, but the answer has no direct_response_text.");
+      lines.push("The shim marked its answer as direct, but the answer has no direct_response_text.");
     }
-    if (injected.length) lines.push("System message Herma added to the payload:\n" + injected.join("\n\n"));
+    if (injected.length) lines.push("System message the shim added to the payload:\n" + injected.join("\n\n"));
     if (matches && !matches.length) {
       lines.push(
         hermaPayloadUnchanged(ap, prompt)
-          ? "Herma matched nothing and returned the payload unchanged."
-          : "Herma matched no provisions."
+          ? "The shim matched nothing and returned the payload unchanged."
+          : "The shim matched no provisions."
       );
     } else if (matches && direct == null && !injected.length && ap) {
-      lines.push("Herma matched provisions but added no system message to the payload.");
+      lines.push("The shim matched provisions but added no system message to the payload.");
     }
-    if (!ap) lines.push("Herma's answer has no augmented_payload.");
+    if (!ap) lines.push("The shim's answer has no augmented_payload.");
     return { data: data, matches: matches, ap: ap, injected: injected, direct: direct, lines: lines };
   }
 
@@ -1487,10 +1483,10 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     stream.innerHTML =
       '<div class="shim-card" id="chat-welcome-card">' +
       '<div class="shim-head">' +
-      '<div class="shim-prov-badges"><span class="prov-badge">Herma public preview</span><span class="ref-badge">no key needed</span></div>' +
+      '<div class="shim-prov-badges"><span class="prov-badge">Shim public preview</span><span class="ref-badge">no key needed</span></div>' +
       '<span class="shim-latency">herma.teleionlabs.com/api/preview</span>' +
       "</div>" +
-      '<div class="shim-answer">Click a starter prompt above or type your own below. Each prompt is a real POST to Herma. The card that comes back shows only what Herma returned: the provisions it matched, its direct answer when it gives one, and the system message it added to the payload.</div>' +
+      '<div class="shim-answer">Click a starter prompt above or type your own below. Each prompt is a real POST to the shim. The card that comes back shows only what the shim returned: the provisions it matched, its direct answer when it gives one, and the system message it added to the payload.</div>' +
       "</div>";
   }
 
@@ -1530,13 +1526,13 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
           category: "noun.provision",
           key: m.prov_id,
           version: Number.isInteger(m.version) ? m.version : null,
-          source: "Matched by Herma's public preview (HTTP " + res.status + ").",
+          source: "Matched by the shim's public preview (HTTP " + res.status + ").",
           value: m
         });
       });
     }
 
-    const answerLines = preview ? preview.lines : ["Herma did not answer the preview: " + failureText(res) + "."];
+    const answerLines = preview ? preview.lines : ["The shim did not answer the preview: " + failureText(res) + "."];
 
     if (stream) {
       const welcome = $("chat-welcome-card");
@@ -1570,10 +1566,10 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
             ? "system message added"
             : "nothing added";
       const afterText = !preview
-        ? "No answer from Herma."
+        ? "No answer from the shim."
         : preview.ap
           ? JSON.stringify(preview.ap, null, 2)
-          : "Herma's answer has no augmented_payload.";
+          : "The shim's answer has no augmented_payload.";
 
       turnEl.innerHTML =
         '<div class="chat-user-bubble">' +
@@ -1599,12 +1595,12 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
         '<details class="shim-diff-details"' +
         (opts && opts.openDiff ? " open" : "") +
         ">" +
-        "<summary>Inspect what was sent and Herma's augmented_payload</summary>" +
+        "<summary>Inspect what was sent and the shim's augmented_payload</summary>" +
         '<div class="shim-diff-grid">' +
-        '<div class="diff-box"><span class="diff-label">Sent to Herma (POST /api/preview)</span><pre>' +
+        '<div class="diff-box"><span class="diff-label">Sent to the shim (POST /api/preview)</span><pre>' +
         escapeHtml(JSON.stringify(sentBody, null, 2)) +
         "</pre></div>" +
-        '<div class="diff-box diff-box-added"><span class="diff-label">augmented_payload, as Herma returned it</span><pre>' +
+        '<div class="diff-box diff-box-added"><span class="diff-label">augmented_payload, as the shim returned it</span><pre>' +
         escapeHtml(afterText) +
         "</pre></div>" +
         "</div>" +
@@ -1622,10 +1618,10 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
      Every step is a real call, and this browser plays the worker that claims the verb. The run stops at the
      first call that fails and shows the service's own status and error text; a missing field fails the step. */
   const NGO_STEP_DEFS = [
-    { num: 1, title: "1. Store noun.request (Tessera)" },
+    { num: 1, title: "1. Store noun.request (Teleion Fabric)" },
     { num: 2, title: "2. Enqueue verb.build_agent_kit" },
     { num: 3, title: "3. Claim it (this browser as worker)" },
-    { num: 4, title: "4. Ask Herma for guardrails" },
+    { num: 4, title: "4. Ask the shim for guardrails" },
     { num: 5, title: "5. Eranos practice check" },
     { num: 6, title: "6. Store noun.agent_kit (MCP), submit" }
   ];
@@ -1663,10 +1659,10 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     if (detail) detail.textContent = detailText;
   }
 
-  /* One Tessera run at a time: an anonymous session holds one lease, and interleaved runs would mix results. */
+  /* One Teleion Fabric run at a time: an anonymous session holds one lease, and interleaved runs would mix results. */
   async function runExclusive(name, fn) {
     if (state.flowBusy) {
-      return { ok: false, busy: true, error: "Not started: another run (" + state.flowBusy + ") is using Tessera." };
+      return { ok: false, busy: true, error: "Not started: another run (" + state.flowBusy + ") is using Teleion Fabric." };
     }
     state.flowBusy = name;
     applySessionGate();
@@ -1740,7 +1736,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
         "Submitted " + lease.task_id + " so another claim can start (an anonymous session holds one lease at a time)."
       );
     } else {
-      if (res.status === 409) state.workerLab.activeLease = null; // Tessera says the lease is no longer live.
+      if (res.status === 409) state.workerLab.activeLease = null; // Teleion Fabric says the lease is no longer live.
       appendWorkerEvent("Could not close the lab's open lease", statusPill(res), failureText(res), "fail");
     }
     updateWorkerTelemetryUI();
@@ -1786,8 +1782,8 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
 
     const sess = liveSession();
     if (!sess) {
-      setBadge("failed", "Not started: there is no live Tessera demo session.");
-      return { ok: false, error: "Not started: there is no live Tessera demo session." };
+      setBadge("failed", "Not started: there is no live Teleion Fabric demo session.");
+      return { ok: false, error: "Not started: there is no live Teleion Fabric demo session." };
     }
 
     const released = await releaseActiveWorkerLeaseIfAny(sess);
@@ -1825,18 +1821,18 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       pathFn: nsPath("/v1/stores/demo.requests/records/" + reqKey),
       body: { value: reqValue, expected_version: 0 }
     });
-    if (!r1.ok) return halt(1, r1, "Tessera did not store the request: " + failureText(r1) + ".");
-    if (!r1.data || !Number.isInteger(r1.data.version)) return halt(1, r1, missingField(r1, "Tessera", "version"));
+    if (!r1.ok) return halt(1, r1, "Teleion Fabric did not store the request: " + failureText(r1) + ".");
+    if (!r1.data || !Number.isInteger(r1.data.version)) return halt(1, r1, missingField(r1, "Teleion Fabric", "version"));
     upsertNoun({
       store: "demo.requests",
       category: "noun.request",
       key: reqKey,
       version: r1.data.version,
       sha256: reqSha,
-      source: "Stored by Tessera (HTTP " + r1.status + ").",
+      source: "Stored by Teleion Fabric (HTTP " + r1.status + ").",
       value: reqValue
     });
-    updateNgoStep(1, "done", statusPill(r1), "Tessera stored demo.requests/" + reqKey + " as version " + r1.data.version + ".");
+    updateNgoStep(1, "done", statusPill(r1), "Teleion Fabric stored demo.requests/" + reqKey + " as version " + r1.data.version + ".");
 
     /* STEP 2: enqueue verb.build_agent_kit */
     setBadge("running", "Running step 2 of 6...");
@@ -1858,11 +1854,11 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
         }
       }
     });
-    if (!r2.ok) return halt(2, r2, "Tessera did not enqueue the Task: " + failureText(r2) + ".");
+    if (!r2.ok) return halt(2, r2, "Teleion Fabric did not enqueue the Task: " + failureText(r2) + ".");
     const taskId = r2.data && typeof r2.data.task_id === "string" && r2.data.task_id ? r2.data.task_id : null;
-    if (!taskId) return halt(2, r2, missingField(r2, "Tessera", "task_id"));
+    if (!taskId) return halt(2, r2, missingField(r2, "Teleion Fabric", "task_id"));
     upsertTask({ task_id: taskId, queue: queue, kind: kind, last: "enqueued (HTTP " + r2.status + ")", tone: "queued" });
-    updateNgoStep(2, "done", statusPill(r2), "Tessera enqueued task " + taskId + ".");
+    updateNgoStep(2, "done", statusPill(r2), "Teleion Fabric enqueued task " + taskId + ".");
 
     /* STEP 3: this browser, as the worker, claims the verb */
     setBadge("running", "Running step 3 of 6...");
@@ -1876,25 +1872,25 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     });
     const stopReason = "Agora Studio run stopped at step ";
     if (!r3.ok) {
-      return halt(3, r3, "Tessera did not lease the Task: " + failureText(r3) + "." + (await cancelTask(sess, taskId, stopReason + 3)));
+      return halt(3, r3, "Teleion Fabric did not lease the Task: " + failureText(r3) + "." + (await cancelTask(sess, taskId, stopReason + 3)));
     }
     if (r3.status === 204 || !r3.data || typeof r3.data !== "object") {
       return halt(
         3,
         r3,
-        "Tessera answered HTTP " + r3.status + " without a lease: it had no ready task to give." + (await cancelTask(sess, taskId, stopReason + 3))
+        "Teleion Fabric answered HTTP " + r3.status + " without a lease: it had no ready task to give." + (await cancelTask(sess, taskId, stopReason + 3))
       );
     }
     const lease = r3.data;
     const leasedId = typeof lease.task_id === "string" && lease.task_id ? lease.task_id : null;
     if (!leasedId) {
-      return halt(3, r3, missingField(r3, "Tessera", "task_id") + (await cancelTask(sess, taskId, stopReason + 3)));
+      return halt(3, r3, missingField(r3, "Teleion Fabric", "task_id") + (await cancelTask(sess, taskId, stopReason + 3)));
     }
     if (leasedId !== taskId) {
       return halt(
         3,
         r3,
-        "Tessera leased task " +
+        "Teleion Fabric leased task " +
           leasedId +
           ", not the task enqueued in step 2 (" +
           taskId +
@@ -1904,7 +1900,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       );
     }
     if (!Number.isInteger(lease.fencing_token)) {
-      return halt(3, r3, missingField(r3, "Tessera", "fencing_token") + (await cancelTask(sess, taskId, stopReason + 3, "worker")));
+      return halt(3, r3, missingField(r3, "Teleion Fabric", "fencing_token") + (await cancelTask(sess, taskId, stopReason + 3, "worker")));
     }
     const fence = lease.fencing_token;
     const leaseWorker = typeof lease.worker === "string" ? lease.worker : null;
@@ -1927,7 +1923,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       return halt(num, res, message + (await cancelTask(sess, taskId, stopReason + num, "worker")));
     };
 
-    /* STEP 4: the worker asks Herma for this brief's guardrails */
+    /* STEP 4: the worker asks the shim for this brief's guardrails */
     setBadge("running", "Running step 4 of 6...");
     updateNgoStep(4, "running", "sending", "POST herma /api/preview with this brief's guardrail prompt");
     const r4 = await liveWireFetch({
@@ -1937,14 +1933,14 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       url: ENDPOINTS.herma + "/api/preview",
       body: { prompt: preset.hermaPrompt, wire_format: "chat_completions" }
     });
-    if (!r4.ok) return stopAfterLease(4, r4, "Herma did not answer the preview: " + failureText(r4) + ".");
+    if (!r4.ok) return stopAfterLease(4, r4, "The shim did not answer the preview: " + failureText(r4) + ".");
     const m4 = r4.data && Array.isArray(r4.data.matches) ? r4.data.matches : null;
-    if (!m4) return stopAfterLease(4, r4, missingField(r4, "Herma", "matches list"));
+    if (!m4) return stopAfterLease(4, r4, missingField(r4, "The shim", "matches list"));
     updateNgoStep(
       4,
       "done",
       statusPill(r4),
-      m4.length ? "Herma matched " + m4.map(hermaMatchLabel).join(", ") + "." : "Herma matched no provisions for this prompt."
+      m4.length ? "The shim matched " + m4.map(hermaMatchLabel).join(", ") + "." : "The shim matched no provisions for this prompt."
     );
 
     /* STEP 5: the worker sends the brief's kit draft to Eranos's practice check */
@@ -2007,10 +2003,10 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       "worker",
       sess
     );
-    if (!r6.ok) return stopAfterLease(6, r6, "Tessera did not store the kit: " + failureText(r6) + ".");
+    if (!r6.ok) return stopAfterLease(6, r6, "Teleion Fabric did not store the kit: " + failureText(r6) + ".");
     const rec = (mcpContent(r6) || {}).record;
     if (!rec || !Number.isInteger(rec.version)) {
-      return stopAfterLease(6, r6, missingField(r6, "Tessera", "record.version in its put_record result"));
+      return stopAfterLease(6, r6, missingField(r6, "Teleion Fabric", "record.version in its put_record result"));
     }
     upsertNoun({
       store: "demo.kits",
@@ -2018,7 +2014,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       key: kitKey,
       version: rec.version,
       sha256: kitSha,
-      source: "Stored by Tessera over MCP put_record (HTTP " + r6.status + ").",
+      source: "Stored by Teleion Fabric over MCP put_record (HTTP " + r6.status + ").",
       value: kitRecordValue
     });
 
@@ -2043,14 +2039,14 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       }
     });
     if (!r6s.ok) {
-      return stopAfterLease(6, r6s, "The kit is stored, but Tessera did not accept the submit: " + failureText(r6s) + ".");
+      return stopAfterLease(6, r6s, "The kit is stored, but Teleion Fabric did not accept the submit: " + failureText(r6s) + ".");
     }
     const receipt = r6s.data && typeof r6s.data === "object" ? r6s.data : {};
     if (typeof receipt.receipt_hash !== "string" || !receipt.receipt_hash) {
-      return halt(6, r6s, missingField(r6s, "Tessera", "receipt_hash"));
+      return halt(6, r6s, missingField(r6s, "Teleion Fabric", "receipt_hash"));
     }
     if (typeof receipt.state_after !== "string" || !receipt.state_after) {
-      return halt(6, r6s, missingField(r6s, "Tessera", "state_after"));
+      return halt(6, r6s, missingField(r6s, "Teleion Fabric", "state_after"));
     }
     upsertTask({
       task_id: taskId,
@@ -2062,7 +2058,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       6,
       "held",
       statusPill(r6s),
-      "Tessera stored demo.kits/" +
+      "Teleion Fabric stored demo.kits/" +
         kitKey +
         " as version " +
         rec.version +
@@ -2148,7 +2144,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     if (!res || res.approved) return null;
     const sess = liveSession();
     if (!sess) {
-      res.approvalError = "Not sent: there is no live Tessera demo session.";
+      res.approvalError = "Not sent: there is no live Teleion Fabric demo session.";
       renderNgoHumanGate();
       return null;
     }
@@ -2174,8 +2170,8 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     });
     if (!r.ok || !r.data || !Number.isInteger(r.data.version)) {
       res.approvalError = r.ok
-        ? missingField(r, "Tessera", "version")
-        : "Tessera did not store the review: " + failureText(r) + ".";
+        ? missingField(r, "Teleion Fabric", "version")
+        : "Teleion Fabric did not store the review: " + failureText(r) + ".";
       renderNgoHumanGate();
       return r;
     }
@@ -2186,7 +2182,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       key: approvalKey,
       version: r.data.version,
       sha256: appSha,
-      source: "Stored by Tessera (HTTP " + r.status + ").",
+      source: "Stored by Teleion Fabric (HTTP " + r.status + ").",
       value: approvalVal
     });
 
@@ -2223,7 +2219,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
         "</span>" +
         "</div>" +
         '<div class="kit-meta-grid">' +
-        '<div class="kit-meta-box"><span>The stored value</span><strong>Recorded in Tessera</strong></div>' +
+        '<div class="kit-meta-box"><span>The stored value</span><strong>Recorded in Teleion Fabric</strong></div>' +
         '<div class="kit-meta-box"><span>Eranos practice check</span><strong>' +
         escapeHtml(res.practiceReceipt ? "Recorded by Eranos" : "Not recorded") +
         "</strong></div>" +
@@ -2290,7 +2286,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       if (timerEl) {
         const rem = Math.max(0, wl.activeLease.expires_at - Date.now() / 1000);
         timerEl.dataset.live = "true";
-        timerEl.textContent = rem.toFixed(1) + "s left (Tessera's expires_at)";
+        timerEl.textContent = rem.toFixed(1) + "s left (Teleion Fabric's expires_at)";
       }
     } else {
       if (taskEl) {
@@ -2340,7 +2336,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     });
     if (!res.ok) return workerFail("[1] Enqueue failed", res, failureText(res));
     const tid = res.data && typeof res.data.task_id === "string" && res.data.task_id ? res.data.task_id : null;
-    if (!tid) return workerFail("[1] Enqueue answer incomplete", res, missingField(res, "Tessera", "task_id"));
+    if (!tid) return workerFail("[1] Enqueue answer incomplete", res, missingField(res, "Teleion Fabric", "task_id"));
     state.workerLab.enqueuedTaskId = tid;
     upsertTask({
       task_id: tid,
@@ -2351,7 +2347,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     });
     $("worker-btn-1").classList.add("is-done");
     updateWorkerTelemetryUI();
-    const message = "Tessera queued task " + tid + " in demo.echo.";
+    const message = "Teleion Fabric queued task " + tid + " in demo.echo.";
     appendWorkerEvent("[1] Enqueued verb.lab_echo", statusPill(res), message);
     return { ok: true, res: res, message: message };
   }
@@ -2384,7 +2380,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       return workerFail(
         "[2] Nothing to claim",
         res,
-        "Tessera answered HTTP " + res.status + " without a lease: no ready verb.lab_echo in demo.echo. Run step 1 to enqueue one."
+        "Teleion Fabric answered HTTP " + res.status + " without a lease: no ready verb.lab_echo in demo.echo. Run step 1 to enqueue one."
       );
     }
     const l = res.data;
@@ -2396,7 +2392,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
           : l.expires_at == null || !Number.isFinite(Number(l.expires_at))
             ? "expires_at"
             : null;
-    if (missing) return workerFail("[2] Lease answer incomplete", res, missingField(res, "Tessera", missing));
+    if (missing) return workerFail("[2] Lease answer incomplete", res, missingField(res, "Teleion Fabric", missing));
 
     state.workerLab.activeLease = {
       task_id: l.task_id,
@@ -2441,18 +2437,18 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     });
     if (!res.ok) {
       if (res.status === 409) {
-        state.workerLab.activeLease = null; // Tessera says the lease is no longer live.
+        state.workerLab.activeLease = null; // Teleion Fabric says the lease is no longer live.
         updateWorkerTelemetryUI();
       }
       return workerFail("Heartbeat failed", res, failureText(res));
     }
     const exp = res.data ? Number(res.data.expires_at) : NaN;
     if (res.data == null || res.data.expires_at == null || !Number.isFinite(exp)) {
-      return workerFail("Heartbeat answer incomplete", res, missingField(res, "Tessera", "expires_at"));
+      return workerFail("Heartbeat answer incomplete", res, missingField(res, "Teleion Fabric", "expires_at"));
     }
     lease.expires_at = exp;
     updateWorkerTelemetryUI();
-    const message = "Tessera extended the lease on " + lease.task_id + " (fencing_token " + lease.fencing_token + ").";
+    const message = "Teleion Fabric extended the lease on " + lease.task_id + " (fencing_token " + lease.fencing_token + ").";
     appendWorkerEvent("Heartbeat accepted", statusPill(res), message);
     return { ok: true, res: res, message: message };
   }
@@ -2481,7 +2477,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     });
     if (!rV1.ok) return workerFail("[3] First write failed", rV1, failureText(rV1));
     if (!rV1.data || !Number.isInteger(rV1.data.version)) {
-      return workerFail("[3] First write answer incomplete", rV1, missingField(rV1, "Tessera", "version"));
+      return workerFail("[3] First write answer incomplete", rV1, missingField(rV1, "Teleion Fabric", "version"));
     }
     const v1 = rV1.data.version;
 
@@ -2502,7 +2498,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     });
     if (!rV2.ok) return workerFail("[3] Second write failed", rV2, failureText(rV2));
     if (!rV2.data || !Number.isInteger(rV2.data.version)) {
-      return workerFail("[3] Second write answer incomplete", rV2, missingField(rV2, "Tessera", "version"));
+      return workerFail("[3] Second write answer incomplete", rV2, missingField(rV2, "Teleion Fabric", "version"));
     }
     const v2 = rV2.data.version;
 
@@ -2515,7 +2511,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       key: casKey,
       version: v2,
       sha256: shaV2,
-      source: "Stored by Tessera as version " + v1 + ", then version " + v2 + ".",
+      source: "Stored by Teleion Fabric as version " + v1 + ", then version " + v2 + ".",
       value: valV2
     });
     updateWorkerTelemetryUI();
@@ -2539,7 +2535,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     });
     if (!rSub.ok) {
       if (rSub.status === 409) {
-        state.workerLab.activeLease = null; // Tessera says the lease is no longer live.
+        state.workerLab.activeLease = null; // Teleion Fabric says the lease is no longer live.
         updateWorkerTelemetryUI();
       }
       return workerFail("[3] Submit failed", rSub, failureText(rSub));
@@ -2551,7 +2547,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
         : typeof receipt.state_after !== "string" || !receipt.state_after
           ? "state_after"
           : null;
-    if (missing) return workerFail("[3] Submit answer incomplete", rSub, missingField(rSub, "Tessera", missing));
+    if (missing) return workerFail("[3] Submit answer incomplete", rSub, missingField(rSub, "Teleion Fabric", missing));
 
     state.workerLab.lastSubmittedTaskId = lease.task_id;
     state.workerLab.lastSubmittedFence = lease.fencing_token;
@@ -2568,7 +2564,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     $("worker-btn-3").classList.add("is-done");
     updateWorkerTelemetryUI();
     const message =
-      "Tessera stored demo.artifacts/" +
+      "Teleion Fabric stored demo.artifacts/" +
       casKey +
       " as version " +
       v1 +
@@ -2590,7 +2586,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
   }
 
   /* Sends a real overwrite with the old expected_version, and a heartbeat with the closed fencing token,
-     and shows exactly what Tessera answered. Tessera is expected to refuse both with HTTP 409. */
+     and shows exactly what Teleion Fabric answered. Teleion Fabric is expected to refuse both with HTTP 409. */
   async function workerStaleOverwrite(sess) {
     if (!state.workerLab.casKey || !(state.workerLab.casVersion > state.workerLab.casPrevVersion)) {
       const c = await workerCommit(sess);
@@ -2620,7 +2616,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       }
     });
     if (casRes.ok && casRes.data && Number.isInteger(casRes.data.version)) {
-      state.workerLab.casVersion = casRes.data.version; // Tessera accepted it, so the head moved.
+      state.workerLab.casVersion = casRes.data.version; // Teleion Fabric accepted it, so the head moved.
       state.workerLab.casPrevVersion = head;
       updateWorkerTelemetryUI();
     }
@@ -2643,9 +2639,9 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       return res && res.data && typeof res.data.code === "string" ? res.data.code : "(no code)";
     };
     const headline = casRefused
-      ? "Tessera refused the stale overwrite: HTTP 409 " + code(casRes)
+      ? "Teleion Fabric refused the stale overwrite: HTTP 409 " + code(casRes)
       : casRes.ok
-        ? "Tessera accepted the stale overwrite (" + statusPill(casRes) + ")"
+        ? "Teleion Fabric accepted the stale overwrite (" + statusPill(casRes) + ")"
         : "The stale overwrite got no refusal: " + failureText(casRes);
     const banner = $("worker-conflict-banner");
     if (banner) {
@@ -2669,10 +2665,10 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
             escapeHtml(staleFence) +
             "</code>. " +
             (leaseRefused
-              ? "Tessera refused the heartbeat too (HTTP 409 " + escapeHtml(code(leaseRes)) + ")."
+              ? "Teleion Fabric refused the heartbeat too (HTTP 409 " + escapeHtml(code(leaseRes)) + ")."
               : "The heartbeat answer: " + escapeHtml(failureText(leaseRes)) + ".")
           : ".") +
-        " Tessera's answers:</div>" +
+        " Teleion Fabric's answers:</div>" +
         "<pre>" +
         escapeHtml(
           JSON.stringify(
@@ -2700,12 +2696,12 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     return { ok: casRefused, res: casRes, message: message, casRes: casRes, leaseRes: leaseRes };
   }
 
-  /* Each worker button runs one step, with the live session, and only when no other run is using Tessera. */
+  /* Each worker button runs one step, with the live session, and only when no other run is using Teleion Fabric. */
   function runWorkerStep(fn) {
     return runExclusive("worker lab", function () {
       const sess = liveSession();
       if (!sess) {
-        const message = "Not sent: there is no live Tessera demo session.";
+        const message = "Not sent: there is no live Teleion Fabric demo session.";
         appendWorkerEvent("Not started", "not sent", message, "fail");
         return { ok: false, res: null, message: message };
       }
@@ -2740,7 +2736,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     const out = $("cli-output");
     if (!out || out.children.length > 0) return;
     appendCliLine(
-      "ta-amps Studio CLI · commands that reach a service make real calls to Tessera, Herma or Eranos",
+      "ta-amps Studio CLI · commands that reach a service make real calls to Teleion Fabric, the shim or Eranos",
       "cli-line-ok"
     );
     appendCliLine(
@@ -2791,17 +2787,17 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       appendCliLine(
         [
           "Commands (each one makes real calls):",
-          "  shim <prompt>         -> POST https://herma.teleionlabs.com/api/preview",
+          "  shim <prompt>         -> POST https://shim.teleionlabs.com/api/preview",
           "  ngo submit [preset]   -> the NGO run, steps 1-6 (clinic | pantry | shelter)",
           "  worker claim          -> enqueue a Task, then claim it as this browser",
-          "  worker conflict       -> write v1 and v2, then send a stale overwrite (Tessera should answer 409)",
+          "  worker conflict       -> write v1 and v2, then send a stale overwrite (Teleion Fabric should answer 409)",
           "  eranos tracks         -> GET https://eranosforgood.org/api/tracks",
           "  eranos catalog        -> GET https://eranosforgood.org/api/catalog + /api/examples",
-          "  objects ls            -> MCP search_nouns on https://tessera.teleionlabs.com/mcp",
-          "  tasks ls              -> MCP list_verbs (ready Tasks) on https://tessera.teleionlabs.com/mcp",
+          "  objects ls            -> MCP search_nouns on https://fabric.teleionlabs.com/mcp",
+          "  tasks ls              -> MCP list_verbs (ready Tasks) on https://fabric.teleionlabs.com/mcp",
           "  curl last             -> print a curl command for the latest Wire Log call",
           "  clear                 -> clear the terminal",
-          "ngo, worker, objects and tasks need a live Tessera demo session; shim and eranos do not."
+          "ngo, worker, objects and tasks need a live Teleion Fabric demo session; shim and eranos do not."
         ].join("\n"),
         "cli-line-muted"
       );
@@ -2810,7 +2806,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
 
     if (cliNeedsSession(lower) && !liveSession()) {
       appendCliLine(
-        "Not sent: '" + cmdLine + "' uses Tessera, and there is no live demo session yet. " + sessionWaitHint(),
+        "Not sent: '" + cmdLine + "' uses Teleion Fabric, and there is no live demo session yet. " + sessionWaitHint(),
         "cli-line-warn"
       );
       return;
@@ -2990,7 +2986,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
         return;
       }
       appendCliLine(
-        "[MCP search_nouns · " + statusPill(out.res) + "] Tessera returned " + out.scents.length + " Task Objects:",
+        "[MCP search_nouns · " + statusPill(out.res) + "] Teleion Fabric returned " + out.scents.length + " Task Objects:",
         "cli-line-ok"
       );
       out.scents.forEach(function (s) {
@@ -3014,7 +3010,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
         return;
       }
       appendCliLine(
-        "[MCP list_verbs · " + statusPill(out.res) + "] Tessera returned " + out.verbs.length + " ready Tasks:",
+        "[MCP list_verbs · " + statusPill(out.res) + "] Teleion Fabric returned " + out.verbs.length + " ready Tasks:",
         "cli-line-ok"
       );
       out.verbs.forEach(function (v) {
@@ -3047,15 +3043,15 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     );
   }
 
-  /* MCP SYNC HELPERS FOR INSPECTOR TABS: they show what Tessera's MCP tools returned, nothing more. */
+  /* MCP SYNC HELPERS FOR INSPECTOR TABS: they show what Teleion Fabric's MCP tools returned, nothing more. */
   async function syncNounsFromMcp(sess) {
-    if (!sess) return { ok: false, res: null, message: "Not sent: there is no live Tessera demo session." };
+    if (!sess) return { ok: false, res: null, message: "Not sent: there is no live Teleion Fabric demo session." };
     const res = await callTesseraMcp("search_nouns", { query: "" }, "browser", sess);
     if (!res.ok) return { ok: false, res: res, message: failureText(res) };
     const sc = mcpContent(res);
     const scents = sc && Array.isArray(sc.scents) ? sc.scents : null;
     if (!scents) {
-      return { ok: false, res: res, message: missingField(res, "Tessera", "scents list in its search_nouns result") };
+      return { ok: false, res: res, message: missingField(res, "Teleion Fabric", "scents list in its search_nouns result") };
     }
     scents.forEach(function (s) {
       if (!s || typeof s.key !== "string") return;
@@ -3064,7 +3060,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
         key: s.key,
         version: Number.isInteger(s.version) ? s.version : null,
         sha256: typeof s.sha256 === "string" && s.sha256 ? s.sha256 : null,
-        source: "Summary from Tessera's MCP search_nouns.",
+        source: "Summary from Teleion Fabric's MCP search_nouns.",
         value: s
       });
     });
@@ -3072,13 +3068,13 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
   }
 
   async function syncTasksFromMcp(sess) {
-    if (!sess) return { ok: false, res: null, message: "Not sent: there is no live Tessera demo session." };
+    if (!sess) return { ok: false, res: null, message: "Not sent: there is no live Teleion Fabric demo session." };
     const res = await callTesseraMcp("list_verbs", { limit: 25 }, "browser", sess);
     if (!res.ok) return { ok: false, res: res, message: failureText(res) };
     const sc = mcpContent(res);
     const verbs = sc && Array.isArray(sc.verbs) ? sc.verbs : null;
     if (!verbs) {
-      return { ok: false, res: res, message: missingField(res, "Tessera", "verbs list in its list_verbs result") };
+      return { ok: false, res: res, message: missingField(res, "Teleion Fabric", "verbs list in its list_verbs result") };
     }
     verbs.forEach(function (v) {
       if (!v || typeof v.task_id !== "string") return;
@@ -3100,7 +3096,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       const target = label.indexOf("list_verbs") >= 0 ? $("tasks-sync-status") : $("nouns-sync-status");
       if (target) {
         target.textContent = out.ok
-          ? (out.verbs ? out.verbs.length + " ready Tasks" : out.scents.length + " Task Objects") + " from Tessera (" + statusPill(out.res) + ")"
+          ? (out.verbs ? out.verbs.length + " ready Tasks" : out.scents.length + " Task Objects") + " from Teleion Fabric (" + statusPill(out.res) + ")"
           : "Sync failed: " + out.message;
         target.dataset.ok = out.ok ? "true" : "false";
       }
@@ -3559,13 +3555,13 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
     if (lastPersonaEval.verdict !== "admit") {
       say(
         false,
-        "<strong>[NOT SENT]</strong> The linter in this page found supply-chain problems, so nothing was written to Tessera."
+        "<strong>[NOT SENT]</strong> The linter in this page found supply-chain problems, so nothing was written to Teleion Fabric."
       );
       return null;
     }
     const sess = liveSession();
     if (!sess) {
-      say(false, "<strong>[NOT SENT]</strong> There is no live Tessera demo session.");
+      say(false, "<strong>[NOT SENT]</strong> There is no live Teleion Fabric demo session.");
       return null;
     }
     // Anonymous demo sessions may write only demo.* stores.
@@ -3586,7 +3582,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       say(
         false,
         "<strong>[NOT STORED]</strong> " +
-          escapeHtml(res.ok ? missingField(res, "Tessera", "record.version in its put_record result") : failureText(res))
+          escapeHtml(res.ok ? missingField(res, "Teleion Fabric", "record.version in its put_record result") : failureText(res))
       );
       return res;
     }
@@ -3596,7 +3592,7 @@ pi --mcp "$TESSERA_MCP_URL" --header "X-Herma-Harness: pi"`
       key: key,
       version: rec.version,
       source:
-        "Stored by Tessera over MCP put_record (HTTP " +
+        "Stored by Teleion Fabric over MCP put_record (HTTP " +
         res.status +
         "). The page's linter found " +
         lastPersonaEval.findings.length +

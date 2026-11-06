@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Live Studio | Agora</title>
-<meta name="description" content="The Live Studio calls the live Tessera, Herma and Eranos from your browser and shows every request and answer: Herma's context shim, a preset agent kit checked by Eranos and held for a person, Tessera atomic leases and HTTP 409 CAS fencing, and live MCP wire calls directly in your browser.">
+<meta name="description" content="The Live Studio calls the live Teleion Fabric, the shim and Eranos from your browser and shows every request and answer: the model shim's context, a preset agent kit checked by Eranos and held for a person, Teleion Fabric atomic leases and HTTP 409 CAS fencing, and live MCP wire calls directly in your browser.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='0' y='0' width='14' height='14' rx='3' fill='%2338bdf8'/%3E%3Crect x='18' y='0' width='14' height='14' rx='3' fill='%2310b981'/%3E%3Crect x='0' y='18' width='14' height='14' rx='3' fill='%23f59e0b'/%3E%3Crect x='18' y='18' width='14' height='14' rx='3' fill='%2338bdf8'/%3E%3C/svg%3E" type="image/svg+xml">
 <link rel="canonical" href="https://agora.eranosforgood.org/studio/">
 <meta name="color-scheme" content="only light">
@@ -43,7 +43,7 @@
     <div class="session-pill" id="session-pill" data-state="connecting" title="Anonymous demo session on tessera.teleionlabs.com. This browser saves it so a reload does not open a new one.">
       <span class="session-dot" aria-hidden="true"></span>
       <span class="session-body">
-        <span class="session-label" id="session-pill-text" role="status" aria-live="polite">Opening a demo session on Tessera...</span>
+        <span class="session-label" id="session-pill-text" role="status" aria-live="polite">Opening a demo session on Teleion Fabric...</span>
         <span class="session-countdown" id="session-countdown" hidden></span>
         <span class="session-detail" id="session-pill-detail" hidden></span>
       </span>
@@ -79,7 +79,7 @@
       <div class="scenario-tabs" role="tablist" aria-label="Interactive roles and flows">
         <button type="button" role="tab" class="scenario-tab is-active" id="tab-btn-chat" aria-selected="true" aria-controls="panel-chat" data-scenario="chat">
           <span class="tab-step">01</span>
-          <span>Chat + Herma Shim</span>
+          <span>Chat + Model Shim</span>
         </button>
         <button type="button" role="tab" class="scenario-tab" id="tab-btn-ngo" aria-selected="false" aria-controls="panel-ngo" data-scenario="ngo">
           <span class="tab-step">02</span>
@@ -107,7 +107,7 @@
           <span class="kicker kicker-cyan">Infrastructure Shim · POST herma.teleionlabs.com/api/preview</span>
           <span class="metric-chip" id="herma-last-metric">No preview sent yet</span>
         </div>
-        <p class="panel-desc">Ask a question or click a starter prompt. Each one is a real POST to Herma's public preview, which checks its built-in provisions (<code>keyword</code>, <code>semantic</code> and <code>micromodel</code> triggers) and stores nothing. Herma either answers directly or adds a system message to the payload it would forward. The card shows only what Herma returned.</p>
+        <p class="panel-desc">Ask a question or click a starter prompt. Each one is a real POST to the shim's public preview, which checks its built-in provisions (<code>keyword</code>, <code>semantic</code> and <code>micromodel</code> triggers) and stores nothing. The shim either answers directly or adds a system message to the payload it would forward. The card shows only what the shim returned.</p>
         <div class="starter-chips" aria-label="Starter prompts">
           <button type="button" class="chip-btn" data-chat-prompt="Explain Tasks and Task Objects simply">Explain Tasks &amp; Task Objects simply</button>
           <button type="button" class="chip-btn" data-chat-prompt="Compare Harness Square, OpenCode, Pi &amp; Muse Code">Compare Harness Square, OpenCode, Pi &amp; Muse Code</button>
@@ -117,11 +117,11 @@
       </div>
 
       <div class="chat-stream" id="chat-stream" aria-live="polite">
-        <!-- Populated dynamically with welcome state + live Herma shim turns -->
+        <!-- Populated dynamically with welcome state + live the model shim turns -->
       </div>
 
       <form class="chat-composer" id="chat-form" autocomplete="off">
-        <label class="sr-only" for="chat-input">Prompt to evaluate through live Herma shim</label>
+        <label class="sr-only" for="chat-input">Prompt to evaluate through live the model shim</label>
         <input id="chat-input" class="chat-input" type="text" maxlength="1200" placeholder="Ask about Tasks &amp; Task Objects, HarnessTax, Meta LoRAs vs shims, or NGO intake rules...">
         <button type="submit" class="btn btn-primary" id="chat-send-btn">
           <span>Shim &amp; Preview</span>
@@ -135,16 +135,16 @@
       <div class="panel-scroll">
         <div class="panel-intro panel-intro-compact">
           <div class="panel-intro-top">
-            <span class="kicker kicker-emerald">Public-Good Flow · Tessera CAS + Queue + Herma + Eranos Verifier</span>
+            <span class="kicker kicker-emerald">Public-Good Flow · Teleion Fabric CAS + Queue + Model Shim + Eranos Verifier</span>
             <span class="example-pill">Use example details only</span>
           </div>
-          <p class="panel-desc">Choose a nonprofit brief and click <strong>Submit NGO Task</strong>. The page makes real calls in order: it stores the request as <code>noun.request</code> in Tessera, enqueues <code>verb.build_agent_kit</code>, claims that Task itself (this browser plays the worker), asks Herma for guardrails, sends the brief's kit draft to Eranos's practice check, stores it as <code>noun.agent_kit</code> over MCP with <code>review_gate: held_for_person</code>, and submits the Task. It stops at the first call that fails and shows that service's own status and error.</p>
+          <p class="panel-desc">Choose a nonprofit brief and click <strong>Submit NGO Task</strong>. The page makes real calls in order: it stores the request as <code>noun.request</code> in Teleion Fabric, enqueues <code>verb.build_agent_kit</code>, claims that Task itself (this browser plays the worker), asks the shim for guardrails, sends the brief's kit draft to Eranos's practice check, stores it as <code>noun.agent_kit</code> over MCP with <code>review_gate: held_for_person</code>, and submits the Task. It stops at the first call that fails and shows that service's own status and error.</p>
         </div>
 
         <div class="ngo-form-card">
           <div class="field-label-row">
             <span class="field-label">1. Choose a nonprofit brief</span>
-            <span class="field-hint">Never enter real personal, medical, or payment data (Tessera's demo sessions refuse it)</span>
+            <span class="field-hint">Never enter real personal, medical, or payment data (Teleion Fabric's demo sessions refuse it)</span>
           </div>
           <div class="preset-grid" role="radiogroup" aria-label="Example NGO presets">
             <button type="button" class="preset-card is-selected" data-ngo-preset="clinic" role="radio" aria-checked="true">
@@ -221,7 +221,7 @@
             <span class="w-num">[2]</span>
             <span class="w-body">
               <strong>Grab / Claim Task</strong>
-              <small>Lease + fencing token from Tessera</small>
+              <small>Lease + fencing token from Teleion Fabric</small>
             </span>
           </button>
           <button type="button" class="worker-step-btn" id="worker-btn-3" data-worker-step="3" data-needs-session>
@@ -262,11 +262,11 @@
         </div>
 
         <div class="conflict-spotlight" id="worker-conflict-banner" hidden>
-          <!-- Filled with Tessera's real answers to the stale overwrite -->
+          <!-- Filled with Teleion Fabric's real answers to the stale overwrite -->
         </div>
 
         <div class="worker-feed" id="worker-event-feed" aria-live="polite">
-          <!-- One entry per worker step, with Tessera's status and answer -->
+          <!-- One entry per worker step, with Teleion Fabric's status and answer -->
         </div>
       </div>
     </div>
@@ -279,7 +279,7 @@
             <span class="kicker kicker-cyan">Portable Persona &amp; Supply-Chain Gate · <code>noun.persona</code></span>
             <span class="metric-chip" id="persona-verdict-chip">Ready · 5 Harnesses</span>
           </div>
-          <p class="panel-desc">Every harness shares the same core (<code>name</code>, <code>description</code>, <code>model</code>, <code>tools</code>, Markdown body), while cloning untrusted rule files can smuggle invisible Unicode backdoors or permission bypasses. Lint a <code>persona.portable.md</code> below, strip accuracy-degrading fluff, compile across 5 harnesses, and persist clean specs as CAS Task Objects on live Tessera.</p>
+          <p class="panel-desc">Every harness shares the same core (<code>name</code>, <code>description</code>, <code>model</code>, <code>tools</code>, Markdown body), while cloning untrusted rule files can smuggle invisible Unicode backdoors or permission bypasses. Lint a <code>persona.portable.md</code> below, strip accuracy-degrading fluff, compile across 5 harnesses, and persist clean specs as CAS Task Objects on live Teleion Fabric.</p>
         </div>
 
         <div class="ngo-form-card">
@@ -296,7 +296,7 @@
           <textarea id="persona-source-input" class="ngo-textarea" rows="7" spellcheck="false" style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:0.78rem;"></textarea>
           <div style="display:flex;gap:0.6rem;flex-wrap:wrap;margin-top:0.65rem;align-items:center;">
             <button type="button" class="btn btn-primary" id="persona-lint-btn">Lint &amp; Compile Persona</button>
-            <button type="button" class="btn btn-emerald" id="persona-persist-btn" data-needs-session>Persist Clean <code>noun.persona</code> to Tessera</button>
+            <button type="button" class="btn btn-emerald" id="persona-persist-btn" data-needs-session>Persist Clean <code>noun.persona</code> to Teleion Fabric</button>
           </div>
           <p class="session-gate-note" data-session-note hidden></p>
         </div>
@@ -372,7 +372,7 @@
       </div>
 
       <div class="topology-stage">
-        <svg id="topology-svg" class="topology-svg" viewBox="0 0 820 272" role="img" aria-label="Five-node call topology linking the Browser GUI or CLI, Herma Shim, Tessera Engine, Eranos Verifier, and this browser acting as the worker">
+        <svg id="topology-svg" class="topology-svg" viewBox="0 0 820 272" role="img" aria-label="Five-node call topology linking the Browser GUI or CLI, the model shim, Teleion Fabric Engine, Eranos Verifier, and this browser acting as the worker">
           <defs>
             <linearGradient id="edge-grad-cyan" x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.35"/>
@@ -415,20 +415,20 @@
             <text x="16" y="63" class="node-stat" id="stat-browser">0 requests</text>
           </g>
 
-          <!-- Node 2: Herma Shim -->
+          <!-- Node 2: Model Shim -->
           <g id="node-herma" class="topo-node topo-node-infra" transform="translate(296, 12)">
             <rect width="220" height="70" rx="11" class="node-box"/>
             <circle cx="18" cy="20" r="4.5" class="node-led"/>
-            <text x="30" y="24" class="node-title">Herma Shim</text>
+            <text x="30" y="24" class="node-title">Model Shim</text>
             <text x="16" y="43" class="node-host">herma.teleionlabs.com</text>
             <text x="16" y="60" class="node-stat" id="stat-herma">provisions · idle</text>
           </g>
 
-          <!-- Node 3: Tessera Engine -->
+          <!-- Node 3: Teleion Fabric Engine -->
           <g id="node-tessera" class="topo-node topo-node-core" transform="translate(296, 101)">
             <rect width="220" height="70" rx="11" class="node-box"/>
             <circle cx="18" cy="20" r="4.5" class="node-led"/>
-            <text x="30" y="24" class="node-title">Tessera Engine</text>
+            <text x="30" y="24" class="node-title">Teleion Fabric Engine</text>
             <text x="16" y="43" class="node-host">tessera.teleionlabs.com</text>
             <text x="16" y="60" class="node-stat" id="stat-tessera">CAS + Leases + /mcp · idle</text>
           </g>
@@ -501,7 +501,7 @@
       <!-- INSPECTOR 3: TASK OBJECTS (NOUNS) -->
       <div class="inspector-panel" id="insp-panel-nouns" role="tabpanel" aria-labelledby="insp-tab-nouns" hidden>
         <div class="inspector-subbar">
-          <span>Records stored in Tessera and provisions matched by Herma <span class="sync-status" id="nouns-sync-status"></span> <span class="session-gate-note session-gate-note-inline" data-session-note="short" hidden></span></span>
+          <span>Records stored in Teleion Fabric and provisions matched by the shim <span class="sync-status" id="nouns-sync-status"></span> <span class="session-gate-note session-gate-note-inline" data-session-note="short" hidden></span></span>
           <button type="button" class="btn-link" id="nouns-refresh-btn" data-needs-session>Sync via MCP search_nouns</button>
         </div>
         <div class="inspector-scroll" id="nouns-list-wrap">
@@ -520,12 +520,12 @@
           <div class="mcp-map-grid">
             <div class="mcp-map-item">
               <span class="mcp-role">1. Fabric Authority (Tasks + Task Objects)</span>
-              <code>https://tessera.teleionlabs.com/mcp</code>
+              <code>https://fabric.teleionlabs.com/mcp</code>
               <p>Tools: <code>open_anonymous_session</code>, <code>search_nouns</code>, <code>claim</code>, <code>heartbeat</code>, <code>put_record</code>, <code>submit</code></p>
             </div>
             <div class="mcp-map-item">
               <span class="mcp-role">2. Context Shim &amp; Guardrails</span>
-              <code>https://herma.teleionlabs.com/mcp</code>
+              <code>https://shim.teleionlabs.com/mcp</code>
               <p>Tools: <code>list_builtin_provisions</code>, <code>preview_shim</code>, <code>extract_entities</code> + OpenAI/Anthropic proxy</p>
             </div>
             <div class="mcp-map-item">
