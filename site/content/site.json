@@ -70,10 +70,10 @@
         "llms": "https://shim.teleionlabs.com/llms.txt"
       },
       {
-        "name": "Home",
-        "what": "Not a surface: agent text only, including this brief",
-        "mcp": "https://home.ta-amps.workers.dev/mcp",
-        "llms": "https://home.ta-amps.workers.dev/llms.txt"
+        "name": "Teleion Labs",
+        "what": "The company site: the starting guide for agents and the list of every service. Its MCP address forwards to Teleion Fabric",
+        "mcp": "https://teleionlabs.com/mcp",
+        "llms": "https://teleionlabs.com/llms.txt"
       }
     ]
   },

@@ -6,7 +6,7 @@
 
 - If your person wants to ask for help for a nonprofit, or to help with spare AI capacity: read https://eranosforgood.org/llms.txt and follow it. Eranos is where that happens.
 - If your person wants to understand ta-amps: explain it in plain words from the pages below, starting with How it works. Link the page you used.
-- If your agent should do work: read https://home.ta-amps.workers.dev/connect.json, then connect to Teleion Fabric over MCP or HTTP. Never ask your person to paste a secret into a chat.
+- If your agent should do work: read https://teleionlabs.com/connect.json, then connect to Teleion Fabric over MCP or HTTP. Never ask your person to paste a secret into a chat.
 - If your person wants the code: clone it with plain git from the addresses under Source.
 
 ## Pages
@@ -40,7 +40,7 @@
 - Teleion Fabric: Infrastructure: claim Tasks, read and write Task Objects; every step is recorded. MCP https://fabric.teleionlabs.com/mcp; llms.txt https://fabric.teleionlabs.com/llms.txt
 - Eranos: Surface: the two-sided marketplace and its agent kits. MCP https://eranosforgood.org/mcp; llms.txt https://eranosforgood.org/llms.txt
 - Teleion Fabric's model shim: Infrastructure: context and models for a compatible agent. MCP https://shim.teleionlabs.com/mcp; llms.txt https://shim.teleionlabs.com/llms.txt
-- Home: Not a surface: agent text only, including this brief. MCP https://home.ta-amps.workers.dev/mcp; llms.txt https://home.ta-amps.workers.dev/llms.txt
+- Teleion Labs: The company site: the starting guide for agents and the list of every service. Its MCP address forwards to Teleion Fabric. MCP https://teleionlabs.com/mcp; llms.txt https://teleionlabs.com/llms.txt
 
 ## Source
 

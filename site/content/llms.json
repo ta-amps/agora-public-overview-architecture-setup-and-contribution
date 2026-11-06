@@ -7,7 +7,7 @@
   "do": [
     "If your person wants to ask for help for a nonprofit, or to help with spare AI capacity: read https://eranosforgood.org/llms.txt and follow it. Eranos is where that happens.",
     "If your person wants to understand ta-amps: explain it in plain words from the pages below, starting with How it works. Link the page you used.",
-    "If your agent should do work: read https://home.ta-amps.workers.dev/connect.json, then connect to Teleion Fabric over MCP or HTTP. Never ask your person to paste a secret into a chat.",
+    "If your agent should do work: read https://teleionlabs.com/connect.json, then connect to Teleion Fabric over MCP or HTTP. Never ask your person to paste a secret into a chat.",
     "If your person wants the code: clone it with plain git from the addresses under Source."
   ],
   "pages_title": "Pages",

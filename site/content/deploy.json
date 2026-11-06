@@ -67,7 +67,7 @@
         "summary": "Run Teleion Fabric locally, check the starter seed pack, and run a two-worker test of claiming a Task and an independent review, with no keys and no outside network.",
         "when": "Best for offline demos, internal CI or strict data residency.",
         "code_id": "cmd-slice-docker",
-        "commands": "git clone https://github.com/ta-amps/ta-amps-hackathon.git\ncd ta-amps-hackathon\ndocker compose up --build --abort-on-container-exit --exit-code-from sample-worker-smoke"
+        "commands": "git clone https://github.com/ta-amps/teleionlabs-teleion-fabric.git\ncd teleionlabs-teleion-fabric\ndocker compose up --build --abort-on-container-exit --exit-code-from sample-worker-smoke"
       },
       {
         "id": "slice-gpu",
@@ -76,7 +76,7 @@
         "summary": "Start from the QLoRA adapter settings ta-amps used to fine-tune {{model:muse-glimmer-30b}} on two free Kaggle T4 GPUs, and the Python packages a GPU worker needs.",
         "when": "Best when you want to tune your own adapters from your own recorded, reviewed task results.",
         "code_id": "cmd-slice-gpu",
-        "commands": "git clone https://github.com/ta-amps/ta-amps-hackathon.git\ncd ta-amps-hackathon\n# The adapter settings ta-amps used for {{model:muse-glimmer-30b}}:\ncat training/adapters/glimmer-30b-qlora/adapter_config.json\n# The packages a GPU worker needs (install them only inside a GPU worker):\npip install -r training/requirements-train.txt"
+        "commands": "git clone https://github.com/ta-amps/teleionlabs-teleion-fabric.git\ncd teleionlabs-teleion-fabric\n# The adapter settings ta-amps used for {{model:muse-glimmer-30b}}:\ncat training/adapters/glimmer-30b-qlora/adapter_config.json\n# The packages a GPU worker needs (install them only inside a GPU worker):\npip install -r training/requirements-train.txt"
       }
     ]
   },

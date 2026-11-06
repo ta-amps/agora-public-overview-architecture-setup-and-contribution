@@ -564,7 +564,10 @@ PAGES_LINK = re.compile(r"https://ta-amps\.github\.io/[A-Za-z0-9._-]+/")
 FULL_OR_SHORT_SHA = re.compile(r"[0-9a-f]{7,40}\Z")
 
 
-RENAMED_REPOS = {"teleion-fabric-infrastructure-work-and-storage-engine": "tessera-infrastructure-work-and-storage-engine"}
+RENAMED_REPOS = {
+    "teleion-fabric-infrastructure-work-and-storage-engine": "tessera-infrastructure-work-and-storage-engine",
+    "teleionlabs-teleion-fabric": "ta-amps-hackathon",
+}
 
 
 def source_link(match: re.Match, links: dict) -> str:

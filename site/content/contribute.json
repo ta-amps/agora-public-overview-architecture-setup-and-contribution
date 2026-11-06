@@ -57,7 +57,7 @@
         {
           "name": "HTTP",
           "what": "The access instructions and tool schemas, as JSON. Public discovery needs no key.",
-          "endpoint": "https://home.ta-amps.workers.dev/connect.json",
+          "endpoint": "https://teleionlabs.com/connect.json",
           "check": {
             "method": "GET",
             "kind": "page",

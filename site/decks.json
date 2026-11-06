@@ -55,9 +55,9 @@
         {
           "format": "pdf",
           "path": "decks/roll-your-own/ta-amps-roll-your-own.pdf",
-          "sha256": "8dd9aa003a51b39bb3cc0eb2d52777092b06a49bd6f02ae0f01de99d7f93492f",
-          "bytes": 389787,
-          "printed_from_main_sha256": "fd346bfe45d3def4a554ef1c41eeef8ef47db84dd3e798ac3fc00f3e73d472dc"
+          "sha256": "8f05c22e19f2161ddd481321443d9b3595e79db81b93b696c5c186853a1798a9",
+          "bytes": 389842,
+          "printed_from_main_sha256": "96fd0904f92f11cf9f2bcee07eec07e1a42d0d766a8bf1ecb821e478e9558ae2"
         }
       ]
     },
