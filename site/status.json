@@ -1,7 +1,7 @@
 {
   "format": "ta-amps.agora.status.public.v1",
   "page": "https://agora.eranosforgood.org/status/",
-  "checked_at": "2026-11-01T13:29:32Z",
+  "checked_at": "2026-11-06T15:30:37Z",
   "how": "one GET of each address, no credentials, a 20-second timeout and one try",
   "overall": "answering",
   "states": {
@@ -16,24 +16,24 @@
     {
       "id": "eranos",
       "name": "Eranos",
-      "host": "eranos.ta-amps.workers.dev",
+      "host": "eranosforgood.org",
       "state": "answering",
       "label": "Answering",
-      "checked_at": "2026-11-01T13:29:32Z",
+      "checked_at": "2026-11-06T15:30:37Z",
       "http_status": 200,
-      "seconds": 0.225,
-      "record": "https://eranos.ta-amps.workers.dev/api/health"
+      "seconds": 0.348,
+      "record": "https://eranosforgood.org/api/health"
     },
     {
       "id": "agora",
       "name": "Agora",
-      "host": "agora.ta-amps.workers.dev",
+      "host": "agora.eranosforgood.org",
       "state": "answering",
       "label": "Answering",
-      "checked_at": "2026-11-01T13:29:32Z",
+      "checked_at": "2026-11-06T15:30:37Z",
       "http_status": 200,
-      "seconds": 0.222,
-      "record": "https://agora.ta-amps.workers.dev/llms.txt"
+      "seconds": 0.385,
+      "record": "https://agora.eranosforgood.org/llms.txt"
     },
     {
       "id": "tessera",
@@ -41,46 +41,38 @@
       "host": "fabric.teleionlabs.com",
       "state": "answering",
       "label": "Answering",
-      "checked_at": "2026-11-01T13:29:32Z",
+      "checked_at": "2026-11-06T15:30:37Z",
       "http_status": 200,
-      "seconds": 0.163,
+      "seconds": 0.378,
       "record": "https://fabric.teleionlabs.com/v1/health"
     },
     {
       "id": "herma",
-      "name": "Teleion Fabric's model shim, Teleion Fabric's model shim",
+      "name": "Teleion Fabric's model shim",
       "host": "shim.teleionlabs.com",
       "state": "answering",
       "label": "Answering",
-      "checked_at": "2026-11-01T13:29:32Z",
+      "checked_at": "2026-11-06T15:30:38Z",
       "http_status": 200,
-      "seconds": 0.512,
+      "seconds": 1.213,
       "record": "https://shim.teleionlabs.com/v1/health"
     },
     {
-      "id": "home",
-      "name": "Agent endpoints",
-      "host": "home.ta-amps.workers.dev",
+      "id": "teleionlabs",
+      "name": "Teleion Labs",
+      "host": "teleionlabs.com",
       "state": "answering",
       "label": "Answering",
-      "checked_at": "2026-11-01T13:29:33Z",
+      "checked_at": "2026-11-06T15:30:39Z",
       "http_status": 200,
-      "seconds": 0.19,
-      "record": "https://home.ta-amps.workers.dev/healthz"
+      "seconds": 0.719,
+      "record": "https://teleionlabs.com/llms.txt"
     }
   ],
   "daily_check": {
-    "checked_at": "2026-11-01T13:29:33Z",
+    "checked_at": "2026-11-06T15:30:40Z",
     "http_status": 200,
-    "last_run": "2026-11-01T13:00:14Z",
-    "status": "completed",
-    "trigger": "scheduled",
-    "healthy": 4,
-    "total": 4,
-    "next_run": "2026-11-02T13:00:00Z",
-    "every_hours": 24,
-    "stops_at": "2026-11-04T17:00:00Z",
-    "record": "https://home.ta-amps.workers.dev/frontier/status"
+    "record": "https://teleionlabs.com/status/"
   },
   "problems": []
 }

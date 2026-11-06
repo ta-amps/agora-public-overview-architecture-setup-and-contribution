@@ -1,66 +1,59 @@
 {
   "about": "The status of every ta-amps service, written by scripts/sync_status.py from one read-only GET of each public address in status-page.json, with no credentials and one try. scripts/build_site.py renders /status/ and /status.json from it. Nothing here is a measurement of uptime.",
   "format": "ta-amps.agora.status.v1",
-  "checked_at": "2026-11-01T13:29:32Z",
+  "checked_at": "2026-11-06T15:30:37Z",
   "how": "one GET of each address, no credentials, a 20-second timeout and one try",
   "services": [
     {
       "id": "eranos",
-      "url": "https://eranos.ta-amps.workers.dev/api/health",
-      "checked_at": "2026-11-01T13:29:32Z",
+      "url": "https://eranosforgood.org/api/health",
+      "checked_at": "2026-11-06T15:30:37Z",
       "http_status": 200,
-      "seconds": 0.225,
+      "seconds": 0.348,
       "ok": true,
       "state": "answering"
     },
     {
       "id": "agora",
-      "url": "https://agora.ta-amps.workers.dev/llms.txt",
-      "checked_at": "2026-11-01T13:29:32Z",
+      "url": "https://agora.eranosforgood.org/llms.txt",
+      "checked_at": "2026-11-06T15:30:37Z",
       "http_status": 200,
-      "seconds": 0.222,
+      "seconds": 0.385,
       "ok": null,
       "state": "answering"
     },
     {
       "id": "tessera",
       "url": "https://fabric.teleionlabs.com/v1/health",
-      "checked_at": "2026-11-01T13:29:32Z",
+      "checked_at": "2026-11-06T15:30:37Z",
       "http_status": 200,
-      "seconds": 0.163,
+      "seconds": 0.378,
       "ok": true,
       "state": "answering"
     },
     {
       "id": "herma",
       "url": "https://shim.teleionlabs.com/v1/health",
-      "checked_at": "2026-11-01T13:29:32Z",
+      "checked_at": "2026-11-06T15:30:38Z",
       "http_status": 200,
-      "seconds": 0.512,
+      "seconds": 1.213,
       "ok": true,
       "state": "answering"
     },
     {
-      "id": "home",
-      "url": "https://home.ta-amps.workers.dev/healthz",
-      "checked_at": "2026-11-01T13:29:33Z",
+      "id": "teleionlabs",
+      "url": "https://teleionlabs.com/llms.txt",
+      "checked_at": "2026-11-06T15:30:39Z",
       "http_status": 200,
-      "seconds": 0.19,
-      "ok": true,
+      "seconds": 0.719,
+      "ok": null,
       "state": "answering"
     }
   ],
   "daily": {
-    "url": "https://home.ta-amps.workers.dev/frontier/status",
-    "checked_at": "2026-11-01T13:29:33Z",
+    "url": "https://teleionlabs.com/status/",
+    "checked_at": "2026-11-06T15:30:40Z",
     "http_status": 200,
-    "last_run": "2026-11-01T13:00:14Z",
-    "status": "completed",
-    "trigger": "scheduled",
-    "healthy": 4,
-    "total": 4,
-    "next_run": "2026-11-02T13:00:00Z",
-    "every_hours": 24,
-    "stops_at": "2026-11-04T17:00:00Z"
+    "error": "not JSON"
   }
 }

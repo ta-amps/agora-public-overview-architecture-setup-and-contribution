@@ -49,7 +49,19 @@
       "db_ok"
     ],
     "notes": {
-      "https://eranos.ta-amps.workers.dev/v1/health": "Eranos keeps its health check at /api/health, on the next line."
+      "https://eranos.ta-amps.workers.dev/v1/health": "Eranos keeps its health check at /api/health, on the next line.",
+      "https://fabric.teleionlabs.com/v1/health": "Checked at its earlier address, which is the same service.",
+      "https://shim.teleionlabs.com/v1/health": "Checked at its earlier address, which is the same service."
+    },
+    "shown_as": {
+      "https://tessera.ta-amps.workers.dev/v1/health": {
+        "name": "Teleion Fabric",
+        "url": "https://fabric.teleionlabs.com/v1/health"
+      },
+      "https://herma.ta-amps.workers.dev/v1/health": {
+        "name": "Teleion Fabric's model shim",
+        "url": "https://shim.teleionlabs.com/v1/health"
+      }
     },
     "snapshot": {
       "checked_at": "2026-10-31T23:14:06Z",

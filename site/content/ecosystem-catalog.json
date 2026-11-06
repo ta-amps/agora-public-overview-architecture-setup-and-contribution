@@ -2,7 +2,7 @@
   "schema": "ta-amps.ecosystem-catalog.v1",
   "status": "unexecuted_public_scan_mapping",
   "source_kind": "meta_hackathon_707_catalog_json",
-  "honesty_note": "Static public-directory decomposition only: none of these third-party repositories was executed, endorsed, or admitted into Tessera, and upstream licenses must be checked at each repository's pinned revision before code reuse. One entry of the source catalog is left out.",
+  "honesty_note": "Static public-directory decomposition only: none of these third-party repositories was executed, endorsed, or admitted into Teleion Fabric, and upstream licenses must be checked at each repository's pinned revision before code reuse. One entry of the source catalog is left out.",
   "scan_precedent": {
     "attempted": 739,
     "scanned_ok": 705

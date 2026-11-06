@@ -17,9 +17,9 @@
         {
           "format": "pdf",
           "path": "decks/overview-and-architecture/ta-amps-overview-and-architecture.pdf",
-          "sha256": "15fac750f8ba7e2a9b2281122f0c66896aa4ecd839d1c323339c8832a6c620d5",
-          "bytes": 503674,
-          "printed_from_main_sha256": "d156535ce282e6751fe2e6012790813198a4f8bfacd8c127207943ec4be8b26d"
+          "sha256": "3cd5eea8698a5ab54b3c14723683ee9ed5f0ef8dba521dbf70883bcd802aa587",
+          "bytes": 503652,
+          "printed_from_main_sha256": "5043e5387d50ecba097cd720b8f10fd12294fdc6f9dc0f07d68b5687fcd3801a"
         }
       ]
     },
@@ -55,9 +55,9 @@
         {
           "format": "pdf",
           "path": "decks/roll-your-own/ta-amps-roll-your-own.pdf",
-          "sha256": "8f05c22e19f2161ddd481321443d9b3595e79db81b93b696c5c186853a1798a9",
-          "bytes": 389842,
-          "printed_from_main_sha256": "96fd0904f92f11cf9f2bcee07eec07e1a42d0d766a8bf1ecb821e478e9558ae2"
+          "sha256": "bfccc98713660e3d87f339673d3bcad9fa26ec152abd9e47b1b071a2a6c2f081",
+          "bytes": 391163,
+          "printed_from_main_sha256": "6055bae4114848d74508e29fe4340aa9d8a4abc22d6ae20409cb68b64bb33eb2"
         }
       ]
     },
@@ -74,9 +74,9 @@
         {
           "format": "pdf",
           "path": "decks/server-workers/ta-amps-server-workers.pdf",
-          "sha256": "5b20d586a147c5db78e995570869fd89cf018727dcbcdc2b2b9a777eca847b7f",
+          "sha256": "3458b7489f9da7180011327d5deae4fe8ebf19f0a17bcd324f976e189e7e598c",
           "bytes": 408259,
-          "printed_from_main_sha256": "74d40c191e0dd877e0ed12ff7a434a625595bdfc75d5bc42927de638a84d91ef"
+          "printed_from_main_sha256": "1e81f2a3310457889ab58ba8e5188c167c0abd46b22e93db6ccf02d271c30d1a"
         }
       ]
     },
@@ -93,9 +93,9 @@
         {
           "format": "pdf",
           "path": "decks/continuous-learning/ta-amps-continuous-learning.pdf",
-          "sha256": "70054f2487cbbc735c5ac0d843f28fd9cf944af243ecee7fb9b813c84a612e48",
-          "bytes": 304538,
-          "printed_from_main_sha256": "136bd225568b523c7f7801986acd959c138ad1576cc5a420a85d17b8a1e5081e"
+          "sha256": "a0fdb7b6d23f1386b403e7165820b7a8d09eb3ceaea2fa7234b41eeadd6c8c2d",
+          "bytes": 304493,
+          "printed_from_main_sha256": "b735838bceb189d45f77c85cab02fc413ef8cb69a18ea1854969079b2858b022"
         }
       ]
     }

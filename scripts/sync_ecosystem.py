@@ -316,7 +316,7 @@ def build_catalog(entries: list[dict], source_kind: str, extra_meta: dict | None
         "schema": "ta-amps.ecosystem-catalog.v1",
         "status": "unexecuted_public_scan_mapping",
         "source_kind": source_kind,
-        "honesty_note": "Static public-directory decomposition only: none of these third-party repositories was executed, endorsed, or admitted into Tessera, and upstream licenses must be checked at each repository's pinned revision before code reuse.",
+        "honesty_note": "Static public-directory decomposition only: none of these third-party repositories was executed, endorsed, or admitted into Teleion Fabric, and upstream licenses must be checked at each repository's pinned revision before code reuse.",
         "scan_precedent": scan_info,
         "project_count": len(projects),
         "categories": sorted(cat_counts.values(), key=lambda c: (-c["count"], c["label"])),

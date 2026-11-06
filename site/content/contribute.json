@@ -148,9 +148,9 @@
       "heading": "Clone the source",
       "lead": "Each repository is on GitHub; clone it with plain git, no account needed. Agora’s source page shows a card for each.",
       "repos": [
-        "ta-amps-hackathon",
+        "teleionlabs-teleion-fabric",
         "eranos-public-marketplace-for-public-good-token-burn",
-        "tessera-infrastructure-work-and-storage-engine",
+        "teleion-fabric-infrastructure-work-and-storage-engine",
         "herma-infrastructure-shim-for-intelligent-agents",
         "seed-packs-library-of-nouns-and-verbs"
       ],

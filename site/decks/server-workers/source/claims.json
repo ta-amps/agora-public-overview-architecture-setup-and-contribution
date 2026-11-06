@@ -55,7 +55,7 @@
       "slide": "guardrails",
       "number": "the model shim's merged code refuses an operator-paid turn without the caller's own grant",
       "status": "pending",
-      "source": "Teleion Fabric's model shim pull request 12, merged on October 29, 2026, with main CI passing: operator grants are empty by default, so no caller may use operator-funded inference, and Anthropic and OpenRouter stay paused. the model shim's deployment was held in the October 29 status report, so the hosted behavior is not verified.",
+      "source": "Teleion Fabric's model shim pull request 12, merged on October 29, 2026, with main CI passing: operator grants are empty by default, so no caller may use operator-funded inference, and Anthropic and OpenRouter stay paused. the model shim's deployment was held in the October 29 status report, so the hosted behavior was not checked.",
       "link": "https://github.com/ta-amps/herma-infrastructure-shim-for-intelligent-agents/pull/12"
     },
     {

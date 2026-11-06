@@ -2349,7 +2349,8 @@ def left_out_line(n: int, words: dict) -> str:
 
 def feed_words(page: str) -> str:
     """The feed files stay byte for byte as the workers wrote them; a page shows them in public words."""
-    return page.replace(" run by ta-amps", "").replace("a ta-amps feed", "a Teleion Labs feed")
+    return (page.replace(" run by ta-amps", "").replace("a ta-amps feed", "a Teleion Labs feed")
+            .replace("Herma answered", "Teleion Fabric's model shim answered"))
 
 
 def render_feeds_index(nouns: Nouns) -> str:
@@ -3589,10 +3590,14 @@ def render_evidence(nouns: Nouns) -> str:
         answer = " · ".join(f"{text(key)}: {text(value if isinstance(value, str) else json.dumps(value))}"
                                 for key, value in fields.items())
         saved = (f'<a href="{prefix}{attr(check["body"])}">{text(live["saved"])}</a>' if check["body"] else "")
-        note = live["notes"].get(check["url"], "")
+        # The saved record keeps the address it checked; the page shows the service by its current name and address
+        # (evidence.json "shown_as"), and the note says it is the same service.
+        shown = live.get("shown_as", {}).get(check["url"], {})
+        name, url = shown.get("name", check["name"]), shown.get("url", check["url"])
+        note = live["notes"].get(url, "") if shown else live["notes"].get(check["url"], "")
         rows.append(
             f'<li class="ev-check{" ev-ok" if check["http_status"] == 200 and fields.get("ok") is True else ""}">'
-            f'<p class="ev-check-name">{text(check["name"])}</p><p class="ev-check-url"><code>{text(check["url"])}</code></p>'
+            f'<p class="ev-check-name">{text(name)}</p><p class="ev-check-url"><code>{text(url)}</code></p>'
             f'<p class="ev-check-answer"><strong>{text(live["http"])} {check["http_status"]}</strong>'
             f'{" · " + answer if answer else ""}</p>'
             + (f'<p class="ev-check-note">{text(note)}</p>' if note else "")

@@ -196,7 +196,7 @@ class Pages(unittest.TestCase):
     def test_the_status_page_and_status_json_agree(self):
         page = self.outputs[PAGES["status"]]
         data = json.loads(self.outputs[build.STATUS_JSON])
-        self.assertEqual({"eranos", "agora", "tessera", "herma", "home"}, {s["id"] for s in data["services"]})
+        self.assertEqual({"eranos", "agora", "tessera", "herma", "teleionlabs"}, {s["id"] for s in data["services"]})
         text = visible(page)
         for service in data["services"]:
             self.assertIn(service["name"], text)
@@ -225,8 +225,9 @@ class Pages(unittest.TestCase):
         for word in ("POST", "PUT", "DELETE", "Authorization", "Cookie", "session", "studio", "/v1/keys"):
             self.assertNotIn(word.lower(), code.lower(), word)
         for service in self.nouns.status_words["services"]:
-            self.assertRegex(service["check"], r"^https://([a-z]+\.ta-amps\.workers\.dev|fabric\.teleionlabs\.com|shim\.teleionlabs\.com)/")
-        self.assertRegex(self.nouns.status_words["daily"]["check"], r"^https://home\.ta-amps\.workers\.dev/")
+            self.assertNotIn("home.ta-amps", service["check"])  # the old home Worker only redirects now (Nov 6)
+            self.assertRegex(service["check"], r"^https://([a-z]+\.ta-amps\.workers\.dev|fabric\.teleionlabs\.com|shim\.teleionlabs\.com|teleionlabs\.com|eranosforgood\.org|agora\.eranosforgood\.org)/")
+        self.assertRegex(self.nouns.status_words["daily"]["check"], r"^https://teleionlabs\.com/status/$")
 
     def test_a_service_state_needs_words_and_a_failed_check_says_so(self):
         nouns = type(self.nouns).__new__(type(self.nouns))

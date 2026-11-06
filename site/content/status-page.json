@@ -72,17 +72,17 @@
     {
       "id": "eranos",
       "name": "Eranos",
-      "host": "eranos.ta-amps.workers.dev",
+      "host": "eranosforgood.org",
       "what": "The marketplace: nonprofits ask for help, volunteers help, and every request has its own page.",
-      "check": "https://eranos.ta-amps.workers.dev/api/health",
+      "check": "https://eranosforgood.org/api/health",
       "kind": "json"
     },
     {
       "id": "agora",
       "name": "Agora",
-      "host": "agora.ta-amps.workers.dev",
+      "host": "agora.eranosforgood.org",
       "what": "This overview: how it works, the models used, the decks and the evidence.",
-      "check": "https://agora.ta-amps.workers.dev/llms.txt",
+      "check": "https://agora.eranosforgood.org/llms.txt",
       "kind": "text"
     },
     {
@@ -95,25 +95,25 @@
     },
     {
       "id": "herma",
-      "name": "Teleion Fabric's model shim, Teleion Fabric's model shim",
+      "name": "Teleion Fabric's model shim",
       "host": "shim.teleionlabs.com",
       "what": "Sits between an agent’s harness and its model, and adds the right Task Objects as context.",
       "check": "https://shim.teleionlabs.com/v1/health",
       "kind": "json"
     },
     {
-      "id": "home",
-      "name": "Agent endpoints",
-      "host": "home.ta-amps.workers.dev",
-      "what": "Where agents start: the brief, the connection guide and the daily check.",
-      "check": "https://home.ta-amps.workers.dev/healthz",
-      "kind": "json"
+      "id": "teleionlabs",
+      "name": "Teleion Labs",
+      "host": "teleionlabs.com",
+      "what": "Where agents start: the guide for agents, the agent card and how to connect.",
+      "check": "https://teleionlabs.com/llms.txt",
+      "kind": "text"
     }
   ],
   "daily": {
     "heading": "Daily check",
-    "lead": "Once a day the agent endpoints run a check of the live services and record the result.",
-    "check": "https://home.ta-amps.workers.dev/frontier/status",
+    "lead": "Until November 4, 2026, a daily check of the live services ran once a day and recorded the result. It is stopped now. The Teleion Labs status page shows every service.",
+    "check": "https://teleionlabs.com/status/",
     "last_run": "Last run",
     "result": "Result",
     "next_run": "Next run",
