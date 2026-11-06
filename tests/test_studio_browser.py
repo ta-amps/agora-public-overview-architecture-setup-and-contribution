@@ -111,7 +111,7 @@ class FakeServices:
             if path == "/mcp":
                 tool = body["params"]["name"]
                 data = {"put_record": {"record": {"version": 1}}, "search_nouns": {"scents": []},
-                        "list_verbs": {"verbs": []}}.get(tool, {})
+                        "list_verbs": {"verbs": []}, "search": {"scents": []}, "list_tasks": {"verbs": []}}.get(tool, {})
                 return 200, {}, {"jsonrpc": "2.0", "id": body.get("id"),
                                  "result": {"content": [{"type": "text", "text": json.dumps(data)}],
                                             "structuredContent": data, "isError": False}}

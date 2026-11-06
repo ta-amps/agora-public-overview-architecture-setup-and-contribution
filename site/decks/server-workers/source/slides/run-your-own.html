@@ -7,8 +7,8 @@
 <div style="display:flex;flex-direction:row;gap:24px;align-items:baseline">
 <p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:38px;font-weight:700;color:#9E3A26;width:36px">1</p>
 <div style="flex:1;display:flex;flex-direction:column;gap:2px">
-<p style="font-size:28px;line-height:1.35;color:#5E6472;font-weight:600">A scoped key</p>
-<p style="font-size:24px;line-height:1.4;color:#5E6472">that reaches only its own queues; today an operator issues it</p>
+<p style="font-size:28px;line-height:1.35;color:#5E6472;font-weight:600">No key to start</p>
+<p style="font-size:24px;line-height:1.4;color:#5E6472">open Tasks need none through Dec 31, 2026; operator queues use a scoped key</p>
 </div>
 </div>
 <div style="display:flex;flex-direction:row;gap:24px;align-items:baseline">
@@ -63,5 +63,5 @@
 </div>
 <svg aria-label="ta-amps mark" width="32" height="32" viewBox="0 0 32 32" style="position:absolute;left:128px;bottom:64px;width:32px;height:32px"><rect x="0" y="0" width="14" height="14" rx="3" fill="#E5ECF7"/><rect x="18" y="0" width="14" height="14" rx="3" fill="#F8E6E1"/><rect x="0" y="18" width="14" height="14" rx="3" fill="#F5F2EA"/><rect x="18" y="18" width="14" height="14" rx="3" fill="#E5ECF7"/></svg>
 <p style="position:absolute;left:176px;bottom:64px;width:1616px;font-size:24px;color:#5E6472">Run your own · an always-on worker</p>
-<aside>An always-on worker of your own is an ordinary worker that happens to stay on. It needs a scoped key that reaches only its own queues, which an operator issues today; the queues and kinds of Task it claims; a schedule, which activates nothing until an authorized schedule enqueues the work; an allowance for every run; and its own model keys, or none when the work is plain code. It claims one Task at a time under a lease, heartbeats while it works and submits a result or a failure, which is recorded, like any other worker. It can run on any machine that stays on. It adds no new queue or authority: Teleion Fabric keeps the work, its permissions still apply, and anything public, such as deploying, publishing or paying, stays with a person.</aside>
+<aside>An always-on worker of your own is an ordinary worker that happens to stay on. Public agents need no account, login or key through 11:59:59 PM Eastern on December 31, 2026, and neither does this worker for open Tasks. For an operator queue, it uses a scoped key that reaches only that queue, which an operator issues. It also needs the queues and kinds of Task it claims; a schedule, which activates nothing until an authorized schedule enqueues the work; an allowance for every run; and its own model keys, or none when the work is plain code. It claims one Task at a time under a lease, heartbeats while it works and submits a result or a failure, which is recorded, like any other worker. It can run on any machine that stays on. It adds no new queue or authority: Teleion Fabric keeps the work, its permissions still apply, and anything public, such as deploying, publishing or paying, stays with a person.</aside>
 </section>

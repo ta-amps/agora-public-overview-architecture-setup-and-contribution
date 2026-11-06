@@ -1315,7 +1315,7 @@ pi --mcp "$FABRIC_MCP_URL" --header "X-Herma-Harness: pi"`
 
     if (!rows.length) {
       wrap.innerHTML =
-        '<div class="empty-state">No Tasks in this view. Run NGO Submits Task or Worker + 409 Guard, or click Sync ready Tasks via MCP list_verbs.</div>';
+        '<div class="empty-state">No Tasks in this view. Run NGO Submits Task or Worker + 409 Guard, or click Sync ready Tasks via MCP list_tasks.</div>';
       return;
     }
 
@@ -2793,8 +2793,8 @@ pi --mcp "$FABRIC_MCP_URL" --header "X-Herma-Harness: pi"`
           "  worker conflict       -> write v1 and v2, then send a stale overwrite (Teleion Fabric should answer 409)",
           "  eranos tracks         -> GET https://eranosforgood.org/api/tracks",
           "  eranos catalog        -> GET https://eranosforgood.org/api/catalog + /api/examples",
-          "  objects ls            -> MCP search_nouns on https://fabric.teleionlabs.com/mcp",
-          "  tasks ls              -> MCP list_verbs (ready Tasks) on https://fabric.teleionlabs.com/mcp",
+          "  objects ls            -> MCP search on https://fabric.teleionlabs.com/mcp",
+          "  tasks ls              -> MCP list_tasks (ready Tasks) on https://fabric.teleionlabs.com/mcp",
           "  curl last             -> print a curl command for the latest Wire Log call",
           "  clear                 -> clear the terminal",
           "ngo, worker, objects and tasks need a live Teleion Fabric demo session; shim and eranos do not."
@@ -2978,15 +2978,15 @@ pi --mcp "$FABRIC_MCP_URL" --header "X-Herma-Harness: pi"`
     }
 
     if (lower === "objects ls" || lower === "nouns ls") {
-      const out = await runExclusive("MCP search_nouns", function () {
+      const out = await runExclusive("MCP search", function () {
         return syncNounsFromMcp(liveSession());
       });
       if (!out.ok) {
-        appendCliLine(cliResultLine("[MCP search_nouns] ", out), "cli-line-err");
+        appendCliLine(cliResultLine("[MCP search] ", out), "cli-line-err");
         return;
       }
       appendCliLine(
-        "[MCP search_nouns · " + statusPill(out.res) + "] Teleion Fabric returned " + out.scents.length + " Task Objects:",
+        "[MCP search · " + statusPill(out.res) + "] Teleion Fabric returned " + out.scents.length + " Task Objects:",
         "cli-line-ok"
       );
       out.scents.forEach(function (s) {
@@ -3002,15 +3002,15 @@ pi --mcp "$FABRIC_MCP_URL" --header "X-Herma-Harness: pi"`
     }
 
     if (lower === "tasks ls") {
-      const out = await runExclusive("MCP list_verbs", function () {
+      const out = await runExclusive("MCP list_tasks", function () {
         return syncTasksFromMcp(liveSession());
       });
       if (!out.ok) {
-        appendCliLine(cliResultLine("[MCP list_verbs] ", out), "cli-line-err");
+        appendCliLine(cliResultLine("[MCP list_tasks] ", out), "cli-line-err");
         return;
       }
       appendCliLine(
-        "[MCP list_verbs · " + statusPill(out.res) + "] Teleion Fabric returned " + out.verbs.length + " ready Tasks:",
+        "[MCP list_tasks · " + statusPill(out.res) + "] Teleion Fabric returned " + out.verbs.length + " ready Tasks:",
         "cli-line-ok"
       );
       out.verbs.forEach(function (v) {
@@ -3046,12 +3046,12 @@ pi --mcp "$FABRIC_MCP_URL" --header "X-Herma-Harness: pi"`
   /* MCP SYNC HELPERS FOR INSPECTOR TABS: they show what Teleion Fabric's MCP tools returned, nothing more. */
   async function syncNounsFromMcp(sess) {
     if (!sess) return { ok: false, res: null, message: "Not sent: there is no live Teleion Fabric demo session." };
-    const res = await callTesseraMcp("search_nouns", { query: "" }, "browser", sess);
+    const res = await callTesseraMcp("search", { query: "" }, "browser", sess);
     if (!res.ok) return { ok: false, res: res, message: failureText(res) };
     const sc = mcpContent(res);
     const scents = sc && Array.isArray(sc.scents) ? sc.scents : null;
     if (!scents) {
-      return { ok: false, res: res, message: missingField(res, "Teleion Fabric", "scents list in its search_nouns result") };
+      return { ok: false, res: res, message: missingField(res, "Teleion Fabric", "scents list in its search result") };
     }
     scents.forEach(function (s) {
       if (!s || typeof s.key !== "string") return;
@@ -3060,7 +3060,7 @@ pi --mcp "$FABRIC_MCP_URL" --header "X-Herma-Harness: pi"`
         key: s.key,
         version: Number.isInteger(s.version) ? s.version : null,
         sha256: typeof s.sha256 === "string" && s.sha256 ? s.sha256 : null,
-        source: "Summary from Teleion Fabric's MCP search_nouns.",
+        source: "Summary from Teleion Fabric's MCP search.",
         value: s
       });
     });
@@ -3069,12 +3069,12 @@ pi --mcp "$FABRIC_MCP_URL" --header "X-Herma-Harness: pi"`
 
   async function syncTasksFromMcp(sess) {
     if (!sess) return { ok: false, res: null, message: "Not sent: there is no live Teleion Fabric demo session." };
-    const res = await callTesseraMcp("list_verbs", { limit: 25 }, "browser", sess);
+    const res = await callTesseraMcp("list_tasks", { limit: 25 }, "browser", sess);
     if (!res.ok) return { ok: false, res: res, message: failureText(res) };
     const sc = mcpContent(res);
     const verbs = sc && Array.isArray(sc.verbs) ? sc.verbs : null;
     if (!verbs) {
-      return { ok: false, res: res, message: missingField(res, "Teleion Fabric", "Task list in its list_verbs result") };
+      return { ok: false, res: res, message: missingField(res, "Teleion Fabric", "Task list in its list_tasks result") };
     }
     verbs.forEach(function (v) {
       if (!v || typeof v.task_id !== "string") return;
@@ -3082,7 +3082,7 @@ pi --mcp "$FABRIC_MCP_URL" --header "X-Herma-Harness: pi"`
         task_id: v.task_id,
         queue: typeof v.queue === "string" ? v.queue : undefined,
         kind: typeof v.kind === "string" ? v.kind : undefined,
-        last: "list_verbs: state " + (typeof v.state === "string" ? v.state : "not reported"),
+        last: "list_tasks: state " + (typeof v.state === "string" ? v.state : "not reported"),
         tone: v.state === "ready" ? "queued" : typeof v.state === "string" ? v.state : "",
         fencing_token: Number.isInteger(v.fencing_token) ? v.fencing_token : undefined
       });
@@ -3093,7 +3093,7 @@ pi --mcp "$FABRIC_MCP_URL" --header "X-Herma-Harness: pi"`
   function inspectorSync(fn, label) {
     return runExclusive(label, async function () {
       const out = await fn(liveSession());
-      const target = label.indexOf("list_verbs") >= 0 ? $("tasks-sync-status") : $("nouns-sync-status");
+      const target = label.indexOf("list_tasks") >= 0 ? $("tasks-sync-status") : $("nouns-sync-status");
       if (target) {
         target.textContent = out.ok
           ? (out.verbs ? out.verbs.length + " ready Tasks" : out.scents.length + " Task Objects") + " from Teleion Fabric (" + statusPill(out.res) + ")"
@@ -3197,7 +3197,7 @@ pi --mcp "$FABRIC_MCP_URL" --header "X-Herma-Harness: pi"`
       "name: ngo-kit-reviewer\n" +
       "description: Use when verifying submitted NGO seed-pack JSON manifests and example CSV fixtures; read-only and never mutates live queues.\n" +
       "model: inherit\n" +
-      "tools: [read_file, search_nouns, practice_verify_kit]\n" +
+      "tools: [read_file, search, practice_verify_kit]\n" +
       "permissions: read-only\n" +
       "---\n\n" +
       "Verify that builder_key_id differs from reviewer_key_id on every kit.\n" +
@@ -3208,7 +3208,7 @@ pi --mcp "$FABRIC_MCP_URL" --header "X-Herma-Harness: pi"`
       "name: pantry-roster-auditor\n" +
       "description: Audits example volunteer shift CSV schedules and JSON schemas in read-only local mode without mutating external services.\n" +
       "model: inherit\n" +
-      "tools: [read_file, search_nouns]\n" +
+      "tools: [read_file, search]\n" +
       "permissions: read-only\n" +
       "---\n\n" +
       "You are a world-class 10x PhD-level genius with 25 years of experience and an IQ of 165.\n" +
@@ -3243,7 +3243,7 @@ pi --mcp "$FABRIC_MCP_URL" --header "X-Herma-Harness: pi"`
       name: "unnamed-worker",
       description: "",
       model: "inherit",
-      tools: ["read_file", "search_nouns"],
+      tools: ["read_file", "search"],
       permissions: "read-only"
     };
     let body = raw || "";
@@ -3756,10 +3756,10 @@ pi --mcp "$FABRIC_MCP_URL" --header "X-Herma-Harness: pi"`
     });
 
     $("tasks-refresh-btn").addEventListener("click", function () {
-      inspectorSync(syncTasksFromMcp, "MCP list_verbs");
+      inspectorSync(syncTasksFromMcp, "MCP list_tasks");
     });
     $("nouns-refresh-btn").addEventListener("click", function () {
-      inspectorSync(syncNounsFromMcp, "MCP search_nouns");
+      inspectorSync(syncNounsFromMcp, "MCP search");
     });
 
     $("session-retry-btn").addEventListener("click", function () {
