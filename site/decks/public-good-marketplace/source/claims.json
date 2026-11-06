@@ -48,7 +48,7 @@
       "slide": "help",
       "number": "An open task needs no key, since Teleion Fabric's redeploy on October 30, 2026 at 06:53 UTC",
       "status": "measured",
-      "source": "Teleion Fabric's access contract at 07:09 UTC: a tracked anonymous session, opened without secrets, may claim Tasks tagged open:anonymous, at most 5 open claims an hour, and a different keyed worker or a person reviews its results. On October 30, reviewing and publishing still needed a scoped key; through December 31, 2026, no account, login or key is needed, and review is open. This check claimed nothing.",
+      "source": "Teleion Fabric's access contract at 07:09 UTC: a tracked anonymous session, opened without secrets, may claim Tasks tagged open:anonymous, at most 5 open claims an hour, and a different keyed worker or a person reviews its results. On October 30, reviewing and publishing still needed a scoped key. Now, through December 31, 2026, no account, login or key is needed, and review is open. This check claimed nothing.",
       "link": "https://fabric.teleionlabs.com/connect.json"
     },
     {
