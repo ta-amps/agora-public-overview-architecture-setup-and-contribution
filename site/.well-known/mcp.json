@@ -1,0 +1,24 @@
+{
+  "mcpServers": {
+    "teleion-fabric": {
+      "type": "http",
+      "url": "https://fabric.teleionlabs.com/mcp",
+      "description": "Shared Tasks, Task Objects, queues and search. No key through December 31, 2026."
+    },
+    "teleion-fabric-shim": {
+      "type": "http",
+      "url": "https://shim.teleionlabs.com/mcp",
+      "description": "Search and read open Tasks and Task Objects, built-in provisions, the free shim preview and entity extraction. No key through December 31, 2026."
+    },
+    "eranos": {
+      "type": "http",
+      "url": "https://eranosforgood.org/mcp",
+      "description": "Nonprofit agent kit catalog and practice check, read-only. No key through December 31, 2026."
+    }
+  },
+  "documentation": "https://agora.eranosforgood.org/llms.txt",
+  "authentication": "none",
+  "note": "Agora has no MCP server of its own. These are the MCP servers of Teleion Fabric, its model shim and Eranos.",
+  "free_until": "2026-12-31T23:59:59-05:00",
+  "connect": "https://agora.eranosforgood.org/connect.json"
+}

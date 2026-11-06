@@ -1137,10 +1137,22 @@ def when_utc(iso: str, utc_word: str) -> str:
             f"{text(utc_word)}</time>")
 
 
+# Names of other makers' models and model companies (owner, Nov 4: public text names only Meta's models). Third-party
+# entries that name one are left out like UNSHOWN ones; the models page shows a general phrase instead.
+OTHER_MAKER_MODEL = re.compile(
+    r"\b(?:GPT[-\s]?\d|ChatGPT|OpenAI|Claude|Anthropic|Gemini|Mistral|Mixtral|Qwen|DeepSeek|GLM[-\s]?\d|Kimi|Grok|"
+    r"Cohere|Gemma|Phi-\d|Sonnet|Haiku|OpenRouter|Moonshot)\b", re.I)
+
+
+def is_meta_model_name(name: str) -> bool:
+    return not OTHER_MAKER_MODEL.search(name or "")
+
+
 def may_show(*values) -> bool:
     """Whether a third-party entry may be shown: none of its text, at any depth, says what the owner's rules keep off
     the pages."""
-    return not any(UNSHOWN.search(found) for value in values for found in strings_in(value))
+    return not any(UNSHOWN.search(found) or OTHER_MAKER_MODEL.search(found)
+                   for value in values for found in strings_in(value))
 
 
 def pct_class(value: float, most: float) -> str:
@@ -1975,15 +1987,24 @@ def render_models(nouns: Nouns) -> str:
         return (f'<li class="mu-card mu-film"><p class="mu-kind">{text(page["meta_badge"])}</p><h3>{text(m["name"])}</h3>'
                 f'<p>{text(m["role"])}</p>' + (f'<p class="mu-note-small">{text(tested)}</p>' if tested else "") + "</li>")
 
+    # Owner, Nov 4: public pages name no other maker's model. The catalog keeps the exact names (and the legal notice
+    # file may); the page shows a model that is not Meta's as a general phrase, and the two switched-off fallbacks as
+    # one card.
     apps = "".join(
         f'<tr><th scope="row">{text(a["app"])} {text(a["version"].split("-")[0])}'
         + (f' <span class="mu-by">{text("by " + a["by"] if a["by"] == "Meta" else a["by"])}</span>' if a.get("by") else "")
-        + f'</th><td>{text(a["model"])}</td></tr>' for a in cat["agent_apps_tested_2026_10_29"])
-    fallbacks = "".join(
-        f'<li class="mu-card mu-other"><h3>{text(f["name"])}</h3><p class="mu-kind">{text(f["by"])}</p>'
-        f'<p>{text(f["role"])}</p><p class="mu-state">{text(f["state"])}</p></li>' for f in cat["fallbacks"])
+        + f'</th><td>{text(a["model"] if is_meta_model_name(a["model"]) else page["other_model_shown_as"])}</td></tr>'
+        for a in cat["agent_apps_tested_2026_10_29"])
+    fallback_cards = []
+    for f in cat["fallbacks"]:
+        card = (f'<li class="mu-card mu-other"><h3>{text(page["fallback_shown_as"])}</h3>'
+                f'<p>{text(page["fallback_role"])}</p><p class="mu-state">{text(f["state"])}</p></li>')
+        if card not in fallback_cards:
+            fallback_cards.append(card)
+    fallbacks = "".join(fallback_cards)
     other = "".join(
-        f'<li class="mu-card mu-other"><h3>{text(o["name"])}</h3><p>{text(o["use"])}</p></li>' for o in others)
+        f'<li class="mu-card mu-other"><h3>{text(page["other_model_shown_as"])}</h3><p>{text(o["use"])}</p></li>'
+        for o in others)
     links = " · ".join(f'<a href="{link(prefix, l_["href"])}">{text(l_["label"])}</a>' for l_ in page["links"])
     main = "\n".join([
         '<main id="main">',
@@ -2276,6 +2297,8 @@ def render_llms(nouns: Nouns, built: set[Path]) -> str:
     lines += ["", f"## {page['endpoints_title']}", ""]
     for row in nouns.site["endpoints"]["rows"]:
         lines.append(f"- {row['name']}: {row['what']}. MCP {row['mcp']}; llms.txt {row['llms']}")
+    if page.get("agent_files"):
+        lines += ["", f"## {page['agent_files_title']}", ""] + [f"- {item}" for item in page["agent_files"]]
     # The served repositories come from the per-repository mirror switch (source-links.json), so this line follows it.
     # The repositories shown as cards come from source-links.json, so this line follows it.
     current = {old: new for new, old in RENAMED_REPOS.items()}  # agents read the GitHub name, not the mirror's folder

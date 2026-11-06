@@ -1,0 +1,14 @@
+{
+  "name": "agora",
+  "title": "Agora",
+  "description": "Agora holds the decks, evidence and public records of Eranos and Teleion Fabric. It is read-only and has no MCP server of its own. Its MCP list points to Teleion Fabric, its model shim and Eranos.",
+  "url": "https://agora.eranosforgood.org",
+  "documentationUrl": "https://agora.eranosforgood.org/llms.txt",
+  "mcp": "https://agora.eranosforgood.org/.well-known/mcp.json",
+  "connect": "https://agora.eranosforgood.org/connect.json",
+  "authentication": {
+    "required": false,
+    "schemes": []
+  },
+  "free_until": "2026-12-31T23:59:59-05:00"
+}

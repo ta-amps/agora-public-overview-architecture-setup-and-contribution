@@ -33,7 +33,7 @@
     "Model in the test"
   ],
   "fallbacks_heading": "Fallbacks *",
-  "fallbacks_lead": "Used only when a Meta model can’t answer. Both are switched off today.",
+  "fallbacks_lead": "Used only when a Meta model can’t answer. Every fallback is switched off today.",
   "other_heading": "Other makers *",
   "footnote": "* Not a Meta model. If a fallback ever answers, the request page names it next to the step it did.",
   "sources_note": "Versions and timings come from our run records (Oct 29 agent-app tests, Oct 31 test run).",
@@ -52,5 +52,8 @@
   "use_states": {
     "measured": "Measured",
     "ready": "Ready for a trial"
-  }
+  },
+  "other_model_shown_as": "Another maker's model *",
+  "fallback_shown_as": "A hosted fallback provider (switched off) *",
+  "fallback_role": "Teleion Fabric's model shim would call it only when a Meta model can't answer, with the operator's own key, never yours. It works with almost any model and inference provider."
 }

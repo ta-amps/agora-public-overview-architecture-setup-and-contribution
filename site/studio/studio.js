@@ -1618,12 +1618,12 @@ pi --mcp "$FABRIC_MCP_URL" --header "X-Herma-Harness: pi"`
      Every step is a real call, and this browser plays the worker that claims the verb. The run stops at the
      first call that fails and shows the service's own status and error text; a missing field fails the step. */
   const NGO_STEP_DEFS = [
-    { num: 1, title: "1. Store noun.request (Teleion Fabric)" },
-    { num: 2, title: "2. Enqueue verb.build_agent_kit" },
+    { num: 1, title: "1. Store the request Task Object (Teleion Fabric)" },
+    { num: 2, title: "2. Enqueue a build-agent-kit Task" },
     { num: 3, title: "3. Claim it (this browser as worker)" },
     { num: 4, title: "4. Ask the shim for guardrails" },
     { num: 5, title: "5. Eranos practice check" },
-    { num: 6, title: "6. Store noun.agent_kit (MCP), submit" }
+    { num: 6, title: "6. Store the agent kit Task Object (MCP), submit" }
   ];
 
   function renderInitialNgoSteps() {
@@ -2348,7 +2348,7 @@ pi --mcp "$FABRIC_MCP_URL" --header "X-Herma-Harness: pi"`
     $("worker-btn-1").classList.add("is-done");
     updateWorkerTelemetryUI();
     const message = "Teleion Fabric queued task " + tid + " in demo.echo.";
-    appendWorkerEvent("[1] Enqueued verb.lab_echo", statusPill(res), message);
+    appendWorkerEvent("[1] Enqueued a lab echo Task", statusPill(res), message);
     return { ok: true, res: res, message: message };
   }
 
@@ -2380,7 +2380,7 @@ pi --mcp "$FABRIC_MCP_URL" --header "X-Herma-Harness: pi"`
       return workerFail(
         "[2] Nothing to claim",
         res,
-        "Teleion Fabric answered HTTP " + res.status + " without a lease: no ready verb.lab_echo in demo.echo. Run step 1 to enqueue one."
+        "Teleion Fabric answered HTTP " + res.status + " without a lease: no ready lab echo Task in demo.echo. Run step 1 to enqueue one."
       );
     }
     const l = res.data;
@@ -3074,7 +3074,7 @@ pi --mcp "$FABRIC_MCP_URL" --header "X-Herma-Harness: pi"`
     const sc = mcpContent(res);
     const verbs = sc && Array.isArray(sc.verbs) ? sc.verbs : null;
     if (!verbs) {
-      return { ok: false, res: res, message: missingField(res, "Teleion Fabric", "verbs list in its list_verbs result") };
+      return { ok: false, res: res, message: missingField(res, "Teleion Fabric", "Task list in its list_verbs result") };
     }
     verbs.forEach(function (v) {
       if (!v || typeof v.task_id !== "string") return;

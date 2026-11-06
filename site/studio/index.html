@@ -138,7 +138,7 @@
             <span class="kicker kicker-emerald">Public-Good Flow · Teleion Fabric CAS + Queue + Model Shim + Eranos Verifier</span>
             <span class="example-pill">Use example details only</span>
           </div>
-          <p class="panel-desc">Choose a nonprofit brief and click <strong>Submit NGO Task</strong>. The page makes real calls in order: it stores the request as <code>noun.request</code> in Teleion Fabric, enqueues <code>verb.build_agent_kit</code>, claims that Task itself (this browser plays the worker), asks the shim for guardrails, sends the brief's kit draft to Eranos's practice check, stores it as <code>noun.agent_kit</code> over MCP with <code>review_gate: held_for_person</code>, and submits the Task. It stops at the first call that fails and shows that service's own status and error.</p>
+          <p class="panel-desc">Choose a nonprofit brief and click <strong>Submit NGO Task</strong>. The page makes real calls in order: it stores the request as a request Task Object in Teleion Fabric, enqueues a Task to build an agent kit, claims that Task itself (this browser plays the worker), asks the shim for guardrails, sends the brief's kit draft to Eranos's practice check, stores it as an agent kit Task Object over MCP with <code>review_gate: held_for_person</code>, and submits the Task. It stops at the first call that fails and shows that service's own status and error.</p>
         </div>
 
         <div class="ngo-form-card">
@@ -276,7 +276,7 @@
       <div class="panel-scroll">
         <div class="panel-intro panel-intro-compact">
           <div class="panel-intro-top">
-            <span class="kicker kicker-cyan">Portable Persona &amp; Supply-Chain Gate · <code>noun.persona</code></span>
+            <span class="kicker kicker-cyan">Portable Persona &amp; Supply-Chain Gate · persona Task Object</span>
             <span class="metric-chip" id="persona-verdict-chip">Ready · 5 Harnesses</span>
           </div>
           <p class="panel-desc">Every harness shares the same core (<code>name</code>, <code>description</code>, <code>model</code>, <code>tools</code>, Markdown body), while cloning untrusted rule files can smuggle invisible Unicode backdoors or permission bypasses. Lint a <code>persona.portable.md</code> below, strip accuracy-degrading fluff, compile across 5 harnesses, and persist clean specs as CAS Task Objects on live Teleion Fabric.</p>
@@ -296,7 +296,7 @@
           <textarea id="persona-source-input" class="ngo-textarea" rows="7" spellcheck="false" style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:0.78rem;"></textarea>
           <div style="display:flex;gap:0.6rem;flex-wrap:wrap;margin-top:0.65rem;align-items:center;">
             <button type="button" class="btn btn-primary" id="persona-lint-btn">Lint &amp; Compile Persona</button>
-            <button type="button" class="btn btn-emerald" id="persona-persist-btn" data-needs-session>Persist Clean <code>noun.persona</code> to Teleion Fabric</button>
+            <button type="button" class="btn btn-emerald" id="persona-persist-btn" data-needs-session>Save the clean persona Task Object to Teleion Fabric</button>
           </div>
           <p class="session-gate-note" data-session-note hidden></p>
         </div>
@@ -526,7 +526,7 @@
             <div class="mcp-map-item">
               <span class="mcp-role">2. Context Shim &amp; Guardrails</span>
               <code>https://shim.teleionlabs.com/mcp</code>
-              <p>Tools: <code>list_builtin_provisions</code>, <code>preview_shim</code>, <code>extract_entities</code> + OpenAI/Anthropic proxy</p>
+              <p>Tools: <code>list_builtin_provisions</code>, <code>preview_shim</code>, <code>extract_entities</code>, and a proxy for almost any model and inference provider</p>
             </div>
             <div class="mcp-map-item">
               <span class="mcp-role">3. Public-Good Marketplace &amp; Verifier</span>

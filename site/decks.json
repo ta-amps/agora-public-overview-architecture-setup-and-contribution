@@ -36,9 +36,9 @@
         {
           "format": "pdf",
           "path": "decks/public-good-marketplace/ta-amps-public-good-marketplace.pdf",
-          "sha256": "226d39e157ab4c5d8d65b83791c890b5ea6ea7227a9199619554153205f65c8a",
-          "bytes": 384996,
-          "printed_from_main_sha256": "e98bfe7b4d63cc41fe6540ab23fb097822c3034a863228f18232eea4522e5c7e"
+          "sha256": "27f3bce511d0f923bdf77540a3166c2014df18c44b897f0a8bfc077c5129693a",
+          "bytes": 385313,
+          "printed_from_main_sha256": "292c3abc69ae1f43c8089a5154e1ee1fbbe93192a7b157a543f91680e529bf92"
         }
       ]
     },
@@ -74,9 +74,9 @@
         {
           "format": "pdf",
           "path": "decks/server-workers/ta-amps-server-workers.pdf",
-          "sha256": "3458b7489f9da7180011327d5deae4fe8ebf19f0a17bcd324f976e189e7e598c",
+          "sha256": "ad99e4185b2915c865d639658bb62a7af830349e7679b4d277aa5fac9cf8704b",
           "bytes": 408259,
-          "printed_from_main_sha256": "1e81f2a3310457889ab58ba8e5188c167c0abd46b22e93db6ccf02d271c30d1a"
+          "printed_from_main_sha256": "16db2b857f9581bc377c345e226c5d64166851f7fda81a15b152c31e9b31ede2"
         }
       ]
     },

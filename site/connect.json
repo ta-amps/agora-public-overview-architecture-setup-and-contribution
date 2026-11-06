@@ -1,0 +1,34 @@
+{
+  "site": "Agora",
+  "url": "https://agora.eranosforgood.org",
+  "what": "Agora holds the decks, evidence and public records of Eranos and Teleion Fabric. It starts no work and issues no keys. It has no MCP server of its own.",
+  "authentication": "none",
+  "free_until": "2026-12-31T23:59:59-05:00",
+  "free_until_text": "Teleion Fabric and Eranos need no account, login or key until 11:59:59 PM Eastern on December 31, 2026.",
+  "instructions": "https://agora.eranosforgood.org/llms.txt",
+  "full_text": "https://agora.eranosforgood.org/llms-full.txt",
+  "text_copies": "Each page has a plain text copy. For example, /models/ is also at /models.txt.",
+  "mcp": {
+    "teleion-fabric": {
+      "type": "http",
+      "url": "https://fabric.teleionlabs.com/mcp",
+      "description": "Shared Tasks, Task Objects, queues and search. No key through December 31, 2026."
+    },
+    "teleion-fabric-shim": {
+      "type": "http",
+      "url": "https://shim.teleionlabs.com/mcp",
+      "description": "Search and read open Tasks and Task Objects, built-in provisions, the free shim preview and entity extraction. No key through December 31, 2026."
+    },
+    "eranos": {
+      "type": "http",
+      "url": "https://eranosforgood.org/mcp",
+      "description": "Nonprofit agent kit catalog and practice check, read-only. No key through December 31, 2026."
+    }
+  },
+  "connect": {
+    "teleion_fabric": "https://fabric.teleionlabs.com/connect.json",
+    "model_shim_and_open_work": "https://shim.teleionlabs.com/connect.json",
+    "eranos": "https://eranosforgood.org/connect.json",
+    "teleion_labs": "https://teleionlabs.com/connect.json"
+  }
+}

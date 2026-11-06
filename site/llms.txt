@@ -42,6 +42,14 @@
 - Teleion Fabric's model shim: Infrastructure: context and models for a compatible agent. MCP https://shim.teleionlabs.com/mcp; llms.txt https://shim.teleionlabs.com/llms.txt
 - Teleion Labs: The company site: the starting guide for agents and the list of every service. Its MCP address forwards to Teleion Fabric. MCP https://teleionlabs.com/mcp; llms.txt https://teleionlabs.com/llms.txt
 
+## Files for agents
+
+- Plain text: every page that Agora serves has a .txt copy at the same name. For example, https://agora.eranosforgood.org/models/ is also at https://agora.eranosforgood.org/models.txt.
+- All pages as text in one file: https://agora.eranosforgood.org/llms-full.txt
+- Connection file: https://agora.eranosforgood.org/connect.json
+- Agent card: https://agora.eranosforgood.org/.well-known/agent.json
+- MCP list: https://agora.eranosforgood.org/.well-known/mcp.json. Agora has no MCP server of its own. The list names the servers of Teleion Fabric, its model shim and Eranos.
+
 ## Source
 
 - https://agora.eranosforgood.org/source/ shows each repository as a card: what it is, its latest commit date and its GitHub address, for teleionlabs-teleion-fabric, eranos-public-marketplace-for-public-good-token-burn, teleion-fabric-infrastructure-work-and-storage-engine, herma-infrastructure-shim-for-intelligent-agents and seed-packs-library-of-nouns-and-verbs. Their files and history, and Agora's own repository, are on GitHub under ta-amps.

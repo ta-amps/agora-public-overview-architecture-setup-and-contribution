@@ -129,6 +129,14 @@
     }
   ],
   "endpoints_title": "Machine endpoints",
+  "agent_files_title": "Files for agents",
+  "agent_files": [
+    "Plain text: every page that Agora serves has a .txt copy at the same name. For example, https://agora.eranosforgood.org/models/ is also at https://agora.eranosforgood.org/models.txt.",
+    "All pages as text in one file: https://agora.eranosforgood.org/llms-full.txt",
+    "Connection file: https://agora.eranosforgood.org/connect.json",
+    "Agent card: https://agora.eranosforgood.org/.well-known/agent.json",
+    "MCP list: https://agora.eranosforgood.org/.well-known/mcp.json. Agora has no MCP server of its own. The list names the servers of Teleion Fabric, its model shim and Eranos."
+  ],
   "source_title": "Source",
   "source": [
     "https://agora.eranosforgood.org/source/ shows each repository as a card: what it is, its latest commit date and its GitHub address, for {cards}. Their files and history, and Agora's own repository, are on GitHub under ta-amps.",

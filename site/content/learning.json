@@ -108,7 +108,7 @@
         "model": "Self-learning library search",
         "before": "23.3%",
         "after": "100.0%",
-        "line": "A local check with no model calls: across 60 hard search queries over 79 seed packs, the first result was the right pack every time, while the text added to a prompt shrank by 82.8%. Each search took 0.30 ms, and 10 of 10 independent reviews passed.",
+        "line": "A local check with no model calls: across 60 hard search queries over the 79 seed packs in the test's own copy of the library, which has grown since, the first result was the right pack every time, while the text added to a prompt shrank by 82.8%. Each search took 0.30 ms, and 10 of 10 independent reviews passed.",
         "source": "The benchmark record",
         "link": "evidence/#sira-are-cascade-2026-10-31"
       }
