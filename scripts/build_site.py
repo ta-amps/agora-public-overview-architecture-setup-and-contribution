@@ -1050,6 +1050,8 @@ def render_deck(deck: dict, nouns: Nouns) -> str:
         f'<p class="deck-kicker">{total} {text(ui["slides"])} · {text(page["date_text"])}</p>',
         f"<h1>{text(page['heading'])}</h1>",
         f"<p>{text(page['summary'])}</p>",
+        # QA sweep, Nov 6: a dated deck can say, on its page, what has changed since its date.
+        f'<p class="deck-record-note"><strong>{text(page["record_note"])}</strong></p>' if page.get("record_note") else "",
         "</div>",
         '<div class="deck-tools">',
         f'<button class="tool" type="button" data-outline-toggle aria-expanded="false" aria-controls="deck-outline" '
