@@ -45,7 +45,7 @@
         },
         {
           "name": "MCP",
-          "what": "Teleion Fabric's model shim, Teleion Fabric's model shim: the right Task Objects as context, or a direct answer.",
+          "what": "Teleion Fabric's model shim: the right Task Objects as context, or a direct answer.",
           "endpoint": "https://shim.teleionlabs.com/mcp",
           "check": {
             "method": "POST",
@@ -99,7 +99,7 @@
           }
         }
       ],
-      "note": "Copying an address issues no key and starts no work. A demo session from Teleion Fabric is isolated and expires; Teleion Fabric opens at most 10 new demo sessions per address per hour."
+      "note": "Copying an address issues no key and starts no work. A demo session from Teleion Fabric is optional, isolated and expires. Through December 31, 2026 there is no per-address limit on new sessions."
     },
     {
       "id": "work",

@@ -44,7 +44,7 @@
 
 ## Source
 
-- https://agora.eranosforgood.org/source/ shows each repository as a card: what it is, its latest commit date and its GitHub address, for ta-amps-hackathon, eranos-public-marketplace-for-public-good-token-burn, tessera-infrastructure-work-and-storage-engine, herma-infrastructure-shim-for-intelligent-agents and seed-packs-library-of-nouns-and-verbs. Their files and history, and Agora's own repository, are on GitHub under ta-amps.
+- https://agora.eranosforgood.org/source/ shows each repository as a card: what it is, its latest commit date and its GitHub address, for teleionlabs-teleion-fabric, eranos-public-marketplace-for-public-good-token-burn, teleion-fabric-infrastructure-work-and-storage-engine, herma-infrastructure-shim-for-intelligent-agents and seed-packs-library-of-nouns-and-verbs. Their files and history, and Agora's own repository, are on GitHub under ta-amps.
 - Agora serves no repository files itself.
 
 ## Rules

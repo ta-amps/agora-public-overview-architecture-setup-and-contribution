@@ -75,7 +75,7 @@ npx wrangler login
 
 # 2. Teleion Fabric: the queue, the Task Object stores and the /mcp endpoint
 git clone https://github.com/ta-amps/teleion-fabric-infrastructure-work-and-storage-engine.git
-cd tessera-infrastructure-work-and-storage-engine
+cd teleion-fabric-infrastructure-work-and-storage-engine
 npx --yes wrangler@4.154.0 secret put BOOTSTRAP_SECRET --config deploy/cloudflare/wrangler.jsonc
 npx --yes wrangler@4.154.0 deploy --config deploy/cloudflare/wrangler.jsonc
 
@@ -159,7 +159,7 @@ curl -fsS -X POST https://shim.teleionlabs.com/api/preview \
   -d '{"prompt":"How do Tasks and Task Objects work with Agent Harness Feeds?"}'
 
 # 3. The brief agents start from
-curl -fsS https://home.ta-amps.workers.dev/llms.txt | head -n 25</code></pre>
+curl -fsS https://teleionlabs.com/llms.txt | head -n 25</code></pre>
 </div></section>
 </div>
 </main>

@@ -2278,7 +2278,8 @@ def render_llms(nouns: Nouns, built: set[Path]) -> str:
         lines.append(f"- {row['name']}: {row['what']}. MCP {row['mcp']}; llms.txt {row['llms']}")
     # The served repositories come from the per-repository mirror switch (source-links.json), so this line follows it.
     # The repositories shown as cards come from source-links.json, so this line follows it.
-    shown = [name for name in nouns.links["heads"] if name in nouns.links.get("cards", [])]
+    current = {old: new for new, old in RENAMED_REPOS.items()}  # agents read the GitHub name, not the mirror's folder
+    shown = [current.get(name, name) for name in nouns.links["heads"] if name in nouns.links.get("cards", [])]
     named = ", ".join(shown[:-1]) + (" and " if len(shown) > 1 else "") + shown[-1] if shown else "none yet"
     lines += ["", f"## {page['source_title']}", ""] + [f"- {fill(item, {'cards': named}, 'llms.json') if '{cards}' in item else item}"
                                                          for item in page["source"]]

@@ -28,8 +28,8 @@ try:
 except ImportError:  # pragma: no cover - depends on the environment
     sync_playwright = None
 
-TESSERA = "tessera.teleionlabs.com"
-HERMA = "herma.teleionlabs.com"
+TESSERA = "fabric.teleionlabs.com"  # the Studio calls the public hosts (the CSP allows them)
+HERMA = "shim.teleionlabs.com"
 ERANOS = "eranosforgood.org"
 CORS = {
     "access-control-allow-origin": "*",
@@ -222,7 +222,7 @@ class Studio(unittest.TestCase):
         self.assertNotIn("Connected", text)
         pill = page.inner_text("#session-pill")
         self.assertIn("Waiting for a demo session", pill)
-        self.assertIn("at most 10 new demo sessions per address per hour", pill)
+        self.assertIn("Teleion Fabric asked this page to wait before it opens another session.", pill)
         self.assertIn("HTTP 429", pill)
         self.assertRegex(pill, r"Trying again in 0:(30|29|28)")
         self.assertTrue(page.is_visible("#session-retry-btn"))
@@ -317,7 +317,7 @@ class Studio(unittest.TestCase):
         page = self.open(fake)
         self.pill_state(page, "waiting")
         pill = page.inner_text("#session-pill")
-        self.assertIn("no answer from tessera.teleionlabs.com", pill)
+        self.assertIn("no answer from fabric.teleionlabs.com", pill)
         self.assertRegex(pill, r"Trying again in 0:(30|29|28)")  # no Retry-After: the backoff starts at 30 s
         self.assertEqual(1, page.locator('#wire-log-list .w-status[data-code="0"]').count())
 
@@ -325,7 +325,7 @@ class Studio(unittest.TestCase):
         page.click("#chat-send-btn")
         page.wait_for_selector('.chat-turn .shim-card[data-ok="false"]')
         card = page.inner_text(".chat-turn")
-        self.assertIn("The shim did not answer the preview: no answer from herma.teleionlabs.com", card)
+        self.assertIn("The shim did not answer the preview: no answer from shim.teleionlabs.com", card)
         self.assertNotIn("matched", card.replace("0 provisions matched", ""))
         self.assertEqual(2, page.locator('#wire-log-list .w-status[data-code="0"]').count())
         text = self.assert_no_simulation(page)

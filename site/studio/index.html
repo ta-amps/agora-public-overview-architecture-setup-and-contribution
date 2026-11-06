@@ -40,7 +40,7 @@
       </span>
     </a>
 
-    <div class="session-pill" id="session-pill" data-state="connecting" title="Anonymous demo session on tessera.teleionlabs.com. This browser saves it so a reload does not open a new one.">
+    <div class="session-pill" id="session-pill" data-state="connecting" title="Optional demo session on fabric.teleionlabs.com. This browser saves it so a reload does not open a new one.">
       <span class="session-dot" aria-hidden="true"></span>
       <span class="session-body">
         <span class="session-label" id="session-pill-text" role="status" aria-live="polite">Opening a demo session on Teleion Fabric...</span>
@@ -59,7 +59,7 @@
       </button>
       <button type="button" class="mode-btn" id="mode-btn-cli" data-ui-mode="cli" aria-pressed="false">
         <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2" width="13" height="12" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4.5 6l2.5 2-2.5 2M8.5 10.5h3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span>Terminal / CLI (tessera · herma)</span>
+        <span>Terminal / CLI (Teleion Fabric · shim)</span>
       </button>
     </div>
 
@@ -100,11 +100,11 @@
       </div>
     </div>
 
-    <!-- PANEL 1: CHAT + HERMA SHIM -->
+    <!-- PANEL 1: CHAT + MODEL SHIM -->
     <div class="scenario-panel is-active" id="panel-chat" role="tabpanel" aria-labelledby="tab-btn-chat">
       <div class="panel-intro">
         <div class="panel-intro-top">
-          <span class="kicker kicker-cyan">Infrastructure Shim · POST herma.teleionlabs.com/api/preview</span>
+          <span class="kicker kicker-cyan">Infrastructure Shim · POST shim.teleionlabs.com/api/preview</span>
           <span class="metric-chip" id="herma-last-metric">No preview sent yet</span>
         </div>
         <p class="panel-desc">Ask a question or click a starter prompt. Each one is a real POST to the shim's public preview, which checks its built-in provisions (<code>keyword</code>, <code>semantic</code> and <code>micromodel</code> triggers) and stores nothing. The shim either answers directly or adds a system message to the payload it would forward. The card shows only what the shim returned.</p>
@@ -206,7 +206,7 @@
             <span class="kicker kicker-amber">Worker Lab · Fencing Tokens &amp; CAS expected_version</span>
             <button type="button" class="btn btn-subtle btn-xs" id="worker-run-all-btn" data-needs-session>Run Steps 1 -&gt; 4</button>
           </div>
-          <p class="panel-desc">This browser plays a contributor's worker. Enqueue and lease a real Task, write a Task Object as <code>v1 -&gt; v2</code> with compare-and-set, then send a stale overwrite: a real request that still carries the old <code>expected_version</code>. The feed shows what <code>tessera.teleionlabs.com</code> answered; it should refuse with <strong>HTTP 409 Conflict</strong>.</p>
+          <p class="panel-desc">This browser plays a contributor's worker. Enqueue and lease a real Task, write a Task Object as <code>v1 -&gt; v2</code> with compare-and-set, then send a stale overwrite: a real request that still carries the old <code>expected_version</code>. The feed shows what <code>fabric.teleionlabs.com</code> answered; it should refuse with <strong>HTTP 409 Conflict</strong>.</p>
         </div>
 
         <div class="worker-actions-grid">
@@ -420,7 +420,7 @@
             <rect width="220" height="70" rx="11" class="node-box"/>
             <circle cx="18" cy="20" r="4.5" class="node-led"/>
             <text x="30" y="24" class="node-title">Model Shim</text>
-            <text x="16" y="43" class="node-host">herma.teleionlabs.com</text>
+            <text x="16" y="43" class="node-host">shim.teleionlabs.com</text>
             <text x="16" y="60" class="node-stat" id="stat-herma">provisions · idle</text>
           </g>
 
@@ -429,7 +429,7 @@
             <rect width="220" height="70" rx="11" class="node-box"/>
             <circle cx="18" cy="20" r="4.5" class="node-led"/>
             <text x="30" y="24" class="node-title">Teleion Fabric Engine</text>
-            <text x="16" y="43" class="node-host">tessera.teleionlabs.com</text>
+            <text x="16" y="43" class="node-host">fabric.teleionlabs.com</text>
             <text x="16" y="60" class="node-stat" id="stat-tessera">CAS + Leases + /mcp · idle</text>
           </g>
 

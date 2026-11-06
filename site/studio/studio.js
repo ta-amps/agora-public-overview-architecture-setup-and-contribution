@@ -2,15 +2,15 @@
   "use strict";
 
   const ENDPOINTS = {
-    tessera: "https://tessera.teleionlabs.com",
-    herma: "https://herma.teleionlabs.com",
+    tessera: "https://fabric.teleionlabs.com",
+    herma: "https://shim.teleionlabs.com",
     eranos: "https://eranosforgood.org",
     agora: "https://agora.eranosforgood.org/"
   };
 
   const SESSION_STORAGE_KEY = "ta_amps_demo_session_v1";
   // Teleion Fabric's anonymous mint rule (DEMO_QUOTAS.sessions_per_ip_hour, published at /connect.json).
-  const SESSION_LIMIT_TEXT = "Teleion Fabric opens at most 10 new demo sessions per address per hour.";
+  const SESSION_LIMIT_TEXT = "Teleion Fabric asked this page to wait before it opens another session.";
   const RETRY_FIRST_MS = 30000;
   const RETRY_MAX_MS = 300000;
   // The worker id this page sends when it claims verbs: the browser itself plays the worker.
@@ -896,7 +896,7 @@ pi --mcp "$FABRIC_MCP_URL" --header "X-Herma-Harness: pi"`
     Object.keys(entry.rawReqHeaders || {}).forEach(function (k) {
       const val =
         k.toLowerCase() === "authorization"
-          ? "Bearer $TESSERA_DEMO_TOKEN"
+          ? "Bearer $FABRIC_SESSION_TOKEN"
           : entry.rawReqHeaders[k];
       parts.push('  -H "' + k + ": " + String(val).replace(/"/g, '\\"') + '"');
     });
@@ -1484,7 +1484,7 @@ pi --mcp "$FABRIC_MCP_URL" --header "X-Herma-Harness: pi"`
       '<div class="shim-card" id="chat-welcome-card">' +
       '<div class="shim-head">' +
       '<div class="shim-prov-badges"><span class="prov-badge">Shim public preview</span><span class="ref-badge">no key needed</span></div>' +
-      '<span class="shim-latency">herma.teleionlabs.com/api/preview</span>' +
+      '<span class="shim-latency">shim.teleionlabs.com/api/preview</span>' +
       "</div>" +
       '<div class="shim-answer">Click a starter prompt above or type your own below. Each prompt is a real POST to the shim. The card that comes back shows only what the shim returned: the provisions it matched, its direct answer when it gives one, and the system message it added to the payload.</div>' +
       "</div>";
@@ -1522,7 +1522,7 @@ pi --mcp "$FABRIC_MCP_URL" --header "X-Herma-Harness: pi"`
       preview.matches.forEach(function (m) {
         if (!m || typeof m.prov_id !== "string") return;
         upsertNoun({
-          store: "herma.provisions",
+          store: "shim.provisions",
           category: "noun.provision",
           key: m.prov_id,
           version: Number.isInteger(m.version) ? m.version : null,
@@ -1925,7 +1925,7 @@ pi --mcp "$FABRIC_MCP_URL" --header "X-Herma-Harness: pi"`
 
     /* STEP 4: the worker asks the shim for this brief's guardrails */
     setBadge("running", "Running step 4 of 6...");
-    updateNgoStep(4, "running", "sending", "POST herma /api/preview with this brief's guardrail prompt");
+    updateNgoStep(4, "running", "sending", "POST shim /api/preview with this brief's guardrail prompt");
     const r4 = await liveWireFetch({
       actor: "worker",
       target: "herma",
@@ -3603,7 +3603,7 @@ pi --mcp "$FABRIC_MCP_URL" --header "X-Herma-Harness: pi"`
     });
     say(
       true,
-      "<strong>[STORED IN TESSERA]</strong> <code>" +
+      "<strong>[STORED IN TELEION FABRIC]</strong> <code>" +
         escapeHtml(store + "/" + key) +
         "</code> is version " +
         escapeHtml(rec.version) +
